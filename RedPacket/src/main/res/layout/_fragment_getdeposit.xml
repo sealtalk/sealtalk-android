@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_bg"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/ll_bankCard"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="@dimen/base_margin"
+            android:background="@drawable/selector_item"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/base_margin2"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_bankIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_card"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/base_margin"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_cardName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="中国工商银行(1985)"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/tv_cardType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"
+                    tools:text="储蓄卡"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|right"
+                android:layout_marginRight="@dimen/base_margin"
+                android:src="@drawable/arrow_right"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_add_card"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_mywallet_height"
+            android:layout_marginTop="@dimen/base_margin"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/base_margin"
+                android:gravity="center_vertical"
+                android:text="@string/jrmf_add_bank_card"
+                android:textColor="@color/title_bar_color"
+                android:textSize="14sp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_sub_bank"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_mywallet_height"
+            android:layout_marginTop="@dimen/base_margin"
+            android:background="@drawable/selector_item"
+            android:visibility="gone"
+            >
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/base_margin"
+                android:gravity="center_vertical"
+                android:text="@string/jrmf_select_sub_branch"
+                android:textColor="@color/black"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_subBankName"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="14sp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/base_margin"
+                android:src="@drawable/arrow_right"
+                />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_limit"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/base_padding"
+            android:textColor="@color/color_a0a0a0"
+            android:textSize="12sp"
+            tools:text="该卡本次最多可提现1.00元"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_mywallet_height"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/base_margin"
+                android:gravity="center_vertical"
+                android:text="@string/jrmf_deposit_receive_time"
+                android:textColor="@color/black"
+                android:textSize="14sp"/>
+
+            <com.jrmf360.rylib.wallet.widget.ClearEditText
+                android:id="@+id/cet_get_money_time"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:enabled="false"
+                android:focusable="false"
+                android:hint=""
+                android:textColor="@color/black"
+                android:textColorHint="@color/color_c9c9c9"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_mywallet_height"
+            android:layout_marginTop="@dimen/base_margin"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/base_margin"
+                android:gravity="center_vertical"
+                android:text="@string/jrmf_deposit_amount"
+                android:textColor="@color/black"
+                android:textSize="14sp"/>
+
+            <com.jrmf360.rylib.wallet.widget.ClearEditText
+                android:id="@+id/cet_get_money"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/base_margin"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="@string/no_input_amount"
+                android:inputType="numberDecimal"
+                android:maxLength="8"
+                android:textColor="@color/black"
+                android:textColorHint="@color/color_c9c9c9"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_all_money"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:layout_marginRight="@dimen/base_margin"
+                android:background="@drawable/shape_code_bg"
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="@string/jrmf_deposit_all"
+                android:textColor="@color/title_bar_color"
+                android:textSize="14sp"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_over_tip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/base_margin"
+            android:layout_marginTop="@dimen/base_margin"
+            android:textColor="@color/red"
+            android:textSize="14sp"
+            android:visibility="visible"
+            tools:text="手续费2元"
+            />
+
+
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/btn_height"
+            android:layout_marginLeft="@dimen/base_margin2"
+            android:layout_marginRight="@dimen/base_margin2"
+            android:layout_marginTop="@dimen/base_margin2"
+            android:background="@drawable/selector_round_btn"
+            android:text="@string/jrmf_next"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/tv_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/base_margin2"
+            android:text=""
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            />
+
+    </LinearLayout>
+
+</ScrollView>
+
+
+
+

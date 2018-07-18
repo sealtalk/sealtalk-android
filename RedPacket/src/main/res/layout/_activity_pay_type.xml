@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/layout"
+              android:layout_width="300dip"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:layout_marginLeft="26dip"
+              android:layout_marginRight="26dip"
+              android:background="@drawable/dialog_paytype_bg"
+              android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbar_height">
+
+        <TextView
+            android:id="@+id/tv_pay_title"
+            style="@style/text_black_16"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/please_pay"
+            android:textColor="@color/color_323232"
+            android:textSize="14sp"/>
+
+        <ImageView
+            android:id="@+id/iv_exit"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/_btn_exit"/>
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_80b5b5b5"/>
+
+    <TextView
+        android:id="@+id/tv_redenvelope_name"
+        style="@style/text_black_16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dip"
+        android:gravity="center"
+        android:text="@string/jrmf_rp_default_name"
+        android:textColor="@color/color_323232"
+        android:textSize="12sp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/_rmb"/>
+
+        <TextView
+            android:id="@+id/tv_redenvelope_amount"
+            style="@style/text_black_16"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/actionbar_height"
+            android:layout_marginLeft="1dp"
+            android:gravity="center"
+            android:textColor="@color/color_323232"
+            android:textSize="30sp"
+            tools:text="0.01"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dip"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/color_80c9c9c9"/>
+
+    <LinearLayout
+        android:id="@+id/layout_paytype"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/btn_height"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/base_padding">
+
+        <ImageView
+            android:id="@+id/iv_paytype_icon"
+            android:layout_width="22dip"
+            android:layout_height="22dip"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_paytype_name"
+                style="@style/text_gray_16"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/actionbar_height"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                tools:text="@string/jrmf_rp_balance"
+                android:textColor="@color/color_434343"
+                android:textSize="13sp"/>
+
+            <!--<ImageView-->
+                <!--android:id="@+id/iv_paytype_rmb"-->
+                <!--android:layout_width="11dp"-->
+                <!--android:layout_height="11dp"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:layout_marginTop="1dp"-->
+                <!--android:src="@drawable/_rmb"-->
+                <!--android:visibility="gone"-->
+                <!--/>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_paytype_balance"-->
+                <!--style="@style/text_gray_16"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="@dimen/actionbar_height"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:text=" 0.07 )"-->
+                <!--android:textColor="@color/color_434343"-->
+                <!--android:textSize="13sp"-->
+                <!--android:visibility="gone"/>-->
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/_ic_arrow"/>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dip"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/color_80c9c9c9"/>
+
+    <TextView
+        android:id="@+id/tv_pswd_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/base_padding"
+        android:text="@string/input_pwd"
+        android:textColor="@color/color_b7b7b7"
+        android:textSize="10sp"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+
+        <Button
+            android:id="@+id/btn_pay"
+            style="@style/text_white_16"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/btn_height"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/selector_common_btn"
+            android:text="@string/btn_pay"
+            android:visibility="gone"/>
+
+        <com.jrmf360.rylib.rp.gridpwdview.GridPasswordView
+            android:id="@+id/gpv_pswd"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="8dp"
+            app:gpvLineColor="#2196F3"
+            app:gpvPasswordType="numberPassword"/>
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_forget_pswd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dip"
+        android:padding="3dip"
+        tools:text="支付密码"
+        android:textColor="@color/blue"
+        android:textSize="10sp"/>
+
+</LinearLayout>
+
+

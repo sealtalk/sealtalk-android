@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+
+    <com.jrmf360.rylib.rp.widget.ActionBarView
+        android:id="@+id/actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bankground="@color/red_dark"
+        app:content="" />
+
+
+    <TextView
+        android:id="@+id/tv_look_rp_history"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/color_46a2fa"
+        android:textSize="14sp"
+        android:text="@string/jrmf_rp_look_history"
+        />
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_below="@id/actionbar"
+        android:layout_above="@id/tv_look_rp_history"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:scrollbars="none">
+    </ListView>
+
+
+</RelativeLayout>
+
+
+
+
+
+
+
+

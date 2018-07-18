@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/background"
+              android:orientation="vertical"
+              tools:context=".rp.ui.ResetPswdActivity">
+
+    <com.jrmf360.rylib.rp.widget.ActionBarView
+        android:id="@+id/actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:content="@string/jrmf_reset_pwd_title"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/text_gray_16"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/btn_height"
+                android:background="@color/background"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/base_padding"
+                android:text="@string/jrmf_auth_tip"
+                android:textSize="12dip"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:layout_marginLeft="@dimen/base_padding"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/text_black_16"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/jrmf_username"/>
+
+                <com.jrmf360.rylib.rp.widget.ClearEditText
+                    android:id="@+id/et_username"
+                    style="@style/text_black_14"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="@string/jrmf_input_username_hint"
+                    android:paddingRight="@dimen/base_padding"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/color_b7b7b7"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dip"
+                android:background="@color/background"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:layout_marginLeft="@dimen/base_padding"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/text_black_16"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/jrmf_IDCard"/>
+
+                <com.jrmf360.rylib.rp.widget.ClearEditText
+                    android:id="@+id/et_identity"
+                    style="@style/text_black_14"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:background="@null"
+                    android:digits="0123456789xyzXYZ"
+                    android:gravity="center_vertical"
+                    android:hint="@string/jrmf_input_IDCard_num2"
+                    android:paddingRight="@dimen/base_padding"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/color_b7b7b7"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dip"
+                android:background="@color/background"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:layout_marginLeft="@dimen/base_padding"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/text_black_16"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/jrmf_phone_num"/>
+
+                <com.jrmf360.rylib.rp.widget.ClearEditText
+                    android:id="@+id/et_userphone"
+                    style="@style/text_black_14"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="@string/jrmf_inupt_phone_num"
+                    android:inputType="phone"
+                    android:paddingRight="@dimen/base_padding"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/color_b7b7b7"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dip"
+                android:background="@color/background"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:layout_marginLeft="@dimen/base_padding"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/text_black_16"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/jrmf_verify_code"/>
+
+                <com.jrmf360.rylib.rp.widget.ClearEditText
+                    android:id="@+id/et_vcode"
+                    style="@style/text_black_14"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3.5"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="@string/verify_code_empty2"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:paddingRight="@dimen/base_padding"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/color_b7b7b7"/>
+
+                <TextView
+                    android:id="@+id/tv_send_code"
+                    android:layout_width="0dip"
+                    android:layout_height="30dip"
+                    android:layout_marginRight="@dimen/base_padding"
+                    android:layout_weight="1.5"
+                    android:background="@drawable/_bg_red_round"
+                    android:gravity="center"
+                    android:text="@string/send_code"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/base_padding"
+                android:background="@color/background"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:layout_marginLeft="@dimen/base_padding"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/text_black_16"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/jrmf_new_pwd"/>
+
+                <com.jrmf360.rylib.rp.widget.ClearEditText
+                    android:id="@+id/et_password"
+                    style="@style/text_black_14"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:background="@null"
+                    android:hint="@string/jrmf_input_new_pwd"
+                    android:inputType="numberPassword"
+                    android:maxLength="6"
+                    android:paddingRight="@dimen/base_padding"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/color_b7b7b7"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dip"
+                android:background="@color/background"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:layout_marginLeft="@dimen/base_padding"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/text_black_16"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/jrmf_confirm_new_pwd"/>
+
+                <com.jrmf360.rylib.rp.widget.ClearEditText
+                    android:id="@+id/et_confirm_pwd"
+                    style="@style/text_black_14"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="@string/jrmf_input_new_pwd_confirm"
+                    android:inputType="numberPassword"
+                    android:maxLength="6"
+                    android:paddingRight="@dimen/base_padding"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/color_b7b7b7"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background"
+                android:padding="@dimen/base_padding">
+
+                <Button
+                    android:id="@+id/btn_next"
+                    style="@style/text_black_16"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/btn_height"
+                    android:background="@drawable/_bg_gray_round"
+                    android:text="@string/jrmf_submit"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

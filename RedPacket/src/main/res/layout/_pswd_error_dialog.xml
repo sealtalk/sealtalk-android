@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:paddingBottom="@dimen/base_padding">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbar_height"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="@string/jrmf_tip"
+        android:textSize="14sp"
+        android:textColor="@color/black" />
+
+    <ImageView
+
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:layout_below="@+id/title"
+        android:background="@color/gray" />
+
+    <TextView
+        android:id="@+id/tv_text"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbar_height"
+        android:layout_below="@+id/line"
+        android:layout_margin="@dimen/base_padding"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:text="@string/pwd_error"
+        android:textColor="@color/black"
+
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_text"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/cancle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/base_padding"
+            android:layout_marginRight="7dip"
+            android:layout_weight="1"
+            android:background="@drawable/_btn_white"
+            android:paddingBottom="7dip"
+            android:paddingTop="7dip"
+            android:text="@string/jrmf_retry"
+            android:textSize="16sp"
+            android:textColor="@color/red" />
+
+        <Button
+            android:id="@+id/confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dip"
+            android:layout_marginRight="@dimen/base_padding"
+            android:layout_weight="1"
+            android:background="@drawable/_btn_red"
+            android:paddingBottom="7dip"
+            android:paddingTop="7dip"
+            android:text="@string/jrmf_reset_pwd_title"
+            android:textSize="16sp"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

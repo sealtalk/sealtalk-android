@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <cn.rongcloud.im.server.widget.SelectableRoundedImageView
+            android:id="@+id/blackuri"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="8dp"
+            app:sriv_left_bottom_corner_radius="4dp"
+            app:sriv_left_top_corner_radius="4dp"
+            app:sriv_right_bottom_corner_radius="4dp"
+            app:sriv_right_top_corner_radius="4dp"/>
+
+        <TextView
+            android:id="@+id/blackname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:maxLines="1"
+            android:layout_marginRight="14dp"
+            android:ellipsize="middle"
+            android:textSize="16sp"
+            android:textColor="#353535"
+            android:text="wulalala" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#dfdfdd" />
+</LinearLayout>

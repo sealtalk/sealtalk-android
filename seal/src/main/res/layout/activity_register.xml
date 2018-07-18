@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/de_frm_backgroud"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/rg_img_backgroud"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="-50dp"
+            android:layout_marginRight="-300dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/de_bg" />
+
+    </FrameLayout>
+
+
+    <LinearLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:id="@+id/de_login_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="61dip"
+            android:src="@drawable/seal_logo" />
+
+        <cn.rongcloud.im.server.widget.ClearWriteEditText
+            android:id="@+id/reg_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:drawablePadding="5dip"
+            android:hint="@string/nickname"
+            android:inputType="textPersonName"
+            android:maxLength="32"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="#FFF"
+            android:textColorHint="#FFFFFF" />
+
+        <cn.rongcloud.im.server.widget.ClearWriteEditText
+            android:id="@+id/reg_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:drawablePadding="5dip"
+            android:hint="@string/phone_number"
+            android:maxLength="11"
+            android:inputType="phone"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip"
+            android:maxLines="1"
+            android:textColor="#FFF"
+            android:textColorHint="#FFFFFF" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+
+            <cn.rongcloud.im.server.widget.ClearWriteEditText
+                android:id="@+id/reg_code"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="7"
+                android:drawablePadding="5dip"
+                android:hint="@string/code"
+                android:inputType="number"
+                android:maxLength="6"
+                android:maxLines="1"
+                android:textColor="#FFF"
+                android:textColorHint="#FFFFFF" />
+
+
+            <Button
+                android:id="@+id/reg_getcode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="4"
+                android:background="@drawable/rs_select_btn_gray"
+                android:clickable="false"
+                android:minHeight="1dp"
+                android:minWidth="1dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="@string/send_code"
+                android:textColor="#FFF"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <cn.rongcloud.im.server.widget.ClearWriteEditText
+            android:id="@+id/reg_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:drawablePadding="5dip"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:maxLength="16"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip"
+            android:maxLines="1"
+            android:textColor="#FFF"
+            android:textColorHint="#FFFFFF" />
+
+
+        <Button
+            android:id="@+id/reg_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="36dp"
+            android:layout_marginRight="36dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/rs_select_btn_gray"
+            android:clickable="false"
+            android:text="@string/register"
+            android:textColor="#FFF" />
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/reg_forget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="15dp"
+        android:text="@string/forgot_password"
+        android:textColor="#999999"
+        android:textSize="14sp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Powered by RongCloud"
+        android:textSize="12sp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:padding="15dp"
+        android:textColor="#484848"
+        />
+
+
+    <TextView
+        android:id="@+id/reg_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:padding="15dp"
+        android:text="@string/Login"
+        android:textColor="#999999"
+        android:textSize="14sp" />
+
+</RelativeLayout>

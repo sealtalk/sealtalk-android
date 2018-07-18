@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <cn.rongcloud.im.server.widget.ClearWriteEditText
+        android:id="@+id/forget_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="40dp"
+        android:drawableLeft="@drawable/ic_phone"
+        android:drawablePadding="5dip"
+        android:hint="@string/phone_number"
+        android:maxLength="11"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:maxLines="1"
+        android:textColor="@color/de_title_bg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal">
+
+
+        <cn.rongcloud.im.server.widget.ClearWriteEditText
+            android:id="@+id/forget_code"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="6"
+            android:drawableLeft="@drawable/ic_code"
+            android:drawablePadding="5dip"
+            android:hint="@string/code"
+            android:inputType="number"
+            android:maxLength="6"
+            android:maxLines="1"
+            android:textColor="@color/de_title_bg" />
+
+
+        <Button
+            android:id="@+id/forget_getcode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="4"
+            android:background="@drawable/rs_select_btn_gray"
+            android:clickable="false"
+            android:minHeight="1dp"
+            android:minWidth="1dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/send_code"
+            android:textColor="#FFF"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <cn.rongcloud.im.server.widget.ClearWriteEditText
+        android:id="@+id/forget_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="40dp"
+        android:drawableLeft="@drawable/ic_password"
+        android:drawablePadding="5dip"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:maxLength="16"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:maxLines="1"
+        android:textColor="@color/de_title_bg" />
+
+    <cn.rongcloud.im.server.widget.ClearWriteEditText
+        android:id="@+id/forget_password1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="40dp"
+        android:drawableLeft="@drawable/ic_password"
+        android:drawablePadding="5dip"
+        android:hint="@string/confirm_password"
+        android:inputType="textPassword"
+        android:maxLength="16"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:maxLines="1"
+        android:textColor="@color/de_title_bg"/>
+
+    <Button
+        android:id="@+id/forget_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/rs_select_btn_gray"
+        android:clickable="false"
+        android:text="@string/confirm"
+        android:textColor="#FFF" />
+
+</LinearLayout>

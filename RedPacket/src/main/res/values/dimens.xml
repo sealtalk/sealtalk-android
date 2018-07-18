@@ -1,0 +1,30 @@
+<resources>
+
+    <!--标题栏的高度-->
+    <dimen name="actionbar_height">56dp</dimen>
+    <dimen name="input_height">48dip</dimen>
+    <!--底部按钮高度-->
+    <dimen name="btn_height">44dp</dimen>
+
+    <dimen name="base_padding">16dip</dimen>
+    <dimen name="base_margin">16dip</dimen>
+    <dimen name="half_base_margin">8dip</dimen>
+    <dimen name="half_base_padding">8dip</dimen>
+    <dimen name="round_radius">6dip</dimen>
+    <dimen name="jrmf_dimen_4">4dip</dimen>
+
+
+    <!--钱包-->
+
+    <dimen name="titlebar_height">56dp</dimen>
+
+    <dimen name="item_mywallet_height">48dp</dimen>
+    <dimen name="item_trade_detail_height">80dp</dimen>
+    <dimen name="base_margin2">16dp</dimen>
+    <dimen name="base_padding2">16dip</dimen>
+    <dimen name="btn_radius">5dip</dimen>
+
+
+    <!--titleBar-->
+    <dimen name="title_bar_text_size">17sp</dimen>
+</resources>

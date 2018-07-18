@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- PictureSelectorActivity -->
+    <color name="rc_picsel_toolbar">#393A3E</color>
+    <color name="rc_picsel_toolbar_transparent">#F0393A3E</color>
+    <color name="rc_picsel_toolbar_send_normal">#45C018</color>
+    <color name="rc_picsel_toolbar_send_pressed">#3E7D2C</color>
+    <color name="rc_picsel_toolbar_send_disable">#3E7D2C</color>
+    <color name="rc_picsel_toolbar_send_text_disable">#AAAAAA</color>
+    <color name="rc_picsel_toolbar_send_text_normal">#FFFFFF</color>
+    <color name="rc_picsel_grid_mask">#00000000</color>
+    <color name="rc_picsel_grid_mask_pressed">#80000000</color>
+    <color name="rc_picsel_catalog_shadow">#C0000000</color>
+
+    <!-- PicturePreviewActivity -->
+    <color name="rc_picprev_toolbar_transparent">@color/rc_picsel_toolbar_transparent</color>
+
+    <color name="rc_extension_normal">#f4f4f6</color>
+    <color name="rc_divider_line">#ababad</color>
+
+    <!-- Extension -->
+    <color name="rc_divider_color">#d9d9d9</color>
+    <color name="rc_emoji_grid_item_bg">#ebebeb</color>
+
+    <color name="rc_main_theme">#0195ff</color>
+
+    <color name="rc_popup_dialog_list_divider_color">#dfdfdd</color>
+
+    <color name="rc_popup_dialog_prompt_ok_color">#0099ff</color>
+    <color name="rc_popup_dialog_prompt_cancel_color">#999999</color>
+    <color name="rc_popup_dialog_prompt_clear_color">#f43530</color>
+    <color name="rc_popup_dialog_text_color">#353535</color>
+    <color name="rc_ext_root_menu_item_text_color">#353535</color>
+    <color name="rc_ext_sub_menu_item_text_color">#828282</color>
+    <color name="rc_map_list_divider_color">#e5e5e5</color>
+    <color name="rc_map_list_text_color">#262626</color>
+    <color name="rc_map_list_text_grey_color">#939393</color>
+    <color name="rc_map_search_highlight_color">#0099ff</color>
+</resources>

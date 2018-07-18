@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <cn.rongcloud.im.server.widget.SelectableRoundedImageView
+        android:id="@+id/iv_selected_friends"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        android:layout_margin="2dp"
+        app:sriv_left_bottom_corner_radius="3dip"
+        app:sriv_left_top_corner_radius="3dip"
+        app:sriv_right_bottom_corner_radius="3dip"
+        app:sriv_right_top_corner_radius="3dip" />
+</LinearLayout>
+

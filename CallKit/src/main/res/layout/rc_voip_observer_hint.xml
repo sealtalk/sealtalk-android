@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="gone">
+
+    <TextView
+        android:id="@+id/rc_observer_hint_message"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        android:background="@color/rc_voip_color_backgroud_text"
+        android:gravity="center"
+        android:text="@string/rc_voip_observer_hint"
+        android:textColor="#ffffff"
+        android:textSize="14sp" />
+</RelativeLayout>

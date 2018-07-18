@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.amap.api.maps2d.MapView
+            android:id="@+id/map"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"/>
+
+        <TextView
+            android:id="@+id/location"
+            android:text="@string/fetching"
+            android:drawableLeft="@drawable/schedule_end_icon"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:padding="10dp"
+            android:background="@drawable/bg_white"
+            android:textColor="@android:color/secondary_text_light"
+            android:textSize="15sp"
+            android:drawablePadding="8dp"
+            android:layout_margin="20dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <ImageView
+            android:id="@+id/myLocation"
+            android:src="@drawable/btn_location"
+            android:layout_gravity="right|bottom"
+            android:layout_marginBottom="70dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </FrameLayout>
+
+</RelativeLayout>

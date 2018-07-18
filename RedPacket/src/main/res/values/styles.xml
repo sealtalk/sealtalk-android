@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 以窗口的形式打开Activity -->
+    <style name="jrmf_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--窗口背景色-->
+        <item name="android:windowFrame">@null</item>
+        <!--Dialog的windowFrame框为无-->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 窗口是否半透明——是（与第一条配合使用） -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 这个不设置的话，可能会出现边框黑线 -->
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <!-- 窗口弹出效果 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 是否允许背景模糊 -->
+    </style>
+
+
+    <style name="Jrmf_AnimBottom" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/_slide_right_in</item>
+        <item name="android:windowExitAnimation">@anim/_slide_right_out</item>
+    </style>
+
+    <style name="jrmf_commondialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+
+    <style name="text_black_16">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="text_black_14">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="text_black_12">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">12dip</item>
+    </style>
+    <style name="text_black_28">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">28sp</item>
+    </style>
+    <style name="text_gray_16">
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textSize">16dip</item>
+    </style>
+
+    <style name="text_red_16">
+        <item name="android:textColor">@color/red</item>
+        <item name="android:textSize">16dip</item>
+    </style>
+
+    <style name="text_red_12">
+        <item name="android:textColor">@color/red</item>
+        <item name="android:textSize">12dip</item>
+    </style>
+
+    <style name="text_blue_16">
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:textSize">16dip</item>
+    </style>
+
+    <style name="text_white_16">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16dip</item>
+    </style>
+
+    <style name="text_white_28">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">28dip</item>
+    </style>
+
+    <style name="text_red_28">
+        <item name="android:textColor">@color/red</item>
+        <item name="android:textSize">28dip</item>
+    </style>
+
+    <style name="text_gray_12">
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textSize">12dip</item>
+    </style>
+
+    <style name="text_blue_12">
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:textSize">12dip</item>
+    </style>
+
+    <!--FragmentDialog-->
+    <style name="Jrmf_DialogTheme" parent="android:Theme.Dialog">
+        <item name="android:windowBackground">@drawable/dialog_background</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <!--CircleImageView属性-->
+    <declare-styleable name="Ry_CircleImageView">
+        <attr name="ry_civ_border_width" format="dimension" />
+        <attr name="ry_civ_border_color" format="color" />
+        <attr name="ry_civ_border_overlay" format="boolean" />
+        <attr name="ry_civ_fill_color" format="color" />
+    </declare-styleable>
+
+
+    <style name="Jrmf_ActionSheetDialogStyle" parent="@android:style/Theme.Dialog">
+        <!-- 背景透明 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 浮于Activity之上 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- Dialog以外的区域模糊效果 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 半透明 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- Dialog进入及退出动画 -->
+        <item name="android:windowAnimationStyle">@style/Jrmf_ActionSheetDialogAnimation</item>
+    </style>
+    <!-- ActionSheet进出动画 -->
+    <style name="Jrmf_ActionSheetDialogAnimation" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/actionsheet_dialog_in</item>
+        <item name="android:windowExitAnimation">@anim/actionsheet_dialog_out</item>
+    </style>
+
+</resources>

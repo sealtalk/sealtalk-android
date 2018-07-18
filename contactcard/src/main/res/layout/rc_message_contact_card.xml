@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@id/rc_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="227.5dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <io.rong.imkit.widget.AsyncImageView
+            android:id="@+id/rc_img"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="10dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitXY"
+            android:src="@drawable/rc_default_portrait"
+            app:RCCornerRadius="@dimen/contactcard_dimen_size_3"
+            app:RCDefDrawable="@drawable/rc_default_portrait"/>
+
+        <TextView
+            android:id="@+id/rc_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginRight="12dp"
+            android:textSize="16sp"
+            android:textColor="#262626"
+            android:layout_gravity="center_vertical"
+            android:gravity="start"
+            android:ellipsize="end"
+            android:maxLines="1"
+            tools:text="Frank"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="227.5dp"
+        android:layout_height="0.5dp"
+        android:background="#EDEDED"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp" />
+
+    <LinearLayout
+        android:layout_width="227.5dp"
+        android:layout_height="21dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginRight="12dp"
+            android:textSize="9sp"
+            android:textColor="#939393"
+            android:layout_gravity="center_vertical"
+            android:gravity="start"
+            android:text="@string/rc_plugins_contact"/>
+    </LinearLayout>
+
+</LinearLayout>

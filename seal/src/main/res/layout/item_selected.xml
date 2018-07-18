@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <cn.rongcloud.im.server.widget.SelectableRoundedImageView
+        android:id="@+id/selected_icon"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        app:sriv_left_bottom_corner_radius="3dip"
+        app:sriv_left_top_corner_radius="3dip"
+        app:sriv_right_bottom_corner_radius="3dip"
+        app:sriv_right_top_corner_radius="3dip" />
+
+</LinearLayout>

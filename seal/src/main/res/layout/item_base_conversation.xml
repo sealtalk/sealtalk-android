@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
+    android:background="@color/de_transparent">
+
+    <TextView
+        android:id="@+id/de_conversation_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="85dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/de_transparent"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/group_list_black_textview"
+        android:textSize="@dimen/de_conversation_item_name_size" />
+
+    <TextView
+        android:id="@+id/de_conversation_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/de_transparent"
+        android:textColor="#d7d7d7"
+        android:textSize="@dimen/de_conversation_item_data_size" />
+
+    <TextView
+        android:id="@+id/de_at_me"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_below="@+id/de_conversation_title"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/de_transparent"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:text="@string/de_message_at_me"
+        android:textColor="@color/de_draft_color"
+        android:visibility="gone"
+        android:textSize="@dimen/de_conversation_item_data_size" />
+
+    <TextView
+        android:id="@+id/de_conversation_content"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_toRightOf="@+id/de_at_me"
+        android:layout_below="@+id/de_conversation_title"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="70dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/de_transparent"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:textColor="@color/group_list_gray"
+        android:textSize="@dimen/de_conversation_item_data_size" />
+
+    <ImageView
+        android:id="@+id/de_conversation_msg_block"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/de_conversation_time"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/de_ic_message_block"
+        android:visibility="gone" />
+
+</RelativeLayout>

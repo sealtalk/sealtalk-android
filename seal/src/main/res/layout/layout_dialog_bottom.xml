@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/photographBtn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_item_bg"
+        android:gravity="center"
+        android:padding="10dip"
+        android:text="@string/dialog_bottom_picture"
+        android:textColor="@color/text_black_color"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/text_line_color" />
+
+    <Button
+        android:id="@+id/localPhotosBtn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_item_bg"
+        android:gravity="center"
+        android:padding="10dip"
+        android:text="@string/dialog_bottom_import_from_local"
+        android:textColor="@color/text_black_color"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/text_line_color" />
+
+    <Button
+        android:id="@+id/cancelBtn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_item_bg"
+        android:gravity="center"
+        android:padding="10dip"
+        android:text="@string/share_dialog_cancel"
+        android:textColor="@color/text_tips_color"
+        android:textSize="18sp" />
+
+</LinearLayout>

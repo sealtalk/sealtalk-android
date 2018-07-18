@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="rc_bg_speech_tv_bottom_pressed">#80d6d6d6</color>
+    <color name="rc_bg_speech_tv_bottom_normal">#fcfcfc</color>
+    <color name="rc_speech_tv">#999999</color>
+    <color name="rc_gray">#ababab</color>
+    <color name="rc_divider_color">#d9d9d9</color>
+    <color name="rc_recognizerview_bg_normal">#f4f4f6</color>
+</resources>

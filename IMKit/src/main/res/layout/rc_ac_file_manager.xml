@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/rc_ac_file_manager_title"
+        android:text="@string/rc_ac_file_manager_category_title"
+        android:visibility="gone" />
+
+    <View
+        style="@style/rc_ac_file_manager_line"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:visibility="gone">
+
+        <ImageView
+            style="@style/rc_ac_file_manager_image_style"
+            android:src="@drawable/rc_ac_text_file_icon" />
+
+        <TextView
+            android:id="@+id/rc_ac_tv_file_manager_file"
+            style="@style/rc_ac_file_manager_style"
+            android:text="@string/rc_ac_file_manager_category_file" />
+    </LinearLayout>
+
+    <View
+        style="@style/rc_ac_file_manager_line"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:visibility="gone">
+
+        <ImageView
+            style="@style/rc_ac_file_manager_image_style"
+            android:src="@drawable/rc_ac_video_file_icon" />
+
+        <TextView
+            android:id="@+id/rc_ac_tv_file_manager_video"
+            style="@style/rc_ac_file_manager_style"
+            android:text="@string/rc_ac_file_manager_category_video" />
+    </LinearLayout>
+
+    <View
+        style="@style/rc_ac_file_manager_line"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:visibility="gone">
+
+        <ImageView
+            style="@style/rc_ac_file_manager_image_style"
+            android:src="@drawable/rc_ac_audio_file_icon" />
+
+        <TextView
+            android:id="@+id/rc_ac_tv_file_manager_audio"
+            style="@style/rc_ac_file_manager_style"
+            android:text="@string/rc_ac_file_manager_category_audio" />
+    </LinearLayout>
+
+    <View
+        style="@style/rc_ac_file_manager_line"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:visibility="gone">
+
+        <ImageView
+            style="@style/rc_ac_file_manager_image_style"
+            android:src="@drawable/rc_ac_other_file_icon" />
+
+        <TextView
+            android:id="@+id/rc_ac_tv_file_manager_picture"
+            style="@style/rc_ac_file_manager_style"
+            android:text="@string/rc_ac_file_manager_category_picture" />
+    </LinearLayout>
+
+    <View
+        style="@style/rc_ac_file_manager_line"
+        android:visibility="gone" />
+
+    <TextView
+        style="@style/rc_ac_file_manager_title"
+        android:text="@string/rc_ac_file_manager_dir_title" />
+
+    <View style="@style/rc_ac_file_manager_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp">
+
+        <ImageView
+            style="@style/rc_ac_file_manager_image_style"
+            android:src="@drawable/rc_ac_ram_icon" />
+
+        <TextView
+            android:id="@+id/rc_ac_tv_file_manager_mobile_memory"
+            style="@style/rc_ac_file_manager_style"
+            android:text="@string/rc_ac_file_manager_mobile_memory" />
+    </LinearLayout>
+
+    <View style="@style/rc_ac_file_manager_line" />
+
+    <LinearLayout
+        android:id="@+id/rc_ac_ll_sd_card"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:visibility="gone">
+
+        <ImageView
+            style="@style/rc_ac_file_manager_image_style"
+            android:src="@drawable/rc_ac_sd_card_icon" />
+
+        <TextView
+            android:id="@+id/rc_ac_tv_file_manager_SD_card"
+            style="@style/rc_ac_file_manager_style"
+            android:text="@string/rc_ac_file_manager_SD_card" />
+    </LinearLayout>
+
+    <View style="@style/rc_ac_file_manager_line" />
+
+    <LinearLayout
+        android:id="@+id/rc_ac_ll_sd_card_one"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:visibility="gone">
+
+        <ImageView
+            style="@style/rc_ac_file_manager_image_style"
+            android:src="@drawable/rc_ac_sd_card_icon" />
+
+        <TextView
+            android:id="@+id/rc_ac_tv_file_manager_SD_card_one"
+            style="@style/rc_ac_file_manager_style"
+            android:text="@string/rc_ac_file_manager_SD_card_one" />
+    </LinearLayout>
+
+    <View style="@style/rc_ac_file_manager_line" />
+
+    <LinearLayout
+        android:id="@+id/rc_ac_ll_sd_card_two"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:visibility="gone">
+
+        <ImageView
+            style="@style/rc_ac_file_manager_image_style"
+            android:src="@drawable/rc_ac_sd_card_icon" />
+
+        <TextView
+            android:id="@+id/rc_ac_tv_file_manager_SD_card_two"
+            style="@style/rc_ac_file_manager_style"
+            android:text="@string/rc_ac_file_manager_SD_card_two" />
+    </LinearLayout>
+</LinearLayout>

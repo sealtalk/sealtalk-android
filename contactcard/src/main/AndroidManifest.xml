@@ -1,0 +1,15 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cn.rongcloud.contactcard">
+
+    <application android:supportsRtl="true">
+        <activity
+            android:name=".activities.ContactListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".activities.ContactDetailActivity"
+            android:theme="@android:style/Theme.Dialog" />
+    </application>
+
+</manifest>

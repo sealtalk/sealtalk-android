@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/rc_location_search_title_bar" />
+
+
+    <ImageView
+        android:id="@+id/ac_iv_search_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/rc_ext_search_loading"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/ac_ll_filter_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/rc_filtered_location_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="14dp"
+            android:dividerHeight="1dp"
+            android:scrollbars="none"
+            android:background="@android:color/white"
+            android:divider="@color/rc_map_list_divider_color"/>
+
+        <TextView
+            android:id="@+id/rc_tv_search_no_results"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="45dp"
+            android:ellipsize="middle"
+            android:singleLine="true"
+            android:textColor="#999999"
+            android:textSize="14sp"
+            android:visibility="gone" />
+    </LinearLayout>
+</LinearLayout>

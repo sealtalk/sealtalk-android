@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="callkit_textsize18sp">18sp</dimen>
+    <dimen name="userhead90dp">90dp</dimen>
+    <dimen name="callkit_userNameMarginTop17dp">17dp</dimen>
+    <dimen name="userNameMarginTop17dp">17dp</dimen>
+    <dimen name="asynimg_cornerRadius8dp">8dp</dimen>
+</resources>

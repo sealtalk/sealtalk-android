@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ebebeb"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/seal_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="14dp"
+            android:text="@string/fr_chat_room"
+            android:textColor="#353535"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.25dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:background="#dfdfdd" />
+
+    <LinearLayout
+        android:id="@+id/def_chatroom1"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="@drawable/btn_list_item_bg"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="14dp"
+            android:drawableLeft="@drawable/icon_1"
+            android:drawablePadding="14dp"
+            android:gravity="center_vertical"
+            android:text="@string/fr_chat_room_one"
+            android:textColor="@color/text_color" />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.25dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:background="#dfdfdd" />
+
+    <LinearLayout
+        android:id="@+id/def_chatroom2"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="@drawable/btn_list_item_bg"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="14dp"
+            android:drawableLeft="@drawable/icon_2"
+            android:drawablePadding="14dp"
+            android:gravity="center_vertical"
+            android:text="@string/fr_chat_room_two"
+            android:textColor="@color/text_color" />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.25dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:background="#dfdfdd" />
+
+    <LinearLayout
+        android:id="@+id/def_chatroom3"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="@drawable/btn_list_item_bg"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="14dp"
+            android:drawableLeft="@drawable/icon_3"
+            android:drawablePadding="14dp"
+            android:gravity="center_vertical"
+            android:text="@string/fr_chat_room_three"
+            android:textColor="@color/text_color" />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.25dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:background="#dfdfdd" />
+
+    <LinearLayout
+        android:id="@+id/def_chatroom4"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="@drawable/btn_list_item_bg"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="14dp"
+            android:drawableLeft="@drawable/icon_4"
+            android:drawablePadding="14dp"
+            android:gravity="center_vertical"
+            android:text="@string/fr_chat_room_four"
+            android:textColor="@color/text_color" />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.25dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:background="#dfdfdd" />
+
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="12dp"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<View-->
+    <!--android:layout_width="3dp"-->
+    <!--android:layout_height="22dp"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:background="@color/main_theme_color" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:layout_marginLeft="16dp"-->
+    <!--android:text="@string/chatroom"-->
+    <!--android:textSize="16sp" />-->
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="10dp"-->
+    <!--android:layout_marginRight="10dp"-->
+    <!--android:layout_marginTop="12dp"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/def_chatroom1"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/btn_list_item_bg"-->
+    <!--android:drawablePadding="10dp"-->
+    <!--android:drawableTop="@drawable/icon_1"-->
+    <!--android:gravity="center_horizontal"-->
+    <!--android:text="@string/chatroom1"-->
+    <!--android:textSize="14sp" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/def_chatroom2"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/btn_list_item_bg"-->
+    <!--android:drawablePadding="10dp"-->
+    <!--android:drawableTop="@drawable/icon_2"-->
+    <!--android:gravity="center_horizontal"-->
+    <!--android:text="@string/chatroom2"-->
+    <!--android:textSize="14sp" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/def_chatroom3"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/btn_list_item_bg"-->
+    <!--android:drawablePadding="10dp"-->
+    <!--android:drawableTop="@drawable/icon_3"-->
+    <!--android:gravity="center_horizontal"-->
+    <!--android:text="@string/chatroom3"-->
+    <!--android:textSize="14sp" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/def_chatroom4"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/btn_list_item_bg"-->
+    <!--android:drawablePadding="10dp"-->
+    <!--android:drawableTop="@drawable/icon_4"-->
+    <!--android:gravity="center_horizontal"-->
+    <!--android:text="@string/chatroom4"-->
+    <!--android:textSize="14sp" />-->
+
+
+    <!--</LinearLayout>-->
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0.6dp"-->
+    <!--android:layout_gravity="center_horizontal"-->
+    <!--android:layout_marginLeft="16dp"-->
+    <!--android:layout_marginRight="16dp"-->
+    <!--android:layout_marginTop="20dp"-->
+    <!--android:background="@color/group_list_liner" />-->
+
+    <!--<LinearLayout-->
+    <!--android:visibility="gone"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="12dp"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<View-->
+    <!--android:layout_width="3dp"-->
+    <!--android:layout_height="22dp"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:background="@color/main_theme_color" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:layout_marginLeft="16dp"-->
+    <!--android:text="@string/groups"-->
+    <!--android:textSize="16sp" />-->
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:visibility="gone"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="5dp"-->
+    <!--android:orientation="vertical">-->
+
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/group_item1"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_margin="10dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/btn_list_item_bg"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<cn.rongcloud.im.server.widget.SelectableRoundedImageView-->
+    <!--android:id="@+id/def_group_image1"-->
+    <!--app:sriv_left_bottom_corner_radius="3dip"-->
+    <!--app:sriv_left_top_corner_radius="3dip"-->
+    <!--app:sriv_right_bottom_corner_radius="3dip"-->
+    <!--app:sriv_right_top_corner_radius="3dip"-->
+    <!--android:scaleType="centerCrop"-->
+    <!--android:layout_marginLeft="6dp"-->
+    <!--android:layout_width="60dp"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:background="@drawable/group_1" />-->
+
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:layout_marginLeft="16dp">-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/def_group_name1"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="技术交流群1"-->
+    <!--android:textSize="14sp" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/group_number1"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="32/100"-->
+    <!--android:textColor="@color/group_list_gray"-->
+    <!--android:textSize="12sp" />-->
+
+    <!--</LinearLayout>-->
+
+    <!--<Button-->
+    <!--android:id="@+id/def_state_group1"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="30dp"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:background="@drawable/join"-->
+    <!--android:gravity="center"-->
+    <!--android:text="加入"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:textSize="14dp" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/def_state_group1_chat"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="30dp"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:background="@drawable/chat"-->
+    <!--android:gravity="center"-->
+    <!--android:text="聊天"-->
+    <!--android:visibility="gone"-->
+    <!--android:textColor="@color/main_theme_color"-->
+    <!--android:textSize="14dp" />-->
+
+    <!--</RelativeLayout>-->
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/group_item2"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_margin="10dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/btn_list_item_bg"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<cn.rongcloud.im.server.widget.SelectableRoundedImageView-->
+    <!--android:id="@+id/def_group_image2"-->
+    <!--app:sriv_left_bottom_corner_radius="3dip"-->
+    <!--app:sriv_left_top_corner_radius="3dip"-->
+    <!--app:sriv_right_bottom_corner_radius="3dip"-->
+    <!--app:sriv_right_top_corner_radius="3dip"-->
+    <!--android:scaleType="centerCrop"-->
+    <!--android:layout_marginLeft="6dp"-->
+    <!--android:layout_width="60dp"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:background="@drawable/group_2" />-->
+
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:layout_marginLeft="16dp">-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/def_group_name2"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="技术交流群2"-->
+    <!--android:textSize="14sp" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/group_number2"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="32/100"-->
+    <!--android:textColor="@color/group_list_gray"-->
+    <!--android:textSize="12dp" />-->
+
+    <!--</LinearLayout>-->
+
+    <!--<Button-->
+    <!--android:id="@+id/def_state_group2"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="30dp"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:background="@drawable/join"-->
+    <!--android:gravity="center"-->
+    <!--android:text="加入"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:textSize="14dp" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/def_state_group2_chat"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="30dp"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:background="@drawable/chat"-->
+    <!--android:gravity="center"-->
+    <!--android:text="聊天"-->
+    <!--android:visibility="gone"-->
+    <!--android:textColor="@color/main_theme_color"-->
+    <!--android:textSize="14dp" />-->
+
+    <!--</RelativeLayout>-->
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/group_item3"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_margin="10dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/btn_list_item_bg"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<cn.rongcloud.im.server.widget.SelectableRoundedImageView-->
+    <!--android:id="@+id/def_group_image3"-->
+    <!--app:sriv_left_bottom_corner_radius="3dip"-->
+    <!--app:sriv_left_top_corner_radius="3dip"-->
+    <!--app:sriv_right_bottom_corner_radius="3dip"-->
+    <!--app:sriv_right_top_corner_radius="3dip"-->
+    <!--android:layout_marginLeft="6dp"-->
+    <!--android:scaleType="centerCrop"-->
+    <!--android:layout_width="60dp"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:background="@drawable/group_3" />-->
+
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:layout_marginLeft="16dp">-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/def_group_name3"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="技术交流群3"-->
+    <!--android:textSize="14sp" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/group_number3"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="32/100"-->
+    <!--android:textColor="@color/group_list_gray"-->
+    <!--android:textSize="12sp" />-->
+
+
+    <!--</LinearLayout>-->
+
+    <!--<Button-->
+    <!--android:id="@+id/def_state_group3"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="30dp"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:background="@drawable/join"-->
+    <!--android:gravity="center"-->
+    <!--android:text="加入"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:textSize="14dp" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/def_state_group3_chat"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="30dp"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:background="@drawable/chat"-->
+    <!--android:gravity="center"-->
+    <!--android:text="聊天"-->
+    <!--android:visibility="gone"-->
+    <!--android:textColor="@color/main_theme_color"-->
+    <!--android:textSize="14dp" />-->
+
+    <!--</RelativeLayout>-->
+    <!--</LinearLayout>-->
+    <!--</LinearLayout>-->
+
+</LinearLayout>

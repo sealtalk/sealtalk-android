@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.rong.imkit.widget.RoundCornerLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@id/rc_title_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rc_bg_item">
+
+        <io.rong.imkit.widget.AsyncImageView
+            android:id="@id/rc_img"
+            android:layout_width="fill_parent"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:background="@drawable/rc_bg_item"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@id/rc_txt"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@drawable/rc_bg_black_cover"
+            android:gravity="left"
+            android:paddingLeft="19dp"
+            android:paddingRight="19dp"
+            android:paddingBottom="12dp"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/rc_normal_bg" />
+
+    <ListView
+        android:id="@id/rc_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@android:color/white"
+        android:divider="@null"
+        android:scrollbars="none" />
+
+</io.rong.imkit.widget.RoundCornerLinearLayout>

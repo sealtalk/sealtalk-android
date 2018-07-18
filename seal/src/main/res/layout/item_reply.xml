@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="80dp">
+
+    <io.rong.imkit.widget.AsyncImageView
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="12dp"
+        android:padding="5dp"
+        android:src="@drawable/rc_default_portrait"
+        android:id="@+id/reply1"/>
+
+    <TextView
+        android:id="@+id/text1"
+        style="@style/DemoTextStyleBigBlack"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_marginLeft="12dp"
+        android:layout_toRightOf="@+id/reply1"/>
+</RelativeLayout>

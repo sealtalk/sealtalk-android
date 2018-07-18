@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:background="#0195ff" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"
+            android:background="@drawable/seal_logo_icon"
+             />
+        <LinearLayout
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_alignParentRight="true">
+            <ImageView
+                android:id="@+id/ac_iv_search"
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:src="@drawable/ac_title_search_icon"/>
+            <ImageView
+                android:id="@+id/seal_more"
+                android:layout_width="56dp"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:src="@drawable/main_activity_add" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

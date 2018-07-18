@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rc_action_bar_back">返回</string>
+    <string name="rc_action_bar_ok">确定</string>
+
+    <string name="rc_plugin_location">位置</string>
+    <string name="rc_plugin_image">图片</string>
+    <string name="rc_plugin_location_message">发送位置</string>
+    <string name="rc_plugin_location_sharing">共享实时位置</string>
+    <string name="rc_audio_input">按住 说话</string>
+    <string name="rc_audio_input_hover">松开 发送</string>
+    <string name="rc_ext_send">发送</string>
+    <string name="rc_ext_exit_location_sharing_confirm">结束共享</string>
+    <string name="rc_ext_cancel">取消</string>
+    <string name="rc_location_fetching">获取中&#8230;&#8230;</string>
+    <string name="rc_location_fail">定位失败</string>
+    <string name="rc_location_temp_failed">定位失败，请稍后重试</string>
+    <string name="rc_location_sharing_exceed_max">超过最大位置共享人数</string>
+    <string name="rc_you_are_sharing_location">你正在共享位置</string>
+    <string name="rc_other_is_sharing_location">%s正在共享位置</string>
+    <string name="rc_others_are_sharing_location">%d人正在共享位置</string>
+    <string name="rc_real_time_join_notification">加入位置共享，聊天中其他人也能看到你的位置，确定加入？</string>
+    <string name="rc_ext_warning">提示</string>
+    <string name="rc_ext_exit_location_sharing">是否结束位置共享？</string>
+    <string name="rc_real_time_exit_notification">离开会话，位置共享也会结束，确定离开？</string>
+
+    <string name="rc_ext_location_permission_failed">您需要在设置里打开定位权限</string>
+
+    <!-- PictureSelectorActivity -->
+    <string name="rc_picsel_toolbar">图片</string>
+    <string name="rc_picsel_toolbar_send">发送</string>
+    <string name="rc_picsel_toolbar_send_num">发送(%d/9)</string>
+    <string name="rc_picsel_pictype">图片</string>
+    <string name="rc_picsel_toolbar_preview">预览</string>
+    <string name="rc_picsel_toolbar_preview_num">预览(%d)</string>
+    <string name="rc_picsel_selected_max">您最多只能选择9张图片</string>
+    <string name="rc_picsel_take_picture">拍摄照片</string>
+    <string name="rc_picsel_catalog_allpic">所有图片</string>
+    <string name="rc_picsel_catalog_number">%d张</string>
+
+    <!-- PicturePreviewActivity -->
+    <string name="rc_picprev_origin">原图</string>
+    <string name="rc_picprev_origin_size">原图(%s)</string>
+    <string name="rc_picprev_select">选择</string>
+
+    <string name="rc_network_exception">网络异常请稍后再试</string>
+    <string name="rc_permission_grant_needed">您需要在设置中打开权限</string>
+    <string name="rc_permission_microphone">（麦克风）。</string>
+    <string name="rc_permission_microphone_and_camera">（麦克风，相机）。</string>
+    <string name="rc_permission_camera">（相机）。</string>
+    <string name="rc_android.settings.action.MANAGE_OVERLAY_PERMISSION">悬浮窗</string>
+
+    <string name="rc_confirm">确认</string>
+    <string name="rc_cancel">取消</string>
+    <string name="rc_ext_search">搜索</string>
+    <string name="rc_ext_search_no_result">暂无结果</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true"
+        android:drawable="@drawable/de_pic_image_selected" /><!--设置选中图片-->
+    <item android:state_checked="false"
+        android:drawable="@drawable/de_pic_image_unselect" /><!--设置未选中图片-->
+</selector>

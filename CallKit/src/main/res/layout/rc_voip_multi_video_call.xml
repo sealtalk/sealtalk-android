@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <io.rong.callkit.ContainerLayout
+        android:id="@+id/rc_local_user_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/rc_voip_background_color" />
+
+    <ImageView
+        android:id="@+id/iv_large_preview_mutilvideo"
+        android:layout_width="match_parent"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:id="@+id/iv_large_preview_Mask"
+        android:layout_width="match_parent"
+        android:background="@color/callkit_color_90mask"
+        android:visibility="invisible"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:id="@+id/rc_whiteboard"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_below="@+id/rc_top_container"
+        android:layout_marginTop="90dp"
+        android:layout_marginBottom="90dp"
+        android:layout_above="@+id/rc_bottom_button_container"
+        android:layout_height="match_parent">
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/rc_top_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/rc_voip_multi_video_top_view" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/rc_bottom_button_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical" />
+
+    <HorizontalScrollView
+        android:id="@+id/rc_remoteuser_horizontalScrollView"
+        android:layout_width="match_parent"
+        android:layout_above="@+id/rc_bottom_button_container"
+        android:layout_marginBottom="43dp"
+        android:gravity="center_horizontal|bottom"
+        android:layout_alignWithParentIfMissing="true"
+        android:scrollbars="none"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/rc_remote_user_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/rc_remote_user_container_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:gravity="right"
+                android:orientation="horizontal" />
+
+            <LinearLayout
+                android:id="@+id/rc_remote_user_container_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal" />
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <LinearLayout
+        android:id="@+id/rc_waiting_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/rc_remoteuser_horizontalScrollView"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/callkit_voip_text_style_18spWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/rc_voip_call_waiting" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/rc_participant_portait_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/rc_bottom_button_container"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/callkit_groupchatmembers"
+            android:textSize="16sp"
+            android:text="@string/rc_voip_participant_users"
+            android:layout_gravity="center_horizontal"/>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:scrollbars="none"
+            android:layout_marginBottom="40dp"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/rc_participant_portait_container_1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:gravity="center_horizontal">
+            </LinearLayout>
+
+            <!--<LinearLayout-->
+                <!--android:id="@+id/rc_participant_portait_container_2"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:visibility="gone"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginBottom="10dp"-->
+                <!--android:gravity="center_horizontal">-->
+            <!--</LinearLayout>-->
+
+        </HorizontalScrollView>
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/rc_voip_multiVideoCall_minimize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11.5dp"
+        android:visibility="gone"
+        android:layout_marginLeft="17.5dp"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/rc_voip_minimize" />
+</RelativeLayout>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/rl_new_card"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_mywallet_height"
+                android:background="@drawable/selector_item"
+                android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/iv_bankCardLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/base_margin2"
+        android:src="@drawable/ic_card"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/base_margin2"
+        android:layout_toRightOf="@id/iv_bankCardLogo"
+        android:gravity="center_vertical"
+        android:text="@string/jrmf_add_bank_card_title"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/base_margin2"
+        android:src="@drawable/arrow_right"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/base_margin2"
+        android:background="@color/color_bg"
+        />
+
+</RelativeLayout>

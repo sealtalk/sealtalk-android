@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f0f0f6"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/rl_my_portrait"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_list_item_bg"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"
+            android:text="@string/portrait"
+            android:textColor="@color/text_color"
+            android:textSize="16sp" />
+
+        <cn.rongcloud.im.server.widget.SelectableRoundedImageView
+            android:id="@+id/img_my_portrait"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14sp"
+            android:scaleType="centerCrop"
+            app:sriv_left_bottom_corner_radius="3dip"
+            app:sriv_left_top_corner_radius="3dip"
+            app:sriv_right_bottom_corner_radius="3dip"
+            app:sriv_right_top_corner_radius="3dip" />
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.25dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:background="#dfdfdd" />
+
+    <RelativeLayout
+        android:id="@+id/rl_my_username"
+        android:layout_width="match_parent"
+        android:layout_height="45.5dp"
+        android:background="@drawable/btn_list_item_bg"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"
+            android:text="@string/nickname"
+            android:textColor="@color/text_color"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_my_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="48dp"
+            android:layout_marginRight="14dp"
+            android:textColor="#999"
+            android:textSize="16sp" />
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.25dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:background="#dfdfdd" />
+
+    <RelativeLayout
+        android:id="@+id/rl_my_telephone"
+        android:layout_width="match_parent"
+        android:layout_height="45.5dp"
+        android:background="@drawable/btn_list_item_bg"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"
+            android:text="@string/phone_number"
+            android:textColor="@color/text_color"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_my_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:textColor="#999"
+            android:textSize="16sp" />
+
+
+    </RelativeLayout>
+
+
+    <!-- <RelativeLayout
+         android:id="@+id/rl_my_portrait"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content">
+
+         <TextView
+             style="@style/DemoTextStyleBigBlack"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="33dp"
+             android:layout_marginLeft="24dp"
+             android:layout_marginTop="33dp"
+             android:text="@string/portrait" />
+
+         <cn.rongcloud.im.server.widget.SelectableRoundedImageView
+             android:id="@+id/img_my_portrait"
+             android:layout_width="64dp"
+             android:layout_height="64dp"
+             android:layout_alignParentRight="true"
+             android:layout_centerVertical="true"
+             android:layout_marginRight="16dp"
+             app:sriv_left_bottom_corner_radius="3dip"
+             app:sriv_left_top_corner_radius="3dip"
+             app:sriv_right_bottom_corner_radius="3dip"
+             app:sriv_right_top_corner_radius="3dip"
+             android:scaleType="centerCrop"
+             android:src="@drawable/de_ic_my_portrait"
+              />
+
+     </RelativeLayout>
+
+     <View
+         android:layout_width="match_parent"
+         android:layout_height="1dp"
+         android:layout_gravity="center_horizontal"
+         android:layout_marginLeft="16dp"
+         android:layout_marginRight="16dp"
+         android:background="@color/group_list_liner" />
+
+     <RelativeLayout
+         android:id="@+id/rl_my_username"
+         android:layout_width="fill_parent"
+         android:layout_height="48dp">
+
+         <TextView
+             style="@style/DemoTextStyleBigBlack"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_centerVertical="true"
+             android:layout_marginLeft="24dp"
+             android:text="@string/my_username" />
+
+         <TextView
+             android:id="@+id/tv_my_username"
+             style="@style/DemoTextStyleMiddle"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignParentRight="true"
+             android:layout_centerInParent="true"
+             android:layout_marginRight="25dp"
+             android:text="一鹿" />
+
+     </RelativeLayout>
+     <View
+         android:layout_width="match_parent"
+         android:layout_height="1dp"
+         android:layout_gravity="center_horizontal"
+         android:layout_marginLeft="16dp"
+         android:layout_marginRight="16dp"
+         android:background="@color/group_list_liner" />
+
+     <RelativeLayout
+         android:id="@+id/rl_my_telephone"
+         android:layout_width="fill_parent"
+         android:layout_height="48dp">
+
+         <TextView
+             style="@style/DemoTextStyleBigBlack"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_centerVertical="true"
+             android:layout_marginLeft="24dp"
+             android:text="@string/mobile_phone" />
+
+         <TextView
+             android:id="@+id/tv_my_phone"
+             style="@style/DemoTextStyleMiddle"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignParentRight="true"
+             android:layout_centerInParent="true"
+             android:layout_marginRight="25dp"
+             android:text="+86 18618268584" />
+
+
+     </RelativeLayout>
+
+     <View
+         android:layout_width="match_parent"
+         android:layout_height="1dp"
+         android:layout_gravity="center_horizontal"
+         android:layout_marginLeft="16dp"
+         android:layout_marginRight="16dp"
+         android:background="@color/group_list_liner" />
+
+
+
+     <RelativeLayout
+         android:id="@+id/rl_my_password"
+         android:layout_width="fill_parent"
+         android:layout_height="48dp">
+
+         <TextView
+             style="@style/DemoTextStyleBigBlack"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_centerVertical="true"
+             android:layout_marginLeft="24dp"
+             android:text="@string/change_password" />
+
+
+     </RelativeLayout>
+
+     <View
+         android:layout_width="match_parent"
+         android:layout_height="1dp"
+         android:layout_gravity="center_horizontal"
+         android:layout_marginLeft="16dp"
+         android:layout_marginRight="16dp"
+         android:background="@color/group_list_liner" />
+
+
+
+     <RelativeLayout
+         android:visibility="gone"
+         android:layout_width="fill_parent"
+         android:layout_height="48dp"
+         android:onClick="onTestClick">
+
+         <TextView
+             style="@style/DemoTextStyleBigBlack"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_centerVertical="true"
+             android:layout_marginLeft="24dp"
+             android:text="测试" />
+
+
+     </RelativeLayout>
+
+     <View
+         android:visibility="gone"
+         android:layout_width="match_parent"
+         android:layout_height="1dp"
+         android:layout_gravity="center_horizontal"
+         android:layout_marginLeft="16dp"
+         android:layout_marginRight="16dp"
+         android:background="@color/group_list_liner" />-->
+
+
+</LinearLayout>

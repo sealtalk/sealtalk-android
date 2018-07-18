@@ -1,0 +1,5 @@
+<resources>
+    <string name="rc_plugin_recognize">语音输入</string>
+    <string name="rc_plugin_recognize_clear">清除</string>
+    <string name="rc_plugin_recognize_check_network">请检查网络</string>
+</resources>

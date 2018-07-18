@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_bg"
+                android:orientation="vertical"
+                tools:context=".wallet.ui.SelectSubBankActivity">
+
+    <include
+        layout="@layout/w_layout_titlebar"/>
+
+    <LinearLayout
+        android:id="@+id/ll_province"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_mywallet_height"
+        android:layout_below="@id/titleBar"
+        android:layout_marginTop="@dimen/base_margin"
+        android:background="@drawable/selector_item">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/base_margin"
+            android:textColor="@color/gray"
+            android:gravity="center_vertical"
+            android:textSize="14sp"
+            android:text="@string/jrmf_select_province"/>
+
+        <TextView
+            android:id="@+id/tv_province"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/base_margin"
+            android:layout_marginRight="@dimen/base_margin"
+            android:textColor="@color/color_535353"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:textSize="14sp"
+            android:text=""/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/base_margin"
+            android:src="@drawable/arrow_right"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_city"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_mywallet_height"
+        android:layout_below="@id/ll_province"
+        android:layout_marginTop="@dimen/base_margin"
+        android:background="@drawable/selector_item">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/base_margin"
+            android:textColor="@color/gray"
+            android:gravity="center_vertical"
+            android:textSize="14sp"
+            android:text="@string/jrmf_select_city"/>
+
+        <TextView
+            android:id="@+id/tv_city"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/base_margin"
+            android:layout_marginRight="@dimen/base_padding"
+            android:textColor="@color/color_535353"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:textSize="14sp"
+            android:text=""/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/base_margin"
+            android:src="@drawable/arrow_right"/>
+    </LinearLayout>
+
+
+    <ViewAnimator
+        android:id="@+id/viewAnim"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_mywallet_height"
+        android:layout_below="@id/ll_city"
+        android:layout_marginTop="@dimen/base_margin">
+
+        <LinearLayout
+            android:id="@+id/ll_sub_bank"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_mywallet_height"
+            android:background="@drawable/selector_item">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/base_margin"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                android:gravity="center_vertical"
+                android:text="@string/jrmf_select_sub_branch"/>
+
+            <TextView
+                android:id="@+id/tv_sub_bank"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/base_margin"
+                android:layout_marginLeft="@dimen/base_margin"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text=""
+                android:textSize="14sp"
+                android:textColor="@color/color_535353"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/base_margin"
+                android:src="@drawable/arrow_right"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_input_sub_bank"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_mywallet_height"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/base_margin"
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:text="@string/jrmf_input_sub_branch"/>
+
+            <EditText
+                android:id="@+id/et_input_sub_bank"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/base_margin"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:gravity="center_vertical"
+                android:hint="@string/jrmf_input_sub_branch_hint"
+                android:singleLine="true"
+                android:text=""
+                android:textSize="14sp"
+                android:textColor="@color/color_535353"
+                android:textColorHint="@color/color_c9c9c9"/>
+        </LinearLayout>
+    </ViewAnimator>
+
+    <Button
+        android:id="@+id/btn_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_below="@id/viewAnim"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="75dp"
+        android:background="@drawable/selector_round_btn"
+        android:text="@string/jrmf_confirm_submit"
+        android:textColor="@color/white"
+        android:textSize="16sp"/>
+
+</RelativeLayout>

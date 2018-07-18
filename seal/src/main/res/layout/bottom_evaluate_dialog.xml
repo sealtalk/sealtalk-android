@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <!--Title 评价-->
+    <RelativeLayout
+        android:id="@+id/cs_evaluate_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:id="@+id/iv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:clickable="true"
+            android:src="@drawable/ac_cs_dialog_cancel" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/cs_evaluation"
+            android:textColor="@color/text_black_color"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/cs_evaluate_dialog_divider" />
+    </RelativeLayout>
+
+    <cn.rongcloud.im.ui.widget.CSEvaluateScrollView
+        android:id="@+id/scrollview_evaluate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="30dp">
+
+            <!--是否解决问题-->
+            <RelativeLayout
+                android:id="@+id/ll_resolve_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp">
+
+                <TextView
+                    android:id="@+id/tv_resolved_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/cs_evaluate_resolved_title"
+                    android:textColor="@color/cs_evaluate_text_color"
+                    android:textSize="16sp" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_resolved_title"
+                    android:layout_centerHorizontal="true">
+
+                    <TextView
+                        android:id="@+id/tv_resolved"
+                        android:layout_width="130dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="13dp"
+                        android:background="@drawable/rc_cs_evaluate_resolve_selector"
+                        android:gravity="center"
+                        android:text="@string/cs_evaluate_resolved"
+                        android:textColor="@drawable/rc_cs_evaluate_text_color_selector" />
+
+                    <TextView
+                        android:id="@+id/tv_unresolved"
+                        android:layout_width="130dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="21dp"
+                        android:layout_marginTop="13dp"
+                        android:layout_toRightOf="@id/tv_resolved"
+                        android:background="@drawable/rc_cs_evaluate_resolve_selector"
+                        android:gravity="center"
+                        android:text="@string/cs_evaluate_unresolved"
+                        android:textColor="@drawable/rc_cs_evaluate_text_color_selector" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <!--星级评价-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp">
+
+                <TextView
+                    android:id="@+id/tv_star_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/cs_evaluate_star_title"
+                    android:textColor="@color/cs_evaluate_text_color"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:id="@+id/cs_stars"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_star_title"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="13dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/rc_cs_star_selector" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:src="@drawable/rc_cs_star_selector" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:src="@drawable/rc_cs_star_selector" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:src="@drawable/rc_cs_star_selector" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:src="@drawable/rc_cs_star_selector" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <!--存在的问题-->
+            <RelativeLayout
+                android:id="@+id/ll_problems"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp">
+
+                <TextView
+                    android:id="@+id/tv_problem_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/cs_evaluate_text_color"
+                    android:textSize="16sp" />
+
+                <RelativeLayout
+                    android:id="@+id/ll_problem_tables"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_problem_title"
+                    android:layout_marginLeft="47dp"
+                    android:layout_marginRight="47dp"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:id="@+id/tv_tab1"
+                        android:layout_width="130dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/rc_cs_evaluate_resolve_selector"
+                        android:gravity="center"
+                        android:textColor="@drawable/rc_cs_evaluate_text_color_selector" />
+
+                    <TextView
+                        android:id="@+id/tv_tab2"
+                        android:layout_width="130dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="21dp"
+                        android:layout_toRightOf="@id/tv_tab1"
+                        android:background="@drawable/rc_cs_evaluate_resolve_selector"
+                        android:gravity="center"
+                        android:textColor="@drawable/rc_cs_evaluate_text_color_selector" />
+
+                    <TextView
+                        android:id="@+id/tv_tab3"
+                        android:layout_width="130dp"
+                        android:layout_height="30dp"
+                        android:layout_below="@id/tv_tab2"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/rc_cs_evaluate_resolve_selector"
+                        android:gravity="center"
+                        android:textColor="@drawable/rc_cs_evaluate_text_color_selector" />
+
+                    <TextView
+                        android:id="@+id/tv_tab4"
+                        android:layout_width="130dp"
+                        android:layout_height="30dp"
+                        android:layout_below="@id/tv_tab2"
+                        android:layout_marginLeft="21dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_toRightOf="@id/tv_tab3"
+                        android:background="@drawable/rc_cs_evaluate_resolve_selector"
+                        android:gravity="center"
+                        android:textColor="@drawable/rc_cs_evaluate_text_color_selector" />
+
+                    <TextView
+                        android:id="@+id/tv_tab5"
+                        android:layout_width="130dp"
+                        android:layout_height="30dp"
+                        android:layout_below="@id/tv_tab4"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/rc_cs_evaluate_resolve_selector"
+                        android:gravity="center"
+                        android:textColor="@drawable/rc_cs_evaluate_text_color_selector" />
+
+                    <TextView
+                        android:id="@+id/tv_tab6"
+                        android:layout_width="130dp"
+                        android:layout_height="30dp"
+                        android:layout_below="@id/tv_tab4"
+                        android:layout_marginLeft="21dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_toRightOf="@id/tv_tab5"
+                        android:background="@drawable/rc_cs_evaluate_resolve_selector"
+                        android:gravity="center"
+                        android:textColor="@drawable/rc_cs_evaluate_text_color_selector" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <EditText
+                android:id="@+id/edit_suggestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="47dp"
+                android:layout_marginRight="47dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/rc_cs_edittext_background"
+                android:maxLines="3"
+                android:minLines="3"
+                android:paddingBottom="11dp"
+                android:gravity="top"
+                android:paddingLeft="21dp"
+                android:paddingRight="21dp"
+                android:paddingTop="11dp"
+                android:textColor="@color/cs_evaluate_edittext_textcolor"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </cn.rongcloud.im.ui.widget.CSEvaluateScrollView>
+
+    <TextView
+        android:id="@+id/tv_submit"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_gravity="bottom"
+        android:background="@color/cs_evaluate_bottom_text_backgroud"
+        android:gravity="center"
+        android:text="@string/cs_submit_evaluation"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+</LinearLayout>

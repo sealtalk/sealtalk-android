@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="rc_image_file_suffix">
+        <item>.bmp</item>
+        <item>.cod</item>
+        <item>.gif</item>
+        <item>.ief</item>
+        <item>.jpe</item>
+        <item>.jpeg</item>
+        <item>.jpg</item>
+        <item>.jfif</item>
+        <item>.svg</item>
+        <item>.tif</item>
+        <item>.tiff</item>
+        <item>.ras</item>
+        <item>.ico</item>
+        <item>.pbm</item>
+        <item>.pgm</item>
+        <item>.png</item>
+        <item>.pnm</item>
+        <item>.ppm</item>
+        <item>.xbm</item>
+        <item>.xpm</item>
+        <item>.xwd</item>
+        <item>.rgb</item>
+    </array>
+    <array name="rc_file_file_suffix">
+        <item>.txt</item>
+        <item>.log</item>
+        <item>.html</item>
+        <item>.stm</item>
+        <item>.uls</item>
+        <item>.bas</item>
+        <item>.c</item>
+        <item>.h</item>
+        <item>.rtx</item>
+        <item>.sct</item>
+        <item>.tsv</item>
+        <item>.htt</item>
+        <item>.htc</item>
+        <item>.etx</item>
+        <item>.vcf</item>
+    </array>
+    <array name="rc_video_file_suffix">
+        <item>.rmvb</item>
+        <item>.avi</item>
+        <item>.mp4</item>
+        <item>.mp2</item>
+        <item>.mpa</item>
+        <item>.mpe</item>
+        <item>.mpeg</item>
+        <item>.mpg</item>
+        <item>.mpv2</item>
+        <item>.mov</item>
+        <item>.qt</item>
+        <item>.lsf</item>
+        <item>.lsx</item>
+        <item>.asf</item>
+        <item>.asr</item>
+        <item>.asx</item>
+        <item>.avi</item>
+        <item>.movie</item>
+        <item>.wmv</item>
+    </array>
+    <array name="rc_audio_file_suffix">
+        <item>.mp3</item>
+        <item>.au</item>
+        <item>.snd</item>
+        <item>.mid</item>
+        <item>.rmi</item>
+        <item>.aif</item>
+        <item>.aifc</item>
+        <item>.aiff</item>
+        <item>.m3u</item>
+        <item>.ra</item>
+        <item>.ram</item>
+        <item>.wav</item>
+        <item>.wma</item>
+    </array>
+    <array name="rc_word_file_suffix">
+        <item>.doc</item>
+        <item>.dot</item>
+        <item>.docx</item>
+    </array>
+    <array name="rc_excel_file_suffix">
+        <item>.xla</item>
+        <item>.xlc</item>
+        <item>.xlm</item>
+        <item>.xls</item>
+        <item>.xlt</item>
+        <item>.xlw</item>
+        <item>.xlsx</item>
+    </array>
+    <array name="rc_ppt_file_suffix">
+        <item>.ppt</item>
+        <item>.pptx</item>
+    </array>
+    <array name="rc_pdf_file_suffix">
+        <item>.pdf</item>
+    </array>
+    <array name="rc_other_file_suffix">
+        <item>.apk</item>
+        <item>.doc</item>
+        <item>.dot</item>
+        <item>.xla</item>
+        <item>.xlc</item>
+        <item>.xlm</item>
+        <item>.xls</item>
+        <item>.xlt</item>
+        <item>.xlw</item>
+        <item>.gif</item>
+        <item>.jpe</item>
+        <item>.jpeg</item>
+        <item>.jpg</item>
+    </array>
+</resources>

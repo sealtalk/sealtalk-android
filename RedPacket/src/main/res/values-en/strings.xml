@@ -1,0 +1,317 @@
+<resources>
+    <!--发红包-->
+    <string name="jrmf_send_rp_title">Red Packet</string>
+    <string name="_bribery_message">Best wishes！</string>
+    <string name="btn_put">Prepare Red Packet</string>
+    <string name="jrmf_rp_default_name">Cloud Red Packet</string>
+    <string name="jrmf_rp_num">Quantity</string>
+    <string name="btn_pay">Pay Now</string>
+    <string name="jrmf_ge"> </string>
+    <string name="_s_bribery">Red Packet</string>
+    <string name="network_error">The current network is poor, please try again later</string>
+    <string name="_de_dialog_item_message_delete">Delete</string>
+    <string name="red_envelope_blessing">The red packet greetings enter up to 25 characters</string>
+    <string name="group_number">%1$d members</string>
+    <string name="jrmf_rp_look_rp">View the red packets</string>
+    <string name="jrmf_rp_receive_rp">Open the red packets</string>
+    <string name="jrmf_rp_all_amount">Total</string>
+    <string name="jrmf_rp_amount">Amount</string>
+    <string name="jrmf_rp_single_amount">Amount Each</string>
+    <string name="jrmf_rp_luck_to_normal">Random Amount，Change to Identical</string>
+    <string name="jrmf_rp_normal_to_luck">Identical Amount，Change to Random</string>
+    <string name="jrmf_rp_min_num">Please enter the packets quantity</string>
+    <string name="jrmf_rp_max_num">Up to %1$d for quantity</string>
+    <string name="jrmf_rp_num_error">Please enter the correct quantity</string>
+    <string name="jrmf_rp_amount_error">Please enter the correct amount</string>
+    <string name="jrmf_rp_min_amount">The Identical Amount can‘t be less than 0.01 yuan</string>
+    <string name="jrmf_rp_max_amount">Up to %1$sCNY each total amount</string>
+    <string name="jrmf_rp_single_max_amount">Up to %1$sCNY each red packet</string>
+    <string name="jrmf_rp_no_card_max_amount">You have not yet bound the bank card, the red packet accumulated limit of %1$s yuan, please bind the bank card and then send the red packet.</string>
+    <string name="jrmf_rp_balance">Balance（￥%1$s）</string>
+
+
+    <!--拆红包-->
+    <string name="jrmf_get_self_rp_and_done">You\'ve opened the Red Packet you sent.The red packets you sent are all received.</string>
+    <string name="jrmf_get_self_rp">You\'ve opened the Red Packet you sent.</string>
+    <string name="jrmf_get_other_rp">You\'ve opened the Red Packet of %1$s.</string>
+    <string name="jrmf_other_get_self_rp_done">%1$s opened your Red Packet.The red packets you sent are all received.</string>
+    <string name="jrmf_other_get_self_rp">%1$s opened your Red Packet.</string>
+    <string name="jrmf_rp_send_a_rp">Send a red packet</string>
+    <string name="jrmf_look_others">View details</string>
+
+
+
+    <!--添加银行卡-->
+    <string name="card_name_tip">Please use the bank savings card of %1$s</string>
+    <string name="card_num_empty">Bank card number can\'t be empty</string>
+    <string name="jrmf_input_card_num">Card No.</string>
+    <string name="jrmf_input_card_num2">Bank Card</string>
+    <string name="jrmf_look_support_bank_cards">View supported bank cards</string>
+    <string name="jrmf_add_bank_card_title">Add a new card</string>
+    <string name="jrmf_add_bank_card">+Add a card</string>
+    <string name="card_num_error">Please enter the correct bank card number</string>
+    <string name="next_step_tip">Click on the next step as you agree to "User Agreement"</string>
+    <string name="name_tip">please enter your name</string>
+    <string name="name_error_tip">Please enter the correct name</string>
+    <string name="idcard_tip">Please enter the correct ID number</string>
+    <string name="phone_tip">Please enter the correct phone number</string>
+    <string name="phone_hint">Please enter the correct registered bank phone number</string>
+    <string name="jrmf_input_phone_hint">Registered bank phone number</string>
+    <string name="jrmf_input_phone_hint2">Enter phone number</string>
+    <string name="verify_code_empty">please enter verification code</string>
+    <string name="verify_code_empty2">Enter code</string>
+    <string name="jrmf_verify_code_hint">Enter code</string>
+    <string name="verify_code_error">Please enter the correct verification code</string>
+    <string name="jrmf_wait_resend_code">Reacquired after %1$d seconds</string>
+    <string name="jrmf_wait_resend_code2">%1$d seconds</string>
+    <string name="jrmf_some_second">%1$d seconds</string>
+    <string name="bind_card_suss">Bank card binding success</string>
+    <string name="user_protocol">User Agreement</string>
+    <string name="jrmf_verify_card_fee">The bank will deduct 0.01 yuan used to verify the true effectiveness of your filled card from your card</string>
+    <string name="jrmf_check_code">Verify SMS verification code</string>
+    <string name="jrmf_send_sms_code">Send code</string>
+    <string name="jrmf_input_bank_card_num">Enter the bank card number</string>
+    <string name="jrmf_input_verify_code">Please enter the SMS verification code for the phone number%1$s</string>
+
+
+    <!--webview-->
+    <string name="user_protocol_title">User Agreement</string>
+    <string name="wallet_title">Wallet</string>
+
+    <!--paytype-->
+    <string name="input_pwd">Enter Payment Password</string>
+    <string name="forget_pwd">Retrieve Payment Password</string>
+    <string name="please_pay">Payment</string>
+    <string name="send_code">Send the verification code</string>
+    <string name="re_send_code">Resend the verification code</string>
+    <string name="re_send">Resend</string>
+    <string name="input_verify_code">Enter verification code for your %1$s</string>
+    <string name="input_verify_code_title">Enter code</string>
+    <string name="add_card_pay">Add bank card</string>
+    <string name="alipay">Alipay</string>
+    <string name="jrmf_we_chat_pay">WeChat payment</string>
+    <string name="jrmf_rp_pay_quit">Cancel payment</string>
+    <string name="verify_code_suss">Verification code sent successfully</string>
+    <string name="pay_waiting">The result of the payment is being confirmed</string>
+    <string name="pay_failure">Payment failed</string>
+    <string name="jrmf_select_pay_style">Mode Of Payment</string>
+
+    <!--重置密码-->
+    <string name="jrmf_reset_pwd_title">Reset Password</string>
+    <string name="jrmf_new_pwd">Password</string>
+    <string name="jrmf_confirm_new_pwd">Confirm</string>
+    <string name="jrmf_confirm_payment_pwd">Confirm</string>
+    <string name="update_pwd_succ">Payment failed</string>
+    <string name="set_pwd_succ">The payment password is set successfully</string>
+    <string name="jrmf_input_new_pwd">Enter the 6-digit password</string>
+    <string name="jrmf_input_new_pwd_confirm">Enter password again</string>
+    <string name="jrmf_new_pwd_not_empty">The new password can\'t be empty</string>
+    <string name="jrmf_username_empty">The name can\'t be empty</string>
+    <string name="jrmf_input_username_hint">Enter name</string>
+    <string name="jrmf_auth_tip">Please fill in the ID number to complete the authentication</string>
+    <string name="jrmf_pwd_tip">Password</string>
+    <string name="jrmf_pwd_hint">The password is 6 digits</string>
+    <string name="jrmf_confirm_pwd_hint">Enter password again</string>
+
+
+    <!--拆红包原生-->
+
+    <string name="other_rp_has_left">Opened %1$d/%2$d</string>
+    <string name="other_rp_no_left">Opened %1$d/%2$d，has been finished</string>
+    <string name="self_rp_has_left">Opened %1$d/%2$d，a total of %3$s/%4$s yuan</string>
+    <string name="self_rp_no_left">Opened %1$d/%2$d，has been finished</string>
+
+    <!--红包显示-->
+    <string name="no_rp">Better luck next time!</string>
+    <string name="no_rp_normal">The red envelope has been opened</string>
+    <string name="rp_expire">The red packet has been more than 24 hours. If you have received it, you can view it in "Red Packet"</string>
+
+
+    <!-- 我的钱包 -->
+    <string name="my_wallet_title">Wallet</string>
+    <string name="jrmf_my_balance">Balance</string>
+    <string name="jrmf_some_zhang">%1$d</string>
+
+    <!--我的红包-->
+    <string name="my_rp_title">Red Packet</string>
+    <string name="luck_rp">Random Amount</string>
+    <string name="normal_rp">Identical Amount</string>
+    <string name="trade_suc">Trading Success</string>
+    <string name="who_rp">The Red Packet of %1$s</string>
+    <string name="has_grab_rp">You have received the red packet</string>
+    <string name="jrmf_rp_send_num">Total Number Sent %1$d</string>
+    <string name="jrmf_money_yuan">%1$sCNY</string>
+    <string name="jrmf_money_yuan2">CNY</string>
+    <string name="jrmf_money_yuan3">￥%1$s</string>
+    <string name="jrmf_rp_time_out">Expired</string>
+    <string name="jrmf_rp_receive_rate">Opened %1$s/%2$s</string>
+    <string name="jrmf_rp_receiving_rate">Opened %1$s/%2$s</string>
+    <string name="jrmf_rp_receive">Received Packets</string>
+    <string name="jrmf_rp_receive2">Total Number</string>
+    <string name="jrmf_rp_send">Sent packets</string>
+    <string name="jrmf_rp_look_history">View my red packets</string>
+    <string name="jrmf_rp_all_receive">received</string>
+    <string name="jrmf_rp_all_send">sent</string>
+    <string name="jrmf_rp_most_luck">Luckiest Draw</string>
+
+    <!-- 银行卡 -->
+    <string name="my_bank_title">Cards</string>
+    <string name="look_banks">View support bank</string>
+    <string name="name_error">Please enter your name</string>
+    <string name="jrmf_name_hint">Enter name</string>
+    <string name="id_card_error">Please enter the correct ID number</string>
+    <string name="phone_num_error">Please enter the correct phone number</string>
+    <string name="card_id_error">Bank card number error</string>
+    <string name="send_code_suc">Verification code sent successfully</string>
+    <string name="req_code">Please get the verification code first</string>
+    <string name="get_code">Resend the verification code</string>
+    <string name="input_code">Please enter the SMS verification code</string>
+    <string name="input_code_error">Please enter the correct verification code</string>
+    <string name="add_card_suc">Bank card binding success</string>
+    <string name="pay_protocol"> Wallet quick payment agreement</string>
+    <string name="jrmf_card_list"> Bank card list</string>
+    <string name="jrmf_go_bind_card"> Add a card</string>
+
+    <!--收支明细 -->
+    <string name="trade_detail_title">Transaction Record</string>
+    <string name="update_pwd">Modify Payment Password</string>
+    <string name="jrmf_type">Type</string>
+    <string name="jrmf_time">Time</string>
+    <string name="jrmf_trade_order">Bill No.</string>
+    <string name="jrmf_trade_all">All</string>
+    <string name="jrmf_trade_in">Income</string>
+    <string name="jrmf_trade_out">Expenditure</string>
+    <string name="jrmf_trade_detail">Order Detail</string>
+
+    <!-- 提现 -->
+    <string name="deposit_tip">Tip: when using no-charge withdrawals, the withdrawal information is not consistent with the withdrawal of the bank card, resulting in the withdrawal failure.
+	The withdrawal result will be sent to your bank card on the reserved phone number.</string>
+    <string name="deposit_fee_tip">Tip: the withdrawal of the need to charge %1$s yuan fee, the results will be sent in the form of a short message to your bank card to set the phone number</string>
+    <string name="card_limit">This card can withdraw cash %1$s yuan</string>
+    <string name="deposit_money">Withdraw %1$s yuan</string>
+    <string name="select_bank_card">Choose the bank card</string>
+    <string name="charge">Service charge %1$s yuan</string>
+    <string name="jrmf_charge">Service Charge</string>
+    <string name="charge_tip_dialog">The withdrawal will deduct %1$s yuan from your amount</string>
+    <string name="get_deposit_over">Withdrawal amount exceeding limit</string>
+    <string name="get_deposit_low">Your amount is not sufficient to cover your service charge</string>
+    <string name="jrmf_get_deposit">Withdraw</string>
+    <string name="jrmf_get_deposit_free">No fee withdrawal </string>
+    <string name="jrmf_deposit_receive_time">Arrive Time </string>
+    <string name="jrmf_deposit_all">All</string>
+    <string name="jrmf_deposit_amount_format_error">Amount format error</string>
+    <string name="jrmf_deposit_success">Withdrawal success </string>
+    <string name="jrmf_deposit_amount">Amount</string>
+
+
+    <!-- 充值 -->
+    <string name="jrmf_recharge">Top up</string>
+    <string name="recharge_money">Top-up %1$s yuan</string>
+    <string name="no_card_bind">Please add a bank card first.</string>
+    <string name="input_recharge_amount_hint">Enter top-up amount.</string>
+    <string name="input_recharge_amount_toast">Please enter top-up amount.</string>
+    <string name="recharge_fail">Top-up failure</string>
+    <string name="recharge_suc">Top-up success</string>
+    <string name="card_des">Tail number(%1$s)</string>
+    <string name="card_recharge_limit">The card can be top-up to %1$s yuan</string>
+    <string name="cardname_card_des">%1$s(%2$s)</string>
+    <string name="jrmf_account_balance">Account Balance</string>
+    <string name="jrmf_pay_type_not_support">Doesn’t support current transactions.</string>
+    <string name="jrmf_recharge_amount">Amount</string>
+    <string name="jrmf_recharge_amount_over">Top-up amount exceeding limit</string>
+
+    <!--银行卡设置  -->
+    <string name="jrmf_bank_card_setting">Cards</string>
+    <string name="del_card_des">Delete a bank card with a tail number of %1$s</string>
+    <string name="unbind_suc">Unbind successfully</string>
+    <string name="jrmf_unbind">Unbind</string>
+
+    <!--安全设置-->
+    <string name="jrmf_security_setting">Security Settings</string>
+    <string name="jrmf_input_pwd_check_identity">Please enter your payment password to verify your identity</string>
+    <string name="jrmf_set_pwd_tip">Payment password settings</string>
+
+
+    <!--账户信息-->
+
+    <string name="account_info_title">Account Information</string>
+    <string name="update_user_info">Modify account information</string>
+    <string name="set_user_info">Set up account information</string>
+    <string name="account_net_error">The current network is poor, failed to obtain account information</string>
+    <string name="no_authen">No real-name authentication</string>
+    <string name="jrmf_username">Name</string>
+    <string name="jrmf_real_username">Real Name</string>
+    <string name="jrmf_IDCard_num">ID No.</string>
+    <string name="jrmf_IDCard">ID No.</string>
+    <string name="jrmf_input_IDCard_num">Please enter ID number</string>
+    <string name="jrmf_input_IDCard_num2">Enter ID number</string>
+    <string name="jrmf_input_IDCard_num_hint">Enter ID number</string>
+
+    <!--找回支付密码-->
+    <string name="jrmf_set_pwd_title">Payment password settings</string>
+    <string name="get_pwd_title">Retrieve Payment Password</string>
+    <string name="jrmf_bank_card_ID_num">ID No.</string>
+    <string name="jrmf_phone_num">Phone No.</string>
+    <string name="jrmf_inupt_phone_num">Enter Phone number</string>
+    <string name="jrmf_verify_code">Verification code</string>
+
+    <!--身份认证-->
+    <string name="jrmf_auth_title">Real-name authentication</string>
+    <string name="update_userinfo_suc">Modified successfully</string>
+    <string name="jrmf_quit_auth">Are you sure you want to give up real-name authentication?</string>
+    <string name="jrmf_not_abandon">Not give up</string>
+    <string name="jrmf_abandon">Give up</string>
+
+    <!--密码校验-->
+    <string name="jrmf_pwd_check">Password verification</string>
+    <string name="pwd_error">Payment password is wrong,please try again.</string>
+
+    <!--找回支付密码-->
+    <string name="set_pwd_error">Enter the 6-digit payment password</string>
+    <string name="pwd_not_same">Two password enter is inconsistent</string>
+    <string name="set_pwd_suc">The payment password is set successfully</string>
+    <string name="jrmf_update_pwd_suc">Payment password modified successfully</string>
+    <string name="jrmf_first_get_verify_code">Please get the verification code first</string>
+
+    <!--网络-->
+    <string name="net_error_l">The current network is poor, please try again later</string>
+    <string name="net_weekly">The current network is poor, please try again later</string>
+    <string name="jrmf_load_fail">Load failed, click retry</string>
+
+    <!--选择支行-->
+    <string name="no_city">No corresponding city</string>
+    <string name="no_branch">No corresponding branch bank, you manually enter branch banking</string>
+    <string name="no_sel_province">Please choose province</string>
+    <string name="no_sel_city">Please choose city</string>
+    <string name="no_sel_branch">Please choose branch bank</string>
+    <string name="no_input_branch">Please enter branch bank</string>
+    <string name="no_input_amount">Enter the amount</string>
+    <string name="no_input_amount_toast">Please enter withdrawal amount.</string>
+    <string name="input_amount_error">Please enter the correct withdrawal amount</string>
+    <string name="jrmf_select_province">Choose province</string>
+    <string name="jrmf_please_select_province">Please choose province first</string>
+    <string name="jrmf_select_city">Choose city</string>
+    <string name="jrmf_please_select_city">Please choose city first</string>
+    <string name="jrmf_select_sub_branch">Choose branch bank</string>
+    <string name="jrmf_input_sub_branch">Enter branch bank</string>
+    <string name="jrmf_input_sub_branch_hint">Please enter branch bank</string>
+
+
+    <string name="jrmf_not_support_emoji">Doesn\'t support entering Emoji emoticons</string>
+    <string name="to_buttom">The end</string>
+    <string name="jrmf_next">Next</string>
+    <string name="jrmf_confirm">Confirm</string>
+    <string name="jrmf_quit">Cancel</string>
+    <string name="jrmf_done">Complete</string>
+    <string name="jrmf_retry">Try again</string>
+    <string name="jrmf_tip">Tips</string>
+    <string name="jrmf_forget_pwd">Forget password</string>
+    <string name="jrmf_submit">Submit</string>
+    <string name="jrmf_confirm_submit">Confirm submission</string>
+    <string name="jrmf_confirm_submit2">Confirm</string>
+    <string name="jrmf_not_data">No data</string>
+    <string name="jrmf_unbinding">Unbinding...</string>
+    <string name="loading">Loading...</string>
+    <string name="waiting">Waiting...</string>
+
+</resources>

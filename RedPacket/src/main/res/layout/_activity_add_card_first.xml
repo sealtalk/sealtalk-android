@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/background"
+              android:orientation="vertical">
+
+    <com.jrmf360.rylib.rp.widget.ActionBarView
+        android:id="@+id/actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:content="@string/jrmf_add_bank_card_title"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="@dimen/base_padding">
+
+            <TextView
+                android:id="@+id/tv_bankname"
+                style="@style/text_black_16"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                tools:text="XXXX（xxxx）"/>
+
+            <com.jrmf360.rylib.rp.widget.FloatingLabelTextView
+                android:id="@+id/ftv_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                app:allowEmpty="false"
+                app:hint="@string/jrmf_username"
+                app:validatorType="alpha"/>
+
+            <com.jrmf360.rylib.rp.widget.FloatingLabelTextView
+                android:id="@+id/ftv_identityno"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                app:allowEmpty="false"
+                app:hint="@string/jrmf_IDCard_num"
+                app:validatorType="alpha"/>
+
+            <com.jrmf360.rylib.rp.widget.FloatingLabelTextView
+                android:id="@+id/ftv_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                app:allowEmpty="false"
+                app:hint="@string/jrmf_input_phone_hint"
+                app:validatorType="alpha"/>
+
+            <TextView
+                android:id="@+id/tv_charge_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:paddingBottom="3dip"
+                android:text="@string/jrmf_verify_card_fee"
+                android:textColor="@color/gray"
+                android:textSize="10sp"/>
+
+            <TextView
+                android:id="@+id/tv_protocol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                android:layout_marginTop="25dp"
+                android:paddingBottom="3dip"
+                tools:text="点击下一步视为您同意《金融魔方用户协议》"/>
+
+            <Button
+                android:id="@+id/btn_next"
+                style="@style/text_white_16"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/btn_height"
+                android:layout_marginTop="@dimen/base_padding"
+                android:background="@drawable/selector_common_btn"
+                android:text="@string/jrmf_next"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

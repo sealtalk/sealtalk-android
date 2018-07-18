@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rc_name">融云</string>
+
+    <!-- discussion_notification_msg -->
+    <string name="rc_discussion_nt_msg_for_rename">"%1$s 修改讨论组名称为 %2$s"</string>
+    <string name="rc_discussion_nt_msg_for_added">"%1$s 邀请 %2$s 加入了讨论组"</string>
+    <string name="rc_discussion_nt_msg_for_add">"%1$s 邀请了%2$d位成员加入了讨论组"</string>
+    <string name="rc_discussion_nt_msg_for_exit">"%1$s 退出了讨论组"</string>
+    <string name="rc_discussion_nt_msg_for_removed">"你被 %1$s 移出了讨论组"</string>
+    <string name="rc_discussion_nt_msg_for_who_removed">"%1$s 被 %2$s 移出了讨论组"</string>
+    <string name="rc_discussion_nt_msg_for_you">"你"</string>
+    <string name="rc_discussion_nt_msg_for_is_open_invite_open">"%1$s 开放了成员邀请"</string>
+    <string name="rc_discussion_nt_msg_for_is_open_invite_close">"%1$s 关闭了成员邀请"</string>
+
+    <string name="rc_conversation_list_my_private_conversation">我的私人会话</string>
+    <string name="rc_conversation_list_my_group">我的群组</string>
+    <string name="rc_conversation_list_my_discussion">我的讨论组</string>
+    <string name="rc_conversation_list_my_chatroom">我的聊天室</string>
+    <string name="rc_conversation_list_my_customer_service">客服列表</string>
+    <string name="rc_conversation_list_system_conversation">系统消息</string>
+    <string name="rc_conversation_list_app_public_service">应用公众服务</string>
+    <string name="rc_conversation_list_public_service">公众服务</string>
+    <string name="rc_conversation_list_dialog_set_top">置顶该会话</string>
+    <string name="rc_conversation_list_dialog_cancel_top">取消置顶</string>
+    <string name="rc_conversation_list_dialog_remove">从会话列表中移除</string>
+    <string name="rc_conversation_list_popup_set_top">已置顶</string>
+    <string name="rc_conversation_list_popup_cancel_top">取消置顶</string>
+    <string name="rc_conversation_List_operation_failure">操作失败</string>
+    <string name="rc_conversation_list_default_discussion_name">"讨论组"</string>
+    <string name="rc_conversation_list_empty_prompt">"暂无聊天信息"</string>
+    <string name="rc_conversation_list_not_connected">"尚未连接!"</string>
+
+    <string name="rc_message_content_image">[图片]</string>
+    <string name="rc_message_content_voice">[语音]</string>
+    <string name="rc_message_content_rich_text">[图文]</string>
+    <string name="rc_message_content_location">[位置]</string>
+    <string name="rc_message_content_draft">[草稿]</string>
+    <string name="rc_message_content_mentioned">[有人@我]</string>
+    <string name="rc_message_content_file">[文件]</string>
+
+    <string name="rc_dialog_item_message_delete">删除消息</string>
+    <string name="rc_dialog_item_message_copy">复制消息</string>
+    <string name="rc_dialog_item_message_recall">撤回消息</string>
+    <string name="rc_dialog_item_message_more">更多&#8230;</string>
+    <string name="rc_recall_failed">撤回失败</string>
+    <string name="rc_you_recalled_a_message">你撤回了一条消息</string>
+    <string name="rc_recalled_a_message">&#160;撤回了一条消息</string>
+    <string name="rc_exceeded_max_limit">超出最大限制</string>
+
+    <string name="rc_message_unread_count">"···"</string>
+    <string name="rc_input_voice">按住 说话</string>
+
+    <string name="rc_setting_name">设置</string>
+    <string name="rc_setting_clear_msg_prompt">你确定要清空聊天消息吗?</string>
+    <string name="rc_setting_clear_msg_name">清空聊天信息</string>
+    <string name="rc_setting_clear_msg_fail">清空聊天失败</string>
+    <string name="rc_setting_clear_msg_success">清空聊天成功</string>
+    <string name="rc_setting_set_top">置顶</string>
+    <string name="rc_setting_set_top_fail">设置置顶失败</string>
+    <string name="rc_setting_conversation_notify">新消息通知</string>
+    <string name="rc_setting_conversation_notify_fail">设置新消息通知失败</string>
+    <string name="rc_setting_get_conversation_notify_fail">获取新消息通知失败</string>
+
+    <string name="rc_dialog_cancel">取消</string>
+    <string name="rc_dialog_ok">确定</string>
+    <string name="rc_input_send">发送</string>
+
+    <string name="rc_plugins_camera">相机</string>
+    <string name="rc_plugins_files">文件</string>
+
+    <string name="rc_voice_rec">手指上滑，取消发送</string>
+    <string name="rc_voice_cancel">松开手指，取消发送</string>
+    <string name="rc_voice_short">录音时间太短</string>
+    <string name="rc_voice_failure">录音失败！</string>
+    <string name="rc_voice_too_long">录制时间超长</string>
+    <string name="rc_voip_occupying">声音通道被占用，请稍后再试</string>
+
+
+    <string name="rc_pub_service_info_description">功能介绍</string>
+    <string name="rc_pub_service_info_enter">进入公众号</string>
+    <string name="rc_pub_service_info_follow">关注</string>
+    <string name="rc_pub_service_info_unfollow">取消关注</string>
+    <string name="rc_pub_service_info_account">公众号：%s</string>
+
+    <string name="rc_notice_network_unavailable">当前网络不可用，请检查你的网络设置</string>
+    <string name="rc_notice_disconnect">无法连接到服务器</string>
+    <string name="rc_notice_tick">该帐号已经在其他设备登录</string>
+    <string name="rc_notice_connecting">正在连接服务器</string>
+    <string name="rc_notice_create_discussion">正在创建讨论组</string>
+    <string name="rc_notice_create_discussion_fail">创建讨论组失败</string>
+    <string name="rc_notice_enter_chatroom">进入聊天室</string>
+    <string name="rc_notice_input_conversation_error">会话尚未创建</string>
+    <string name="rc_notice_data_is_loading">数据加载中</string>
+    <string name="rc_notice_load_data_fail">获取数据失败</string>
+    <string name="rc_notice_download_fail">下载失败!</string>
+    <string name="rc_notice_select_one_picture_at_last">请至少选择一张图片</string>
+
+    <string name="rc_message_unknown">当前版本暂不支持查看此消息</string>
+    <string name="rc_new_messages">条新消息</string>
+    <string name="rc_info_not_in_discussion">你不在该讨论组</string>
+    <string name="rc_info_not_in_group">你不在该群</string>
+    <string name="rc_info_not_in_chatroom">你不在该聊天室</string>
+    <string name="rc_rejected_by_blacklist_prompt">您的消息已经发出，但被对方拒收</string>
+    <string name="rc_info_forbidden_to_talk">您当前在群组中被禁言</string>
+    <string name="rc_forbidden_in_chatroom">你已被禁言，不能发送消息</string>
+    <string name="rc_kicked_from_chatroom">你已被踢出聊天室</string>
+    <string name="rc_join_chatroom_failure">加入聊天室失败</string>
+
+    <string name="rc_send_format">发送(%1$s)</string>
+    <string name="rc_yesterday_format">昨天</string>
+    <string name="rc_year_format">年</string>
+    <string name="rc_month_format">月</string>
+    <string name="rc_day_format">日</string>
+    <string name="rc_monday_format">周一</string>
+    <string name="rc_tuesday_format">周二</string>
+    <string name="rc_wednesday_format">周三</string>
+    <string name="rc_thuresday_format">周四</string>
+    <string name="rc_friday_format">周五</string>
+    <string name="rc_saturday_format">周六</string>
+    <string name="rc_sunsay_format">周日</string>
+    <string name="rc_daybreak_format">凌晨</string>
+    <string name="rc_morning_format">上午</string>
+    <string name="rc_noon_format">中午</string>
+    <string name="rc_afternoon_format">下午</string>
+    <string name="rc_night_format">晚上</string>
+    <string name="rc_waiting">等待中</string>
+    <string name="rc_file_not_exist">文件不存在</string>
+    <string name="rc_network_is_busy">网络繁忙</string>
+    <string name="rc_network_error">网络连接错误</string>
+    <string name="rc_called_on_hook">对方已挂机</string>
+    <string name="rc_called_is_calling">对方正在通话中</string>
+    <string name="rc_exit_calling">是否退出通话界面？</string>
+    <string name="rc_yes">是</string>
+    <string name="rc_called_not_accept">对方未接听</string>
+    <string name="rc_called_accept">对方接受了通话请求</string>
+    <string name="rc_plugins_voip">语音通话</string>
+    <string name="rc_read_all">阅读全文</string>
+
+    <string name="rc_voip_cpu_error">很抱歉，该功能暂时不支持您的机型</string>
+
+    <string name="rc_cs_evaluate_human">请对本次服务做出评价</string>
+    <string name="rc_cs_evaluate_robot">机器人是否解决了您的问题</string>
+    <string name="rc_cs_submit">提交</string>
+    <string name="rc_cs_cancel">取消</string>
+
+    <!-- LargePictureActivity -->
+    <string name="rc_save_picture">保存图片</string>
+    <string name="rc_save_picture_at">图片保存成功</string>
+    <string name="rc_src_file_not_found">源文件不存在</string>
+
+    <string name="rc_blacklist_prompt">您已被加入黑名单</string>
+    <string name="rc_cs_select_group">请选择咨询内容</string>
+    <string name="rc_search">搜索</string>
+    <string name="rc_choose_members">选择联系人</string>
+
+    <string name="rc_ac_file_download_preview">文件预览</string>
+    <string name="rc_ac_file_manager_category_title">按分类查找</string>
+    <string name="rc_ac_file_manager_category_file">文档</string>
+    <string name="rc_ac_file_manager_category_video">视频</string>
+    <string name="rc_ac_file_manager_category_audio">音频</string>
+    <string name="rc_ac_file_manager_category_picture">其他</string>
+    <string name="rc_ac_file_manager_dir_title">按目录查找</string>
+    <string name="rc_ac_file_manager_mobile_memory">手机内存</string>
+    <string name="rc_ac_file_manager_SD_card">SD卡</string>
+    <string name="rc_ac_file_manager_SD_card_one">SD卡1</string>
+    <string name="rc_ac_file_manager_SD_card_two">SD卡2</string>
+    <string name="rc_fr_storage_folder_list_search">搜索</string>
+    <string name="rc_fr_storage_folder_list_no_files">无法读取%1$s中的文件</string>
+    <string name="rc_ad_folder_files_number">%1$s个文件</string>
+    <string name="rc_ad_folder_no_files">空文件夹</string>
+    <string name="rc_ad_file_size">大小:%1$s</string>
+    <string name="rc_ac_file_download_btn">开始下载</string>
+    <string name="rc_ac_file_download_progress_tv">下载中...(%1$s/%2$s)</string>
+    <string name="rc_ac_file_download_open_file_btn">打开文件</string>
+    <string name="rc_ac_file_send_preview">发文件</string>
+    <string name="rc_ad_send_file_no_select_file">发送</string>
+    <string name="rc_ad_send_file_select_file">发送(%1$s/20)</string>
+    <string name="rc_fr_no_file_message">没有%1$s文件</string>
+    <string name="rc_fr_loading_file_message">加载中...</string>
+    <string name="rc_fr_file_category_title_text">文本</string>
+    <string name="rc_fr_file_category_title_video">视频</string>
+    <string name="rc_fr_file_category_title_audio">音频</string>
+    <string name="rc_fr_file_category_title_other">其他</string>
+    <string name="rc_fr_file_category_title_sd">SD卡</string>
+    <string name="rc_fr_file_category_title_ram">手机内存</string>
+    <string name="rc_ac_file_preview_can_not_open_file">无法打开文件</string>
+    <string name="rc_ac_file_preview_begin_download">开始下载</string>
+    <string name="rc_ac_file_preview_downloaded">已下载</string>
+    <string name="rc_ac_file_preview_download_error">下载失败</string>
+    <string name="rc_ac_file_preview_download_cancel">已取消下载</string>
+    <string name="rc_ac_file_download_progress_pause">已取消(%1$s/%2$s)</string>
+    <string name="rc_ac_file_preview_download_resume">继续下载</string>
+    <string name="rc_ac_file_preview_deleted">文件已过期或已被清理</string>
+    <string name="rc_fr_file_list_most_selected_files">您最多只能选择20个文件</string>
+    <string name="rc_fr_file_size_limit">您选择的文件不能超过 %1$d%2$s</string>
+    <string name="rc_ac_file_download_request_permission">您需要在设置里打开读写权限</string>
+    <string name="rc_ac_file_download_request_permission_sure">确定</string>
+    <string name="rc_ac_file_download_request_permission_cancel">取消</string>
+    <string name="rc_read_receipt_status">%d人已读</string>
+
+    <string name="rc_item_quit_groups">退出了群组</string>
+    <string name="rc_item_dismiss_groups">解散了群组</string>
+    <string name="rc_item_join_group">加入了群组</string>
+    <string name="rc_item_to_join_group">加入了群组</string>
+
+    <string name="rc_item_remove_group_before_str">将</string>
+    <string name="rc_item_remove_group_after_str">移出了群组</string>
+    <string name="rc_item_create_group">创建群组</string>
+    <string name="rc_item_created_group">%1$s创建了群组</string>
+    <string name="rc_item_invitation">%1$s邀请%2$s加入群组</string>
+    <string name="rc_item_etc">等</string>
+    <string name="rc_item_remove_group_member">%1$s将%2$s移出群组</string>
+    <string name="rc_item_remove_self">%1$s被%2$s移出群组</string>
+    <string name="rc_item_change_group_name">%1$s修改群名称为%2$s</string>
+    <string name="rc_item_you">你</string>
+    <string name="rc_item_divided_string">、</string>
+    <string name="rc_item_group_notification_summary">[群组通知]</string>
+
+
+    <string name="rc_android.permission.CAMERA">相机</string>
+    <string name="rc_android.permission.ACCESS_FINE_LOCATION">位置信息</string>
+    <string name="rc_android.permission.ACCESS_COARSE_LOCATION">位置信息</string>
+    <string name="rc_android.permission.RECORD_AUDIO">麦克风</string>
+    <string name="rc_android.permission.READ_EXTERNAL_STORAGE">存储空间</string>
+    <string name="rc_android.permission.WRITE_EXTERNAL_STORAGE">存储空间</string>
+    <string name="rc_android.permission.READ_PHONE_STATE">电话</string>
+    <string name="rc_android.permission.PROCESS_OUTGOING_CALLS">电话</string>
+
+    <string name="rc_real_time_location_summary">我发起了位置共享</string>
+    <string name="rc_real_time_location_sharing">发起了位置共享</string>
+    <string name="rc_dialog_button_clear">清空</string>
+
+    <string name="rc_user_recalled_message">%s撤回了一条消息</string>
+    <string name="rc_recall_failed_for_network_unavailable">撤回不成功，请检查网络连接</string>
+
+    <string name="rc_cs_evaluate">评价</string>
+    <string name="rc_cs_evaluate_title">请对我们本次的服务进行评价</string>
+    <string name="rc_cs_very_satisfactory">非常满意</string>
+    <string name="rc_cs_satisfactory">满意</string>
+    <string name="rc_cs_average">一般</string>
+    <string name="rc_cs_unsatisfactory">不满意</string>
+    <string name="rc_cs_very_unsatisfactory">非常不满意</string>
+    <string name="rc_cs_resolved_or_not">是否解决了您的问题 ?</string>
+    <string name="rc_cs_submit_evaluate_content">提交评价</string>
+    <string name="rc_cs_please_comment">欢迎给我们的服务提建议~</string>
+    <string name="rc_cs_please_leave_message">请您留言, 我们会尽快回复您。</string>
+    <string name="rc_cs_leave_message">留言</string>
+    <string name="rc_cs_submit_message">提交留言</string>
+    <string name="rc_cs_message_submited">您的留言已提交</string>
+
+    <string name="rc_new_message_divider_content">以上是历史消息</string>
+</resources>

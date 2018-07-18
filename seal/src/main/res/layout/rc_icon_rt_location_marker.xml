@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <io.rong.imkit.widget.AsyncImageView
+        android:id="@android:id/icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/rc_default_portrait"
+        app:RCDefDrawable="@drawable/rc_default_portrait"
+        app:RCShape="circle" />
+
+    <ImageView
+        android:id="@android:id/icon1"
+        android:layout_width="14dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/rc_icon_rt_message_left" />
+
+</LinearLayout>

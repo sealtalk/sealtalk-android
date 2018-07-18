@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/seal_bg"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:gravity="center_vertical"
+        android:text="@string/current_password"
+        android:textColor="#999"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/old_password"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/btn_list_item_bg"
+        android:lines="1"
+        android:maxLength="16"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:inputType="textPassword"
+        android:textColor="#dadada"
+        android:textSize="14sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:gravity="center_vertical"
+        android:text="@string/new_password"
+        android:textColor="#999"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/new_password"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/btn_list_item_bg"
+        android:hint="@string/password_hint"
+        android:lines="1"
+        android:maxLength="16"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:inputType="textPassword"
+        android:textColor="#dadada"
+        android:textSize="14sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:gravity="center_vertical"
+        android:text="@string/confirm_password"
+        android:textColor="#999"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/new_password2"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/btn_list_item_bg"
+        android:hint="@string/password_hint"
+        android:lines="1"
+        android:maxLength="16"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:inputType="textPassword"
+        android:textColor="#dadada"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/update_pswd_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/rs_select_btn_blue"
+        android:text="@string/confirm"
+        android:textColor="#FFF" />
+
+</LinearLayout>

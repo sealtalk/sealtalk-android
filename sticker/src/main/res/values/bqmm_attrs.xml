@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="GifMoviewView">
+        <attr name="gif" format="reference" />
+        <attr name="paused" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="CustomTheme">
+        <attr name="gifMoviewViewStyle" format="reference" />
+    </declare-styleable>
+    <declare-styleable name="ProgressTextView">
+        <attr name="reachBarColor" format="reference" />
+        <attr name="reachTextColor" format="reference" />
+        <attr name="unReachBarColor" format="reference" />
+        <attr name="unReachTextColor" format="reference" />
+        <attr name="progress" format="float" />
+    </declare-styleable>
+    <declare-styleable name="AnimDownloadProgressButton">
+        <attr name="progressbtn_radius" format="float" />
+        <attr name="progressbtn_backgroud_color" format="color" />
+        <attr name="progressbtn_backgroud_second_color" format="color" />
+        <attr name="progressbtn_text_color" format="color" />
+        <attr name="progressbtn_text_covercolor" format="color" />
+    </declare-styleable>
+</resources>

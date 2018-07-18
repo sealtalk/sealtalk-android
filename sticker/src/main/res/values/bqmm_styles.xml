@@ -1,0 +1,34 @@
+<resources>
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+    <style name="Widget.GifMoviewView" parent="@android:style/Widget"></style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+    
+     <!-- activity进入与退出 start -->
+    <style name="bqmm_horizontal_slide" parent="android:Theme.NoTitleBar">
+        <item name="android:windowAnimationStyle">@style/AnimFade2</item>
+    </style>
+    
+     <style name="AnimFade2" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/bqmm_slide_in_from_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/bqmm_slide_out_to_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/bqmm_slide_out_to_right</item>
+        <item name="android:activityCloseEnterAnimation">@anim/bqmm_slide_in_from_left</item>
+    </style>
+    
+
+</resources>

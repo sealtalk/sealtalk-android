@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#262e42">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@id/rc_btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/rc_dialog_cancel"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="14dp"
+            android:textColor="#ffffff"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_gravity="left" />
+
+
+        <TextView
+            android:id="@id/rc_btn_ok"
+            android:layout_marginRight="14dp"
+            android:layout_marginTop="14dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/rc_dialog_ok"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:textColor="@color/rc_voip_check_disable"
+            android:layout_gravity="right" />
+
+        <TextView
+            android:paddingTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/rc_voip_select_member"
+            android:textColor="#ffffff"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal|top" />
+
+    </FrameLayout>
+
+    <ListView
+        android:paddingLeft="18dp"
+        android:id="@+id/rc_listview_select_member"
+        android:divider="#595e6b"
+        android:dividerHeight="0.5px"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
+</LinearLayout>

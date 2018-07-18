@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rc_name">RongCloud</string>
+
+    <string name="rc_voice_rec">Slide up to cancel</string>
+    <string name="rc_voice_cancel">Release to cancel</string>
+    <string name="rc_voice_short">Message too short</string>
+    <string name="rc_voice_failure"> Message error!</string>
+    <string name="rc_voice_too_long">Message too long</string>
+    <string name="rc_voip_occupying">Audio is holding by other function. Try again later.</string>
+
+    <!-- discussion_notification_msg -->
+    <string name="rc_discussion_nt_msg_for_rename">"%1$s Modify the discussion group name is %2$s"</string>
+    <string name="rc_discussion_nt_msg_for_added">"%1$s Invited %2$s to join the discussion group"</string>
+    <string name="rc_discussion_nt_msg_for_add">"%1$s Invited %2$d members to join the discussion group"</string>
+    <string name="rc_discussion_nt_msg_for_exit">"%1$s Quit the discussion group"</string>
+    <string name="rc_discussion_nt_msg_for_removed">"You are removed from the discussion group by %1$s"</string>
+    <string name="rc_discussion_nt_msg_for_who_removed">"%1$s was removed from the discussion group by %2$s"</string>
+    <string name="rc_discussion_nt_msg_for_you">"You"</string>
+    <string name="rc_discussion_nt_msg_for_is_open_invite_open">"%1$s open its members invited"</string>
+    <string name="rc_discussion_nt_msg_for_is_open_invite_close">"%1$s shut down the invitation to the member"</string>
+
+    <string name="rc_conversation_list_my_private_conversation">My private conversation</string>
+    <string name="rc_conversation_list_my_group">My group</string>
+    <string name="rc_conversation_list_my_discussion">My discussion</string>
+    <string name="rc_conversation_list_my_chatroom">My chat room</string>
+    <string name="rc_conversation_list_my_customer_service">Customer service list</string>
+    <string name="rc_conversation_list_system_conversation">System message</string>
+    <string name="rc_conversation_list_app_public_service">Application Public Service</string>
+    <string name="rc_conversation_list_public_service">Public Service</string>
+    <string name="rc_conversation_list_dialog_set_top">Sticky on Top</string>
+    <string name="rc_conversation_list_dialog_cancel_top">Remove from top</string>
+    <string name="rc_conversation_list_dialog_remove">Delete conversation</string>
+    <string name="rc_conversation_list_popup_set_top">Stuck on top</string>
+    <string name="rc_conversation_list_popup_cancel_top">Removed from top</string>
+    <string name="rc_conversation_List_operation_failure">Operation failure</string>
+    <string name="rc_conversation_list_default_discussion_name">"Discussion"</string>
+    <string name="rc_conversation_list_empty_prompt">"No chat information"</string>
+    <string name="rc_conversation_list_not_connected">"Not connected yet!"</string>
+
+    <string name="rc_message_content_image">[Image]</string>
+    <string name="rc_message_content_voice">[Voice]</string>
+    <string name="rc_message_content_rich_text">[RichContent]</string>
+    <string name="rc_message_content_location">[Location]</string>
+    <string name="rc_message_content_draft">[Draft]</string>
+    <string name="rc_message_content_file">[File]</string>
+    <string name="rc_message_content_mentioned">[You were mentioned]</string>
+
+    <string name="rc_dialog_item_message_delete">Delete</string>
+    <string name="rc_dialog_item_message_copy">Copy</string>
+    <string name="rc_dialog_item_message_recall">Recall</string>
+    <string name="rc_dialog_item_message_more">More&#8230;</string>
+    <string name="rc_recall_failed">Recall failed</string>
+    <string name="rc_you_recalled_a_message">You have recalled a message</string>
+    <string name="rc_recalled_a_message">&#160; has recalled a message</string>
+    <string name="rc_exceeded_max_limit">Exceeded the maximum limit</string>
+
+    <string name="rc_message_unread_count">"···"</string>
+    <string name="rc_input_voice">Hold to Talk</string>
+
+    <string name="rc_setting_name">Setting</string>
+    <string name="rc_setting_clear_msg_prompt"> Are you sure you want to clear the chat message?</string>
+    <string name="rc_setting_clear_msg_name">Clear Chat History</string>
+    <string name="rc_setting_clear_msg_fail">clear_massage fail</string>
+    <string name="rc_setting_clear_msg_success">clear_massage success</string>
+    <string name="rc_setting_set_top">sticky on top</string>
+    <string name="rc_setting_set_top_fail">Set top failure</string>
+    <string name="rc_setting_conversation_notify">New message notification</string>
+    <string name="rc_setting_conversation_notify_fail">Set new message notice failure</string>
+    <string name="rc_setting_get_conversation_notify_fail">Failed to get new message notification</string>
+
+    <string name="rc_dialog_cancel">Cancel</string>
+    <string name="rc_dialog_ok">OK</string>
+    <string name="rc_input_send">Send</string>
+
+    <string name="rc_plugins_camera">Camera</string>
+    <string name="rc_plugins_files">File</string>
+
+    <string name="rc_pub_service_info_description">Features</string>
+    <string name="rc_pub_service_info_enter">Enter Official Account</string>
+    <string name="rc_pub_service_info_follow">Follow</string>
+    <string name="rc_pub_service_info_unfollow">Unfollow</string>
+    <string name="rc_pub_service_info_account">Official Account：%1$s</string>
+
+    <string name="rc_notice_network_unavailable">Network unavailable, please check your network</string>
+    <string name="rc_notice_disconnect">Unable to access the server</string>
+    <string name="rc_notice_tick">The account has been logged in to other devices</string>
+    <string name="rc_notice_connecting">Connecting...</string>
+    <string name="rc_notice_create_discussion">Creating discussion</string>
+    <string name="rc_notice_create_discussion_fail">Failed to create discussion groups</string>
+    <string name="rc_notice_enter_chatroom">Enter the chatroom</string>
+    <string name="rc_notice_input_conversation_error">Activity was not created</string>
+    <string name="rc_notice_data_is_loading">Data loading</string>
+    <string name="rc_notice_load_data_fail">Failed to get the data</string>
+    <string name="rc_notice_download_fail">Download failed!</string>
+    <string name="rc_notice_select_one_picture_at_last">Please select at least a picture</string>
+
+    <string name="rc_message_unknown">The current version does not support viewing this message</string>
+    <string name="rc_new_messages">&#160;new messages</string>
+    <string name="rc_info_not_in_discussion">You are not in current discussion</string>
+    <string name="rc_info_not_in_group">You are not in current group</string>
+    <string name="rc_info_not_in_chatroom">You are not in current chat room</string>
+    <string name="rc_rejected_by_blacklist_prompt">Your message have sent out, but rejected by the receiver</string>
+    <string name="rc_info_forbidden_to_talk">You were forbidden to send message in current group</string>
+    <string name="rc_forbidden_in_chatroom">You were forbidden to send message in current chatroom</string>
+    <string name="rc_kicked_from_chatroom">You were kicked from current chatroom</string>
+
+    <string name="rc_send_format">Send(%1$s)</string>
+    <string name="rc_yesterday_format">Yesterday</string>
+    <string name="rc_year_format"></string>
+    <string name="rc_month_format"></string>
+    <string name="rc_day_format"></string>
+    <string name="rc_monday_format">Mon</string>
+    <string name="rc_tuesday_format">Tue</string>
+    <string name="rc_wednesday_format">Wed</string>
+    <string name="rc_thuresday_format">Thu</string>
+    <string name="rc_friday_format">Fri</string>
+    <string name="rc_saturday_format">Sat</string>
+    <string name="rc_sunsay_format">Sun</string>
+    <string name="rc_daybreak_format">AM</string>
+    <string name="rc_morning_format">AM</string>
+    <string name="rc_noon_format">PM</string>
+    <string name="rc_afternoon_format">PM</string>
+    <string name="rc_night_format">PM</string>
+    <string name="rc_waiting">Connecting</string>
+    <string name="rc_file_not_exist">File does not exist</string>
+    <string name="rc_network_is_busy">Network is busy</string>
+    <string name="rc_network_error">Network connection error</string>
+    <string name="rc_called_on_hook">Call cancelled by caller</string>
+    <string name="rc_called_is_calling">Calling number is talking</string>
+    <string name="rc_exit_calling">Whether out of call interface?</string>
+    <string name="rc_yes">Yes</string>
+    <string name="rc_called_not_accept">Call has no answer</string>
+    <string name="rc_called_accept">The other accepted the call request</string>
+    <string name="rc_plugins_voip">Voice Call</string>
+    <string name="rc_read_all">Read All</string>
+
+    <string name="rc_voip_cpu_error">Sorry  Function temporarily does not support your models</string>
+
+    <string name="rc_cs_evaluate_human">Please comment on our services</string>
+    <string name="rc_cs_evaluate_robot">Whether the robot solves your problem?</string>
+    <string name="rc_cs_submit">Submit</string>
+    <string name="rc_cs_cancel">Cancel</string>
+
+    <!-- LargePictureActivity -->
+    <string name="rc_save_picture">Save Photo</string>
+    <string name="rc_save_picture_at">Picture saved success</string>
+    <string name="rc_src_file_not_found">Source file not found.</string>
+
+    <string name="rc_blacklist_prompt">You have been added to blacklist</string>
+
+    <string name="rc_join_chatroom_failure">Join chatroom failure</string>
+    <string name="rc_cs_select_group">Please select the contents</string>
+    <string name="rc_search">Search</string>
+    <string name="rc_choose_members">Select Member</string>
+
+    <string name="rc_android.permission.CAMERA">Camera</string>
+    <string name="rc_android.permission.ACCESS_FINE_LOCATION">Location</string>
+    <string name="rc_android.permission.ACCESS_COARSE_LOCATION">Location</string>
+    <string name="rc_android.permission.RECORD_AUDIO">Microphone</string>
+    <string name="rc_android.permission.READ_EXTERNAL_STORAGE">Storage</string>
+    <string name="rc_android.permission.WRITE_EXTERNAL_STORAGE">Storage</string>
+    <string name="rc_android.permission.READ_PHONE_STATE">Phone</string>
+    <string name="rc_android.permission.PROCESS_OUTGOING_CALLS">Phone</string>
+
+    <string name="rc_ac_file_download_preview">File Preview</string>
+    <string name="rc_ac_file_manager_category_title">Search according to type</string>
+    <string name="rc_ac_file_manager_category_file">Document</string>
+    <string name="rc_ac_file_manager_category_video">Video</string>
+    <string name="rc_ac_file_manager_category_audio">Audio</string>
+    <string name="rc_ac_file_manager_category_picture">Other</string>
+    <string name="rc_ac_file_manager_dir_title">Search according to directory</string>
+    <string name="rc_ac_file_manager_mobile_memory">Phone memory</string>
+    <string name="rc_ac_file_manager_SD_card">SD card</string>
+    <string name="rc_ac_file_manager_SD_card_one">SD card1</string>
+    <string name="rc_ac_file_manager_SD_card_two">SD card2</string>
+    <string name="rc_fr_storage_folder_list_search">Search</string>
+    <string name="rc_fr_storage_folder_list_no_files">"Can't read files in %1$s"</string>
+    <string name="rc_ad_folder_files_number">%1$s files</string>
+    <string name="rc_ad_folder_no_files">Empty folder</string>
+    <string name="rc_ad_file_size">Size:%1$s</string>
+    <string name="rc_ac_file_download_btn">Start downloading</string>
+    <string name="rc_ac_file_download_progress_tv">Downloading...(%1$s/%2$s)</string>
+    <string name="rc_ac_file_download_open_file_btn">Open File</string>
+    <string name="rc_ac_file_send_preview">Send File</string>
+    <string name="rc_ad_send_file_no_select_file">Send</string>
+    <string name="rc_ad_send_file_select_file">Send(%1$s/20)</string>
+    <string name="rc_fr_no_file_message"> No file %1$scurrently</string>
+    <string name="rc_fr_loading_file_message">Loading...</string>
+    <string name="rc_fr_file_category_title_text">Document</string>
+    <string name="rc_fr_file_category_title_video">Video</string>
+    <string name="rc_fr_file_category_title_audio">Audio</string>
+    <string name="rc_fr_file_category_title_other">Other</string>
+    <string name="rc_fr_file_category_title_sd">SD Card</string>
+    <string name="rc_fr_file_category_title_ram">Phone Memory</string>
+    <string name="rc_ac_file_preview_can_not_open_file">Unable to open file</string>
+    <string name="rc_ac_file_preview_begin_download">Start downloading</string>
+    <string name="rc_ac_file_preview_downloaded">Have downloaded</string>
+    <string name="rc_ac_file_preview_download_error">Download failed</string>
+    <string name="rc_ac_file_preview_download_cancel">Download has been canceled</string>
+    <string name="rc_ac_file_download_progress_pause">Canceled(%1$s/%2$s)</string>
+    <string name="rc_ac_file_preview_download_resume">Continue download</string>
+    <string name="rc_ac_file_preview_deleted">File has expired or has already been cleared</string>
+    <string name="rc_fr_file_list_most_selected_files">You can only choose 20 files</string>
+    <string name="rc_ac_file_download_request_permission">You have to grant permissions in setting</string>
+    <string name="rc_fr_file_size_limit">File size can not exceed %1$d%2$s</string>
+    <string name="rc_ac_file_download_request_permission_sure">OK</string>
+    <string name="rc_ac_file_download_request_permission_cancel">Cancel</string>
+    <string name="rc_read_receipt_status">%d read</string>
+
+    <string name="rc_item_quit_groups">" quited the group"</string>
+    <string name="rc_item_dismiss_groups">" dismissed the group"</string>
+    <string name="rc_item_join_group">" joined the group"</string>
+    <string name="rc_item_to_join_group">" join group"</string>
+    <string name="rc_item_remove_group_before_str">" remove "</string>
+    <string name="rc_item_remove_group_after_str">" from the group"</string>
+    <string name="rc_item_create_group">" create group"</string>
+    <string name="rc_item_created_group">%1$s created the group</string>
+    <string name="rc_item_invitation">%1$s invited %2$s to join the group</string>
+    <string name="rc_item_etc"> and etc </string>
+    <string name="rc_item_remove_group_member">%1$s removed %2$s from the group</string>
+    <string name="rc_item_change_group_name">%1$s changed the group name to %2$s</string>
+    <string name="rc_item_you">You</string>
+    <string name="rc_item_divided_string">、</string>
+    <string name="rc_item_group_notification_summary">[Group Notification]</string>
+    <string name="rc_item_remove_self">%1$s were removed from the group by %2$s</string>
+
+    <string name="rc_real_time_location_summary">Location sharing...</string>
+    <string name="rc_real_time_location_sharing">Location sharing...</string>
+
+    <string name="rc_dialog_button_clear">Clear</string>
+    <string name="rc_user_recalled_message">%s recalled one message</string>
+    <string name="rc_recall_failed_for_network_unavailable">Recall failed. Please check your network</string>
+    <string name="rc_new_message_divider_content">Above is the historical messages</string>
+</resources>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rc_action_bar_back">Back</string>
+    <string name="rc_action_bar_ok">OK</string>
+
+    <string name="rc_plugin_location">Location</string>
+    <string name="rc_plugin_image">Image</string>
+    <string name="rc_plugin_location_message">Send location</string>
+    <string name="rc_plugin_location_sharing">Real-time Location</string>
+    <string name="rc_audio_input">Hold to Talk</string>
+    <string name="rc_audio_input_hover">Release to Send</string>
+    <string name="rc_ext_send">Send</string>
+    <string name="rc_ext_exit_location_sharing_confirm">End</string>
+    <string name="rc_ext_cancel">Cancel</string>
+    <string name="rc_location_fetching">Fetching&#8230;&#8230;</string>
+    <string name="rc_location_fail">Failed to locate</string>
+    <string name="rc_location_temp_failed">Failed to locate，please try again later</string>
+    <string name="rc_location_sharing_exceed_max">Maximum number exceed </string>
+    <string name="rc_you_are_sharing_location">You are sharing location</string>
+    <string name="rc_other_is_sharing_location">%s are sharing location</string>
+    <string name="rc_others_are_sharing_location">%d persons are sharing location</string>
+    <string name="rc_ext_warning">Prompt</string>
+    <string name="rc_ext_exit_location_sharing">End Real-time Location now?</string>
+    <string name="rc_ext_location_permission_failed">You need to grant location permission in settings menu</string>
+
+    <!-- PictureSelectorActivity -->
+    <string name="rc_picsel_toolbar">Picture</string>
+    <string name="rc_picsel_toolbar_send">Send</string>
+    <string name="rc_picsel_toolbar_send_num">Send(%d/9)</string>
+    <string name="rc_picsel_pictype">Picture</string>
+    <string name="rc_picsel_toolbar_preview">Preview</string>
+    <string name="rc_picsel_toolbar_preview_num">Preview(%d)</string>
+    <string name="rc_picsel_selected_max">You can only choose 9 pictures at most.</string>
+    <string name="rc_picsel_take_picture">Take picture</string>
+    <string name="rc_picsel_catalog_allpic">All pictures</string>
+    <string name="rc_picsel_catalog_number">%d</string>
+
+    <!-- PicturePreviewActivity -->
+    <string name="rc_picprev_origin">Full Image</string>
+    <string name="rc_picprev_origin_size">Full Image(%s)</string>
+    <string name="rc_picprev_select">Select</string>
+
+    <string name="rc_network_exception">Network anomalies, please try again later</string>
+    <string name="rc_permission_grant_needed">You have to grant permissions in setting</string>
+    <string name="rc_permission_microphone">(Microphone).</string>
+    <string name="rc_permission_microphone_and_camera">(Microphone, Camera).</string>
+    <string name="rc_permission_camera">(Camera).</string>
+    <string name="rc_android.settings.action.MANAGE_OVERLAY_PERMISSION">Draw Overlay</string>
+    <string name="rc_confirm">OK</string>
+    <string name="rc_cancel">Cancel</string>
+    <string name="rc_ext_search">Search</string>
+    <string name="rc_ext_search_no_result">No results</string>
+</resources>

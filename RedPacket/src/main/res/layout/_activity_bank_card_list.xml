@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".rp.ui.BankCardListActivity"
+    android:background="@color/background">
+
+    <com.jrmf360.rylib.rp.widget.ActionBarView
+        android:id="@+id/actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:content="@string/jrmf_card_list"/>
+
+    <ListView
+        android:id="@+id/lv_listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/color_bg"
+        android:dividerHeight="0.5dp">
+    </ListView>
+
+    <TextView
+        android:id="@+id/refresh"
+        style="@style/text_gray_16"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/jrmf_load_fail"
+        android:gravity="center"/>
+
+</LinearLayout>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/rc_ad_file_list_no_select_file_text_state" android:state_selected="false" />
+    <item android:color="@color/rc_ad_file_list_select_file_text_state" android:state_selected="true" />
+</selector>

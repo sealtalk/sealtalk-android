@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "396364826160",
+    "project_id": "sealtalk-4be99"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396364826160:android:a10a4a74ea61b328",
+        "android_client_info": {
+          "package_name": "cn.rongcloud.im"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9oaYejQ4_Cit4-u8RSkKCjAmsZ0HtU6E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

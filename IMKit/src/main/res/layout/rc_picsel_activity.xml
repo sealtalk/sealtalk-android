@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/rc_picsel_toolbar">
+
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/rc_sel_picsel_toolbar_back"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="1dp"
+            android:layout_marginLeft="12dp"
+            android:layout_toRightOf="@id/back"
+            android:gravity="center_vertical"
+            android:text="@string/rc_picsel_toolbar"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"/>
+
+        <Button
+            android:id="@+id/send"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/rc_sel_picsel_toolbar_send"
+            android:enabled="false"
+            android:minWidth="0dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="@string/rc_picsel_toolbar_send"
+            android:textColor="@color/rc_picsel_toolbar_send_text_disable"
+            android:textSize="14sp"/>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="1dp">
+
+        <GridView
+            android:id="@+id/gridlist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black"
+            android:gravity="center"
+            android:horizontalSpacing="2dip"
+            android:numColumns="3"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="2dip"/>
+
+        <RelativeLayout
+            android:id="@+id/catalog_window"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="48dp"
+            android:background="@color/rc_picsel_catalog_shadow"
+            android:visibility="invisible">
+
+            <ListView
+                android:id="@+id/catalog_listview"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="48dp"
+                android:background="@android:color/white"
+                android:paddingBottom="6dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="6dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="bottom"
+            android:background="@color/rc_picsel_toolbar_transparent"
+            android:clickable="true">
+
+            <view
+                android:id="@+id/pic_type"
+                class="io.rong.imkit.plugin.image.PictureSelectorActivity$PicTypeBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp">
+
+                <TextView
+                    android:id="@+id/type_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/rc_picsel_pictype"
+                    android:textColor="@color/rc_picsel_toolbar_send_text_disable"
+                    android:textSize="16sp"/>
+
+                <ImageView
+                    android:id="@+id/type_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="4dp"
+                    android:paddingTop="8dp"
+                    android:src="@drawable/rc_picsel_pictype_normal"/>
+            </view>
+
+            <view
+                android:id="@+id/preview"
+                class="io.rong.imkit.plugin.image.PictureSelectorActivity$PreviewBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true">
+
+                <ImageView
+                    android:layout_width="1dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="#2A2A2A"/>
+
+                <TextView
+                    android:id="@+id/preview_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:text="@string/rc_picsel_toolbar_preview"
+                    android:textColor="@color/rc_picsel_toolbar_send_text_disable"
+                    android:textSize="16sp"/>
+            </view>
+        </RelativeLayout>
+    </FrameLayout>
+</LinearLayout>

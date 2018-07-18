@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+   
+
+    <style name="WinDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+    <!-- -->
+    <style name="ActionBarSettingImg">
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="ActionBarSettingTextView">
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/group_list_black_textview</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <!-- 下划线-->
+    <style name="PublicLineView">
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:background">@color/group_list_gray</item>
+    </style>
+
+    <!--主页面ui下划线-->
+    <style name="DemoMainPublic">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">4dp</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:background">@color/de_title_bg</item>
+    </style>
+
+    <style name="DemoMainNewMassage1">
+        <item name="android:background">@drawable/rc_unread_count_bg</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/tab_indicator_text</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_width">6dp</item>
+        <item name="android:layout_height">6dp</item>
+        <!-- <item name="android:visibility">gone</item>-->
+    </style>
+    <style name="DemoMainNewMassage">
+        <item name="android:background">@drawable/rc_unread_count_bg</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/tab_indicator_text</item>
+        <item name="android:textSize">9sp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_width">18dp</item>
+        <item name="android:layout_height">18dp</item>
+       <!-- <item name="android:visibility">gone</item>-->
+    </style>
+    <style name="DemoAddressNewMassage">
+        <item name="android:background">@drawable/rc_unread_count_bg</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/tab_indicator_text</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">20dp</item>
+        <!-- <item name="android:visibility">gone</item>-->
+    </style>
+
+    <!-- big black-->
+    <style name="DemoTextStyleBig1">
+        <item name="android:textSize">18sp</item>
+    </style>
+    <!-- big black-->
+    <style name="DemoTextStyleBigBlack">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/group_list_black_textview</item>
+    </style>
+    <!-- small gray-->
+    <style name="DemoTextStyleSmall">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/group_list_gray</item>
+    </style>
+
+    <!-- middle gray-->
+    <style name="DemoTextStyleMiddle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/group_list_gray</item>
+    </style>
+
+
+    <style name="anim_popup_dir">
+        <item name="android:windowEnterAnimation">@anim/slide_in</item>
+        <item name="android:windowExitAnimation">@anim/slide_out</item>
+    </style>
+
+    <style name="MyCheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
+
+        <item name="android:button">@drawable/de_pic_checkbox</item>
+
+    </style>
+
+    <style name="PicCheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
+
+        <item name="android:button">@drawable/de_pic_chebox_photo</item>
+
+        <item name="android:paddingLeft">2.0dip</item>
+
+        <item name="android:maxHeight">10.0dip</item>
+
+    </style>
+
+    <style name="dialogFullscreen">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+    <!--SWITCH-->
+    <style name="SwitchButtonMD">
+        <item name="kswThumbDrawable">@drawable/ksw_md_thumb</item>
+        <item name="kswBackColor">@color/ksw_md_back_color</item>
+        <item name="kswBackMeasureRatio">1.45</item>
+        <item name="kswThumbMarginLeft">-16dp</item>
+        <item name="kswThumbMarginTop">-14dp</item>
+        <item name="kswThumbMarginRight">-16dp</item>
+        <item name="kswThumbMarginBottom">-14dp</item>
+        <item name="kswThumbWidth">@dimen/ksw_md_thumb_ripple_size</item>
+        <item name="kswThumbHeight">@dimen/ksw_md_thumb_ripple_size</item>
+    </style>
+
+    <style name="SwitchButtonStyle">
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+    </style>
+
+    <!-- 右上角popupwindow -->
+    <style name="AnimationPreview">
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
+    </style>
+
+    <style name="AnimationPage">
+        <item name="android:windowEnterAnimation">@anim/slide_in</item>
+        <item name="android:windowExitAnimation">@anim/slide_out</item>
+    </style>
+
+
+    <style name="ac_search_list_view_item">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:paddingLeft">14dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#999999</item>
+        <item name="android:background">#ffffff</item>
+    </style>
+    <style name="ac_search_list_view_item_more">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#7ca1c9</item>
+    </style>
+    <style name="ac_search_list_view_divider">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">#f0f0f6</item>
+        <item name="android:layout_marginLeft">14dp</item>
+        <item name="android:layout_marginRight">14dp</item>
+    </style>
+    <style name="ac_search_part_divider_high">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">14dp</item>
+        <item name="android:background">#f0f0f6</item>
+    </style>
+    <style name="ac_search_no_results">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginTop">45dp</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:layout_marginRight">40dp</item>
+        <item name="android:layout_marginLeft">40dp</item>
+        <item name="android:ellipsize">middle</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#999999</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="ac_horizontal_light_thin_divider">
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">#E5E5E5</item>
+    </style>
+</resources>

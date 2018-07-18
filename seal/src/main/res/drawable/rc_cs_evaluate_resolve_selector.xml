@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/rc_cs_evaluate_text_boder_selected" android:state_selected="true"/>
+    <item android:drawable="@drawable/rc_cs_evaluate_text_boder_unselected"/>
+
+</selector>

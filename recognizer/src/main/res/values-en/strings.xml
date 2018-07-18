@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rc_plugin_recognize">Voice Input</string>
+    <string name="rc_plugin_recognize_clear">Clear</string>
+    <string name="rc_plugin_recognize_check_network">Please check the network</string>
+</resources>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--ActionBar-->
+    <declare-styleable name="ActionBarView">
+        <attr name="content" format="string" />
+        <attr name="bankground" format="color" />
+        <attr name="isBackFinish" format="boolean" />
+        <attr name="leftIcon" format="reference" />
+    </declare-styleable>
+
+
+    <declare-styleable name="FloatingLabelTextView">
+        <attr name="validationMessage" format="string" />
+        <attr name="hint" format="string" />
+        <attr name="allowEmpty" format="boolean" />
+        <attr name="validatorType" format="enum">
+            <enum name="alpha" value="0" />
+            <enum name="numeric" value="1" />
+            <enum name="alphaNumeric" value="2" />
+            <enum name="email" value="3" />
+            <enum name="phone" value="4" />
+        </attr>
+        <attr name="textSize" format="integer" />
+    </declare-styleable>
+
+
+
+
+
+    <!--带清空的EditText-->
+    <declare-styleable name="W_FloatingLabelTextView">
+        <attr name="w_validationMessage" format="string" />
+        <attr name="w_hintText" format="string" />
+        <attr name="w_allowEmpty" format="boolean" />
+        <attr name="w_validatorType" format="enum">
+            <enum name="alpha" value="0" />
+            <enum name="numeric" value="1" />
+            <enum name="alphaNumeric" value="2" />
+            <enum name="email" value="3" />
+            <enum name="phone" value="4" />
+        </attr>
+        <attr name="w_textSize" format="integer" />
+    </declare-styleable>
+
+    <!--密码输入框-->
+    <declare-styleable name="W_GridPasswordView">
+        <attr name="w_gpvTextColor" format="color|reference" />
+        <attr name="w_gpvTextSize" format="dimension" />
+        <attr name="w_gpvLineColor" format="color" />
+        <attr name="w_gpvGridColor" format="color" />
+        <attr name="w_gpvLineWidth" format="dimension" />
+        <attr name="w_gpvPasswordLength" format="integer" />
+        <attr name="w_gpvPasswordTransformation" format="string" />
+        <attr name="w_gpvPasswordType" format="enum">
+            <enum name="numberPassword" value="0" />
+            <enum name="textPassword" value="1" />
+            <enum name="textVisiblePassword" value="2" />
+            <enum name="textWebPassword" value="3" />
+        </attr>
+    </declare-styleable>
+    <!--titleBar属性-->
+
+    <declare-styleable name="W_TitleBar">
+        <attr name="w_backgroud" format="color|reference" />
+        <attr name="w_title_size" format="dimension" />
+        <attr name="w_title_color" format="color|reference" />
+
+    </declare-styleable>
+
+    <!--CircleImageView属性-->
+    <declare-styleable name="W_CircleImageView">
+        <attr name="w_civ_border_width" format="dimension" />
+        <attr name="w_civ_border_color" format="color" />
+        <attr name="w_civ_border_overlay" format="boolean" />
+        <attr name="w_civ_fill_color" format="color" />
+    </declare-styleable>
+
+</resources>

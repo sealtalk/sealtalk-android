@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@id/rc_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+    <io.rong.imkit.widget.AutoRefreshListView
+        android:id="@id/rc_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:listSelector="@android:color/transparent" />
+
+    <LinearLayout
+        android:id="@+id/rc_unread_message_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_gravity="end"
+        android:gravity="center_vertical"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rc_unread_msg_bg_style"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:background="@drawable/rc_unread_msg_arrow"/>
+
+        <TextView
+            android:id="@+id/rc_unread_message_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="5dp"
+            android:text="@string/rc_new_messages"
+            android:textColor="#0195ff"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="4dp"
+        android:layout_marginRight="10dp">
+
+        <ImageButton
+            android:id="@+id/rc_new_message_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rc_conversation_newmsg"
+            android:gravity="center"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/rc_new_message_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/rc_new_message_count"
+            android:layout_alignLeft="@id/rc_new_message_count"
+            android:layout_alignRight="@id/rc_new_message_count"
+            android:layout_alignTop="@id/rc_new_message_count"
+            android:gravity="center"
+            android:paddingBottom="5dp"
+            android:textColor="#fff"
+            android:textSize="12dp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/rc_notification_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#cc69b8ee"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible" />
+</FrameLayout>

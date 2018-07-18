@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    tools:context=".rp.ui.SendSingleEnvelopesActivity">
+
+    <com.jrmf360.rylib.rp.widget.ActionBarView
+        android:id="@+id/actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:content="@string/jrmf_send_rp_title" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/base_padding"
+        android:paddingRight="@dimen/base_padding">
+
+        <TextView
+            android:id="@+id/pop_message"
+            android:layout_width="match_parent"
+            android:layout_height="20dip"
+            android:layout_marginTop="3dip"
+            android:background="@color/red"
+            android:gravity="center"
+            tools:text="提示信息"
+            android:textColor="@color/red_dark" />
+
+        <LinearLayout
+            android:id="@+id/ll_amount_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/input_height"
+            android:background="@drawable/_bg_white_round"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/text_black_16"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/base_padding"
+                android:layout_marginRight="@dimen/base_padding"
+                android:gravity="center_vertical"
+                android:text="@string/jrmf_rp_amount" />
+
+            <EditText
+                android:id="@+id/et_amount"
+                style="@style/text_black_16"
+                android:layout_width="0dip"
+                android:layout_height="@dimen/input_height"
+                android:layout_weight="1"
+                android:background="@null"
+                android:textCursorDrawable="@drawable/selector_cursor"
+                android:maxLength="6"
+                android:gravity="right|center_vertical"
+                android:inputType="numberDecimal" />
+
+            <TextView
+                style="@style/text_black_16"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/base_padding"
+                android:layout_marginRight="@dimen/base_padding"
+                android:gravity="center_vertical"
+                android:text="@string/jrmf_money_yuan2" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/et_peak_message"
+            style="@style/text_black_16"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/input_height"
+            android:layout_marginTop="@dimen/base_padding"
+            android:background="@drawable/_bg_white_round"
+            android:gravity="left|center_vertical"
+            android:hint="@string/_bribery_message"
+            android:textCursorDrawable="@drawable/selector_cursor"
+            android:textColorHint="@color/color_b7b7b7"
+            android:maxLength="25"
+            android:paddingLeft="@dimen/base_padding"
+            android:paddingRight="@dimen/base_padding" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/base_padding"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/_rmb"/>
+            <TextView
+                android:id="@+id/tv_amount"
+                style="@style/text_black_28"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/actionbar_height"
+                android:gravity="center"
+                android:textStyle="normal"
+                android:typeface="serif"
+                tools:text="0.01" />
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/btn_putin"
+            style="@style/text_white_16"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/btn_height"
+            android:layout_marginTop="@dimen/base_padding"
+            android:background="@drawable/selector_common_btn"
+            android:text="@string/btn_put" />
+    </LinearLayout>
+
+
+</LinearLayout>

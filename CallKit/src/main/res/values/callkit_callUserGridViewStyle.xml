@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CallUserGridView">
+        <attr name="CallGridViewOrientation" format="boolean"/>
+        <attr name="CallGridViewChildrenPerLine" format="integer"/>
+    </declare-styleable>
+</resources>

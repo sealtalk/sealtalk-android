@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/background"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical">
+
+    <com.jrmf360.rylib.rp.widget.ActionBarView
+        android:id="@+id/actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:content="@string/jrmf_send_rp_title"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/base_padding"
+            android:paddingRight="@dimen/base_padding">
+
+            <TextView
+                android:id="@+id/pop_message"
+                android:layout_width="match_parent"
+                android:layout_height="20dip"
+                android:layout_marginTop="3dip"
+                android:background="@color/red"
+                android:gravity="center"
+                tools:text="提示信息"
+                android:textColor="@color/red_dark"/>
+
+            <LinearLayout
+                android:id="@+id/ll_peak_num_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:background="@drawable/_bg_white_round"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/text_black_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/base_padding"
+                    android:layout_marginRight="@dimen/base_padding"
+                    android:gravity="center_vertical"
+                    android:text="@string/jrmf_rp_num"/>
+
+                <EditText
+                    android:id="@+id/et_peak_num"
+                    style="@style/text_black_16"
+                    android:layout_width="0dip"
+                    android:layout_height="@dimen/input_height"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:inputType="numberDecimal"
+                    android:maxLength="5"
+                    android:paddingRight="16dp"
+                    android:textCursorDrawable="@drawable/selector_cursor"/>
+
+                <TextView
+                    android:id="@+id/tv_ge"
+                    style="@style/text_black_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/base_padding"
+                    android:gravity="center_vertical"
+                    android:text="@string/jrmf_ge"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_group_member_num"
+                style="@style/text_gray_12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/base_padding"
+                android:layout_marginTop="7dip"
+                tools:text="100"
+                android:visibility="invisible"/>
+
+
+            <LinearLayout
+                android:id="@+id/ll_peak_amount_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:layout_marginTop="@dimen/half_base_margin"
+                android:background="@drawable/_bg_white_round"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_peak_amount_icon"
+                    style="@style/text_black_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/base_padding"
+                    android:layout_marginRight="@dimen/base_padding"
+                    android:gravity="center_vertical"
+                    android:text="@string/jrmf_rp_all_amount"/>
+
+                <EditText
+                    android:id="@+id/et_peak_amount"
+                    style="@style/text_black_16"
+                    android:layout_width="0dip"
+                    android:layout_height="@dimen/input_height"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:inputType="numberDecimal"
+                    android:maxLength="6"
+                    android:paddingRight="16dp"
+                    android:textCursorDrawable="@drawable/selector_cursor"/>
+
+                <TextView
+                    style="@style/text_black_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/base_padding"
+                    android:gravity="center_vertical"
+                    android:text="@string/jrmf_money_yuan2"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_peak_type"
+                style="@style/text_gray_12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/base_padding"
+                android:layout_marginTop="7dip"
+                tools:text="红包类型切换"/>
+
+
+            <EditText
+                android:id="@+id/et_peak_message"
+                style="@style/text_black_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/half_base_margin"
+                android:background="@drawable/_bg_white_round"
+                android:gravity="left|top"
+                android:textColorHint="@color/color_b7b7b7"
+                android:hint="@string/_bribery_message"
+                android:maxLength="25"
+                android:minHeight="48dp"
+                android:paddingBottom="8dp"
+                android:paddingLeft="@dimen/base_padding"
+                android:paddingRight="@dimen/base_padding"
+                android:paddingTop="8dp"
+                android:textCursorDrawable="@drawable/selector_cursor"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/base_padding"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/_rmb"/>
+
+                <TextView
+                    android:id="@+id/tv_amount_for_show"
+                    style="@style/text_black_28"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/actionbar_height"
+                    android:gravity="center"
+                    tools:text="0.01"
+                    android:textStyle="normal"
+                    android:typeface="serif"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_putin"
+                style="@style/text_white_16"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/btn_height"
+                android:layout_marginTop="@dimen/base_padding"
+                android:background="@drawable/selector_common_btn"
+                android:text="@string/btn_put"/>
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

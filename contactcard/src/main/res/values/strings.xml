@@ -1,0 +1,10 @@
+<resources>
+    <!-- plugins -->
+    <string name="rc_plugins_contact">个人名片</string>
+    <string name="rc_send">发送</string>
+    <string name="rc_send_to">发送给 :</string>
+    <string name="rc_message_to_friend">给朋友留言</string>
+    <string name="rc_contact_group_member_count">%1$s(%2$d人)</string>
+    <string name="rc_recommend_clause_to_others">你推荐了%1$s</string>
+    <string name="rc_recommend_clause_to_me">%1$s向你推荐了%2$s</string>
+</resources>

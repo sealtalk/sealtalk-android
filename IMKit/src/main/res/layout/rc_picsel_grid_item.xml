@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.rong.imkit.widget.SquareLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="127dip">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"/>
+
+    <RelativeLayout
+        android:id="@+id/mask"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rc_sp_grid_mask">
+
+        <view
+            android:id="@+id/checkbox"
+            class="io.rong.imkit.plugin.image.PictureSelectorActivity$SelectBox"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:focusable="false"
+            android:scaleType="centerInside"/>
+
+    </RelativeLayout>
+
+</io.rong.imkit.widget.SquareLayout>

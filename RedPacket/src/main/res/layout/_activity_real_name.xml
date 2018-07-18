@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    tools:context=".rp.ui.RealNameActivity">
+
+    <com.jrmf360.rylib.rp.widget.ActionBarView
+
+        android:id="@+id/actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:content="@string/jrmf_auth_title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/base_padding"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="@dimen/base_padding">
+
+        <com.jrmf360.rylib.rp.widget.FloatingLabelTextView
+
+            android:id="@+id/ftv_realname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:allowEmpty="false"
+            app:hint="@string/jrmf_real_username"
+            app:validatorType="alpha" />
+
+        <com.jrmf360.rylib.rp.widget.FloatingLabelTextView
+            android:id="@+id/ftv_identityno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            app:allowEmpty="false"
+            app:hint="@string/jrmf_IDCard_num"
+            app:validatorType="alphaNumeric" />
+
+
+        <Button
+            android:id="@+id/btn_next"
+            style="@style/text_white_16"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/btn_height"
+            android:layout_marginTop="30dip"
+            android:background="@drawable/selector_common_btn"
+            android:text="@string/jrmf_next" />
+    </LinearLayout>
+</LinearLayout>

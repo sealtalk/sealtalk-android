@@ -43,6 +43,7 @@
             android:layout_above="@+id/rc_voip_btn"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="20dp"
+            android:layout_marginRight="45dp"
             android:visibility="gone">
 
             <ImageView
@@ -50,7 +51,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginRight="20dp"
                 android:src="@drawable/rc_voip_phone" />
 
             <TextView
@@ -58,7 +58,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rc_voip_audio_chat_btn"
                 android:layout_centerHorizontal="true"
-                android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
                 android:text="@string/rc_voip_switch_to_audio"
                 style="@style/rc_voip_text_style_style" />

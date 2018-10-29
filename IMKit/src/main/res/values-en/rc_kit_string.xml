@@ -206,6 +206,7 @@
     <string name="rc_fr_file_size_limit">File size can not exceed %1$d%2$s</string>
     <string name="rc_ac_file_download_request_permission_sure">OK</string>
     <string name="rc_ac_file_download_request_permission_cancel">Cancel</string>
+    <string name="rc_ac_file_url_error">File URL error!</string>
     <string name="rc_read_receipt_status">%d read</string>
 
     <string name="rc_item_quit_groups">" quited the group"</string>
@@ -232,4 +233,8 @@
     <string name="rc_user_recalled_message">%s recalled one message</string>
     <string name="rc_recall_failed_for_network_unavailable">Recall failed. Please check your network</string>
     <string name="rc_new_message_divider_content">Above is the historical messages</string>
+
+    <string name="rc_toast_message_destruct">The message has auto-destructed,can\'t continue to view</string>
+    <string name="rc_receive_new_message">You have received a new message</string>
+    <string name="rc_notification_error_ssl_cert_invalid">The web certificate you have visited is not valid。Visit anyway?</string>
 </resources>

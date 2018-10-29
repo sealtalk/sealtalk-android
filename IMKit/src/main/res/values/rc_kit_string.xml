@@ -197,6 +197,7 @@
     <string name="rc_ac_file_download_request_permission">您需要在设置里打开读写权限</string>
     <string name="rc_ac_file_download_request_permission_sure">确定</string>
     <string name="rc_ac_file_download_request_permission_cancel">取消</string>
+    <string name="rc_ac_file_url_error">文件地址异常，无法下载!</string>
     <string name="rc_read_receipt_status">%d人已读</string>
 
     <string name="rc_item_quit_groups">退出了群组</string>
@@ -250,4 +251,9 @@
     <string name="rc_cs_message_submited">您的留言已提交</string>
 
     <string name="rc_new_message_divider_content">以上是历史消息</string>
+
+    <string name="rc_time_count_down">%d\'\'</string>
+    <string name="rc_toast_message_destruct">该消息已自动销毁，无法继续查看</string>
+    <string name="rc_receive_new_message">你收到一条新消息</string>
+    <string name="rc_notification_error_ssl_cert_invalid">您访问的网页证书无效。是否继续访问?</string>
 </resources>

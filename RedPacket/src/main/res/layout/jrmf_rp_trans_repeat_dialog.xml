@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/shape_round_white"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:lineSpacingMultiplier="1.2"
+        android:textColor="@color/color_323232"
+        android:textSize="16sp"
+        tools:text="@string/trans_repeat_tip"
+        />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/et_trans_money"
+        android:layout_marginTop="@dimen/base_margin"
+        android:background="@color/color_bg"/>
+
+    <TextView
+        android:id="@+id/tv_continue_trans"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/btn_height"
+        android:gravity="center"
+        android:text="@string/continue_trans"
+        android:textColor="@color/title_bar_color"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/et_trans_money"
+        android:background="@color/color_bg"/>
+
+    <TextView
+        android:id="@+id/tv_quit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/btn_height"
+        android:gravity="center"
+        android:text="@string/jrmf_quit"
+        android:textColor="@color/title_bar_color"/>
+
+</LinearLayout>

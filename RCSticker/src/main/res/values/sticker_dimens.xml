@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="indicator_dot_size">4dp</dimen>
+    <dimen name="indicator_dot_space">10dp</dimen>
+
+    <dimen name="download_text_size">16sp</dimen>
+    <dimen name="download_progress_text_size">15sp</dimen>
+    <dimen name="download_progress_stroke_width">1dp</dimen>
+    <dimen name="download_progress_radius">4dp</dimen>
+
+    <dimen name="popup_window_xoff">45dp</dimen>
+    <dimen name="my_sticker_divider_margin_left">10dp</dimen>
+</resources>

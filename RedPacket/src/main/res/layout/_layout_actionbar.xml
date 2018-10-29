@@ -3,7 +3,7 @@
     android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="@dimen/actionbar_height"
-    android:background="@color/red">
+    android:background="@color/jrmf_red">
 
     <TextView
         android:id="@+id/tv_content"

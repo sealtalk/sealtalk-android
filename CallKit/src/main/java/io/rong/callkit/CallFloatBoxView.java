@@ -223,13 +223,13 @@ public class CallFloatBoxView {
             }
 
             @Override
-            public void onRemoteUserInvited(String userId, RongCallCommon.CallMediaType mediaType) {
-
+            public void onRemoteUserJoined(String userId, RongCallCommon.CallMediaType mediaType, int userType, SurfaceView remoteVideo) {
+                CallKitUtils.isDial=false;
             }
 
             @Override
-            public void onRemoteUserJoined(String userId, RongCallCommon.CallMediaType mediaType, int userType, SurfaceView remoteVideo) {
-                CallKitUtils.isDial=false;
+            public void onRemoteUserInvited(String userId, RongCallCommon.CallMediaType mediaType) {
+
             }
 
             @Override
@@ -456,10 +456,6 @@ public class CallFloatBoxView {
             }
 
             @Override
-            public void onRemoteUserInvited(String userId, RongCallCommon.CallMediaType mediaType) {
-
-            }
-            @Override
             public void onRemoteUserLeft(String userId, RongCallCommon.CallDisconnectedReason reason) {
 
             }
@@ -489,6 +485,11 @@ public class CallFloatBoxView {
                     CallFloatBoxView.showFloatBoxToCallTime();
                     CallKitUtils.isDial=false;
                 }
+            }
+
+            @Override
+            public void onRemoteUserInvited(String userId, RongCallCommon.CallMediaType mediaType) {
+
             }
 
             @Override

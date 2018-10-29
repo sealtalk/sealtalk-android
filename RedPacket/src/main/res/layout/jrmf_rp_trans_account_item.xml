@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_trans_bg"
+        android:layout_width="220dp"
+        android:layout_height="100dp"
+        android:background="@drawable/jrmf_trans_bg_from">
+
+        <ImageView
+            android:id="@+id/iv_trans_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/half_base_margin"
+            android:layout_marginTop="18dip"
+            android:src="@drawable/jrmf_ic_trans"/>
+
+        <TextView
+            android:id="@+id/tv_trans_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="65dip"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="18dip"
+            android:ellipsize="end"
+            android:gravity="center|left"
+            android:maxLines="1"
+            tools:text="恭喜发财，大吉大利恭喜发财，大吉大利恭喜发财，大吉大利"
+            android:textColor="@android:color/white"
+            android:textSize="13sp"/>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="65dip"
+            android:layout_marginTop="40dip"
+            android:gravity="center_vertical|left"
+            android:orientation="horizontal">
+
+            <!--<ImageView-->
+                <!--android:layout_width="8dp"-->
+                <!--android:layout_height="9dp"-->
+                <!--android:layout_marginTop="1dp"-->
+                <!--android:background="@drawable/jrmf_trans_msg_rmb"/>-->
+
+            <TextView
+                android:id="@+id/tv_trans_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="1.00"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="13sp"/>
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_trans_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="4dip"
+            android:layout_marginLeft="@dimen/half_base_margin"
+            android:gravity="center|left"
+            android:text="@string/jrmf_transfer_account_type"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="14sp"/>
+    </RelativeLayout>
+</FrameLayout>

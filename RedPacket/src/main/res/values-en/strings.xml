@@ -144,6 +144,7 @@
     <string name="jrmf_money_yuan2">CNY</string>
     <string name="jrmf_money_yuan3">￥%1$s</string>
     <string name="jrmf_rp_time_out">Expired</string>
+    <string name="jrmf_rp_time_out_rate">Expired %1$s/%2$s</string>
     <string name="jrmf_rp_receive_rate">Opened %1$s/%2$s</string>
     <string name="jrmf_rp_receiving_rate">Opened %1$s/%2$s</string>
     <string name="jrmf_rp_receive">Received Packets</string>
@@ -314,4 +315,53 @@
     <string name="loading">Loading...</string>
     <string name="waiting">Waiting...</string>
 
+
+
+    <!--转账-->
+    <string name="add_trans_tip">Add Note</string>
+    <string name="trans_little_tip">The minimum amount of transfer can not be less than ￥0.01</string>
+    <string name="trans_repeat_tip">You have %1$s transfer(s) with the same amount awaiting confirmation by the receiver. You can open transaction history to resend these transfer messages or continue to make a new transfer</string>
+    <string name="continue_trans">Continue</string>
+    <string name="jrmf_pay_succ">Payment successful</string>
+    <string name="jrmf_trans_to_who">Awaiting receipt by %1$s</string>
+    <!--<string name="jrmf_reback_tip">Money will be refunded to other user if receipt not confirmed within in 1 day. Refund now</string>-->
+    <string name="jrmf_reback_tip">More than one day will be refunded. Refund now</string>
+    <string name="jrmf_reback_dialog">To reject %1$s’s transfer</string>
+    <string name="jrmf_trans_to">Pay to %1$s</string>
+    <string name="jrmf_trans_wait">Awaiting receipt by %1$s</string>
+    <string name="jrmf_trans_succ">%1$s Accepted</string>
+    <string name="jrmf_trans_raback">%1$s Rejected</string>
+    <string name="jrmf_rp_identity_table">You have not been the real-name authentication, the account may have security risks, please try after the real-name authentication</string>
+    <string name="jrmf_rp_identity_right">Real-name Authentication</string>
+    <string name="jrmf_rp_identity_left">Cancel</string>
+    <string name="_transfer_account">Transfer</string>
+    <string name="jrmf_transfer_account_type">Cloud Transfer</string>
+    <string name="jrmf_transfer_account_sender">[Transfer] Wait for your receipt </string>
+    <string name="jrmf_transfer_account_receiver">[Transfer] Confirm</string>
+    <string name="jrmf_transfer_account_receive_sender">[Transfer] Receipt confirm</string>
+    <string name="jrmf_transfer_account_receive_receiver">[Transfer] You\'ve confirmed receipt</string>
+    <string name="jrmf_transfer_account_refund_sender">[Transfer] Your friend has rejected the transfer </string>
+    <string name="jrmf_transfer_account_refund_receiver">[Transfer] You\'ve rejected this money</string>
+    <string name="jrmf_transfer_to_you">Transfer to you</string>
+    <string name="jrmf_transfer_to">Pay to %1$s</string>
+    <string name="jrmf_had_receive_money">Accepted</string>
+    <string name="jrmf_had_back_money">Rejected</string>
+    <string name="jrmf_had_back_money_timeout">Rejected(Expired)</string>
+    <string name="jrmf_trans_back_now">Refond now</string>
+    <string name="jrmf_trans_over_limit">Up to ￥%1$s for daily transaction amount</string>
+    <string name="jrmf_trans_unconfirm_back">Money will be refunded to other user if receipt not confirmed within in 1 day </string>
+    <string name="jrmf_trans_time">Transfer time : %1$s</string>
+    <string name="jrmf_trans_receive_time">Collection time : %1$s</string>
+    <string name="jrmf_trans_back_time">Rejected time : %1$s</string>
+    <string name="jrmf_trans_back_to_wallet">This money has been returned to Balance</string>
+    <string name="jrmf_trans_waiting_receive">Await friend’s confirmation</string>
+    <string name="jrmf_trans_confirm_receive">Confirm Receipt</string>
+    <string name="jrmf_trans_save_to_wallet">Accepted ,View Balance</string>
+    <string name="jrmf_receive_message_tip">You received a message</string>
+    <string name="jrmf_trans_detail">Transfer details </string>
+    <string name="jrmf_trans_to_friend">Transfer to friends</string>
+    <string name="jrmf_trans_amount">Transfer Amount</string>
+    <string name="jrmf_trans_update">Change</string>
+    <string name="jrmf_trans_note">Transfer instructions</string>
+    <string name="jrmf_trans_note_limit">Enter up to 10 words</string>
 </resources>

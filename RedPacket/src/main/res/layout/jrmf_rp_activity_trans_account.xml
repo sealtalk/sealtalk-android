@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/color_bg"
+              android:orientation="vertical"
+              tools:context=".rp.ui.TransAccountActivity">
+
+    <com.jrmf360.rylib.rp.widget.ActionBarView
+        android:id="@+id/actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bankground="@color/jrmf_red"
+        app:content="@string/jrmf_trans_to_friend"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="@dimen/base_margin"
+        android:background="@color/white"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:id="@+id/ll_userinfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_fbfbfb"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <com.jrmf360.rylib.rp.widget.RoundImageView
+                android:id="@+id/iv_header"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="25dp"
+                android:src="@drawable/jrmf_default_portrait"
+                app:jrmf_borderRadius="@dimen/half_base_margin"
+                app:jrmf_type="round"/>
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="11dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/color_7c7c7c"
+                android:textSize="14sp"
+                tools:text="姓名"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_transMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_userinfo"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/jrmf_trans_amount"
+            android:textColor="@color/color_323232"
+            android:textSize="14sp"/>
+
+
+        <LinearLayout
+            android:id="@+id/ll_trans_money"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_transMoney"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/iv_rmb_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="47sp"
+                android:textColor="@color/black"
+                android:text="￥"/>
+
+            <EditText
+                android:id="@+id/et_trans_money"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/iv_rmb_icon"
+                android:background="@color/transparent"
+                android:inputType="numberDecimal"
+                android:maxLength="8"
+                android:textColor="@color/color_323232"
+                android:textCursorDrawable="@drawable/selector_cursor"
+                android:textSize="36sp"
+                tools:text="nihao"
+                />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/ll_trans_money"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="@dimen/half_base_padding"
+            android:background="@color/color_bg"/>
+
+        <LinearLayout
+            android:id="@+id/ll_trans_tip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/line"
+            android:layout_marginTop="@dimen/base_margin"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_trans_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_userinfo"
+                android:layout_marginLeft="20dp"
+                android:text="@string/add_trans_tip"
+                android:textColor="@color/title_bar_color"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_update_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_userinfo"
+                android:layout_marginLeft="10dp"
+                android:text="@string/jrmf_trans_update"
+                android:textColor="@color/title_bar_color"
+                android:textSize="14sp"
+                android:visibility="invisible"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_trans_account"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/btn_height"
+            android:layout_below="@id/ll_trans_tip"
+            android:layout_marginBottom="24dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/selector_common_btn"
+            android:text="@string/_transfer_account"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

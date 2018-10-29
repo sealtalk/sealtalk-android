@@ -58,11 +58,15 @@
         android:layout_marginTop="10dp"
         android:gravity="center">
 
-        <ImageView
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:layout_marginTop="2dp"
-            android:background="@drawable/_rmb"/>
+
+        <TextView
+            style="@style/text_black_16"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/actionbar_height"
+            android:gravity="center"
+            android:textColor="@color/color_323232"
+            android:textSize="30sp"
+            android:text="￥"/>
 
         <TextView
             android:id="@+id/tv_redenvelope_amount"
@@ -114,28 +118,6 @@
                 tools:text="@string/jrmf_rp_balance"
                 android:textColor="@color/color_434343"
                 android:textSize="13sp"/>
-
-            <!--<ImageView-->
-                <!--android:id="@+id/iv_paytype_rmb"-->
-                <!--android:layout_width="11dp"-->
-                <!--android:layout_height="11dp"-->
-                <!--android:layout_gravity="center_vertical"-->
-                <!--android:layout_marginTop="1dp"-->
-                <!--android:src="@drawable/_rmb"-->
-                <!--android:visibility="gone"-->
-                <!--/>-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/tv_paytype_balance"-->
-                <!--style="@style/text_gray_16"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="@dimen/actionbar_height"-->
-                <!--android:gravity="center_vertical"-->
-                <!--android:text=" 0.07 )"-->
-                <!--android:textColor="@color/color_434343"-->
-                <!--android:textSize="13sp"-->
-                <!--android:visibility="gone"/>-->
-
         </LinearLayout>
 
         <ImageView

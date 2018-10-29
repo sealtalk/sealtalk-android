@@ -2,8 +2,10 @@ package io.rong.callkit.util;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.ImageView;
 
+import com.bailingcloud.bailingvideo.engine.binstack.util.FinLog;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -19,11 +21,19 @@ public class GlideUtils {
 
     public static void showBlurTransformation(Context context, ImageView imageView ,Uri val){
         if(val==null){return;}
-        Glide.with(context)
-                .load(val)
-                .apply(RequestOptions.bitmapTransform(new GlideBlurformation(context)))
-                .apply(new RequestOptions().centerCrop())
-                .into(imageView);
+        try {
+            Glide.with(context)
+                    .load(val)
+                    .apply(RequestOptions.bitmapTransform(new GlideBlurformation(context)))
+                    .apply(new RequestOptions().centerCrop())
+                    .into(imageView);
+        } catch (Exception e) {
+            e.printStackTrace();
+            FinLog.e("Glide Utils Error="+e.getMessage());
+        } catch (NoSuchMethodError noSuchMethodError){
+            noSuchMethodError.printStackTrace();
+            FinLog.e("Glide NoSuchMethodError = "+noSuchMethodError.getMessage());
+        }
     }
 
 

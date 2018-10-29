@@ -216,7 +216,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/base_margin"
             android:layout_marginTop="@dimen/base_margin"
-            android:textColor="@color/red"
+            android:textColor="@color/jrmf_red"
             android:textSize="14sp"
             android:visibility="visible"
             tools:text="手续费2元"

@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">rcsticker</string>
+    <string name="download_sticker">Get</string>
+    <string name="download_progress">%1$d %</string>
+    <string name="my_sticker">My Stickers</string>
+    <string name="added_stickers">Added Stickers</string>
+    <string name="remove_sticker">Remove</string>
+    <string name="no_sticker">No Get Stickers</string>
+    <string name="sticker_download_fail">Unable to download \"%1$s\". Try again.</string>
+    <string name="sticker_fail_to_load">Fail to load</string>
+</resources>

@@ -9,6 +9,18 @@
     </declare-styleable>
 
 
+    <attr name="jrmf_borderRadius" format="dimension"/>
+    <attr name="jrmf_type">
+        <enum name="circle" value="0"/>
+        <enum name="round" value="1"/>
+    </attr>
+
+    <declare-styleable name="Jrmf_RoundImageView">
+        <attr name="jrmf_borderRadius"/>
+        <attr name="jrmf_type"/>
+    </declare-styleable>
+
+
     <declare-styleable name="FloatingLabelTextView">
         <attr name="validationMessage" format="string" />
         <attr name="hint" format="string" />
@@ -22,9 +34,6 @@
         </attr>
         <attr name="textSize" format="integer" />
     </declare-styleable>
-
-
-
 
 
     <!--带清空的EditText-->

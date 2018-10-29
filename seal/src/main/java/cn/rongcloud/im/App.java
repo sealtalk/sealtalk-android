@@ -134,7 +134,7 @@ public class App extends MultiDexApplication {
                     .cacheOnDisk(true)
                     .build();
 
-//            RongExtensionManager.getInstance().registerExtensionModule(new PTTExtensionModule(this, true, 1000 * 60));
+            //RongExtensionManager.getInstance().registerExtensionModule(new PTTExtensionModule(this, true, 1000 * 60));
             RongExtensionManager.getInstance().registerExtensionModule(new ContactCardExtensionModule(new IContactCardInfoProvider() {
                 @Override
                 public void getContactAllInfoProvider(final IContactCardInfoCallback contactInfoCallback) {

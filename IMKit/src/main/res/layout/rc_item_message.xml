@@ -73,6 +73,7 @@
         android:layout_toRightOf="@id/rc_left"
         android:ellipsize="end"
         android:gravity="center_vertical"
+        android:layout_marginBottom="@dimen/rc_dimen_size_3"
         android:maxEms="14"
         android:singleLine="true"
         android:visibility="gone" />

@@ -17,6 +17,7 @@
         <!-- 窗口弹出效果 -->
         <item name="android:backgroundDimEnabled">true</item>
         <!-- 是否允许背景模糊 -->
+        <item name="android:windowCloseOnTouchOutside">false</item>
     </style>
 
 
@@ -60,12 +61,12 @@
     </style>
 
     <style name="text_red_16">
-        <item name="android:textColor">@color/red</item>
+        <item name="android:textColor">@color/jrmf_red</item>
         <item name="android:textSize">16dip</item>
     </style>
 
     <style name="text_red_12">
-        <item name="android:textColor">@color/red</item>
+        <item name="android:textColor">@color/jrmf_red</item>
         <item name="android:textSize">12dip</item>
     </style>
 
@@ -85,7 +86,7 @@
     </style>
 
     <style name="text_red_28">
-        <item name="android:textColor">@color/red</item>
+        <item name="android:textColor">@color/jrmf_red</item>
         <item name="android:textSize">28dip</item>
     </style>
 

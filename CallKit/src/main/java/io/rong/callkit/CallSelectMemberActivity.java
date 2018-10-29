@@ -41,9 +41,11 @@ import io.rong.imlib.model.UserInfo;
 public class CallSelectMemberActivity extends BaseNoActionBarActivity {
 
     ArrayList<String> selectedMember;
+    private boolean isFirstDialog=true;
+    /** 已经选择的观察者列表 **/
     private ArrayList<String> observerMember;
     TextView txtvStart,callkit_conference_selected_number;
-    CallSelectMemberActivity.ListAdapter mAdapter;
+    ListAdapter mAdapter;
     ListView mList;
     RongCallCommon.CallMediaType mMediaType;
     private Conversation.ConversationType conversationType;
@@ -56,6 +58,8 @@ public class CallSelectMemberActivity extends BaseNoActionBarActivity {
     private ArrayList<String> invitedMembers;
     private ArrayList<String> tempMembers=new ArrayList<>();
 
+    private ArrayList<String> allObserver=null;//保存当前通话中从多人音/视频传递过来的观察者列表
+
     private UserInfo userInfo;
     private GroupUserInfo groupUserInfo;
 
@@ -64,6 +68,14 @@ public class CallSelectMemberActivity extends BaseNoActionBarActivity {
     private RelativeLayout rlActionBar;
     private ImageView ivBack;
     private CallKitSearchBarView searchBar;
+    /**
+     * true:只能选择n个人同时进行音视频通话，>n选择无效;
+     * false:>n个人同时音视频通话之后,其他人视为观察者加入到本次通话中;
+     * n ：NORMAL_VIDEO_NUMBER 和 NORMAL_AUDIO_NUMBER
+     */
+    private boolean ctrlTag=true;
+    private static final int NORMAL_VIDEO_NUMBER=7;
+    private static final int NORMAL_AUDIO_NUMBER=20;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +98,7 @@ public class CallSelectMemberActivity extends BaseNoActionBarActivity {
         int conType = intent.getIntExtra("conversationType", 0);
         conversationType = Conversation.ConversationType.setValue(conType);
         invitedMembers = intent.getStringArrayListExtra("invitedMembers");
+        allObserver=intent.getStringArrayListExtra("allObserver");
         allMembers = intent.getStringArrayListExtra("allMembers");
         groupId = intent.getStringExtra("groupId");
         RongCallKit.GroupMembersProvider provider = RongCallKit.getGroupMemberProvider();
@@ -145,61 +158,9 @@ public class CallSelectMemberActivity extends BaseNoActionBarActivity {
 
         mList = (ListView) findViewById(R.id.calkit_list_view_select_member);
         if (invitedMembers != null && invitedMembers.size() > 0) {
-            mAdapter = new CallSelectMemberActivity.ListAdapter(allMembers, invitedMembers);
+            mAdapter = new ListAdapter(allMembers, invitedMembers);
             mList.setAdapter(mAdapter);
-            mList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    View v = view.findViewById(R.id.rc_checkbox);
-                    String userId = (String) v.getTag();
-                    if (!invitedMembers.contains(userId)) {
-                        if (mMediaType.equals(RongCallCommon.CallMediaType.VIDEO)
-                                && !v.isSelected() && selectedMember.size() + invitedMembers.size() == 6) {
-//                            Toast.makeText(CallSelectMemberActivity.this,
-//                                    String.format(getString(R.string.rc_voip_over_limit), 9),
-//                                    Toast.LENGTH_SHORT)
-//                                    .show();
-//                            return;
-
-                            CallPromptDialog dialog = CallPromptDialog.newInstance(CallSelectMemberActivity.this, getString(R.string.rc_voip_video_observer));
-                            dialog.setPromptButtonClickedListener(new CallPromptDialog.OnPromptButtonClickedListener() {
-                                @Override
-                                public void onPositiveButtonClicked() {
-                                }
-
-                                @Override
-                                public void onNegativeButtonClicked() {
-
-                                }
-                            });
-                            dialog.disableCancel();
-                            dialog.setCancelable(false);
-                            dialog.show();
-                        }
-                        if (selectedMember.contains(userId)) {
-                            selectedMember.remove(userId);
-                        }
-
-                        v.setSelected(!v.isSelected());
-                        if (v.isSelected()) {
-                            selectedMember.add(userId);
-                        }
-                        if (selectedMember.size() > 6) {
-                            observerMember.add(userId);
-                        }
-                        if (selectedMember.size() > 0) {
-                            txtvStart.setEnabled(true);
-                            txtvStart.setTextColor(getResources().getColor(R.color.rc_voip_check_enable));
-                        } else {
-                            txtvStart.setEnabled(false);
-                            txtvStart.setTextColor(getResources().getColor(R.color.rc_voip_check_disable));
-                        }
-                    }
-                    if(searchMembers!=null){
-                        callkit_conference_selected_number.setText(getString(R.string.callkit_selected_contacts_count, selectedMember.size()));
-                    }
-                }
-            });
+            mList.setOnItemClickListener(adapterOnItemClickListener);
         }
         rlSearchTop = (RelativeLayout) findViewById(R.id.rl_search_top);
         ivBack = (ImageView) findViewById(R.id.iv_back);
@@ -230,6 +191,11 @@ public class CallSelectMemberActivity extends BaseNoActionBarActivity {
 
             @Override
             public void onClearButtonClick() {
+                if (invitedMembers != null) {
+                    mAdapter = new ListAdapter(allMembers, invitedMembers);
+                    mList.setAdapter(mAdapter);
+                    mList.setOnItemClickListener(adapterOnItemClickListener);
+                }
             }
         });
 
@@ -258,61 +224,9 @@ public class CallSelectMemberActivity extends BaseNoActionBarActivity {
 
     private void setData() {
         if(null!=tempMembers && tempMembers.size()>0){
-            CallSelectMemberActivity.ListAdapter adapter = new CallSelectMemberActivity.ListAdapter(tempMembers, invitedMembers);
+            ListAdapter adapter = new ListAdapter(tempMembers, invitedMembers);
             mList.setAdapter(adapter);
-            mList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    View v = view.findViewById(R.id.rc_checkbox);
-                    String userId = (String) v.getTag();
-                    if (!invitedMembers.contains(userId)) {
-                        if (mMediaType.equals(RongCallCommon.CallMediaType.VIDEO)
-                                && !v.isSelected() && selectedMember.size() + invitedMembers.size() == 6) {
-//                            Toast.makeText(CallSelectMemberActivity.this,
-//                                    String.format(getString(R.string.rc_voip_over_limit), 9),
-//                                    Toast.LENGTH_SHORT)
-//                                    .show();
-//                            return;
-
-                            CallPromptDialog dialog = CallPromptDialog.newInstance(CallSelectMemberActivity.this, getString(R.string.rc_voip_video_observer));
-                            dialog.setPromptButtonClickedListener(new CallPromptDialog.OnPromptButtonClickedListener() {
-                                @Override
-                                public void onPositiveButtonClicked() {
-                                }
-
-                                @Override
-                                public void onNegativeButtonClicked() {
-
-                                }
-                            });
-                            dialog.disableCancel();
-                            dialog.setCancelable(false);
-                            dialog.show();
-                        }
-                        if (selectedMember.contains(userId)) {
-                            selectedMember.remove(userId);
-                        }
-
-                        v.setSelected(!v.isSelected());
-                        if (v.isSelected()) {
-                            selectedMember.add(userId);
-                        }
-                        if (selectedMember.size() > 6) {
-                            observerMember.add(userId);
-                        }
-                        if (selectedMember.size() > 0) {
-                            txtvStart.setEnabled(true);
-                            txtvStart.setTextColor(getResources().getColor(R.color.rc_voip_check_enable));
-                        } else {
-                            txtvStart.setEnabled(false);
-                            txtvStart.setTextColor(getResources().getColor(R.color.rc_voip_check_disable));
-                        }
-                    }
-                    if(searchMembers!=null){
-                        callkit_conference_selected_number.setText(getString(R.string.callkit_selected_contacts_count, selectedMember.size()));
-                    }
-                }
-            });
+            mList.setOnItemClickListener(adapterOnItemClickListener);
         }
     }
 
@@ -352,9 +266,9 @@ public class CallSelectMemberActivity extends BaseNoActionBarActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            CallSelectMemberActivity.ViewHolder holder;
+            ViewHolder holder;
             if (convertView == null) {
-                holder = new CallSelectMemberActivity.ViewHolder();
+                holder = new ViewHolder();
                 convertView = LayoutInflater.from(CallSelectMemberActivity.this).inflate(R.layout.rc_voip_listitem_select_member, null);
                 holder.checkbox = (ImageView) convertView.findViewById(R.id.rc_checkbox);
                 holder.portrait = (AsyncImageView) convertView.findViewById(R.id.rc_user_portrait);
@@ -362,7 +276,7 @@ public class CallSelectMemberActivity extends BaseNoActionBarActivity {
                 convertView.setTag(holder);
             }
 
-            holder = (CallSelectMemberActivity.ViewHolder) convertView.getTag();
+            holder = (ViewHolder) convertView.getTag();
             holder.checkbox.setTag(mallMembers.get(position));
             if (invitedMembers.contains(mallMembers.get(position))) {
                 holder.checkbox.setClickable(false);
@@ -454,4 +368,83 @@ public class CallSelectMemberActivity extends BaseNoActionBarActivity {
             }
         });
     }
+
+    private AdapterView.OnItemClickListener adapterOnItemClickListener=new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            View v = view.findViewById(R.id.rc_checkbox);
+            String userId = (String) v.getTag();
+            if (!invitedMembers.contains(userId)) {
+                if(v.isSelected()){
+                    if(selectedMember.contains(userId)){
+                        selectedMember.remove(userId);
+                    }
+                    if (observerMember.contains(userId)) {
+                        observerMember.remove(userId);
+                    }
+                    v.setSelected(false);
+                    return;
+                }
+                int totalNumber=selectedMember.size() + (invitedMembers.size()-(allObserver==null?0:allObserver.size()));
+                boolean videoObserverState= totalNumber>= (mMediaType.equals(RongCallCommon.CallMediaType.AUDIO)?NORMAL_AUDIO_NUMBER:NORMAL_VIDEO_NUMBER);
+                if(ctrlTag){
+                    if(videoObserverState){
+                        Toast.makeText(CallSelectMemberActivity.this, String.format(getString(mMediaType.equals(RongCallCommon.CallMediaType.AUDIO)?R.string.rc_voip_audio_numberofobservers:R.string.rc_voip_video_numberofobservers),totalNumber), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if(selectedMember.contains(userId)){
+                        selectedMember.remove(userId);
+                    }
+                    v.setSelected(!v.isSelected());//1 false
+                    if (v.isSelected()) {
+                        selectedMember.add(userId);
+                    }
+                    if (selectedMember.size() > 0 || observerMember.size()>0) {
+                        txtvStart.setEnabled(true);
+                        txtvStart.setTextColor(getResources().getColor(R.color.rc_voip_check_enable));
+                    } else {
+                        txtvStart.setEnabled(false);
+                        txtvStart.setTextColor(getResources().getColor(R.color.rc_voip_check_disable));
+                    }
+                }else{
+                    if(videoObserverState && isFirstDialog){
+                        CallPromptDialog dialog = CallPromptDialog.newInstance(CallSelectMemberActivity.this, getString(R.string.rc_voip_video_observer));
+                        dialog.setPromptButtonClickedListener(new CallPromptDialog.OnPromptButtonClickedListener() {
+                            @Override
+                            public void onPositiveButtonClicked() {}
+                            @Override
+                            public void onNegativeButtonClicked() {}
+                        });
+                        dialog.disableCancel();
+                        dialog.setCancelable(false);
+                        dialog.show();
+                        isFirstDialog=false;
+                    }
+                    v.setSelected(!v.isSelected());//1 false
+                    if(videoObserverState){
+                        if (observerMember.contains(userId)) {
+                            observerMember.remove(userId);
+                        }
+                        observerMember.add(userId);
+                    }
+                    if (selectedMember.contains(userId)) {
+                        selectedMember.remove(userId);
+                    }
+                    if (v.isSelected()) {
+                        selectedMember.add(userId);
+                    }
+                    if (selectedMember.size() > 0 ||observerMember.size()>0) {
+                        txtvStart.setEnabled(true);
+                        txtvStart.setTextColor(getResources().getColor(R.color.rc_voip_check_enable));
+                    } else {
+                        txtvStart.setEnabled(false);
+                        txtvStart.setTextColor(getResources().getColor(R.color.rc_voip_check_disable));
+                    }
+                }
+            }
+            if(searchMembers!=null){
+                callkit_conference_selected_number.setText(getString(R.string.callkit_selected_contacts_count, selectedMember.size()));
+            }
+        }
+    };
 }

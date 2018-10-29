@@ -113,4 +113,13 @@
         <item>.jpeg</item>
         <item>.jpg</item>
     </array>
+    <array name="rc_key_file_suffix">
+        <item>.key</item>
+    </array>
+    <array name="rc_pages_file_suffix">
+        <item>.pages</item>
+    </array>
+    <array name="rc_numbers_file_suffix">
+        <item>.numbers</item>
+    </array>
 </resources>

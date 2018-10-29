@@ -1,1 +1,2 @@
 include ':seal', ':recognizer', ':sticker', ':IMLib', ':IMKit', ':CallLib', ':CallKit', ':RedPacket', ':contactcard'
+include ':RCSticker'

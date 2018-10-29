@@ -9,11 +9,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
+import io.rong.callkit.util.CallKitUtils;
 import io.rong.calllib.RongCallClient;
 import io.rong.calllib.RongCallCommon;
 import io.rong.calllib.RongCallSession;
@@ -54,7 +56,7 @@ public class VideoPlugin implements IPluginModule, IPluginRequestPermissionResul
         conversationType = extension.getConversationType();
         targetId = extension.getTargetId();
 
-        String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO};
+        String[] permissions = CallKitUtils.getCallpermissions();
         if (PermissionCheckUtil.checkPermissions(currentFragment.getActivity(), permissions)) {
             startVideoActivity(extension);
         } else {

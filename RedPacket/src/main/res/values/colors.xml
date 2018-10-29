@@ -6,7 +6,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="white">#FFFFFF</color>
-    <color name="red">#fe5c5c</color>
+    <color name="jrmf_red">#fe5c5c</color>
     <color name="red_trans">#88fe5c5c</color>
     <color name="red_dark">#e54141</color>
     <color name="black">#3e3a39</color>
@@ -47,4 +47,13 @@
     <color name="color_ededed">#ededed</color>
     <color name="color_03a9f4">#03a9f4</color>
     <color name="color_1bfd00">#1bfd00</color>
+    <color name="color_fbfbfb">#fbfbfb</color>
+    <color name="color_7c7c7c">#7c7c7c</color>
+    <color name="color_5b6a91">#5b6a91</color>
+    <color name="color_818181">#818181</color>
+    <color name="color_22ac38">#22ac38</color>
+    <color name="color_888888">#888888</color>
+
+
+
 </resources>

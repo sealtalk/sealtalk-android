@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="20dip"
                 android:layout_marginTop="3dip"
-                android:background="@color/red"
+                android:background="@color/jrmf_red"
                 android:gravity="center"
                 tools:text="提示信息"
                 android:textColor="@color/red_dark"/>
@@ -160,11 +160,14 @@
                 android:layout_marginTop="@dimen/base_padding"
                 android:gravity="center">
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginTop="2dp"
-                    android:background="@drawable/_rmb"/>
+                <TextView
+                    style="@style/text_black_28"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/actionbar_height"
+                    android:gravity="center"
+                    android:text="￥"
+                    android:textStyle="normal"
+                    android:typeface="serif"/>
 
                 <TextView
                     android:id="@+id/tv_amount_for_show"

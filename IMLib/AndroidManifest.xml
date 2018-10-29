@@ -30,11 +30,6 @@
             android:exported="true"
             android:process=":ipc" />
 
-        <service
-            android:name=".ReConnectService"
-            android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-
         <receiver
             android:name="io.rong.imlib.ConnectChangeReceiver"
             android:exported="true" />

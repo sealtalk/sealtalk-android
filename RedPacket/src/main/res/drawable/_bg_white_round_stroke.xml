@@ -6,7 +6,7 @@
     <!--http://keeganlee.me/post/android/20150830-->
     <stroke
         android:width="1dip"
-        android:color="@color/red"
+        android:color="@color/jrmf_red"
      />
     <!-- android:shape="rectangle"	shape的形状，默认为矩形，可以设置为矩形（rectangle）、椭圆形(oval)、线性形状(line)、环形(ring)-->
 

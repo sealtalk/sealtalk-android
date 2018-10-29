@@ -65,7 +65,7 @@
             android:text="@string/rc_voip_participant_users"/>
 
         <io.rong.callkit.CallUserGridView
-            android:id="@+id/rc_voip_members_container"
+            android:id="@+id/rc_voip_members_container_gridView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fadingEdge="none"

@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import io.rong.callkit.util.CallKitUtils;
 import io.rong.calllib.RongCallClient;
 import io.rong.calllib.RongCallCommon;
 import io.rong.calllib.RongCallSession;
@@ -55,7 +56,7 @@ public class AudioPlugin implements IPluginModule, IPluginRequestPermissionResul
         conversationType = extension.getConversationType();
         targetId = extension.getTargetId();
         Log.i(TAG,"---- targetId=="+targetId);
-        String[] permissions = {Manifest.permission.RECORD_AUDIO};
+        String[] permissions = CallKitUtils.getCallpermissions();
         if (PermissionCheckUtil.checkPermissions(currentFragment.getActivity(), permissions)) {
             Log.i(TAG,"---- startAudioActivity ----");
             startAudioActivity(currentFragment, extension);
@@ -136,11 +137,13 @@ public class AudioPlugin implements IPluginModule, IPluginRequestPermissionResul
 
         Intent intent = new Intent(RongVoIPIntent.RONG_INTENT_ACTION_VOIP_MULTIAUDIO);
         ArrayList<String> userIds = data.getStringArrayListExtra("invited");
+        ArrayList<String> observers=data.getStringArrayListExtra("observers");
         userIds.add(RongIMClient.getInstance().getCurrentUserId());
         intent.putExtra("conversationType", conversationType.getName().toLowerCase());
         intent.putExtra("targetId", targetId);
         intent.putExtra("callAction", RongCallAction.ACTION_OUTGOING_CALL.getName());
         intent.putStringArrayListExtra("invitedUsers", userIds);
+        intent.putStringArrayListExtra("observers",observers);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setPackage(context.getPackageName());
         context.getApplicationContext().startActivity(intent);

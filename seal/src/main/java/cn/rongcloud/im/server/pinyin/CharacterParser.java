@@ -354,9 +354,20 @@ public class CharacterParser {
                     builder.append(spannableStringBuilder);
                     return finalBuilder.append(builder);
                 } else {
-                    String smallerString = content.substring(firstIndex - 5, firstIndex + 7);
-                    String smallerStringLowerCase = lowerCaseText.substring(firstIndex - 5, firstIndex + 7);
-                    int index = smallerStringLowerCase.indexOf(lowerCaseFilterStr);
+                    String smallerString;
+                    String smallerStringLowerCase;
+                    int index = 0;
+                    if (firstIndex >= 5) {
+                        smallerString = content.substring(firstIndex - 5, firstIndex + 7);
+                        smallerStringLowerCase = lowerCaseText.substring(firstIndex - 5, firstIndex + 7);
+                        index = smallerStringLowerCase.indexOf(lowerCaseFilterStr);
+                    } else {
+                        smallerString = content.substring(firstIndex, firstIndex + 12);
+                        smallerStringLowerCase = lowerCaseText.substring(firstIndex, firstIndex + 12);
+                        if (smallerStringLowerCase.length() < lowerCaseFilterStr.length()) {
+                            index = 0;
+                        }
+                    }
                     SpannableStringBuilder builder = new SpannableStringBuilder("...");
                     SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(smallerString);
                     spannableStringBuilder.setSpan(new ForegroundColorSpan(Color.parseColor("#0099ff")), index, getSmallerLength(smallerString.length(), index + filterStr.length()), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);

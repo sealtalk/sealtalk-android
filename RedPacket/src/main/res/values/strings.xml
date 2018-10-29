@@ -140,6 +140,7 @@
     <string name="jrmf_money_yuan2">元</string>
     <string name="jrmf_money_yuan3">%1$s元</string>
     <string name="jrmf_rp_time_out">已过期</string>
+    <string name="jrmf_rp_time_out_rate">已过期%1$s/%2$s</string>
     <string name="jrmf_rp_receive_rate">已领完%1$s/%2$s</string>
     <string name="jrmf_rp_receiving_rate">已领%1$s/%2$s</string>
     <string name="jrmf_rp_receive">收到的红包</string>
@@ -307,5 +308,56 @@
     <string name="jrmf_unbinding">解绑中...</string>
     <string name="loading">加载中...</string>
     <string name="waiting">请稍后...</string>
+
+
+    <!--转账-->
+    <string name="add_trans_tip">添加转账说明</string>
+    <string name="trans_little_tip">转账最低金额不能小于0.01元</string>
+    <string name="trans_repeat_tip">你有%1$s笔相同的转账对方未确认收款,你是否要继续转账</string>
+    <string name="continue_trans">继续转账</string>
+    <string name="jrmf_pay_succ">支付成功</string>
+    <string name="jrmf_trans_to_who">待%1$s确认收款</string>
+    <string name="jrmf_reback_tip">一天内未确认，将退还给对方。立即退还</string>
+    <string name="jrmf_reback_dialog">是否退还%1$s的转账</string>
+    <string name="jrmf_trans_to">向%1$s转账</string>
+    <string name="jrmf_trans_wait">待%1$s确认收款</string>
+    <string name="jrmf_trans_succ">%1$s已收款</string>
+    <string name="jrmf_trans_raback">%1$s已退还</string>
+    <string name="jrmf_rp_identity_table">您尚未进行实名认证，账户可能存在安全风险，请实名认证后尝试。</string>
+    <string name="jrmf_rp_identity_right">实名认证</string>
+    <string name="jrmf_rp_identity_left">取消</string>
+    <string name="_transfer_account">转账</string>
+    <string name="jrmf_transfer_account_type">云转账</string>
+    <string name="jrmf_transfer_account_sender">[转账]待确认收款</string>
+    <string name="jrmf_transfer_account_receiver">[转账]请确认收款</string>
+    <string name="jrmf_transfer_account_receive_sender">[转账]已确认收款</string>
+    <string name="jrmf_transfer_account_receive_receiver">[转账]确认收款</string>
+    <string name="jrmf_transfer_account_refund_sender">[转账]款已被退还</string>
+    <string name="jrmf_transfer_account_refund_receiver">[转账]已将款退还</string>
+    <string name="jrmf_transfer_to_you">转账给你</string>
+    <string name="jrmf_transfer_to">转账给%1$s</string>
+    <string name="jrmf_had_receive_money">已收款</string>
+    <string name="jrmf_had_back_money">已退还</string>
+    <string name="jrmf_had_back_money_timeout">已退还（过期）</string>
+    <string name="jrmf_trans_back_now">立即退还</string>
+    <string name="jrmf_trans_over_limit">转账金额超过限额%1$s元</string>
+    <string name="jrmf_trans_unconfirm_back">一天内朋友未确认，将退还给你</string>
+    <string name="jrmf_trans_time">转账时间:%1$s</string>
+    <string name="jrmf_trans_receive_time">收款时间:%1$s</string>
+    <string name="jrmf_trans_back_time">退还时间:%1$s</string>
+    <string name="jrmf_trans_back_to_wallet">已退款到钱包</string>
+    <string name="jrmf_trans_waiting_receive">待确认收款</string>
+    <string name="jrmf_trans_confirm_receive">确认收款</string>
+    <string name="jrmf_trans_save_to_wallet">已存入，您可在钱包中查看</string>
+    <string name="jrmf_receive_message_tip">您收到了一条消息</string>
+    <string name="jrmf_trans_detail">转账详情</string>
+    <string name="jrmf_trans_to_friend">转账给朋友</string>
+    <string name="jrmf_trans_amount">转账金额</string>
+    <string name="jrmf_trans_update">修改</string>
+
+
+    <string name="jrmf_trans_note">转账说明</string>
+    <string name="jrmf_trans_note_limit">最多输入10个字</string>
+
 
 </resources>

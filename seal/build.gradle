@@ -68,6 +68,6 @@ dependencies {
     compile project(':IMKit')
     compile project(':CallKit')
     compile project(':RedPacket')
-    compile 'com.huawei.android.hms:push:2.5.3.305'
+    compile 'com.huawei.android.hms:push:2.6.1.301'
 }
 apply plugin: 'com.google.gms.google-services'

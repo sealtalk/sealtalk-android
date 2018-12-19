@@ -34,7 +34,7 @@
             <ImageView
                 android:id="@+id/rc_unread_message_icon"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
             <TextView
                 android:id="@+id/rc_unread_message"
@@ -92,4 +92,9 @@
 
     </FrameLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/rc_conversation_list_divider_color" />
 </RelativeLayout>

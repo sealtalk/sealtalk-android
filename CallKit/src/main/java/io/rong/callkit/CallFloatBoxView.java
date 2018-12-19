@@ -467,7 +467,6 @@ public class CallFloatBoxView {
 
             @Override
             public void onError(RongCallCommon.CallErrorCode errorCode) {
-
             }
 
             @Override
@@ -586,6 +585,11 @@ public class CallFloatBoxView {
         if (mBundle == null) {
             RLog.d(TAG, "onClickToResume mBundle is null");
             return;
+        }
+        if(mBundle.getInt("mediaType")==RongCallCommon.CallMediaType.VIDEO.getValue() &&
+                !isDial){
+            RLog.d(TAG, "onClickToResume setEnableLocalVideo(true)");
+            RongCallClient.getInstance().setEnableLocalVideo(true);
         }
         mBundle.putBoolean("isDial",isDial);
         RongCallClient.getInstance().setVoIPCallListener(RongCallProxy.getInstance());

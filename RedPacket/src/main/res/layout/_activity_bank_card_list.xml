@@ -12,7 +12,7 @@
         android:id="@+id/actionbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:content="@string/jrmf_card_list"/>
+        app:jrmf_content="@string/jrmf_card_list"/>
 
     <ListView
         android:id="@+id/lv_listView"

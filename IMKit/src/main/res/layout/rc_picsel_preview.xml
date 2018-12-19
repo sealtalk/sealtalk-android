@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<view xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:layout_alignParentRight="true">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="1dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center_vertical"
-        android:background="#2A2A2A"/>
+    <!--<io.rong.photoview.PhotoView-->
+        <!--android:id="@+id/rc_picsel_photoView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
 
-    <TextView
-        android:id="@+id/preview_text"
-        android:layout_width="wrap_content"
+    <io.rong.subscaleview.SubsamplingScaleImageView
+        android:id="@+id/rc_photoView"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:text="@string/rc_picsel_toolbar_preview"
-        android:textColor="@color/rc_picsel_toolbar_send_text_disable"
-        android:textSize="16sp"/>
-</view>
+        android:layout_centerInParent="true"/>
+
+    <ImageButton
+        android:id="@+id/rc_play_video"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:background="@android:color/transparent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/rc_icon_video_play"
+        android:visibility="gone"
+        tools:visibility="visible" />
+</FrameLayout>

@@ -11,8 +11,8 @@
         android:id="@+id/actionbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:bankground="@color/red_dark"
-        app:content="" />
+        app:jrmf_bankground="@color/red_dark"
+        app:jrmf_content="" />
 
 
     <LinearLayout

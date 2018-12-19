@@ -13,7 +13,7 @@
         android:scrollbars="none"
         android:visibility="visible" />
 
-    <cn.rongcloud.sticker.widget.IndicatorView
+    <io.rong.sticker.widget.IndicatorView
         android:id="@+id/indicator_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

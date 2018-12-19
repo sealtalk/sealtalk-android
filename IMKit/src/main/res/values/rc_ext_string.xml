@@ -27,13 +27,16 @@
     <string name="rc_ext_location_permission_failed">您需要在设置里打开定位权限</string>
 
     <!-- PictureSelectorActivity -->
-    <string name="rc_picsel_toolbar">图片</string>
+    <string name="rc_picsel_toolbar">图片和视频</string>
     <string name="rc_picsel_toolbar_send">发送</string>
     <string name="rc_picsel_toolbar_send_num">发送(%d/9)</string>
-    <string name="rc_picsel_pictype">图片</string>
+    <string name="rc_picsel_pictype">图片和视频</string>
     <string name="rc_picsel_toolbar_preview">预览</string>
     <string name="rc_picsel_toolbar_preview_num">预览(%d)</string>
-    <string name="rc_picsel_selected_max">您最多只能选择9张图片</string>
+    <string name="rc_picsel_selected_max_pic_count">您最多只能选择9张图片</string>
+    <string name="rc_picsel_selected_max_time_span">不能分享超过5分钟的视频</string>
+    <string name="rc_picsel_selected_max_time_span_with_param">不能分享超过%d分钟的视频</string>
+    <string name="rc_picsel_video_corrupted">不能分享损坏的视频</string>
     <string name="rc_picsel_take_picture">拍摄照片</string>
     <string name="rc_picsel_catalog_allpic">所有图片</string>
     <string name="rc_picsel_catalog_number">%d张</string>
@@ -185,5 +188,6 @@
     <string name="rc_emoji_capsule">药</string><!--127-->
     <string name="rc_emoji_rocket">火箭</string><!--128-->
     <string name="rc_emoji_globe">地球</string><!--129-->
-    <!--emoji 对应的文字描述 共 128 个 end-->
+    <string name="rc_emoji_love_heart">爱心</string><!--130-->
+    <!--emoji 对应的文字描述 共 130 个 end-->
 </resources>

@@ -20,7 +20,7 @@
     <!-- 设置心跳包的timer, 默认2分半（150000） , 最小值为10秒（10000）建议不要超过3分钟-->
     <string name="rc_heartbeat_timer">150000</string>
     <!--&lt;!&ndash;实时位置共享最大人数&ndash;&gt;-->
-    <!--<integer name="rc_max_realtime_location_perticipants">5</integer>-->
+    <!--<integer name="rc_max_realtime_location_participants">5</integer>-->
     <!--&lt;!&ndash;实时位置共享会话类型&ndash;&gt;-->
     <!--<string-array name="rc_realtime_support_conversation_types" translatable="false">-->
         <!--<item>private</item>-->

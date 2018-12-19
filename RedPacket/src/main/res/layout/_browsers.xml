@@ -11,9 +11,9 @@
         android:id="@+id/actionbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/actionbar_height"
-        app:bankground="#E54141"
-        app:content=""
-        app:isBackFinish="true"/>
+        app:jrmf_bankground="#E54141"
+        app:jrmf_content=""
+        app:jrmf_isBackFinish="true"/>
 
     <WebView
         android:id="@+id/webView"

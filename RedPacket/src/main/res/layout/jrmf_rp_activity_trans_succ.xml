@@ -11,8 +11,8 @@
         android:id="@+id/actionbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:bankground="@color/jrmf_red"
-        app:content="转账详情"/>
+        app:jrmf_bankground="@color/jrmf_red"
+        app:jrmf_content="转账详情"/>
 
     <LinearLayout
         android:layout_width="match_parent"

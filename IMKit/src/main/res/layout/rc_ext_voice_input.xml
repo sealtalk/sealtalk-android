@@ -9,4 +9,5 @@
     android:background="@drawable/rc_voice_input_selector"
     android:text="@string/rc_audio_input"
     android:textColor="#737373"
-    android:textSize="16sp"/>
+    android:textSize="16sp"
+    android:textAllCaps="false"/>

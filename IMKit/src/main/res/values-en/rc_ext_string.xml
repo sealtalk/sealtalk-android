@@ -24,13 +24,16 @@
     <string name="rc_ext_location_permission_failed">You need to grant location permission in settings menu</string>
 
     <!-- PictureSelectorActivity -->
-    <string name="rc_picsel_toolbar">Picture</string>
+    <string name="rc_picsel_toolbar">Photos &amp; Videos</string>
     <string name="rc_picsel_toolbar_send">Send</string>
     <string name="rc_picsel_toolbar_send_num">Send(%d/9)</string>
-    <string name="rc_picsel_pictype">Picture</string>
+    <string name="rc_picsel_pictype">Photos &amp; Videos</string>
     <string name="rc_picsel_toolbar_preview">Preview</string>
     <string name="rc_picsel_toolbar_preview_num">Preview(%d)</string>
-    <string name="rc_picsel_selected_max">You can only choose 9 pictures at most.</string>
+    <string name="rc_picsel_selected_max_pic_count">You can only choose 9 pictures at most.</string>
+    <string name="rc_picsel_selected_max_time_span">Can\'t share the video longer than 5 minutes.</string>
+    <string name="rc_picsel_selected_max_time_span_with_param">Can\'t share the video longer than %d minutes.</string>
+    <string name="rc_picsel_video_corrupted">Unable to share damaged video.</string>
     <string name="rc_picsel_take_picture">Take picture</string>
     <string name="rc_picsel_catalog_allpic">All pictures</string>
     <string name="rc_picsel_catalog_number">%d</string>

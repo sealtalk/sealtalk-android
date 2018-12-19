@@ -35,4 +35,12 @@
 
     <!-- 开启之后，用户在其他端上阅读过的消息，当前客户端会清掉该消息的未读数。目前仅支持单聊、群聊、讨论组。-->
     <bool name="rc_enable_sync_read_status">false</bool>
+
+    <!--WebView 是否忽略 SSL 证书错误检测-->
+    <bool name="rc_open_https_certificate">false</bool>
+
+    <bool name="rc_location_2D">false</bool>
+
+    <!--PictureSelectorActivity 选择媒体资源时，是否包含视频文件 -->
+    <bool name="rc_media_selector_contain_video">false</bool>
 </resources>

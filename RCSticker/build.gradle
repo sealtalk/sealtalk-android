@@ -2,16 +2,14 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 27
-    buildToolsVersion "27.0.3"
+    buildToolsVersion '28.0.2'
 
 
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 2018102915
-        versionName "2.9.7 Stable"
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        versionCode 2018112221
+        versionName "2.9.8 Dev"
 
     }
 
@@ -31,15 +29,10 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:27.1.1'
-    compile project(':IMKit')
-    compile 'com.google.code.gson:gson:2.2.4'
-    testCompile 'junit:junit:4.12'
-    androidTestCompile('com.android.support.test.espresso:espresso-core:3.0.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-
+    api fileTree(dir: 'libs', include: ['*.jar'])
+//    api 'com.android.support:appcompat-v7:27.1.1'
+    api project(':IMKit')
+    api 'com.google.code.gson:gson:2.2.4'
 }
 
 //生成 jar 名字
@@ -50,7 +43,7 @@ def OUTPUT_PATH = "build/libs/"
 //执行 gradle makeJar 后生成发布的 Sight.jar
 task makeJar(type: Jar) {
     //Sight.jar
-    from zipTree(file('build/intermediates/bundles/release/classes.jar'))
+    from zipTree(file('build/intermediates/intermediate-jars/release/classes.jar'))
 
     //去除编译生成的临时文件
     exclude('**/BuildConfig.class')

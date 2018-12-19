@@ -54,6 +54,7 @@
         <item>@drawable/u1f64a</item>
         <item>@drawable/u1f47d</item>
         <item>@drawable/u1f4a9</item>
+        <item>@drawable/ufe0f</item>
         <item>@drawable/u1f494</item>
         <item>@drawable/u1f525</item>
         <item>@drawable/u1f4a2</item>
@@ -186,6 +187,7 @@
         <item>0x1f64a</item>
         <item>0x1f47d</item>
         <item>0x1f4a9</item>
+        <item>0xfe0f</item>
         <item>0x1f494</item>
         <item>0x1f525</item>
         <item>0x1f4a2</item>
@@ -318,6 +320,7 @@
         <item>@string/rc_emoji_no_speaking</item><!--51-->
         <item>@string/rc_emoji_alien</item><!--52-->
         <item>@string/rc_emoji_pile_of_poo</item><!--53-->
+        <item>@string/rc_emoji_love_heart</item><!-- <<<<<<<<<<<<<<<<<< 130 >>>>>>>>>>>>>>>>  -->
         <item>@string/rc_emoji_broken_heart</item><!--54-->
         <item>@string/rc_emoji_fire</item><!--55-->
         <item>@string/rc_emoji_anger</item><!--56-->

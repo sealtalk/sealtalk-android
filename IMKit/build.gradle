@@ -6,8 +6,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 2018102915
-        versionName "2.9.7 Stable"
+        versionCode 2018112221
+        versionName "2.9.8 Dev"
     }
     buildTypes {
         release {
@@ -33,6 +33,7 @@ android {
 dependencies {
     compile fileTree(dir: 'src/main/libs', include: ['*.jar'])
     compile 'com.android.support:support-v4:26.0.0'
+    compile 'com.android.support:exifinterface:26.0.0'
     compile project (':IMLib')
 }
 

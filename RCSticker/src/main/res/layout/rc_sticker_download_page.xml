@@ -28,7 +28,7 @@
                 android:textSize="24sp"
                 tools:text="嗨豹" />
 
-            <cn.rongcloud.sticker.widget.DownloadProgressView
+            <io.rong.sticker.widget.DownloadProgressView
                 android:id="@+id/btn"
                 android:layout_width="100dp"
                 android:layout_height="32dp"

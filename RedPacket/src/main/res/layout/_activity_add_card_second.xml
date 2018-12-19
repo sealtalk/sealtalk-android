@@ -11,7 +11,7 @@
         android:id="@+id/actionbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:content="@string/jrmf_add_bank_card_title"/>
+        app:jrmf_content="@string/jrmf_add_bank_card_title"/>
 
     <LinearLayout
         android:id="@+id/layout_step2"
@@ -61,9 +61,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dip"
-            app:allowEmpty="false"
-            app:hint="@string/jrmf_input_phone_hint"
-            app:validatorType="phone"/>
+            app:jrmf_allowEmpty="false"
+            app:jrmf_hint="@string/jrmf_input_phone_hint"
+            app:jrmf_validatorType="phone"/>
 
 
         <TextView

@@ -1,6 +1,5 @@
 package io.rong.callkit;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -68,7 +67,7 @@ public class AudioPlugin implements IPluginModule, IPluginRequestPermissionResul
 
     private void startAudioActivity(Fragment currentFragment, final RongExtension extension) {
         RongCallSession profile = RongCallClient.getInstance().getCallSession();
-        if (profile != null && profile.getActiveTime() > 0) {
+        if (profile != null && profile.getStartTime() > 0) {
             Toast.makeText(context,
                     profile.getMediaType() == RongCallCommon.CallMediaType.AUDIO ?
                             currentFragment.getString(R.string.rc_voip_call_audio_start_fail) :

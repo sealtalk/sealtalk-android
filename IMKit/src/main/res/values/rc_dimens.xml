@@ -6,8 +6,10 @@
     <dimen name="rc_conversation_item_time_size">13sp</dimen>
     <dimen name="rc_dimen_size_3">3dp</dimen>
     <dimen name="rc_dimen_size_5">5dp</dimen>
+    <dimen name="rc_dimen_size_6">6dp</dimen>
     <dimen name="rc_dimen_size_7">7dp</dimen>
     <dimen name="rc_dimen_size_9">9dp</dimen>
+    <dimen name="rc_dimen_size_12">12dp</dimen>
     <dimen name="rc_dimen_size_18">18dp</dimen>
     <dimen name="rc_dimen_size_24">24dp</dimen>
     <dimen name="rc_dimen_size_40">40dp</dimen>

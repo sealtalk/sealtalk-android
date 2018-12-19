@@ -10,8 +10,8 @@
         android:id="@+id/actionbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:bankground="@color/jrmf_red"
-        app:content="@string/jrmf_trans_detail"/>
+        app:jrmf_bankground="@color/jrmf_red"
+        app:jrmf_content="@string/jrmf_trans_detail"/>
 
     <ImageView
         android:id="@+id/iv_trans_state"

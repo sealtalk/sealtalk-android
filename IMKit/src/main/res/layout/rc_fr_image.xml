@@ -3,10 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <io.rong.photoview.PhotoView
+    <io.rong.subscaleview.SubsamplingScaleImageView
         android:id="@+id/rc_photoView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"/>
+    
+    <TextView
+        android:id="@+id/rc_count_down"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:textColor="#fff"
+        android:gravity="center"
+        android:layout_gravity="right"/>
 
     <ProgressBar
         android:id="@id/rc_progress"

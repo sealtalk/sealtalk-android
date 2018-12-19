@@ -11,7 +11,7 @@
         android:id="@+id/actionbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:content="@string/jrmf_send_rp_title"/>
+        app:jrmf_content="@string/jrmf_send_rp_title"/>
 
     <ScrollView
         android:layout_width="match_parent"

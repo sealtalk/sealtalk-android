@@ -67,7 +67,7 @@ public class VideoPlugin implements IPluginModule, IPluginRequestPermissionResul
     private void startVideoActivity(final RongExtension extension) {
 
         RongCallSession profile = RongCallClient.getInstance().getCallSession();
-        if (profile != null && profile.getActiveTime() > 0) {
+        if (profile != null && profile.getStartTime() > 0) {
             Toast.makeText(context,
                     profile.getMediaType() == RongCallCommon.CallMediaType.AUDIO ?
                             context.getString(R.string.rc_voip_call_audio_start_fail) :

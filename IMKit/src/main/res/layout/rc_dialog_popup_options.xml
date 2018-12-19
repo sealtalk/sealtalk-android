@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rc_corner_popup_dialog_style"
         android:divider="@color/rc_popup_dialog_list_divider_color"
+        android:listSelector="@color/rc_popup_dialog_list_divider_color"
         android:dividerHeight="0.5dp">
     </ListView>
 </RelativeLayout>

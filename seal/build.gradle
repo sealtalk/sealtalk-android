@@ -3,7 +3,7 @@ apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         applicationId "cn.rongcloud.im"
@@ -11,7 +11,7 @@ android {
         targetSdkVersion 23
         versionCode 2018102915
         versionName "1.3.7"
-
+        flavorDimensions "versionCode"
         multiDexEnabled true
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -64,11 +64,12 @@ dependencies {
     compile project(':recognizer')
     compile project(':contactcard')
     compile project(':sticker')
+    compile project(':RedPacket')
+    compile project(':CallKit')
+    compile project(':IMKit')
+    compile project(':RCSticker')
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.facebook.stetho:stetho:1.4.1'
-    compile project(':IMKit')
-    compile project(':CallKit')
-    compile project(':RedPacket')
     compile 'com.huawei.android.hms:push:2.6.1.301'
 }
 

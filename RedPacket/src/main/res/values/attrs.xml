@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--ActionBar-->
-    <declare-styleable name="ActionBarView">
-        <attr name="content" format="string" />
-        <attr name="bankground" format="color" />
-        <attr name="isBackFinish" format="boolean" />
-        <attr name="leftIcon" format="reference" />
+    <declare-styleable name="Jrmf_ActionBarView">
+        <attr name="jrmf_content" format="string" />
+        <attr name="jrmf_bankground" format="color" />
+        <attr name="jrmf_isBackFinish" format="boolean" />
+        <attr name="jrmf_leftIcon" format="reference" />
     </declare-styleable>
 
 
@@ -21,18 +21,19 @@
     </declare-styleable>
 
 
-    <declare-styleable name="FloatingLabelTextView">
-        <attr name="validationMessage" format="string" />
-        <attr name="hint" format="string" />
-        <attr name="allowEmpty" format="boolean" />
-        <attr name="validatorType" format="enum">
+
+    <declare-styleable name="Jrmf_FloatingLabelTextView">
+        <attr name="jrmf_validationMessage" format="string" />
+        <attr name="jrmf_hint" format="string" />
+        <attr name="jrmf_allowEmpty" format="boolean" />
+        <attr name="jrmf_validatorType" format="enum">
             <enum name="alpha" value="0" />
             <enum name="numeric" value="1" />
             <enum name="alphaNumeric" value="2" />
             <enum name="email" value="3" />
             <enum name="phone" value="4" />
         </attr>
-        <attr name="textSize" format="integer" />
+        <attr name="jrmf_textSize" format="integer" />
     </declare-styleable>
 
 

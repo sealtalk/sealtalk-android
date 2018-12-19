@@ -57,6 +57,7 @@ import io.rong.imkit.utils.NotificationUtil;
 import io.rong.imlib.model.UserInfo;
 
 import static io.rong.callkit.CallFloatBoxView.showFB;
+import static io.rong.callkit.util.CallKitUtils.isDial;
 
 /**
  * Created by weiqinxiao on 16/3/9.
@@ -579,6 +580,7 @@ public class BaseCallActivity extends BaseNoActionBarActivity implements IRongCa
         Intent intent = new Intent(getIntent().getAction());
         Bundle bundle = new Bundle();
         onSaveFloatBoxState(bundle);
+        bundle.putBoolean("isDial",isDial);
         intent.putExtra("floatbox", bundle);
         intent.putExtra("callAction", RongCallAction.ACTION_RESUME_CALL.getName());
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 1000, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -720,12 +722,14 @@ public class BaseCallActivity extends BaseNoActionBarActivity implements IRongCa
      * outgoing （initView）incoming处注册
      */
     public void regisHeadsetPlugReceiver(){
-        IntentFilter intentFilter=new IntentFilter();
-        intentFilter.addAction("android.intent.action.HEADSET_PLUG");
-        intentFilter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
-        intentFilter.addAction(BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED);
-        headsetPlugReceiver=new HeadsetPlugReceiver();
-        registerReceiver(headsetPlugReceiver,intentFilter);
+        if(BluetoothUtil.isSupportBluetooth()){
+            IntentFilter intentFilter=new IntentFilter();
+            intentFilter.addAction("android.intent.action.HEADSET_PLUG");
+            intentFilter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
+            intentFilter.addAction(BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED);
+            headsetPlugReceiver=new HeadsetPlugReceiver();
+            registerReceiver(headsetPlugReceiver,intentFilter);
+        }
     }
 
     /**

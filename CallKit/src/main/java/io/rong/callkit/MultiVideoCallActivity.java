@@ -120,8 +120,9 @@ public class MultiVideoCallActivity extends BaseCallActivity {
         setContentView(R.layout.rc_voip_multi_video_call);
         Intent intent = getIntent();
         startForCheckPermissions = intent.getBooleanExtra("checkPermissions", false);
-        Log.i(TAG, "onCreate initViews requestCallPermissions=" + requestCallPermissions(RongCallCommon.CallMediaType.VIDEO, REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS));
-        if (requestCallPermissions(RongCallCommon.CallMediaType.VIDEO, REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS)) {
+        boolean val=requestCallPermissions(RongCallCommon.CallMediaType.VIDEO, REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
+        Log.i(TAG, "onCreate initViews requestCallPermissions=" + val);
+        if (val) {
             Log.i(TAG, "--- onCreate  initViews------");
             initViews();
             setupIntent();
@@ -132,8 +133,9 @@ public class MultiVideoCallActivity extends BaseCallActivity {
     protected void onNewIntent(Intent intent) {
         startForCheckPermissions = intent.getBooleanExtra("checkPermissions", false);
         super.onNewIntent(intent);
-        Log.i(TAG, "mult onNewIntent==" + requestCallPermissions(RongCallCommon.CallMediaType.VIDEO, REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS));
-        if (requestCallPermissions(RongCallCommon.CallMediaType.VIDEO, REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS)) {
+        boolean bool=requestCallPermissions(RongCallCommon.CallMediaType.VIDEO, REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
+        Log.i(TAG, "mult onNewIntent==" + bool);
+        if (bool) {
             Log.i(TAG, "mult onNewIntent initViews");
             initViews();
             setupIntent();
@@ -795,7 +797,8 @@ public class MultiVideoCallActivity extends BaseCallActivity {
 
     @Override
     public void onNotifyUpgradeObserverToNormalUser() {
-        dialog = CallPromptDialog.newInstance(MultiVideoCallActivity.this, getString(R.string.rc_voip_invite_to_normal));
+        if(dialog == null){
+		dialog = CallPromptDialog.newInstance(MultiVideoCallActivity.this, getString(R.string.rc_voip_invite_to_normal));
         dialog.setPromptButtonClickedListener(new CallPromptDialog.OnPromptButtonClickedListener() {
             @Override
             public void onPositiveButtonClicked() {
@@ -823,7 +826,10 @@ public class MultiVideoCallActivity extends BaseCallActivity {
         });
 
         dialog.setCancelable(false);
-        dialog.show();
+		}
+		if (!dialog.isShowing()) {
+            dialog.show();
+        }
     }
 
     @Override

@@ -2,9 +2,10 @@ buildscript {
     repositories {
         jcenter()
         mavenCentral()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.2'
+        classpath 'com.android.tools.build:gradle:3.0.0'
         // just for GCM.
         classpath 'com.google.gms:google-services:2.0.0-alpha3'
     }
@@ -19,5 +20,6 @@ allprojects {
             name 'Google'
         }
         maven {url 'http://developer.huawei.com/repo/'}
+        google()
     }
 }

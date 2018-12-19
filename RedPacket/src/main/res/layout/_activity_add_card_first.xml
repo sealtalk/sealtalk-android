@@ -11,7 +11,7 @@
         android:id="@+id/actionbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:content="@string/jrmf_add_bank_card_title"/>
+        app:jrmf_content="@string/jrmf_add_bank_card_title"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -39,27 +39,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dip"
-                app:allowEmpty="false"
-                app:hint="@string/jrmf_username"
-                app:validatorType="alpha"/>
+                app:jrmf_allowEmpty="false"
+                app:jrmf_hint="@string/jrmf_username"
+                app:jrmf_validatorType="alpha"/>
 
             <com.jrmf360.rylib.rp.widget.FloatingLabelTextView
                 android:id="@+id/ftv_identityno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dip"
-                app:allowEmpty="false"
-                app:hint="@string/jrmf_IDCard_num"
-                app:validatorType="alpha"/>
+                app:jrmf_allowEmpty="false"
+                app:jrmf_hint="@string/jrmf_IDCard_num"
+                app:jrmf_validatorType="alpha"/>
 
             <com.jrmf360.rylib.rp.widget.FloatingLabelTextView
                 android:id="@+id/ftv_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dip"
-                app:allowEmpty="false"
-                app:hint="@string/jrmf_input_phone_hint"
-                app:validatorType="alpha"/>
+                app:jrmf_allowEmpty="false"
+                app:jrmf_hint="@string/jrmf_input_phone_hint"
+                app:jrmf_validatorType="alpha"/>
 
             <TextView
                 android:id="@+id/tv_charge_tip"

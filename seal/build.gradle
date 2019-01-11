@@ -63,7 +63,6 @@ dependencies {
     compile 'com.android.support:support-v4:26.0.0'
     compile project(':recognizer')
     compile project(':contactcard')
-    compile project(':sticker')
     compile project(':RedPacket')
     compile project(':CallKit')
     compile project(':IMKit')

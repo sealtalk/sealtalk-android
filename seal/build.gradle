@@ -2,15 +2,15 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 26
+    buildToolsVersion '28.0.2'
 
     defaultConfig {
         applicationId "cn.rongcloud.im"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 2018102915
-        versionName "1.3.7"
+        versionCode 2019011121
+        versionName "1.3.9"
         flavorDimensions "versionCode"
         multiDexEnabled true
         ndk {
@@ -59,16 +59,17 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:support-v4:26.0.0'
-    compile project(':recognizer')
-    compile project(':contactcard')
-    compile project(':RedPacket')
-    compile project(':CallKit')
-    compile project(':IMKit')
-    compile project(':RCSticker')
-    compile 'com.android.support:multidex:1.0.1'
-    compile 'com.facebook.stetho:stetho:1.4.1'
-    compile 'com.huawei.android.hms:push:2.6.1.301'
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api 'com.android.support:support-v4:26.0.0'
+    api project(':recognizer')
+    api project(':contactcard')
+    api project(':RedPacket')
+    api project(':CallKit')
+    api project(':IMKit')
+    api project(':RCSticker')
+    api project(':Sight')
+    api 'com.android.support:multidex:1.0.1'
+    api 'com.facebook.stetho:stetho:1.4.1'
+    api 'com.huawei.android.hms:push:2.6.1.301'
 }
 

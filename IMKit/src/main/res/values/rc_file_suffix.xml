@@ -98,8 +98,10 @@
     <array name="rc_pdf_file_suffix">
         <item>.pdf</item>
     </array>
-    <array name="rc_other_file_suffix">
+    <array name="rc_apk_file_suffix">
         <item>.apk</item>
+    </array>
+    <array name="rc_other_file_suffix">
         <item>.doc</item>
         <item>.dot</item>
         <item>.xla</item>

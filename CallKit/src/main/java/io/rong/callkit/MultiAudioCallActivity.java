@@ -576,8 +576,8 @@ public class MultiAudioCallActivity extends BaseCallActivity {
         MultiCallEndMessage multiCallEndMessage = new MultiCallEndMessage();
         multiCallEndMessage.setReason(reason);
         multiCallEndMessage.setMediaType(RongIMClient.MediaType.AUDIO);
-
-        RongIM.getInstance().insertMessage(callSession.getConversationType(), callSession.getTargetId(), callSession.getCallerUserId(), multiCallEndMessage, null);
+        long serverTime = System.currentTimeMillis() - RongIMClient.getInstance().getDeltaTime();
+        RongIM.getInstance().insertMessage(callSession.getConversationType(), callSession.getTargetId(), callSession.getCallerUserId(), multiCallEndMessage, serverTime, null);
         stopRing();
         postRunnableDelay(new Runnable() {
             @Override

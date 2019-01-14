@@ -383,6 +383,10 @@ public class CallSelectMemberActivity extends BaseNoActionBarActivity {
                         observerMember.remove(userId);
                     }
                     v.setSelected(false);
+                    if (selectedMember.size() == 0 && observerMember.size() == 0) {
+                        txtvStart.setEnabled(false);
+                        txtvStart.setTextColor(getResources().getColor(R.color.callkit_color_text_operation_disable));
+                    }
                     return;
                 }
                 int totalNumber=selectedMember.size() + (invitedMembers.size()-(allObserver==null?0:allObserver.size()));
@@ -404,7 +408,7 @@ public class CallSelectMemberActivity extends BaseNoActionBarActivity {
                         txtvStart.setTextColor(getResources().getColor(R.color.rc_voip_check_enable));
                     } else {
                         txtvStart.setEnabled(false);
-                        txtvStart.setTextColor(getResources().getColor(R.color.rc_voip_check_disable));
+                        txtvStart.setTextColor(getResources().getColor(R.color.callkit_color_text_operation_disable));
                     }
                 }else{
                     if(videoObserverState && isFirstDialog){
@@ -438,7 +442,7 @@ public class CallSelectMemberActivity extends BaseNoActionBarActivity {
                         txtvStart.setTextColor(getResources().getColor(R.color.rc_voip_check_enable));
                     } else {
                         txtvStart.setEnabled(false);
-                        txtvStart.setTextColor(getResources().getColor(R.color.rc_voip_check_disable));
+                        txtvStart.setTextColor(getResources().getColor(R.color.callkit_color_text_operation_disable));
                     }
                 }
             }

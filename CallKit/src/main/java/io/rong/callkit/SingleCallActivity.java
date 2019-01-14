@@ -729,14 +729,15 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
             message.setReason(reason);
             message.setMediaType(callSession.getMediaType());
             message.setExtra(extra);
+            long serverTime = System.currentTimeMillis() - RongIMClient.getInstance().getDeltaTime();
             if (senderId.equals(callSession.getSelfUserId())) {
                 message.setDirection("MO");
-                RongIM.getInstance().insertOutgoingMessage(Conversation.ConversationType.PRIVATE, callSession.getTargetId(), io.rong.imlib.model.Message.SentStatus.SENT, message, null);
+                RongIM.getInstance().insertOutgoingMessage(Conversation.ConversationType.PRIVATE, callSession.getTargetId(), io.rong.imlib.model.Message.SentStatus.SENT, message, serverTime, null);
             } else {
                 message.setDirection("MT");
                 io.rong.imlib.model.Message.ReceivedStatus receivedStatus = new io.rong.imlib.model.Message.ReceivedStatus(0);
                 receivedStatus.setRead();
-                RongIM.getInstance().insertIncomingMessage(Conversation.ConversationType.PRIVATE, callSession.getTargetId(), senderId, receivedStatus, message, null);
+                RongIM.getInstance().insertIncomingMessage(Conversation.ConversationType.PRIVATE, callSession.getTargetId(), senderId, receivedStatus, message, serverTime, null);
             }
         }
         postRunnableDelay(new Runnable() {

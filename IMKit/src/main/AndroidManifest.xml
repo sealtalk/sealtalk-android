@@ -47,6 +47,7 @@
         <!-- 开发者可以修改 RongBaseActivity 的 rc_base_activity_layout 布局文件调整 actionbar-->
         <activity
             android:name="io.rong.imkit.tools.RongWebviewActivity"
+            android:exported="false"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="io.rong.imkit.intent.action.webview" />
@@ -61,6 +62,7 @@
 
         <activity
             android:name="io.rong.imkit.activity.PicturePagerActivity"
+            android:exported="false"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="io.rong.imkit.intent.action.picturepagerview" />
@@ -76,6 +78,7 @@
         <activity android:name="io.rong.imkit.activity.FileListActivity" />
         <activity
             android:name="io.rong.imkit.activity.FilePreviewActivity"
+            android:exported="false"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="io.rong.imkit.intent.action.openfile" />

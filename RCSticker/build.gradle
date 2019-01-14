@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 2018112221
-        versionName "2.9.8 Dev"
+        versionCode 2019011121
+        versionName "2.9.9 Dev"
 
     }
 
@@ -30,7 +30,7 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-//    api 'com.android.support:appcompat-v7:27.1.1'
+    api 'com.android.support:appcompat-v7:26.0.0'
     api project(':IMKit')
     api 'com.google.code.gson:gson:2.2.4'
 }

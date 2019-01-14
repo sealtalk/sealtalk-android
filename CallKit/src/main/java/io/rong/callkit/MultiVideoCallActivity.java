@@ -719,8 +719,8 @@ public class MultiVideoCallActivity extends BaseCallActivity {
         MultiCallEndMessage multiCallEndMessage = new MultiCallEndMessage();
         multiCallEndMessage.setMediaType(RongIMClient.MediaType.VIDEO);
         multiCallEndMessage.setReason(reason);
-
-        RongIM.getInstance().insertMessage(callSession.getConversationType(), callSession.getTargetId(), callSession.getCallerUserId(), multiCallEndMessage, null);
+        long serverTime = System.currentTimeMillis() - RongIMClient.getInstance().getDeltaTime();
+        RongIM.getInstance().insertMessage(callSession.getConversationType(), callSession.getTargetId(), callSession.getCallerUserId(), multiCallEndMessage, serverTime, null);
         stopRing();
         postRunnableDelay(new Runnable() {
             @Override

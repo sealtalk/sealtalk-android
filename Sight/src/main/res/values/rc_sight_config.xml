@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 设置最大拍摄时长(单位：秒)-->
+    <integer name="rc_sight_max_record_duration">10</integer>
+</resources>

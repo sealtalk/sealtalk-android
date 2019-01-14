@@ -21,7 +21,9 @@
     <string name="rc_others_are_sharing_location">%d persons are sharing location</string>
     <string name="rc_ext_warning">Prompt</string>
     <string name="rc_ext_exit_location_sharing">End Real-time Location now?</string>
+    <string name="rc_real_time_exit_notification">Real-time Location will stop if you leave this session. Leave now?</string>
     <string name="rc_ext_location_permission_failed">You need to grant location permission in settings menu</string>
+    <string name="rc_real_time_join_notification">Others can see your location if you join Real-time Location. Join now</string>
 
     <!-- PictureSelectorActivity -->
     <string name="rc_picsel_toolbar">Photos &amp; Videos</string>

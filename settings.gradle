@@ -1,2 +1,3 @@
 include ':seal', ':recognizer', ':contactcard',":IMKit",":IMLib",":CallLib",":CallKit",":RedPacket"
 include ':RCSticker'
+include ':Sight'

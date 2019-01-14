@@ -43,4 +43,7 @@
 
     <!--PictureSelectorActivity 选择媒体资源时，是否包含视频文件 -->
     <bool name="rc_media_selector_contain_video">false</bool>
+
+    <!--进入会话或会话列表界面，是否清除通知栏通知-->
+    <bool name="rc_wipe_out_notification_message">true</bool>
 </resources>

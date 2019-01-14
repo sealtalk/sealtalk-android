@@ -2,12 +2,12 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '27'
+    buildToolsVersion '28.0.2'
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 2018112221
-        versionName "2.9.8 Dev"
+        versionCode 2019011121
+        versionName "2.9.9 Dev"
     }
     buildTypes {
         release {
@@ -31,10 +31,11 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'src/main/libs', include: ['*.jar'])
-    compile 'com.android.support:support-v4:26.0.0'
-    compile 'com.android.support:exifinterface:26.0.0'
-    compile project (':IMLib')
+    api fileTree(dir: 'src/main/libs', include: ['*.jar'])
+    api 'com.android.support:support-v4:26.0.0'
+    api 'com.googlecode.mp4parser:isoparser:1.1.21'
+    api 'com.android.support:exifinterface:26.0.0'
+    api project (':IMLib')
 }
 
 repositories {

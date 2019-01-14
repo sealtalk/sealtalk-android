@@ -56,4 +56,5 @@
     <item type="id" name="rc_conversation_status" />
     <item type="id" name="rc_edit_text" />
     <item type="id" name="rc_layout_msg_list" />
+    <item type="id" name="rc_debounceClick_last_timestamp" />
 </resources>

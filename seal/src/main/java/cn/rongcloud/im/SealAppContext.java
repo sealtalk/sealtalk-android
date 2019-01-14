@@ -37,9 +37,12 @@ import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.RongMessageItemLongClickActionManager;
 import io.rong.imkit.model.GroupNotificationMessageData;
 import io.rong.imkit.model.GroupUserInfo;
 import io.rong.imkit.model.UIConversation;
+import io.rong.imkit.model.UIMessage;
+import io.rong.imkit.widget.provider.MessageItemLongClickAction;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
@@ -144,6 +147,26 @@ public class SealAppContext implements RongIM.ConversationListBehaviorListener,
                 quit(false);
             }
         });
+        setMessageItemLongClickAction(mContext);
+    }
+
+    private static void setMessageItemLongClickAction(Context context) {
+        MessageItemLongClickAction action = new MessageItemLongClickAction.Builder()
+                .titleResId(R.string.rc_dialog_item_message_delete)
+                .actionListener(new MessageItemLongClickAction.MessageItemLongClickListener() {
+                    @Override
+                    public boolean onMessageItemLongClick(Context context, UIMessage message) {
+                        Message[] messages = new Message[1];
+                        messages[0] = message.getMessage();
+                        if (message.getConversationType().equals(Conversation.ConversationType.PRIVATE)) {
+                            RongIM.getInstance().deleteRemoteMessages(message.getConversationType(), message.getTargetId(), messages, null);
+                        } else {
+                            RongIM.getInstance().deleteMessages(new int[]{message.getMessageId()}, null);
+                        }
+                        return false;
+                    }
+                }).build();
+        RongMessageItemLongClickActionManager.getInstance().addMessageItemLongClickAction(action, 1);
     }
 
     private void setReadReceiptConversationType() {

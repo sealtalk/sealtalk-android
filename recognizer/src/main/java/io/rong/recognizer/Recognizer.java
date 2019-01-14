@@ -58,12 +58,6 @@ public class Recognizer extends RelativeLayout implements RecognizerListener {
 
     public Recognizer(Context context) {
         super(context);
-        /**
-         * 语音输入模块集成的是讯分SDK,开发者要集成需要去讯飞开放平台获取自身的APPID替换下面的id.
-         */
-        if (SpeechUtility.getUtility() == null) {
-            SpeechUtility.createUtility(context.getApplicationContext(), SpeechConstant.APPID + "=" + (mAppId == null ? "5a430817" : mAppId));
-        }
         initViews();
     }
 
@@ -101,6 +95,7 @@ public class Recognizer extends RelativeLayout implements RecognizerListener {
         rlBottom = (RelativeLayout) recognizerContainer.findViewById(R.id.rl_bottom);
         addView(recognizerContainer);
         random = new Random();
+        IflytekSpeech.initSDK(getContext(), mAppId);
     }
 
     /**
@@ -265,42 +260,12 @@ public class Recognizer extends RelativeLayout implements RecognizerListener {
             animStart.stop();
             animEnd = null;
         }
-        if (SpeechUtility.getUtility() != null) {
-            SpeechUtility.getUtility().destroy();
-        }
         mInitListener = null;
-    }
-
-    private String parseIatResult(String json) {
-        {
-            StringBuffer ret = new StringBuffer();
-            JSONTokener jsonTokener = new JSONTokener(json);
-            try {
-                JSONObject jsonObject = new JSONObject(jsonTokener);
-                JSONArray jsonArray = jsonObject.getJSONArray("ws");
-                for (int i = 0; i < jsonArray.length(); ++i) {
-                    // 转写结果词，默认使用第一个结果
-                    JSONArray items = jsonArray.getJSONObject(i).getJSONArray("cw");
-                    JSONObject obj = items.getJSONObject(0);
-//				如果需要多候选结果，解析数组其他字段0
-//				for(int j = 0; j < items.length(); j++)
-//				{
-//					JSONObject obj = items.getJSONObject(j);
-//					ret.append(obj.getString("w"));
-//				}
-                    ret.append(obj.getString("w"));
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return ret.toString();
-        }
-
     }
 
     private void printResult(RecognizerResult result) {
         String json = result.getResultString();
-        String text = parseIatResult(json);
+        String text = IflytekSpeech.parseRecognizeResult(result);
         try {
             JSONObject obj = new JSONObject(json);
             boolean isLast = obj.getBoolean("ls");

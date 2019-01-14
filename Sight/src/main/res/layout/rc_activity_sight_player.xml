@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_sight_player"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_sight_black"
+    android:gravity="center">
+
+    <RelativeLayout
+        android:id="@+id/rl_sight_download"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <io.rong.imkit.widget.AsyncImageView
+            android:id="@+id/rc_sight_thumb"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/rc_sight_download_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/sight_record_top_icon_margin"
+            android:layout_marginTop="@dimen/sight_record_top_icon_margin"
+            android:src="@drawable/rc_ic_sight_close" />
+
+        <io.rong.imkit.widget.CircleProgressView
+            android:id="@+id/rc_sight_download_progress"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_centerInParent="true" />
+
+        <RelativeLayout
+            android:id="@+id/rc_sight_download_failed_reminder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/rc_sight_download_failed_iv_reminder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/rc_ic_sight_try_download_again" />
+
+            <TextView
+                android:id="@+id/rc_sight_download_failed_tv_reminder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rc_sight_download_failed_iv_reminder"
+                android:paddingTop="45dp"
+                android:text="@string/rc_sight_download_failed"
+                android:textColor="@color/color_sight_white"
+                android:textSize="14sp" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/rc_count_down"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:textColor="#fff" />
+</RelativeLayout>

@@ -18,10 +18,6 @@ import com.facebook.stetho.inspector.protocol.ChromeDevtoolsDomain;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.rongcloud.contactcard.ContactCardExtensionModule;
-import cn.rongcloud.contactcard.IContactCardClickListener;
-import cn.rongcloud.contactcard.IContactCardInfoProvider;
-import cn.rongcloud.contactcard.message.ContactMessage;
 import cn.rongcloud.im.db.Friend;
 import cn.rongcloud.im.message.TestMessage;
 import cn.rongcloud.im.message.provider.ContactNotificationMessageProvider;
@@ -34,6 +30,10 @@ import cn.rongcloud.im.stetho.RongDatabaseFilesProvider;
 import cn.rongcloud.im.stetho.RongDbFilesDumperPlugin;
 import cn.rongcloud.im.ui.activity.UserDetailActivity;
 import cn.rongcloud.im.utils.SharedPreferencesContext;
+import io.rong.contactcard.ContactCardExtensionModule;
+import io.rong.contactcard.IContactCardClickListener;
+import io.rong.contactcard.IContactCardInfoProvider;
+import io.rong.contactcard.message.ContactMessage;
 import io.rong.imageloader.core.DisplayImageOptions;
 import io.rong.imageloader.core.display.FadeInBitmapDisplayer;
 import io.rong.imkit.RongExtensionManager;
@@ -43,8 +43,9 @@ import io.rong.imlib.RongIMClient;
 import io.rong.imlib.ipc.RongExceptionHandler;
 import io.rong.imlib.model.UserInfo;
 import io.rong.push.RongPushClient;
-import io.rong.push.common.RongException;
+import io.rong.push.pushconfig.PushConfig;
 import io.rong.recognizer.RecognizeExtensionModule;
+import io.rong.sight.SightExtensionModule;
 
 
 public class App extends MultiDexApplication {
@@ -74,15 +75,15 @@ public class App extends MultiDexApplication {
         if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
 
 //            LeakCanary.install(this);//内存泄露检测
-            RongPushClient.registerHWPush(this);
-            RongPushClient.registerMiPush(this, "2882303761517473625", "5451747338625");
-            RongPushClient.registerMZPush(this, "112988", "2fa951a802ac4bd5843d694517307896");
-            try {
-                RongPushClient.registerFCM(this);
-            } catch (RongException e) {
-                e.printStackTrace();
-            }
-
+            PushConfig config = new PushConfig
+                    .Builder()
+                    .enableHWPush(true)
+                    .enableMiPush("2882303761517473625", "5451747338625")
+                    .enableMeiZuPush("112988", "2fa951a802ac4bd5843d694517307896")
+                    .enableVivoPush(true)
+                    .enableFCM(true)
+                    .build();
+            RongPushClient.setPushConfig(config);
             /**
              * 注意：
              *
@@ -92,7 +93,7 @@ public class App extends MultiDexApplication {
              *
              * 只有两个进程需要初始化，主进程和 push 进程
              */
-            RongIM.setServerInfo("nav.cn.ronghub.com", "up.qbox.me");
+//            RongIM.setServerInfo("nav.cn.ronghub.com", "up.qbox.me");
             RongIM.init(this);
             NLog.setDebug(true);//Seal Module Log 开关
             SealAppContext.init(this);
@@ -134,7 +135,7 @@ public class App extends MultiDexApplication {
                     .cacheOnDisk(true)
                     .build();
 
-            //RongExtensionManager.getInstance().registerExtensionModule(new PTTExtensionModule(this, true, 1000 * 60));
+//            RongExtensionManager.getInstance().registerExtensionModule(new PTTExtensionModule(this, true, 1000 * 60));
             RongExtensionManager.getInstance().registerExtensionModule(new ContactCardExtensionModule(new IContactCardInfoProvider() {
                 @Override
                 public void getContactAllInfoProvider(final IContactCardInfoCallback contactInfoCallback) {
@@ -183,6 +184,8 @@ public class App extends MultiDexApplication {
                 }
             }));
             RongExtensionManager.getInstance().registerExtensionModule(new RecognizeExtensionModule());
+            //小视频
+            RongExtensionManager.getInstance().registerExtensionModule(new SightExtensionModule());
         }
     }
 

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_sight_white">#FFFFFF</color>
+    <color name="color_sight_black">#ff000000</color>
+    <color name="color_sight_divider_line">#E5E5E5</color>
+    <color name="color_sight_capture_button_circle_outer">#B3FFFFFF</color>
+    <color name="color_sight_primary">#3A91F3</color>
+    <color name="color_sight_record_reminder_shadow">#33000000</color>
+</resources>

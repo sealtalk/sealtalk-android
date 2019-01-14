@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="sight_text_view_padding_horizontal">9dp</dimen>
+    <dimen name="sight_text_view_padding_vertical">10dp</dimen>
+    <dimen name="sight_record_top_icon_size">29dp</dimen>
+    <dimen name="sight_record_top_icon_margin">20dp</dimen>
+    <dimen name="sight_record_control_icon_size">74dp</dimen>
+    <dimen name="sight_record_control_icon_margin_left">30dp</dimen>
+    <dimen name="sight_record_control_icon_margin_bottom">45dp</dimen>
+    <dimen name="sight_capture_button_circle_size_inner">27dp</dimen>
+    <dimen name="sight_capture_button_circle_size_outer">37dp</dimen>
+    <dimen name="sight_capture_button_record_circle_size_inner">20dp</dimen>
+    <dimen name="sight_capture_button_record_circle_size_outer">60dp</dimen>
+    <dimen name="sight_text_size_14">14sp</dimen>
+</resources>

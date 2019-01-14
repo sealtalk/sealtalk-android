@@ -1,0 +1,8 @@
+<resources>
+    <string name="rc_plugin_sight">小视频</string>
+    <string name="rc_sight_reminder">长按录制小视频</string>
+    <string name="rc_sight_list_title">聊天文件</string>
+    <string name="rc_sight_download_failed">下载失败，点击重新下载</string>
+    <string name="rc_sight_record_too_short_time">录制时间短，请重试</string>
+    <string name="rc_sight_message_recalled">消息被撤回</string>
+</resources>

@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="14dp"
-            android:drawableLeft="@drawable/_wallet"
+            android:drawableLeft="@drawable/ac_wallet"
             android:drawablePadding="14sp"
             android:text="@string/my_wallet"
             android:textColor="@color/text_color"

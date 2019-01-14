@@ -1,0 +1,58 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion '28.0.2'
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 19
+        versionCode 2019011121
+        versionName "2.9.9 Dev"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    android {
+        lintOptions {
+            abortOnError false
+        }
+    }
+
+}
+
+dependencies {
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api project(':IMKit')
+}
+
+//生成 jar 名字
+def JAR_NAME = "Sight"
+//生成 jar 路径
+def OUTPUT_PATH = "build/libs/"
+
+//执行 gradle makeJar 后生成发布的 Sight.jar
+task makeJar(type: Jar) {
+    //Sight.jar
+    from zipTree(file('build/intermediates/intermediate-jars/release/classes.jar'))
+
+    //去除编译生成的临时文件
+    exclude('**/BuildConfig.class')
+    exclude('**/BuildConfig\$*.class')
+    exclude('**/R.class')
+    exclude('**/R\$*.class')
+    exclude('**/*_version')
+
+    baseName JAR_NAME
+    destinationDir file(OUTPUT_PATH)
+}
+
+task clearJar(type: Delete) {
+    delete OUTPUT_PATH + JAR_NAME + '.jar'
+}
+
+makeJar.dependsOn(clearJar, build)

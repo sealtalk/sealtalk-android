@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#BF000000"
+    android:clickable="true"
+    android:orientation="horizontal"
+    android:paddingBottom="8dp"
+    android:paddingTop="16dp">
+
+    <ImageView
+        android:id="@+id/btnPlayPause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:layout_weight="0" />
+
+    <TextView
+        android:id="@+id/current"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="7dp"
+        android:layout_weight="0"
+        android:textColor="@color/color_sight_white"
+        android:textSize="10sp"
+        tools:text="00:00" />
+
+    <SeekBar
+        android:id="@+id/seeker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="7dp"
+        android:layout_weight="1"
+        android:maxHeight="3dp"
+        android:minHeight="3dp"
+        android:thumb="@drawable/rc_ic_sight_seek_bar_thumb" />
+
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="14dp"
+        android:layout_weight="0"
+        android:textColor="@color/color_sight_white"
+        android:textSize="10sp"
+        tools:text="09:12" />
+
+</LinearLayout>

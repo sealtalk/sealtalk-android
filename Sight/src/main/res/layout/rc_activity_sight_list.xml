@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#FAFAFA">
+
+        <ImageButton
+            android:id="@+id/imgbtn_nav_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:paddingBottom="12dp"
+            android:paddingLeft="14dp"
+            android:paddingRight="14dp"
+            android:paddingTop="12dp"
+            android:src="@drawable/rc_ic_sight_nav_back" />
+
+        <LinearLayout
+            android:id="@+id/ll_nav_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/imgbtn_nav_back"
+            android:layout_toLeftOf="@+id/imgbtn_nav_option"
+            android:layout_toRightOf="@+id/imgbtn_nav_back"
+            android:layout_toStartOf="@+id/imgbtn_nav_option"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_nav_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="@string/rc_sight_list_title"
+                android:textColor="#262626"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_nav_sub_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#262626"
+                android:textSize="10sp"
+                android:visibility="gone"
+                tools:text="小标题" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/imgbtn_nav_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:paddingBottom="12dp"
+            android:paddingLeft="14dp"
+            android:paddingRight="14dp"
+            android:paddingTop="12dp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <View style="@style/rc_sight_horizontal_light_thin_divider" />
+
+    <ListView
+        android:id="@+id/sightList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp" />
+</LinearLayout>

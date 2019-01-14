@@ -3,34 +3,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@id/rc_checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/rc_voip_checkbox" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-    <io.rong.imkit.widget.AsyncImageView
-        android:id="@+id/rc_user_portrait"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginLeft="16dp"
-        android:scaleType="centerCrop"
-        android:background="@android:color/transparent"
-        app:RCCornerRadius="@dimen/asynimg_cornerRadius8dp"
-        app:RCDefDrawable="@drawable/rc_default_portrait" />
+        <ImageView
+            android:id="@id/rc_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:src="@drawable/rc_voip_checkbox" />
 
-    <TextView
-        android:id="@+id/rc_user_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="8dp"
-        android:gravity="center"
-        android:textColor="#ff262626"
-        android:textSize="16sp" />
+        <io.rong.imkit.widget.AsyncImageView
+            android:id="@+id/rc_user_portrait"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginLeft="14dp"
+            android:background="@android:color/transparent"
+            android:scaleType="centerCrop"
+            app:RCCornerRadius="3dp"
+            app:RCDefDrawable="@drawable/rc_default_portrait" />
+
+        <TextView
+            android:id="@+id/rc_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="64dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="7dp"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+    </LinearLayout>
 </LinearLayout>

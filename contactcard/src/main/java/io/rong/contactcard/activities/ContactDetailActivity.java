@@ -199,9 +199,9 @@ public class ContactDetailActivity extends RongBaseNoActionbarActivity {
                 UserInfo sendUserInfo = RongUserInfoManager.getInstance().
                         getUserInfo(RongIMClient.getInstance().getCurrentUserId());
                 String sendUserName = sendUserInfo == null ? "" : sendUserInfo.getName();
+                String friendPortrait = mContactFriend.getPortraitUri() == null ? "" : mContactFriend.getPortraitUri().toString();
                 ContactMessage contactMessage = ContactMessage.obtain(mContactFriend.getUserId(),
-                        mContactFriend.getName(), mContactFriend.getPortraitUri().toString(),
-                        RongIMClient.getInstance().getCurrentUserId(), sendUserName, "");
+                        mContactFriend.getName(), friendPortrait, RongIMClient.getInstance().getCurrentUserId(), sendUserName, "");
                 String pushContent = String.format(RongContext.getInstance().getResources().getString(R.string.rc_recommend_clause_to_me), sendUserName, contactMessage.getName());
                 RongIM.getInstance().sendMessage(Message.obtain(mTargetId, mConversationType, contactMessage),
                         pushContent, null, new IRongCallback.ISendMessageCallback() {

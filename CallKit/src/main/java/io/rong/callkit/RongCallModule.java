@@ -65,6 +65,7 @@ public class RongCallModule implements IExternalModule {
             @Override
             public void onCheckPermission(RongCallSession callSession) {
                 FinLog.d("VoIPReceiver", "onCheckPermissions");
+                mCallSession = callSession;
                 if (mViewLoaded) {
                     startVoIPActivity(mContext, callSession, true);
                 }

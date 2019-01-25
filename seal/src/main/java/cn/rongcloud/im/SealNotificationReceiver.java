@@ -19,4 +19,8 @@ public class SealNotificationReceiver extends PushMessageReceiver {
         return false;
     }
 
+    @Override
+    public void onThirdPartyPushState(PushType pushType, String action, long resultCode) {
+        super.onThirdPartyPushState(pushType, action, resultCode);
+    }
 }

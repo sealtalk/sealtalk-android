@@ -21,7 +21,6 @@
     </declare-styleable>
 
 
-
     <declare-styleable name="Jrmf_FloatingLabelTextView">
         <attr name="jrmf_validationMessage" format="string" />
         <attr name="jrmf_hint" format="string" />

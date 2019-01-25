@@ -9,101 +9,132 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application>
-        <activity android:name="com.jrmf360.rylib.rp.ui.AddCardActivity"
-                  android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.jrmf360.rylib.rp.ui.AddCardActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity
             android:name="com.jrmf360.rylib.rp.ui.AddCardFirsstActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.rp.ui.AddCardSecondActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.rp.ui.BankCardListActivity"
-                  android:screenOrientation="portrait"/>
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.rp.ui.AddCardSecondActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.rp.ui.BankCardListActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity
             android:name="com.jrmf360.rylib.rp.ui.EnBrowserActivity"
-            android:screenOrientation="portrait"/>
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity
             android:name="com.jrmf360.rylib.rp.ui.PayTypeActivity"
             android:theme="@style/jrmf_dialog"
             android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait"/>
-
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity
             android:name="com.jrmf360.rylib.rp.ui.TransPayActivity"
             android:launchMode="singleTask"
             android:theme="@style/jrmf_dialog"
             android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait"/>
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.rp.ui.RealNameActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
 
-        <activity android:name="com.jrmf360.rylib.rp.ui.RealNameActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.rp.ui.ResetPswdActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.rp.ui.SendGroupEnvelopesActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.rp.ui.SendSingleEnvelopesActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.rp.ui.SettingPswdActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.rp.ui.RpDetailActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.rp.ui.MyRpActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.rp.ui.FindPwdByInfoActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.rp.ui.TransAccountActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.rp.ui.TransSuccActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.rp.ui.TransDetailActivity"
-                  android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.jrmf360.rylib.rp.ui.ResetPswdActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.rp.ui.SendGroupEnvelopesActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.rp.ui.SendSingleEnvelopesActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.rp.ui.SettingPswdActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.rp.ui.RpDetailActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.rp.ui.MyRpActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.rp.ui.FindPwdByInfoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.rp.ui.TransAccountActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.rp.ui.TransSuccActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.rp.ui.TransDetailActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
 
 
         <!--钱包 配置开始-->
         <activity
             android:name="com.jrmf360.rylib.wallet.ui.MyWalletActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity android:name="com.jrmf360.rylib.wallet.ui.AccountInfoActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.wallet.ui.TradeHistoryActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.wallet.ui.SecureSettingActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.wallet.ui.SetPayPwdActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.wallet.ui.IdentityAuthenActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.wallet.ui.UpdatePwdActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.wallet.ui.GetPwdActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.wallet.ui.SupportBankCardActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.wallet.ui.BankSettingActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.wallet.ui.AddCardSecondActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.wallet.ui.AddCardFirstActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.wallet.ui.RechargeActivity"
-                  android:screenOrientation="portrait"/>
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity
+            android:name="com.jrmf360.rylib.wallet.ui.AccountInfoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.wallet.ui.TradeHistoryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.wallet.ui.SecureSettingActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.wallet.ui.SetPayPwdActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.wallet.ui.IdentityAuthenActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.wallet.ui.UpdatePwdActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.wallet.ui.GetPwdActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.wallet.ui.SupportBankCardActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.wallet.ui.BankSettingActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.wallet.ui.AddCardSecondActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.wallet.ui.AddCardFirstActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.wallet.ui.RechargeActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
 
         <activity
             android:name="com.jrmf360.rylib.wallet.ui.GetDepositActivity"
             android:windowSoftInputMode="adjustResize|stateHidden"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.wallet.ui.PwdCheckActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.wallet.ui.MyRpActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.wallet.ui.SelectSubBankActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.wallet.ui.WebViewActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name="com.jrmf360.rylib.wallet.ui.TradeDetailActivity"
-                  android:screenOrientation="portrait"/>
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.wallet.ui.PwdCheckActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.wallet.ui.MyRpActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.wallet.ui.SelectSubBankActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.wallet.ui.WebViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.jrmf360.rylib.wallet.ui.TradeDetailActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
 
         <!--钱包配置结束-->
 

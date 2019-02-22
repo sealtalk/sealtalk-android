@@ -2,27 +2,15 @@
 <resources>
 
     <string name="app_name">SealTalk</string>
-    <string name="action_settings">Settings</string>
-
 
     <!--主页-->
-    <string name="main_name">融云</string>
-    <string name="main_conversation">会话</string>
-    <string name="main_group">广场</string>
-    <string name="main_chatroom">通讯录</string>
     <string name="main_customer">意见反馈</string>
     <string name="main_customer_xn">小能客服</string>
     <string name="private_chat">发起聊天</string>
     <string name="group_chat">创建群组</string>
     <string name="add_contacts">添加好友</string>
-    <string name="add_select_group">创建群组</string>
-    <string name="set_personal_information">我的账号</string>
-    <string name="set_news_reminded">新消息提醒</string>
     <string name="set_privacy">隐私</string>
-    <string name="set_set">设置</string>
     <string name="set_rongcloud">关于 SealTalk</string>
-    <string name="set_logout">注销</string>
-    <string name="de_save">"保存"</string>
 
     <string name="no_read_message">"···"</string>
 
@@ -34,27 +22,17 @@
     <string name="new_message_show">新消息通知</string>
     <string name="new_message_voice">声音</string>
     <string name="new_message_vibration">震动</string>
-    <string name="new_message_prompt_voice">新消息提示音</string>
-    <string name="new_message_follow_system">跟随系统</string>
     <string name="friend_confirmation">加我好友时需要验证</string>
     <string name="the_blacklist">黑名单</string>
     <string name="join_the_blacklist">加入黑名单</string>
     <string name="blacklist_empty">黑名单为空</string>
     <string name="portrait">头像</string>
-    <string name="my_username">昵称</string>
     <string name="update_log">更新日志</string>
     <string name="function_introduce">功能介绍</string>
     <string name="version_number">V2.1.0</string>
-    <string name="dv_document">开发者文档</string>
     <string name="rongcloud_web">官方网站</string>
-    <string name="new_version_update">当前版本</string>
     <string name="de_notification_start">开始时间</string>
     <string name="de_notification_end">结束时间</string>
-
-
-    <!-- friend list -->
-    <string name="de_item_delete_friend">"删除"</string>
-
 
     <!--actionbar title -->
     <string name="de_actionbar_myacc">"个人账号"</string>
@@ -69,8 +47,6 @@
     <string name="de_dialog_item_message_delete">删除消息</string>
     <string name="de_notification_information">开启后，在设定时间段内收到新消息时不会响铃或振动。</string>
 
-    <string name="de_group_list_default_discussion_name">讨论组</string>
-    <string name="de_message_content_draft">[草稿]</string>
     <string name="de_message_at_me">[有人@我]</string>
 
     <!-- Aming 10月重构版 -->
@@ -78,8 +54,7 @@
     <string name="network_not_available">网络不可用</string>
     <string name="login_api_fail">登录请求接口失败</string>
     <string name="sync_userinfo_api_fail">同步用户信息接口请求失败</string>
-    <string name="get_token_api_fail">获取token请求接口失败</string>
-    <string name="sync_group_api_fail">同步群组信息请求接口失败</string>
+    <string name="get_token_api_fail">获取 token 请求接口失败</string>
     <string name="phone_or_psw_error">手机或者密码错误</string>
     <string name="phone_number_is_null">手机号不能为空</string>
     <string name="Illegal_phone_number">非法手机号</string>
@@ -106,38 +81,23 @@
     <string name="forget_password">忘记密码</string>
     <string name="cancel">取消</string>
     <string name="Done">完成</string>
-    <string name="exit_app">确定退出应用?</string>
     <string name="No_friends">暂无好友</string>
     <string name="Search">搜索</string>
     <string name="new_friends">新的朋友</string>
     <string name="group">群组</string>
     <string name="public_service">公众号</string>
-    <string name="chatroom">聊天室</string>
-    <string name="groups">群聊</string>
-    <string name="chatroom1">聊天室 I</string>
-    <string name="add_success">加入成功</string>
-    <string name="not_group_members">非群组成员不能查看群组详情</string>
     <string name="check_network">请检查网络</string>
-    <string name="chatroom2">聊天室 II</string>
-    <string name="chatroom3">聊天室 III</string>
-    <string name="chatroom4">聊天室 IV</string>
     <string name="agreed_friend">已同意好友关系</string>
     <string name="agree">接&#160;&#160;&#160;受</string>
     <string name="request">已请求</string>
     <string name="ignore">已忽略</string>
     <string name="added">已添加</string>
     <string name="deleted">已删除</string>
-    <string name="mobile_phone">手机号</string>
     <string name="change_password">密码修改</string>
     <string name="select_group_member">选择群组成员</string>
     <string name="remove_group_member">移除群组成员</string>
     <string name="add_group_member">添加群组成员</string>
     <string name="edit_group_name">填写群名称(2-10字)</string>
-    <string name="create_group">创建群组</string>
-    <string name="created_group">创建了群组</string>
-    <string name="you">你</string>
-    <string name="request_friends">请求添加你为好友</string>
-    <string name="edit_phone">请输入 11 位手机号</string>
     <string name="original_password">原密码不能为空</string>
     <string name="new_password_not_null">新密码不能为空</string>
     <string name="confirm_password_not_null">确认密码不能为空</string>
@@ -152,25 +112,14 @@
     <string name="group_name">群名称</string>
     <string name="confirm_quit_group">确认退出群组?</string>
     <string name="confirm_dismiss_group">确认解散群组?</string>
-    <string name="clean_history">是否清除会话聊天记录?</string>
     <string name="set_top">会话置顶</string>
     <string name="message_notice">消息免打扰</string>
     <string name="search_message">查找聊天记录</string>
     <string name="clean_message">清除聊天记录</string>
-    <string name="send_message">发起聊天</string>
     <string name="quit_group">删除并退出</string>
     <string name="dismiss_group">解散并退出</string>
     <string name="user_details">用户详情</string>
     <string name="black_state">黑名单状态</string>
-    <string name="divided_string">、</string>
-    <string name="change_group_name">修改群名称为</string>
-    <string name="quit_groups">退出了群组</string>
-    <string name="dismiss_groups">解散了群组</string>
-    <string name="join_group">加入了群组</string>
-    <string name="to_join_group">加入了群组</string>
-    <string name="invitation">邀请</string>
-    <string name="remove_group_before_str">将</string>
-    <string name="remove_group_after_str">移出了群组</string>
     <string name="my_groups">群组</string>
     <string name="code_is_null">验证码为空</string>
     <string name="name_is_null">昵称不能为空</string>
@@ -183,7 +132,6 @@
     <string name="get_code">获取验证码</string>
     <string name="clear_success">清除成功</string>
     <string name="clear_failure">清除失败</string>
-    <string name="change_group_info">更改群组信息</string>
     <string name="new_group_name">新的群名称</string>
     <string name="update_success">更改成功</string>
     <string name="quit_success">退出成功</string>
@@ -199,8 +147,6 @@
     <string name="add_friend">加为好友</string>
     <string name="add_text">加好友信息...</string>
     <string name="request_success">请求成功</string>
-    <string name="can_not_add_yourself">自己不能添加自己为好友</string>
-    <string name="new_name">新昵称</string>
     <string name="portrait_update_success">头像更新成功</string>
     <string name="chat">会话</string>
     <string name="contacts">通讯录</string>
@@ -216,22 +162,8 @@
     <string name="privacy">隐私</string>
     <string name="new_message">接收新消息通知</string>
     <string name="message_show_details">通知显示消息详情</string>
-
-    <string name="launched_location_sharing">发起了位置共享</string>
-    <string name="location_sharing_ended">位置共享已结束</string>
-    <string name="location">位置</string>
-    <string name="send_location">发送位置</string>
-    <string name="real_time_location_sharing">实时位置共享</string>
     <string name="fetching">获取中……</string>
-    <string name="geographical_position">地理位置</string>
-    <string name="you_are_sharing_location">你正在共享位置</string>
-    <string name="person_is_sharing_loaction">人正在共享位置</string>
-    <string name="persons_are_sharing_loaction">人正在共享位置</string>
-    <string name="location_sharing_exit_promt">退出当前页面将会终止实时位置共享,确定退出？</string>
     <string name="prompt">提示</string>
-    <string name="launched_a_location_sharing">我发起了位置共享</string>
-    <string name="sdk_version_update">SDK版本</string>
-    <string name="sealtalk_version_update">SealTalk版本</string>
     <string name="all_group_member">全部群成员</string>
     <string name="group_member_online_status">群成员在线状态</string>
     <string name="group_announcement">群公告</string>
@@ -256,20 +188,13 @@
     <string name="search_friend">添加好友</string>
     <string name="setdisplayname">设置备注</string>
     <string name="new_and_old_password">新旧密码一致</string>
-    <string name="nickname_show">昵称:</string>
-    <string name="ac_item_friend_nick_name">昵称:%1$s</string>
-    <string name="ac_search_no_result">没有搜索到%1$s相关的会话</string>
-    <string name="other_devices_login">账号在其它设备登录</string>
     <string name="new_message_notice_title">消息免打扰</string>
     <string name="other_devices_text">您的账号在别的设备上登录，您被迫下线!</string>
     <string name="i_know">知道了</string>
     <string name="update_name">昵称更改</string>
     <string name="ac_search_no_result_pre">没有搜到</string>
     <string name="ac_search_no_result_suffix">相关的信息</string>
-    <string name="ac_search_chat_title">聊天记录</string>
     <string name="ac_search_chat_detail">共%1$d条与</string>
-    <string name="ac_search_chat_detail_one">共</string>
-    <string name="ac_search_chat_detail_two">条与</string>
     <string name="ac_search_chat_detail_three">相关的聊天记录</string>
     <string name="ac_search_nick_name">昵称： </string>
     <string name="ac_contact_nick_name">昵称:</string>
@@ -282,12 +207,10 @@
     <string name="ac_search_more_chatting_records">查看更多聊天记录</string>
 
     <string name="search_item_chat_records">%d条相关记录</string>
-    <string name="online">在线</string>
     <string name="offline">离线</string>
-    <string name="web_online">网页在线</string>
     <string name="pc_online">电脑在线</string>
     <string name="phone_online">手机在线</string>
-    <string name="ipad_online">iPad在线</string>
+    <string name="ipad_online">iPad 在线</string>
     <string name="imac_online">iMac 在线</string>
     <string name="set_user_online_status">设置用户在线状态</string>
     <string name="read_receipt_detail">回执详情</string>
@@ -300,16 +223,15 @@
     <string name="clean_private_chat_history">确定删除聊天记录吗</string>
     <string name="clean_group_chat_history">确定删除群聊天记录吗</string>
     <string name="clean_discussion_chat_history">确定删除讨论组聊天记录吗</string>
-    <string name="join_chat_room_error_toast">聊天室ID为空,请稍后重试</string>
+    <string name="join_chat_room_error_toast">聊天室 ID 为空,请稍后重试</string>
 
     <string name="activity_detail_discussion_to_top">置顶</string>
     <string name="activity_detail_discussion_not_disturb">消息免打扰</string>
     <string name="ac_about_seal_talk_version">SealTalk 版本</string>
     <string name="ac_about_sdk_version">SDK 版本</string>
-    <string name="ac_about_shut_down_debug_mode">关闭debug模式</string>
+    <string name="ac_about_shut_down_debug_mode">关闭 debug 模式</string>
     <string name="ac_detail_discussion_member_size">讨论组成员()</string>
     <string name="ac_detail_discussion_clear_messages">清空聊天信息</string>
-    <string name="ac_detail_discussion_start_group_conversation">开启群组会话</string>
     <string name="ac_detail_discussion_group_display_name">群组昵称</string>
     <string name="ac_detail_discussion_start_chat">发起聊天</string>
     <string name="ac_detail_discussion_delete_and_quit_discussion">删除并退出讨论组</string>
@@ -327,13 +249,11 @@
     <string name="share_dialog_share">分享</string>
     <string name="share_dialog_cancel">取消</string>
     <string name="share_dialog_hint">说些什么</string>
-    <string name="share_dialog_from">来自：UC浏览器</string>
+    <string name="share_dialog_from">来自：UC 浏览器</string>
 
     <string name="dialog_bottom_picture">拍照</string>
     <string name="dialog_bottom_import_from_local">从本地导入</string>
     <string name="fr_group_list_not_join_the_group">暂未加入群组</string>
-    <string name="ac_select_friend">选择联系人</string>
-    <string name="ac_select_friend_sure">确定</string>
 
     <string name="ac_note_info_name">备注名</string>
     <string name="ac_note_info">备注信息</string>

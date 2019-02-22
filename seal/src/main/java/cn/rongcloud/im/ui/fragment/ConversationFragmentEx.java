@@ -154,7 +154,7 @@ public class ConversationFragmentEx extends ConversationFragment {
                 @Override
                 public void run() {
                     listView.requestFocusFromTouch();
-                    listView.setSelection(listView.getCount() - listView.getFooterViewsCount() - listView.getHeaderViewsCount());
+                    listView.setSelection(listView.getCount());
                 }
             }, 100);
         }
@@ -167,7 +167,7 @@ public class ConversationFragmentEx extends ConversationFragment {
                 @Override
                 public void run() {
                     listView.requestFocusFromTouch();
-                    listView.setSelection(listView.getCount() - listView.getFooterViewsCount() - listView.getHeaderViewsCount());
+                    listView.setSelection(listView.getCount());
                 }
             }, 100);
         }

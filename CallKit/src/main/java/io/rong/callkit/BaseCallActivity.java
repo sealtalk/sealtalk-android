@@ -422,6 +422,7 @@ public class BaseCallActivity extends BaseNoActionBarActivity implements IRongCa
         CallKitUtils.callConnected=true;
         CallKitUtils.shouldShowFloat = true;
         CallKitUtils.isDial=false;
+        AudioPlayManager.getInstance().setInVoipMode(true);
         AudioRecordManager.getInstance().destroyRecord();
     }
 

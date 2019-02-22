@@ -259,7 +259,9 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
                     userPortrait.setResource(userInfo.getPortraitUri().toString(), R.drawable.rc_default_portrait);
                 }
                 TextView userName = (TextView) mUserInfoContainer.findViewById(R.id.rc_voip_user_name);
-                userName.setText(userInfo.getName());
+                if (userName != null) {
+                    userName.setText(userInfo.getName());
+                }
             }
         }
         if(callAction.equals(RongCallAction.ACTION_INCOMING_CALL) && userInfo!=null){

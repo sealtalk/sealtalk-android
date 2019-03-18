@@ -71,5 +71,6 @@ dependencies {
     api 'com.android.support:multidex:1.0.1'
     api 'com.facebook.stetho:stetho:1.4.1'
     api 'com.huawei.android.hms:push:2.6.1.301'
+    api 'com.meizu.flyme.internet:push-internal:3.6.+@aar'
 }
 

@@ -12,7 +12,7 @@ public class PublicServiceInfoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         Log.e("", "---------PublicServiceInfoActivity------------");
         setContentView(R.layout.pub_account_info);
-        setTitle("公众号信息");
+        setTitle(getString(R.string.public_account_information));
 
     }
 

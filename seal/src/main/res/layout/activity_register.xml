@@ -54,23 +54,82 @@
             android:textColor="#FFF"
             android:textColorHint="#FFFFFF" />
 
-        <cn.rongcloud.im.server.widget.ClearWriteEditText
-            android:id="@+id/reg_phone"
+        <LinearLayout
+            android:id="@+id/reg_country_select"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
-            android:drawablePadding="5dip"
-            android:hint="@string/phone_number"
-            android:maxLength="11"
-            android:inputType="phone"
-            android:paddingLeft="10dip"
-            android:paddingRight="10dip"
-            android:maxLines="1"
-            android:textColor="#FFF"
-            android:textColorHint="#FFFFFF" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/countries_and_regions"
+                android:paddingLeft="10dip"
+                android:paddingRight="10dip"
+                android:textColor="#FFF"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium.Inverse"
+                />
+            <TextView
+                android:id="@+id/reg_country_name"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:layout_height="wrap_content"
+                android:text="@string/china"
+                android:paddingLeft="10dip"
+                android:paddingRight="10dip"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textColor="#FFF"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium.Inverse"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/rp_arrow"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            >
+            <TextView
+                android:id="@+id/reg_country_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dip"
+                android:paddingRight="10dip"
+                android:text="+86"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium.Inverse"
+                />
+            <cn.rongcloud.im.server.widget.ClearWriteEditText
+                android:id="@+id/reg_phone"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:drawablePadding="5dip"
+                android:hint="@string/phone_number"
+                android:maxLength="20"
+                android:inputType="phone"
+                android:paddingLeft="10dip"
+                android:paddingRight="10dip"
+                android:maxLines="1"
+                android:textColor="#FFF"
+                android:textColorHint="#FFFFFF" />
+
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -185,5 +244,17 @@
         android:text="@string/Login"
         android:textColor="#999999"
         android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/chg_lang"
+        android:text="EN"
+        android:textColor="#FFF"
+        android:textSize="16sp"
+        android:padding="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 
 </RelativeLayout>

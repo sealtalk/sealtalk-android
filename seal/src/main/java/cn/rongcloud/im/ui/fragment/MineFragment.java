@@ -20,6 +20,8 @@ import android.widget.TextView;
 
 import com.jrmf360.rylib.JrmfClient;
 
+import java.util.Locale;
+
 import cn.rongcloud.im.App;
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.SealConst;
@@ -34,8 +36,11 @@ import cn.rongcloud.im.server.widget.SelectableRoundedImageView;
 import cn.rongcloud.im.ui.activity.AboutRongCloudActivity;
 import cn.rongcloud.im.ui.activity.AccountSettingActivity;
 import cn.rongcloud.im.ui.activity.MyAccountActivity;
+import cn.rongcloud.im.ui.activity.SetLanguageActivity;
 import io.rong.imageloader.core.ImageLoader;
+import io.rong.imkit.RongConfigurationManager;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.utilities.LangUtils;
 import io.rong.imlib.model.CSCustomServiceInfo;
 import io.rong.imlib.model.UserInfo;
 
@@ -48,7 +53,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     public static final String SHOW_RED = "SHOW_RED";
     private SharedPreferences sp;
     private SelectableRoundedImageView imageView;
-    private TextView mName;
+    private TextView mName, mCurrentLanguageTv;
     private ImageView mNewVersionView;
     private boolean isHasNewVersion;
     private String url;
@@ -133,9 +138,13 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         mName = (TextView) mView.findViewById(R.id.mine_name);
         LinearLayout mUserProfile = (LinearLayout) mView.findViewById(R.id.start_user_profile);
         LinearLayout mMineSetting = (LinearLayout) mView.findViewById(R.id.mine_setting);
+        LinearLayout mMineLanguage = (LinearLayout) mView.findViewById(R.id.mine_language);
         LinearLayout mMineService = (LinearLayout) mView.findViewById(R.id.mine_service);
         LinearLayout mMineXN = (LinearLayout) mView.findViewById(R.id.mine_xiaoneng);
         LinearLayout mMineAbout = (LinearLayout) mView.findViewById(R.id.mine_about);
+        mCurrentLanguageTv = (TextView) mView.findViewById(R.id.tv_mine_current_language);
+        mCurrentLanguageTv.setText(getLanguageStr());
+
         if (isDebug) {
             mMineXN.setVisibility(View.VISIBLE);
         } else {
@@ -143,6 +152,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         }
         mUserProfile.setOnClickListener(this);
         mMineSetting.setOnClickListener(this);
+        mMineLanguage.setOnClickListener(this);
         mMineService.setOnClickListener(this);
         mMineAbout.setOnClickListener(this);
         mMineXN.setOnClickListener(this);
@@ -158,18 +168,21 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.mine_setting:
                 startActivity(new Intent(getActivity(), AccountSettingActivity.class));
                 break;
+            case R.id.mine_language:
+                startActivity(new Intent(getActivity(), SetLanguageActivity.class));
+                break;
             case R.id.mine_service:
                 CSCustomServiceInfo.Builder builder = new CSCustomServiceInfo.Builder();
-                builder.province("北京");
-                builder.city("北京");
-                RongIM.getInstance().startCustomerServiceChat(getActivity(), "KEFU146001495753714", "在线客服", builder.build());
+                builder.province(getString(R.string.beijing));
+                builder.city(getString(R.string.beijing));
+                RongIM.getInstance().startCustomerServiceChat(getActivity(), "KEFU146001495753714", getString(R.string.online_custom_service), builder.build());
                 // KEFU146001495753714 正式  KEFU145930951497220 测试  小能: zf_1000_1481459114694   zf_1000_1480591492399
                 break;
             case R.id.mine_xiaoneng:
                 CSCustomServiceInfo.Builder builder1 = new CSCustomServiceInfo.Builder();
-                builder1.province("北京");
-                builder1.city("北京");
-                RongIM.getInstance().startCustomerServiceChat(getActivity(), "zf_1000_1481459114694", "在线客服", builder1.build());
+                builder1.province(getString(R.string.beijing));
+                builder1.city(getString(R.string.beijing));
+                RongIM.getInstance().startCustomerServiceChat(getActivity(), "zf_1000_1481459114694", getString(R.string.online_custom_service), builder1.build());
                 break;
             case R.id.mine_about:
                 mNewVersionView.setVisibility(View.GONE);
@@ -218,5 +231,26 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         }
 
         return version;
+    }
+
+    /**
+     * 获取当前语言字符串
+     */
+    private String getLanguageStr() {
+        LangUtils.RCLocale currentLocale = RongConfigurationManager.getInstance().getAppLocale(getContext());
+        Locale systemLocale = RongConfigurationManager.getInstance().getSystemLocale();
+        if (currentLocale == LangUtils.RCLocale.LOCALE_CHINA) {
+            return getString(R.string.lang_chs);
+        } else if (currentLocale == LangUtils.RCLocale.LOCALE_US) {
+            return getString(R.string.lang_english);
+        } else {
+            if (systemLocale.getLanguage().equals(Locale.CHINESE.getLanguage())) {
+                return getString(R.string.lang_chs);
+            } else if (systemLocale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
+                return getString(R.string.lang_english);
+            } else {
+                return getString(R.string.lang_chs);
+            }
+        }
     }
 }

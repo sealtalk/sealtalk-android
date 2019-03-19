@@ -42,7 +42,7 @@ import io.rong.imkit.RongIM;
 /**
  * Created by tiankui on 16/9/20.
  */
-public class SealSearchMoreGroupActivity extends Activity {
+public class SealSearchMoreGroupActivity extends BaseActivity {
 
     private EditText mSearchEditText;
     private ListView mGroupsListView;
@@ -63,7 +63,7 @@ public class SealSearchMoreGroupActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more_groups_info);
-
+        setHeadVisibility(View.GONE);
         Intent intent = getIntent();
         mFilterString = intent.getStringExtra("filterString");
         mFilterGroupId = intent.getStringArrayListExtra("filterGroupId");

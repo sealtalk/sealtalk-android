@@ -45,7 +45,7 @@ import io.rong.imkit.RongIM;
 /**
  * Created by tiankui on 16/9/2.
  */
-public class SealSearchMoreFriendsActivity extends Activity implements AdapterView.OnItemClickListener {
+public class SealSearchMoreFriendsActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
     private EditText mSearchEditText;
     private ListView mFriendListView;
@@ -62,7 +62,7 @@ public class SealSearchMoreFriendsActivity extends Activity implements AdapterVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more_friends_detail_info);
-
+        setHeadVisibility(View.GONE);
         Intent intent = getIntent();
         mFilterString = intent.getStringExtra("filterString");
         mFilterFriendList = intent.getParcelableArrayListExtra("filterFriendList");

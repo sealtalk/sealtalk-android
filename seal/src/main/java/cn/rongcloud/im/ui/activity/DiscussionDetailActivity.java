@@ -64,7 +64,7 @@ public class DiscussionDetailActivity extends BaseActivity implements CompoundBu
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_discussion);
-        setTitle("讨论组详情");
+        setTitle(getString(R.string.discussion_group_detail));
         targetId = getIntent().getStringExtra("TargetId");
         if (TextUtils.isEmpty(targetId)) {
             return;
@@ -140,7 +140,7 @@ public class DiscussionDetailActivity extends BaseActivity implements CompoundBu
 
 
     private void initData(Discussion mDiscussion) {
-        memberSize.setText("讨论组成员(" + mDiscussion.getMemberIdList().size() + ")");
+        memberSize.setText(getString(R.string.discussion_group_member_format, mDiscussion.getMemberIdList().size()));
         createId = mDiscussion.getCreatorId();
         ids = mDiscussion.getMemberIdList();
         if (ids != null) {
@@ -197,7 +197,7 @@ public class DiscussionDetailActivity extends BaseActivity implements CompoundBu
                         }).show();
                 break;
             case R.id.discu_quit:
-                DialogWithYesOrNoUtils.getInstance().showDialog(mContext, "是否退出并删除当前讨论组?", new DialogWithYesOrNoUtils.DialogCallBack() {
+                DialogWithYesOrNoUtils.getInstance().showDialog(mContext, mContext.getString(R.string.exit_and_delete_discussion_group_prompt), new DialogWithYesOrNoUtils.DialogCallBack() {
                     @Override
                     public void executeEvent() {
                         RongIM.getInstance().quitDiscussion(targetId, new RongIMClient.OperationCallback() {

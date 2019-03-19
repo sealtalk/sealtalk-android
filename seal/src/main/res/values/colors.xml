@@ -32,6 +32,12 @@
     <color name="mine_head_color">#cccccc</color>
     <color name="text_color">#353535</color>
 
+    <color name="color_gray_text">#939393</color>
+    <color name="color_divider_line">#E5E5E5</color>
+    <color name="register_select_country_text_color">#4a4a4a</color>
+    <color name="register_select_country_bg">#f1f1f1</color>
+
+
     <!--SWITCH-->
     <color name="ksw_md_ripple_normal">#1E000000</color>
     <color name="ksw_md_solid_shadow">#33000000</color>

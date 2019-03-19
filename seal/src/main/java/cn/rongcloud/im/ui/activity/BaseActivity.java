@@ -23,6 +23,7 @@ import cn.rongcloud.im.server.network.async.AsyncTaskManager;
 import cn.rongcloud.im.server.network.async.OnDataListener;
 import cn.rongcloud.im.server.network.http.HttpException;
 import cn.rongcloud.im.server.utils.NToast;
+import io.rong.imkit.RongConfigurationManager;
 
 public abstract class BaseActivity extends FragmentActivity implements OnDataListener {
 
@@ -61,6 +62,12 @@ public abstract class BaseActivity extends FragmentActivity implements OnDataLis
         // Activity管理
         action = new SealAction(mContext);
 
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        Context context = RongConfigurationManager.getInstance().getConfigurationContext(newBase);
+        super.attachBaseContext(context);
     }
 
 
@@ -248,12 +255,12 @@ public abstract class BaseActivity extends FragmentActivity implements OnDataLis
         switch (state) {
             // 网络不可用给出提示
             case AsyncTaskManager.HTTP_NULL_CODE:
-                NToast.shortToast(mContext, "当前网络不可用");
+                NToast.shortToast(mContext, mContext.getString(R.string.network_unavailable));
                 break;
 
             // 网络有问题给出提示
             case AsyncTaskManager.HTTP_ERROR_CODE:
-                NToast.shortToast(mContext, "网络问题请稍后重试");
+                NToast.shortToast(mContext, mContext.getString(R.string.network_error_and_retry_after));
                 break;
 
             // 请求有问题给出提示
@@ -275,5 +282,13 @@ public abstract class BaseActivity extends FragmentActivity implements OnDataLis
             return mInputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
         }
         return super.onTouchEvent(event);
+    }
+
+    public void hideInputKeyboard(){
+        View currentFocus = getCurrentFocus();
+        if(currentFocus != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
+        }
     }
 }

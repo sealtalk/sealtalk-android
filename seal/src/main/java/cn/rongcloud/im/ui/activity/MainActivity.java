@@ -46,11 +46,17 @@ import io.rong.message.ContactNotificationMessage;
 //import io.rong.toolkit.TestActivity;
 
 @SuppressWarnings("deprecation")
-public class MainActivity extends FragmentActivity implements
+public class MainActivity extends BaseActivity implements
         ViewPager.OnPageChangeListener,
         View.OnClickListener,
         DragPointView.OnDragListencer,
         IUnReadMessageObserver {
+    /**
+     * 启动 MainActivity 时，通过 Intent 传入首次需要加载的 Fragment 的 Index，
+     * 如：intent.putExtra({@link #INITIAL_TAB_INDEX}, {@link #TAB_ME_INDEX})
+     */
+    public static final String INITIAL_TAB_INDEX = "initialTabIndex";
+    public static final int TAB_ME_INDEX = 3;
 
     public static ViewPager mViewPager;
     private List<Fragment> mFragment = new ArrayList<>();
@@ -75,12 +81,20 @@ public class MainActivity extends FragmentActivity implements
             return;
         }
         setContentView(R.layout.activity_main);
+        setHeadVisibility(View.GONE);
         mContext = this;
         isDebug = getSharedPreferences("config", MODE_PRIVATE).getBoolean("isDebug", false);
         initViews();
         changeTextViewColor();
-        changeSelectedTabState(0);
+        Intent intent = getIntent();
         initMainViewPager();
+        if(intent != null){
+            int initialIndex = intent.getIntExtra(INITIAL_TAB_INDEX, 0);
+            changeSelectedTabState(initialIndex);
+            mViewPager.setCurrentItem(initialIndex);
+        }else{
+            changeSelectedTabState(0);
+        }
         registerHomeKeyReceiver(this);
     }
 

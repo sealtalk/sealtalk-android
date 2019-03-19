@@ -83,8 +83,9 @@ public class MyAccountActivity extends BaseActivity implements View.OnClickListe
         String cacheName = sp.getString(SealConst.SEALTALK_LOGIN_NAME, "");
         String cachePortrait = sp.getString(SealConst.SEALTALK_LOGING_PORTRAIT, "");
         String cachePhone = sp.getString(SealConst.SEALTALK_LOGING_PHONE, "");
+        String cacheRegion = sp.getString(SealConst.SEALTALK_LOGIN_REGION, "86");
         if (!TextUtils.isEmpty(cachePhone)) {
-            mPhone.setText("+86 " + cachePhone);
+            mPhone.setText("+" + cacheRegion + " " + cachePhone);
         }
         if (!TextUtils.isEmpty(cacheName)) {
             mName.setText(cacheName);
@@ -184,7 +185,7 @@ public class MyAccountActivity extends BaseActivity implements View.OnClickListe
         switch (requestCode) {
             case GET_QI_NIU_TOKEN:
             case UP_LOAD_PORTRAIT:
-                NToast.shortToast(mContext, "设置头像请求失败");
+                NToast.shortToast(mContext, mContext.getString(R.string.set_avatar_request_failed));
                 LoadDialog.dismiss(mContext);
                 break;
         }
@@ -215,19 +216,27 @@ public class MyAccountActivity extends BaseActivity implements View.OnClickListe
                             requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_ASK_PERMISSIONS);
                         } else {
                             new AlertDialog.Builder(mContext)
-                                    .setMessage("您需要在设置里打开相机权限。")
-                                    .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                                    .setMessage(mContext.getString(R.string.camera_permission_request_prompt))
+                                    .setPositiveButton(mContext.getString(R.string.confirm), new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_ASK_PERMISSIONS);
                                         }
                                     })
-                                    .setNegativeButton("取消", null)
+                                    .setNegativeButton(mContext.getString(R.string.cancel), null)
                                     .create().show();
                         }
                         return;
                     }
+
+                    // 从6.0系统(API 23)开始，访问外置存储需要动态申请权限
+                    checkPermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    if (checkPermission != PackageManager.PERMISSION_GRANTED) {
+                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS);
+                        return;
+                    }
                 }
+
                 photoUtils.takePicture(MyAccountActivity.this);
             }
         });
@@ -236,6 +245,14 @@ public class MyAccountActivity extends BaseActivity implements View.OnClickListe
             public void onClick(View arg0) {
                 if (dialog != null && dialog.isShowing()) {
                     dialog.dismiss();
+                }
+                // 从6.0系统(API 23)开始，访问外置存储需要动态申请权限
+                if (Build.VERSION.SDK_INT >= 23) {
+                    int checkPermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    if (checkPermission != PackageManager.PERMISSION_GRANTED) {
+                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS);
+                        return;
+                    }
                 }
                 photoUtils.selectPicture(MyAccountActivity.this);
             }

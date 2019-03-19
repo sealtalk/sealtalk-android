@@ -106,7 +106,7 @@ public class SelectFriendsActivity extends BaseActivity implements View.OnClickL
         Button rightButton = getHeadRightButton();
         rightButton.setVisibility(View.GONE);
         mHeadRightText.setVisibility(View.VISIBLE);
-        mHeadRightText.setText("确定");
+        mHeadRightText.setText(getString(R.string.confirm));
         mHeadRightText.setOnClickListener(this);
         mSelectedFriend = new ArrayList<>();
         mSelectedFriendsLinearLayout = (LinearLayout) findViewById(R.id.ll_selected_friends);
@@ -158,12 +158,12 @@ public class SelectFriendsActivity extends BaseActivity implements View.OnClickL
         if (isConversationActivityStartPrivate) {
             conversationStartType = "PRIVATE";
             conversationStartId = getIntent().getStringExtra("DEMO_FRIEND_TARGETID");
-            setTitle("选择讨论组成员");
+            setTitle(getString(R.string.select_discussion_group_member));
         } else if (isConversationActivityStartDiscussion) {
             conversationStartType = "DISCUSSION";
             conversationStartId = getIntent().getStringExtra("DEMO_FRIEND_TARGETID");
             discListMember = getIntent().getStringArrayListExtra("DISCUSSIONMEMBER");
-            setTitle("选择讨论组成员");
+            setTitle(getString(R.string.select_discussion_group_member));
         } else if (isDeleteGroupMember) {
             setTitle(getString(R.string.remove_group_member));
         } else if (isAddGroupMember) {
@@ -171,9 +171,9 @@ public class SelectFriendsActivity extends BaseActivity implements View.OnClickL
         } else if (isCrateGroup) {
             setTitle(getString(R.string.select_group_member));
         } else if (addDisList != null) {
-            setTitle("增加讨论组成员");
+            setTitle(getString(R.string.add_discussion_group_member));
         } else if (deleDisList != null) {
-            setTitle("移除讨论组成员");
+            setTitle(getString(R.string.remove_discussion_group_member));
         } else {
             setTitle(getString(R.string.select_contact));
             if (!getSharedPreferences("config", MODE_PRIVATE).getBoolean("isDebug", false)) {
@@ -493,10 +493,10 @@ public class SelectFriendsActivity extends BaseActivity implements View.OnClickL
                     }
                 }
                 if (size == 0) {
-                    mHeadRightText.setText("确定");
+                    mHeadRightText.setText(getString(R.string.confirm));
                     mSelectedFriendsLinearLayout.setVisibility(View.GONE);
                 } else {
-                    mHeadRightText.setText("确定(" + size + ")");
+                    mHeadRightText.setText(getString(R.string.confirm) + "(" + size + ")");
                     List<Friend> selectedList = new ArrayList<>();
                     for (int i = 0; i < sourceDataList.size(); i++) {
                         if (mCBFlag.get(i)) {
@@ -601,7 +601,7 @@ public class SelectFriendsActivity extends BaseActivity implements View.OnClickL
                         finish();
                     } else if (response.getCode() == 400) {
                         LoadDialog.dismiss(mContext);
-                        NToast.shortToast(mContext, "创建者不能将自己移除");
+                        NToast.shortToast(mContext, mContext.getString(R.string.creator_can_not_remove_self));
                     }
                     break;
             }
@@ -613,11 +613,11 @@ public class SelectFriendsActivity extends BaseActivity implements View.OnClickL
         switch (requestCode) {
             case ADD_GROUP_MEMBER:
                 LoadDialog.dismiss(mContext);
-                NToast.shortToast(mContext, "添加群组成员请求失败");
+                NToast.shortToast(mContext, mContext.getString(R.string.add_group_member_request_failed));
                 break;
             case DELETE_GROUP_MEMBER:
                 LoadDialog.dismiss(mContext);
-                NToast.shortToast(mContext, "移除群组成员请求失败");
+                NToast.shortToast(mContext, mContext.getString(R.string.remove_group_member_request_failed));
                 break;
         }
     }
@@ -765,7 +765,7 @@ public class SelectFriendsActivity extends BaseActivity implements View.OnClickL
                             startActivity(intent);
                             finish();
                         } else {
-                            NToast.shortToast(mContext, "请至少邀请一位好友创建群组");
+                            NToast.shortToast(mContext, getString(R.string.at_least_one_friend_to_create_group));
                             mHeadRightText.setClickable(true);
                         }
                     } else {
@@ -777,7 +777,7 @@ public class SelectFriendsActivity extends BaseActivity implements View.OnClickL
 
                             String disName;
                             if (disNameList.size() < 2) {
-                                disName = disNameList.get(0) + "和我的讨论组";
+                                disName = disNameList.get(0) + getString(R.string.and_my_discussion);
                             } else {
                                 StringBuilder sb = new StringBuilder();
                                 for (String s : disNameList) {
@@ -786,7 +786,7 @@ public class SelectFriendsActivity extends BaseActivity implements View.OnClickL
                                 }
                                 String str = sb.toString();
                                 disName = str.substring(0, str.length() - 1);
-                                disName = disName + "和我的讨论组";
+                                disName = disName + getString(R.string.and_my_discussion);
                             }
                             RongIM.getInstance().createDiscussion(disName, startDisList, new RongIMClient.CreateDiscussionCallback() {
                                 @Override
@@ -806,7 +806,7 @@ public class SelectFriendsActivity extends BaseActivity implements View.OnClickL
                         }
                     }
                 } else {
-                    Toast.makeText(SelectFriendsActivity.this, "无数据", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SelectFriendsActivity.this, getString(R.string.no_data), Toast.LENGTH_SHORT).show();
                 }
                 break;
         }

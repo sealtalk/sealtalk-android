@@ -4,9 +4,14 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.Uri;
+import android.os.Build;
+import android.os.LocaleList;
 import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
@@ -17,6 +22,7 @@ import com.facebook.stetho.inspector.protocol.ChromeDevtoolsDomain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import cn.rongcloud.im.db.Friend;
 import cn.rongcloud.im.message.TestMessage;
@@ -36,6 +42,7 @@ import io.rong.contactcard.IContactCardInfoProvider;
 import io.rong.contactcard.message.ContactMessage;
 import io.rong.imageloader.core.DisplayImageOptions;
 import io.rong.imageloader.core.display.FadeInBitmapDisplayer;
+import io.rong.imkit.RongConfigurationManager;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.widget.provider.RealTimeLocationMessageProvider;
@@ -51,11 +58,14 @@ import io.rong.sight.SightExtensionModule;
 public class App extends MultiDexApplication {
 
     private static DisplayImageOptions options;
+    private static App sInstance;
 
     @Override
     public void onCreate() {
 
         super.onCreate();
+        sInstance = this;
+
         Stetho.initialize(new Stetho.Initializer(this) {
             @Override
             protected Iterable<DumperPlugin> getDumperPlugins() {
@@ -111,20 +121,6 @@ public class App extends MultiDexApplication {
                 e.printStackTrace();
             }
             openSealDBIfHasCachedToken();
-            RongIM.setConnectionStatusListener(new RongIMClient.ConnectionStatusListener() {
-                @Override
-                public void onChanged(ConnectionStatus status) {
-                    if (status == ConnectionStatus.TOKEN_INCORRECT) {
-                        SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
-                        final String cacheToken = sp.getString("loginToken", "");
-                        if (!TextUtils.isEmpty(cacheToken)) {
-                            RongIM.connect(cacheToken, SealAppContext.getInstance().getConnectCallback());
-                        } else {
-                            Log.e("seal", "token is empty, can not reconnect");
-                        }
-                    }
-                }
-            });
 
             options = new DisplayImageOptions.Builder()
                     .showImageForEmptyUri(cn.rongcloud.im.R.drawable.de_default_portrait)
@@ -214,6 +210,32 @@ public class App extends MultiDexApplication {
             }
         }
         return null;
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        Context context = RongConfigurationManager.getInstance().getConfigurationContext(base);
+        super.attachBaseContext(context);
+    }
+
+    public static Resources getAppResources() {
+        return sInstance.getResources();
+    }
+
+    public static void updateApplicationLanguage() {
+        if (sInstance == null) return;
+
+        Resources resources = sInstance.getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        Locale locale = RongConfigurationManager.getInstance().getAppLocale(sInstance).toLocale();
+        config.locale = locale;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            LocaleList localeList = new LocaleList(locale);
+            LocaleList.setDefault(localeList);
+            config.setLocales(localeList);
+        }
+        resources.updateConfiguration(config, dm);
     }
 
 }

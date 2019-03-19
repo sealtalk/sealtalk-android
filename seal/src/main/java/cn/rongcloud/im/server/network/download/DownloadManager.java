@@ -19,6 +19,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import cn.rongcloud.im.App;
+import cn.rongcloud.im.R;
 import cn.rongcloud.im.server.network.http.AsyncHttpClient;
 import cn.rongcloud.im.server.network.http.AsyncHttpResponseHandler;
 import cn.rongcloud.im.server.network.http.BreakpointHttpResponseHandler;
@@ -200,7 +202,7 @@ public class DownloadManager extends Thread {
     public void addHandler(String url) {
         if (getTotalhandlerCount() >= MAX_HANDLER_COUNT) {
             if (mDownLoadCallback != null) {
-                mDownLoadCallback.sendFailureMessage(url, "任务列表已满");
+                mDownLoadCallback.sendFailureMessage(url, App.getAppResources().getString(R.string.task_list_is_full));
             }
             return;
         }

@@ -386,6 +386,10 @@ public class BaseCallActivity extends BaseNoActionBarActivity implements IRongCa
         stopRing();
         NotificationUtil.clearNotification(this, BaseCallActivity.CALL_NOTIFICATION_ID);
         RongCallProxy.getInstance().setCallListener(null);
+        AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        if (am != null) {
+            am.setMode(AudioManager.MODE_NORMAL);
+        }
     }
 
     @Override
@@ -422,7 +426,10 @@ public class BaseCallActivity extends BaseNoActionBarActivity implements IRongCa
         CallKitUtils.callConnected=true;
         CallKitUtils.shouldShowFloat = true;
         CallKitUtils.isDial=false;
-        AudioPlayManager.getInstance().setInVoipMode(true);
+        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        if (audioManager != null) {
+            audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
+        }
         AudioRecordManager.getInstance().destroyRecord();
     }
 
@@ -500,11 +507,6 @@ public class BaseCallActivity extends BaseNoActionBarActivity implements IRongCa
                 mMediaPlayer.stop();
             }
             mMediaPlayer.release();
-            // 退出此页面后应设置成正常模式，否则按下音量键无法更改其他音频类型的音量
-            AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-            if (am != null) {
-                am.setMode(AudioManager.MODE_NORMAL);
-            }
             if(mMediaPlayer!=null){
                 mMediaPlayer=null;
             }

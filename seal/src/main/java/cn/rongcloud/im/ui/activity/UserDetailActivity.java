@@ -306,9 +306,9 @@ public class UserDetailActivity extends BaseActivity implements View.OnClickList
                     public void executeEditEvent(String editText) {
                         if (TextUtils.isEmpty(editText)) {
                             if (mGroupName != null && !TextUtils.isEmpty(mGroupName)) {
-                                addMessage = "我是" + mGroupName + "群的" + getSharedPreferences("config", MODE_PRIVATE).getString(SealConst.SEALTALK_LOGIN_NAME, "");
+                                addMessage = getString(R.string.invite_friend_descprtion_has_group_format, mGroupName, getSharedPreferences("config", MODE_PRIVATE).getString(SealConst.SEALTALK_LOGIN_NAME, ""));
                             } else {
-                                addMessage = "我是" + getSharedPreferences("config", MODE_PRIVATE).getString(SealConst.SEALTALK_LOGIN_NAME, "");
+                                addMessage = getString(R.string.inivte_firend_descprtion_format, getSharedPreferences("config", MODE_PRIVATE).getString(SealConst.SEALTALK_LOGIN_NAME, ""));
                             }
                         } else {
                             addMessage = editText;
@@ -405,7 +405,7 @@ public class UserDetailActivity extends BaseActivity implements View.OnClickList
                     if (friendInfoByIDResponse.getCode() == 200) {
                         mUserPhone.setVisibility(View.VISIBLE);
                         mPhoneString = friendInfoByIDResponse.getResult().getUser().getPhone();
-                        mUserPhone.setText("手机号:" + friendInfoByIDResponse.getResult().getUser().getPhone());
+                        mUserPhone.setText(getString(R.string.phone_number) + ":" + friendInfoByIDResponse.getResult().getUser().getPhone());
                         GetFriendInfoByIDResponse.ResultEntity resultEntity = friendInfoByIDResponse.getResult();
                         GetFriendInfoByIDResponse.ResultEntity.UserEntity userEntity = resultEntity.getUser();
                         if (mFriend.getUserId().equals(userEntity.getId())) {

@@ -227,7 +227,7 @@ public class MessageDisturbActivity extends BaseActivity implements View.OnClick
                         getWindow().getDecorView().post(new Runnable() {
                             @Override
                             public void run() {
-                                NToast.shortToast(mContext, "间隔时间必须>0");
+                                NToast.shortToast(mContext, mContext.getString(R.string.interval_time_must_over_zero));
                             }
                         });
                     }

@@ -81,8 +81,8 @@ public class ConversationActivity extends BaseActivity implements View.OnClickLi
 
     private SharedPreferences sp;
 
-    private final String TextTypingTitle = "对方正在输入...";
-    private final String VoiceTypingTitle = "对方正在讲话...";
+    private String TextTypingTitle;
+    private String VoiceTypingTitle;
 
     private Handler mHandler;
 
@@ -100,6 +100,10 @@ public class ConversationActivity extends BaseActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.conversation);
+
+        TextTypingTitle = getString(R.string.the_other_side_is_typing);
+        VoiceTypingTitle = getString(R.string.the_other_side_is__speaking);
+
         sp = getSharedPreferences("config", MODE_PRIVATE);
         mDialog = new LoadingDialog(this);
         layout_announce = (RelativeLayout) findViewById(R.id.ll_annouce);
@@ -494,13 +498,13 @@ public class ConversationActivity extends BaseActivity implements View.OnClickLi
                         @Override
                         public void onError(RongIMClient.ErrorCode e) {
                             if (e.equals(RongIMClient.ErrorCode.NOT_IN_DISCUSSION)) {
-                                setTitle("不在讨论组中");
+                                setTitle(getString(R.string.not_in_discussion_group));
                                 supportInvalidateOptionsMenu();
                             }
                         }
                     });
         } else {
-            setTitle("讨论组");
+            setTitle(getString(R.string.discussion_group));
         }
     }
 
@@ -541,7 +545,7 @@ public class ConversationActivity extends BaseActivity implements View.OnClickLi
             mTargetId = fragment.getUri().getQueryParameter("targetId");
 
             if (TextUtils.isEmpty(mTargetId)) {
-                NToast.shortToast(mContext, "讨论组尚未创建成功");
+                NToast.shortToast(mContext, mContext.getString(R.string.discussion_group_not_created));
             }
 
 

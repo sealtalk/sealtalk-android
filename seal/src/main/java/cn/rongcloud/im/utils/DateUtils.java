@@ -7,6 +7,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import cn.rongcloud.im.App;
+import cn.rongcloud.im.R;
 import cn.rongcloud.im.model.SealSearchConversationResult;
 import io.rong.imlib.model.SearchConversationResult;
 
@@ -104,13 +106,13 @@ public class DateUtils {
      */
     public static String showTimeView(int hourday) {
         if (hourday >= 22 && hourday <= 24) {
-            return "晚上";
+            return App.getAppResources().getString(R.string.evening);
         } else if (hourday >= 0 && hourday <= 6) {
-            return "凌晨";
+            return App.getAppResources().getString(R.string.early_morning);
         } else if (hourday > 6 && hourday <= 12) {
-            return "上午";
+            return App.getAppResources().getString(R.string.morning);
         } else if (hourday > 12 && hourday < 22) {
-            return "下午";
+            return App.getAppResources().getString(R.string.afternoon);
         }
         return null;
     }

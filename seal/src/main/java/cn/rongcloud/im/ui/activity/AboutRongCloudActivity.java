@@ -118,9 +118,9 @@ public class AboutRongCloudActivity extends BaseActivity {
                 mHits[mHits.length - 1] = SystemClock.uptimeMillis();
                 if (mHits[0] > SystemClock.uptimeMillis() - 10000) {
                     if (getSharedPreferences("config", MODE_PRIVATE).getBoolean("isDebug", false)) {
-                        NToast.shortToast(mContext, "debug 模式已开启");
+                        NToast.shortToast(mContext, mContext.getString(R.string.debug_mode_is_open));
                     } else {
-                        DialogWithYesOrNoUtils.getInstance().showDialog(mContext, "是否开启 App Debug 模式(需要重新登录应用)?", new DialogWithYesOrNoUtils.DialogCallBack() {
+                        DialogWithYesOrNoUtils.getInstance().showDialog(mContext, mContext.getString(R.string.setting_open_debug_prompt), new DialogWithYesOrNoUtils.DialogCallBack() {
                             @Override
                             public void executeEvent() {
                                 SharedPreferences.Editor editor = getSharedPreferences("config", MODE_PRIVATE).edit();
@@ -150,7 +150,7 @@ public class AboutRongCloudActivity extends BaseActivity {
             mCloseDebug.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DialogWithYesOrNoUtils.getInstance().showDialog(mContext, "是否关闭 App Debug 模式(需要重新登录应用)?", new DialogWithYesOrNoUtils.DialogCallBack() {
+                    DialogWithYesOrNoUtils.getInstance().showDialog(mContext, mContext.getString(R.string.setting_close_debug_promt), new DialogWithYesOrNoUtils.DialogCallBack() {
                         @Override
                         public void executeEvent() {
                             SharedPreferences.Editor editor = getSharedPreferences("config", MODE_PRIVATE).edit();

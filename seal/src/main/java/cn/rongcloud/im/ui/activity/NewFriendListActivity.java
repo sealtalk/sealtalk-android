@@ -10,9 +10,11 @@ import android.widget.TextView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.SealAppContext;
@@ -104,8 +106,14 @@ public class NewFriendListActivity extends BaseActivity implements NewFriendList
                         }
                     });
 
+                    List<UserRelationshipResponse.ResultEntity> userList = new ArrayList<>();
+                    for(UserRelationshipResponse.ResultEntity entity : userRelationshipResponse.getResult()){
+                        if(entity.getUser() != null){
+                            userList.add(entity);
+                        }
+                    }
                     adapter.removeAll();
-                    adapter.addData(userRelationshipResponse.getResult());
+                    adapter.addData(userList);
 
                     adapter.notifyDataSetChanged();
                     adapter.setOnItemButtonClick(this);

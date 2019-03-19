@@ -370,6 +370,14 @@
 
         <activity android:name=".ui.activity.NoteInformationActivity" />
 
+        <activity android:name=".ui.activity.SelectCountryActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <activity android:name=".ui.activity.SetLanguageActivity"
+            android:screenOrientation="portrait"
+            />
+
         <receiver
             android:name=".SealNotificationReceiver"
             android:exported="true">
@@ -574,6 +582,7 @@
                 <action android:name="com.meizu.flyme.push.intent.REGISTER.FEEDBACK" />
                 <!-- 接收 unregister 消息-->
                 <action android:name="com.meizu.flyme.push.intent.UNREGISTER.FEEDBACK" />
+                />
                 <!-- 兼容低版本 Flyme3 推送服务配置 -->
                 <action android:name="com.meizu.c2dm.intent.REGISTRATION" />
                 <action android:name="com.meizu.c2dm.intent.RECEIVE" />

@@ -65,7 +65,7 @@ import io.rong.imlib.model.UserInfo;
 /**
  * Created by tiankui on 16/8/31.
  */
-public class SealSearchActivity extends Activity {
+public class SealSearchActivity extends BaseActivity {
     private static final int SEARCH_TYPE_FLAG = 1;
 
     private EditText mSearchEditText;
@@ -99,7 +99,7 @@ public class SealSearchActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seal_search);
-
+        setHeadVisibility(View.GONE);
         initView();
         initData();
     }

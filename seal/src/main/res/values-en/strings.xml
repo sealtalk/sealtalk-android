@@ -6,9 +6,9 @@
     <string name="group_chat">Create Groups</string>
     <string name="private_chat">Start Chat</string>
     <string name="network_not_available">Network is unavailable</string>
-    <string name="login_api_fail">Login api request failed</string>
-    <string name="sync_userinfo_api_fail">User info synchronizing api request failed</string>
-    <string name="get_token_api_fail">Token obtaining api request failed</string>
+    <string name="login_api_fail">Login failed</string>
+    <string name="sync_userinfo_api_fail">User info synchronizing api failed</string>
+    <string name="get_token_api_fail">Token obtaining api failed</string>
     <string name="login_success">Login successful</string>
     <string name="phone_or_psw_error">The mobile number or password is incorrect</string>
     <string name="phone_number_is_null">Mobile number cannot be empty</string>
@@ -28,8 +28,8 @@
     <string name="phone_number">Mobile Number</string>
     <string name="password">Password</string>
     <string name="nickname">Nickname</string>
-    <string name="code">SMS Verification Code</string>
-    <string name="send_code">Send Verification Code</string>
+    <string name="code">Verification Code</string>
+    <string name="send_code">Send a Code</string>
     <string name="register">register</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="confirm">Confirm</string>
@@ -46,7 +46,7 @@
     <string name="check_network">Please to check network</string>
     <string name="agreed_friend">Accepted to friend</string>
     <string name="agree">Accept</string>
-    <string name="request">Requested</string>
+    <string name="request">Sent</string>
     <string name="ignore">Ignored</string>
     <string name="added">Added</string>
     <string name="deleted">Deleted</string>
@@ -82,7 +82,7 @@
     <string name="group_name">Group Name</string>
     <string name="confirm_quit_group">Confirm to quit the group?</string>
     <string name="confirm_dismiss_group">Confirm to dismiss the group?</string>
-    <string name="set_top">tick On Top</string>
+    <string name="set_top">Stick On Top</string>
     <string name="message_notice">Mute Notifications</string>
     <string name="clean_message">Clear Chat History</string>
     <string name="quit_group">Delete And Quit</string>
@@ -99,7 +99,7 @@
     <string name="least_one_friend">At least to select one friend</string>
     <string name="not_send_code">Not getting verification code from server</string>
     <string name="get_code">Get Verification Code</string>
-    <string name="de_actionbar_set_public">\"Public Accounts\"</string>
+    <string name="de_actionbar_set_public">"Public Accounts"</string>
     <string name="clear_success">Cleared</string>
     <string name="clear_failure">Clear failed</string>
     <string name="new_group_name">New Group Name</string>
@@ -107,8 +107,8 @@
     <string name="quit_success">Quit successful</string>
     <string name="dismiss_success">Dismissed</string>
     <string name="create_group_success">Group created successfully</string>
-    <string name="group_header_api_fail">Group portrait api request failed</string>
-    <string name="group_create_api_fail">Creating group api request failed</string>
+    <string name="group_header_api_fail">Group portrait api failed</string>
+    <string name="group_create_api_fail">Creating group api failed</string>
     <string name="upload_portrait_failed">Portrait upload failed</string>
     <string name="phone_unregister">This number is unregisterred</string>
     <string name="group_name_not_is_null">Group name input cannot be empty</string>
@@ -116,10 +116,10 @@
     <string name="group_portrait">Group Portrait</string>
     <string name="add_friend">Add To Friend</string>
     <string name="add_text">Friend adding info</string>
-    <string name="request_success">Requested</string>
+    <string name="request_success">Sent</string>
     <string name="portrait_update_success">Portrait updated successfully</string>
     <string name="de_actionbar_sub_system">"System Notification"</string>
-    <string name="de_actionbar_sub_group">\"Group\"</string>
+    <string name="de_actionbar_sub_group">"Group"</string>
     <string name="chat">Chats</string>
     <string name="contacts">Contacts</string>
     <string name="discover">Discover</string>
@@ -161,7 +161,7 @@
     <string name="group_notice_exist_confirm">Quit Editing</string>
     <string name="group_notice_post_confirm">The announcement will notify all group members, confirm to submit?</string>
     <string name="group_notice_prefix">\@all\n</string>
-    <string name="search_friend">Add Friends</string>
+    <string name="search_friend">Add Contacts</string>
     <string name="setdisplayname">Setting Remarks</string>
     <string name="new_and_old_password">The new password shall be same as the old password</string>
     <string name="new_message_notice_title">Mute Notifications</string>
@@ -181,24 +181,24 @@
     <string name="read_receipt_no_person_unread">All Unread</string>
     <string name="ac_contact_nick_name">Nickname:</string>
     <string name="ac_search_chat_detail_three">.</string>
-    <string name="ac_search_no_result_pre">There\'re no results related to </string>
-    <string name="de_actionbar_sub_defult">\"Chat\"</string>
-    <string name="de_actionbar_sub_discussion">\"My discussion\"</string>
+    <string name="ac_search_no_result_pre">Not related to content of \"</string>
+    <string name="de_actionbar_sub_defult">"Chat"</string>
+    <string name="de_actionbar_sub_discussion">"My discussion"</string>
     <string name="version_number">V2.1.0</string>
     <string name="start_chat">Start Chat</string>
-    <string name="search_message">Search chat history</string>
+    <string name="search_message">Search Chat History</string>
     <string name="search_item_chat_records">Found %d related chat histories </string>
-    <string name="no_read_message">\"...\"</string>
+    <string name="no_read_message">"..."</string>
     <string name="my_wallet">My Wallet</string>
     <string name="join_the_blacklist">Add to blacklist</string>
-    <string name="de_actionbar_system">\"System Notification\"</string>
+    <string name="de_actionbar_system">"System Notification"</string>
     <string name="de_dialog_item_message_delete">Delete Message</string>
     <string name="de_message_at_me">[@me]</string>
     <string name="de_notification_end">End Time</string>
     <string name="de_notification_information">Once enabled, it will not ring or vibrate when a new message is received within the set time  period.</string>
     <string name="de_notification_start">Start Time</string>
-    <string name="de_actionbar_sub_private">\"My Private Chat\"</string>
-    <string name="ac_search_no_result_suffix">.</string>
+    <string name="de_actionbar_sub_private">"My Private Chat"</string>
+    <string name="ac_search_no_result_suffix">\" were found.</string>
     <string name="ac_search_chat_detail">Total %1$d related records of </string>
     <string name="ac_search_nick_name">Nickname: </string>
 
@@ -241,7 +241,7 @@
     <string name="share_dialog_hint">Say something</string>
     <string name="share_dialog_from">From: UC browser</string>
     <string name="dialog_bottom_picture">Take Picture</string>
-    <string name="dialog_bottom_import_from_local">Import From Local</string>
+    <string name="dialog_bottom_import_from_local">From My Album</string>
     <string name="fr_group_list_not_join_the_group">Not joining the group yet</string>
 
     <string name="ac_note_info_name">Remark Name</string>
@@ -253,7 +253,7 @@
     <string name="ac_group_list_group_number">%1$d groups</string>
     <string name="ac_share_receiver_from">From:%1$s</string>
 
-    <string name="ac_search_phone_number">Mobile Number</string>
+    <string name="ac_search_phone_number">Enter mobile (i.e.): (86)137XXXXX</string>
     <string name="layout_dialog_loading">Loading</string>
     <string name="seal_mine_fragment_user_portrait">User Portrait</string>
     <string name="item_filter_group_list_include">Include:</string>
@@ -271,4 +271,77 @@
     <string name="cs_evaluate_tag_must">Must select tag</string>
     <string name="cs_evaluate_input_must">Must insert advise</string>
     <string name="cs_evaluate_select_must">Must select</string>
+
+    <string name="setting_language">Language</string>
+    <string name="countries_and_regions">Countries/Regions</string>
+    <string name="china">China</string>
+    <string name="lang_en">EN</string>
+    <string name="lang_english">English</string>
+    <string name="lang_chs">简体中文</string>
+    <string name="setting_push_language_error">Push language set failed</string>
+    <string name="msg_reference_link">[link]</string>
+    <string name="msg_reference_file">[file]</string>
+    <string name="set_failed">Set failed</string>
+    <string name="join_success">Join success</string>
+    <string name="network_unavailable">Network Unavailable</string>
+    <string name="logout_prompt">Do you want to log out?</string>
+    <string name="clear_cache_prompt">Clear Cache?</string>
+    <string name="the_other_side_is_typing">Typing &#046;&#046;&#046;</string>
+    <string name="the_other_side_is__speaking">Speaking &#046;&#046;&#046;</string>
+    <string name="account_not_exist">User does not exist.</string>
+    <string name="share_error">Share failed</string>
+    <string name="share_success">Share successfully</string>
+
+    <string name="task_list_is_full">The task list is full</string>
+    <string name="invite_friend_descprtion_has_group_format" formatted="true">I am %s from the group of %s</string>
+    <string name="inivte_firend_descprtion_format" formatted="true">I am %s</string>
+    <string name="remove_from_blacklist">Remove from blacklist</string>
+    <string name="remove_failed">Remove failed</string>
+    <string name="join_failed">Join failed</string>
+    <string name="network_error_and_retry_after">Network problem, please try later</string>
+    <string name="debug_mode_is_open">Debug mode is on</string>
+    <string name="setting_open_debug_prompt">Is the App Debug mode enabled (requires re-login to the app)?</string>
+    <string name="setting_close_debug_promt">Is the App Debug mode disabled (requires re-login to the app)?</string>
+    <string name="not_in_discussion_group">Not in discussion group</string>
+    <string name="discussion_group">Discussion Group</string>
+    <string name="discussion_group_not_created">Discussion group has not been created</string>
+    <string name="discussion_group_detail">Discussion Group Details</string>
+    <string name="discussion_group_member_format" formatted="true">Discussion Group Members(%d)</string>
+    <string name="exit_and_delete_discussion_group_prompt">Confirm to quit and delete this discussion group?</string>
+    <string name="set_conversation_diable_notification_success">Set mute notification successful</string>
+    <string name="interval_time_must_over_zero">Interval time must be greater than 0</string>
+    <string name="phone_enable_check_request_failed">Mobile number available check is failed</string>
+    <string name="get_verify_code_request_failed">Failed to get a verification code request</string>
+    <string name="exit_group_request_failed">Quit group failed</string>
+    <string name="dismiss_group_request_failed">Failed to dismiss the group</string>
+    <string name="group_name_word_limit_format" formatted="true">The group name should be %d-%d words</string>
+    <string name="group_name_emoji_too_short">Group name is too short</string>
+    <string name="set_avatar_request_failed">Portrait setting failed</string>
+    <string name="camera_permission_request_prompt">You need to turn on camera access in the settings</string>
+    <string name="public_account_information">Public account Info</string>
+    <string name="verify_code_enable_check_request_failed">Verification code available check is failed</string>
+    <string name="register_request_failed">Login failed</string>
+    <string name="invalid_phone_number">Illegal mobile number</string>
+    <string name="quest_failed_error_code">Request failed, error code:</string>
+    <string name="you_are_already_friends">You are already friends</string>
+    <string name="select_discussion_group_member">Select discussion group members</string>
+    <string name="add_discussion_group_member">Add discussion group members</string>
+    <string name="remove_discussion_group_member">Remove discussion group members</string>
+    <string name="creator_can_not_remove_self">Creator cannot remove myself</string>
+    <string name="add_group_member_request_failed">Add group members failed</string>
+    <string name="remove_group_member_request_failed">Remove group members failed</string>
+    <string name="and_my_discussion"> and my discussion group</string>
+    <string name="at_least_one_friend_to_create_group">Please select at least one friend to create a group</string>
+    <string name="no_data">No data</string>
+    <string name="not_support_now">Not supported yet</string>
+    <string name="nick_name_change_success">Nickname is changed successful</string>
+    <string name="nick_name_can_not_empty">Nickname input cannot be empty</string>
+    <string name="change_password_failed">Password change failed</string>
+    <string name="change_password_request_failed">Change password failed</string>
+    <string name="beijing">Beijing</string>
+    <string name="online_custom_service">Online customer service</string>
+    <string name="evening">Evening</string>
+    <string name="early_morning">Early morning</string>
+    <string name="morning">Morning/am</string>
+    <string name="afternoon">Afternoon/pm</string>
 </resources>

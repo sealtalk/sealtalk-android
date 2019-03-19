@@ -261,7 +261,7 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
                 if (!TextUtils.isEmpty(member.getDisplayName())) {
                     mGroupDisplayNameText.setText(member.getDisplayName());
                 } else {
-                    mGroupDisplayNameText.setText("无");
+                    mGroupDisplayNameText.setText(getString(R.string.ac_detail_discussion_no));
                 }
             }
         }
@@ -436,11 +436,11 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
     public void onFailure(int requestCode, int state, Object result) {
         switch (requestCode) {
             case QUIT_GROUP:
-                NToast.shortToast(mContext, "退出群组请求失败");
+                NToast.shortToast(mContext, mContext.getString(R.string.exit_group_request_failed));
                 LoadDialog.dismiss(mContext);
                 break;
             case DISMISS_GROUP:
-                NToast.shortToast(mContext, "解散群组请求失败");
+                NToast.shortToast(mContext, mContext.getString(R.string.dismiss_group_request_failed));
                 LoadDialog.dismiss(mContext);
                 break;
         }
@@ -571,12 +571,12 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
                                 return;
                             }
                             if (editText.length() < 2 && editText.length() > 10) {
-                                NToast.shortToast(mContext, "群名称应为 2-10 字");
+                                NToast.shortToast(mContext, mContext.getString(R.string.group_name_word_limit_format,2,10));
                                 return;
                             }
 
                             if (AndroidEmoji.isEmoji(editText) && editText.length() < 4) {
-                                NToast.shortToast(mContext, "群名称表情过短");
+                                NToast.shortToast(mContext, mContext.getString(R.string.group_name_emoji_too_short));
                                 return;
                             }
                             newGroupName = editText;
@@ -660,7 +660,7 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
             if (position == getCount() - 1 && isCreated) {
                 tv_username.setText("");
                 badge_delete.setVisibility(View.GONE);
-                iv_avatar.setImageResource(R.drawable.icon_btn_deleteperson);
+                iv_avatar.setBackground(getResources().getDrawable(R.drawable.icon_btn_deleteperson));
 
                 iv_avatar.setOnClickListener(new View.OnClickListener() {
 
@@ -676,7 +676,7 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
             } else if ((isCreated && position == getCount() - 2) || (!isCreated && position == getCount() - 1)) {
                 tv_username.setText("");
                 badge_delete.setVisibility(View.GONE);
-                iv_avatar.setImageResource(R.drawable.jy_drltsz_btn_addperson);
+                iv_avatar.setBackground(getResources().getDrawable(R.drawable.jy_drltsz_btn_addperson));
 
                 iv_avatar.setOnClickListener(new View.OnClickListener() {
                     @Override

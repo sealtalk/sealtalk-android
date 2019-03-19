@@ -20,7 +20,7 @@ import io.rong.imlib.model.Conversation;
  * Created by AMing on 16/5/27.
  * Company RongCloud
  */
-public class DoubleChatRoomActivity extends FragmentActivity {
+public class DoubleChatRoomActivity extends BaseActivity {
     private String chatroomId1;
     private String chatroomId2;
 
@@ -28,6 +28,7 @@ public class DoubleChatRoomActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doublechatroom);
+        setHeadVisibility(View.GONE);
         chatroomId1 = getIntent().getStringExtra("chatroomId1");
         chatroomId2 = getIntent().getStringExtra("chatroomId2");
 

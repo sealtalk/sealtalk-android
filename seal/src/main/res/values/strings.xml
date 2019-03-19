@@ -264,7 +264,7 @@
     <string name="ac_group_list_group_number">%1$d个群组</string>
     <string name="ac_share_receiver_from">来自：%1$s</string>
 
-    <string name="ac_search_phone_number">手机号</string>
+    <string name="ac_search_phone_number">搜索手机号，如：(86)137XXXXX</string>
     <string name="layout_dialog_loading">正在加载</string>
     <string name="seal_mine_fragment_user_portrait">用户头像</string>
     <string name="item_filter_group_list_include">包含：</string>
@@ -282,4 +282,77 @@
     <string name="cs_evaluate_tag_must">必须选择标签</string>
     <string name="cs_evaluate_input_must">必须输入建议</string>
     <string name="cs_evaluate_select_must">必选</string>
+
+    <string name="setting_language">多语言</string>
+    <string name="countries_and_regions">国家/地区</string>
+    <string name="china">中国</string>
+    <string name="lang_en">EN</string>
+    <string name="lang_english">English</string>
+    <string name="lang_chs">简体中文</string>
+    <string name="setting_push_language_error">推送语言设置失败</string>
+    <string name="msg_reference_link">[链接]</string>
+    <string name="msg_reference_file">[文件]</string>
+    <string name="set_failed">设置失败</string>
+    <string name="join_success">加入成功</string>
+    <string name="network_unavailable">当前网络不可用</string>
+    <string name="logout_prompt">是否退出登录?</string>
+    <string name="clear_cache_prompt">是否清除缓存?</string>
+    <string name="the_other_side_is_typing">对方正在输入&#046;&#046;&#046;</string>
+    <string name="the_other_side_is__speaking">对方正在讲话&#046;&#046;&#046;</string>
+    <string name="account_not_exist">用户不存在</string>
+    <string name="share_error">分享失败</string>
+    <string name="share_success">分享成功</string>
+
+    <string name="task_list_is_full">任务列表已满</string>
+    <string name="invite_friend_descprtion_has_group_format" formatted="true">我是%s群的%s</string>
+    <string name="inivte_firend_descprtion_format" formatted="true">我是%s</string>
+    <string name="remove_from_blacklist">移除黑名单</string>
+    <string name="remove_failed">移除失败</string>
+    <string name="join_failed">加入失败</string>
+    <string name="network_error_and_retry_after">网络问题请稍后重试</string>
+    <string name="debug_mode_is_open">debug 模式已开启</string>
+    <string name="setting_open_debug_prompt">是否开启 App Debug 模式(需要重新登录应用)?</string>
+    <string name="setting_close_debug_promt">是否关闭 App Debug 模式(需要重新登录应用)?</string>
+    <string name="not_in_discussion_group">不在讨论组中</string>
+    <string name="discussion_group">讨论组</string>
+    <string name="discussion_group_not_created">讨论组尚未创建成功</string>
+    <string name="discussion_group_detail">讨论组详情</string>
+    <string name="discussion_group_member_format" formatted="true">讨论组成员(%d)</string>
+    <string name="exit_and_delete_discussion_group_prompt">是否退出并删除当前讨论组?</string>
+    <string name="set_conversation_diable_notification_success">设置消息免打扰成功</string>
+    <string name="interval_time_must_over_zero">间隔时间必须大于0</string>
+    <string name="phone_enable_check_request_failed">手机号可用请求失败</string>
+    <string name="get_verify_code_request_failed">获取验证码请求失败</string>
+    <string name="exit_group_request_failed">退出群组请求失败</string>
+    <string name="dismiss_group_request_failed">解散群组请求失败</string>
+    <string name="group_name_word_limit_format" formatted="true">群名称应为 %d-%d 字</string>
+    <string name="group_name_emoji_too_short">群名称表情过短</string>
+    <string name="set_avatar_request_failed">设置头像请求失败</string>
+    <string name="camera_permission_request_prompt">您需要在设置里打开相机权限。</string>
+    <string name="public_account_information">公众号信息</string>
+    <string name="verify_code_enable_check_request_failed">验证码是否可用请求失败</string>
+    <string name="register_request_failed">注册请求失败</string>
+    <string name="invalid_phone_number">非法手机号</string>
+    <string name="quest_failed_error_code">请求失败 错误码:</string>
+    <string name="you_are_already_friends">你们已经是好友</string>
+    <string name="select_discussion_group_member">选择讨论组成员</string>
+    <string name="add_discussion_group_member">增加讨论组成员</string>
+    <string name="remove_discussion_group_member">移除讨论组成员</string>
+    <string name="creator_can_not_remove_self">创建者不能将自己移除</string>
+    <string name="add_group_member_request_failed">添加群组成员请求失败</string>
+    <string name="remove_group_member_request_failed">移除群组成员请求失败</string>
+    <string name="and_my_discussion">和我的讨论组</string>
+    <string name="at_least_one_friend_to_create_group">请至少邀请一位好友创建群组</string>
+    <string name="no_data">无数据</string>
+    <string name="not_support_now">暂时不支持</string>
+    <string name="nick_name_change_success">昵称更改成功</string>
+    <string name="nick_name_can_not_empty">昵称不能为空</string>
+    <string name="change_password_failed">修改密码失败</string>
+    <string name="change_password_request_failed">修改密码请求失败</string>
+    <string name="beijing">北京</string>
+    <string name="online_custom_service">在线客服</string>
+    <string name="evening">晚上</string>
+    <string name="early_morning">凌晨</string>
+    <string name="morning">上午</string>
+    <string name="afternoon">下午</string>
 </resources>

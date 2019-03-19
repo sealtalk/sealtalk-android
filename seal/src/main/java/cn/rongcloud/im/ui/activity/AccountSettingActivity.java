@@ -117,12 +117,12 @@ public class AccountSettingActivity extends BaseActivity implements View.OnClick
                 startActivity(new Intent(this, NewMessageRemindActivity.class));
                 break;
             case R.id.ac_set_clean:
-                DialogWithYesOrNoUtils.getInstance().showDialog(mContext, "是否清除缓存?", new DialogWithYesOrNoUtils.DialogCallBack() {
+                DialogWithYesOrNoUtils.getInstance().showDialog(mContext, mContext.getString(R.string.clear_cache_prompt), new DialogWithYesOrNoUtils.DialogCallBack() {
                     @Override
                     public void executeEvent() {
                         File file = new File(Environment.getExternalStorageDirectory().getPath() + getPackageName());
                         deleteFile(file);
-                        NToast.shortToast(mContext, "清除成功");
+                        NToast.shortToast(mContext, mContext.getString(R.string.clear_success));
                     }
 
                     @Override
@@ -137,7 +137,7 @@ public class AccountSettingActivity extends BaseActivity implements View.OnClick
                 });
                 break;
             case R.id.ac_set_exit:
-                DialogWithYesOrNoUtils.getInstance().showDialog(mContext, "是否退出登录?", new DialogWithYesOrNoUtils.DialogCallBack() {
+                DialogWithYesOrNoUtils.getInstance().showDialog(mContext, mContext.getString(R.string.logout_prompt), new DialogWithYesOrNoUtils.DialogCallBack() {
                     @Override
                     public void executeEvent() {
                         BroadcastManager.getInstance(mContext).sendBroadcast(SealConst.EXIT);

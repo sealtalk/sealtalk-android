@@ -64,6 +64,40 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/mine_language"
+        android:layout_width="match_parent"
+        android:layout_height="45.5dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_list_item_bg"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:drawableLeft="@drawable/mine_language"
+            android:drawablePadding="14sp"
+            android:text="@string/setting_language"
+            android:textColor="@color/text_color"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_mine_current_language"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/lang_chs"
+            android:textColor="@color/text_tips_color"
+            android:textSize="16sp"
+            android:layout_marginRight="14dp"
+            android:gravity="right"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/my_wallet"
         android:layout_width="match_parent"
         android:layout_height="45.5dp"

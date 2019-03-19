@@ -86,16 +86,16 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener, 
         }
         switch (v.getId()) {
             case R.id.def_chatroom1:
-                RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.CHATROOM, chatroomList.get(0).getId(), "聊天室 I");
+                RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.CHATROOM, chatroomList.get(0).getId(), getString(R.string.fr_chat_room_one));
                 break;
             case R.id.def_chatroom2:
-                RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.CHATROOM, chatroomList.get(1).getId(), "聊天室 II");
+                RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.CHATROOM, chatroomList.get(1).getId(), getString(R.string.fr_chat_room_two));
                 break;
             case R.id.def_chatroom3:
-                RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.CHATROOM, chatroomList.get(2).getId(), "聊天室 III");
+                RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.CHATROOM, chatroomList.get(2).getId(), getString(R.string.fr_chat_room_three));
                 break;
             case R.id.def_chatroom4:
-                RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.CHATROOM, chatroomList.get(3).getId(), "聊天室 IV");
+                RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.CHATROOM, chatroomList.get(3).getId(), getString(R.string.fr_chat_room_four));
                 break;
         }
     }

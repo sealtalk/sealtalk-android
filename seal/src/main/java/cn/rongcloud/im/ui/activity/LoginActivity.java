@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.TaskStackBuilder;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -18,6 +19,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Locale;
+
+import cn.rongcloud.im.App;
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.SealConst;
 import cn.rongcloud.im.SealUserInfoManager;
@@ -32,7 +36,10 @@ import cn.rongcloud.im.server.utils.NToast;
 import cn.rongcloud.im.server.utils.RongGenerate;
 import cn.rongcloud.im.server.widget.ClearWriteEditText;
 import cn.rongcloud.im.server.widget.LoadDialog;
+import io.rong.common.RLog;
+import io.rong.imkit.RongConfigurationManager;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.utilities.LangUtils;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
 
@@ -46,15 +53,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private static final int LOGIN = 5;
     private static final int GET_TOKEN = 6;
     private static final int SYNC_USER_INFO = 9;
+    private static final int REQUEST_CODE_SELECT_COUNTRY = 1000;
 
     private ImageView mImg_Background;
     private ClearWriteEditText mPhoneEdit, mPasswordEdit;
+    private TextView mCountryNameTv, mCountryCodeTv, changLanguageTv;
     private String phoneString;
     private String passwordString;
     private String connectResultId;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private String loginToken;
+    private String mCountryNameCN, mCountryNameEN;
+    private String mRegion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,9 +83,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         Button mConfirm = (Button) findViewById(R.id.de_login_sign);
         TextView mRegister = (TextView) findViewById(R.id.de_login_register);
         TextView forgetPassword = (TextView) findViewById(R.id.de_login_forgot);
+        mCountryNameTv = (TextView)findViewById(R.id.reg_country_name);
+        mCountryCodeTv = (TextView)findViewById(R.id.reg_country_code);
+        View selectCountryView = findViewById(R.id.reg_country_select);
+        changLanguageTv = findViewById(R.id.chg_lang);
+
         forgetPassword.setOnClickListener(this);
         mConfirm.setOnClickListener(this);
         mRegister.setOnClickListener(this);
+        selectCountryView.setOnClickListener(this);
+        changLanguageTv.setOnClickListener(this);
+
         mImg_Background = (ImageView) findViewById(R.id.de_img_backgroud);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -104,8 +123,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         String oldPhone = sp.getString(SealConst.SEALTALK_LOGING_PHONE, "");
         String oldPassword = sp.getString(SealConst.SEALTALK_LOGING_PASSWORD, "");
+        String oldRegion = sp.getString(SealConst.SEALTALK_LOGIN_REGION,"");
 
-        if (!TextUtils.isEmpty(oldPhone) && !TextUtils.isEmpty(oldPassword)) {
+        if (!TextUtils.isEmpty(oldPhone)
+                && !TextUtils.isEmpty(oldPassword)) {
             mPhoneEdit.setText(oldPhone);
             mPasswordEdit.setText(oldPassword);
         }
@@ -122,6 +143,42 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     dlg.cancel();
                 }
             });
+        }
+
+        LangUtils.RCLocale appLocale = LangUtils.getAppLocale(this);
+        if (LangUtils.RCLocale.LOCALE_CHINA == appLocale) {
+            changLanguageTv.setText(R.string.lang_en);
+            String countryName = sp.getString(SealConst.SEALTALK_LOGIN_COUNTRY_CN, "");
+            if(!TextUtils.isEmpty(countryName)){
+                mCountryNameTv.setText(countryName);
+                mCountryCodeTv.setText("+" + oldRegion);
+            }
+        } else if (LangUtils.RCLocale.LOCALE_US == appLocale) {
+            changLanguageTv.setText(R.string.lang_chs);
+            String countryName = sp.getString(SealConst.SEALTALK_LOGIN_COUNTRY_EN, "");
+            if(!TextUtils.isEmpty(countryName)){
+                mCountryNameTv.setText(countryName);
+                mCountryCodeTv.setText("+" + oldRegion);
+            }
+        } else {
+            Locale systemLocale = RongConfigurationManager.getInstance().getSystemLocale();
+            if (systemLocale.getLanguage().equals(Locale.CHINESE.getLanguage())) {
+                RongConfigurationManager.getInstance().switchLocale(LangUtils.RCLocale.LOCALE_CHINA, this);
+                changLanguageTv.setText(R.string.lang_en);
+                String countryName = sp.getString(SealConst.SEALTALK_LOGIN_COUNTRY_CN, "");
+                if(!TextUtils.isEmpty(countryName)){
+                    mCountryNameTv.setText(countryName);
+                    mCountryCodeTv.setText("+" + oldRegion);
+                }
+            } else {
+                RongConfigurationManager.getInstance().switchLocale(LangUtils.RCLocale.LOCALE_US, this);
+                changLanguageTv.setText(R.string.lang_chs);
+                String countryName = sp.getString(SealConst.SEALTALK_LOGIN_COUNTRY_EN, "");
+                if(!TextUtils.isEmpty(countryName)){
+                    mCountryNameTv.setText(countryName);
+                    mCountryCodeTv.setText("+" + oldRegion);
+                }
+            }
         }
     }
 
@@ -166,15 +223,78 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             case R.id.de_login_forgot:
                 startActivityForResult(new Intent(this, ForgetPasswordActivity.class), 2);
                 break;
+            case R.id.reg_country_select:
+                startActivityForResult(new Intent(this, SelectCountryActivity.class), REQUEST_CODE_SELECT_COUNTRY);
+                break;
+            case R.id.chg_lang:
+                LangUtils.RCLocale appLocale = LangUtils.getAppLocale(this);
+                if (LangUtils.RCLocale.LOCALE_CHINA == appLocale) {
+                    RongConfigurationManager.getInstance().switchLocale(LangUtils.RCLocale.LOCALE_US, this);
+                    App.updateApplicationLanguage();
+                    setPushLanguage(RongIMClient.PushLanguage.EN_US);
+                    changLanguageTv.setText(R.string.lang_chs);
+                } else if (LangUtils.RCLocale.LOCALE_US == appLocale) {
+                    RongConfigurationManager.getInstance().switchLocale(LangUtils.RCLocale.LOCALE_CHINA, this);
+                    App.updateApplicationLanguage();
+                    setPushLanguage(RongIMClient.PushLanguage.ZH_CN);
+                    changLanguageTv.setText(R.string.lang_en);
+                } else{
+                    Locale systemLocale = RongConfigurationManager.getInstance().getSystemLocale();
+                    if (systemLocale.getLanguage().equals(Locale.CHINESE.getLanguage())) {
+                        RongConfigurationManager.getInstance().switchLocale(LangUtils.RCLocale.LOCALE_US, this);
+                        App.updateApplicationLanguage();
+                        setPushLanguage(RongIMClient.PushLanguage.EN_US);
+                        changLanguageTv.setText(R.string.lang_chs);
+                    } else {
+                        RongConfigurationManager.getInstance().switchLocale(LangUtils.RCLocale.LOCALE_CHINA, this);
+                        App.updateApplicationLanguage();
+                        setPushLanguage(RongIMClient.PushLanguage.ZH_CN);
+                        changLanguageTv.setText(R.string.lang_en);
+                    }
+                }
+                changeLanguage();
+                break;
         }
     }
 
+    private void changeLanguage() {
+        Intent loginIntent = new Intent(this, LoginActivity.class);
+        TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(this);
+        taskStackBuilder.addNextIntent(loginIntent);
+        taskStackBuilder.startActivities();
+        overridePendingTransition(0, 0);
+    }
+
+    private void setPushLanguage(final RongIMClient.PushLanguage language) {
+        RongIMClient.getInstance().setPushLanguage(language, new RongIMClient.OperationCallback() {
+            @Override
+            public void onSuccess() {
+                //设置成功也存起来
+                RongConfigurationManager.getInstance().setPushLanguage(LoginActivity.this, language);
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                RLog.e(TAG, getString(R.string.setting_push_language_error));
+            }
+        });
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 2 && data != null) {
             String phone = data.getStringExtra("phone");
             String password = data.getStringExtra("password");
+            String region = data.getStringExtra("region");
+            String countryName = data.getStringExtra("country");
+            String countryNameCN = data.getStringExtra("countryCN");
+            String countryNameEN = data.getStringExtra("countryEN");
+            if(!TextUtils.isEmpty(countryNameCN) && !TextUtils.isEmpty(countryNameEN)){
+                mCountryNameCN = countryNameCN;
+                mCountryNameEN = countryNameEN;
+                mCountryCodeTv.setText("+" + region);
+                mCountryNameTv.setText(countryName);
+            }
             mPhoneEdit.setText(phone);
             mPasswordEdit.setText(password);
         } else if (data != null && requestCode == 1) {
@@ -182,6 +302,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             String password = data.getStringExtra("password");
             String id = data.getStringExtra("id");
             String nickname = data.getStringExtra("nickname");
+            String region = data.getStringExtra("region");
+            String countryName = data.getStringExtra("country");
+            String countryNameCN = data.getStringExtra("countryCN");
+            String countryNameEN = data.getStringExtra("countryEN");
+            if(!TextUtils.isEmpty(countryNameCN) && !TextUtils.isEmpty(countryNameEN)){
+                mCountryNameCN = countryNameCN;
+                mCountryNameEN = countryNameEN;
+                mCountryCodeTv.setText("+" + region);
+                mCountryNameTv.setText(countryName);
+            }
             if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(id) && !TextUtils.isEmpty(nickname)) {
                 mPhoneEdit.setText(phone);
                 mPasswordEdit.setText(password);
@@ -189,9 +319,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 editor.putString(SealConst.SEALTALK_LOGING_PASSWORD, password);
                 editor.putString(SealConst.SEALTALK_LOGIN_ID, id);
                 editor.putString(SealConst.SEALTALK_LOGIN_NAME, nickname);
+                if(!TextUtils.isEmpty(mCountryNameCN) && !TextUtils.isEmpty(mCountryNameEN)){
+                    editor.putString(SealConst.SEALTALK_LOGIN_COUNTRY_CN, mCountryNameCN);
+                    editor.putString(SealConst.SEALTALK_LOGIN_COUNTRY_EN, mCountryNameEN);
+                    editor.putString(SealConst.SEALTALK_LOGIN_REGION, mRegion);
+                }
                 editor.commit();
             }
-
+        } else if(requestCode == REQUEST_CODE_SELECT_COUNTRY && resultCode == RESULT_OK){
+            String zipCode = data.getStringExtra("zipCode");
+            String countryName = data.getStringExtra("countryName");
+            String countryNameCN = data.getStringExtra("countryNameCN");
+            String countryNameEN = data.getStringExtra("countryNameEN");
+            mCountryNameCN = countryNameCN;
+            mCountryNameEN = countryNameEN;
+            mCountryCodeTv.setText(zipCode);
+            mCountryNameTv.setText(countryName);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -199,9 +342,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public Object doInBackground(int requestCode, String id) throws HttpException {
+        String region = mCountryCodeTv.getText().toString();
+        if(TextUtils.isEmpty(region)){
+            region = "86";
+        }else if(region.startsWith("+")){
+            region = region.substring(1);
+        }
+        mRegion = region;
         switch (requestCode) {
             case LOGIN:
-                return action.login("86", phoneString, passwordString);
+                return action.login(region, phoneString, passwordString);
             case GET_TOKEN:
                 return action.getToken();
             case SYNC_USER_INFO:
@@ -336,6 +486,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         editor.putString("loginToken", loginToken);
         editor.putString(SealConst.SEALTALK_LOGING_PHONE, phoneString);
         editor.putString(SealConst.SEALTALK_LOGING_PASSWORD, passwordString);
+        if(!TextUtils.isEmpty(mCountryNameCN) && !TextUtils.isEmpty(mCountryNameEN)){
+            editor.putString(SealConst.SEALTALK_LOGIN_REGION, mRegion);
+            editor.putString(SealConst.SEALTALK_LOGIN_COUNTRY_CN, mCountryNameCN);
+            editor.putString(SealConst.SEALTALK_LOGIN_COUNTRY_EN, mCountryNameEN);
+        }
         editor.commit();
         LoadDialog.dismiss(mContext);
         NToast.shortToast(mContext, R.string.login_success);

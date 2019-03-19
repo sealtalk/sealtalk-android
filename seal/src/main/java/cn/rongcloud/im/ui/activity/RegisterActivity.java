@@ -3,6 +3,7 @@ package cn.rongcloud.im.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.TaskStackBuilder;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -14,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Locale;
+
+import cn.rongcloud.im.App;
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.server.network.http.HttpException;
 import cn.rongcloud.im.server.response.CheckPhoneResponse;
@@ -26,6 +30,10 @@ import cn.rongcloud.im.server.utils.downtime.DownTimer;
 import cn.rongcloud.im.server.utils.downtime.DownTimerListener;
 import cn.rongcloud.im.server.widget.ClearWriteEditText;
 import cn.rongcloud.im.server.widget.LoadDialog;
+import io.rong.common.RLog;
+import io.rong.imkit.RongConfigurationManager;
+import io.rong.imkit.utilities.LangUtils;
+import io.rong.imlib.RongIMClient;
 
 /**
  * Created by AMing on 16/1/14.
@@ -33,6 +41,8 @@ import cn.rongcloud.im.server.widget.LoadDialog;
  */
 @SuppressWarnings("deprecation")
 public class RegisterActivity extends BaseActivity implements View.OnClickListener, DownTimerListener {
+    private final String TAG = RegisterActivity.class.getSimpleName();
+    private final int REQUEST_CODE_SELECT_COUNTRY = 1;
 
     private static final int CHECK_PHONE = 1;
     private static final int SEND_CODE = 2;
@@ -41,9 +51,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private static final int REGISTER_BACK = 1001;
     private ImageView mImgBackground;
     private ClearWriteEditText mPhoneEdit, mCodeEdit, mNickEdit, mPasswordEdit;
+    private TextView mCountryNameTv, mCountryCodeTv, changLanguageTv;
     private Button mGetCode, mConfirm;
     private String mPhone, mCode, mNickName, mPassword, mCodeToken;
     private boolean isRequestCode = false;
+    private String mCountryNameCN, mCountryNameEN;
+    private String mRegion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +73,16 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         mPasswordEdit = (ClearWriteEditText) findViewById(R.id.reg_password);
         mGetCode = (Button) findViewById(R.id.reg_getcode);
         mConfirm = (Button) findViewById(R.id.reg_button);
+        mCountryNameTv = (TextView)findViewById(R.id.reg_country_name);
+        mCountryCodeTv = (TextView)findViewById(R.id.reg_country_code);
+        View selectCountryView = findViewById(R.id.reg_country_select);
+        changLanguageTv = findViewById(R.id.chg_lang);
 
         mGetCode.setOnClickListener(this);
         mGetCode.setClickable(false);
         mConfirm.setOnClickListener(this);
+        selectCountryView.setOnClickListener(this);
+        changLanguageTv.setOnClickListener(this);
 
         TextView goLogin = (TextView) findViewById(R.id.reg_login);
         TextView goForget = (TextView) findViewById(R.id.reg_forget);
@@ -81,6 +100,21 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
         addEditTextListener();
 
+        LangUtils.RCLocale appLocale = LangUtils.getAppLocale(this);
+        if (LangUtils.RCLocale.LOCALE_CHINA == appLocale) {
+            changLanguageTv.setText(R.string.lang_en);
+        } else if (LangUtils.RCLocale.LOCALE_US == appLocale) {
+            changLanguageTv.setText(R.string.lang_chs);
+        } else {
+            Locale systemLocale = RongConfigurationManager.getInstance().getSystemLocale();
+            if (systemLocale.getLanguage().equals(Locale.CHINESE.getLanguage())) {
+                RongConfigurationManager.getInstance().switchLocale(LangUtils.RCLocale.LOCALE_CHINA, this);
+                changLanguageTv.setText(R.string.lang_en);
+            } else {
+                RongConfigurationManager.getInstance().switchLocale(LangUtils.RCLocale.LOCALE_US, this);
+                changLanguageTv.setText(R.string.lang_chs);
+            }
+        }
     }
 
     private void addEditTextListener() {
@@ -92,14 +126,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() == 11 && isBright) {
-                    if (AMUtils.isMobile(s.toString().trim())) {
-                        mPhone = s.toString().trim();
-                        request(CHECK_PHONE, true);
-                        AMUtils.onInactive(mContext, mPhoneEdit);
-                    } else {
-                        Toast.makeText(mContext, R.string.Illegal_phone_number, Toast.LENGTH_SHORT).show();
-                    }
+                if (s.length() > 0 && isBright) {
+                    mPhone = s.toString().trim();
+                    mGetCode.setClickable(true);
+                    mGetCode.setBackgroundDrawable(getResources().getDrawable(R.drawable.rs_select_btn_blue));
                 } else {
                     mGetCode.setClickable(false);
                     mGetCode.setBackgroundDrawable(getResources().getDrawable(R.drawable.rs_select_btn_gray));
@@ -119,9 +149,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() == 6) {
-                    AMUtils.onInactive(mContext, mCodeEdit);
-                }
+//                if (s.length() == 6) {
+//                    AMUtils.onInactive(mContext, mCodeEdit);
+//                }
             }
 
             @Override
@@ -156,13 +186,20 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public Object doInBackground(int requestCode, String id) throws HttpException {
+        String region = mCountryCodeTv.getText().toString();
+        if(TextUtils.isEmpty(region)){
+            region = "86";
+        }else if(region.startsWith("+")){
+            region = region.substring(1);
+        }
+        mRegion = region;
         switch (requestCode) {
             case CHECK_PHONE:
-                return action.checkPhoneAvailable("86", mPhone);
+                return action.checkPhoneAvailable(region, mPhone);
             case SEND_CODE:
-                return action.sendCode("86", mPhone);
+                return action.sendCode(region, mPhone);
             case VERIFY_CODE:
-                return action.verifyCode("86", mPhone, mCode);
+                return action.verifyCode(region, mPhone, mCode);
             case REGISTER:
                 return action.register(mNickName, mPassword, mCodeToken);
         }
@@ -177,9 +214,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     CheckPhoneResponse cprres = (CheckPhoneResponse) result;
                     if (cprres.getCode() == 200) {
                         if (cprres.isResult()) {
-                            mGetCode.setClickable(true);
-                            mGetCode.setBackgroundDrawable(getResources().getDrawable(R.drawable.rs_select_btn_blue));
-                            Toast.makeText(mContext, R.string.phone_number_available, Toast.LENGTH_SHORT).show();
+                            mGetCode.setClickable(false);
+                            mGetCode.setBackgroundDrawable(getResources().getDrawable(R.drawable.rs_select_btn_gray));
+                            request(SEND_CODE);
                         } else {
                             mGetCode.setClickable(false);
                             mGetCode.setBackgroundDrawable(getResources().getDrawable(R.drawable.rs_select_btn_gray));
@@ -190,9 +227,15 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 case SEND_CODE:
                     SendCodeResponse scrres = (SendCodeResponse) result;
                     if (scrres.getCode() == 200) {
+                        isRequestCode = true;
+                        DownTimer downTimer = new DownTimer();
+                        downTimer.setListener(this);
+                        downTimer.startDown(60 * 1000);
                         NToast.shortToast(mContext, R.string.messge_send);
                     } else if (scrres.getCode() == 5000) {
                         NToast.shortToast(mContext, R.string.message_frequency);
+                    } else if(scrres.getCode() == 3102){
+                        NToast.shortToast(mContext, R.string.Illegal_phone_number);
                     }
                     break;
 
@@ -231,6 +274,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                             data.putExtra("phone", mPhone);
                             data.putExtra("password", mPassword);
                             data.putExtra("nickname", mNickName);
+                            data.putExtra("region", mRegion);
+                            data.putExtra("country", mCountryNameTv.getText());
+                            data.putExtra("countryCN", mCountryNameCN);
+                            data.putExtra("countryEN", mCountryNameEN);
                             data.putExtra("id", rres.getResult().getId());
                             setResult(REGISTER_BACK, data);
                             this.finish();
@@ -254,18 +301,18 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void onFailure(int requestCode, int state, Object result) {
         switch (requestCode) {
             case CHECK_PHONE:
-                Toast.makeText(mContext, "手机号可用请求失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, mContext.getString(R.string.phone_enable_check_request_failed), Toast.LENGTH_SHORT).show();
                 break;
             case SEND_CODE:
-                NToast.shortToast(mContext, "获取验证码请求失败");
+                NToast.shortToast(mContext, mContext.getString(R.string.get_verify_code_request_failed));
                 break;
             case VERIFY_CODE:
                 LoadDialog.dismiss(mContext);
-                NToast.shortToast(mContext, "验证码是否可用请求失败");
+                NToast.shortToast(mContext, mContext.getString(R.string.verify_code_enable_check_request_failed));
                 break;
             case REGISTER:
                 LoadDialog.dismiss(mContext);
-                NToast.shortToast(mContext, "注册请求失败");
+                NToast.shortToast(mContext, mContext.getString(R.string.register_request_failed));
                 break;
         }
     }
@@ -279,20 +326,19 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.reg_login:
-                startActivity(new Intent(this, LoginActivity.class));
+                toLogin();
                 break;
             case R.id.reg_forget:
                 startActivity(new Intent(this, ForgetPasswordActivity.class));
+                finish();
                 break;
             case R.id.reg_getcode:
                 if (TextUtils.isEmpty(mPhoneEdit.getText().toString().trim())) {
                     NToast.longToast(mContext, R.string.phone_number_is_null);
                 } else {
-                    isRequestCode = true;
-                    DownTimer downTimer = new DownTimer();
-                    downTimer.setListener(this);
-                    downTimer.startDown(60 * 1000);
-                    request(SEND_CODE);
+                    mGetCode.setClickable(false);
+                    mGetCode.setBackgroundDrawable(getResources().getDrawable(R.drawable.rs_select_btn_gray));
+                    request(CHECK_PHONE);
                 }
                 break;
             case R.id.reg_button:
@@ -343,7 +389,70 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 request(VERIFY_CODE, true);
 
                 break;
+            case R.id.reg_country_select:
+                startActivityForResult(new Intent(this, SelectCountryActivity.class), REQUEST_CODE_SELECT_COUNTRY);
+                break;
+            case R.id.chg_lang:
+                LangUtils.RCLocale appLocale = LangUtils.getAppLocale(this);
+                if (LangUtils.RCLocale.LOCALE_CHINA == appLocale) {
+                    RongConfigurationManager.getInstance().switchLocale(LangUtils.RCLocale.LOCALE_US, this);
+                    App.updateApplicationLanguage();
+                    setPushLanguage(RongIMClient.PushLanguage.EN_US);
+                    changLanguageTv.setText(R.string.lang_chs);
+                } else if (LangUtils.RCLocale.LOCALE_US == appLocale) {
+                    RongConfigurationManager.getInstance().switchLocale(LangUtils.RCLocale.LOCALE_CHINA, this);
+                    App.updateApplicationLanguage();
+                    setPushLanguage(RongIMClient.PushLanguage.ZH_CN);
+                    changLanguageTv.setText(R.string.lang_en);
+                } else{
+                    Locale systemLocale = RongConfigurationManager.getInstance().getSystemLocale();
+                    if (systemLocale.getLanguage().equals(Locale.CHINESE.getLanguage())) {
+                        RongConfigurationManager.getInstance().switchLocale(LangUtils.RCLocale.LOCALE_US, this);
+                        App.updateApplicationLanguage();
+                        setPushLanguage(RongIMClient.PushLanguage.EN_US);
+                        changLanguageTv.setText(R.string.lang_chs);
+                    } else {
+                        RongConfigurationManager.getInstance().switchLocale(LangUtils.RCLocale.LOCALE_CHINA, this);
+                        App.updateApplicationLanguage();
+                        setPushLanguage(RongIMClient.PushLanguage.ZH_CN);
+                        changLanguageTv.setText(R.string.lang_en);
+                    }
+                }
+                changeLanguage();
+                break;
         }
+    }
+
+    private void changeLanguage() {
+        Intent loginIntent = new Intent(this, LoginActivity.class);
+        Intent registerIntent = new Intent(this, RegisterActivity.class);
+        TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(this);
+        taskStackBuilder.addNextIntent(loginIntent);
+        taskStackBuilder.addNextIntent(registerIntent);
+        taskStackBuilder.startActivities();
+        overridePendingTransition(0, 0);
+    }
+
+    private void setPushLanguage(final RongIMClient.PushLanguage language) {
+        RongIMClient.getInstance().setPushLanguage(language, new RongIMClient.OperationCallback() {
+            @Override
+            public void onSuccess() {
+                //设置成功也存起来
+                RongConfigurationManager.getInstance().setPushLanguage(RegisterActivity.this, language);
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                RLog.e(TAG, getString(R.string.setting_push_language_error));
+            }
+        });
+    }
+
+    private void toLogin(){
+        Intent loginIntent = new Intent(this, LoginActivity.class);
+        TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(this);
+        taskStackBuilder.addNextIntent(loginIntent);
+        taskStackBuilder.startActivities();
     }
 
     boolean isBright = true;
@@ -364,4 +473,19 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         isBright = true;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == REQUEST_CODE_SELECT_COUNTRY && resultCode == RESULT_OK){
+            String zipCode = data.getStringExtra("zipCode");
+            String countryName = data.getStringExtra("countryName");
+            String countryNameCN = data.getStringExtra("countryNameCN");
+            String countryNameEN = data.getStringExtra("countryNameEN");
+            mCountryCodeTv.setText(zipCode);
+            mCountryNameTv.setText(countryName);
+            mCountryNameCN = countryNameCN;
+            mCountryNameEN = countryNameEN;
+        }
+    }
 }

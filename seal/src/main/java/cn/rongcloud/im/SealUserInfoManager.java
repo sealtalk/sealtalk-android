@@ -797,7 +797,7 @@ public class SealUserInfoManager implements OnDataListener {
         if (list != null && list.size() > 0) {
             List<Friend> friendsList = new ArrayList<>();
             for (UserRelationshipResponse.ResultEntity resultEntity : list) {
-                if (resultEntity.getStatus() == 20) {
+                if (resultEntity.getStatus() == 20 && resultEntity.getUser() != null) {
                     Friend friend = new Friend(
                             resultEntity.getUser().getId(),
                             resultEntity.getUser().getNickname(),

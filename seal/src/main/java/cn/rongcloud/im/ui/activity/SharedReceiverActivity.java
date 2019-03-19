@@ -71,7 +71,7 @@ public class SharedReceiverActivity extends BaseActivity {
                     String linkInfo = getIntent().getClipData().toString();
                     if (linkInfo != null) {
                         if (linkInfo.contains("file://")) {
-                            NToast.shortToast(mContext, "暂时不支持");
+                            NToast.shortToast(mContext, mContext.getString(R.string.not_support_now));
                             finish();
                             return;
                         }
@@ -99,7 +99,7 @@ public class SharedReceiverActivity extends BaseActivity {
                             description = shareVia;
                         }
                     } else {
-                        NToast.shortToast(mContext, "暂时不支持");
+                        NToast.shortToast(mContext, mContext.getString(R.string.not_support_now));
                         finish();
                         return;
                     }
@@ -233,13 +233,13 @@ public class SharedReceiverActivity extends BaseActivity {
             public void onError(Integer messageId, RongIMClient.ErrorCode e) {
                 NLog.e("share", e.getValue());
                 LoadDialog.dismiss(mContext);
-                NToast.shortToast(mContext, "分享失败");
+                NToast.shortToast(mContext, mContext.getString(R.string.share_error));
             }
 
             @Override
             public void onSuccess(Integer integer) {
                 LoadDialog.dismiss(mContext);
-                NToast.shortToast(mContext, "分享成功");
+                NToast.shortToast(mContext, mContext.getString(R.string.share_success));
             }
         });
     }

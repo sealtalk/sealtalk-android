@@ -17,7 +17,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="14dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/default_useravatar"
+            android:background="@drawable/default_useravatar"
             app:sriv_left_bottom_corner_radius="3dip"
             app:sriv_left_top_corner_radius="3dip"
             app:sriv_right_bottom_corner_radius="3dip"

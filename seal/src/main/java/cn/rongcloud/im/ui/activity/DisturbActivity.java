@@ -307,7 +307,7 @@ public class DisturbActivity extends BaseActivity implements View.OnClickListene
                                 mHandler.post(new Runnable() {
                                     @Override
                                     public void run() {
-                                        NToast.shortToast(mContext, "设置消息免打扰成功");
+                                        NToast.shortToast(mContext, mContext.getString(R.string.set_conversation_diable_notification_success));
                                     }
                                 });
                             }
@@ -318,7 +318,7 @@ public class DisturbActivity extends BaseActivity implements View.OnClickListene
                             }
                         });
                     } else {
-                        NToast.shortToast(mContext, "间隔时间必须>0");
+                        NToast.shortToast(mContext, mContext.getString(R.string.interval_time_must_over_zero));
                     }
                 }
             });

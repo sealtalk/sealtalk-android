@@ -6,17 +6,19 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
-import android.graphics.Interpolator;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
-
 
 import java.io.File;
 import java.util.List;
 
-import cn.rongcloud.im.server.utils.CommonUtils;
+import cn.rongcloud.im.R;
+import cn.rongcloud.im.SealAppContext;
+import io.rong.imkit.RongContext;
 
 
 /**
@@ -89,7 +91,7 @@ public class PhotoUtils {
     public void selectPicture(Activity activity) {
         try {
             //每次选择图片吧之前的图片删除
-            clearCropFile(buildUri(activity));
+            clearCropFile(buildLocalFileUri());
 
             Intent intent = new Intent(Intent.ACTION_PICK, null);
             intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
@@ -110,11 +112,24 @@ public class PhotoUtils {
      * @return
      */
     private Uri buildUri(Activity activity) {
-        if (CommonUtils.checkSDCard()) {
-            return Uri.fromFile(Environment.getExternalStorageDirectory()).buildUpon().appendPath(CROP_FILE_NAME).build();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Uri uri = FileProvider.getUriForFile(RongContext.getInstance(),
+                    SealAppContext.getInstance().getContext().getPackageName()
+                            + SealAppContext.getInstance().getContext().getResources().getString(R.string.rc_authorities_fileprovider)
+                    , new File(Environment.getExternalStorageDirectory().getPath() + File.separator + CROP_FILE_NAME));
+            return uri;
         } else {
-            return Uri.fromFile(activity.getCacheDir()).buildUpon().appendPath(CROP_FILE_NAME).build();
+            return Uri.fromFile(Environment.getExternalStorageDirectory()).buildUpon().appendPath(CROP_FILE_NAME).build();
         }
+    }
+
+    /**
+     * 构建本地文件uri
+     *
+     * @return
+     */
+    private Uri buildLocalFileUri() {
+        return Uri.fromFile(Environment.getExternalStorageDirectory()).buildUpon().appendPath(CROP_FILE_NAME).build();
     }
 
     /**
@@ -131,13 +146,16 @@ public class PhotoUtils {
         Intent cropIntent = new Intent("com.android.camera.action.CROP");
         cropIntent.setDataAndType(uri, "image/*");
         cropIntent.putExtra("crop", "true");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            cropIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
         cropIntent.putExtra("aspectX", 1);
         cropIntent.putExtra("aspectY", 1);
         cropIntent.putExtra("outputX", 200);
         cropIntent.putExtra("outputY", 200);
         cropIntent.putExtra("return-data", false);
         cropIntent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-        Uri cropuri = buildUri(activity);
+        Uri cropuri = buildLocalFileUri();
         cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, cropuri);
         if (!isIntentAvailable(activity, cropIntent)) {
             return false;
@@ -168,7 +186,7 @@ public class PhotoUtils {
         switch (requestCode) {
             //拍照
             case INTENT_TAKE:
-                if (new File(buildUri(activity).getPath()).exists()) {
+                if (new File(buildLocalFileUri().getPath()).exists()) {
                     if (corp(activity, buildUri(activity))) {
                         return;
                     }
@@ -189,8 +207,8 @@ public class PhotoUtils {
 
             //截图
             case INTENT_CROP:
-                if (resultCode == Activity.RESULT_OK && new File(buildUri(activity).getPath()).exists()) {
-                    onPhotoResultListener.onPhotoResult(buildUri(activity));
+                if (resultCode == Activity.RESULT_OK && new File(buildLocalFileUri().getPath()).exists()) {
+                    onPhotoResultListener.onPhotoResult(buildLocalFileUri());
                 }
                 break;
         }

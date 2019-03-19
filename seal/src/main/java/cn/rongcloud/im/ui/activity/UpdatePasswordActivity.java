@@ -177,7 +177,7 @@ public class UpdatePasswordActivity extends BaseActivity implements View.OnClick
             NToast.shortToast(mContext, getString(R.string.original_password_mistake));
             LoadDialog.dismiss(mContext);
         } else {
-            NToast.shortToast(mContext, "修改密码失败:" + cpRes.getCode());
+            NToast.shortToast(mContext, mContext.getString(R.string.change_password_failed) + ":" + cpRes.getCode());
             LoadDialog.dismiss(mContext);
         }
     }
@@ -185,6 +185,6 @@ public class UpdatePasswordActivity extends BaseActivity implements View.OnClick
     @Override
     public void onFailure(int requestCode, int state, Object result) {
         LoadDialog.dismiss(mContext);
-        NToast.shortToast(mContext, "修改密码请求失败");
+        NToast.shortToast(mContext, mContext.getString(R.string.change_password_request_failed));
     }
 }

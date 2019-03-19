@@ -63,9 +63,9 @@ public class SinglePopWindow extends PopupWindow {
         final TextView blacklistText = (TextView) conentView.findViewById(R.id.blacklist_text_status);
 
         if (blacklistStatus == RongIMClient.BlacklistStatus.IN_BLACK_LIST) {
-            blacklistText.setText("移除黑名单");
+            blacklistText.setText(R.string.remove_from_blacklist);
         } else {
-            blacklistText.setText("加入黑名单");
+            blacklistText.setText(R.string.join_the_blacklist);
         }
 
 
@@ -86,7 +86,7 @@ public class SinglePopWindow extends PopupWindow {
                                 @Override
                                 public void onSuccess(int requestCode, Object result) {
                                     SealUserInfoManager.getInstance().deleteBlackList(friend.getUserId());
-                                    NToast.shortToast(context, "移除成功");
+                                    NToast.shortToast(context, context.getString(R.string.remove_successful));
                                 }
 
                                 @Override
@@ -98,7 +98,7 @@ public class SinglePopWindow extends PopupWindow {
 
                         @Override
                         public void onError(RongIMClient.ErrorCode errorCode) {
-                            NToast.shortToast(context, "移除失败");
+                            NToast.shortToast(context, context.getString(R.string.remove_failed));
                         }
                     });
                 } else {
@@ -123,7 +123,7 @@ public class SinglePopWindow extends PopupWindow {
                                                         null,
                                                         null
                                                     ));
-                                            NToast.shortToast(context, "加入成功");
+                                            NToast.shortToast(context, context.getString(R.string.join_success));
                                         }
 
                                         @Override
@@ -135,7 +135,7 @@ public class SinglePopWindow extends PopupWindow {
 
                                 @Override
                                 public void onError(RongIMClient.ErrorCode errorCode) {
-                                    NToast.shortToast(context, "加入失败");
+                                    NToast.shortToast(context, context.getString(R.string.join_failed));
                                 }
                             });
                         }

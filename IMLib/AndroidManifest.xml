@@ -1,11 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.rong.imlib">
 
+    <!-- 保存图片，拍照等 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 网络 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 消息通道保活 -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- 定位，如果您不需要定位相关的功能，可以删掉 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application>

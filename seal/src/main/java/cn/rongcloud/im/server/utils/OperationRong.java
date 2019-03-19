@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 
+import cn.rongcloud.im.R;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -24,7 +25,7 @@ public class OperationRong {
 
                 @Override
                 public void onError(RongIMClient.ErrorCode errorCode) {
-                    NToast.shortToast(context, "设置失败");
+                    NToast.shortToast(context, context.getString(R.string.set_failed));
                 }
             });
         }
@@ -50,7 +51,7 @@ public class OperationRong {
 
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
-                NToast.shortToast(context, "设置失败");
+                NToast.shortToast(context, context.getString(R.string.set_failed));
             }
         });
     }

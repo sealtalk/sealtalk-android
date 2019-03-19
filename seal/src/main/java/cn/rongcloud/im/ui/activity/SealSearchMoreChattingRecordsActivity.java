@@ -53,7 +53,7 @@ import io.rong.imlib.model.UserInfo;
  * Created by tiankui on 16/10/8.
  */
 
-public class SealSearchMoreChattingRecordsActivity extends Activity {
+public class SealSearchMoreChattingRecordsActivity extends BaseActivity {
 
     private static final int SEARCH_TYPE_FLAG = 1;
 
@@ -72,6 +72,7 @@ public class SealSearchMoreChattingRecordsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seal_search_more_info);
+        setHeadVisibility(View.GONE);
         Intent intent = getIntent();
         mFilterString = intent.getStringExtra("filterString");
         mSearchConversationResultsArrayList = intent.getParcelableArrayListExtra("conversationRecords");

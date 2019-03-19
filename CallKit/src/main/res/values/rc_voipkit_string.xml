@@ -65,4 +65,5 @@
     <string name="rc_voip_observer_hint">当前您的身份是观察者，其他人看不见您。\n如需发言请举手。</string>
     <string name="rc_voip_video_numberofobservers">最多允许%d人同时视频聊天</string>
     <string name="rc_voip_audio_numberofobservers">最多允许%d人同时语音聊天</string>
+    <string name="rc_voip_select_contacts">选择联系人</string>
 </resources>

@@ -2,18 +2,25 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.rong.imkit">
 
+    <!-- 访问相册，访问文件系统等 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- 发送位置消息，实时位置共享 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 拍照 -->
     <uses-permission android:name="android.permission.CAMERA" />
+    <!-- 拍照等 -->
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
+    <!-- 音视频 -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
+    <!-- 网络 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 录音 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 使用ActivityManager需要 -->
     <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+    <!-- 适配 Android 8.0 -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application>
 
@@ -29,11 +36,6 @@
 
         <activity android:name="io.rong.imkit.plugin.location.AMapRealTimeActivity" />
         <activity android:name="io.rong.imkit.plugin.location.AMapRealTimeActivity2D" />
-
-        <activity
-            android:name="io.rong.imkit.plugin.location.SearchLocationActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustResize" />
 
         <activity
             android:name="io.rong.imkit.plugin.location.SearchLocationActivity"

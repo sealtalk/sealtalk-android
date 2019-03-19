@@ -18,5 +18,8 @@ public class SealConst {
     public static final String SEALTALK_LOGING_PORTRAIT = "loginPortrait";
     public static final String SEALTALK_LOGING_PHONE = "loginphone";
     public static final String SEALTALK_LOGING_PASSWORD = "loginpassword";
+    public static final String SEALTALK_LOGIN_REGION = "loginregion";
+    public static final String SEALTALK_LOGIN_COUNTRY_CN = "logincountrycn";
+    public static final String SEALTALK_LOGIN_COUNTRY_EN = "logincountryen";
 
 }

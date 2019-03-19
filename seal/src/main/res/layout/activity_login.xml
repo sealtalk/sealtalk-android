@@ -39,41 +39,95 @@
             android:layout_marginTop="72dip"
             android:orientation="vertical">
 
-
-            <RelativeLayout
-                android:id="@+id/liner1"
+            <LinearLayout
+                android:id="@+id/reg_country_select"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dip"
                 android:layout_marginRight="30dip"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
-
-
-                <cn.rongcloud.im.server.widget.ClearWriteEditText
-                    android:id="@+id/de_login_phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rc_ed_public_service_search_selector"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:hint="@string/phone_number"
-                    android:inputType="phone"
-                    android:maxLines="1"
-                    android:maxLength="11"
-                    android:textColor="#FFFFFF"
-                    android:textColorHint="#FFFFFF" />
-
-                <FrameLayout
-                    android:id="@+id/fr_username_delete"
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignRight="@+id/de_login_phone"
-                    android:layout_centerVertical="true"
-                    android:visibility="gone">
+                    android:text="@string/countries_and_regions"
+                    android:paddingLeft="10dip"
+                    android:paddingRight="10dip"
+                    android:textColor="#FFF"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium.Inverse"
+                    />
+                <TextView
+                    android:id="@+id/reg_country_name"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:layout_height="wrap_content"
+                    android:text="@string/china"
+                    android:paddingLeft="10dip"
+                    android:paddingRight="10dip"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="#FFF"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium.Inverse"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/rp_arrow"
+                    />
+            </LinearLayout>
 
-                </FrameLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="30dip"
+                android:layout_marginRight="30dip"
+                android:layout_marginTop="37dip"
+                android:gravity="center_vertical"
+                >
+                <TextView
+                    android:id="@+id/reg_country_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dip"
+                    android:paddingRight="10dip"
+                    android:text="+86"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium.Inverse"
+                    />
+                <RelativeLayout
+                    android:id="@+id/liner1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-            </RelativeLayout>
+                    <cn.rongcloud.im.server.widget.ClearWriteEditText
+                        android:id="@+id/de_login_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rc_ed_public_service_search_selector"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:hint="@string/phone_number"
+                        android:inputType="phone"
+                        android:maxLines="1"
+                        android:maxLength="20"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#FFFFFF" />
+
+                    <FrameLayout
+                        android:id="@+id/fr_username_delete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignRight="@+id/de_login_phone"
+                        android:layout_centerVertical="true"
+                        android:visibility="gone">
+
+                    </FrameLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/liner2"
@@ -158,5 +212,16 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:text="@string/new_user" />
+
+    <TextView
+        android:id="@+id/chg_lang"
+        android:text="EN"
+        android:textColor="#FFF"
+        android:textSize="16sp"
+        android:padding="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>

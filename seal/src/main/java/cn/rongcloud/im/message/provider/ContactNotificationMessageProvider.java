@@ -81,11 +81,11 @@ public class ContactNotificationMessageProvider extends IContainerItemProvider.M
             } finally {
                 if (bean != null && !TextUtils.isEmpty(bean.getSourceUserNickname())) {
                     if (content.getOperation().equals("AcceptResponse")) {
-                        return new SpannableString(bean.getSourceUserNickname() + "已同意你的好友请求");
+                        return new SpannableString(context.getString(R.string.contact_notification_someone_agree_your_request,bean.getSourceUserNickname()));
                     }
                 } else {
                     if (content.getOperation().equals("AcceptResponse")) {
-                        return new SpannableString("对方已同意你的好友请求");
+                        return new SpannableString(context.getString(R.string.contact_notification_agree_your_request));
                     }
                 }
                 if (content.getOperation().equals("Request")) {

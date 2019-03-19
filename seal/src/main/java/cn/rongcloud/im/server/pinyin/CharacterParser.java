@@ -9,6 +9,8 @@ import android.text.style.ForegroundColorSpan;
 
 import java.util.List;
 
+import cn.rongcloud.im.App;
+import cn.rongcloud.im.R;
 import cn.rongcloud.im.db.Friend;
 import cn.rongcloud.im.db.GroupMember;
 import io.rong.imlib.model.MessageContent;
@@ -296,7 +298,7 @@ public class CharacterParser {
             String messageTitle = richContentMessage.getTitle();
             messageText = getOmitColored(filterStr, messageTitle, 1);
             if (messageText.length() == 0) {
-                SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder("[链接] ");
+                SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(App.getAppResources().getString(R.string.msg_reference_link));
                 spannableStringBuilder.append(messageTitle);
                 messageText = spannableStringBuilder;
             }
@@ -317,9 +319,9 @@ public class CharacterParser {
             SpannableStringBuilder finalBuilder = new SpannableStringBuilder();
             if (type == 0) {
             } else if (type == 1) {
-                finalBuilder.append("[链接] ");
+                finalBuilder.append(App.getAppResources().getString(R.string.msg_reference_link));
             } else if (type == 2) {
-                finalBuilder.append("[文件] ");
+                finalBuilder.append(App.getAppResources().getString(R.string.msg_reference_file));
             }
             int length = content.length();
             int firstIndex = lowerCaseText.indexOf(lowerCaseFilterStr);

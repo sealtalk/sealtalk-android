@@ -51,6 +51,7 @@ import cn.rongcloud.im.server.response.GetFriendInfoByIDResponse;
 import cn.rongcloud.im.server.response.GetGroupInfoResponse;
 import cn.rongcloud.im.server.response.GetGroupMemberResponse;
 import cn.rongcloud.im.server.response.GetGroupResponse;
+import cn.rongcloud.im.server.response.GetRegionListResponse;
 import cn.rongcloud.im.server.response.GetTokenResponse;
 import cn.rongcloud.im.server.response.GetUserInfoByIdResponse;
 import cn.rongcloud.im.server.response.GetUserInfoByPhoneResponse;
@@ -129,7 +130,7 @@ public class SealAction extends BaseAction {
      * @throws HttpException
      */
     public SendCodeResponse sendCode(String region, String phone) throws HttpException {
-        String url = getURL("user/send_code");
+        String url = getURL("user/send_code_yp");
         String json = JsonMananger.beanToJson(new SendCodeRequest(region, phone));
         StringEntity entity = null;
         try {
@@ -164,7 +165,7 @@ public class SealAction extends BaseAction {
      * @throws HttpException
      */
     public VerifyCodeResponse verifyCode(String region, String phone, String code) throws HttpException {
-        String url = getURL("user/verify_code");
+        String url = getURL("user/verify_code_yp");
         String json = JsonMananger.beanToJson(new VerifyCodeRequest(region, phone, code));
         VerifyCodeResponse response = null;
         StringEntity entity = null;
@@ -922,6 +923,16 @@ public class SealAction extends BaseAction {
         SyncTotalDataResponse response = null;
         if (!TextUtils.isEmpty(result)) {
             response = jsonToBean(result, SyncTotalDataResponse.class);
+        }
+        return response;
+    }
+
+    public GetRegionListResponse getRegionListResponse() throws HttpException {
+        String url = getURL("user/regionlist");
+        String result = httpManager.get(mContext, url.trim());
+        GetRegionListResponse response = null;
+        if(!TextUtils.isEmpty(result)) {
+            response = jsonToBean(result, GetRegionListResponse.class);
         }
         return response;
     }

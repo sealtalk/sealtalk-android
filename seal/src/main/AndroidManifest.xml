@@ -326,17 +326,6 @@
             android:name=".ui.activity.AccountSettingActivity"
             android:screenOrientation="portrait" />
 
-        <service
-            android:name="io.rong.imlib.ipc.RongService"
-            android:process=":ipc" />
-        <service android:name="io.rong.imlib.ReConnectService" />
-
-        <receiver android:name="io.rong.imlib.ConnectChangeReceiver" />
-
-        <receiver
-            android:name="io.rong.imlib.HeartbeatReceiver"
-            android:process=":ipc" />
-
         <activity
             android:name="io.rong.imkit.widget.provider.TakingPicturesActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -582,7 +571,6 @@
                 <action android:name="com.meizu.flyme.push.intent.REGISTER.FEEDBACK" />
                 <!-- 接收 unregister 消息-->
                 <action android:name="com.meizu.flyme.push.intent.UNREGISTER.FEEDBACK" />
-                />
                 <!-- 兼容低版本 Flyme3 推送服务配置 -->
                 <action android:name="com.meizu.c2dm.intent.REGISTRATION" />
                 <action android:name="com.meizu.c2dm.intent.RECEIVE" />

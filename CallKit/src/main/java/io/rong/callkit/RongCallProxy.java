@@ -124,9 +124,16 @@ public class RongCallProxy implements IRongCallListener {
     }
 
     @Override
-    public void onNetWorkLossRate(int lossRate) {
+    public void onNetworkSendLost(int lossRate) {
         if (mCallListener != null) {
-            mCallListener.onNetWorkLossRate(lossRate);
+            mCallListener.onNetworkSendLost(lossRate);
+        }
+    }
+
+    @Override
+    public void onNetworkReceiveLost(int lossRate) {
+        if (mCallListener != null) {
+            mCallListener.onNetworkReceiveLost(lossRate);
         }
     }
 
@@ -162,6 +169,13 @@ public class RongCallProxy implements IRongCallListener {
     public void onNotifyHostControlUserDevice(String userId, int dType, int isOpen) {
         if (mCallListener != null) {
             mCallListener.onNotifyHostControlUserDevice(userId, dType, isOpen);
+        }
+    }
+
+    @Override
+    public void onNotifyAnswerUpgradeObserverToNormalUser(String userId, SurfaceView remoteVideo) {
+        if (mCallListener != null) {
+            mCallListener.onNotifyAnswerUpgradeObserverToNormalUser(userId,remoteVideo);
         }
     }
 

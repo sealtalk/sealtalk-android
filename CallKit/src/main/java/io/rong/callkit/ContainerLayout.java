@@ -8,14 +8,15 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
-import com.bailingcloud.bailingvideo.engine.binstack.util.FinLog;
-import com.bailingcloud.bailingvideo.engine.view.BlinkVideoView;
+import cn.rongcloud.rtc.engine.view.RongRTCVideoView;
+import cn.rongcloud.rtc.utils.FinLog;
 
 /**
  * Created by Administrator on 2017/3/30.
  */
 
 public class ContainerLayout extends RelativeLayout {
+    private final String TAG = ContainerLayout.class.getSimpleName();
     private Context context;
     private static boolean isNeedFillScrren = true;
     SurfaceView currentView;
@@ -31,16 +32,16 @@ public class ContainerLayout extends RelativeLayout {
         ;
         this.screenHeight = wm.getDefaultDisplay().getHeight();
         ;
-        FinLog.d("---xx-- add view " + videoView.toString() + " Height: " + ((BlinkVideoView) videoView).rotatedFrameHeight + " Width: " + ((BlinkVideoView) videoView).rotatedFrameWidth);
-        super.addView(videoView, getBigContainerParams((BlinkVideoView) videoView));
+        FinLog.d(TAG, "---xx-- add view " + videoView.toString() + " Height: " + ((RongRTCVideoView) videoView).rotatedFrameHeight + " Width: " + ((RongRTCVideoView) videoView).rotatedFrameWidth);
+        super.addView(videoView, getBigContainerParams((RongRTCVideoView) videoView));
         currentView = videoView;
-        ((BlinkVideoView) videoView).setOnSizeChangedListener(new BlinkVideoView.OnSizeChangedListener() {
+        ((RongRTCVideoView) videoView).setOnSizeChangedListener(new RongRTCVideoView.OnSizeChangedListener() {
             @Override
-            public void onChanged(BlinkVideoView.Size size) {
+            public void onChanged(RongRTCVideoView.Size size) {
                 try {
                     ContainerLayout.this.removeAllViews();
-                    FinLog.d("---xx-- change view " + videoView.toString() + " Height: " + ((BlinkVideoView) videoView).rotatedFrameHeight + " Width: " + ((BlinkVideoView) videoView).rotatedFrameWidth);
-                    ContainerLayout.this.addView(videoView, getBigContainerParams((BlinkVideoView) videoView));
+                    FinLog.d(TAG, "---xx-- change view " + videoView.toString() + " Height: " + ((RongRTCVideoView) videoView).rotatedFrameHeight + " Width: " + ((RongRTCVideoView) videoView).rotatedFrameWidth);
+                    ContainerLayout.this.addView(videoView, getBigContainerParams((RongRTCVideoView) videoView));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -50,7 +51,7 @@ public class ContainerLayout extends RelativeLayout {
 
 
     @NonNull
-    private LayoutParams getBigContainerParams(BlinkVideoView videoView) {
+    private LayoutParams getBigContainerParams(RongRTCVideoView videoView) {
         LayoutParams layoutParams = null;
         if (!isNeedFillScrren) {
             if (screenHeight > screenWidth) { //V
@@ -74,7 +75,7 @@ public class ContainerLayout extends RelativeLayout {
     @Override
     public void removeAllViews() {
         if (currentView != null)
-            ((BlinkVideoView) currentView).setOnSizeChangedListener(null);
+            ((RongRTCVideoView) currentView).setOnSizeChangedListener(null);
         super.removeAllViews();
     }
 

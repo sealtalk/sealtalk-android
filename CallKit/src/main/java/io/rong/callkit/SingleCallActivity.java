@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,17 +21,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bailingcloud.bailingvideo.engine.binstack.util.FinLog;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import cn.rongcloud.rtc.utils.FinLog;
 import io.rong.callkit.util.BluetoothUtil;
 import io.rong.callkit.util.CallKitUtils;
 import io.rong.callkit.util.GlideUtils;
 import io.rong.callkit.util.HeadsetInfo;
-import io.rong.callkit.util.SPUtils;
 import io.rong.calllib.CallUserProfile;
 import io.rong.calllib.RongCallClient;
 import io.rong.calllib.RongCallCommon;
@@ -53,11 +52,15 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
     private FrameLayout mSPreviewContainer;
     private FrameLayout mButtonContainer;
     private LinearLayout mUserInfoContainer;
+    private TextView mConnectionStateTextView;
     private Boolean isInformationShow = false;
     private SurfaceView mLocalVideo = null;
     private boolean muted = false;
     private boolean handFree = false;
     private boolean startForCheckPermissions = false;
+    private boolean isReceiveLost = false;
+    private boolean isSendLost = false;
+    private SoundPool mSoundPool = null;
 
     private int EVENT_FULL_SCREEN = 1;
 
@@ -90,6 +93,7 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
         mSPreviewContainer = (FrameLayout) findViewById(R.id.rc_voip_call_small_preview);
         mButtonContainer = (FrameLayout) findViewById(R.id.rc_voip_btn);
         mUserInfoContainer = (LinearLayout) findViewById(R.id.rc_voip_user_info);
+        mConnectionStateTextView = findViewById(R.id.rc_tv_connection_state);
 
         startForCheckPermissions = intent.getBooleanExtra("checkPermissions", false);
         RongCallAction callAction = RongCallAction.valueOf(intent.getStringExtra("callAction"));
@@ -259,9 +263,7 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
                     userPortrait.setResource(userInfo.getPortraitUri().toString(), R.drawable.rc_default_portrait);
                 }
                 TextView userName = (TextView) mUserInfoContainer.findViewById(R.id.rc_voip_user_name);
-                if (userName != null) {
-                    userName.setText(userInfo.getName());
-                }
+                userName.setText(userInfo.getName());
             }
         }
         if(callAction.equals(RongCallAction.ACTION_INCOMING_CALL) && userInfo!=null){
@@ -634,7 +636,7 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
         RongCallSession session = RongCallClient.getInstance().getCallSession();
         if (session == null || isFinishing) {
             finish();
-            FinLog.e(TAG+"_挂断单人视频出错 callSession="+(callSession == null)+",isFinishing="+isFinishing);
+            FinLog.e(TAG, "_挂断单人视频出错 callSession="+(callSession == null)+",isFinishing="+isFinishing);
             return;
         }
         RongCallClient.getInstance().hangUpCall(session.getCallId());
@@ -644,7 +646,7 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
     public void onReceiveBtnClick(View view) {
         RongCallSession session = RongCallClient.getInstance().getCallSession();
         if (session == null || isFinishing) {
-            FinLog.e(TAG+"_接听单人视频出错 callSession="+(callSession == null)+",isFinishing="+isFinishing);
+            FinLog.e(TAG, "_接听单人视频出错 callSession="+(callSession == null)+",isFinishing="+isFinishing);
             finish();
             return;
         }
@@ -725,6 +727,7 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
                 }
                 break;
         }
+        cancelTime();
 
         if (!TextUtils.isEmpty(senderId)) {
             CallSTerminateMessage message = new CallSTerminateMessage();
@@ -748,6 +751,49 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onNetworkSendLost(int lossRate) {
+        isSendLost = lossRate > 30;
+        refreshConnectionState();
+    }
+
+    @Override
+    public void onNetworkReceiveLost(int lossRate) {
+        isReceiveLost = lossRate > 30;
+        refreshConnectionState();
+    }
+
+    private Runnable mCheckConnectionStableTask = new Runnable() {
+        @Override
+        public void run() {
+            boolean isConnectionStable = !isSendLost && !isReceiveLost;
+            if (isConnectionStable) {
+                mConnectionStateTextView.setVisibility(View.GONE);
+            }
+        }
+    };
+
+    private void refreshConnectionState() {
+        if (isSendLost || isReceiveLost) {
+            if (mConnectionStateTextView.getVisibility() == View.GONE) {
+                mConnectionStateTextView.setVisibility(View.VISIBLE);
+                if (mSoundPool != null) {
+                    mSoundPool.release();
+                }
+                mSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+                mSoundPool.load(this, R.raw.voip_network_error_sound, 0);
+                mSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                    @Override
+                    public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                        soundPool.play(sampleId, 1F, 1F, 0, 0, 1F);
+                    }
+                });
+            }
+            mConnectionStateTextView.removeCallbacks(mCheckConnectionStableTask);
+            mConnectionStateTextView.postDelayed(mCheckConnectionStableTask, 3000);
+        }
     }
 
     @Override

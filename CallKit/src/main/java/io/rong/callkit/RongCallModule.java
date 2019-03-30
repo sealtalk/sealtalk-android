@@ -3,11 +3,10 @@ package io.rong.callkit;
 import android.content.Context;
 import android.content.Intent;
 
-import com.bailingcloud.bailingvideo.engine.binstack.util.FinLog;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.rongcloud.rtc.utils.FinLog;
 import io.rong.calllib.IRongReceivedCallListener;
 import io.rong.calllib.RongCallClient;
 import io.rong.calllib.RongCallCommon;
@@ -43,7 +42,7 @@ public class RongCallModule implements IExternalModule {
         RongCallClient.getInstance().setVoIPCallListener(RongCallProxy.getInstance());
         // 开启音视频日志，如果不需要开启，则去掉下面这句。
         RongCallClient.getInstance().setEnablePrintLog(true);
-        RongCallClient.getInstance().setVideoProfile(RongCallCommon.CallVideoProfile.VIDEO_PROFILE_480P);
+        RongCallClient.getInstance().setVideoProfile(RongCallCommon.CallVideoProfile.VIDEO_PROFILE_720P);
     }
 
     @Override

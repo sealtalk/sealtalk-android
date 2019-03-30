@@ -17,6 +17,7 @@
     <string name="rc_voip_call_audio_start_fail">正在进行语音通话，请稍后再试</string>
     <string name="rc_voip_call_video_start_fail">正在进行视频通话，请稍后再试</string>
     <string name="rc_voip_call_other">其它设备已处理</string>
+    <string name="rc_voip_call_conn_user_blocked">用户被开发者后台封禁</string>
 
     <string name="rc_voip_audio_call_inviting">正在邀请你进行语音聊天...</string>
     <string name="rc_voip_video_call_inviting">正在邀请你进行视频聊天...</string>
@@ -65,5 +66,6 @@
     <string name="rc_voip_observer_hint">当前您的身份是观察者，其他人看不见您。\n如需发言请举手。</string>
     <string name="rc_voip_video_numberofobservers">最多允许%d人同时视频聊天</string>
     <string name="rc_voip_audio_numberofobservers">最多允许%d人同时语音聊天</string>
-    <string name="rc_voip_select_contacts">选择联系人</string>
+    <string name="rc_voip_unstable_call_connection">当前通话连接质量不佳</string>
+    <string name="rc_voip_engine_notfound">开通的音视频服务没有及时生效或音视频服务已关闭，请等待3-5小时后重新安装应用或开启音视频服务再进行测试.</string>
 </resources>

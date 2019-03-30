@@ -3,7 +3,6 @@ package io.rong.callkit;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
-import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -224,10 +223,6 @@ public class CallFloatBoxView {
                 }
                 NotificationUtil.clearNotification(mContext, BaseCallActivity.CALL_NOTIFICATION_ID);
                 RongCallClient.getInstance().setVoIPCallListener(RongCallProxy.getInstance());
-                AudioManager am = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
-                if (am != null) {
-                    am.setMode(AudioManager.MODE_NORMAL);
-                }
             }
 
             @Override
@@ -258,10 +253,6 @@ public class CallFloatBoxView {
             @Override
             public void onCallConnected(RongCallSession callInfo, SurfaceView localVideo) {
                 CallKitUtils.isDial=false;
-                AudioManager am = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
-                if (am != null) {
-                    am.setMode(AudioManager.MODE_IN_COMMUNICATION);
-                }
             }
 
             @Override
@@ -275,7 +266,12 @@ public class CallFloatBoxView {
             }
 
             @Override
-            public void onNetWorkLossRate(int lossRate) {
+            public void onNetworkReceiveLost(int lossRate) {
+
+            }
+
+            @Override
+            public void onNetworkSendLost(int lossRate) {
 
             }
 
@@ -301,6 +297,11 @@ public class CallFloatBoxView {
 
             @Override
             public void onNotifyHostControlUserDevice(String userId, int dType, int isOpen) {
+
+            }
+
+            @Override
+            public void onNotifyAnswerUpgradeObserverToNormalUser(String userId, SurfaceView remoteVideo) {
 
             }
         });
@@ -514,7 +515,12 @@ public class CallFloatBoxView {
             }
 
             @Override
-            public void onNetWorkLossRate(int lossRate) {
+            public void onNetworkReceiveLost(int lossRate) {
+
+            }
+
+            @Override
+            public void onNetworkSendLost(int lossRate) {
 
             }
 
@@ -540,6 +546,11 @@ public class CallFloatBoxView {
 
             @Override
             public void onNotifyHostControlUserDevice(String userId, int dType, int isOpen) {
+
+            }
+
+            @Override
+            public void onNotifyAnswerUpgradeObserverToNormalUser(String userId, SurfaceView remoteVideo) {
 
             }
         });

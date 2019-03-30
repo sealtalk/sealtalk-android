@@ -359,13 +359,13 @@
 
         <activity android:name=".ui.activity.NoteInformationActivity" />
 
-        <activity android:name=".ui.activity.SelectCountryActivity"
-            android:screenOrientation="portrait"
-            />
+        <activity
+            android:name=".ui.activity.SelectCountryActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activity.SetLanguageActivity"
-            android:screenOrientation="portrait"
-            />
+        <activity
+            android:name=".ui.activity.SetLanguageActivity"
+            android:screenOrientation="portrait" />
 
         <receiver
             android:name=".SealNotificationReceiver"
@@ -492,7 +492,8 @@
             android:name="com.huawei.hms.update.provider.UpdateProvider"
             android:authorities="cn.rongcloud.im.hms.update.provider"
             android:exported="false"
-            android:grantUriPermissions="true"></provider>
+            android:grantUriPermissions="true">
+        </provider>
         <!-- 第三方相关 :接收Push消息（注册、Push消息、Push连接状态）广播 -->
         <receiver android:name="io.rong.push.platform.hms.HMSReceiver">
             <intent-filter>
@@ -514,34 +515,6 @@
             </intent-filter>
         </receiver>
         <!-- HMS 配置结束-->
-
-        <!-- GCM 配置 < -->
-        <!--<receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <category android:name="cn.rongcloud.im" />
-                &lt;!&ndash; 替换为自己的packagename < &ndash;&gt;
-            </intent-filter>
-        </receiver>
-
-        <service
-            android:name="io.rong.push.platform.google.RongGcmListenerService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-            </intent-filter>
-        </service>
-        <service
-            android:name="io.rong.push.platform.google.RongGCMInstanceIDListenerService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID" />
-            </intent-filter>
-        </service>-->
-        <!-- GCM 配置结束 < -->
 
         <!-- [START firebase_service] -->
         <service
@@ -571,6 +544,7 @@
                 <action android:name="com.meizu.flyme.push.intent.REGISTER.FEEDBACK" />
                 <!-- 接收 unregister 消息-->
                 <action android:name="com.meizu.flyme.push.intent.UNREGISTER.FEEDBACK" />
+
                 <!-- 兼容低版本 Flyme3 推送服务配置 -->
                 <action android:name="com.meizu.c2dm.intent.REGISTRATION" />
                 <action android:name="com.meizu.c2dm.intent.RECEIVE" />
@@ -595,22 +569,22 @@
         <!-- vivo 推送配置 开始 -->
         <service
             android:name="com.vivo.push.sdk.service.CommandClientService"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name="com.vivo.push.sdk.LinkProxyClientActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!--推送配置项-->
         <meta-data
             android:name="com.vivo.push.api_key"
-            android:value="2efff5bb-2713-424a-8042-5242421b3dc9"/>
+            android:value="2efff5bb-2713-424a-8042-5242421b3dc9" />
         <meta-data
             android:name="com.vivo.push.app_id"
-            android:value="10441"/>
+            android:value="10441" />
 
         <!-- push 应用定义消息 receiver 声明 -->
-        <receiver android:name="io.rong.push.platform.vivo.VivoPushMessageReceiver" >
+        <receiver android:name="io.rong.push.platform.vivo.VivoPushMessageReceiver">
             <intent-filter>
                 <!-- 接收 push 消息 -->
                 <action android:name="com.vivo.pushclient.action.RECEIVE" />

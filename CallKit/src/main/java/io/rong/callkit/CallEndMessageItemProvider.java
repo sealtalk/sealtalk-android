@@ -86,6 +86,7 @@ public class CallEndMessageItemProvider extends IContainerItemProvider.MessagePr
                 break;
             case HANGUP:
             case REMOTE_HANGUP:
+//            case CONN_USER_BLOCKED:
                 msgContent = v.getResources().getString(R.string.rc_voip_call_time_length);
                 msgContent += content.getExtra();
                 break;
@@ -185,17 +186,17 @@ public class CallEndMessageItemProvider extends IContainerItemProvider.MessagePr
         view.getContext().startActivity(intent);
     }
 
-//    @Override
-//    public void onItemLongClick(final View view, int position, final CallSTerminateMessage content, final UIMessage message) {
-//
-//        String[] items = new String[] {view.getContext().getResources().getString(R.string.rc_dialog_item_message_delete)};
-//
-//        OptionsPopupDialog.newInstance(view.getContext(), items).setOptionsPopupDialogListener(new OptionsPopupDialog.OnOptionsItemClickedListener() {
-//            @Override
-//            public void onOptionsItemClicked(int which) {
-//                if (which == 0)
-//                    RongIM.getInstance().deleteMessages(new int[] {message.getMessageId()}, null);
-//            }
-//        }).show();
-//    }
+    @Override
+    public void onItemLongClick(final View view, int position, final CallSTerminateMessage content, final UIMessage message) {
+
+        String[] items = new String[] {view.getContext().getResources().getString(R.string.rc_dialog_item_message_delete)};
+
+        OptionsPopupDialog.newInstance(view.getContext(), items).setOptionsPopupDialogListener(new OptionsPopupDialog.OnOptionsItemClickedListener() {
+            @Override
+            public void onOptionsItemClicked(int which) {
+                if (which == 0)
+                    RongIM.getInstance().deleteMessages(new int[] {message.getMessageId()}, null);
+            }
+        }).show();
+    }
 }

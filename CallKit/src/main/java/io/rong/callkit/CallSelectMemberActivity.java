@@ -354,7 +354,7 @@ public class CallSelectMemberActivity extends BaseNoActionBarActivity {
             }
         });
         TextView titleTextView = (TextView) findViewById(R.id.tv_custom_nav_title);
-        titleTextView.setText(getResources().getString(R.string.rc_voip_select_contacts));
+        titleTextView.setText("选择联系人");
         titleTextView.setTextSize(18);
         titleTextView.setTextColor(getResources().getColor(R.color.callkit_normal_text));
 

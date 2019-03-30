@@ -10,14 +10,20 @@
     <string name="rc_voip_occupying">The audio channel is being used, please try later</string>
 
     <!-- discussion_notification_msg -->
+    <string name="rc_discussion_nt_msg_for_you_rename">"You changed the discussion group name to %1$s"</string>
     <string name="rc_discussion_nt_msg_for_rename">"%1$s changed the discussion group name to %2$s"</string>
+    <string name="rc_discussion_nt_msg_for_you_added">"You have Invited %1$s to join the discussion group"</string>
     <string name="rc_discussion_nt_msg_for_added">"%1$s has Invited %2$s to join the discussion group"</string>
+    <string name="rc_discussion_nt_msg_for_you_add">"You have Invited %1$d members to join the discussion group"</string>
     <string name="rc_discussion_nt_msg_for_add">"%1$s has Invited %2$d members to join the discussion group"</string>
+    <string name="rc_discussion_nt_msg_for_you_exit">"You have quit the discussion group"</string>
     <string name="rc_discussion_nt_msg_for_exit">"%1$s has quit the discussion group"</string>
-    <string name="rc_discussion_nt_msg_for_removed">"You are removed from the discussion group by %1$s"</string>
+    <string name="rc_discussion_nt_msg_for_removed">"You have removed from the discussion group by %1$s"</string>
     <string name="rc_discussion_nt_msg_for_who_removed">"%1$s has removed from the discussion group by %2$s"</string>
-    <string name="rc_discussion_nt_msg_for_you">"You"</string>
+    <string name="rc_discussion_nt_msg_for_you">"you"</string>
+    <string name="rc_discussion_nt_msg_for_you_is_open_invite_open">"You have enabled the member invitation"</string>
     <string name="rc_discussion_nt_msg_for_is_open_invite_open">"%1$s has enabled the member invitation"</string>
+    <string name="rc_discussion_nt_msg_for_you_is_open_invite_close">"You have disabled the member invitation"</string>
     <string name="rc_discussion_nt_msg_for_is_open_invite_close">"%1$s has disabled the member invitation"</string>
 
     <string name="rc_conversation_list_my_private_conversation">My private conversation</string>
@@ -217,14 +223,19 @@
     <string name="rc_item_remove_group_before_str">" remove "</string>
     <string name="rc_item_remove_group_after_str">" from the group"</string>
     <string name="rc_item_create_group">Create Groups</string>
+    <string name="rc_item_you_created_group">You have created the group</string>
     <string name="rc_item_created_group">%1$s has created the group</string>
+    <string name="rc_item_you_invitation">You have invited %1$s to join the group</string>
     <string name="rc_item_invitation">%1$s has invited %2$s to join the group</string>
     <string name="rc_item_etc">" and etc."</string>
+    <string name="rc_item_you_remove_group_member">You have removed %1$s from the group</string>
     <string name="rc_item_remove_group_member">%1$s has removed %2$s from the group</string>
+    <string name="rc_item_you_change_group_name">You changed the group name to %1$s</string>
     <string name="rc_item_change_group_name">%1$s changed the group name to %2$s</string>
     <string name="rc_item_you">You</string>
     <string name="rc_item_divided_string">、</string>
     <string name="rc_item_group_notification_summary">[Group Announcement]</string>
+    <string name="rc_item_you_remove_self">You have removed by %1$s from the group</string>
     <string name="rc_item_remove_self">%1$s has removed by %2$s from the group</string>
 
     <string name="rc_real_time_location_summary">I start a location sharing</string>

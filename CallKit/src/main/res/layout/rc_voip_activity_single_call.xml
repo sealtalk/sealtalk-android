@@ -36,6 +36,18 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/rc_tv_connection_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/rc_voip_audio_chat"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="100dp"
+            android:visibility="gone"
+            android:textColor="@color/rc_voip_white"
+            android:textSize="16sp"
+            android:text="@string/rc_voip_unstable_call_connection"/>
+
         <RelativeLayout
             android:id="@+id/rc_voip_audio_chat"
             android:layout_width="wrap_content"

@@ -3,6 +3,7 @@ package io.rong.callkit.util;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -172,5 +173,20 @@ public class CallKitUtils {
         stringBuffer.append(val1);
         stringBuffer.append(val2);
         return stringBuffer.toString();
+    }
+
+
+    /**
+     * 是否是debug状态
+     * @param context
+     * @return
+     */
+    public static boolean isDebug(Context context) {
+        try {
+            ApplicationInfo info = context.getApplicationInfo();
+            return (info.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

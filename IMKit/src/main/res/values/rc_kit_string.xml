@@ -3,14 +3,20 @@
     <string name="rc_name">融云</string>
 
     <!-- discussion_notification_msg -->
+    <string name="rc_discussion_nt_msg_for_you_rename">"你修改讨论组名称为 %1$s"</string>
     <string name="rc_discussion_nt_msg_for_rename">"%1$s 修改讨论组名称为 %2$s"</string>
+    <string name="rc_discussion_nt_msg_for_you_added">"你邀请 %1$s 加入了讨论组"</string>
     <string name="rc_discussion_nt_msg_for_added">"%1$s 邀请 %2$s 加入了讨论组"</string>
+    <string name="rc_discussion_nt_msg_for_you_add">"你邀请了%1$d位成员加入了讨论组"</string>
     <string name="rc_discussion_nt_msg_for_add">"%1$s 邀请了%2$d位成员加入了讨论组"</string>
+    <string name="rc_discussion_nt_msg_for_you_exit">"你退出了讨论组"</string>
     <string name="rc_discussion_nt_msg_for_exit">"%1$s 退出了讨论组"</string>
     <string name="rc_discussion_nt_msg_for_removed">"你被 %1$s 移出了讨论组"</string>
     <string name="rc_discussion_nt_msg_for_who_removed">"%1$s 被 %2$s 移出了讨论组"</string>
     <string name="rc_discussion_nt_msg_for_you">"你"</string>
+    <string name="rc_discussion_nt_msg_for_you_is_open_invite_open">"你开放了成员邀请"</string>
     <string name="rc_discussion_nt_msg_for_is_open_invite_open">"%1$s 开放了成员邀请"</string>
+    <string name="rc_discussion_nt_msg_for_you_is_open_invite_close">"你关闭了成员邀请"</string>
     <string name="rc_discussion_nt_msg_for_is_open_invite_close">"%1$s 关闭了成员邀请"</string>
 
     <string name="rc_conversation_list_my_private_conversation">我的私人会话</string>
@@ -210,11 +216,16 @@
     <string name="rc_item_remove_group_before_str">将</string>
     <string name="rc_item_remove_group_after_str">移出了群组</string>
     <string name="rc_item_create_group">创建群组</string>
+    <string name="rc_item_you_created_group">你创建了群组</string>
     <string name="rc_item_created_group">%1$s创建了群组</string>
+    <string name="rc_item_you_invitation">你邀请%1$s加入群组</string>
     <string name="rc_item_invitation">%1$s邀请%2$s加入群组</string>
     <string name="rc_item_etc">等</string>
+    <string name="rc_item_you_remove_group_member">你将%1$s移出群组</string>
     <string name="rc_item_remove_group_member">%1$s将%2$s移出群组</string>
+    <string name="rc_item_you_remove_self">你被%1$s移出群组</string>
     <string name="rc_item_remove_self">%1$s被%2$s移出群组</string>
+    <string name="rc_item_you_change_group_name">你修改群名称为%1$s</string>
     <string name="rc_item_change_group_name">%1$s修改群名称为%2$s</string>
     <string name="rc_item_you">你</string>
     <string name="rc_item_divided_string">、</string>

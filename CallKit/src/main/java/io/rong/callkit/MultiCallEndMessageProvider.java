@@ -90,8 +90,8 @@ public class MultiCallEndMessageProvider extends IContainerItemProvider.MessageP
 
     }
 
-//    @Override
-//    public void onItemLongClick(View view, int position, MultiCallEndMessage content, UIMessage message) {
-//
-//    }
+    @Override
+    public void onItemLongClick(View view, int position, MultiCallEndMessage content, UIMessage message) {
+
+    }
 }

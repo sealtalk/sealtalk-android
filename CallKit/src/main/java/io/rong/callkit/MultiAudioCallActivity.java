@@ -17,12 +17,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bailingcloud.bailingvideo.engine.binstack.util.FinLog;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import cn.rongcloud.rtc.utils.FinLog;
 import io.rong.callkit.util.BluetoothUtil;
 import io.rong.callkit.util.CallVerticalScrollView;
 import io.rong.callkit.util.CallKitUtils;
@@ -299,7 +298,7 @@ public class MultiAudioCallActivity extends BaseCallActivity {
     public void onHangupBtnClick(View view) {
         unRegisterHeadsetplugReceiver();
         if (callSession == null || isFinishing) {
-            FinLog.e(TAG+"_挂断多人语音出错 callSession="+(callSession == null)+",isFinishing="+isFinishing);
+            FinLog.e(TAG, "_挂断多人语音出错 callSession="+(callSession == null)+",isFinishing="+isFinishing);
             return;
         }
         RongCallClient.getInstance().hangUpCall(callSession.getCallId());
@@ -307,7 +306,7 @@ public class MultiAudioCallActivity extends BaseCallActivity {
 
     public void onReceiveBtnClick(View view) {
         if (callSession == null || isFinishing) {
-            FinLog.e(TAG+"_接听多人语音出错 callSession="+(callSession == null)+",isFinishing="+isFinishing);
+            FinLog.e(TAG, "_接听多人语音出错 callSession="+(callSession == null)+",isFinishing="+isFinishing);
             return;
         }
         RongCallClient.getInstance().acceptCall(callSession.getCallId());
@@ -578,6 +577,7 @@ public class MultiAudioCallActivity extends BaseCallActivity {
         multiCallEndMessage.setMediaType(RongIMClient.MediaType.AUDIO);
         long serverTime = System.currentTimeMillis() - RongIMClient.getInstance().getDeltaTime();
         RongIM.getInstance().insertMessage(callSession.getConversationType(), callSession.getTargetId(), callSession.getCallerUserId(), multiCallEndMessage, serverTime, null);
+        cancelTime();
         stopRing();
         postRunnableDelay(new Runnable() {
             @Override
@@ -670,26 +670,7 @@ public class MultiAudioCallActivity extends BaseCallActivity {
 
     @Override
     public void onBackPressed() {
-        if (callSession == null) {
-            callSession = RongCallClient.getInstance().getCallSession();
-            if (callSession == null) {
-                super.onBackPressed();
-                return;
-            }
-        }
-        List<CallUserProfile> participantProfiles = callSession.getParticipantProfileList();
-        RongCallCommon.CallStatus callStatus = null;
-        for (CallUserProfile item : participantProfiles) {
-            if (item.getUserId().equals(callSession.getSelfUserId())) {
-                callStatus = item.getCallStatus();
-                break;
-            }
-        }
-        if (callStatus != null && callStatus.equals(RongCallCommon.CallStatus.CONNECTED)) {
-            super.onBackPressed();
-        } else {
-            RongCallClient.getInstance().hangUpCall(callSession.getCallId());
-        }
+        return;
     }
 
     public void onMinimizeClick(View view) {

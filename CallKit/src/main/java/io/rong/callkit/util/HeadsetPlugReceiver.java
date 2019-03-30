@@ -10,8 +10,7 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.util.Log;
 
-import com.bailingcloud.bailingvideo.engine.binstack.util.FinLog;
-
+import cn.rongcloud.rtc.utils.FinLog;
 import io.rong.imkit.RongContext;
 
 /**
@@ -20,6 +19,7 @@ import io.rong.imkit.RongContext;
 
 public class HeadsetPlugReceiver extends BroadcastReceiver{
 
+    private static final String TAG = HeadsetPlugReceiver.class.getSimpleName();
     // 动态注册了监听有线耳机之后 默认会调用一次有限耳机拔出
     public boolean FIRST_HEADSET_PLUG_RECEIVER=false;
 
@@ -55,7 +55,7 @@ public class HeadsetPlugReceiver extends BroadcastReceiver{
         if(null!=headsetInfo){//onHandFreeButtonClick
             RongContext.getInstance().getEventBus().post(headsetInfo);
         }else{
-            FinLog.e("HeadsetPlugReceiver headsetInfo=null !");
+            FinLog.e(TAG, "HeadsetPlugReceiver headsetInfo=null !");
         }
     }
 }

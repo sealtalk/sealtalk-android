@@ -16,8 +16,6 @@ import android.net.NetworkInfo;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.bailingcloud.bailingvideo.engine.binstack.util.FinLog;
-
 import org.w3c.dom.Text;
 
 import java.lang.reflect.Method;

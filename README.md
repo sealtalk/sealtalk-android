@@ -2,9 +2,11 @@
 [![Platform](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html)
 [![API](https://img.shields.io/badge/API-9%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=9)<br/>
 
-
 [中文版](https://github.com/sealtalk/sealtalk-android/blob/master/README.zh.md)  <br/>
 Android App of SealTalk powered by RongCloud.  
+
+## Notes
+Starting with SealTalk 1.3.14, the audio and video engine referenced by the CallLib module has been replaced with RTC 3.0, which is not compatible with previous versions.For details, see the [RTC 3.0](https://www.rongcloud.cn/docs/android_rtclib.html).
 
 ## Features
 - Support multi-device [Android iOS Web PC(Windows Mac)](http://web.sealtalk.im/) online simultaneously, so is your app;

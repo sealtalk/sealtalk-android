@@ -6,7 +6,7 @@
 Android 应用 SealTalk 由 融云 RongCloud 出品
 
 ## 特别注意
-SealTalk 自从 1.3.14 版本起，CallLib 模块引用的音视频引擎以替换成 RTC 3.0，与之前的版本不互通。详细内容请参考官网的 [音视频 SDK 文档](https://www.rongcloud.cn/docs/android_rtclib.html) 。
+SealTalk 自从 1.3.14 版本起，CallLib 模块引用的音视频引擎已替换成 RTC 3.0，与之前的版本不互通。详细内容请参考官网的 [音视频 SDK 文档](https://www.rongcloud.cn/docs/android_rtclib.html) 。
 
 ## 特点
 - Android iOS [Web](http://web.sealtalk.im/) PC(Windows Mac) 多端互通,如果需要你的产品也可以这样实现

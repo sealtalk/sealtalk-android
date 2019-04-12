@@ -4,13 +4,17 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import io.rong.calllib.RongCallClient;
 import io.rong.calllib.RongCallCommon;
+import io.rong.calllib.RongCallMissedListener;
 import io.rong.calllib.RongCallSession;
+import io.rong.calllib.message.CallSTerminateMessage;
+import io.rong.imkit.RongIM;
 import io.rong.imkit.utilities.PermissionCheckUtil;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -117,9 +121,10 @@ public class RongCallKit {
     }
 
     /**
-     *  发起的多人通话，不依赖群、讨论组等
+     * 发起的多人通话，不依赖群、讨论组等
+     *
      * @param context
-     * @param userIds 邀请的成员
+     * @param userIds    邀请的成员
      * @param oberverIds 邀请的以观察者身份加入房间的成员
      * @param mediaType
      */
@@ -285,5 +290,10 @@ public class RongCallKit {
      */
     public static RongCallCustomerHandlerListener getCustomerHandlerListener() {
         return customerHandlerListener;
+    }
+
+
+    public static void setRongCallMissedListener(final RongCallMissedListener rongCallMissedListener) {
+        RongCallModule.setMissedCallListener(rongCallMissedListener);
     }
 }

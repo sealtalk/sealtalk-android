@@ -268,8 +268,10 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
         }
         if(callAction.equals(RongCallAction.ACTION_INCOMING_CALL) && userInfo!=null){
             ImageView iv_icoming_backgroud=(ImageView)mUserInfoContainer.findViewById(R.id.iv_icoming_backgroud);
-            iv_icoming_backgroud.setVisibility(View.VISIBLE);
-            GlideUtils.showBlurTransformation(SingleCallActivity.this, iv_icoming_backgroud, null != userInfo ? userInfo.getPortraitUri() : null);
+            if(iv_icoming_backgroud!=null){
+                iv_icoming_backgroud.setVisibility(View.VISIBLE);
+                GlideUtils.showBlurTransformation(SingleCallActivity.this, iv_icoming_backgroud, null != userInfo ? userInfo.getPortraitUri() : null);
+            }
         }
 
         createPowerManager();

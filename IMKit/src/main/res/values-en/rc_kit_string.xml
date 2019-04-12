@@ -2,8 +2,8 @@
 <resources>
     <string name="rc_name">RongCloud</string>
 
-    <string name="rc_voice_rec">Slide up to cancel message sending</string>
-    <string name="rc_voice_cancel">Release your finger to cancel message sending</string>
+    <string name="rc_voice_rec">Slide up to cancel</string>
+    <string name="rc_voice_cancel">Release to cancel</string>
     <string name="rc_voice_short">Recording time is too short</string>
     <string name="rc_voice_failure">Recording failed</string>
     <string name="rc_voice_too_long">Recording time is too long</string>
@@ -52,10 +52,10 @@
     <string name="rc_message_content_file">[File]</string>
     <string name="rc_message_content_mentioned">[You were mentioned]</string>
 
-    <string name="rc_dialog_item_message_delete">Delete message</string>
+    <string name="rc_dialog_item_message_delete">Delete</string>
     <string name="rc_dialog_item_message_copy">Copy</string>
     <string name="rc_dialog_item_message_recall">Recall</string>
-    <string name="rc_dialog_item_message_more">More&#8230;</string>
+    <string name="rc_dialog_item_message_more">Select&#8230;</string>
     <string name="rc_recall_failed">Failed to recall the message</string>
     <string name="rc_you_recalled_a_message">You have recalled a message</string>
     <string name="rc_admin_recalled_a_message">Admin has recalled a message</string>

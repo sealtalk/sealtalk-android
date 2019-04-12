@@ -38,7 +38,7 @@ public class UpdateNameActivity extends BaseActivity implements View.OnClickList
         Button rightButton = getHeadRightButton();
         rightButton.setVisibility(View.GONE);
         mHeadRightText.setVisibility(View.VISIBLE);
-        mHeadRightText.setText(getString(R.string.confirm));
+        mHeadRightText.setText(getString(R.string.save_update));
         mHeadRightText.setOnClickListener(this);
         mNameEditText = (ClearWriteEditText) findViewById(R.id.update_name);
         sp = getSharedPreferences("config", MODE_PRIVATE);

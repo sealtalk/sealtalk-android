@@ -4,7 +4,7 @@
     <string name="rc_action_bar_ok">OK</string>
 
     <string name="rc_plugin_location">Location</string>
-    <string name="rc_plugin_image">Image</string>
+    <string name="rc_plugin_image">Album</string>
     <string name="rc_plugin_location_message">Send location</string>
     <string name="rc_plugin_location_sharing">Real-time Location</string>
     <string name="rc_audio_input">Hold to Talk</string>
@@ -186,5 +186,7 @@
     <string name="rc_emoji_capsule">Capsule</string><!--127-->
     <string name="rc_emoji_rocket">Rocket</string><!--128-->
     <string name="rc_emoji_globe">Globe</string><!--129-->
+    <string name="rc_emoji_love_heart">Love</string><!--130-->
+
     <!--emoji description 128 total end-->
 </resources>

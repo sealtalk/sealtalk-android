@@ -84,7 +84,7 @@
         android:layout_marginRight="15dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/rs_select_btn_blue"
-        android:text="@string/confirm"
+        android:text="@string/save_update"
         android:textColor="#FFF" />
 
 </LinearLayout>

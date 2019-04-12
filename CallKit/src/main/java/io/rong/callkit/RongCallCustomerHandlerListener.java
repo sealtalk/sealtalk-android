@@ -23,4 +23,5 @@ public interface RongCallCustomerHandlerListener {
 
     void onCallDisconnected(RongCallSession callSession, RongCallCommon.CallDisconnectedReason reason);
 
+    void onCallMissed(RongCallSession callSession ,RongCallCommon.CallDisconnectedReason reason);
 }

@@ -195,7 +195,7 @@ public class SealAppContext implements RongIM.ConversationListBehaviorListener,
             }
             if (defaultModule != null) {
                 RongExtensionManager.getInstance().unregisterExtensionModule(defaultModule);
-                RongExtensionManager.getInstance().registerExtensionModule(new SealExtensionModule());
+                RongExtensionManager.getInstance().registerExtensionModule(new SealExtensionModule(mContext));
             }
         }
     }

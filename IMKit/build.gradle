@@ -6,8 +6,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 2019033013
-        versionName "2.9.13 Dev"
+        versionCode 2019041211
+        versionName "2.9.14 Stable"
     }
     buildTypes {
         release {

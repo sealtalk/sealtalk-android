@@ -41,8 +41,8 @@
     <string name="No_friends">No Friends</string>
     <string name="Search">Search</string>
     <string name="new_friends">New Friends</string>
-    <string name="group">Group</string>
-    <string name="public_service">Public Account</string>
+    <string name="group">Groups</string>
+    <string name="public_service">Public Accounts</string>
     <string name="check_network">Please to check network</string>
     <string name="agreed_friend">Accepted to friend</string>
     <string name="agree">Accept</string>
@@ -53,7 +53,7 @@
     <string name="set_privacy">Privacy</string>
     <string name="set_rongcloud">About SealTalk</string>
     <string name="de_actionbar_myacc">My Account</string>
-    <string name="new_message_notice">Turn On Mute Notification</string>
+    <string name="new_message_notice">Turn on Mute Notification</string>
     <string name="new_message_show">New Message Notification</string>
     <string name="new_message_voice">Sounds</string>
     <string name="new_message_vibration">Vibration</string>
@@ -61,10 +61,10 @@
     <string name="blacklist_empty">Blacklist is empty</string>
     <string name="portrait">Portrait</string>
     <string name="change_password">Change Password</string>
-    <string name="update_log">Update Log</string>
+    <string name="update_log">Update Log </string>
     <string name="function_introduce">Feature Introduction</string>
     <string name="rongcloud_web">Official Website</string>
-    <string name="select_group_member">Select Group Members</string>
+    <string name="select_group_member">Select Members</string>
     <string name="remove_group_member">Remove Group Members</string>
     <string name="add_group_member">Add Group Members</string>
     <string name="edit_group_name">Enter group name (2-10 characters)</string>
@@ -87,7 +87,7 @@
     <string name="clean_message">Clear Chat History</string>
     <string name="quit_group">Delete And Quit</string>
     <string name="dismiss_group">Dismiss And Quit</string>
-    <string name="user_details">User Details</string>
+    <string name="user_details">User Info</string>
     <string name="black_state">Blacklist Status</string>
     <string name="my_groups">Groups</string>
     <string name="code_is_null">Verification code is null</string>
@@ -241,7 +241,7 @@
     <string name="share_dialog_hint">Say something</string>
     <string name="share_dialog_from">From: UC browser</string>
     <string name="dialog_bottom_picture">Take Picture</string>
-    <string name="dialog_bottom_import_from_local">From My Album</string>
+    <string name="dialog_bottom_import_from_local">My Album</string>
     <string name="fr_group_list_not_join_the_group">Not joining the group yet</string>
 
     <string name="ac_note_info_name">Remark Name</string>
@@ -285,7 +285,7 @@
     <string name="join_success">Join success</string>
     <string name="network_unavailable">Network Unavailable</string>
     <string name="logout_prompt">Do you want to log out?</string>
-    <string name="clear_cache_prompt">Clear Cache?</string>
+    <string name="clear_cache_prompt">Do you want to clear cache?</string>
     <string name="the_other_side_is_typing">Typing &#046;&#046;&#046;</string>
     <string name="the_other_side_is__speaking">Speaking &#046;&#046;&#046;</string>
     <string name="account_not_exist">User does not exist.</string>
@@ -344,4 +344,5 @@
     <string name="early_morning">Early morning</string>
     <string name="morning">Morning/am</string>
     <string name="afternoon">Afternoon/pm</string>
+    <string name="save_update">Save</string>
 </resources>

@@ -1,5 +1,7 @@
 package cn.rongcloud.im.message.module;
 
+import android.content.Context;
+
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,10 @@ import io.rong.imlib.model.Message;
 
 
 public class SealExtensionModule extends DefaultExtensionModule {
+
+    public SealExtensionModule(Context context) {
+        super(context);
+    }
 
     @Override
     public void onInit(String appKey) {

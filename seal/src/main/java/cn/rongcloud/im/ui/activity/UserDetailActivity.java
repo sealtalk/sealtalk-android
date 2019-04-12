@@ -108,6 +108,7 @@ public class UserDetailActivity extends BaseActivity implements View.OnClickList
 
         mAddFriendButton.setOnClickListener(this);
         mUserPhone.setOnClickListener(this);
+
     }
 
     private void initData() {
@@ -166,8 +167,9 @@ public class UserDetailActivity extends BaseActivity implements View.OnClickList
         if (!TextUtils.isEmpty(mFriend.getUserId())) {
             String mySelf = getSharedPreferences("config", MODE_PRIVATE).getString(SealConst.SEALTALK_LOGIN_ID, "");
             if (mySelf.equals(mFriend.getUserId())) {
-                mChatButtonGroupLinearLayout.setVisibility(View.VISIBLE);
+                mChatButtonGroupLinearLayout.setVisibility(View.GONE);
                 mAddFriendButton.setVisibility(View.GONE);
+                mNoteNameLinearLayout.setVisibility(View.GONE);
                 return;
             }
             if (mIsFriendsRelationship) {

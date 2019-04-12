@@ -128,7 +128,7 @@
 
 
     <!-- 我的钱包 -->
-    <string name="my_wallet_title">Wallet</string>
+    <string name="my_wallet_title">My Wallet</string>
     <string name="jrmf_my_balance">Balance</string>
     <string name="jrmf_some_zhang">%1$d</string>
 

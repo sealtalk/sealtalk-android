@@ -17,6 +17,17 @@ android {
         }
     }
 
+    configurations.all {
+        resolutionStrategy.eachDependency { details ->
+            def requested = details.requested
+            if (requested.group == 'com.android.support') {
+                if (!requested.name.startsWith("multidex")) {
+                    details.useVersion '26.0.0'
+                }
+            }
+        }
+    }
+
     signingConfigs {
         config {
             storeFile file("rong.key")
@@ -71,5 +82,7 @@ dependencies {
     api 'com.facebook.stetho:stetho:1.4.1'
     api 'com.huawei.android.hms:push:2.6.1.301'
     api 'com.meizu.flyme.internet:push-internal:3.6.+@aar'
+    api 'com.google.firebase:firebase-messaging:17.6.0'
+    api 'com.google.android.gms:play-services:12.0.1'
 }
 

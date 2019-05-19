@@ -1,6 +1,8 @@
 package cn.rongcloud.im.ui.activity;
 
+import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -19,6 +21,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
 import java.util.Locale;
 
 import cn.rongcloud.im.App;
@@ -36,12 +39,16 @@ import cn.rongcloud.im.server.utils.NToast;
 import cn.rongcloud.im.server.utils.RongGenerate;
 import cn.rongcloud.im.server.widget.ClearWriteEditText;
 import cn.rongcloud.im.server.widget.LoadDialog;
+import cn.rongcloud.im.utils.PushSetAdvisorHistory;
 import io.rong.common.RLog;
 import io.rong.imkit.RongConfigurationManager;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.utilities.LangUtils;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
+import io.rong.pushperm.ResultCallback;
+import io.rong.pushperm.RongPushPremissionsCheckHelper;
+import io.rong.pushperm.perm.PermissionType;
 
 /**
  * Created by AMing on 16/1/15.
@@ -75,6 +82,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         sp = getSharedPreferences("config", MODE_PRIVATE);
         editor = sp.edit();
         initView();
+        pushPermCheckAndSet();
     }
 
     private void initView() {
@@ -496,5 +504,66 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         NToast.shortToast(mContext, R.string.login_success);
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
         finish();
+    }
+
+
+    private void pushPermCheckAndSet () {
+
+        RongPushPremissionsCheckHelper.checkPermissionsAndShowDialog(this, new ResultCallback() {
+            @Override
+            public void onAreadlyOpened(String value) {
+                RLog.d(TAG,"Areadly opened ," + value);
+            }
+
+            @Override
+            public boolean onBeforeShowDialog(String value) {
+                boolean isExist = isProcessExists("io.rong.push");
+                if (!isExist) {
+                    RLog.d(TAG,"Push process is not exist");
+                    return false;
+                }
+//                return false;
+                // 是否有rong push 进程
+                // 跳转并记录
+                if (value.equalsIgnoreCase(PermissionType.PERM_NOTIFICATION.getValue())) {
+                    RLog.d(TAG,"No show " + value);
+                    return false;
+                }
+                return !PushSetAdvisorHistory.isCanSet(LoginActivity.this, value);
+            }
+
+            @Override
+            public void onGoToSetting(String value) {
+                RLog.d(TAG,"To set " + value);
+                if (value.equalsIgnoreCase(PermissionType.PERM_NOTIFICATION.getValue())) {
+                    return ;
+                }
+                PushSetAdvisorHistory.saveSetHistory(LoginActivity.this, value);
+            }
+
+            @Override
+            public void onFailed(String value, FailedType type) {
+                RLog.d(TAG,"Set failed " + value + "/ " + type);
+            }
+        });
+
+    }
+
+    private boolean isProcessExists(String packageName) {
+        if (TextUtils.isEmpty(packageName)) {
+            return false;
+        }
+
+        boolean isOk = false;
+        ActivityManager am = (ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> list = am.getRunningAppProcesses();
+
+        for (ActivityManager.RunningAppProcessInfo appProcess : list) {
+            if (appProcess.processName.equals(packageName)) {
+                isOk = true;
+            }
+        }
+
+        return isOk;
     }
 }

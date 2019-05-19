@@ -244,7 +244,7 @@
     <string name="fr_chat_room_three">聊天室 III</string>
     <string name="fr_chat_room_four">聊天室 IV</string>
     <string name="fr_chat_room_join_failure">加入聊天室失败</string>
-
+    
     <string name="ac_new_friend_list_no_data">暂无数据</string>
     <string name="share_dialog_share">分享</string>
     <string name="share_dialog_cancel">取消</string>

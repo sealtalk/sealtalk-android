@@ -691,7 +691,7 @@ public class MultiAudioCallActivity extends BaseCallActivity {
 
     public void onEventMainThread(HeadsetInfo headsetInfo) {
         if(headsetInfo==null || !BluetoothUtil.isForground(MultiAudioCallActivity.this)){
-            FinLog.i("bugtags","MultiAudioCallActivity 不在前台！");
+            FinLog.v("bugtags","MultiAudioCallActivity 不在前台！");
             return;
         }
         Log.i("bugtags","Insert="+headsetInfo.isInsert()+",headsetInfo.getType="+headsetInfo.getType().getValue());

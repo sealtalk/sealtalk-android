@@ -121,20 +121,6 @@ public class App extends MultiDexApplication {
                 e.printStackTrace();
             }
             openSealDBIfHasCachedToken();
-            RongIM.setConnectionStatusListener(new RongIMClient.ConnectionStatusListener() {
-                @Override
-                public void onChanged(ConnectionStatus status) {
-                    if (status == ConnectionStatus.TOKEN_INCORRECT) {
-                        SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
-                        final String cacheToken = sp.getString("loginToken", "");
-                        if (!TextUtils.isEmpty(cacheToken)) {
-                            RongIM.connect(cacheToken, SealAppContext.getInstance().getConnectCallback());
-                        } else {
-                            Log.e("seal", "token is empty, can not reconnect");
-                        }
-                    }
-                }
-            });
 
             options = new DisplayImageOptions.Builder()
                     .showImageForEmptyUri(cn.rongcloud.im.R.drawable.de_default_portrait)

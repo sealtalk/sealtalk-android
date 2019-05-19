@@ -60,6 +60,7 @@
     <string name="rc_you_recalled_a_message">You have recalled a message</string>
     <string name="rc_admin_recalled_a_message">Admin has recalled a message</string>
     <string name="rc_recalled_a_message">&#160; has recalled a message</string>
+    <string name="rc_admin_recalled_message">Admin&#160; has recalled a message</string>
     <string name="rc_exceeded_max_limit">Exceeded the maximum limit</string>
 
     <string name="rc_message_unread_count">"···"</string>

@@ -15,12 +15,19 @@
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
     <!-- 网络 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- 录音 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <!-- 使用ActivityManager需要 -->
     <uses-permission android:name="android.permission.GET_TASKS" />
     <!-- 适配 Android 8.0 -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!-- 保存图片，拍照等 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 新消息震动提醒 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application>
 
@@ -44,6 +51,7 @@
 
         <activity
             android:name="io.rong.imkit.plugin.image.PictureSelectorActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait" />
 
         <activity

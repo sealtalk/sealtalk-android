@@ -617,6 +617,7 @@ public class MultiVideoCallActivity extends BaseCallActivity {
             ((ViewGroup) video.getParent()).removeView(video);
         }
         video.setTag(CallKitUtils.getStitchedContent(userId, REMOTE_FURFACEVIEW_TAG));
+        video.setBackgroundColor(Color.BLACK);
         ((RongRTCVideoView) video).setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FILL);
         remoteVideoView.addView(video, new FrameLayout.LayoutParams(remoteUserViewWidth, remoteUserViewWidth));
 
@@ -1494,7 +1495,7 @@ public class MultiVideoCallActivity extends BaseCallActivity {
 
     public void onEventMainThread(HeadsetInfo headsetInfo) {
         if (headsetInfo == null || !BluetoothUtil.isForground(MultiVideoCallActivity.this)) {
-            FinLog.i("bugtags", "MultiVideoCallActivity 不在前台！");
+            FinLog.v("bugtags", "MultiVideoCallActivity 不在前台！");
             return;
         }
         Log.i("bugtags", "Insert=" + headsetInfo.isInsert() + ",headsetInfo.getType=" + headsetInfo.getType().getValue());

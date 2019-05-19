@@ -54,6 +54,7 @@
     <string name="rc_you_recalled_a_message">你撤回了一条消息</string>
     <string name="rc_admin_recalled_a_message">管理员撤回了一条消息</string>
     <string name="rc_recalled_a_message">&#160;撤回了一条消息</string>
+    <string name="rc_admin_recalled_message">管理员&#160;撤回了一条消息</string>
     <string name="rc_exceeded_max_limit">超出最大限制</string>
 
     <string name="rc_message_unread_count">"···"</string>

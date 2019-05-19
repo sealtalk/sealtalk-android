@@ -268,10 +268,8 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
         }
         if(callAction.equals(RongCallAction.ACTION_INCOMING_CALL) && userInfo!=null){
             ImageView iv_icoming_backgroud=(ImageView)mUserInfoContainer.findViewById(R.id.iv_icoming_backgroud);
-            if(iv_icoming_backgroud!=null){
-                iv_icoming_backgroud.setVisibility(View.VISIBLE);
-                GlideUtils.showBlurTransformation(SingleCallActivity.this, iv_icoming_backgroud, null != userInfo ? userInfo.getPortraitUri() : null);
-            }
+            iv_icoming_backgroud.setVisibility(View.VISIBLE);
+            GlideUtils.showBlurTransformation(SingleCallActivity.this, iv_icoming_backgroud, null != userInfo ? userInfo.getPortraitUri() : null);
         }
 
         createPowerManager();
@@ -281,7 +279,7 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
     @Override
     protected void onResume() {
         super.onResume();
-        FinLog.i("AudioPlugin","---single activity onResume---");
+        FinLog.v("AudioPlugin","---single activity onResume---");
         if (pickupDetector != null && mediaType.equals(RongCallCommon.CallMediaType.AUDIO)) {
             pickupDetector.register(this);
         }
@@ -410,7 +408,7 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
     public void onCallConnected(RongCallSession callSession, SurfaceView localVideo) {
         super.onCallConnected(callSession, localVideo);
         this.callSession = callSession;
-        FinLog.i(TAG,"onCallConnected----mediaType="+callSession.getMediaType().getValue());
+        FinLog.v(TAG,"onCallConnected----mediaType="+callSession.getMediaType().getValue());
         if (callSession.getMediaType().equals(RongCallCommon.CallMediaType.AUDIO)) {
             findViewById(R.id.rc_voip_call_minimize).setVisibility(View.VISIBLE);
             RelativeLayout btnLayout = (RelativeLayout) inflater.inflate(R.layout.rc_voip_call_bottom_connected_button_layout, null);
@@ -488,14 +486,14 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
     @Override
     public void onRemoteUserJoined(final String userId, RongCallCommon.CallMediaType mediaType, int userType, SurfaceView remoteVideo) {
         super.onRemoteUserJoined(userId, mediaType, userType, remoteVideo);
-        FinLog.i(TAG,"onRemoteUserJoined userID="+userId+",mediaType="+mediaType.getValue()+",userType="+userId);
+        FinLog.v(TAG,"onRemoteUserJoined userID="+userId+",mediaType="+mediaType.getValue()+",userType="+userId);
         if (mediaType.equals(RongCallCommon.CallMediaType.VIDEO)) {
             findViewById(R.id.rc_voip_call_information).setBackgroundColor(getResources().getColor(android.R.color.transparent));
             mLPreviewContainer.setVisibility(View.VISIBLE);
             mLPreviewContainer.removeAllViews();
             remoteVideo.setTag(userId);
 
-            FinLog.i(TAG,"onRemoteUserJoined mLPreviewContainer.addView(remoteVideo)");
+            FinLog.v(TAG,"onRemoteUserJoined mLPreviewContainer.addView(remoteVideo)");
             mLPreviewContainer.addView(remoteVideo);
             mLPreviewContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -510,7 +508,7 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
             });
             mSPreviewContainer.setVisibility(View.VISIBLE);
             mSPreviewContainer.removeAllViews();
-            FinLog.i(TAG,"onRemoteUserJoined mLocalVideo != null="+(mLocalVideo != null));
+            FinLog.v(TAG,"onRemoteUserJoined mLocalVideo != null="+(mLocalVideo != null));
             if (mLocalVideo != null) {
                 mLocalVideo.setZOrderMediaOverlay(true);
                 mLocalVideo.setZOrderOnTop(true);
@@ -929,10 +927,10 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
 
     public void onEventMainThread(HeadsetInfo headsetInfo) {
         if(headsetInfo==null || !BluetoothUtil.isForground(SingleCallActivity.this)){
-            FinLog.i("bugtags","SingleCallActivity 不在前台！");
+            FinLog.v("bugtags","SingleCallActivity 不在前台！");
             return;
         }
-        FinLog.i("bugtags","Insert="+headsetInfo.isInsert()+",headsetInfo.getType="+headsetInfo.getType().getValue());
+        FinLog.v("bugtags","Insert="+headsetInfo.isInsert()+",headsetInfo.getType="+headsetInfo.getType().getValue());
         try {
             if(headsetInfo.isInsert()){
                 RongCallClient.getInstance().setEnableSpeakerphone(false);
@@ -967,7 +965,7 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
             }
         } catch (Exception e) {
             e.printStackTrace();
-            FinLog.i("bugtags","SingleCallActivity->onEventMainThread Error="+e.getMessage());
+            FinLog.v("bugtags","SingleCallActivity->onEventMainThread Error="+e.getMessage());
         }
     }
 }

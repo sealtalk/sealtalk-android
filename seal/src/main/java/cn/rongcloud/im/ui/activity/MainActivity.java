@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -97,7 +98,7 @@ public class MainActivity extends BaseActivity implements
         }
         registerHomeKeyReceiver(this);
     }
-
+    
 
     private void initViews() {
         RelativeLayout chatRLayout = (RelativeLayout) findViewById(R.id.seal_chat);
@@ -129,7 +130,6 @@ public class MainActivity extends BaseActivity implements
             }
         });
     }
-
 
     private void initMainViewPager() {
         Fragment conversationList = initConversationList();

@@ -24,6 +24,7 @@ import cn.rongcloud.im.server.network.async.OnDataListener;
 import cn.rongcloud.im.server.network.http.HttpException;
 import cn.rongcloud.im.server.utils.NToast;
 import io.rong.imkit.RongConfigurationManager;
+import io.rong.imlib.RongIMClient;
 
 public abstract class BaseActivity extends FragmentActivity implements OnDataListener {
 
@@ -188,6 +189,7 @@ public abstract class BaseActivity extends FragmentActivity implements OnDataLis
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
+        RongIMClient.getInstance().appOnStart();
     }
 
     protected void onPause() {

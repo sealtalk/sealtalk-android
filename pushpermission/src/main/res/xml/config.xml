@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+    此配置文件是为了配置机型进行保活所需权限的权限设置界面的跳转信息配置。
+    由于手机系统对保活的限制，需要开启某些特定的权限，并且某些手机所需的权限不一致。
+    所以在此页面进行配置以起到灵活适配的目的。
+
+    具体的信息配置规则如下，以小米为例：
+    <XIAOMI>
+        <AutoStart>
+            <IntentInfo>
+                <Package></Package>
+                <Clazz></Clazz>
+                <Action></Action>
+                <Data>
+                    <Key></Key>
+                    <Value></Value>
+                </Data>
+                 <Extra>
+                    <Key></Key>
+                    <Value></Value>
+                </Extra>
+                <SetPath></SetPath>
+            </IntentInfo>
+        </AutoStart>
+        <Notification> ... </Notification>
+        <Clean> ... </Clean>
+    </XIAOMI>
+
+    标签 XIAOMI ： 为手机的 Build.MANUFACTURER 字段的值。 当前为小米手机的 MANUFACTURER 值 （不区分大小写）。 不可为其他的，
+                   否则找到不到设置的机型。
+    标签 AutoStart ： 为自启动权限的配置。
+    标签 Notification ： 为通知权限的配置。
+    标签 Clean ： 为锁屏清理权限的配置。
+
+    后续如果需要添加别的权限跳转设置， 则会增加其他标签。
+
+    标签 IntentInfo : 为跳转中所要用到的的信息。 其中包括 package ， class， action 跳转中所需要的值。
+    标签 Data: intent 跳转所需的 data 数据。 有 Key 和 Value.  当 Value 值为 auto 的时候，则有代码内部自动获取值。
+    标签 Extra: intent 跳转所需的 Extra 数据。有 Key 和 Value.  当 Value 值为 auto 的时候，则有代码内部自动获取值。
+    标签 SetPath: 设置的界面路径
+
+    每个权限标签下可配置多个 IntentInfo。 这是为了兼容机型（因为有可能有的机型有，有的机型没有）。代码会全部解析出来，
+    并去检测配置的组件信息是否存在。如果存在则会直接使用当前的。后面的则不会再去验证。 如果没有再会再尝试下面的配置，
+    直到结束。所以，当有多个 IntentInfo 的时候， 建议把配置多的，优先的配置到前面，以提高检测效率。
+
+-->
+<Config>
+
+    <!--
+     HUAWEI 华为
+     适配情况：
+     机型    具体型号    系统
+     Mate 9  MHA-AL00    8.0.0
+     Mate 8  NXT-DL00    8.0.0
+     Mate 7  MT7-TL10    6.0.0
+     荣耀 9  STF-AL00    8.0.0
+     P10
+    -->
+    <HUAWEI>
+        <!-- 自启动权限设置跳转配置 -->
+        <AutoStart>
+            <!--跳转到自启动权限应用列表-->
+            <IntentInfo>
+                <Package>com.huawei.systemmanager</Package>
+                <Clazz>com.huawei.systemmanager.startupmgr.ui.StartupNormalAppListActivity</Clazz>
+                <SetPath>手机管家->启动管理</SetPath>
+            </IntentInfo>
+            <!--跳转到自启动权限应用列表-->
+            <IntentInfo>
+                <Package>com.huawei.systemmanager</Package>
+                <Clazz>com.huawei.systemmanager.appcontrol.activity.StartupAppControlActivity</Clazz>
+                <SetPath>手机管家->启动管理</SetPath>
+            </IntentInfo>
+
+        </AutoStart>
+
+        <!-- 通知权限设置跳转配置 -->
+        <Notification>
+            <!--跳转到应用通知设置权限-->
+            <IntentInfo>
+                <Action>android.settings.APP_NOTIFICATION_SETTINGS</Action>
+                <Extra>
+                    <Key>package</Key>
+                    <Value>auto</Value>
+                </Extra>
+                <SetPath>设置->应用和通知->通知管理</SetPath>
+            </IntentInfo>
+            <!--跳转到应用的通知权限应用列表界面-->
+            <IntentInfo>
+                <Package>com.huawei.systemmanager</Package>
+                <Clazz>com.huawei.notificationmanager.ui.NotificationManagmentActivity</Clazz>
+                <SetPath>设置->应用和通知->通知管理</SetPath>
+            </IntentInfo>
+        </Notification>
+
+        <Clean>
+            <!--跳转到锁屏清理权限应用列表界面-->
+            <IntentInfo>
+                <Package>com.huawei.systemmanager</Package>
+                <Clazz>com.huawei.systemmanager.optimize.process.ProtectActivity</Clazz>
+            </IntentInfo>
+        </Clean>
+
+    </HUAWEI>
+
+
+    <!-- VIVO  -->
+    <VIVO>
+        <!-- 自启动权限设置跳转配置 -->
+        <AutoStart>
+            <!--
+                此设置项机型适配情况:
+                * VIVO X21A
+                * NEX A  8.1  6.0.0.5
+            -->
+
+            <!--跳转到应用通知设置权限-->
+            <IntentInfo>
+                <Action>android.settings.APPLICATION_DETAILS_SETTINGS</Action>
+                <Data>
+                    <Key>package</Key>
+                    <Value>auto</Value>
+                </Data>
+                <SetPath>设置->应用权限管理</SetPath>
+            </IntentInfo>
+
+        </AutoStart>
+
+
+        <!-- 通知权限设置跳转配置 -->
+        <Notification>
+
+            <!--跳转到应用通知设置权限-->
+            <IntentInfo>
+                <Action>android.settings.APP_NOTIFICATION_SETTINGS</Action>
+                <Extra>
+                    <Key>package</Key>
+                    <Value>auto</Value>
+                </Extra>
+                <SetPath>设置->通知与状态栏->通知管理</SetPath>
+            </IntentInfo>
+
+            <IntentInfo>
+                <Package>com.android.systemui</Package>
+                <Clazz>com.vivo.systemui.statusbar.notification.settings.channels.NotificationSettingsActivity</Clazz>
+            </IntentInfo>
+        </Notification>
+
+        <Clean>
+            <IntentInfo>
+                <Package>com.vivo.abe</Package>
+                <Clazz>com.vivo.applicationbehaviorengine.ui.ExcessivePowerManagerActivity</Clazz>
+            </IntentInfo>
+        </Clean>
+    </VIVO>
+
+
+    <!-- OPPO  -->
+    <OPPO>
+        <!-- 自启动权限设置跳转配置 -->
+        <AutoStart>
+            <!--
+                此设置项机型适配情况:
+                * OPPO R9sk
+            -->
+          <IntentInfo>
+                <Package>com.coloros.safecenter</Package>
+                <Clazz>com.coloros.safecenter.startupapp.StartupAppListActivity</Clazz>
+                <SetPath>手机管家->权限隐私->自启动管理</SetPath>
+          </IntentInfo>
+        </AutoStart>
+
+
+        <!-- 通知权限设置跳转配置 -->
+        <Notification>
+            <!--跳转到应用通知设置权限-->
+            <IntentInfo>
+                <Action>android.settings.APP_NOTIFICATION_SETTINGS</Action>
+                <Extra>
+                    <Key>package</Key>
+                    <Value>auto</Value>
+                </Extra>
+                <SetPath>设置->通知与状态栏->通知管理</SetPath>
+            </IntentInfo>
+
+        </Notification>
+        <!--<Clean>-->
+            <!--<IntentInfo>-->
+                <!--<Package>com.coloros.oppoguardelf</Package>-->
+                <!--<Clazz>com.coloros.powermanager.fuelgaue.PowerUsageModelActivity</Clazz>-->
+            <!--</IntentInfo>-->
+
+            <!--&lt;!&ndash;跳转到清理应用权限应用列表界面&ndash;&gt;-->
+            <!--<IntentInfo>-->
+                <!--<Package>com.coloros.oppoguardelf</Package>-->
+                <!--<Clazz>com.coloros.powermanager.fuelgaue.PowerAppsBgSetting</Clazz>-->
+                <!--<Extra>-->
+                    <!--<Key>package</Key>-->
+                    <!--<Value>auto</Value>-->
+                <!--</Extra>-->
+            <!--</IntentInfo>-->
+        <!--</Clean>-->
+    </OPPO>
+
+    <!--
+     三星 SAMSUNG
+     适配情况：
+     机型    具体型号    系统
+     note3   SM-N9008V   5.0.0
+
+    -->
+    <SAMSUNG>
+        <!-- 自启动权限设置跳转配置 -->
+        <AutoStart>
+            <!--
+            -->
+            <IntentInfo>
+                <Package>com.samsung.android.sm_cn</Package>
+                <Clazz>com.samsung.android.sm.ui.ram.AutoRunActivity</Clazz>
+                <Action>com.samsung.android.sm.ACTION_AUTO_RUN</Action>
+            </IntentInfo>
+            <IntentInfo>
+                <Package>com.samsung.android.sm_cn</Package>
+                <Clazz>com.samsung.android.sm.autorun.ui.AutoRunActivity</Clazz>
+                <Action>com.samsung.android.sm.ACTION_AUTO_RUN</Action>
+            </IntentInfo>
+        </AutoStart>
+
+        <!-- 通知权限设置跳转配置 -->
+        <Notification>
+            <!--跳转到应用通知设置权限-->
+            <IntentInfo>
+                <Action>android.settings.APP_NOTIFICATION_SETTINGS</Action>
+                <Extra>
+                    <Key>package</Key>
+                    <Value>auto</Value>
+                </Extra>
+                <SetPath>设置->应用和通知->通知管理</SetPath>
+            </IntentInfo>
+        </Notification>
+
+    </SAMSUNG>
+
+    <!--
+      小米 XIAOMI
+      适配情况：
+      机型    具体型号    系统
+      MI8       MI8       9.0.0
+      RedMi   Note 5A
+     -->
+    <XIAOMI>
+        <!-- 自启动权限设置跳转配置 -->
+        <AutoStart>
+            <!--跳转到自启动权限应用列表界面-->
+            <IntentInfo>
+                <Package>com.miui.securitycenter</Package>
+                <Clazz>com.miui.permcenter.autostart.AutoStartManagementActivity</Clazz>
+                <SetPath>设置->授权管理->自启动管理</SetPath>
+            </IntentInfo>
+        </AutoStart>
+
+        <!-- 通知权限设置跳转配置 -->
+        <Notification>
+            <!--跳转到应用通知设置权限-->
+            <IntentInfo>
+                <Action>android.settings.APP_NOTIFICATION_SETTINGS</Action>
+                <Extra>
+                    <Key>package</Key>
+                    <Value>auto</Value>
+                </Extra>
+                <SetPath>设置->通知和状态栏->通知管理</SetPath>
+            </IntentInfo>
+        </Notification>
+
+    </XIAOMI>
+
+    <!--
+     MEIZU 魅族
+     适配情况：
+     机型     具体型号    系统
+    魅蓝note6  M6 note    7.1.2
+     PRO 6s
+     -->
+    <MEIZU>
+
+        <!-- 通知权限设置跳转配置 -->
+        <Notification>
+
+            <!--跳转到应用通知设置权限-->
+            <IntentInfo>
+                <Action>android.settings.APP_NOTIFICATION_SETTINGS</Action>
+                <Extra>
+                    <Key>package</Key>
+                    <Value>auto</Value>
+                </Extra>
+                <SetPath>设置->应用和通知->通知管理</SetPath>
+            </IntentInfo>
+            <!--应用详情界面-->
+            <IntentInfo>
+                <Action>com.meizu.safe.security.SHOW_APPSEC</Action>
+                <Category>android.intent.category.DEFAULT</Category>
+                <Extra>
+                    <Key>packageName</Key>
+                    <Value>auto</Value>
+                </Extra>
+                <SetPath>手机管家->权限管理->应用权限->应用详情->通知栏</SetPath>
+            </IntentInfo>
+        </Notification>
+
+        <!-- 自启动权限设置跳转配置 -->
+        <Clean>
+            <!--应用详情界面-->
+            <IntentInfo>
+                <Action>com.meizu.safe.security.SHOW_APPSEC</Action>
+                <Category>android.intent.category.DEFAULT</Category>
+                <Extra>
+                    <Key>packageName</Key>
+                    <Value>auto</Value>
+                </Extra>
+                <SetPath>手机管家->权限管理->应用权限->应用详情->后台管理</SetPath>
+            </IntentInfo>
+            <!--自启动权限应用列表-->
+            <IntentInfo>
+                <Package>com.meizu.safe</Package>
+                <Clazz>com.meizu.safe.permission.SmartBGActivity</Clazz>
+                <SetPath>手机管家->权限管理->后台管理</SetPath>
+            </IntentInfo>
+        </Clean>
+    </MEIZU>
+
+
+    <!--
+     360
+     适配情况：
+     机型    具体型号    系统
+     N5      1605-A01    6.0.1
+    -->
+    <M360>
+        <!-- 自启动权限设置跳转配置 -->
+        <AutoStart>
+            <!-- 跳转到设置自启动权限应用列表页面 -->
+            <IntentInfo>
+                <Package>com.qiku.android.security</Package>
+                <Clazz>com.qiku.android.security.ui.activity.autorun.AutoRunList</Clazz>
+                <SetPath>设置->权限管理->应用启动管理</SetPath>
+            </IntentInfo>
+        </AutoStart>
+
+        <!-- 通知权限设置跳转配置 -->
+        <Notification>
+
+            <!--跳转到应用通知设置权限-->
+            <IntentInfo>
+                <Action>android.settings.APP_NOTIFICATION_SETTINGS</Action>
+                <Extra>
+                    <Key>package</Key>
+                    <Value>auto</Value>
+                </Extra>
+                <SetPath>设置->应用和通知->通知管理</SetPath>
+            </IntentInfo>
+            <!-- 跳转到设置通知的应用列表页面。（备选）-->
+            <IntentInfo>
+                <Package>com.android.settings</Package>
+                <Clazz>com.android.settings.notification.QKNotificationAppListActivity</Clazz>
+                <SetPath>设置->权限管理->应用通知管理</SetPath>
+            </IntentInfo>
+        </Notification>
+
+        <Clean>
+            <!--跳转到锁屏清理权限应用列表界面-->
+            <IntentInfo>
+                <Package>com.qiku.android.security</Package>
+                <Clazz>com.qiku.android.security.ui.activity.memclean.MemoryCleanSettingActivity</Clazz>
+                <SetPath>设置->权限管理->锁屏清理白名单</SetPath>
+            </IntentInfo>
+        </Clean>
+
+    </M360>
+
+    <!--
+    锤子 SMARTTISAN
+    适配情况：
+    机型    具体型号    系统
+    坚果      OD103     7.1.1
+   -->
+    <SMARTISAN>
+        <!-- 自启动权限设置跳转配置 -->
+        <AutoStart>
+
+
+            <!--跳转到应用通知设置权限-->
+            <IntentInfo>
+                <Action>android.settings.APPLICATION_DETAILS_SETTINGS</Action>
+                <Data>
+                    <Key>package</Key>
+                    <Value>auto</Value>
+                </Data>
+                <SetPath>设置->应用管理-应用程序管理->应用详情->通知</SetPath>
+            </IntentInfo>
+            <!--&lt;!&ndash; 跳转到设置自启动权限应用列表页面 &ndash;&gt;-->
+            <!--<IntentInfo>-->
+                <!--<Package>com.smartisanos.security</Package>-->
+                <!--<Clazz>com.smartisanos.security.RadioPermissions</Clazz>-->
+                <!--<SetPath>手机管理->权限管理->自启动管理</SetPath>-->
+            <!--</IntentInfo>-->
+
+
+        </AutoStart>
+
+        <!-- 通知权限设置跳转配置 -->
+        <Notification>
+
+            <!--跳转到应用通知设置权限-->
+            <IntentInfo>
+                <Action>android.settings.APPLICATION_DETAILS_SETTINGS</Action>
+                <Data>
+                    <Key>package</Key>
+                    <Value>auto</Value>
+                </Data>
+                <SetPath>设置->应用管理->应用程序管理->应用详情->通知</SetPath>
+            </IntentInfo>
+
+        </Notification>
+
+        <Clean>
+            <!--跳转到应用通知设置权限-->
+            <IntentInfo>
+                <Action>android.settings.APPLICATION_DETAILS_SETTINGS</Action>
+                <Data>
+                    <Key>package</Key>
+                    <Value>auto</Value>
+                </Data>
+                <SetPath>设置->应用管理-应用程序管理->应用详情->通知</SetPath>
+            </IntentInfo>
+        </Clean>
+
+    </SMARTISAN>
+
+    <LGE>
+        <!-- 通知权限设置跳转配置 -->
+        <Notification>
+            <!--跳转到应用通知设置权限-->
+            <IntentInfo>
+                <Action>android.settings.APP_NOTIFICATION_SETTINGS</Action>
+                <Extra>
+                    <Key>package</Key>
+                    <Value>auto</Value>
+                </Extra>
+                <SetPath>设置->应用和通知->通知管理</SetPath>
+            </IntentInfo>
+        </Notification>
+    </LGE>
+
+    <!-- 乐视手机
+        LeMobile        LEX651   6.0
+
+    -->
+    <LeMobile>
+
+        <!-- 自启动权限设置跳转配置 -->
+        <AutoStart>
+            <!-- 跳转到设置自启动权限应用列表页面 -->
+            <IntentInfo>
+                <Package>com.letv.android.letvsafe</Package>
+                <Clazz>com.letv.android.letvsafe.AutobootManageActivity</Clazz>
+                <SetPath>手机管理->权限管理->自启动管理</SetPath>
+            </IntentInfo>
+
+        </AutoStart>
+        <!-- 通知权限设置跳转配置 -->
+        <Notification>
+            <!--跳转到应用通知设置权限-->
+            <IntentInfo>
+                <Action>android.settings.APP_NOTIFICATION_SETTINGS</Action>
+                <Extra>
+                    <Key>package</Key>
+                    <Value>auto</Value>
+                </Extra>
+                <SetPath>设置->应用和通知->通知管理</SetPath>
+            </IntentInfo>
+        </Notification>
+
+        <Clean>
+            <IntentInfo>
+                <Package>com.letv.android.letvsafe</Package>
+                <Clazz>com.letv.android.letvsafe.BackgroundAppManageActivity</Clazz>
+                <SetPath>手机管理->权限管理->自启动管理</SetPath>
+            </IntentInfo>
+
+        </Clean>
+    </LeMobile>
+
+
+
+    <!-- 中兴
+     ZTE BV0710T 6.0.0
+    -->
+    <ZTE>
+        <!-- 自启动权限设置跳转配置 -->
+        <AutoStart>
+            <IntentInfo>
+                <Package>com.zte.heartyservice</Package>
+                <Clazz>com.zte.heartyservice.autorun.AppAutoRunManager</Clazz>
+            </IntentInfo>
+        </AutoStart>
+
+        <!-- 通知权限设置跳转配置 -->
+        <Notification>
+            <!--跳转到应用通知设置权限-->
+            <IntentInfo>
+                <Action>android.settings.APP_NOTIFICATION_SETTINGS</Action>
+                <Extra>
+                    <Key>package</Key>
+                    <Value>auto</Value>
+                </Extra>
+                <SetPath>设置->应用和通知->通知管理</SetPath>
+            </IntentInfo>
+        </Notification>
+
+        <Clean>
+            <IntentInfo>
+                <Package>com.zte.heartyservice</Package>
+                <Clazz>com.zte.heartyservice.setting.ClearAppSettingsActivity</Clazz>
+            </IntentInfo>
+        </Clean>
+    </ZTE>
+
+
+    <!--&lt;!&ndash; F  &ndash;&gt;-->
+    <!--<F>-->
+        <!--&lt;!&ndash; 自启动权限设置跳转配置 &ndash;&gt;-->
+        <!--<AutoStart>-->
+            <!--&lt;!&ndash;-->
+                <!--此设置项机型适配情况:-->
+                <!--*-->
+            <!--&ndash;&gt;-->
+            <!--<IntentInfo>-->
+                <!--<Package>com.gionee.softmanager</Package>-->
+                <!--<Clazz>com.gionee.softmanager.oneclean.AutoStartMrgActivity</Clazz>-->
+            <!--</IntentInfo>-->
+        <!--</AutoStart>-->
+    <!--</F>-->
+
+ <Nubia>
+     <AutoStart>
+         <IntentInfo>
+             <Package>cn.nubia.security2</Package>
+             <Clazz>cn.nubia.security.appmanage.selfstart.ui.SelfStartActivity</Clazz>
+         </IntentInfo>
+     </AutoStart>
+     <!-- 通知权限设置跳转配置 -->
+     <Notification>
+         <!--跳转到应用通知设置权限-->
+         <IntentInfo>
+             <Action>android.settings.APP_NOTIFICATION_SETTINGS</Action>
+             <Extra>
+                 <Key>package</Key>
+                 <Value>auto</Value>
+             </Extra>
+             <SetPath>设置->应用和通知->通知管理</SetPath>
+         </IntentInfo>
+     </Notification>
+
+     <Clean>
+         <IntentInfo>
+             <Package>cn.nubia.security2</Package>
+             <Clazz>cn.nubia.security.powermanage.ui.AppLevelActivity</Clazz>
+         </IntentInfo>
+     </Clean>
+ </Nubia>
+  <!-- 酷派 -->
+  <YuLong>
+    <AutoStart>
+        <IntentInfo>
+            <Package>com.yulong.android.security</Package>
+            <Clazz>com.yulong.android.security.ui.activity.improve.ForbidAutoRunListActivity</Clazz>
+        </IntentInfo>
+    </AutoStart>
+    <!-- 通知权限设置跳转配置 -->
+    <Notification>
+        <!--跳转到应用通知设置权限-->
+        <IntentInfo>
+            <Action>android.settings.APP_NOTIFICATION_SETTINGS</Action>
+            <Extra>
+                <Key>package</Key>
+                <Value>auto</Value>
+            </Extra>
+        </IntentInfo>
+    </Notification>
+
+  </YuLong>
+
+</Config>

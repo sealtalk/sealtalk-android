@@ -1,0 +1,16 @@
+<resources>
+
+    <string name="dialog_title">%1$s</string>
+    <string name="dialog_message">为了您更好的体验，请您去设置“%1$s”</string>
+
+    <string name="auto_start">自启动权限</string>
+    <string name="notifi">通知权限</string>
+    <string name="no_clean">保持应用运行</string>
+    <string name="float_window">悬浮窗权限</string>
+    <string name="dialog_to_set_failed">跳转失败</string>
+    <string name="dialog_manual_set">为了您更好的体验，请去“%1$s”手动开启%2$s</string>
+    <string name="dialog_btn_yes">确定</string>
+    <string name="dialog_btn_no">取消</string>
+
+
+</resources>

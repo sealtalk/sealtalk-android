@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+
+
+
+
+    <string name="huawei_auto_start">设置-&gt;权限管理-&gt;自启动管理</string>
+    <string name="huawei_notifi">设置-&gt;通知和状态栏-&gt;通知中心</string>
+    <string name="huawei_no_clean">设置-&gt;高级设置-&gt;电池管理-&gt;受保护应用</string>
+
+    <string name="vivo_auto_start">设置-&gt;更多设置-&gt;权限管理-&gt;单项权限设置</string>
+    <string name="vivo_notifi">设置-&gt;状态栏与通知-&gt;管理通知</string>
+    <string name="vivo_no_clean">设置-&gt;电池-&gt;后台高耗电</string>
+
+    <string name="oppo_auto_start">手机管家-&gt;自启动管理</string>
+    <string name="oppo_notifi">设置-&gt;通知与状态栏-&gt;通知管理</string>
+    <string name="oppo_no_clean">设置-&gt;电池-&gt;耗电保护</string>
+
+
+
+    <string name="samsung_auto_start">桌面智能管理器-&gt;自动运行应用程序</string>
+    <string name="samsung_notifi">设置-&gt;通知</string>
+
+    <string name="xiaomi_auto_start">设置-&gt;授权管理-&gt;自启动管理</string>
+    <string name="xiaomi_notifi">设置-&gt;状态栏与通知-&gt;管理通知</string>
+
+    <string name="meizu_notifi">设置-&gt;通知与状态栏-&gt;通知管理</string>
+    <string name="meizu_no_clean">设置-&gt;应用管理-&gt;选择应用-&gt;后台管理-&gt;允许后台运行</string>
+
+
+    <string name="m360_auto_start">设置，权限管理，应用启动管理</string>
+    <string name="m360_notifi">设置，通知栏和状态栏，应用通知管理</string>
+    <string name="m360_no_clean"> 设置，权限管理，锁屏清理白名单</string>
+
+
+    <string name="smartisan_auto_start">设置-&gt;应用管理-&gt;选择应用-&gt;权限管理-&gt;允许被系统启动</string>
+    <string name="smartisan_notifi">设置-&gt;通知中心</string>
+    <string name="smartisan_no_clean">设置-&gt;应用管理-&gt;选择应用-&gt;电量与优化</string>
+
+
+    <string name="lemobile_auto_start">设置-&gt;隐私授权-&gt;允许应用自启动</string>
+    <string name="lemobile_notifi">设置-&gt;通知管理</string>
+    <string name="lemobile_no_clean">电池-&gt;省电管理-&gt;应用保护</string>
+
+    <string name="zet_auto_start">设置-&gt;权限管理-&gt;自启动管理</string>
+    <string name="zet_notifi">设置-&gt;通知栏和状态栏-&gt;通知管理</string>
+
+    <string name="nubia_auto_start">手机管家-&gt;自启动管理</string>
+    <string name="nubia_notifi">设置-&gt;通知与状态栏-&gt;通知管理</string>
+    <string name="nubia_no_clean">设置-&gt;电池-&gt;耗电保护</string>
+
+
+    <string name="yulong_auto_start">酷管家-&gt;自启动管理</string>
+    <string name="yulong_notifi">任务栏下滑-&gt;自定义通知</string>
+
+</resources>

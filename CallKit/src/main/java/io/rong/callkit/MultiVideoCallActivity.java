@@ -617,7 +617,6 @@ public class MultiVideoCallActivity extends BaseCallActivity {
             ((ViewGroup) video.getParent()).removeView(video);
         }
         video.setTag(CallKitUtils.getStitchedContent(userId, REMOTE_FURFACEVIEW_TAG));
-        video.setBackgroundColor(Color.BLACK);
         ((RongRTCVideoView) video).setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FILL);
         remoteVideoView.addView(video, new FrameLayout.LayoutParams(remoteUserViewWidth, remoteUserViewWidth));
 
@@ -732,20 +731,20 @@ public class MultiVideoCallActivity extends BaseCallActivity {
     public void onRemoteCameraDisabled(String userId, boolean muted) {
         if (!muted) {
             if (localViewUserId.equals(userId)) {
-                localView.setVisibility(View.INVISIBLE);
+                localView.setBackgroundColor(Color.TRANSPARENT);
             } else {
                 View remoteView = remoteViewContainer.findViewWithTag(CallKitUtils.getStitchedContent(userId, REMOTE_FURFACEVIEW_TAG));
                 if (remoteView != null) {
-                    remoteView.setVisibility(View.INVISIBLE);
+                    remoteView.setBackgroundColor(Color.TRANSPARENT);
                 }
             }
         } else {
             if (localViewUserId.equals(userId)) {
-                localView.setVisibility(View.VISIBLE);
+                localView.setBackgroundColor(Color.BLACK);
             } else {
                 View remoteView = remoteViewContainer.findViewWithTag(CallKitUtils.getStitchedContent(userId, REMOTE_FURFACEVIEW_TAG));
                 if (remoteView != null) {
-                    remoteView.setVisibility(View.VISIBLE);
+                    remoteView.setBackgroundColor(Color.BLACK);
                 }
             }
         }

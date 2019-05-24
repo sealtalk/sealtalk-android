@@ -818,8 +818,8 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
         targetId = callSession.getTargetId();
         UserInfo userInfo = RongContext.getInstance().getUserInfoFromCache(targetId);
         if (userInfo != null) {
-//            TextView userName = (TextView) mUserInfoContainer.findViewById(R.id.rc_voip_user_name);
-//            userName.setText(userInfo.getName());
+            TextView userName = (TextView) mUserInfoContainer.findViewById(R.id.rc_voip_user_name);
+            userName.setText(userInfo.getName());
             if (mediaType.equals(RongCallCommon.CallMediaType.AUDIO)) {
                 AsyncImageView userPortrait = (AsyncImageView) mUserInfoContainer.findViewById(R.id.rc_voip_user_portrait);
                 if (userPortrait != null) {

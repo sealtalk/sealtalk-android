@@ -19,7 +19,7 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    api 'cn.rongcloud.sdk:im_kit:2.9.17'
+    api 'cn.rongcloud.sdk:im_kit:2.9.16'
     //im_kit必须依赖im_lib，所以需要加入对应依赖
-    api 'cn.rongcloud.sdk:im_lib:2.9.17'
+    api 'cn.rongcloud.sdk:im_lib:2.9.16'
 }

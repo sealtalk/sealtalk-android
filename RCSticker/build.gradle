@@ -30,7 +30,9 @@ android {
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     api 'com.android.support:appcompat-v7:26.0.0'
-    api project(':IMKit')
+    api 'cn.rongcloud.sdk:im_kit:2.9.17'
+    //im_kit必须依赖im_lib，所以需要加入对应依赖
+    api 'cn.rongcloud.sdk:im_lib:2.9.17'
 }
 
 //生成 jar 名字

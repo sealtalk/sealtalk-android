@@ -161,11 +161,7 @@ public class SealAppContext implements RongIM.ConversationListBehaviorListener,
                     public boolean onMessageItemLongClick(Context context, UIMessage message) {
                         Message[] messages = new Message[1];
                         messages[0] = message.getMessage();
-                        if (message.getConversationType().equals(Conversation.ConversationType.PRIVATE)) {
-                            RongIM.getInstance().deleteRemoteMessages(message.getConversationType(), message.getTargetId(), messages, null);
-                        } else {
-                            RongIM.getInstance().deleteMessages(new int[]{message.getMessageId()}, null);
-                        }
+                        RongIM.getInstance().deleteMessages(new int[]{message.getMessageId()}, null);
                         return false;
                     }
                 }).build();

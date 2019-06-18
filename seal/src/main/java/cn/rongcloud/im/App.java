@@ -104,7 +104,7 @@ public class App extends MultiDexApplication {
              * 只有两个进程需要初始化，主进程和 push 进程
              */
             RongIM.setServerInfo("nav.cn.ronghub.com", "up.qbox.me");
-            RongIM.init(this, "n19jmcy59f1q9");
+            RongIM.init(this,"n19jmcy59f1q9");
             NLog.setDebug(true);//Seal Module Log 开关
             SealAppContext.init(this);
             SharedPreferencesContext.init(this);

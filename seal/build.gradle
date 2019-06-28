@@ -75,9 +75,9 @@ dependencies {
     api project(':contactcard')
     api 'cn.rongcloud.sdk:redpacket:2.9.17'
     api project(':CallKit')
-    api 'cn.rongcloud.sdk:im_kit:2.9.18'
+    api 'cn.rongcloud.sdk:im_kit:2.9.19'
     //im_kit必须依赖im_lib，所以需要加入对应依赖
-    api 'cn.rongcloud.sdk:im_lib:2.9.18'
+    api 'cn.rongcloud.sdk:im_lib:2.9.19'
     api 'cn.rongcloud.sdk:rcsticker:2.9.17'
     api 'cn.rongcloud.sdk:sight:2.9.17'
     api project(':pushpermission')

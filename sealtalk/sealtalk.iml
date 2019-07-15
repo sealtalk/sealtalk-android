@@ -18,7 +18,7 @@
         <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
         <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
         <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res;file://$MODULE_DIR$/build/generated/res/google-services/debug;file://$MODULE_DIR$/build/generated/res/rs/debug;file://$MODULE_DIR$/build/generated/res/resValues/debug" />
-        <option name="TEST_RES_FOLDERS_RELATIVE_PATH" value="" />
+        <option name="TEST_RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/build/generated/res/rs/androidTest/debug" />
         <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
       </configuration>
     </facet>
@@ -101,13 +101,10 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/instant-run-resources" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/instant_app_manifest" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/instant_run_app_info_output_file" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/instant_run_main_apk_resources" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/instant_run_merged_manifests" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/instant_run_split_apk_resources" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/javac" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jniLibs" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/legacy_multidex_aapt_derived_proguard_rules" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/legacy_multidex_main_dex_list" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifest-checker" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/merged_assets" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/merged_manifests" />
@@ -170,10 +167,10 @@
     <orderEntry type="library" name="Gradle: androidx.transition:transition:1.0.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.retrofit2:retrofit:2.5.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-basement:16.0.1@aar" level="project" />
-    <orderEntry type="library" name="Gradle: cn.rongcloud.sdk:im_lib:2.9.19@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.sqlite:sqlite-framework:2.0.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-common:16.1.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: __local_aars__:/Users/liusong/RongCloud/github/sealtalk-android/sealtalk/libs/oppo_push-1.0.1.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: cn.rongcloud.sdk:im_kit:2.9.20@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okio:okio:1.15.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-measurement-connector:17.0.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.auto.value:auto-value-annotations:1.6@jar" level="project" />
@@ -189,7 +186,6 @@
     <orderEntry type="library" name="Gradle: __local_aars__:/Users/liusong/RongCloud/github/sealtalk-android/sealtalk/libs/stetho-1.5.1-fatjar.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.cursoradapter:cursoradapter:1.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: __local_aars__:/Users/liusong/RongCloud/github/sealtalk-android/sealtalk/libs/vivo_push_v2.3.1.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: cn.rongcloud.sdk:sight:2.9.17@aar" level="project" />
     <orderEntry type="library" name="Gradle: __local_aars__:/Users/liusong/RongCloud/github/sealtalk-android/sealtalk/libs/Amap_2DMap_V5.2.0_20170627.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.sqlite:sqlite:2.0.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.interpolator:interpolator:1.0.0@aar" level="project" />
@@ -205,12 +201,13 @@
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-iid:17.1.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-runtime:2.2.0-alpha01@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-process:2.2.0-alpha01@aar" level="project" />
-    <orderEntry type="library" name="Gradle: cn.rongcloud.sdk:im_kit:2.9.19@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.googlecode.mp4parser:isoparser:1.1.21@jar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.annotation:annotation:1.1.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.swiperefreshlayout:swiperefreshlayout:1.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.legacy:legacy-support-core-ui:1.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: cn.rongcloud.sdk:im_lib:2.9.20@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.loader:loader:1.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: cn.rongcloud.sdk:sight:2.9.20@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.appcompat:appcompat-resources:1.1.0-beta01@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.fragment:fragment:1.1.0-beta01@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.activity:activity:1.0.0-beta01@aar" level="project" />

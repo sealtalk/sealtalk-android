@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/select_bottom_layout"
+        layout="@layout/select_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_select_bottom_height"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"/>
+
+    <FrameLayout
+        android:id="@+id/fl_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/select_bottom_layout" />
+</RelativeLayout>

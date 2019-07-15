@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <cn.rongcloud.im.ui.widget.ClearWriteEditText
+        android:id="@+id/cet_reg_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/seal_login_register_margin"
+        android:layout_marginTop="@dimen/seal_login_register_margin_top"
+        android:layout_marginRight="@dimen/seal_login_register_margin"
+        android:drawablePadding="@dimen/seal_login_register_drawable_padding"
+        android:ellipsize="end"
+        android:hint="@string/seal_login_nick_name"
+        android:inputType="textPersonName"
+        android:maxLength="32"
+        android:maxLines="1"
+        android:paddingLeft="@dimen/seal_login_register_padding"
+        android:paddingRight="@dimen/seal_login_register_padding"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+
+    <LinearLayout
+        android:id="@+id/ll_reg_country_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/seal_login_register_margin"
+        android:layout_marginTop="@dimen/seal_login_register_margin_top"
+        android:layout_marginRight="@dimen/seal_login_register_margin"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/seal_login_register_padding"
+            android:paddingRight="@dimen/seal_login_register_padding"
+            android:text="@string/seal_login_countries_and_regions"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium.Inverse"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_reg_country_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/seal_login_register_padding"
+            android:paddingRight="@dimen/seal_login_register_padding"
+            android:text="@string/china"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium.Inverse"
+            android:textColor="@color/white" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/seal_ic_rp_arrow" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/seal_login_register_margin"
+        android:layout_marginTop="@dimen/seal_login_register_margin_top"
+        android:layout_marginRight="@dimen/seal_login_register_margin"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_reg_country_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/seal_login_register_padding"
+            android:paddingRight="@dimen/seal_login_register_padding"
+            android:text="+86"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium.Inverse" />
+
+        <cn.rongcloud.im.ui.widget.ClearWriteEditText
+            android:id="@+id/cet_reg_phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/seal_login_register_drawable_padding"
+            android:hint="@string/seal_login_phone_number"
+            android:inputType="phone"
+            android:maxLength="20"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/seal_login_register_padding"
+            android:paddingRight="@dimen/seal_login_register_padding"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/seal_login_register_margin"
+        android:layout_marginTop="@dimen/seal_login_register_margin_top"
+        android:layout_marginRight="@dimen/seal_login_register_margin"
+        android:orientation="horizontal">
+
+
+        <cn.rongcloud.im.ui.widget.ClearWriteEditText
+            android:id="@+id/cet_reg_code"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="7"
+            android:drawablePadding="@dimen/seal_login_register_drawable_padding"
+            android:hint="@string/seal_login_code"
+            android:inputType="number"
+            android:paddingLeft="@dimen/seal_login_find_password_padding"
+            android:paddingRight="@dimen/seal_login_find_password_padding"
+            android:maxLength="6"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+
+        <Button
+            android:id="@+id/btn_reg_send_code"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/seal_login_register_btn_margin_left"
+            android:layout_weight="4"
+            android:background="@drawable/seal_login_btn_selector"
+            android:clickable="false"
+            android:paddingLeft="@dimen/seal_login_register_padding"
+            android:paddingRight="@dimen/seal_login_register_padding"
+            android:text="@string/seal_login_send_code"
+            android:textColor="@color/white"
+            android:textSize="@dimen/seal_login_register_btn_code_text_size" />
+
+    </LinearLayout>
+
+    <cn.rongcloud.im.ui.widget.ClearWriteEditText
+        android:id="@+id/cet_reg_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/seal_login_register_margin"
+        android:layout_marginTop="@dimen/seal_login_register_margin_top"
+        android:layout_marginRight="@dimen/seal_login_register_margin"
+        android:drawablePadding="@dimen/seal_login_register_drawable_padding"
+        android:hint="@string/seal_login_password"
+        android:inputType="textPassword"
+        android:maxLength="16"
+        android:maxLines="1"
+        android:paddingLeft="@dimen/seal_login_register_padding"
+        android:paddingRight="@dimen/seal_login_register_padding"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+
+
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/seal_login_register_btn_reg_margin_left"
+        android:layout_marginTop="@dimen/seal_login_register_btn_reg_margin_top"
+        android:layout_marginRight="@dimen/seal_login_register_btn_reg_margin_right"
+        android:background="@drawable/seal_login_btn_selector"
+        android:clickable="false"
+        android:text="@string/seal_login_register"
+        android:textColor="@color/white" />
+
+
+</LinearLayout>

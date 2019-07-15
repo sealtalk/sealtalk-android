@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_head"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/seal_title_bar_height"
+    android:background="@color/seal_title_bg"
+    android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/btn_left"
+        android:layout_width="@dimen/seal_title_bar_left_btn_width"
+        android:layout_height="match_parent"
+        android:background="@null"
+        android:drawableLeft="@drawable/seal_ic_back"
+        android:gravity="center_vertical"
+        />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/seal_title_bar_line_margin"
+        android:layout_marginBottom="@dimen/seal_title_bar_line_margin"
+        android:background="@color/seal_title_bar_line" />
+
+    <FrameLayout
+        android:id="@+id/fl_content"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/seal_title_bar_line_margin"
+            android:gravity="center_vertical|left"
+            android:maxLength="20"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/seal_title_bar_text_size" />
+
+        <TextView
+            android:id="@+id/tv_typing"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/seal_title_bar_line_margin"
+            android:gravity="center_vertical|left"
+            android:maxLength="20"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/seal_title_bar_text_size"
+            android:visibility="gone"
+            />
+    </FrameLayout>
+
+
+
+    <EditText
+        android:id="@+id/et_search"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/seal_search_title_bar_et_margin"
+        android:layout_marginRight="@dimen/seal_search_title_bar_et_margin"
+        android:drawableLeft="@drawable/seal_ic_et_search"
+        android:drawableRight="@drawable/seal_ic_search_cancel"
+        android:drawablePadding="@dimen/seal_search_title_bar_et_padding"
+        android:hint="@string/seal_search"
+        android:textColorHint="@color/seal_search_title_bar_et_hite"
+        android:textColor="@color/white"
+        android:focusableInTouchMode="true"
+        android:maxLines="1"
+        android:textSize="@dimen/seal_search_title_bar_et_text_size"
+        android:imeOptions="actionSearch"
+        android:inputType="textNoSuggestions"
+        android:imeActionLabel=""
+        android:visibility="visible"
+        android:background="@drawable/seal_bg_edit_text_white"/>
+
+    <ImageButton
+        android:id="@+id/btn_right"
+        android:layout_width="@dimen/seal_title_bar_btn_right_width"
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/seal_title_bar_btn_right_margin"
+        android:background="@null"
+        android:maxLines="1"
+        />
+
+    <TextView
+        android:id="@+id/tv_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/seal_title_bar_btn_right_margin"
+        android:clickable="true"
+        android:maxLines="1"
+        android:textColor="@color/white"
+        android:textSize="@dimen/seal_title_bar_text_size"
+        android:visibility="gone" />
+
+</LinearLayout>

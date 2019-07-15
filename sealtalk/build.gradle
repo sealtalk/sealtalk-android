@@ -1,0 +1,85 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "cn.rongcloud.im"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 2019071212
+        versionName "2.0.0"
+        ndk {
+            abiFilters "armeabi-v7a"
+        }
+        // 若集成过多第三方库时可能导致方法超过65536时需要开启
+        multiDexEnabled true
+    }
+
+    signingConfigs {
+        config {
+            storeFile file("rong.key")
+            storePassword "Amigo123"
+            keyAlias "RongCloud"
+            keyPassword "Amigo123"
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.config
+        }
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.config
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+    buildToolsVersion = '28.0.3'
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.1.0-beta01'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta1'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'com.google.android.material:material:1.1.0-alpha07'
+    implementation 'androidx.lifecycle:lifecycle-livedata:2.2.0-alpha01'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.2.0-alpha01'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0-alpha01'
+    implementation 'androidx.room:room-runtime:2.1.0-rc01'
+    annotationProcessor 'androidx.room:room-compiler:2.1.0-rc01'
+    api "com.google.zxing:core:3.3.2"
+    api 'com.squareup.retrofit2:retrofit:2.5.0'
+    api 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'androidx.annotation:annotation:1.1.0'
+    api 'com.google.firebase:firebase-messaging:17.6.0'
+    api 'com.huawei.android.hms:push:2.6.1.301'
+    api 'com.meizu.flyme.internet:push-internal:3.6.+@aar'
+    api 'com.google.code.gson:gson:2.8.1'
+
+    api 'cn.rongcloud.sdk:im_kit:2.9.19'
+    //im_kit必须依赖im_lib，所以需要加入对应依赖
+    api 'cn.rongcloud.sdk:im_lib:2.9.19'
+
+    api 'cn.rongcloud.sdk:rcsticker:2.9.17'
+    api 'cn.rongcloud.sdk:redpacket:2.9.17'
+    api 'cn.rongcloud.sdk:sight:2.9.17'
+
+    api project(path: ':CallKit')
+    api project(path: ':contactcard')
+    api project(path: ':recognizer')
+    api project(path: ':pushpermission')
+}

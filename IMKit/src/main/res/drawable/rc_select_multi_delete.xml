@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/rc_ic_multi_delete_enable" android:state_enabled="true" />
-    <item android:drawable="@drawable/rc_ic_multi_delete" android:state_enabled="false" />
-</selector>

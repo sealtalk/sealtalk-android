@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: cn.rongcloud.sdk:redpacket:2.9.17@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-redpacket-2.9.17.aar/a5c0c438c4d755736dd1ab23e298094f/jars/libs/jrmfry-2.0.1.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-redpacket-2.9.17.aar/a5c0c438c4d755736dd1ab23e298094f/jars/libs/alipaySingle-20170510.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-redpacket-2.9.17.aar/a5c0c438c4d755736dd1ab23e298094f/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-redpacket-2.9.17.aar/a5c0c438c4d755736dd1ab23e298094f/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/cn.rongcloud.sdk/redpacket/2.9.17/c89adfa4ae8988bee0513c70b3e30a40d5bb85b4/redpacket-2.9.17-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

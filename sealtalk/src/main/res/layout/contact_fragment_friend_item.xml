@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_frienditem"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_contact_friend_item_height"
+        android:background="@drawable/seal_bg_list_item"
+        android:orientation="horizontal"
+        android:paddingRight="@dimen/seal_contact_friend_item_padding">
+
+        <cn.rongcloud.im.ui.widget.SelectableRoundedImageView
+            android:id="@+id/iv_portrait"
+            android:layout_width="@dimen/seal_contact_friend_item_portrait_width"
+            android:layout_height="@dimen/seal_contact_friend_item_portrait_height"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/seal_contact_friend_item_portrait_margin_left"
+            android:scaleType="centerCrop"
+            android:src="@drawable/rc_default_portrait"
+            app:sriv_left_bottom_corner_radius="@dimen/seal_contact_friend_item_portrait_radius"
+            app:sriv_left_top_corner_radius="@dimen/seal_contact_friend_item_portrait_radius"
+            app:sriv_right_bottom_corner_radius="@dimen/seal_contact_friend_item_portrait_radius"
+            app:sriv_right_top_corner_radius="@dimen/seal_contact_friend_item_portrait_radius" />
+
+        <TextView
+            android:id="@+id/tv_friendname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/seal_contact_friend_item_name_margin_left"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxLength="32"
+            android:textColor="@color/seal_contact_friend_item_name_bg"
+            android:textSize="@dimen/seal_contact_friend_item_name_text_size" />
+
+        <TextView
+            android:id="@+id/tv_friend_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/seal_contact_friend_devi_height"
+        android:layout_marginLeft="@dimen/seal_contact_friend_devi_margin_left"
+        android:layout_marginRight="@dimen/seal_contact_friend_devi_margin_right"
+        android:background="@color/seal_contact_friend_devi_color" />
+
+</LinearLayout>

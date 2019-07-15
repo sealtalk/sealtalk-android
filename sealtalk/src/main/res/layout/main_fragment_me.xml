@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <cn.rongcloud.im.ui.view.UserInfoItemView
+            android:id="@+id/uiv_userinfo"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_mine_userfino_item_height"
+            android:layout_marginTop="@dimen/seal_mine_user_margin_top"
+            app:item_userinfo_portrait_height="@dimen/seal_mine_userfino_item_protrait"
+            app:item_userinfo_portrait_width="@dimen/seal_mine_userfino_item_protrait">
+
+        </cn.rongcloud.im.ui.view.UserInfoItemView>
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_setting_qrcode"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_mine_setting_item_height"
+            android:layout_marginTop="@dimen/seal_mine_setting_item_margin_top"
+            app:item_content="@string/seal_main_mine_qrcode"
+            app:item_image="@drawable/seal_ic_mine_qrcode" />
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_setting_account"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_mine_setting_item_height"
+            android:layout_marginTop="@dimen/seal_mine_setting_item_margin_top"
+            app:item_content="@string/seal_main_mine_set_account"
+            app:item_image="@drawable/seal_ic_mine_set">
+
+        </cn.rongcloud.im.ui.view.SettingItemView>
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_language"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_mine_setting_item_height"
+            android:layout_marginTop="@dimen/seal_mine_setting_item_margin_top"
+            app:item_content="@string/seal_main_mine_setting_language"
+            app:item_image="@drawable/seal_ic_mine_language"
+            app:item_value="@string/lang_chs">
+
+        </cn.rongcloud.im.ui.view.SettingItemView>
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_my_wallet"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_mine_setting_item_height"
+            android:layout_marginTop="@dimen/seal_mine_setting_item_margin_top"
+            app:item_content="@string/seal_main_mine_my_wallet"
+            app:item_image="@drawable/seal_ic_mine_wallet">
+
+        </cn.rongcloud.im.ui.view.SettingItemView>
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_feedback"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_mine_setting_item_height"
+            android:layout_marginTop="@dimen/seal_mine_setting_item_margin_top"
+            app:item_content="@string/seal_main_mine_feedback"
+            app:item_divider="true"
+            app:item_image="@drawable/seal_ic_mine_service">
+
+        </cn.rongcloud.im.ui.view.SettingItemView>
+
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_xiaoneng"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_mine_setting_item_height"
+            android:visibility="gone"
+            app:item_content="@string/seal_main_mine_customer_xn"
+            app:item_divider="true"
+            app:item_image="@drawable/seal_ic_mine_service">
+
+        </cn.rongcloud.im.ui.view.SettingItemView>
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_about"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_mine_setting_item_height"
+            app:item_content="@string/seal_main_mine_about"
+            app:item_image="@drawable/seal_ic_mine_about"
+            app:item_tag_image="@drawable/seal_ic_new_version"
+            app:item_tag_image_height="@dimen/seal_mine_setting_item_tag_height"
+            app:item_tag_image_width="@dimen/seal_mine_setting_item_tag_width">
+
+        </cn.rongcloud.im.ui.view.SettingItemView>
+
+
+    </LinearLayout>
+</ScrollView>

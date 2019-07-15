@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/seal_search_item_height"
+    android:background="@drawable/seal_mine_setting_item_selector"
+    android:orientation="horizontal">
+
+    <CheckBox
+        android:id="@+id/cb_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/seal_search_item_checkbox_margin_left"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_gravity="center_vertical"
+        android:clickable="false"
+        android:background="@null"
+        android:button="@drawable/seal_checkbox_selector"
+        android:visibility="gone" />
+
+
+    <cn.rongcloud.im.ui.view.UserInfoItemView
+        android:id="@+id/uiv_userinfo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:item_userinfo_divider="true"
+        app:item_userifo_null_background="false"
+        android:layout_toRightOf="@id/cb_select"
+        >
+
+    </cn.rongcloud.im.ui.view.UserInfoItemView>
+    <View style="@style/ac_search_list_view_divider"
+        android:layout_alignParentBottom="true"
+        />
+
+</RelativeLayout>

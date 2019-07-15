@@ -1,6 +1,6 @@
 package io.rong.recognizer.speechtotext;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * 语音转文字的识别结果回传/监听

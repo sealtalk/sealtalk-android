@@ -1,6 +1,6 @@
 package io.rong.recognizer.speechtotext;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 /**
  * 解码处理的结果回调

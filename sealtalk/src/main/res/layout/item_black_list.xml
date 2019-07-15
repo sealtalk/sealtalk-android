@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cn.rongcloud.im.ui.view.UserInfoItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/seal_black_list_item_height"
+    android:orientation="vertical"
+    app:item_userinfo_divider="true"
+    app:item_userinfo_portrait_height="@dimen/seal_black_list_item_portrait_height"
+    app:item_userinfo_portrait_width="@dimen/seal_black_list_item_portrait_width"
+    />

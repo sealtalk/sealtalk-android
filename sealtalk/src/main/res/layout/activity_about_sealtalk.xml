@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/seal_mine_about_logo_margin_bottom"
+        android:layout_marginTop="@dimen/seal_mine_about_logo_margin_top"
+        android:src="@drawable/seal_ic_about_logo" />
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_update_log"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_mine_about_height"
+        app:item_content="@string/seal_mine_about_update_log"
+        app:item_divider="true"
+        >
+    </cn.rongcloud.im.ui.view.SettingItemView>
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_func_introduce"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_mine_about_height"
+        app:item_content="@string/seal_mine_about_function_introduce"
+        app:item_divider="true"
+        >
+
+    </cn.rongcloud.im.ui.view.SettingItemView>
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_rongcloud_web"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_mine_about_height"
+        app:item_content="@string/seal_mine_about_rongcloud_web"
+        app:item_divider="true"
+        >
+
+    </cn.rongcloud.im.ui.view.SettingItemView>
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_sealtalk_version"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_mine_about_height"
+        app:item_content="@string/seal_mine_about_seal_talk_version"
+        app:item_tag_image="@drawable/seal_ic_new_version"
+        app:item_tag_image_height="@dimen/siv_sealtalk_version_tag_height"
+        app:item_tag_image_width="@dimen/siv_sealtalk_version_tag_width"
+        app:item_divider="true"
+        >
+
+    </cn.rongcloud.im.ui.view.SettingItemView>
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_sdk_version"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_mine_about_height"
+        app:item_content="@string/seal_mine_about_sdk_version"
+        app:item_divider="true"
+        >
+
+    </cn.rongcloud.im.ui.view.SettingItemView>
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_close_debug_mode"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_mine_about_height"
+        app:item_content="@string/seal_mine_about_close_debug_mode"
+        app:item_divider="true"
+        android:visibility="gone"
+        >
+
+    </cn.rongcloud.im.ui.view.SettingItemView>
+
+    <!--SDK 中设置用户在线的方法已经废弃-->
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_online_status"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_mine_about_height"
+        app:item_content="@string/seal_mine_about_user_online_status"
+        android:visibility="gone"
+        >
+
+    </cn.rongcloud.im.ui.view.SettingItemView>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/seal_mine_about_power_margin_bottom"
+        android:gravity="bottom"
+        android:text="Powered by RongCloud"
+        android:textColor="@color/seal_mine_about_power_text"
+        android:textSize="@dimen/seal_mine_about_power_text_size" />
+</LinearLayout>

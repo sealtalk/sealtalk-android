@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <!--Title 评价-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_dialog_evaluate_title_height">
+
+        <ImageView
+            android:id="@+id/iv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/seal_dialog_evaluate_title_cancel_margin_left"
+            android:clickable="true"
+            android:src="@drawable/seal_ic_dialog_cancel" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/seal_evaluate_evaluation"
+            android:textColor="@color/color_black_text"
+            android:textSize="@dimen/seal_dialog_evaluate_title_text_size" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/seal_evaluate_dialog_divider" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/scrollview_evaluate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+           >
+
+            <!--是否解决问题-->
+            <LinearLayout
+                android:id="@+id/ll_resolve_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/seal_dialog_evaluate_resolve_margin_top">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/seal_evaluate_resolved_title"
+                    android:textColor="@color/seal_evaluate_text_color"
+                    android:textSize="@dimen/seal_dialog_evaluate_resolved_title_text_size" />
+
+                <RadioGroup
+                    android:id="@+id/rg_resolve"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/seal_dialog_evaluate_resolved_margin_top"
+
+                    >
+
+                    <RadioButton
+                        android:id="@+id/rb_resolved"
+                        android:layout_width="@dimen/seal_dialog_evaluate_resolved_btn_width"
+                        android:layout_height="@dimen/seal_dialog_evaluate_resolved_btn_height"
+                        android:button="@null"
+                        android:background="@drawable/seal_dialog_evaluate_check_selector"
+                        android:gravity="center"
+                        android:text="@string/seal_evaluate_resolved"
+                        android:textColor="@drawable/seal_dialog_evaluate_text_selector" />
+
+                    <RadioButton
+                        android:id="@+id/rb_unresolved"
+                        android:layout_width="@dimen/seal_dialog_evaluate_resolved_btn_width"
+                        android:layout_height="@dimen/seal_dialog_evaluate_resolved_btn_height"
+                        android:layout_marginLeft="@dimen/seal_dialog_evaluate_resolved_btn_margin_left"
+                        android:button="@null"
+                        android:background="@drawable/seal_dialog_evaluate_check_selector"
+                        android:gravity="center"
+                        android:text="@string/seal_evaluate_unresolved"
+                        android:textColor="@drawable/seal_dialog_evaluate_text_selector" />
+                </RadioGroup>
+            </LinearLayout>
+
+
+
+            <!--星级评价-->
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/seal_evaluate_star_title"
+                android:textColor="@color/seal_evaluate_text_color"
+                android:layout_marginTop="@dimen/seal_dialog_evaluate_star_title_margin_top"
+                android:textSize="@dimen/seal_dialog_evaluate_star_title_text_size" />
+
+
+            <cn.rongcloud.im.ui.view.StarsView
+                android:id="@+id/sv_stars"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/seal_dialog_evaluate_star_margin_top"
+                android:gravity="center"
+                android:orientation="horizontal"
+                />
+
+            <!--存在的问题-->
+            <LinearLayout
+                android:id="@+id/ll_problems"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/seal_dialog_evaluate_problems_margin_top">
+
+                <TextView
+                    android:id="@+id/tv_problem_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/seal_evaluate_text_color"
+                    android:textSize="@dimen/seal_dialog_evaluate_problems_title_text_size" />
+
+                <cn.rongcloud.im.ui.widget.AntGridView
+                    android:id="@+id/gv_problem_tables"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/seal_dialog_evaluate_problems_lable_margin_left"
+                    android:layout_marginRight="@dimen/seal_dialog_evaluate_problems_lable_margin_right"
+                    android:layout_marginTop="@dimen/seal_dialog_evaluate_problems_lable_margin_top">
+                </cn.rongcloud.im.ui.widget.AntGridView>
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/et_suggestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/seal_dialog_evaluate_suggestion_margin_left"
+                android:layout_marginRight="@dimen/seal_dialog_evaluate_suggestion_margin_right"
+                android:layout_marginTop="@dimen/seal_dialog_evaluate_suggestion_margin_top"
+                android:layout_marginBottom="@dimen/seal_dialog_evaluate_suggestion_margin_top"
+                android:background="@drawable/seal_dialog_evaluate_edit_bg"
+                android:maxLines="3"
+                android:minLines="3"
+                android:paddingBottom="@dimen/seal_dialog_evaluate_suggestion_padding_bottom"
+                android:gravity="top"
+                android:paddingLeft="@dimen/seal_dialog_evaluate_suggestion_padding_left"
+                android:paddingRight="@dimen/seal_dialog_evaluate_suggestion_padding_right"
+                android:paddingTop="@dimen/seal_dialog_evaluate_suggestion_padding_top"
+                android:textColor="@color/seal_evaluate_edittext"
+                android:textSize="@dimen/seal_dialog_evaluate_suggestion_text_size" />
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_dialog_evaluate_sumbit_height"
+        android:layout_gravity="bottom"
+        android:background="@color/seal_evaluate_dialog_bg"
+        android:gravity="center"
+        android:text="@string/seal_evaluate_submit_evaluation"
+        android:textColor="@color/white"
+        android:textSize="@dimen/seal_dialog_evaluate_sumbit_text_size" />
+</LinearLayout>

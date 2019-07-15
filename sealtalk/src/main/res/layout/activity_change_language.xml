@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_chinese"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_mine_change_language_item_height"
+        app:item_content="@string/lang_chs"
+        app:item_divider="true"
+        app:item_show_selected="true"
+        app:item_selected_image="@drawable/seal_ic_selected"
+        >
+
+    </cn.rongcloud.im.ui.view.SettingItemView>
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_english"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_mine_change_language_item_height"
+        app:item_content="@string/lang_english"
+        app:item_show_selected="true"
+        app:item_selected_image="@drawable/seal_ic_selected"
+        >
+
+    </cn.rongcloud.im.ui.view.SettingItemView>
+
+</LinearLayout>

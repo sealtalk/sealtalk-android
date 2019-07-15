@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <io.rong.imkit.widget.AsyncImageView
+        android:id="@+id/main_iv_create_group_portrait"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="80dp"
+        android:src="@drawable/main_bg_add_group_portrait" />
+
+    <cn.rongcloud.im.ui.widget.ClearWriteEditText
+        android:id="@+id/main_et_create_group_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:background="@null"
+        android:layout_marginTop="80dp"
+        android:gravity="center"
+        android:maxLength="10" />
+
+    <Button
+        android:id="@+id/main_btn_confirm_create"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/common_btn_blue_selector"
+        android:text="@string/common_confirm"
+        android:textColor="#FFF" />
+
+</LinearLayout>

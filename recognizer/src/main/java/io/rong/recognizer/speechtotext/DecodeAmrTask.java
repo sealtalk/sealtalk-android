@@ -3,7 +3,7 @@ package io.rong.recognizer.speechtotext;
 import android.media.MediaCodec;
 import android.media.MediaExtractor;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

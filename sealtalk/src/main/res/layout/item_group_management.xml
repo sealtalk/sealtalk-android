@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <cn.rongcloud.im.ui.view.UserInfoItemView
+        android:id="@+id/uiv_userinfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+    </cn.rongcloud.im.ui.view.UserInfoItemView>
+    <ImageView
+        android:id="@+id/iv_del"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/seal_ic_group_manager_del"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/seal_group_manager_item_margin"
+        />
+</RelativeLayout>

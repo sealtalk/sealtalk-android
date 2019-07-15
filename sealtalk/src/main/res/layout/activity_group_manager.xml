@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_set_group_manager"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_group_manager_item_height"
+        android:layout_marginTop="@dimen/seal_group_manager_item_margin"
+        app:item_content="@string/seal_group_manager_set_manager"
+        app:item_divider="true">
+
+    </cn.rongcloud.im.ui.view.SettingItemView>
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_transfer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_group_manager_item_height"
+        app:item_content="@string/seal_group_manager_transfer"
+        app:item_divider="true">
+
+    </cn.rongcloud.im.ui.view.SettingItemView>
+
+</LinearLayout>

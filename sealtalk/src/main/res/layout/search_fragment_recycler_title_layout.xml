@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/seal_search_item_title_height"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/ac_search_list_view_item"
+        android:text="@string/seal_ac_search_friend" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_search_item_devi_height"
+        android:layout_gravity="bottom"
+        android:background="@color/seal_search_devi_color" />
+</FrameLayout>

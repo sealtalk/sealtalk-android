@@ -36,5 +36,5 @@ dependencies {
     api 'cn.rongcloud.sdk:im_kit:2.9.19'
     //im_kit必须依赖im_lib，所以需要加入对应依赖
     api 'cn.rongcloud.sdk:im_lib:2.9.19'
-    api 'com.android.support:support-v4:26.0.0'
+    api 'androidx.legacy:legacy-support-v4:1.0.0'
 }

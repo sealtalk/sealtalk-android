@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/profile_ll_detail_info_group"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_user_detail_userinfo_height"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <cn.rongcloud.im.ui.widget.SelectableRoundedImageView
+            android:id="@+id/profile_iv_detail_user_portrait"
+            android:layout_width="@dimen/seal_user_detail_userinfo_portrait_value"
+            android:layout_height="@dimen/seal_user_detail_userinfo_portrait_value"
+            android:layout_marginLeft="@dimen/seal_user_detail_userinfo_portrait_margin_left"
+            android:layout_marginTop="@dimen/seal_user_detail_userinfo_portrait_margin"
+            android:layout_marginBottom="@dimen/seal_user_detail_userinfo_portrait_margin"
+            android:scaleType="centerCrop"
+            app:sriv_left_bottom_corner_radius="@dimen/seal_user_detail_userinfo_portrait_radius"
+            app:sriv_left_top_corner_radius="@dimen/seal_user_detail_userinfo_portrait_radius"
+            app:sriv_right_bottom_corner_radius="@dimen/seal_user_detail_userinfo_portrait_radius"
+            app:sriv_right_top_corner_radius="@dimen/seal_user_detail_userinfo_portrait_radius" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/seal_user_detail_userinfo_margin_left"
+            android:layout_marginRight="@dimen/seal_user_detail_userinfo_margin_right"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/profile_tv_detail_display_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLength="16"
+                android:maxLines="1"
+                android:textColor="@color/color_black_text"
+                android:textSize="@dimen/seal_user_detail_userinfo_display_name" />
+
+            <TextView
+                android:id="@+id/profile_tv_detail_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/seal_user_detail_userinfo_text_margin"
+                android:layout_marginBottom="@dimen/seal_user_detail_userinfo_text_margin"
+                android:maxLines="1"
+                android:textColor="@color/seal_user_detail_userinfo_text_color"
+                android:textSize="@dimen/seal_user_detail_userinfo_text_size"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/profile_tv_detail_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLength="16"
+                android:maxLines="1"
+                android:textColor="@color/seal_user_detail_userinfo_text_color"
+                android:textSize="@dimen/seal_user_detail_userinfo_text_size"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/profile_ll_detail_friend_menu_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible"
+        >
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/profile_siv_detail_alias"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:item_content="@string/profile_set_display_name"
+            android:layout_marginTop="@dimen/seal_user_detail_item_margin"
+            >
+
+        </cn.rongcloud.im.ui.view.SettingItemView>
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/profile_siv_detail_blacklist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:item_content="@string/profile_detail_join_the_blacklist"
+            android:layout_marginTop="@dimen/seal_user_detail_item_margin"
+            >
+
+        </cn.rongcloud.im.ui.view.SettingItemView>
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/profile_siv_detail_delete_contact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:item_content="@string/profile_delete_from_contact"
+            android:visibility="gone"
+            >
+
+        </cn.rongcloud.im.ui.view.SettingItemView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/profile_ll_detail_chat_button_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <Button
+            android:id="@+id/profile_btn_detail_start_chat"
+            style="@style/seal_profile_user_detail_btn"
+            android:background="@drawable/profile_btn_contact_blue_selector"
+            android:text="@string/profile_detail_start_chat"
+            android:textColor="@color/white"
+            />
+
+        <!--CallKit start-->
+        <Button
+            android:id="@+id/profile_btn_detail_start_voice"
+            style="@style/seal_profile_user_detail_btn"
+            android:background="@drawable/profile_btn_contact_white_selector"
+            android:text="@string/profile_detail_start_voice"
+            android:textColor="@color/color_black_text"
+            />
+
+        <Button
+            android:id="@+id/profile_btn_detail_start_video"
+            style="@style/seal_profile_user_detail_btn"
+            android:background="@drawable/profile_btn_contact_white_selector"
+            android:text="@string/profile_detail_start_video"
+            android:textColor="@color/color_black_text"
+            />
+        <!--CallKit end-->
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/profile_btn_detail_add_friend"
+        style="@style/seal_profile_user_detail_btn"
+        android:background="@drawable/profile_btn_contact_blue_selector"
+        android:text="@string/profile_detail_add_friend"
+        android:textColor="@color/white"
+        android:visibility="gone" />
+
+</LinearLayout>

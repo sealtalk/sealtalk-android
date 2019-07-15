@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_firstchar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_char"
+            tools:text="A"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/seal_group_manager_item_padding_left"
+            android:paddingTop="@dimen/seal_group_manager_item_padding_top"
+            android:paddingBottom="@dimen/seal_group_manager_item_padding_bottom"
+            android:textColor="@color/color_gray_text"
+            android:textSize="@dimen/seal_login_select_country_tv_char_text_size" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/color_divider_line" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <cn.rongcloud.im.ui.view.UserInfoItemView
+            android:id="@+id/uiv_member"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </cn.rongcloud.im.ui.view.UserInfoItemView>
+        <CheckBox
+            android:id="@+id/cb_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:button="@drawable/seal_checkbox_selector"
+            android:layout_marginRight="@dimen/seal_group_manager_item_margin_right"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            />
+    </RelativeLayout>
+</LinearLayout>

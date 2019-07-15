@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: __local_aars__:/Users/liusong/RongCloud/rong-project/sealtalk-android/sealtalk/libs/stetho-1.5.1-fatjar.jar:unspecified@jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/sealtalk/libs/stetho-1.5.1-fatjar.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

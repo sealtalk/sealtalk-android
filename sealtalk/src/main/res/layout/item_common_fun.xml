@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_frienditem"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/seal_contact_friend_item_height"
+    android:background="@drawable/seal_bg_list_item"
+    android:orientation="horizontal"
+    >
+
+    <cn.rongcloud.im.ui.view.UserInfoItemView
+        android:id="@+id/uiv_item"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:item_userinfo_divider="true"
+        >
+
+    </cn.rongcloud.im.ui.view.UserInfoItemView>
+
+
+    <TextView
+        android:id="@+id/tv_unread"
+        android:layout_width="@dimen/seal_unread_red_dot_width"
+        android:layout_height="@dimen/seal_unread_red_dot_width"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/seal_unread_red_dot_margin_right"
+        android:background="@drawable/rc_unread_count_bg"
+        android:gravity="center"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/iv_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/seal_ic_rp_arrow"
+        android:layout_marginRight="@dimen/seal_unread_arrow_margin_right"
+        android:visibility="visible"
+        />
+</RelativeLayout>
+
+

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/seal_public_service_item_height_and_div"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/seal_public_service_item_height"
+        android:background="@android:color/transparent"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/seal_public_service_item_height_min"
+        android:orientation="horizontal"
+        android:padding="@dimen/seal_public_service_item_padding">
+
+        <io.rong.imkit.widget.AsyncImageView
+            android:id="@+id/portrait"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitXY"
+            app:RCCornerRadius="@dimen/seal_public_service_item_rc_corner"
+            app:RCDefDrawable="@drawable/rc_ic_def_msg_portrait" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/name"
+                style="@style/RCTheme.Message.TextView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/seal_public_service_item_name_margin_left" />
+
+            <TextView
+                android:id="@+id/introduction"
+                style="@style/RCTheme.Message.RichContent.TextView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/seal_public_service_item_name_margin_left"
+                android:layout_marginTop="@dimen/seal_public_service_item_introduction_margin_top" />
+        </LinearLayout>
+    </LinearLayout>
+    <View style="@style/ac_search_list_view_divider" />
+</LinearLayout>
+

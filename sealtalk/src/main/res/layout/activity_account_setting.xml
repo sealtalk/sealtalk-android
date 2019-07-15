@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_reset_password"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_mine_account_setting_item_height"
+        android:layout_marginTop="@dimen/seal_mine_account_setting_item_margin_top"
+        app:item_content="@string/seal_mine_set_account_change_password"
+        app:item_divider="true"
+        >
+
+    </cn.rongcloud.im.ui.view.SettingItemView>
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_privacy"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_mine_account_setting_item_height"
+        app:item_content="@string/seal_mine_set_account_privacy"
+        app:item_divider="true"
+        >
+
+    </cn.rongcloud.im.ui.view.SettingItemView>
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_show_new_msg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_mine_account_setting_item_height"
+        app:item_content="@string/seal_mine_set_account_new_message_show"
+        >
+
+    </cn.rongcloud.im.ui.view.SettingItemView>
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_clear_cache"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_mine_account_setting_item_height"
+        android:layout_marginTop="@dimen/seal_mine_account_setting_item_margin_top"
+        app:item_content="@string/seal_mine_set_account_clear_cache"
+        >
+
+    </cn.rongcloud.im.ui.view.SettingItemView>
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_push_language"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_mine_account_setting_item_height"
+        android:layout_marginTop="@dimen/seal_mine_account_setting_item_margin_top"
+        app:item_content="@string/seal_mine_set_account_push_language"
+        app:item_divider="true"
+        app:item_switch="true"
+        android:visibility="gone"
+        >
+
+    </cn.rongcloud.im.ui.view.SettingItemView>
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_push_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_mine_account_setting_item_height"
+        app:item_content="@string/seal_mine_set_account_push_content"
+        app:item_divider="true"
+        app:item_switch="true"
+        android:visibility="gone"
+        >
+
+    </cn.rongcloud.im.ui.view.SettingItemView>
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_receive_push_msg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_mine_account_setting_item_height"
+        app:item_content="@string/seal_mine_set_account_push_message"
+        app:item_switch="true"
+        android:visibility="gone"
+        >
+
+    </cn.rongcloud.im.ui.view.SettingItemView>
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_mine_account_setting_item_height"
+        android:layout_marginTop="@dimen/seal_mine_account_setting_item_margin_top"
+        android:textColor="@color/seal_setting_item_content"
+        android:textSize="@dimen/seal_setting_item_text_size"
+        android:text="@string/seal_mine_set_account_logout"
+        android:background="@drawable/seal_mine_setting_item_selector"
+        style="?android:attr/borderlessButtonStyle"
+        />
+
+</LinearLayout>

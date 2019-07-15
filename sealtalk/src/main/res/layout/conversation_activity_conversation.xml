@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <cn.rongcloud.im.ui.view.AnnouceView
+            android:id="@+id/view_annouce"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <FrameLayout
+            android:id="@+id/rong_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/seal_ic_login_bg"
+        android:visibility="gone" />
+</FrameLayout>

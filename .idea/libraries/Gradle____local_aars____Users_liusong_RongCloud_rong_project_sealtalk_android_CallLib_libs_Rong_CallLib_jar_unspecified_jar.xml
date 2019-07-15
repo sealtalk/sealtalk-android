@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: __local_aars__:/Users/liusong/RongCloud/rong-project/sealtalk-android/CallLib/libs/Rong_CallLib.jar:unspecified@jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/CallLib/libs/Rong_CallLib.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

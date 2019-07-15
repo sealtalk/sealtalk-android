@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_donot_distrab"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_message_donot_disturb_item_height"
+        android:layout_marginTop="@dimen/seal_message_donot_disturb_item_margin_top"
+        app:item_switch="true"
+        app:item_background="@android:color/transparent"
+        app:item_content="@string/seal_new_message_donot_disturb_new_message_notice"
+        >
+
+    </cn.rongcloud.im.ui.view.SettingItemView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="13dp"
+        android:text="@string/seal_new_message_donot_disturb_notification_information" />
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        app:item_divider="true"
+        >
+
+    </cn.rongcloud.im.ui.view.SettingItemView>
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_start_time"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_message_donot_disturb_item_height"
+        app:item_background="@android:color/transparent"
+        app:item_divider="true"
+        app:item_content="@string/seal_new_message_donot_disturb_start"
+        android:visibility="gone"
+        >
+
+    </cn.rongcloud.im.ui.view.SettingItemView>
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_end_time"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_message_donot_disturb_item_height"
+        app:item_background="@android:color/transparent"
+        app:item_content="@string/seal_new_message_donot_disturb_end"
+        android:visibility="gone"
+        >
+
+    </cn.rongcloud.im.ui.view.SettingItemView>
+</LinearLayout>

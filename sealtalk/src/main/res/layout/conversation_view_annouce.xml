@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_annouce"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/seal_conversation_annouce_height"
+    android:background="@color/seal_conversation_annouce_bg"
+    android:clickable="true"
+    android:descendantFocusability="blocksDescendants"
+    >
+
+    <ImageView
+        android:id="@+id/iv_announce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/seal_ic_announce"
+        android:layout_marginLeft="@dimen/seal_conversation_annouce_marigin_left"
+        />
+
+    <ImageView
+        android:id="@+id/iv_announce_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/seal_conversation_annouce_arrow_marigin_right"
+        android:src="@drawable/seal_ic_announce_arrow" />
+
+    <TextView
+        android:id="@+id/tv_announce_msg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_conversation_annouce_msg_height"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/seal_conversation_annouce_msg_mrgin_left"
+        android:layout_toLeftOf="@id/iv_announce_arrow"
+        android:layout_toRightOf="@id/iv_announce"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:lines="1"
+        android:textColor="@color/seal_conversation_annouce_text"
+        android:textSize="@dimen/seal_conversation_annouce_msg_text_size" />
+</RelativeLayout>

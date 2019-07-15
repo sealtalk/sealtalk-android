@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <cn.rongcloud.im.ui.widget.ClearWriteEditText
+        android:id="@+id/cet_update_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/seal_update_name_edit_margin"
+        android:layout_marginRight="@dimen/seal_update_name_edit_margin"
+        android:layout_marginTop="@dimen/seal_update_name_edit_margin"
+        android:maxLength="32"
+        android:maxLines="1"
+        android:textColor="@color/seal_update_name_edit"
+        android:textSize="@dimen/seal_update_name_edit_text_size" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/seal_update_name_margin_left"
+        android:layout_marginTop="@dimen/seal_update_name_margin_top"
+        android:text="@string/seal_update_name_text"
+        android:textColor="@color/seal_update_name_text_color"
+        android:textSize="@dimen/seal_update_name_text_size" />
+
+</LinearLayout>

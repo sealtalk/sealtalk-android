@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="130dp"
+    android:layout_height="30dp"
+    android:button="@null"
+    android:background="@drawable/seal_dialog_evaluate_check_selector"
+    android:gravity="center"
+    android:textColor="@drawable/seal_dialog_evaluate_text_selector" />

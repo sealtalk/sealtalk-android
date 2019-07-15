@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:drawable="@drawable/rc_cs_group_ok_normal" android:state_focused="false" android:state_pressed="false" android:state_enabled="true"/>
-    <item android:drawable="@drawable/rc_cs_group_ok_pressed" android:state_pressed="true" android:state_enabled="true"/>
-    <item android:drawable="@drawable/rc_cs_group_ok_disabled" android:state_enabled="false"/>
-    <item android:drawable="@drawable/rc_cs_group_ok_normal"/>
-
-</selector>

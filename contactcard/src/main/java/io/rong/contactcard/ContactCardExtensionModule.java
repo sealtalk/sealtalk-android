@@ -13,10 +13,6 @@ import io.rong.imkit.plugin.IPluginModule;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 
-/**
- * Created by Beyond on 2017/4/14.
- */
-
 public class ContactCardExtensionModule implements IExtensionModule {
 
     private IContactCardClickListener iContactCardClickListener;

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:paddingLeft="18dp"
+    android:paddingTop="12dp"
+    android:paddingRight="27dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/profile_group_notice_tips"
+        android:textColor="@color/default_sub_text" />
+
+    <TextView
+        android:id="@+id/profile_tv_update_group_notice_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/default_sub_text"
+        tools:text="发布时间：2019-05-30 18:34:21" />
+
+    <EditText
+        android:id="@+id/profile_et_group_notice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@null"
+        android:cursorVisible="true"
+        android:gravity="top"
+        android:hint="@string/profile_input_hint_group_notice"
+        android:inputType="text|textMultiLine"
+        android:minLines="8"
+        android:scrollbars="vertical"
+        android:textColor="@color/default_main_text"
+        android:textColorHint="@color/default_text_hint_color"
+        android:textSize="16sp" />
+
+</LinearLayout>

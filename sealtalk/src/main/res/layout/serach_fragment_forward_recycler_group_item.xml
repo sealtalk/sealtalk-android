@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/seal_search_item_height"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_search_item_content_height"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <CheckBox
+            android:id="@+id/cb_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/seal_search_item_checkbox_margin_left"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:clickable="false"
+            android:background="@null"
+            android:button="@drawable/seal_checkbox_selector"
+            android:visibility="gone" />
+
+        <cn.rongcloud.im.ui.widget.SelectableRoundedImageView
+            android:id="@+id/iv_portrait"
+            android:layout_width="@dimen/seal_search_item_portrait_height"
+            android:layout_height="@dimen/seal_search_item_portrait_width"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/seal_search_item_portrait_margin_left"
+            android:layout_marginEnd="@dimen/seal_search_item_portrait_margin_right"
+            android:scaleType="centerCrop"
+            android:src="@drawable/rc_default_portrait"
+            app:sriv_left_bottom_corner_radius="@dimen/seal_search_item_portrait_radius"
+            app:sriv_left_top_corner_radius="@dimen/seal_search_item_portrait_radius"
+            app:sriv_right_bottom_corner_radius="@dimen/seal_search_item_portrait_radius"
+            app:sriv_right_top_corner_radius="@dimen/seal_search_item_portrait_radius" />
+
+        <LinearLayout
+            android:id="@+id/ll_name"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/seal_search_item_name_height"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="@dimen/seal_search_item_name_margin_top"
+            android:layout_marginBottom="@dimen/seal_search_item_name_margin_bottom"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/seal_search_name_text_color"
+                android:textSize="@dimen/seal_search_item_name_text_size" />
+
+            <LinearLayout
+                android:id="@+id/ll_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/seal_group_list_include"
+                    android:textColor="@color/seal_search_description_text_color"
+                    android:textSize="@dimen/seal_search_item_detail_text_size" />
+
+                <TextView
+                    android:id="@+id/tv_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/seal_search_description_text_color"
+                    android:textSize="@dimen/seal_search_item_detail_text_size" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View style="@style/ac_search_list_view_divider" />
+</LinearLayout>

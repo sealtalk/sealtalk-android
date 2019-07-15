@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/main_theme_color</color>
+    <color name="colorPrimaryDark">#0083e0</color>
+    <color name="colorAccent">#0083e0</color>
+    <color name="main_theme_color">#0195ff</color>
+
+    <color name="seal_login_text_button_color">#999999</color>
+    <color name="white">#FFFFFF</color>
+    <color name="seal_search_title_bar_bg">#0195ff</color>
+    <color name="seal_search_title_bar_et_hite">#8ed0ff</color>
+    <color name="seal_search_title_bar_line">#0083e0</color>
+    <color name="color_gray_text">#939393</color>
+    <color name="color_divider_line">#E5E5E5</color>
+    <color name="seal_select_country_text_color">#4a4a4a</color>
+    <color name="seal_select_country_bg">#f1f1f1</color>
+    <color name="seal_title_bg">#0195ff</color>
+    <color name="seal_bg">#f0f0f6</color>
+    <color name="seal_title_bar_line">#0083e0</color>
+    <color name="text_hint_gray">#e6e6e6</color>>
+
+    <color name="common_divider">#dfdfdd</color>
+
+    <color name="color_black_text">#333333</color>
+    <color name="seal_evaluate_dialog_divider">#eceef3</color>
+    <color name="seal_evaluate_dialog_bg">#0e8cea</color>
+    <color name="seal_evaluate_text_color">#3c4d65</color>
+    <color name="seal_evaluate_edittext">#939dab</color>
+    <color name="seal_conversation_annouce_bg">#FFF5ED</color>
+    <color name="seal_conversation_annouce_text">#9D5438</color>
+    <color name="seal_new_friends_is_null_text">#999999</color>
+    <color name="seal_new_friends_divider">#dfdfdd</color>
+    <color name="seal_new_friends_name_text">#353535</color>
+    <color name="seal_new_friends_status_text">#999999</color>
+
+    <!--contact-->
+    <color name="seal_contact_content_bg">#0ff</color>
+    <color name="seal_contact_rv_bg">#ebebeb</color>
+    <color name="seal_contact_dialog_text_color">#ffffffff</color>
+    <color name="seal_contact_friend_item_name_bg">#353535</color>
+    <color name="seal_contact_friend_devi_color">#ccc</color>
+
+    <color name="seal_main_title_bg">#0195ff</color>
+    <color name="seal_main_title_more_text_color">#353535</color>
+
+    <color name="seal_setting_item_content">#353535</color>
+    <color name="seal_setting_item_value">#666666</color>
+    <color name="seal_setting_item_divider">#dfdfdd</color>
+    <color name="seal_mime_bg">#ebebeb</color>
+    <color name="seal_userinfo_item_name_text">#353535</color>
+    <color name="seal_mine_about_power_text">#999999</color>
+    <color name="seal_search_name_text_color">#353535</color>
+    <color name="seal_search_description_text_color">#999999</color>
+    <color name="seal_search_devi_color">#f0f0f6</color>
+    <color name="seal_search_show_more_text_color">#7ca1c9</color>
+
+    <color name="seal_userinfo_item_divider">#dfdfdd</color>
+    <color name="seal_update_name_text_color">#999999</color>
+    <color name="seal_update_name_edit">#353535</color>
+    <color name="seal_dialog_select_picture_btn_text">#333333</color>
+    <color name="seal_dialog_select_picture_divider">#dfdfdd</color>
+    <color name="seal_spannel_color">#0099ff</color>
+
+    <color name="common_dialog_base_line">#E5E5E5</color>
+    <color name="common_dialog_base_text">@color/color_black_text</color>
+    <color name="common_dialog_base_positive">@color/color_black_text</color>
+    <color name="seal_set_account_update_password_tag">#999999</color>
+    <color name="seal_set_account_update_password_value">#dadada</color>
+    <color name="seal_privacy_blacklist_text">#999999</color>
+    <color name="seal_search_empty_text_color">#999999</color>
+
+    <!-- 界面改版使用 -->
+    <color name="text_black">#262626</color>
+    <color name="text_gray">#939393</color>
+    <color name="text_light_gray">#BDBDBD</color>
+    <color name="text_blue">#368AE8</color>
+    <color name="text_white">#FFFFFF</color>
+    <color name="bg_area_dim_white">#F2F2F3</color>
+    <color name="default_main_text">@color/text_black</color>
+    <color name="default_sub_text">@color/text_gray</color>
+    <color name="default_clickable_text">@color/text_blue</color>
+    <color name="default_text_hint_color">@color/text_light_gray</color>
+    <color name="default_main_area_background">@color/bg_area_dim_white</color>
+    <color name="color_list_item_hover">#DFDFDD</color>
+    <color name="seal_forward_message_send">#3595FF</color>
+    <color name="color_tab_indicator_bg">#FAFAFA</color>
+    <color name="color_primary">#3A91F3</color>
+    <color name="color_main_tab">#f9f9f9</color>
+    <color name="seal_user_detail_userinfo_text_color">#999999</color>
+    <color name="seal_group_manager_item_role">@color/text_gray </color>
+    <color name="seal_search_line_color">#DFDFDD</color>
+</resources>

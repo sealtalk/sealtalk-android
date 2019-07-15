@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/select_bottom_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/view_divider"
+        style="@style/rce_horizontal_light_thin_divider" />
+
+    <LinearLayout
+        android:id="@+id/ll_search_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_select_bottom_height"
+        android:background="@color/color_tab_indicator_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/seal_select_bottom_padding_left"
+        android:paddingRight="@dimen/seal_select_bottom_padding_left">
+
+        <TextView
+            android:id="@+id/tv_search_count"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/seal_select_bottom_text_padding"
+            android:textColor="@color/color_primary"
+            android:textSize="@dimen/seal_select_bottom_text_size" />
+
+        <TextView
+            android:id="@+id/tv_search_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:padding="@dimen/seal_select_bottom_confirm_padding"
+            android:text="@string/common_confirm"
+            android:textColor="@color/color_primary"
+            android:textSize="@dimen/seal_select_bottom_text_size" />
+
+    </LinearLayout>
+</LinearLayout>

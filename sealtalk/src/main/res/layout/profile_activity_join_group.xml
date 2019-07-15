@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/default_main_area_background">
+    <RelativeLayout
+        android:id="@+id/profile_rl_join_group_info_container"
+        android:layout_width="match_parent"
+        android:layout_height="211dp"
+        android:background="@color/white"
+        >
+
+        <ImageView
+            android:id="@+id/profile_iv_join_group_portrait"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            tools:src="@drawable/common_default_portrait"
+            android:layout_centerHorizontal="true"
+            android:scaleType="centerCrop"
+            android:layout_marginTop="60dp"
+            />
+
+        <TextView
+            android:id="@+id/profile_tv_join_group_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textSize="20dp"
+            android:layout_below="@id/profile_iv_join_group_portrait"
+            android:textColor="@color/default_main_text"
+            android:layout_marginTop="8dp"
+            tools:text="群名称"
+            />
+
+        <TextView
+            android:id="@+id/profile_tv_join_group_member"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/profile_tv_join_group_name"
+            android:textColor="@color/default_sub_text"
+            android:layout_marginTop="2dp"
+            tools:text="群内已有多少人"
+            />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/profile_btn_join_group_confirm"
+        android:layout_width="310dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/common_btn_blue_selector"
+        android:text="@string/profile_join_group"
+        android:textColor="@color/text_white"
+        android:textSize="17dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        />
+
+</LinearLayout>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="30dp">
+
+            <cn.rongcloud.im.ui.widget.WrapHeightGridView
+                android:id="@+id/profile_gv_group_member"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="1dp"
+                android:paddingRight="1dp"
+                android:background="#ffffff"
+                android:gravity="start"
+                android:listSelector="@android:color/transparent"
+                android:numColumns="4"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#fff">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.25dp"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="14dp"
+                    android:layout_marginTop="14dp"
+                    android:background="#dfdfdd" />
+            </LinearLayout>
+
+            <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/profile_siv_all_group_member"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:item_content="@string/profile_all_group_member"
+                >
+
+            </cn.rongcloud.im.ui.view.SettingItemView>
+
+            <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/profile_siv_group_search_history_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:item_content="@string/profile_search_message"
+                android:layout_marginTop="@dimen/seal_profile_group_item_margin"
+                >
+
+            </cn.rongcloud.im.ui.view.SettingItemView>
+
+            <cn.rongcloud.im.ui.view.UserInfoItemView
+                android:id="@+id/profile_uiv_group_portrait_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/seal_profile_group_item_margin"
+                app:item_userinfo_name="@string/profile_group_portrait"
+                app:item_userinfo_portrait_width="@dimen/seal_profile_group_item_protrait_value"
+                app:item_userinfo_portrait_height="@dimen/seal_profile_group_item_protrait_value"
+                app:item_right_show="true"
+                app:item_userinfo_divider="true"
+                >
+
+            </cn.rongcloud.im.ui.view.UserInfoItemView>
+            <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/profile_siv_group_name_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:item_content="@string/profile_group_name"
+                app:item_divider="true"
+                >
+
+            </cn.rongcloud.im.ui.view.SettingItemView>
+
+            <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/profile_siv_group_qrcode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:item_content="@string/profile_group_qrcode"
+                app:item_right_image = "@drawable/profile_ic_qrcode"
+                app:item_divider="true"
+                >
+
+            </cn.rongcloud.im.ui.view.SettingItemView>
+
+            <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/profile_siv_group_notice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:item_content="@string/profile_group_notice"
+                app:item_divider="true"
+                >
+
+            </cn.rongcloud.im.ui.view.SettingItemView>
+
+
+            <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/profile_siv_group_manager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:item_content="@string/profile_group_manager"
+                >
+
+            </cn.rongcloud.im.ui.view.SettingItemView>
+
+
+            <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/profile_siv_message_notice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/seal_profile_group_item_margin"
+                app:item_content="@string/profile_message_notice"
+                app:item_divider="true"
+                app:item_switch="true"
+                >
+
+            </cn.rongcloud.im.ui.view.SettingItemView>
+
+            <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/profile_siv_group_on_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:item_content="@string/profile_set_top"
+                app:item_switch="true"
+                app:item_divider="true"
+                >
+
+            </cn.rongcloud.im.ui.view.SettingItemView>
+
+            <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/profile_siv_group_save_to_contact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:item_content="@string/profile_group_save_to_contact"
+                app:item_switch="true"
+                app:item_divider="true"
+                >
+
+            </cn.rongcloud.im.ui.view.SettingItemView>
+
+            <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/profile_siv_group_clean_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:item_content="@string/profile_clean_message"
+                app:item_divider="true"
+                >
+
+            </cn.rongcloud.im.ui.view.SettingItemView>
+
+            <Button
+                android:id="@+id/profile_btn_group_quit"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/seal_btn_red_selector"
+                android:text="@string/profile_quit_group"
+                android:textColor="#FFF"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

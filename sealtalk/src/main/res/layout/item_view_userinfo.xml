@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app = "http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/seal_bg_list_item"
+    android:orientation="horizontal">
+
+    <cn.rongcloud.im.ui.widget.SelectableRoundedImageView
+        android:id="@+id/iv_left_header"
+        app:sriv_left_bottom_corner_radius="@dimen/seal_userinfo_item_header_radius"
+        app:sriv_left_top_corner_radius="@dimen/seal_userinfo_item_header_radius"
+        app:sriv_right_bottom_corner_radius="@dimen/seal_userinfo_item_header_radius"
+        app:sriv_right_top_corner_radius="@dimen/seal_userinfo_item_header_radius"
+        android:layout_width="@dimen/seal_userinfo_item_header_width"
+        android:layout_height="@dimen/seal_userinfo_item_header_height"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/seal_userinfo_item_header_margin"
+        android:layout_centerVertical="true"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/seal_userinfo_item_name_margin_left"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/seal_userinfo_item_user_portrait"
+        android:textColor="@color/seal_userinfo_item_name_text"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/iv_left_header"
+        android:textSize="@dimen/seal_userinfo_item_name_text_size" />
+
+    <cn.rongcloud.im.ui.widget.SelectableRoundedImageView
+        android:id="@+id/iv_right_header"
+        app:sriv_left_bottom_corner_radius="@dimen/seal_userinfo_item_header_radius"
+        app:sriv_left_top_corner_radius="@dimen/seal_userinfo_item_header_radius"
+        app:sriv_right_bottom_corner_radius="@dimen/seal_userinfo_item_header_radius"
+        app:sriv_right_top_corner_radius="@dimen/seal_userinfo_item_header_radius"
+        android:layout_width="@dimen/seal_userinfo_item_header_width"
+        android:layout_height="@dimen/seal_userinfo_item_header_height"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="@dimen/seal_userinfo_item_header_margin"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:scaleType="centerCrop"
+        android:visibility="visible"
+        />
+
+    <View
+        android:id="@+id/v_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_userInfo_item_divider"
+        android:layout_marginLeft="@dimen/seal_userinfo_item_header_margin"
+        android:layout_marginRight="@dimen/seal_userinfo_item_header_margin"
+        android:background="@color/seal_userinfo_item_divider"
+        android:layout_alignParentBottom="true"
+        />
+</RelativeLayout>

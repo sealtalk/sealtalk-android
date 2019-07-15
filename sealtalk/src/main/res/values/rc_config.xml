@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <!-- 设置是否支持消息撤回-->
+    <bool name="rc_enable_message_recall">true</bool>
+
+    <!-- 是否打开 @ 功能-->
+    <bool name="rc_enable_mentioned_message">true</bool>
+
+    <!-- 设置已读回执，目前仅支持单聊、群聊、讨论组 -->
+    <bool name="rc_read_receipt">true</bool>
+
+    <!-- 开启之后，用户在其他端上阅读过的消息，当前客户端会清掉该消息的未读数。目前仅支持单聊、群聊、讨论组。-->
+    <bool name="rc_enable_sync_read_status">true</bool>
+
+
+</resources>

@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: cn.rongcloud.sdk:rcsticker:2.9.17@aar">
+    <ANNOTATIONS>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-rcsticker-2.9.17.aar/b1602e3cee1c5cb0a6c7bfdafc06b388/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-rcsticker-2.9.17.aar/b1602e3cee1c5cb0a6c7bfdafc06b388/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-rcsticker-2.9.17.aar/b1602e3cee1c5cb0a6c7bfdafc06b388/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/cn.rongcloud.sdk/rcsticker/2.9.17/60afed3a1ee4661f21c51fd1cc8962bad70dc90e/rcsticker-2.9.17-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

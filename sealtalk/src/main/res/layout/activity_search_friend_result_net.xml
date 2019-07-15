@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/search_result"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="1px"
+    android:background="#fff"
+    android:orientation="horizontal">
+
+    <cn.rongcloud.im.ui.widget.SelectableRoundedImageView
+        android:id="@+id/search_header"
+        app:sriv_left_bottom_corner_radius="3dip"
+        app:sriv_left_top_corner_radius="3dip"
+        app:sriv_right_bottom_corner_radius="3dip"
+        app:sriv_right_top_corner_radius="3dip"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:layout_marginLeft="6dp"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/search_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:maxLines="1"
+        android:textColor="@color/seal_search_empty_text_color"
+        android:textSize="18sp" />
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/seal_ic_rp_arrow" />
+
+
+</LinearLayout>

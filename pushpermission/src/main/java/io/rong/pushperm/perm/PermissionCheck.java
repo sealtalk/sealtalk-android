@@ -2,7 +2,7 @@ package io.rong.pushperm.perm;
 
 import android.content.Context;
 import android.os.Build;
-import android.support.v4.app.NotificationManagerCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 /**
  * 用于权限的检查.

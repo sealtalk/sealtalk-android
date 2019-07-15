@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/seal_ic_popup_bg"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/profile_btn_detail_black_list"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/seal_main_title_popup_item_height"
+        android:drawableLeft="@drawable/profile_ic_detail_black_list"
+        android:drawablePadding="@dimen/seal_main_title_popup_item_drawable_padding"
+        android:paddingLeft="@dimen/seal_main_title_popup_item_padding"
+        android:paddingRight="@dimen/seal_main_title_popup_item_padding"
+        android:gravity="center_vertical"
+        android:background= "@null"
+        android:textColor="@color/seal_main_title_more_text_color"
+        android:textSize="@dimen/seal_main_title_item_text_size" />
+
+</LinearLayout>

@@ -1,0 +1,353 @@
+<resources>
+    <string name="app_name">SealTalk</string>
+    <string name="title_activity_main">MainActivity</string>
+    <!-- login-->
+    <string name="seal_login_text_new_user">New User</string>
+    <string name="seal_login_text_forget_password">Find Password</string>
+    <string name="seal_login_text_login">Login</string>
+    <string name="seal_login_countries_and_regions">Countries/Regions</string>
+    <string name="seal_login_password">Password</string>
+    <string name="seal_login_phone_number">Mobile Number</string>
+    <string name="seal_login_register">Register</string>
+    <string name="seal_login_code">Verification Code</string>
+    <string name="seal_login_send_code">Send a Code</string>
+    <string name="seal_login_nick_name">Nickname</string>
+    <string name="seal_login_confirm">Confirm</string>
+    <string name="seal_login_confirm_password">Confirm Password</string>
+
+    <string name="seal_login_toast_name_is_null">Nickname input cannot be empty</string>
+    <string name="seal_login_toast_name_contain_spaces">Nickname cannot contain spaces</string>
+    <string name="seal_login_toast_phone_number_is_null">Mobile number cannot be empty</string>
+    <string name="seal_login_toast_code_is_null">Verification code is null</string>
+    <string name="seal_login_toast_password_is_null">Password input cannot be empty</string>
+    <string name="seal_login_toast_password_cannot_contain_spaces">Password cannot contain spaces</string>
+    <string name="seal_login_toast_phone_or_psw_error">The mobile number or password is incorrect</string>
+    <string name="seal_login_toast_success">Login successful</string>
+    <string name="seal_login_toast_not_send_code">Not getting verification code from server</string>
+    <string name="seal_login_toast_passwords_invalid">Password must be 6-16 characters, case sensitive </string>
+    <string name="seal_login_toast_new_password_not_null">New password input cannot be empty</string>
+    <string name="seal_login_toast_confirm_password_not_null">Confirm password input cannot be empty</string>
+    <string name="seal_login_toast_passwords_do_not_match">The confirmed password is inconsistent with the new password.</string>
+    <string name="login_error_send_message_frequency">SMS sending frequency is exceeded</string>
+    <string name="login_error_captcha_overdue">The verification code is expired, please try again</string>
+    <string name="login_verification_code_error">Verification code is incorrect</string>
+
+    <string name="common_chat_room">Chatroom</string>
+    <string name="discovery_chat_room_one">Chatroom1</string>
+    <string name="discovery_chat_room_two">Chatroom2</string>
+    <string name="discovery_chat_room_three">Chatroom3</string>
+    <string name="discovery_chat_room_four">Chatroom4</string>
+    <string name="discovery_chat_room_join_failure">Joining chat room failed</string>
+    <string name="discovery_join_chat_room_error">Chat room ID is empty, please try later</string>
+
+    <string name="new_friends">New Friends</string>
+    <string name="group">Groups</string>
+    <string name="public_service">Public Accounts</string>
+    <string name="seal_search_nick_name">Nickname: </string>
+    <string name="seal_group_list_include">Include:</string>
+
+    <string name="china">China</string>
+    <string name="lang_en">EN</string>
+    <string name="lang_english">English</string>
+    <string name="lang_chs">简体中文</string>
+    <string name="seal_search">Search</string>
+    <string name="beijing">Beijing</string>
+
+
+    <string name="common_confirm">Confirm</string>
+    <string name="common_cancel">Cancel</string>
+    <string name="common_done">Done</string>
+    <string name="common_save">Save</string>
+    <string name="common_publish">Publish</string>
+    <string name="common_request_success">Sent</string>
+    <string name="common_add_successful">Added</string>
+    <string name="common_remove_successful">Removed</string>
+    <string name="common_delete_successful">Deleted</string>
+
+    <string name="common_member_count" formatted="true">%d Person(s)</string>
+
+    <string name="common_network_unavailable">Current network unavailable</string>
+    <string name="common_network_check">Please check network settings</string>
+
+    <!--Main-->
+    <string-array name="tab_names">
+        <item>Chats</item>
+        <item>Contacts</item>
+        <item>Discover</item>
+        <item>Me</item>
+    </string-array>
+
+    <string name="common_network_error_and_retry_after">Network problem, please try later</string>
+
+    <string name="seal_evaluate_evaluation">Rate</string>
+    <string name="seal_evaluate_submit_evaluation">Submit</string>
+    <string name="seal_evaluate_resolved_title">Our customer service has solved your problem?</string>
+    <string name="seal_evaluate_resolved">Resolved</string>
+    <string name="seal_evaluate_unresolved">Unsolved</string>
+    <string name="seal_evaluate_star_title">Please rate the customer service</string>
+    <string name="seal_evaluate_problem_title">What are the problems?</string>
+    <string name="seal_evaluate_title_select_must">What are the problems?(Must select)</string>
+    <string name="seal_evaluate_lable_must">Must select tag</string>
+    <string name="seal_evaluate_input_must">Must insert advise</string>
+
+    <string name="seal_conversation_remote_side_is_typing">Typing &#046;&#046;&#046;</string>
+    <string name="seal_conversation_remote_side_speaking">Speaking &#046;&#046;&#046;</string>
+    <string name="seal_conversation_title_discussion_group">Discussion Group</string>
+    <string name="seal_conversation_title_system">System Notification</string>
+    <string name="seal_conversation_title_feedback">Feedback</string>
+    <string name="seal_conversation_title_defult">Chat</string>
+
+    <string name="seal_conversation_sub_system">"System Notification"</string>
+    <string name="seal_conversation_sub_private">"My Private Chat"</string>
+    <string name="seal_conversation_sub_group">"Group"</string>
+    <string name="seal_conversation_sub_discussion">"My discussion"</string>
+    <string name="seal_conversation_sub_defult">"Chat"</string>
+    <string name="seal_conversation_read_receipt_detail">Read Receipt Detail</string>
+    <string name="seal_conversation_read_receipt_unread_persons_format">%1$d Unread</string>
+    <string name="seal_conversation_read_receipt_read_persons_format">%1$d Read</string>
+    <string name="seal_conversation_read_receipt_no_person_read">All Read</string>
+    <string name="seal_conversation_read_receipt_no_person_unread">All Unread</string>
+
+    <string name="seal_new_friend_list_no_data">No Data</string>
+    <string name="seal_new_friend_agree">Accept</string>
+    <string name="seal_new_friend_request">Sent</string>
+    <string name="seal_new_friend_ignore">Ignored</string>
+    <string name="seal_new_friend_added">Added</string>
+    <string name="seal_new_friend_deleted">Deleted</string>
+    <string name="seal_title_add_contacts">Add Contacts</string>
+    <string name="seal_title_group_chat">Create Groups</string>
+    <string name="seal_title_private_chat">Start Chat</string>
+    <!-- chat detail reference -->
+    <string name="profile_search_message">Search Chat History</string>
+    <string name="profile_message_notice">Mute Notifications</string>
+    <string name="profile_set_top">Stick On Top</string>
+    <string name="profile_clean_message">Clear Chat History</string>
+    <string name="profile_user_details">User Info</string>
+    <string name="profile_clean_private_chat_history">Confirm to clear the history?</string>
+    <string name="profile_clean_group_chat_history">Confirm to clear the group history?</string>
+    <string name="profile_clean_discussion_chat_history">Confirm to clear the discussion history?</string>
+
+    <string name="profile_all_group_member">All Group Members</string>
+    <string name="profile_group_member_online_status">Group Member Online Status</string>
+    <string name="profile_group_portrait">Group Portrait</string>
+    <string name="profile_group_name">Group Name</string>
+    <string name="profile_group_notice">Group Announcement</string>
+    <string name="profile_group_code">QR code</string>
+    <string name="profile_quit_group">Delete And Quit</string>
+    <string name="profile_dismiss_group">Dismiss And Quit</string>
+    <string name="profile_group_info">Group Info</string>
+    <string name="profile_group_total_member">Group Members</string>
+    <string name="profile_update_portrait_success">Portrait updated successfully</string>
+    <string name="profile_upload_portrait_failed">Portrait upload failed</string>
+    <string name="profile_hint_new_group_name">New Group Name</string>
+    <string name="profile_group_name_word_limit_format" formatted="true">The group name should be %d-%d words</string>
+    <string name="profile_group_name_emoji_too_short">Group name is too short</string>
+    <string name="profile_input_hint_group_notice">Please edit group announcement</string>
+    <string name="profile_group_notice_post_confirm">The announcement will notify all group members, confirm to submit?</string>
+    <string name="profile_group_notice_prefix">\@all\n</string>
+    <string name="profile_confirm_quit_group">Confirm to quit the group?</string>
+    <string name="profile_confirm_dismiss_group">Confirm to dismiss the group?</string>
+    <string name="profile_set_display_name">Setting Remarks</string>
+    <string name="profile_detail_start_chat">Start Chat</string>
+    <string name="profile_detail_start_voice">Voice Call</string>
+    <string name="profile_detail_start_video">Video Call</string>
+    <string name="profile_detail_add_friend">Add To Friend</string>
+    <string name="profile_detail_join_the_blacklist">Add to blacklist</string>
+    <string name="profile_detail_remove_from_blacklist">Remove from blacklist</string>
+    <string name="profile_add_friend_hint">Friend adding info</string>
+    <string name="profile_invite_friend_description_has_group_format" formatted="true">I am %s from the group of %s</string>
+    <string name="profile_invite_friend_description_format" formatted="true">I am %s</string>
+    <string name="profile_group_save_to_contact">Save to Contacts</string>
+    <string name="group_list_not_group_save_to_contact">No group saved in contact</string>
+
+    <string name="profile_alias">Remark Name</string>
+    <string name="profile_alias_info">Remark Info</string>
+
+    <string name="profile_group_not_exist">group not exist</string>
+    <string name="profile_group_has_dismissed">Group has been dismissed</string>
+    <string name="profile_group_has_members_format">%1$d&#160;member(s) group</string>
+
+    <string name="profile_save_picture_at">Picture saved success</string>
+    <string name="profile_join_the_group_chat">Join the group chat</string>
+
+    <string name="seal_main_title_start_chat">Start Chat</string>
+    <string name="seal_main_title_create_group">Create Groups</string>
+    <string name="seal_main_title_add_friends">Add Contacts</string>
+
+    <string name="seal_main_mine_set_account">Account Settings</string>
+    <string name="seal_main_mine_setting_language">Language</string>
+    <string name="seal_main_mine_my_wallet">My Wallet</string>
+    <string name="seal_main_mine_feedback">Feedback</string>
+    <string name="seal_main_mine_about">About SealTalk</string>
+    <string name="seal_main_mine_customer_xn">Xiaoneng Customer Service</string>
+    <string name="seal_main_mine_online_custom_service">Online customer service</string>
+    <string name="seal_userinfo_item_user_portrait">User Portrait</string>
+    <string name="seal_mine_set_account_change_password">Change Password</string>
+    <string name="seal_mine_set_account_privacy">Private</string>
+    <string name="seal_mine_set_account_new_message_show">New Message Notification</string>
+    <string name="seal_mine_set_account_clear_cache">Clear Cache</string>
+    <string name="seal_mine_set_account_logout">Logout</string>
+    <string name="seal_mine_set_account_push_language">Setting Push To Chinese</string>
+    <string name="seal_mine_set_account_push_content">Display Push Content</string>
+    <string name="seal_mine_set_account_push_message">Receive Push Message</string>
+    <string name="seal_mine_change_language">Language</string>
+    <string name="seal_mine_about_update_log">Update Log </string>
+    <string name="seal_mine_about_function_introduce">Feature Introduction</string>
+    <string name="seal_mine_about_rongcloud_web">Official Website</string>
+    <string name="seal_mine_about_seal_talk_version">SealTalk Version</string>
+    <string name="seal_mine_about_sdk_version">SDK Version</string>
+    <string name="seal_mine_about_close_debug_mode">Turn Off Debug Mode</string>
+    <string name="seal_mine_about_user_online_status">Setting User Online Status</string>
+    <string name="common_set_failed">Set failed</string>
+    <string name="common_clear_success">Cleared</string>
+    <string name="common_clear_failure">Clear failed</string>
+    <string name="seal_mine_my_account_portrait">Portrait</string>
+    <string name="seal_mine_my_account_nickname">Nickname</string>
+    <string name="seal_mine_my_account_phone_number">Mobile Number</string>
+    <string name="seal_mine_my_account">My Account</string>
+    <string name="seal_select_group_member">Select Members</string>
+    <string name="seal_select_friend">Select Friends</string>
+    <string name="seal_select_confirm">Confirm</string>
+    <string name="seal_update_name_text">Good names make it easier for your friends to remember</string>
+    <string name="seal_update_name">Change Nickname</string>
+    <string name="seal_update_name_save_update">Save</string>
+    <string name="seal_update_name_toast_nick_name_can_not_empty">Nickname input cannot be empty</string>
+    <string name="seal_update_name_toast_nick_name_change_success">Nickname is changed successful</string>
+    <string name="seal_dialog_select_picture_take_picture">Take Picture</string>
+    <string name="seal_dialog_select_picture_album">My Album</string>
+    <string name="seal_dialog_select_picture_cancel">Cancel</string>
+    <string name="seal_ac_search_friend">Contacts</string>
+    <string name="seal_ac_search_group">Groups</string>
+    <string name="seal_ac_search_chatting_records">Chat History</string>
+    <string name="seal_ac_search_more_friend">See More Contacts</string>
+    <string name="seal_ac_search_more_group">See More Groups</string>
+    <string name="seal_ac_search_more_chatting_records">See More Chat History</string>
+    <string name="seal_search_item_chat_records">Found %d related chat histories </string>
+    <string name="msg_reference_link">[link]</string>
+    <string name="msg_reference_file">[file]</string>
+
+    <string name="seal_update_password_current_password">Old Password</string>
+    <string name="seal_update_password_password_hint">6-16 characters, case sensitive</string>
+    <string name="seal_update_password_confirm_password">Confirm Password</string>
+    <string name="seal_update_password_new_password">New Password</string>
+    <string name="seal_update_password_save">Save</string>
+    <string name="seal_update_password_toast_password_not_equal">The confirmed password is inconsistent with the new password</string>
+    <string name="seal_update_password_toast_password_old_equal_new">The new password shall be same as the old password</string>
+    <string name="seal_set_account_dialog_toast_clear_cache_clear_success">Cleared</string>
+    <string name="seal_set_account_dialog_clear_cache_message">Do you want to clear cache?</string>
+    <string name="seal_privacy_blacklist_is_empty">Blacklist is empty</string>
+    <string name="seal_privacy_blacklist">BlackList</string>
+
+    <string name="msg_contact_notification_someone_agree_your_request">has accepted to your friend request.</string>
+    <string name="msg_contact_notification_agree_your_request">Receiptant has accepted to you friend request.</string>
+    <string name="msg_dialog_item_message_delete">Delete Message</string>
+    <string name="seal_search_chatting_records">See More Chat History</string>
+    <string name="seal_search_more_friend">See More Contacts</string>
+    <string name="seal_search_more_group">See More Groups</string>
+    <string name="seal_search_more_chatting_records">See More Chat History</string>
+
+
+    <string name="seal_new_message_remind_new_message">New Message Notification</string>
+    <string name="seal_new_message_remind_message_show_details">Notification Shows Details</string>
+    <string name="seal_new_message_donot_disturb_new_message_notice">Turn on Mute Notification</string>
+    <string name="seal_new_message_donot_disturb_notification_information">Once enabled, it will not ring or vibrate when a new message is received within the set time  period.</string>
+    <string name="seal_new_message_donot_disturb_start">Start Time</string>
+    <string name="seal_new_message_donot_disturb_end">End Time</string>
+    <string name="seal_new_message_donot_disturb">Mute Notifications</string>
+
+
+    <string name="seal_search_empty">Not related to content of %s </string>
+    <string name="seal_main_chat_tab_more_read_message">...</string>
+    <string name="seal_main_toast_unread_clear_success">Cleared</string>
+    <string name="seal_public_account_information">Public account Info</string>
+    <string name="seal_member_mention_all_member">All</string>
+
+    <string name="seal_search_phone_number">Enter mobile (i.e.): (86)137XXXXX</string>
+    <string name="seal_add_friend">Add To Friend</string>
+    <string name="seal_add_text">Friend adding info</string>
+    <string name="seal_inivte_firend_descprtion_format" formatted="true">I am %s</string>
+    <string name="seal_account_not_exist">User does not exist.</string>
+    <string name="seal_quest_failed_error_code">Request failed, error code:%d</string>
+    <string name="zxing_msg_camera_framework_bug">Sorry, the Android camera encountered a problem. You may need to restart the device.</string>
+    <string name="zxing_distinguish_picture">Identify the Qrcode from the image</string>
+    <string name="zxing_qr_can_not_recognized">The QR code can’t be recognized</string>
+
+    <string name="seal_mine_set_account_dialog_logout_message">Do you want to log out?</string>
+    <string name="seal_download_app_browser_download">Open By Browser</string>
+    <string name="seal_download_app_local_download">Local Download</string>
+    <string name="seal_forward_message">Forward</string>
+    <string name="seal_not_support_forward">Unable to forward audio,payment messages,failed messages,and other special messages</string>
+    <string name="seal_not_support_forward_pic">Unable to forward failed messages</string>
+    <string name="seal_select_forward_contact_multi">Multi-Select</string>
+    <string name="seal_select_forward_contact_single">Single-Select</string>
+    <string name="seal_group_manager_set_manager">Set up group management</string>
+    <string name="seal_group_manager_transfer">Group admin transfer</string>
+    <string name="seal_group_detail_group_manager">Group management/admin</string>
+    <string name="seal_group_management_group_owner">Group holder</string>
+    <string name="seal_group_management_group_managements">Group admin</string>
+    <string name="seal_group_management_add_group_managements">Add group admin</string>
+    <string name="seal_group_management_dialog_delete_content"><![CDATA[Do you want to remove <font color="#0195ff">%1$s</font> from the group admin list]]> </string>
+
+    <string name="seal_select_forward_create_new_chat">Create a New Chat</string>
+    <string name="seal_select_forward_select_group">Select a Group Chat</string>
+    <string name="seal_select_forward_message_recent_chat">Recent Chats</string>
+    <string name="seal_selected_contact_title">Send to:</string>
+    <string name="seal_multi_selected_contact_title">One-by-One Forward:</string>
+    <string name="seal_group_tag_all">All</string>
+    <string name="seal_group_tag_company">Corp.</string>
+    <string name="seal_group_administrator">Group Owner </string>
+    <string name="seal_send">Send</string>
+    <string name="seal_group_manager_transfer_select_new_group_owner">Select the new group holder</string>
+    <string name="seal_group_manager_transfer_group_owner_dialog_content"><![CDATA[Are you sure to select <font color="#0195ff">%1$s</font> as the new group holder and you will give up the identity automatically]]></string>
+    <string name="seal_select_forward_more_contact">More Contacts</string>
+    <string name="seal_selected_contacts_count">%d people</string>
+    <string name="seal_selected_groups_count">%d people、%d group(s)</string>
+    <string name="seal_selected_only_group">%d group(s)</string>
+    <string name="seal_forward__message_success">Sent successfully</string>
+    <string name="seal_select_forward_message_defeat">Send failed</string>
+    <!-- TODO 以下部分需要翻译英文 -->
+    <string name="profile_qrcode_group_tips">Scan the group QR code to join the group immediately</string>
+    <string name="profile_qrcode_private_tips">Scan the QR code to add me as a friend</string>
+    <string name="profile_qrcode_save_to_phone">Save to mobile/phone</string>
+    <string name="profile_group_qrcode">Group QR code</string>
+    <string name="seal_main_mine_qrcode">My QR code</string>
+    <string name="profile_join_group">Join the group</string>
+    <string name="profile_delete_from_contact">Delete contacts</string>
+    <string name="profile_add_to_blacklist_tips">You will not be able to receive the message and delete the chat history with the contact after added the contacts to blacklist.</string>
+    <string name="profile_remove_from_contact_tips_html_format" formatted="true"><Data><![CDATA[Remove <font color="#368AE8">%1$s</font> from the contacts list and clear all the chat history at the same time]]></Data></string>
+    <string name="seal_group_action_transfer_group_owner">%1$s has became the group holder</string>
+    <string name="profile_group_manager">Group admin</string>
+    <string name="profile_group_notice_tips">After the release, the group announcement will be sent as a system message, visible to all members.</string>
+    <string name="profile_group_notice_update_time_format" formatted="true">Release time：%s</string>
+    <string name="profile_group_notice_clear_confirm">Confirm to clear the group announcement?</string>
+    <string name="profile_group_has_no_notice">No group announcement</string>
+    <string name="profile_group_notice_not_changed">Group announcement has not been modified</string>
+    <string name="seal_group_manager_select_managements_dialog_content"><![CDATA[Confirm to set <font color="#0195ff">%1$s</font> as a group admin?]]></string>
+    <string name="seal_group_manager_confirm">Confirm</string>
+    <string name="seal_group_manager_set_manager_toast_set_management_success">Successful</string>
+    <string name="seal_group_manager_set_manager_toast_set_management_failed">Failed</string>
+    <string name="seal_group_action_set_manager">Group holder sets %1$s as a group admin</string>
+    <string name="seal_group_action_remove_manager">Group holder has removed %1$s from a group admin</string>
+    <string name="seal_qrcode_jump_without_login">No user information, please make sure register first</string>
+    <string name="seal_mine_about_toast_app_downloading">Downloading now….</string>
+    <string name="seal_mine_about_notifi_loading">Now is downloading the latest version….</string>
+    <string name="seal_mine_about_notifi_title">New version download</string>
+    <string name="seal_group_manager_toast_remove_manager_success">Deleted</string>
+    <string name="seal_group_manager_toast_remove_manager_failed">Failed to delete</string>
+    <string name="seal_loading_dialog_logining">logging in</string>
+    <string name="seal_login_toast_send_code_success">Sent</string>
+    <string name="seal_login_toast_send_code_failed">Failed to send verification code, please try again later</string>
+    <string name="login_register_phone_already_existed">Has been registered</string>
+    <string name="seal_login_toast_no_register">Has not register</string>
+    <string name="seal_login_register_registering">Registering...</string>
+    <string name="seal_login_register_toast_register_success">Register success</string>
+    <string name="seal_login_reset_password_toast_reset_password_success">Reset password success</string>
+    <string name="seal_login_reset_password_loading_password">Resetting...</string>
+    <string name="seal_group_management_toast_set_new_group_onwer_success">Success</string>
+    <string name="seal_group_management_toast_set_new_group_onwer_failed">Failed</string>
+    <string name="seal_group_management_toast_management_already_reached_max_size">Group admin member can not over %1$d </string>
+    <string name="seal_group_management_managements">Group admin</string>
+    <string name="profile_group_notice_content_over_max_length">Over max length</string>
+    <string name="seal_forward_selected_detail_comfirm">确定</string>
+    <string name="seal_forward_selected_detail_title">已选择联系人</string>
+</resources>

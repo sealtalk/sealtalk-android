@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_is_null"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/seal_new_friend_list_no_data"
+        android:textColor="@color/seal_new_friends_is_null_text"
+        android:visibility="gone" />
+
+    <ListView
+        android:id="@+id/lv_new_friends_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/seal_new_friends_divider"
+        android:dividerHeight="@dimen/seal_new_friends_divider_height" />
+
+</FrameLayout>

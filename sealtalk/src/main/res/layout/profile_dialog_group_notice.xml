@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/common_dialog_width"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/common_dialog_bg"
+    android:minHeight="@dimen/common_dialog_min_height"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minHeight="@dimen/common_dialog_common_min_height"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/profile_group_notice"
+            android:textColor="@color/default_main_text"
+            android:layout_marginTop="8dp"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/profile_tv_dialog_group_notice_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            android:paddingLeft="@dimen/common_dialog_text_margin_left"
+            android:paddingRight="@dimen/common_dialog_text_margin_right"
+            android:textColor="@color/default_main_text"
+            android:textSize="@dimen/common_dialog_text_size"
+            tools:text="暂时没有公告"
+            />
+
+        <TextView
+            android:id="@+id/profile_tv_dialog_group_notice_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="发布时间:2019-12-12 10:45:12"
+            android:textColor="@color/default_sub_text"
+            android:layout_margin="8dp"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_dialog_line_width"
+        android:background="@color/common_dialog_base_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_dialog_button_height"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/dialog_btn_positive"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/common_dialog_single_positive_seletor"
+            android:text="@string/common_confirm"
+            android:textColor="@color/default_clickable_text"
+            android:textSize="@dimen/common_dialog_text_size"
+            />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/seal_corner_popup_dialog_style"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_dialog_forward_item_title_height"
+        android:layout_marginLeft="@dimen/seal_dialog_forward_item_margin_left"
+        android:layout_marginTop="@dimen/seal_dialog_forward_item_margin_top"
+        android:gravity="center_vertical"
+        android:text="@string/seal_selected_contact_title"
+        android:textSize="@dimen/seal_dialog_forward_item_title_text_size" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/seal_dialog_forward_item_container_margin"
+        android:layout_marginTop="@dimen/seal_dialog_forward_item_container_margin"
+        >
+        <HorizontalScrollView
+            android:id="@+id/hsv_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            >
+
+            <LinearLayout
+                android:id="@+id/ll_selected_contact_container"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/seal_dialog_forward_item_scroll_height"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingRight="@dimen/seal_dialog_forward_item_scroll_padding" />
+        </HorizontalScrollView>
+
+        <cn.rongcloud.im.ui.view.UserInfoItemView
+            android:id="@+id/uiv_selected_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            >
+
+        </cn.rongcloud.im.ui.view.UserInfoItemView>
+
+    </FrameLayout>
+
+    <View
+        style="@style/seal_horizontal_light_thin_divider"
+        android:layout_width="match_parent" />
+
+    <TextView
+        android:id="@+id/tv_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/seal_dialog_forward_item_margin_left"
+        android:lines="1"
+        android:layout_marginRight="@dimen/seal_dialog_forward_item_margin_left"
+        android:layout_marginBottom="@dimen/seal_dialog_forward_item_container_margin"
+        android:layout_marginTop="@dimen/seal_dialog_forward_item_container_margin"
+        />
+
+</LinearLayout>

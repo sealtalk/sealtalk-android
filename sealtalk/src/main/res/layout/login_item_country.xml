@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:descendantFocusability="blocksDescendants"
+    android:paddingLeft="@dimen/seal_login_select_country_padding"
+    android:paddingRight="@dimen/seal_login_select_country_padding">
+
+    <LinearLayout
+        android:id="@+id/ll_firstchar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/seal_login_select_country_first_padding_top"
+        android:paddingBottom="@dimen/seal_login_select_country_first_padding_bottom"
+        >
+
+        <TextView
+            android:id="@+id/tv_char"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="A"
+            android:textColor="@color/color_gray_text"
+            android:textSize="@dimen/seal_login_select_country_tv_char_text_size" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/color_divider_line" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/ll_country_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/seal_login_select_country_padding_top"
+        android:layout_marginTop="@dimen/seal_login_select_country_padding_bottom"
+        >
+
+        <TextView
+            android:id="@+id/tv_country"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@string/china"
+            android:textColor="@color/seal_select_country_text_color"
+            android:textSize="@dimen/seal_login_select_country_text_sizre" />
+
+        <TextView
+            android:id="@+id/tv_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/seal_login_select_country_tv_code_padding_right"
+            android:layout_alignParentRight="true"
+            tools:text="+86"
+            android:textColor="@color/seal_select_country_text_color"
+            android:textSize="@dimen/seal_login_select_country_tv_code_text_size"
+            />
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_divider_line" />
+
+</LinearLayout>

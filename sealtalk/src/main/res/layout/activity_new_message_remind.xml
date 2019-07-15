@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_remind"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_new_message_remind_item_height"
+        android:layout_marginTop="@dimen/seal_new_message_remind_item_margin"
+        app:item_switch="true"
+        app:item_divider="true"
+        app:item_content="@string/seal_new_message_remind_new_message"
+        >
+
+    </cn.rongcloud.im.ui.view.SettingItemView>
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_notice"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_new_message_remind_item_height"
+        app:item_content="@string/seal_new_message_remind_message_show_details"
+        >
+    </cn.rongcloud.im.ui.view.SettingItemView>
+</LinearLayout>

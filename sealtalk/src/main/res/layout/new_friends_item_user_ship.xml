@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
+    <cn.rongcloud.im.ui.widget.SelectableRoundedImageView
+        android:id="@+id/iv_new_header"
+        android:layout_width="@dimen/seal_new_friend_header_width"
+        android:layout_height="@dimen/seal_new_friend_header_height"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="@dimen/seal_new_friend_header_margin_bottom"
+        android:layout_marginLeft="@dimen/seal_new_friend_header_margin_left"
+        android:layout_marginTop="@dimen/seal_new_friend_header_margin_top"
+        android:scaleType="centerCrop"
+        android:src="@drawable/rc_default_portrait"
+        app:sriv_left_bottom_corner_radius="@dimen/seal_new_friend_header_radius"
+        app:sriv_left_top_corner_radius="@dimen/seal_new_friend_header_radius"
+        app:sriv_right_bottom_corner_radius="@dimen/seal_new_friend_header_radius"
+        app:sriv_right_top_corner_radius="@dimen/seal_new_friend_header_radius" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/seal_new_friend_content_margin_left"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/seal_new_friend_content_name_margin"
+            android:maxLines="1"
+            android:textColor="@color/seal_new_friends_name_text"
+            android:textSize="@dimen/seal_new_friend_content_name_text_size" />
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/seal_new_friend_content_message_margin"
+            android:maxLines="1"
+            android:textSize="@dimen/seal_new_friend_content_message_text_size"
+            android:visibility="gone" />
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="@dimen/seal_new_friend_status_margin_right"
+        android:paddingBottom="@dimen/seal_new_friend_status_padding_bottom"
+        android:paddingLeft="@dimen/seal_new_friend_status_padding_left"
+        android:paddingRight="@dimen/seal_new_friend_status_padding_right"
+        android:paddingTop="@dimen/seal_new_friend_status_padding_top"
+        android:text="@string/seal_new_friend_added"
+        android:textColor="@color/seal_new_friends_status_text"
+        android:textSize="@dimen/seal_new_friend_status_text_size" />
+
+</LinearLayout>

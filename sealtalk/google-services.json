@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "396364826160",
+    "firebase_url": "https://sealtalk-4be99.firebaseio.com",
+    "project_id": "sealtalk-4be99",
+    "storage_bucket": "sealtalk-4be99.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396364826160:android:a10a4a74ea61b328",
+        "android_client_info": {
+          "package_name": "cn.rongcloud.im"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "396364826160-f7j0826mqtki71283p5jagirh4i0spe7.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "396364826160-nvbu6aesghmbj5op6uvt9uvp7em8ajjd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9oaYejQ4_Cit4-u8RSkKCjAmsZ0HtU6E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_contacts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <TextView
+        android:id="@+id/tv_group_dialog"
+        android:layout_width="@dimen/seal_contact_fragment_dialog_width"
+        android:layout_height="@dimen/seal_contact_fragment_dialog_height"
+        android:layout_gravity="center"
+        android:background="@drawable/rc_bg_toast"
+        android:gravity="center"
+        android:textColor="@color/seal_contact_dialog_text_color"
+        android:textSize="30.0dip"
+        android:visibility="gone" />
+
+    <cn.rongcloud.im.ui.widget.SideBar
+        android:id="@+id/sv_sidebar"
+        android:layout_width="@dimen/seal_contact_fragment_bar_width"
+        android:layout_height="match_parent"
+        android:layout_gravity="right|center" />
+</FrameLayout>

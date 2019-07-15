@@ -1,0 +1,1082 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
+  </component>
+  <component name="AvailableLibraryUpdateStorage">
+    <last-search-timestamp>1562746023610</last-search-timestamp>
+  </component>
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/activity/GroupListActivity.java" description="private static final String TAG = &quot;GroupListActivi..." line="28" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="efb19a0e-a5c1-4115-bb6a-3c6a72c67ff4" name="Default Changelist" comment="通知" />
+    <ignored path="$PROJECT_DIR$/.idea/shelf/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="sealtalk-android" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="sealtalk-android" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/activity/ForwardSelectedDetailActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="80">
+              <caret line="108" column="89" selection-start-line="108" selection-start-column="89" selection-end-line="108" selection-end-column="89" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/fragment/ForwardSelectedDetailFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="155">
+              <caret line="22" column="34" selection-start-line="22" selection-start-column="34" selection-end-line="22" selection-end-column="34" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/ForwardSelectedDetailViewModel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="271">
+              <caret line="50" column="54" selection-start-line="50" selection-start-column="54" selection-end-line="50" selection-end-column="54" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/CommonListBaseViewModel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="163">
+              <caret line="188" selection-start-line="188" selection-end-line="188" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/ForwardSelectedViewHolder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="398">
+              <caret line="37" column="45" selection-start-line="37" selection-start-column="45" selection-end-line="37" selection-end-column="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="21" column="37" lean-forward="true" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/GroupDetailViewModel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1118">
+              <caret line="34" column="13" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/CommonFriendItemViewHolder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="125">
+              <caret line="19" selection-start-line="19" selection-end-line="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/CommonGroupItemViewHolder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="685">
+              <caret line="74" column="56" selection-start-line="74" selection-start-column="50" selection-end-line="74" selection-end-column="56" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/fragment/ListWithSidebarBaseFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="248">
+              <caret line="79" column="13" lean-forward="true" selection-start-line="79" selection-start-column="13" selection-end-line="79" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="valueResourceFile" />
+        <option value="resourceFile" />
+        <option value="layoutResourceFile_vertical" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>showForwardDialog</find>
+      <find>dialog</find>
+      <find>onA</find>
+      <find>listener</find>
+      <find>showTransferToGroupDialog</find>
+      <find>firstCharacter</find>
+      <find>convertFriends</find>
+      <find>selected</find>
+      <find>update</find>
+      <find>ForwardA</find>
+      <find>profile_siv_detail_alias</find>
+      <find>memberList</find>
+      <find>initP</find>
+      <find>createGroupViewHolder</find>
+      <find>ForwardTitleViewHolder</find>
+      <find>createFunViewHolder</find>
+      <find>ForwardCheckPrivateViewHolder</find>
+      <find>itemResId</find>
+      <find>ForwardCheckGroupViewHolder</find>
+      <find>conversationLiveData</find>
+      <find>getFunctionList</find>
+      <find>tv_detail</find>
+      <find>friendsLiveData</find>
+      <find>getFunctionIndex</find>
+      <find>evaluateList</find>
+      <find>showEvaluateDialog</find>
+      <find>currentEvaluate</find>
+      <find>forwardSuccessLiveData</find>
+      <find>lablesAdapter</find>
+      <find>onCreate</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/ForwardCheckGroupViewHolder.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/res/layout/forward_fragment_friend_fun_item.xml" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/fragment/MainContactsListFragment.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/models/FunctionInfo.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/MainContactsListFragmentViewModel.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/res/layout/item_common_fun.xml" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/ConversationListBaseViewModel.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/fragment/ConversationFragmentEx.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/sp/UserConfigCache.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/activity/NewMessageRemindActivity.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/NewMessageViewModel.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/activity/MessageDonotDisturbSettingActivity.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/activity/ForwardActivity.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/ForwardActivityViewModel.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/res/layout/dialog_bottom_evaluate.xml" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/dialog/EvaluateBottomDialog.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/res/values/dimens.xml" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/res/layout/main_fragment_me.xml" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/res/layout/login_fragment_find_password.xml" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/res/layout/login_fragment_register.xml" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/MainContactsListViewModel.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/MainViewModel.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/BaseActivityViewModel.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/activity/MainActivity.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/BaseActivity.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/im/IMManager.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/fragment/CommonListFragment.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/ListWithSideBarBaseAdapter.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/fragment/ListBaseFragment.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/view/UserInfoItemView.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/BaseItemViewHolder.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/CommonFunItemViewHolder.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/CommonFriendItemViewHolder.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/CommonTextItemViewHolder.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/CommonGroupItemViewHolder.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/ViewHolderFactory.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/fragment/ListWithDelFragment.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/activity/ForwardSelectedDetailActivity1.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/res/layout/forward_activity_selected_detail1.xml" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/res/layout/forward_activity_selected_detail.xml" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/fragment/ForwardSelectedDetailFragment.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/activity/ForwardSelectedDetailActivity.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/ForwardSelectedDetailViewModel.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/qrcode/QRCodeManager.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/fragment/CommonListBaseFragment.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/CommonListAdapter.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/models/ListItemModel.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/CommonListBaseViewModel.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/fragment/ListWithSidebarBaseFragment.java" />
+        <option value="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/ForwardSelectedViewHolder.java" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="217" />
+    <option name="y" value="34" />
+    <option name="width" value="1440" />
+    <option name="height" value="813" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="sealtalk-android" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sealtalk-android" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="sealtalk-android" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sealtalk-android" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="sealtalk" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="sealtalk-android" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DEBUGGABLE_DEVICE" value="360-1605_a01-52a718bb" />
+    <property name="DEBUGGABLE_PROCESS" value="cn.rongcloud.im" />
+    <property name="DEBUGGER_ID" value="Auto" />
+    <property name="SHOW_ALL_PROCESSES" value="false" />
+    <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
+    <property name="device.picker.selection" value="52a718bb" />
+    <property name="extract.method.default.visibility" value="protected" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Build Variants" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
+    <property name="show.do.not.ask.upgrade.gradle.plugin" value="3.3.2" />
+    <property name="sync.plugin.last.upgrade.timestamp" value="1561355190615" />
+  </component>
+  <component name="PsdUISettings">
+    <option name="LAST_EDITED_BUILD_TYPE" value="release" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/sealtalk/src/main/res/layout" />
+      <recent name="$PROJECT_DIR$/seal" />
+      <recent name="$PROJECT_DIR$/sealtalk" />
+      <recent name="$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im" />
+      <recent name="$PROJECT_DIR$/sealtalk/src/main/java" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="cn.rongcloud.im.ui.adapter" />
+      <recent name="cn.rongcloud.im.ui.adapter.item" />
+      <recent name="cn.rongcloud.im.viewmodel" />
+      <recent name="cn.rongcloud.im.ui.activity" />
+      <recent name="cn.rongcloud.im.ui.dialog" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/sealtalk/src/main/res/layout" />
+      <recent name="$PROJECT_DIR$/sealtalk/src/main/res/drawable" />
+      <recent name="$PROJECT_DIR$/sealtalk/src/main/res/drawable-xhdpi" />
+      <recent name="$PROJECT_DIR$/seal/src/main/res" />
+      <recent name="$PROJECT_DIR$/seal/src/main/res/drawable-xhdpi" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="cn.rongcloud.im.ui.activity" />
+      <recent name="cn.rongcloud.im.ui.adapter.viewholders" />
+      <recent name="cn.rongcloud.im.ui.adapter.models" />
+      <recent name="cn.rongcloud.im.viewmodel" />
+      <recent name="cn.rongcloud.im.ui.fragment" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="cn.rongcloud.im.ui.adapter.viewholders" />
+      <recent name="cn.rongcloud.im.viewmodel" />
+      <recent name="cn.rongcloud.im.ui.activity" />
+      <recent name="cn.rongcloud.im" />
+      <recent name="cn.rongcloud.im.ui.adapter" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Android App.sealtalk">
+    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="seal" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="seal" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="sealtalk" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="sealtalk" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="efb19a0e-a5c1-4115-bb6a-3c6a72c67ff4" name="Default Changelist" comment="" />
+      <created>1559613569927</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1559613569927</updated>
+    </task>
+    <task id="LOCAL-00001" summary="通知">
+      <created>1560309536650</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1560309536650</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.79843444" visible="true" weight="0.3018598" />
+      <window_info id="Structure" order="2" sideWeight="0.5014006" side_tool="true" weight="0.33261803" />
+      <window_info id="Favorites" order="3" sideWeight="0.5014006" side_tool="true" weight="0.33261803" />
+      <window_info id="Build Variants" order="4" sideWeight="0.20156556" side_tool="true" weight="0.31402004" />
+      <window_info id="Image Layers" order="5" />
+      <window_info id="Designer" order="6" />
+      <window_info id="Resources Explorer" order="7" />
+      <window_info id="Capture Tool" order="8" />
+      <window_info anchor="bottom" id="Run" order="0" sideWeight="0.49928468" weight="0.49098474" />
+      <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.7181688" weight="0.4566265" />
+      <window_info anchor="bottom" id="TODO" order="2" weight="0.3293011" />
+      <window_info anchor="bottom" id="Find" order="3" sideWeight="0.58154505" weight="0.30361447" />
+      <window_info anchor="bottom" id="Terminal" order="4" />
+      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.12517883" side_tool="true" weight="0.38068965" />
+      <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.8748212" weight="0.5987952" />
+      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.48969072" weight="0.23012048" />
+      <window_info anchor="bottom" id="Debug" order="8" sideWeight="0.81885123" visible="true" weight="0.13493976" />
+      <window_info anchor="bottom" id="Android Profiler" order="9" />
+      <window_info anchor="bottom" id="Messages" order="10" />
+      <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" weight="0.3297568" />
+      <window_info anchor="right" id="Capture Analysis" order="1" />
+      <window_info anchor="right" id="Gradle" order="2" weight="0.3297568" />
+      <window_info anchor="right" id="Theme Preview" order="3" />
+      <window_info anchor="right" id="Preview" order="4" weight="0.18168813" />
+      <window_info anchor="right" id="Palette&#9;" order="5" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.79843444" visible="true" weight="0.021459227" />
+      <window_info id="Structure" order="2" sideWeight="0.5014006" side_tool="true" weight="0.33261803" />
+      <window_info id="Favorites" order="3" sideWeight="0.5014006" side_tool="true" weight="0.33261803" />
+      <window_info id="Build Variants" order="4" sideWeight="0.20156556" side_tool="true" weight="0.31402004" />
+      <window_info id="Image Layers" order="5" />
+      <window_info id="Designer" order="6" />
+      <window_info id="Resources Explorer" order="7" />
+      <window_info id="Capture Tool" order="8" />
+      <window_info anchor="bottom" id="Run" order="0" sideWeight="0.49928468" weight="0.7192771" />
+      <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.7181688" weight="0.5481928" />
+      <window_info anchor="bottom" id="TODO" order="2" weight="0.3293011" />
+      <window_info anchor="bottom" id="Find" order="3" sideWeight="0.58154505" weight="0.21655172" />
+      <window_info anchor="bottom" id="Terminal" order="4" />
+      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.12517883" side_tool="true" visible="true" weight="0.38068965" />
+      <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.8748212" visible="true" weight="0.38068965" />
+      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.48969072" weight="0.094444446" />
+      <window_info anchor="bottom" id="Debug" order="8" sideWeight="0.81885123" weight="0.17083333" />
+      <window_info anchor="bottom" id="Android Profiler" order="9" />
+      <window_info anchor="bottom" id="Messages" order="10" />
+      <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
+      <window_info anchor="right" id="Capture Analysis" order="1" />
+      <window_info anchor="right" id="Gradle" order="2" />
+      <window_info anchor="right" id="Theme Preview" order="3" />
+      <window_info anchor="right" id="Preview" order="4" weight="0.14735337" />
+      <window_info anchor="right" id="Palette&#9;" order="5" />
+    </layout-to-restore>
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="通知" />
+    <option name="LAST_COMMIT_MESSAGE" value="通知" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/qrcode/QRCodeManager.java</url>
+          <line>136</line>
+          <properties />
+          <option name="timeStamp" value="368" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/qrcode/SealQrCodeUISelector.java</url>
+          <line>45</line>
+          <properties />
+          <option name="timeStamp" value="369" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/ForwardSelectedViewHolder.java</url>
+          <line>38</line>
+          <properties />
+          <option name="timeStamp" value="370" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/CommonListBaseViewModel.java</url>
+          <line>186</line>
+          <properties />
+          <option name="timeStamp" value="371" />
+        </line-breakpoint>
+      </breakpoints>
+      <breakpoints-dialog>
+        <breakpoints-dialog>
+          <selected-grouping-rules>
+            <grouping-rule id="XBreakpointGroupingByPackageRule" />
+          </selected-grouping-rules>
+        </breakpoints-dialog>
+      </breakpoints-dialog>
+    </breakpoint-manager>
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="watch">
+      <expression>
+        <expression-string>i</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>userDao.updateNameAndPortrait()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+    <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>tmpList=new ArrayList&lt;&gt;()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/SelectSingleViewModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/fragment/SelectSingleFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="12" column="56" lean-forward="true" selection-start-line="12" selection-start-column="56" selection-end-line="12" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/fragment/BaseContactFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="12" column="32" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/fragment/BaseFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="17" column="48" selection-start-line="17" selection-start-column="48" selection-end-line="17" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/fragment/ListBaseFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="87">
+          <caret line="21" column="22" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
+          <folding>
+            <element signature="e#1056#1057#0" expanded="true" />
+            <element signature="e#1084#1085#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.fragment/fragment/1.1.0-beta01/7d14599c398aecc07b40608a306a161463124337/fragment-1.1.0-beta01-sources.jar!/androidx/fragment/app/Fragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1535">
+          <caret line="94" column="13" selection-start-line="94" selection-start-column="13" selection-end-line="94" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/ListWithSideBarBaseAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="14" column="112" selection-start-line="14" selection-start-column="112" selection-end-line="14" selection-end-column="112" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/view/UserInfoItemView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2">
+          <caret line="46" column="5" selection-start-line="46" selection-start-column="5" selection-end-line="46" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/CommonTextItemViewHolder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/CommonFunItemViewHolder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="279">
+          <caret line="35" column="4" selection-start-line="35" selection-start-column="4" selection-end-line="38" selection-end-column="5" />
+          <folding>
+            <element signature="e#1209#1210#0" expanded="true" />
+            <element signature="e#1249#1250#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/BaseItemViewHolder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="14" column="7" selection-start-line="12" selection-start-column="6" selection-end-line="14" selection-end-column="7" />
+          <folding>
+            <element signature="e#297#298#0" expanded="true" />
+            <element signature="e#328#329#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/BlackListAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/res/layout/item_common_group.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/res/layout/item_common_conversation.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/CheckableBaseViewHolder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/ForwardCheckViewHolder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/ForwardSearchFriendViewHolder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="59">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/ConversationViewModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2962">
+          <caret line="54" selection-start-line="54" selection-end-line="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/fragment/ForwardMultiFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="198" column="8" selection-start-line="198" selection-start-column="8" selection-end-line="198" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/res/layout/forward_activity_selected_detail.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="38" selection-start-column="38" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/res/layout/forward_activity_selected_detail1.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="15" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/activity/ForwardSelectedDetailActivity1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="137" selection-start-line="137" selection-end-line="137" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/activity/SealPicturePagerActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="88" column="67" selection-start-line="88" selection-start-column="67" selection-end-line="88" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/qrcode/SealQrCodeUISelector.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="47" column="56" selection-start-line="47" selection-start-column="50" selection-end-line="47" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-28/android/net/Uri.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="178" column="27" selection-start-line="178" selection-start-column="27" selection-end-line="178" selection-end-column="27" />
+          <folding>
+            <element signature="e#15633#15634#0" expanded="true" />
+            <element signature="e#15680#15681#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/common/QRCodeConstant.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="35" selection-start-line="13" selection-start-column="35" selection-end-line="13" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/MainContactsListViewModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1129">
+          <caret line="144" column="5" selection-start-line="144" selection-start-column="5" selection-end-line="144" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/ForwardGroupListViewModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="38" column="69" lean-forward="true" selection-start-line="38" selection-start-column="69" selection-end-line="38" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/fragment/MainContactsListFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-960">
+          <caret line="26" column="46" selection-start-line="26" selection-start-column="46" selection-end-line="26" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/fragment/ForwordRecentListFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="9" column="61" selection-start-line="9" selection-start-column="61" selection-end-line="9" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/qrcode/QRCodeManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="24" selection-start-line="24" selection-end-line="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/fragment/ForwardSelectContactFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="7" column="50" selection-start-line="7" selection-start-column="50" selection-end-line="7" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/fragment/ForwardGroupListFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="8" selection-start-line="8" selection-end-line="15" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/ViewHolderFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="172">
+          <caret line="16" column="36" selection-start-line="16" selection-start-column="36" selection-end-line="16" selection-end-column="36" />
+          <folding>
+            <element signature="e#424#425#0" expanded="true" />
+            <element signature="e#454#455#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.recyclerview/recyclerview/1.1.0-alpha05/7268ce31ae47fa4d894101e0e994c0a13b53f99/recyclerview-1.1.0-alpha05-sources.jar!/androidx/recyclerview/widget/RecyclerView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="6953" column="24" selection-start-line="6953" selection-start-column="24" selection-end-line="6953" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.annotation/annotation/1.1.0/8b7bdc00eb4d998bfbc76767b098620990f2a805/annotation-1.1.0-sources.jar!/androidx/annotation/NonNull.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="37" column="18" selection-start-line="37" selection-start-column="18" selection-end-line="37" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/models/ListItemModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
+          <folding>
+            <element signature="e#2351#2352#0" expanded="true" />
+            <element signature="e#2401#2402#0" expanded="true" />
+            <element signature="e#2438#2439#0" expanded="true" />
+            <element signature="e#2483#2484#0" expanded="true" />
+            <element signature="e#2819#2820#0" expanded="true" />
+            <element signature="e#2859#2860#0" expanded="true" />
+            <element signature="e#2896#2897#0" expanded="true" />
+            <element signature="e#2942#2943#0" expanded="true" />
+            <element signature="e#2975#2976#0" expanded="true" />
+            <element signature="e#3010#3011#0" expanded="true" />
+            <element signature="e#3053#3054#0" expanded="true" />
+            <element signature="e#3094#3095#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/CommonListAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1067">
+          <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/fragment/CommonListBaseFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-115">
+          <caret line="36" column="19" selection-start-line="36" selection-start-column="19" selection-end-line="36" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/activity/GroupDetailActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="51" column="13" selection-start-line="51" selection-start-column="13" selection-end-line="51" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/ForwardActivityViewModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="77">
+          <caret line="80" column="42" lean-forward="true" selection-start-line="80" selection-start-column="42" selection-end-line="80" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/activity/ForwardSelectedDetailActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="108" column="89" selection-start-line="108" selection-start-column="89" selection-end-line="108" selection-end-column="89" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/fragment/ForwardSelectedDetailFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="22" column="34" selection-start-line="22" selection-start-column="34" selection-end-line="22" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/ForwardSelectedDetailViewModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="50" column="54" selection-start-line="50" selection-start-column="54" selection-end-line="50" selection-end-column="54" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/CommonListBaseViewModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="188" selection-start-line="188" selection-end-line="188" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/GroupDetailViewModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1118">
+          <caret line="34" column="13" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/CommonFriendItemViewHolder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/CommonGroupItemViewHolder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="685">
+          <caret line="74" column="56" selection-start-line="74" selection-start-column="50" selection-end-line="74" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/fragment/ListWithSidebarBaseFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="79" column="13" lean-forward="true" selection-start-line="79" selection-start-column="13" selection-end-line="79" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/ForwardSelectedViewHolder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="398">
+          <caret line="37" column="45" selection-start-line="37" selection-start-column="45" selection-end-line="37" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="37" lean-forward="true" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

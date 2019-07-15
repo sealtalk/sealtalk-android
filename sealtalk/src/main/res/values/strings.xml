@@ -1,0 +1,360 @@
+<resources>
+    <string name="app_name">SealTalk</string>
+    <string name="title_activity_main">MainActivity</string>
+    <!-- login-->
+    <string name="seal_login_text_new_user">新用户</string>
+    <string name="seal_login_text_forget_password">找回密码</string>
+    <string name="seal_login_text_login">登录</string>
+    <string name="seal_login_countries_and_regions">国家/地区</string>
+    <string name="seal_login_password">密码</string>
+    <string name="seal_login_phone_number">手机号</string>
+    <string name="seal_login_nick_name">昵称</string>
+    <string name="seal_login_register">注册</string>
+    <string name="seal_login_code">短信验证码</string>
+    <string name="seal_login_send_code">发送验证码</string>
+    <string name="seal_login_confirm">确认</string>
+    <string name="seal_login_confirm_password">确认密码</string>
+
+    <string name="seal_login_toast_name_is_null">昵称不能为空</string>
+    <string name="seal_login_toast_name_contain_spaces">昵称不能包含空格</string>
+    <string name="seal_login_toast_phone_number_is_null">手机号不能为空</string>
+    <string name="seal_login_toast_code_is_null">验证码为空</string>
+    <string name="seal_login_toast_password_is_null">密码不能为空</string>
+    <string name="seal_login_toast_password_cannot_contain_spaces">密码不能包含空格</string>
+    <string name="seal_login_toast_phone_or_psw_error">手机或者密码错误</string>
+    <string name="seal_login_toast_success">"登录成功"</string>
+    <string name="seal_login_toast_not_send_code">未向服务端获取验证码</string>
+    <string name="seal_login_toast_passwords_invalid">密码必须为6-16位字符，区分大小写</string>
+    <string name="seal_login_toast_new_password_not_null">新密码不能为空</string>
+    <string name="seal_login_toast_confirm_password_not_null">确认密码不能为空</string>
+    <string name="seal_login_toast_passwords_do_not_match">填写的确认密码与新密码不一致</string>
+    <string name="login_error_send_message_frequency">短信发送频率超限</string>
+    <string name="login_error_captcha_overdue">验证码过期,请重新请求</string>
+    <string name="login_verification_code_error">验证码错误</string>
+
+    <string name="common_chat_room">聊天室</string>
+    <string name="discovery_chat_room_one">聊天室 I</string>
+    <string name="discovery_chat_room_two">聊天室 II</string>
+    <string name="discovery_chat_room_three">聊天室 III</string>
+    <string name="discovery_chat_room_four">聊天室 IV</string>
+    <string name="discovery_chat_room_join_failure">加入聊天室失败</string>
+    <string name="discovery_join_chat_room_error">聊天室 ID 为空,请稍后重试</string>
+
+
+    <string name="new_friends">新的朋友</string>
+    <string name="group">群组</string>
+    <string name="public_service">公众号</string>
+    <string name="seal_search_nick_name">昵称： </string>
+    <string name="seal_group_list_include">包含：</string>
+
+    <string name="china">中国</string>
+    <string name="lang_en">EN</string>
+    <string name="lang_english">English</string>
+    <string name="lang_chs">简体中文</string>
+    <string name="seal_search">搜索</string>
+    <string name="beijing">北京</string>
+
+    <string name="common_confirm">确认</string>
+    <string name="common_cancel">取消</string>
+    <string name="common_done">完成</string>
+    <string name="common_save">保存</string>
+    <string name="common_publish">发布</string>
+    <string name="common_request_success">请求成功</string>
+    <string name="common_add_successful">添加成功</string>
+    <string name="common_remove_successful">移除成功</string>
+    <string name="common_delete_successful">删除成功</string>
+
+    <string name="common_member_count" formatted="true">%d 人</string>
+
+    <string name="common_network_unavailable">当前网络不可用</string>
+    <string name="common_network_check">请检查网络设置</string>
+
+    <!--Main-->
+    <string-array name="tab_names">
+        <item>会话</item>
+        <item>通讯录</item>
+        <item>发现</item>
+        <item>我</item>
+    </string-array>
+
+    <string name="common_network_error_and_retry_after">网络问题请稍后重试</string>
+
+    <string name="seal_evaluate_evaluation">评价</string>
+    <string name="seal_evaluate_submit_evaluation">提交评价</string>
+    <string name="seal_evaluate_resolved_title">请问客服是否解决了您的问题</string>
+    <string name="seal_evaluate_resolved">已解决</string>
+    <string name="seal_evaluate_unresolved">未解决</string>
+    <string name="seal_evaluate_star_title">请您对客服进行评价</string>
+    <string name="seal_evaluate_problem_title">存在哪些问题</string>
+    <string name="seal_evaluate_title_select_must">存在哪些问题(必选)</string>
+    <string name="seal_evaluate_lable_must">必须选择标签</string>
+    <string name="seal_evaluate_input_must">必须输入建议</string>
+
+
+    <string name="seal_conversation_remote_side_is_typing">对方正在输入&#046;&#046;&#046;</string>
+    <string name="seal_conversation_remote_side_speaking">对方正在讲话&#046;&#046;&#046;</string>
+    <string name="seal_conversation_title_discussion_group">讨论组</string>
+    <string name="seal_conversation_title_system">系统消息</string>
+    <string name="seal_conversation_title_feedback">意见反馈</string>
+    <string name="seal_conversation_title_defult">聊天</string>
+
+    <string name="seal_conversation_sub_group">"群组"</string>
+    <string name="seal_conversation_sub_private">"我的私人会话"</string>
+    <string name="seal_conversation_sub_discussion">"我的讨论组"</string>
+    <string name="seal_conversation_sub_system">"系统消息"</string>
+    <string name="seal_conversation_sub_defult">"聊天"</string>
+    <string name="seal_conversation_read_receipt_detail">回执详情</string>
+    <string name="seal_conversation_read_receipt_unread_persons_format">%1$d人未读</string>
+    <string name="seal_conversation_read_receipt_read_persons_format">%1$d人已读</string>
+    <string name="seal_conversation_read_receipt_no_person_read">全部未读</string>
+    <string name="seal_conversation_read_receipt_no_person_unread">全部已读</string>
+
+    <string name="seal_new_friend_list_no_data">暂无数据</string>
+    <string name="seal_new_friend_agree">接&#160;&#160;&#160;受</string>
+    <string name="seal_new_friend_request">已请求</string>
+    <string name="seal_new_friend_ignore">已忽略</string>
+    <string name="seal_new_friend_added">已添加</string>
+    <string name="seal_new_friend_deleted">已删除</string>
+
+    <string name="seal_main_title_start_chat">发起聊天</string>
+    <string name="seal_main_title_create_group">创建群组</string>
+    <string name="seal_main_title_add_friends">添加好友</string>
+    <string name="seal_main_mine_set_account">账号设置</string>
+    <string name="seal_main_mine_setting_language">多语言</string>
+    <string name="seal_main_mine_my_wallet">我的钱包</string>
+    <string name="seal_main_mine_feedback">意见反馈</string>
+    <string name="seal_main_mine_about">关于 SealTalk</string>
+    <string name="seal_main_mine_customer_xn">小能客服</string>
+    <string name="seal_main_mine_online_custom_service">在线客服</string>
+    <string name="seal_userinfo_item_user_portrait">用户头像</string>
+    <string name="seal_mine_set_account_change_password">密码修改</string>
+    <string name="seal_mine_set_account_privacy">隐私</string>
+    <string name="seal_mine_set_account_new_message_show">新消息通知</string>
+    <string name="seal_mine_set_account_clear_cache">清除缓存</string>
+    <string name="seal_mine_set_account_logout">退出登录</string>
+    <string name="seal_mine_set_account_push_language">设置 Push 中文</string>
+    <string name="seal_mine_set_account_push_content">显示 Push 内容</string>
+    <string name="seal_mine_set_account_push_message">接收 Push 消息</string>
+    <string name="seal_mine_change_language">多语言</string>
+    <string name="seal_mine_about_update_log">更新日志</string>
+    <string name="seal_mine_about_function_introduce">功能介绍</string>
+    <string name="seal_mine_about_rongcloud_web">官方网站</string>
+    <string name="seal_mine_about_seal_talk_version">SealTalk 版本</string>
+    <string name="seal_mine_about_sdk_version">SDK 版本</string>
+    <string name="seal_mine_about_close_debug_mode">关闭 debug 模式</string>
+    <string name="seal_mine_about_user_online_status">设置用户在线状态</string>
+
+    <string name="seal_title_private_chat">发起聊天</string>
+    <string name="seal_title_group_chat">创建群组</string>
+    <string name="seal_title_add_contacts">添加好友</string>
+    <!-- 聊天详细相关 -->
+    <!-- 私聊详细-->
+    <string name="profile_search_message">查找聊天记录</string>
+    <string name="profile_message_notice">消息免打扰</string>
+    <string name="profile_set_top">会话置顶</string>
+    <string name="profile_clean_message">清除聊天记录</string>
+    <string name="profile_user_details">用户详情</string>
+    <string name="profile_clean_private_chat_history">确定删除聊天记录吗</string>
+    <string name="profile_clean_group_chat_history">确定删除群聊天记录吗</string>
+    <string name="profile_clean_discussion_chat_history">确定删除讨论组聊天记录吗</string>
+
+    <!-- 群组详细 -->
+    <string name="profile_all_group_member">全部群成员</string>
+    <string name="profile_group_member_online_status">群成员在线状态</string>
+    <string name="profile_group_portrait">群头像</string>
+    <string name="profile_group_name">群名称</string>
+    <string name="profile_group_notice">群公告</string>
+    <string name="profile_group_code">群二维码</string>
+    <string name="profile_quit_group">删除并退出</string>
+    <string name="profile_dismiss_group">解散并退出</string>
+    <string name="profile_group_info">群组信息</string>
+    <string name="profile_group_total_member">群成员</string>
+    <string name="profile_update_portrait_success">头像更新成功</string>
+    <string name="profile_upload_portrait_failed">上传头像失败</string>
+    <string name="profile_hint_new_group_name">新的群名称</string>
+    <string name="profile_group_name_word_limit_format" formatted="true">群名称应为 %d-%d 字</string>
+    <string name="profile_group_name_emoji_too_short">群名称表情过短</string>
+    <string name="profile_input_hint_group_notice">请编辑群公告</string>
+    <string name="profile_group_notice_post_confirm">该公告会通知全部群成员，是否发布？</string>
+    <string name="profile_group_notice_prefix">\@所有人\n</string>
+    <string name="profile_confirm_quit_group">确认退出群组?</string>
+    <string name="profile_confirm_dismiss_group">确认解散群组?</string>
+    <string name="profile_set_display_name">设置备注</string>
+    <string name="profile_detail_start_chat">发起聊天</string>
+    <string name="profile_detail_start_voice">语音通话</string>
+    <string name="profile_detail_start_video">视频聊天</string>
+    <string name="profile_detail_add_friend">加为好友</string>
+    <string name="profile_detail_join_the_blacklist">加入黑名单</string>
+    <string name="profile_detail_remove_from_blacklist">移除黑名单</string>
+    <string name="profile_add_friend_hint">加好友信息...</string>
+    <string name="profile_invite_friend_description_has_group_format" formatted="true">我是%s群的%s</string>
+    <string name="profile_invite_friend_description_format" formatted="true">我是%s</string>
+    <string name="profile_group_save_to_contact">保存到通讯录</string>
+    <string name="group_list_not_group_save_to_contact">暂时没有保存到通讯录的群组</string>
+
+    <string name="profile_alias">备注名</string>
+    <string name="profile_alias_info">备注信息</string>
+
+    <string name="profile_group_not_exist">群组不存在</string>
+    <string name="profile_group_has_dismissed">群组已解散</string>
+    <string name="profile_group_has_members_format">群内已有&#160;%1$d&#160;人</string>
+
+    <string name="profile_save_picture_at">图片保存成功</string>
+    <string name="profile_join_the_group_chat">加入群聊</string>
+
+    <string name="common_clear_success">清除成功</string>
+    <string name="common_clear_failure">清除失败</string>
+    <string name="common_set_failed">设置失败</string>
+    <string name="seal_mine_my_account_portrait">头像</string>
+    <string name="seal_mine_my_account_nickname">昵称</string>
+    <string name="seal_mine_my_account_phone_number">手机号</string>
+    <string name="seal_mine_my_account">"个人账号"</string>
+    <string name="seal_select_group_member">选择群组成员</string>
+    <string name="seal_select_friend">选择联系人</string>
+    <string name="seal_select_confirm">确认</string>
+    <string name="seal_update_name_text">好的名字可以让你的朋友更容易记住</string>
+    <string name="seal_update_name">昵称更改</string>
+    <string name="seal_update_name_save_update">确认</string>
+    <string name="seal_update_name_toast_nick_name_can_not_empty">昵称不能为空</string>
+    <string name="seal_update_name_toast_nick_name_change_success">昵称更改成功</string>
+    <string name="seal_dialog_select_picture_take_picture">拍照</string>
+    <string name="seal_dialog_select_picture_album">从本地导入</string>
+    <string name="seal_dialog_select_picture_cancel">取消</string>
+
+    <string name="seal_ac_search_friend">联系人</string>
+    <string name="seal_ac_search_group">群组</string>
+    <string name="seal_ac_search_chatting_records">聊天记录</string>
+    <string name="seal_ac_search_more_friend">查看更多联系人</string>
+    <string name="seal_ac_search_more_group">查看更多群组</string>
+    <string name="seal_ac_search_more_chatting_records">查看更多聊天记录</string>
+    <string name="seal_search_item_chat_records">%d条相关记录</string>
+    <string name="msg_reference_link">[链接]</string>
+    <string name="msg_reference_file">[文件]</string>
+
+    <string name="seal_update_password_current_password">原密码</string>
+    <string name="seal_update_password_password_hint">6-16个字符,区分大小写</string>
+    <string name="seal_update_password_confirm_password">确认密码</string>
+    <string name="seal_update_password_new_password">新密码</string>
+    <string name="seal_update_password_save">确认</string>
+    <string name="seal_update_password_toast_password_not_equal">填写的确认密码与新密码不一致</string>
+    <string name="seal_update_password_toast_password_old_equal_new">新旧密码一致</string>
+
+    <string name="seal_set_account_dialog_toast_clear_cache_clear_success">清除成功</string>
+    <string name="seal_set_account_dialog_clear_cache_message">是否清除缓存?</string>
+    <string name="seal_privacy_blacklist_is_empty">黑名单为空</string>
+    <string name="seal_privacy_blacklist">黑名单</string>
+
+    <string name="seal_search_chatting_records">聊天记录</string>
+    <string name="seal_search_more_friend">查看更多联系人</string>
+    <string name="seal_search_more_group">查看更多群组</string>
+    <string name="seal_search_more_chatting_records">查看更多聊天记录</string>
+
+    <string name="msg_contact_notification_someone_agree_your_request">已同意你的好友请求</string>
+    <string name="msg_contact_notification_agree_your_request">对方已同意你的好友请求</string>
+    <string name="msg_dialog_item_message_delete">删除消息</string>
+
+
+    <string name="seal_new_message_remind_new_message">接收新消息通知</string>
+    <string name="seal_new_message_remind_message_show_details">通知显示消息详情</string>
+    <string name="seal_new_message_donot_disturb_new_message_notice">开启消息免打扰</string>
+    <string name="seal_new_message_donot_disturb_notification_information">开启后，在设定时间段内收到新消息时不会响铃或振动。</string>
+    <string name="seal_new_message_donot_disturb_start">开始时间</string>
+    <string name="seal_new_message_donot_disturb_end">结束时间</string>
+    <string name="seal_new_message_donot_disturb">消息免打扰</string>
+    <string name="seal_search_empty">没有搜到%s相关的信息</string>
+    <string name="seal_main_chat_tab_more_read_message">...</string>
+    <string name="seal_main_toast_unread_clear_success">清除成功</string>
+    <string name="seal_public_account_information">公众号信息</string>
+    <string name="seal_member_mention_all_member">所有人</string>
+    <string name="seal_search_phone_number">搜索手机号，如：(86)137XXXXX</string>
+    <string name="seal_add_friend">加为好友</string>
+    <string name="seal_add_text">加好友信息...</string>
+    <string name="seal_account_not_exist">用户不存在</string>
+    <string name="seal_inivte_firend_descprtion_format" formatted="true">我是%s</string>
+    <string name="seal_quest_failed_error_code">请求失败 错误码:%d</string>F
+
+    <string name="zxing_msg_camera_framework_bug">对不起，Android摄像头遇到问题，您需要重启设备</string>
+    <string name="zxing_distinguish_picture">识别图中二维码</string>
+    <string name="zxing_qr_can_not_recognized">该二维码无法识别</string>
+
+    <string name="seal_mine_set_account_dialog_logout_message">是否退出登录?</string>
+
+    <string name="seal_download_app_browser_download">浏览器打开</string>
+    <string name="seal_download_app_local_download">本地下载</string>
+    <string name="seal_forward_message">转发消息</string>
+    <string name="seal_not_support_forward">语音、红包、发送失败消息和其他特殊消息类型不支持转发</string>
+    <string name="seal_not_support_forward_pic">发送失败消息不支持转发</string>
+    <string name="seal_select_forward_contact_multi">多选</string>
+    <string name="seal_select_forward_contact_single">单选</string>
+    <string name="seal_group_manager_set_manager">设置管理员</string>
+    <string name="seal_group_manager_transfer">群主管理权转让</string>
+    <string name="seal_group_detail_group_manager">群管理</string>
+    <string name="seal_group_management_group_owner">群主</string>
+    <string name="seal_group_management_group_managements">群管理员</string>
+    <string name="seal_group_management_add_group_managements">添加群管理员</string>
+    <string name="seal_group_management_dialog_delete_content"><![CDATA[是否将 <font color="#0195ff">%1$s</font> 从管理员列表中删除]]> </string>
+    <string name="seal_select_forward_create_new_chat">创建一个新聊天</string>
+    <string name="seal_select_forward_select_group">选择一个群</string>
+    <string name="seal_select_forward_message_recent_chat">最近聊天</string>
+    <string name="seal_selected_contact_title">确定发送给：</string>
+    <string name="seal_multi_selected_contact_title">分别发送给：</string>
+    <string name="seal_group_tag_all">全员</string>
+    <string name="seal_group_tag_company">公司</string>
+    <string name="seal_group_administrator">群主</string>
+    <string name="seal_send">发送</string>
+    <string name="seal_group_manager_transfer_select_new_group_owner">选择新群主</string>
+    <string name="seal_group_manager_transfer_group_owner_dialog_content"><![CDATA[确定选择 <font color="#0195ff">%1$s</font> 为新群主，你将放弃]]></string>
+    <string name="seal_select_forward_more_contact">更多联系人</string>
+    <string name="seal_selected_contacts_count">已选择 %d 人</string>
+    <string name="seal_selected_groups_count">已选择 %d 人、 %d 个群组</string>
+    <string name="seal_selected_only_group">已选择 %d 个群组</string>
+    <string name="seal_forward__message_success">转发成功</string>
+    <string name="seal_select_forward_message_defeat">转发失败</string>
+
+    <!-- TODO 以下部分需要翻译英文 -->
+    <string name="profile_qrcode_group_tips">扫一扫群二维码，立刻加入该群</string>
+    <string name="profile_qrcode_private_tips">扫一扫二维码，加我为好友</string>
+    <string name="profile_qrcode_save_to_phone">保存到手机</string>
+    <string name="profile_group_qrcode">群二维码</string>
+    <string name="seal_main_mine_qrcode">我的二维码</string>
+    <string name="profile_join_group">加入该群</string>
+    <string name="profile_delete_from_contact">删除联系人</string>
+    <string name="profile_add_to_blacklist_tips">加入黑名单后，你将不再收到对方的消息，同时删除与该联系人的聊天记录</string>
+    <string name="profile_remove_from_contact_tips_html_format" formatted="true"><Data><![CDATA[将联系人 <font color="#368AE8">%1$s</font> 删除同时删除与该联系人的聊天记录]]></Data></string>
+    <string name="seal_group_action_transfer_group_owner">%1$s 成为新群主</string>
+    <string name="profile_group_manager">群管理</string>
+    <string name="profile_group_notice_tips">发布后将以系统消息发送群聊，全员成员可见</string>
+    <string name="profile_group_notice_update_time_format" formatted="true">发布时间：%s</string>
+    <string name="profile_group_notice_clear_confirm">确定清空群公告？</string>
+    <string name="profile_group_has_no_notice">暂无群公告</string>
+    <string name="profile_group_notice_not_changed">群公告没有修改</string>
+    <string name="seal_group_manager_select_managements_dialog_content"><![CDATA[确定将 <font color="#0195ff">%1$s</font> 设置为管理员]]></string>
+    <string name="seal_group_manager_confirm">确定</string>
+    <string name="seal_group_manager_set_manager_toast_set_management_success">设置管理员成功</string>
+    <string name="seal_group_manager_set_manager_toast_set_management_failed">设置失败</string>
+    <string name="seal_group_action_set_manager">群主将 %1$s 设置为管理员</string>
+    <string name="seal_group_action_remove_manager">群主移除了 %1$s 的管理员身份</string>
+    <string name="seal_qrcode_jump_without_login">无用户信息，请先注册</string>
+    <string name="seal_mine_about_toast_app_downloading">正在后台下载...</string>
+    <string name="seal_mine_about_notifi_loading">正在下载新版本</string>
+    <string name="seal_mine_about_notifi_title">SealTalk 新版本下载</string>
+    <string name="seal_group_manager_toast_remove_manager_success">删除成功</string>
+    <string name="seal_group_manager_toast_remove_manager_failed">删除失败</string>
+    <string name="seal_loading_dialog_logining">登录中</string>
+    <string name="seal_login_toast_send_code_success">发送成功</string>
+    <string name="seal_login_toast_send_code_failed">发送验证码失败，请稍后再试</string>
+    <string name="login_register_phone_already_existed">手机号已经注册</string>
+    <string name="seal_login_toast_no_register">当前手机号还没进行注册</string>
+    <string name="seal_login_register_registering">正在注册...</string>
+    <string name="seal_login_register_toast_register_success">注册成功</string>
+    <string name="seal_login_reset_password_toast_reset_password_success">重置密码成功</string>
+    <string name="seal_login_reset_password_loading_password">重置中...</string>
+    <string name="seal_group_management_toast_set_new_group_onwer_success">设置成功</string>
+    <string name="seal_group_management_toast_set_new_group_onwer_failed">设置失败</string>
+    <string name="seal_group_management_toast_management_already_reached_max_size">最多只能设置 %1$d 个群管理员</string>
+    <string name="seal_group_management_managements">管理员</string>
+    <string name="seal_forward_selected_detail_comfirm">确定</string>
+    <string name="seal_forward_selected_detail_title">已选择联系人</string>
+    <string name="profile_group_notice_content_over_max_length">字数已超限</string>
+
+</resources>

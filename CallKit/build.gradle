@@ -7,7 +7,7 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 2019060617
+        versionCode 2019060614
         versionName "2.9.18 Stable"
     }
 
@@ -24,11 +24,12 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    api 'com.android.support:support-v4:26.0.0'
+    api 'androidx.legacy:legacy-support-v4:1.0.0'
+    api 'androidx.core:core:1.2.0-alpha01'
     api 'cn.rongcloud.sdk:im_kit:2.9.19'
     //im_kit必须依赖im_lib，所以需要加入对应依赖
     api 'cn.rongcloud.sdk:im_lib:2.9.19'
     api project(':CallLib')
-    api 'com.github.bumptech.glide:glide:4.0.0'
-    api 'com.google.code.gson:gson:2.2.4'
+    api 'com.github.bumptech.glide:glide:4.7.1'
+    api 'com.google.code.gson:gson:2.8.5'
 }

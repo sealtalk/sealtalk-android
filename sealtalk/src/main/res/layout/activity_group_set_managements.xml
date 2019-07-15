@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ListView
+        android:id="@+id/lv_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:dividerHeight="@dimen/seal_common_list_divider_height"
+        >
+
+    </ListView>
+
+    <cn.rongcloud.im.ui.widget.SideBar
+        android:id="@+id/sb_sidrbar"
+        android:layout_width="@dimen/seal_login_select_country_sidebar_width"
+        android:layout_height="@dimen/seal_login_select_country_sidebar_height"
+        android:layout_gravity="right|center"
+        />
+
+    <TextView
+        android:id="@+id/tv_side_dialog"
+        android:layout_width="@dimen/seal_contact_fragment_dialog_width"
+        android:layout_height="@dimen/seal_contact_fragment_dialog_height"
+        android:layout_gravity="center"
+        android:background="@drawable/rc_bg_toast"
+        android:gravity="center"
+        android:textColor="@color/seal_contact_dialog_text_color"
+        android:textSize="30.0dip"
+        android:visibility="gone" />
+</FrameLayout>

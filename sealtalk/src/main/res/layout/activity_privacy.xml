@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_blacklist"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_privacy_item_height"
+        android:layout_marginTop="@dimen/seal_privacy_item_margin"
+        app:item_content="@string/seal_privacy_blacklist"
+        >
+
+    </cn.rongcloud.im.ui.view.SettingItemView>
+</LinearLayout>

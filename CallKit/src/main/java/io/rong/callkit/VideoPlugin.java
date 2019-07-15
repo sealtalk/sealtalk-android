@@ -6,8 +6,9 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class VideoPlugin implements IPluginModule, IPluginRequestPermissionResul
     }
 
     @Override
-    public void onClick(Fragment currentFragment, final RongExtension extension) {
+    public void onClick(Fragment currentFragment, RongExtension extension) {
         context = currentFragment.getActivity().getApplicationContext();
         conversationType = extension.getConversationType();
         targetId = extension.getTargetId();
@@ -145,7 +146,7 @@ public class VideoPlugin implements IPluginModule, IPluginRequestPermissionResul
     }
 
     @Override
-    public boolean onRequestPermissionResult(Fragment fragment, RongExtension extension, int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public boolean onRequestPermissionResult(Fragment fragment, RongExtension extension, int requestCode, String[] permissions, int[] grantResults) {
         if (PermissionCheckUtil.checkPermissions(fragment.getActivity(), permissions)) {
             startVideoActivity(extension);
         } else {

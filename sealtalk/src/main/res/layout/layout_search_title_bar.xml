@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/seal_search_title_bar_height"
+    android:background="@color/seal_search_title_bar_bg">
+    <ImageView
+        android:id="@+id/iv_press_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/seal_ic_back"/>
+    <View
+        android:layout_marginTop="@dimen/seal_search_title_bar_line_margin_top"
+        android:layout_marginBottom="@dimen/seal_search_title_bar_line_margin_bottom"
+        android:layout_width="@dimen/seal_search_title_bar_line_width"
+        android:layout_height="@dimen/seal_search_title_bar_line_height"
+        android:background="@color/seal_search_title_bar_line"
+        />
+    <EditText
+        android:id="@+id/et_search"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/seal_search_title_bar_et_margin"
+        android:layout_marginRight="@dimen/seal_search_title_bar_et_margin"
+        android:drawableLeft="@drawable/seal_ic_et_search"
+        android:drawableRight="@drawable/seal_ic_search_cancel"
+        android:drawablePadding="@dimen/seal_search_title_bar_et_padding"
+        android:hint="@string/seal_search"
+        android:textColorHint="@color/seal_search_title_bar_et_hite"
+        android:textColor="@color/white"
+        android:focusableInTouchMode="true"
+        android:maxLines="1"
+        android:textSize="@dimen/seal_search_title_bar_et_text_size"
+        android:imeOptions="actionSearch"
+        android:inputType="textNoSuggestions"
+        android:imeActionLabel=""
+        android:background="@drawable/seal_bg_edit_text_white"/>
+</LinearLayout>

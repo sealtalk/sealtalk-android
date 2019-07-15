@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_marginLeft="@dimen/seal_group_management_text_margin"
+        android:padding="@dimen/seal_group_management_text_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/seal_group_management_group_owner"
+        />
+
+    <cn.rongcloud.im.ui.view.UserInfoItemView
+        android:id="@+id/uiv_group_owner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+    </cn.rongcloud.im.ui.view.UserInfoItemView>
+
+    <TextView
+        android:id="@+id/tv_managements"
+        android:layout_marginLeft="@dimen/seal_group_management_text_margin"
+        android:padding="@dimen/seal_group_management_text_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/seal_group_management_group_managements"
+        />
+
+    <ListView
+        android:id="@+id/lv_managements"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:dividerHeight="@dimen/seal_common_list_divider_height"
+        >
+
+    </ListView>
+
+</LinearLayout>

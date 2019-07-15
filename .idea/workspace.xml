@@ -50,18 +50,9 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/activity/ForwardSelectedDetailActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="80">
-              <caret line="108" column="89" selection-start-line="108" selection-start-column="89" selection-end-line="108" selection-end-column="89" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/fragment/ForwardSelectedDetailFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
+            <state relative-caret-position="120">
               <caret line="22" column="34" selection-start-line="22" selection-start-column="34" selection-end-line="22" selection-end-column="34" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -73,7 +64,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/ForwardSelectedDetailViewModel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="271">
+            <state relative-caret-position="570">
               <caret line="50" column="54" selection-start-line="50" selection-start-column="54" selection-end-line="50" selection-end-column="54" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -85,7 +76,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/CommonListBaseViewModel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="163">
+            <state relative-caret-position="2475">
               <caret line="188" selection-start-line="188" selection-end-line="188" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -94,28 +85,33 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/ForwardSelectedViewHolder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="398">
+            <state relative-caret-position="70">
               <caret line="37" column="45" selection-start-line="37" selection-start-column="45" selection-end-line="37" selection-end-column="45" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="21" column="37" lean-forward="true" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
+            <state relative-caret-position="145">
+              <caret line="21" column="37" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CallKit/CallKit.iml">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/GroupDetailViewModel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1118">
+            <state relative-caret-position="120">
               <caret line="34" column="13" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
             </state>
           </provider>
@@ -124,7 +120,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/CommonFriendItemViewHolder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
+            <state relative-caret-position="150">
               <caret line="19" selection-start-line="19" selection-end-line="19" />
             </state>
           </provider>
@@ -133,7 +129,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/CommonGroupItemViewHolder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="685">
+            <state relative-caret-position="945">
               <caret line="74" column="56" selection-start-line="74" selection-start-column="50" selection-end-line="74" selection-end-column="56" />
             </state>
           </provider>
@@ -142,8 +138,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/fragment/ListWithSidebarBaseFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="248">
-              <caret line="79" column="13" lean-forward="true" selection-start-line="79" selection-start-column="13" selection-end-line="79" selection-end-column="13" />
+            <state relative-caret-position="945">
+              <caret line="79" column="13" selection-start-line="79" selection-start-column="13" selection-end-line="79" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -196,6 +192,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="MIXED" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -255,8 +252,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="217" />
-    <option name="y" value="34" />
+    <option name="x" value="18" />
+    <option name="y" value="36" />
     <option name="width" value="1440" />
     <option name="height" value="813" />
   </component>
@@ -265,8 +262,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -274,20 +270,12 @@
               <item name="sealtalk-android" type="b2602c69:ProjectViewProjectNode" />
               <item name="sealtalk-android" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
-            <path>
-              <item name="sealtalk-android" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sealtalk-android" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="sealtalk" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-            <path>
-              <item name="sealtalk-android" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -504,27 +492,26 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
+    <frame x="18" y="36" width="1440" height="813" extended-state="0" />
     <layout>
-      <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.79843444" visible="true" weight="0.3018598" />
-      <window_info id="Structure" order="2" sideWeight="0.5014006" side_tool="true" weight="0.33261803" />
-      <window_info id="Favorites" order="3" sideWeight="0.5014006" side_tool="true" weight="0.33261803" />
-      <window_info id="Build Variants" order="4" sideWeight="0.20156556" side_tool="true" weight="0.31402004" />
+      <window_info id="Captures" order="0" sideWeight="0.38696256" side_tool="true" weight="0.3018598" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.610687" visible="true" weight="0.3018598" />
+      <window_info id="Structure" order="2" sideWeight="0.38696256" side_tool="true" weight="0.3018598" />
+      <window_info id="Favorites" order="3" sideWeight="0.38696256" side_tool="true" weight="0.3018598" />
+      <window_info id="Build Variants" order="4" sideWeight="0.38931298" side_tool="true" visible="true" weight="0.3018598" />
       <window_info id="Image Layers" order="5" />
       <window_info id="Designer" order="6" />
       <window_info id="Resources Explorer" order="7" />
       <window_info id="Capture Tool" order="8" />
       <window_info anchor="bottom" id="Run" order="0" sideWeight="0.49928468" weight="0.49098474" />
-      <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.7181688" weight="0.4566265" />
+      <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.7181688" weight="0.68654644" />
       <window_info anchor="bottom" id="TODO" order="2" weight="0.3293011" />
       <window_info anchor="bottom" id="Find" order="3" sideWeight="0.58154505" weight="0.30361447" />
       <window_info anchor="bottom" id="Terminal" order="4" />
       <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.12517883" side_tool="true" weight="0.38068965" />
-      <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.8748212" weight="0.5987952" />
-      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.48969072" weight="0.23012048" />
-      <window_info anchor="bottom" id="Debug" order="8" sideWeight="0.81885123" visible="true" weight="0.13493976" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="6" sideWeight="0.8748212" visible="true" weight="0.6366158" />
+      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.48969072" weight="0.22884881" />
+      <window_info anchor="bottom" id="Debug" order="8" sideWeight="0.81885123" weight="0.13493976" />
       <window_info anchor="bottom" id="Android Profiler" order="9" />
       <window_info anchor="bottom" id="Messages" order="10" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" weight="0.3297568" />
@@ -676,13 +663,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/SelectSingleViewModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/fragment/SelectSingleFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -823,21 +803,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/res/layout/forward_activity_selected_detail1.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="15" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/activity/ForwardSelectedDetailActivity1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="137" selection-start-line="137" selection-end-line="137" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/res/layout/forward_activity_selected_detail1.xml" />
+    <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/activity/ForwardSelectedDetailActivity1.java" />
     <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/activity/SealPicturePagerActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="235">
@@ -1001,14 +968,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/activity/ForwardSelectedDetailActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
+        <state relative-caret-position="1275">
           <caret line="108" column="89" selection-start-line="108" selection-start-column="89" selection-end-line="108" selection-end-column="89" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/fragment/ForwardSelectedDetailFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
+        <state relative-caret-position="120">
           <caret line="22" column="34" selection-start-line="22" selection-start-column="34" selection-end-line="22" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1018,7 +985,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/ForwardSelectedDetailViewModel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
+        <state relative-caret-position="570">
           <caret line="50" column="54" selection-start-line="50" selection-start-column="54" selection-end-line="50" selection-end-column="54" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1028,7 +995,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/CommonListBaseViewModel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
+        <state relative-caret-position="2475">
           <caret line="188" selection-start-line="188" selection-end-line="188" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1038,43 +1005,46 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/viewmodel/GroupDetailViewModel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1118">
+        <state relative-caret-position="120">
           <caret line="34" column="13" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/CommonFriendItemViewHolder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
+        <state relative-caret-position="150">
           <caret line="19" selection-start-line="19" selection-end-line="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/CommonGroupItemViewHolder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="685">
+        <state relative-caret-position="945">
           <caret line="74" column="56" selection-start-line="74" selection-start-column="50" selection-end-line="74" selection-end-column="56" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/fragment/ListWithSidebarBaseFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="79" column="13" lean-forward="true" selection-start-line="79" selection-start-column="13" selection-end-line="79" selection-end-column="13" />
+        <state relative-caret-position="945">
+          <caret line="79" column="13" selection-start-line="79" selection-start-column="13" selection-end-line="79" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CallKit/CallKit.iml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="21" column="37" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sealtalk/src/main/java/cn/rongcloud/im/ui/adapter/viewholders/ForwardSelectedViewHolder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
+        <state relative-caret-position="70">
           <caret line="37" column="45" selection-start-line="37" selection-start-column="45" selection-end-line="37" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="37" lean-forward="true" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
         </state>
       </provider>
     </entry>

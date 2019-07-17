@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Gradle: __local_aars__:/Users/liusong/RongCloud/rong-project/sealtalk-android/CallLib/libs/CallEngine_Blink.jar:unspecified@jar">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/CallLib/libs/CallEngine_Blink.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

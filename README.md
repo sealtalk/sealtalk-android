@@ -28,24 +28,9 @@ SealTalk 自从 1.3.14 版本起，CallLib 模块引用的音视频引擎已替�
 ## APK
 [下载 Apk](http://rongcloud.cn/sealtalk)<br/>
 
-## Jcenter & Maven
+## SDK 集成说明
 
-![image](./images/maven.png)<br/>
-
-```Java
-
-dependencies {
-
-    compile 'cn.rongcloud.android:IMLib:2.8.6'
-    compile 'cn.rongcloud.android:IMKit:2.8.6'
-    compile 'cn.rongcloud.android:CallLib:2.8.6'
-    compile 'cn.rongcloud.android:CallKit:2.8.6'
-    compile 'cn.rongcloud.android:RedPacket:2.8.6'
-}
-
-```
-
-[示例 和 使用](https://github.com/13120241790/RongCloudJcenter)<br/>
+请参考官网 [SDK 集成说明指南](https://docs.rongcloud.cn/im/imkit/android/quick-start/import/)<br/>
 
 ## 关于 SealTalk 2.0
 SealTalk 2.0 重构了内部逻辑实现，整体代码将更清晰易读。使用 LiveData + ViewModel + Retrofit 2.0 + Room 等框架基于 MVVM 模式进行开发。
@@ -56,6 +41,7 @@ SealTalk 2.0 重构了内部逻辑实现，整体代码将更清晰易读。使�
 ![](./images/sealtalk-mvvm.png)
 
 **Ativity/Fragment** 作为 View 层, 负责界面显示和事件交互.
+
 **UserInfoViewModel** 等为 ViewModel 层. 连接 View 和 Model 的桥梁, 数据通过 LiveData 返回. ViewModel 可通过调用不同的 Task 来获取不同的数据源.
 
 **Task** 层即为 Repository . 根据不同的接口或数据属性, 分别封装了不同的 Task, 例如关于 User 的数据操作就封装在了 UserTask 中. 这样功能模块职能清晰并复用性高. 所有数据请求等只需编写一次即可.

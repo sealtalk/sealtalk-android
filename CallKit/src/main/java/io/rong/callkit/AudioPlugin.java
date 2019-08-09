@@ -4,8 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
@@ -51,7 +50,7 @@ public class AudioPlugin implements IPluginModule, IPluginRequestPermissionResul
     }
 
     @Override
-    public void onClick(Fragment currentFragment, RongExtension extension) {
+    public void onClick(final Fragment currentFragment, final RongExtension extension) {
         context = currentFragment.getActivity().getApplicationContext();
         conversationType = extension.getConversationType();
         targetId = extension.getTargetId();
@@ -77,9 +76,7 @@ public class AudioPlugin implements IPluginModule, IPluginRequestPermissionResul
                     .show();
             return;
         }
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-        if (networkInfo == null || !networkInfo.isConnected() || !networkInfo.isAvailable()) {
+        if (!CallKitUtils.isNetworkAvailable(context)) {
             Toast.makeText(context, currentFragment.getString(R.string.rc_voip_call_network_error), Toast.LENGTH_SHORT).show();
             return;
         }
@@ -94,7 +91,7 @@ public class AudioPlugin implements IPluginModule, IPluginRequestPermissionResul
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             Log.i(TAG,"getPackageName==="+context.getPackageName());
             intent.setPackage(context.getPackageName());
-            context.getApplicationContext().startActivity(intent);
+            context.startActivity(intent);
         } else if (conversationType.equals(Conversation.ConversationType.DISCUSSION)) {
             RongIM.getInstance().getDiscussion(targetId, new RongIMClient.ResultCallback<Discussion>() {
                 @Override
@@ -146,11 +143,11 @@ public class AudioPlugin implements IPluginModule, IPluginRequestPermissionResul
         intent.putStringArrayListExtra("observers",observers);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setPackage(context.getPackageName());
-        context.getApplicationContext().startActivity(intent);
+        context.startActivity(intent);
     }
 
     @Override
-    public boolean onRequestPermissionResult(Fragment fragment, RongExtension extension, int requestCode, String[] permissions, int[] grantResults) {
+    public boolean onRequestPermissionResult(Fragment fragment, RongExtension extension, int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (PermissionCheckUtil.checkPermissions(fragment.getActivity(), permissions)) {
             startAudioActivity(fragment, extension);
         } else {

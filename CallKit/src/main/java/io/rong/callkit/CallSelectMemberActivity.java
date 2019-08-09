@@ -1,7 +1,10 @@
 package io.rong.callkit;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -219,6 +223,7 @@ public class CallSelectMemberActivity extends BaseNoActionBarActivity {
             e.printStackTrace();
             tempMembers.addAll(allMembers);
         }
+        closeKeyBoard(this,searchBar);
         setData();
     }
 
@@ -386,10 +391,14 @@ public class CallSelectMemberActivity extends BaseNoActionBarActivity {
                     if (selectedMember.size() == 0 && observerMember.size() == 0) {
                         txtvStart.setEnabled(false);
                         txtvStart.setTextColor(getResources().getColor(R.color.callkit_color_text_operation_disable));
+                        callkit_conference_selected_number.setTextColor(getResources().getColor(R.color.callkit_color_text_operation_disable));
+                    }
+                    if(searchMembers!=null){
+                        callkit_conference_selected_number.setText(getString(R.string.callkit_selected_contacts_count, selectedMember.size()));
                     }
                     return;
                 }
-                int totalNumber=selectedMember.size() + (invitedMembers.size()-(allObserver==null?0:allObserver.size()));
+                int totalNumber=selectedMember.size() + invitedMembers.size();
                 boolean videoObserverState= totalNumber>= (mMediaType.equals(RongCallCommon.CallMediaType.AUDIO)?NORMAL_AUDIO_NUMBER:NORMAL_VIDEO_NUMBER);
                 if(ctrlTag){
                     if(videoObserverState){
@@ -406,9 +415,11 @@ public class CallSelectMemberActivity extends BaseNoActionBarActivity {
                     if (selectedMember.size() > 0 || observerMember.size()>0) {
                         txtvStart.setEnabled(true);
                         txtvStart.setTextColor(getResources().getColor(R.color.rc_voip_check_enable));
+                        callkit_conference_selected_number.setTextColor(getResources().getColor(R.color.rc_voip_check_enable));
                     } else {
                         txtvStart.setEnabled(false);
                         txtvStart.setTextColor(getResources().getColor(R.color.callkit_color_text_operation_disable));
+                        callkit_conference_selected_number.setTextColor(getResources().getColor(R.color.callkit_color_text_operation_disable));
                     }
                 }else{
                     if(videoObserverState && isFirstDialog){
@@ -440,9 +451,11 @@ public class CallSelectMemberActivity extends BaseNoActionBarActivity {
                     if (selectedMember.size() > 0 ||observerMember.size()>0) {
                         txtvStart.setEnabled(true);
                         txtvStart.setTextColor(getResources().getColor(R.color.rc_voip_check_enable));
+                        callkit_conference_selected_number.setTextColor(getResources().getColor(R.color.rc_voip_check_enable));
                     } else {
                         txtvStart.setEnabled(false);
                         txtvStart.setTextColor(getResources().getColor(R.color.callkit_color_text_operation_disable));
+                        callkit_conference_selected_number.setTextColor(getResources().getColor(R.color.callkit_color_text_operation_disable));
                     }
                 }
             }
@@ -451,4 +464,32 @@ public class CallSelectMemberActivity extends BaseNoActionBarActivity {
             }
         }
     };
+
+    /**
+     * 关闭软键盘
+     *
+     * @param activity
+     * @param view
+     */
+    private void closeKeyBoard(Activity activity, View view) {
+        IBinder token;
+        if (view == null || view.getWindowToken() == null) {
+            if (null == activity) {
+                return;
+            }
+            Window window = activity.getWindow();
+            if (window == null) {
+                return;
+            }
+            View v = window.peekDecorView();
+            if (v == null) {
+                return;
+            }
+            token = v.getWindowToken();
+        } else {
+            token = view.getWindowToken();
+        }
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(token, 0);
+    }
 }

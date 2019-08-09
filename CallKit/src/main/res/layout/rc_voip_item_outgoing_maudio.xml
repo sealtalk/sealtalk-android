@@ -26,7 +26,8 @@
             android:padding="20dp"
             android:id="@+id/rc_voip_minimize"
             android:src="@drawable/rc_voip_minimize"
-            android:layout_gravity="left|center_vertical" />
+            android:layout_gravity="left|center_vertical"
+            android:visibility="gone"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -69,7 +70,8 @@
             android:onClick="onMinimizeClick"
             android:id="@+id/rc_voip_minimize_outgoing"
             android:src="@drawable/rc_voip_minimize"
-            android:layout_gravity="left|center_vertical" />
+            android:layout_gravity="left|center_vertical"
+            android:visibility="gone"/>
 
 
         <TextView
@@ -88,7 +90,6 @@
         android:layout_width="match_parent"
         android:layout_marginTop="82dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginBottom="40dp"
         android:layout_marginRight="20dp"
         android:layout_height="wrap_content">
 
@@ -98,6 +99,7 @@
             android:layout_height="wrap_content"
             android:scrollbars="none"
             android:gravity="center"
+            android:layout_gravity="center_horizontal"
             android:listSelector="@android:color/transparent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true">
@@ -110,7 +112,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/rc_voip_call_waiting"
-        android:layout_below="@+id/linear_scrollviewTag"
+        android:layout_above="@+id/rc_voip_control_layout"
+        android:layout_marginBottom="50dp"
         android:id="@+id/rc_voip_remind"
         style="@style/callkit_voip_text_style_18spWhite"
         android:layout_centerHorizontal="true" />

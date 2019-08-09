@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -74,12 +75,12 @@ public class MultiAudioCallActivity extends BaseCallActivity {
         setContentView(R.layout.rc_voip_ac_muti_audio);
         audioContainer = (LinearLayout) findViewById(R.id.rc_voip_container);
         incomingLayout = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.rc_voip_item_incoming_maudio, null);
-        TextView tv_invite_incoming_audio=incomingLayout.findViewById(R.id.tv_invite_incoming_audio);
-        CallKitUtils.textViewShadowLayer(tv_invite_incoming_audio,MultiAudioCallActivity.this);
+        TextView tv_invite_incoming_audio = incomingLayout.findViewById(R.id.tv_invite_incoming_audio);
+        CallKitUtils.textViewShadowLayer(tv_invite_incoming_audio, MultiAudioCallActivity.this);
 
         outgoingLayout = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.rc_voip_item_outgoing_maudio, null);
-        TextView rc_voip_remind=incomingLayout.findViewById(R.id.rc_voip_remind);
-        CallKitUtils.textViewShadowLayer(rc_voip_remind,MultiAudioCallActivity.this);
+        TextView rc_voip_remind = incomingLayout.findViewById(R.id.rc_voip_remind);
+        CallKitUtils.textViewShadowLayer(rc_voip_remind, MultiAudioCallActivity.this);
 
         outgoingController = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.rc_voip_call_bottom_connected_button_layout, null);
         ImageView button = outgoingController.findViewById(R.id.rc_voip_call_mute_btn);
@@ -135,7 +136,7 @@ public class MultiAudioCallActivity extends BaseCallActivity {
         if (bundle != null) {
             handFree = bundle.getBoolean("handFree");
             audioContainer.addView(outgoingLayout);
-            String str= (String) SPUtils.get(MultiAudioCallActivity.this,"ICallScrollView","");
+            String str = (String) SPUtils.get(MultiAudioCallActivity.this, "ICallScrollView", "");
 
             FrameLayout controller = (FrameLayout) audioContainer.findViewById(R.id.rc_voip_control_layout);
             controller.addView(outgoingController);
@@ -154,27 +155,28 @@ public class MultiAudioCallActivity extends BaseCallActivity {
                 memberContainer = (CallUserGridView) audioContainer.findViewById(R.id.rc_voip_members_container_gridView);
             }
             memberContainer.enableShowState(true);
-            LinearLayout linear_scrollviewTag=(LinearLayout)outgoingLayout.findViewById(R.id.linear_scrollviewTag);
-            if(participantProfiles.size()>4){
-                ViewGroup.LayoutParams params=linear_scrollviewTag.getLayoutParams();
-                params.height=CallKitUtils.dp2px(200,MultiAudioCallActivity.this);
+            LinearLayout linear_scrollviewTag = (LinearLayout) outgoingLayout.findViewById(R.id.linear_scrollviewTag);
+            if (participantProfiles.size() > 4) {
+                ViewGroup.LayoutParams params = linear_scrollviewTag.getLayoutParams();
+                params.height = CallKitUtils.dp2px(200, MultiAudioCallActivity.this);
                 linear_scrollviewTag.setLayoutParams(params);
             }
             //添加数据
             for (CallUserProfile item : participantProfiles) {
                 if (!item.getUserId().equals(callSession.getSelfUserId())) {
-                    if (item.getCallStatus().equals(RongCallCommon.CallStatus.CONNECTED))
+                    if (item.getCallStatus().equals(RongCallCommon.CallStatus.CONNECTED)) {
                         memberContainer.addChild(item.getUserId(), RongContext.getInstance().getUserInfoFromCache(item.getUserId()));
-                    else {
+                        memberContainer.updateChildState(item.getUserId(), false);
+                    } else {
                         String state = getString(R.string.rc_voip_call_connecting);
                         memberContainer.addChild(item.getUserId(), RongContext.getInstance().getUserInfoFromCache(item.getUserId()), state);
                     }
                 }
             }
-            if(!(boolean)bundle.get("isDial")){
+            if (!(boolean) bundle.get("isDial")) {
                 onCallConnected(callSession, null);//接听
-            }else{
-                onCallOutgoing(callSession,null);
+            } else {
+                onCallOutgoing(callSession, null);
             }
         }
     }
@@ -206,7 +208,7 @@ public class MultiAudioCallActivity extends BaseCallActivity {
             name.setTag(callSession.getCallerUserId() + "callerName");
             audioContainer.addView(incomingLayout);
             memberContainer = (CallUserGridView) audioContainer.findViewById(R.id.rc_voip_members_container_gridView);
-            SPUtils.put(MultiAudioCallActivity.this,"ICallScrollView","CallUserGridView");
+            SPUtils.put(MultiAudioCallActivity.this, "ICallScrollView", "CallUserGridView");
 
             memberContainer.setChildPortraitSize(memberContainer.dip2pix(55));
             List<CallUserProfile> list = callSession.getParticipantProfileList();
@@ -228,10 +230,11 @@ public class MultiAudioCallActivity extends BaseCallActivity {
             Conversation.ConversationType conversationType = Conversation.ConversationType.valueOf(intent.getStringExtra("conversationType").toUpperCase(Locale.US));
             String targetId = intent.getStringExtra("targetId");
             ArrayList<String> userIds = intent.getStringArrayListExtra("invitedUsers");
-            ArrayList<String> observers=intent.getStringArrayListExtra("observers");
+            ArrayList<String> observers = intent.getStringArrayListExtra("observers");
             audioContainer.addView(outgoingLayout);
 
-            LinearLayout linear_scrollviewTag=(LinearLayout)outgoingLayout.findViewById(R.id.linear_scrollviewTag);
+
+            LinearLayout linear_scrollviewTag = (LinearLayout) outgoingLayout.findViewById(R.id.linear_scrollviewTag);
 
 
             //多人语音主叫方顶部布局
@@ -239,7 +242,7 @@ public class MultiAudioCallActivity extends BaseCallActivity {
             relativeLayout.setVisibility(View.VISIBLE);
 
             memberContainer = (CallVerticalScrollView) audioContainer.findViewById(R.id.rc_voip_members_container);
-            SPUtils.put(MultiAudioCallActivity.this,"ICallScrollView","CallVerticalScrollView");
+            SPUtils.put(MultiAudioCallActivity.this, "ICallScrollView", "CallVerticalScrollView");
             memberContainer.enableShowState(true);
             FrameLayout controller = (FrameLayout) audioContainer.findViewById(R.id.rc_voip_control_layout);
             controller.addView(outgoingController);
@@ -257,21 +260,20 @@ public class MultiAudioCallActivity extends BaseCallActivity {
                 }
             }
             //
-            if(userIds.size()>4){
-                ViewGroup.LayoutParams params=linear_scrollviewTag.getLayoutParams();
-                params.height=CallKitUtils.dp2px(200,MultiAudioCallActivity.this);
+            if (userIds.size() > 4) {
+                ViewGroup.LayoutParams params = linear_scrollviewTag.getLayoutParams();
+                params.height = CallKitUtils.dp2px(200, MultiAudioCallActivity.this);
                 linear_scrollviewTag.setLayoutParams(params);
             }
             RongCallClient.getInstance().startCall(conversationType, targetId, invitedList, observers, RongCallCommon.CallMediaType.AUDIO, "multi");
         }
         memberContainer.setScrollViewOverScrollMode(View.OVER_SCROLL_NEVER);
-        createPowerManager();
         createPickupDetector();
 
         if (callAction.equals(RongCallAction.ACTION_INCOMING_CALL)) {
             regisHeadsetPlugReceiver();
-            if(BluetoothUtil.hasBluetoothA2dpConnected() || BluetoothUtil.isWiredHeadsetOn(MultiAudioCallActivity.this)){
-                HeadsetInfo headsetInfo=new HeadsetInfo(true,HeadsetInfo.HeadsetType.BluetoothA2dp);
+            if (BluetoothUtil.hasBluetoothA2dpConnected() || BluetoothUtil.isWiredHeadsetOn(MultiAudioCallActivity.this)) {
+                HeadsetInfo headsetInfo = new HeadsetInfo(true, HeadsetInfo.HeadsetType.BluetoothA2dp);
                 onEventMainThread(headsetInfo);
             }
         }
@@ -288,7 +290,6 @@ public class MultiAudioCallActivity extends BaseCallActivity {
     @Override
     protected void onResume() {
         if (pickupDetector == null) createPickupDetector();
-        if (wakeLock == null) createPowerManager();
         if (pickupDetector != null) {
             pickupDetector.register(this);
         }
@@ -298,7 +299,7 @@ public class MultiAudioCallActivity extends BaseCallActivity {
     public void onHangupBtnClick(View view) {
         unRegisterHeadsetplugReceiver();
         if (callSession == null || isFinishing) {
-            FinLog.e(TAG, "_挂断多人语音出错 callSession="+(callSession == null)+",isFinishing="+isFinishing);
+            FinLog.e(TAG, "_挂断多人语音出错 callSession=" + (callSession == null) + ",isFinishing=" + isFinishing);
             return;
         }
         RongCallClient.getInstance().hangUpCall(callSession.getCallId());
@@ -306,7 +307,7 @@ public class MultiAudioCallActivity extends BaseCallActivity {
 
     public void onReceiveBtnClick(View view) {
         if (callSession == null || isFinishing) {
-            FinLog.e(TAG, "_接听多人语音出错 callSession="+(callSession == null)+",isFinishing="+isFinishing);
+            FinLog.e(TAG, "_接听多人语音出错 callSession=" + (callSession == null) + ",isFinishing=" + isFinishing);
             return;
         }
         RongCallClient.getInstance().acceptCall(callSession.getCallId());
@@ -334,7 +335,7 @@ public class MultiAudioCallActivity extends BaseCallActivity {
             return;
         }
 
-        RongCallClient.getInstance().addParticipants(callSession.getCallId(), added ,null);
+        RongCallClient.getInstance().addParticipants(callSession.getCallId(), added, null);
     }
 
     @Override
@@ -349,8 +350,8 @@ public class MultiAudioCallActivity extends BaseCallActivity {
         onOutgoingCallRinging();
 
         regisHeadsetPlugReceiver();
-        if(BluetoothUtil.hasBluetoothA2dpConnected() || BluetoothUtil.isWiredHeadsetOn(this)){
-            HeadsetInfo headsetInfo=new HeadsetInfo(true,HeadsetInfo.HeadsetType.BluetoothA2dp);
+        if (BluetoothUtil.hasBluetoothA2dpConnected() || BluetoothUtil.isWiredHeadsetOn(this)) {
+            HeadsetInfo headsetInfo = new HeadsetInfo(true, HeadsetInfo.HeadsetType.BluetoothA2dp);
             onEventMainThread(headsetInfo);
         }
     }
@@ -392,10 +393,10 @@ public class MultiAudioCallActivity extends BaseCallActivity {
             case REMOTE_HANGUP:
                 break;
         }
-        if (text != null && memberContainer!=null) {
+        if (text != null && memberContainer != null) {
             memberContainer.updateChildState(userId, text);
         }
-        if(memberContainer!=null)
+        if (memberContainer != null)
             memberContainer.removeChild(userId);
     }
 
@@ -416,14 +417,14 @@ public class MultiAudioCallActivity extends BaseCallActivity {
             FrameLayout controller = (FrameLayout) outgoingLayout.findViewById(R.id.rc_voip_control_layout);
             controller.addView(outgoingController);
             audioContainer.addView(outgoingLayout);
-            SPUtils.put(MultiAudioCallActivity.this,"ICallScrollView","CallVerticalScrollView");
+            SPUtils.put(MultiAudioCallActivity.this, "ICallScrollView", "CallVerticalScrollView");
             //多人语音通话中竖向滑动
             memberContainer = (CallVerticalScrollView) outgoingLayout.findViewById(R.id.rc_voip_members_container);
             memberContainer.enableShowState(true);
-            LinearLayout linear_scrollviewTag=(LinearLayout)outgoingLayout.findViewById(R.id.linear_scrollviewTag);
-            if(callSession.getParticipantProfileList().size()>4){
-                ViewGroup.LayoutParams params=linear_scrollviewTag.getLayoutParams();
-                params.height=CallKitUtils.dp2px(200,MultiAudioCallActivity.this);
+            LinearLayout linear_scrollviewTag = (LinearLayout) outgoingLayout.findViewById(R.id.linear_scrollviewTag);
+            if (callSession.getParticipantProfileList().size() > 4) {
+                ViewGroup.LayoutParams params = linear_scrollviewTag.getLayoutParams();
+                params.height = CallKitUtils.dp2px(200, MultiAudioCallActivity.this);
                 linear_scrollviewTag.setLayoutParams(params);
             }
             for (CallUserProfile profile : callSession.getParticipantProfileList()) {
@@ -483,8 +484,8 @@ public class MultiAudioCallActivity extends BaseCallActivity {
                             for (CallUserProfile profile : list) {
                                 added.add(profile.getUserId());
                             }
-                            ArrayList<String> allObserver= (ArrayList<String>) RongCallClient.getInstance().getCallSession().getObserverUserList();
-                            intent.putStringArrayListExtra("allObserver",allObserver);
+                            ArrayList<String> allObserver = (ArrayList<String>) RongCallClient.getInstance().getCallSession().getObserverUserList();
+                            intent.putStringArrayListExtra("allObserver", allObserver);
                             intent.putStringArrayListExtra("allMembers", (ArrayList<String>) discussion.getMemberIdList());
                             intent.putStringArrayListExtra("invitedMembers", added);
                             intent.putExtra("conversationType", callSession.getConversationType().getValue());
@@ -504,8 +505,8 @@ public class MultiAudioCallActivity extends BaseCallActivity {
                     for (CallUserProfile profile : list) {
                         added.add(profile.getUserId());
                     }
-                    ArrayList<String> allObserver= (ArrayList<String>) RongCallClient.getInstance().getCallSession().getObserverUserList();
-                    intent.putStringArrayListExtra("allObserver",allObserver);
+                    ArrayList<String> allObserver = (ArrayList<String>) RongCallClient.getInstance().getCallSession().getObserverUserList();
+                    intent.putStringArrayListExtra("allObserver", allObserver);
                     intent.putStringArrayListExtra("invitedMembers", added);
                     intent.putExtra("conversationType", callSession.getConversationType().getValue());
                     intent.putExtra("groupId", callSession.getTargetId());
@@ -521,24 +522,24 @@ public class MultiAudioCallActivity extends BaseCallActivity {
                 }
             }
         });
-
+        outgoingLayout.findViewById(R.id.rc_voip_minimize_outgoing).setVisibility(View.VISIBLE);
         View minimizeV = outgoingLayout.findViewById(R.id.rc_voip_minimize);
+        minimizeV.setVisibility(View.VISIBLE);
         minimizeV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("audioTag","************ outgoingLayout.findViewById(R.id.rc_voip_minimize)*****************");
+                Log.i("audioTag", "************ outgoingLayout.findViewById(R.id.rc_voip_minimize)*****************");
                 MultiAudioCallActivity.super.onMinimizeClick(v);
             }
         });
 
 
-
         AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
         if (audioManager.isWiredHeadsetOn() || BluetoothUtil.hasBluetoothA2dpConnected()) {
-            handFree=false;
+            handFree = false;
             RongCallClient.getInstance().setEnableSpeakerphone(false);
-            View handFreeV=null;
-            if(null!=outgoingLayout){
+            View handFreeV = null;
+            if (null != outgoingLayout) {
                 handFreeV = outgoingLayout.findViewById(R.id.rc_voip_handfree_btn);
             }
             if (handFreeV != null) {
@@ -590,6 +591,7 @@ public class MultiAudioCallActivity extends BaseCallActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        callSession = RongCallClient.getInstance().getCallSession();
         if (requestCode == REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS) {
             if (PermissionCheckUtil.checkPermissions(this, AUDIO_CALL_PERMISSIONS)) {
                 if (startForCheckPermissions) {
@@ -616,9 +618,19 @@ public class MultiAudioCallActivity extends BaseCallActivity {
             if (resultCode == RESULT_OK) {
                 ArrayList<String> invited = data.getStringArrayListExtra("invited");
                 ArrayList<String> observers = data.getStringArrayListExtra("observers");
-                RongCallClient.getInstance().addParticipants(callSession.getCallId(), invited,observers);
+                List<CallUserProfile> callUserProfiles = callSession.getParticipantProfileList();
+                Iterator<String> iterator = invited.iterator();
+                while (iterator.hasNext()) {
+                    String id = iterator.next();
+                    for (CallUserProfile profile : callUserProfiles) {
+                        if (profile.getUserId().equals(id)) {
+                            iterator.remove();
+                        }
+                    }
+                }
+                RongCallClient.getInstance().addParticipants(callSession.getCallId(), invited, observers);
             }
-        }else if (requestCode == REQUEST_CODE_ADD_MEMBER_NONE) {
+        } else if (requestCode == REQUEST_CODE_ADD_MEMBER_NONE) {
             try {
                 if (callSession.getEndTime() != 0) {
                     finish();
@@ -627,21 +639,12 @@ public class MultiAudioCallActivity extends BaseCallActivity {
                 setShouldShowFloat(true);
                 if (resultCode == RESULT_OK) {
                     ArrayList<String> invited = data.getStringArrayListExtra("pickedIds");
-                    RongCallClient.getInstance().addParticipants(callSession.getCallId(), invited,null);
+                    RongCallClient.getInstance().addParticipants(callSession.getCallId(), invited, null);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (wakeLock != null && wakeLock.isHeld()) {
-            wakeLock.setReferenceCounted(false);
-            wakeLock.release();
-        }
-        super.onDestroy();
     }
 
     public void onHandFreeButtonClick(View view) {
@@ -659,7 +662,7 @@ public class MultiAudioCallActivity extends BaseCallActivity {
     public String onSaveFloatBoxState(Bundle bundle) {
         super.onSaveFloatBoxState(bundle);
         String intentAction = null;
-        Log.i("audioTag","onSaveFloatBoxState  shouldShowFloat="+shouldShowFloat);
+        Log.i("audioTag", "onSaveFloatBoxState  shouldShowFloat=" + shouldShowFloat);
         if (shouldShowFloat) {
             intentAction = getIntent().getAction();
             bundle.putInt("mediaType", RongCallCommon.CallMediaType.AUDIO.getValue());
@@ -690,16 +693,16 @@ public class MultiAudioCallActivity extends BaseCallActivity {
     }
 
     public void onEventMainThread(HeadsetInfo headsetInfo) {
-        if(headsetInfo==null || !BluetoothUtil.isForground(MultiAudioCallActivity.this)){
-            FinLog.v("bugtags","MultiAudioCallActivity 不在前台！");
+        if (headsetInfo == null || !BluetoothUtil.isForground(MultiAudioCallActivity.this)) {
+            FinLog.v("bugtags", "MultiAudioCallActivity 不在前台！");
             return;
         }
-        Log.i("bugtags","Insert="+headsetInfo.isInsert()+",headsetInfo.getType="+headsetInfo.getType().getValue());
+        Log.i("bugtags", "Insert=" + headsetInfo.isInsert() + ",headsetInfo.getType=" + headsetInfo.getType().getValue());
         try {
-            if(headsetInfo.isInsert()){
+            if (headsetInfo.isInsert()) {
                 RongCallClient.getInstance().setEnableSpeakerphone(false);
-                ImageView handFreeV=null;
-                if(null!=outgoingLayout){
+                ImageView handFreeV = null;
+                if (null != outgoingLayout) {
                     handFreeV = outgoingLayout.findViewById(R.id.rc_voip_handfree_btn);
                 }
                 if (handFreeV != null) {
@@ -707,32 +710,32 @@ public class MultiAudioCallActivity extends BaseCallActivity {
                     handFreeV.setEnabled(false);
                     handFreeV.setClickable(false);
                 }
-                if(headsetInfo.getType()==HeadsetInfo.HeadsetType.BluetoothA2dp){
+                if (headsetInfo.getType() == HeadsetInfo.HeadsetType.BluetoothA2dp) {
                     AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
                     am.setMode(AudioManager.MODE_IN_COMMUNICATION);
                     am.startBluetoothSco();
                     am.setBluetoothScoOn(true);
                     am.setSpeakerphoneOn(false);
                 }
-            }else{
-                if(headsetInfo.getType()==HeadsetInfo.HeadsetType.WiredHeadset &&
-                        BluetoothUtil.hasBluetoothA2dpConnected()){
+            } else {
+                if (headsetInfo.getType() == HeadsetInfo.HeadsetType.WiredHeadset &&
+                        BluetoothUtil.hasBluetoothA2dpConnected()) {
                     return;
                 }
-                RongCallClient.getInstance().setEnableSpeakerphone(false);
-                ImageView handFreeV=null;
-                if(null!=outgoingLayout){
+                RongCallClient.getInstance().setEnableSpeakerphone(true);
+                ImageView handFreeV = null;
+                if (null != outgoingLayout) {
                     handFreeV = outgoingLayout.findViewById(R.id.rc_voip_handfree_btn);
                 }
                 if (handFreeV != null) {
-                    handFreeV.setSelected(false);
+                    handFreeV.setSelected(true);
                     handFreeV.setEnabled(true);
                     handFreeV.setClickable(true);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.i("bugtags","MultiAudioCallActivity->onEventMainThread Error="+e.getMessage());
+            Log.i("bugtags", "MultiAudioCallActivity->onEventMainThread Error=" + e.getMessage());
         }
     }
 }

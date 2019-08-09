@@ -2,7 +2,9 @@ package io.rong.callkit;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.PixelFormat;
+import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +18,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +26,9 @@ import android.widget.Toast;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import io.rong.callkit.util.BluetoothUtil;
 import io.rong.callkit.util.CallKitUtils;
+import io.rong.calllib.CallUserProfile;
 import io.rong.calllib.IRongCallListener;
 import io.rong.calllib.RongCallClient;
 import io.rong.calllib.RongCallCommon;
@@ -31,6 +36,7 @@ import io.rong.calllib.RongCallSession;
 import io.rong.calllib.message.CallSTerminateMessage;
 import io.rong.common.RLog;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.manager.AudioPlayManager;
 import io.rong.imkit.utils.NotificationUtil;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -52,6 +58,7 @@ public class CallFloatBoxView {
     private static Bundle mBundle;
     private static final String TAG = "CallFloatBoxView";
     private static TextView showFBCallTime=null;
+    private static FrameLayout remoteVideoContainer = null;
 
     public static void showFB(Context context, Bundle bundle){
         Log.i("audioTag","CallKitUtils.isDial="+CallKitUtils.isDial);
@@ -71,6 +78,9 @@ public class CallFloatBoxView {
         RongCallSession session = RongCallClient.getInstance().getCallSession();
         long activeTime = session != null ? session.getActiveTime() : 0;
         mTime = activeTime == 0 ? 0 : (System.currentTimeMillis() - activeTime) / 1000;
+        if (mTime > 0) {
+            setAudioMode(AudioManager.MODE_IN_COMMUNICATION);
+        }
 
         mBundle = bundle;
         wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -96,8 +106,7 @@ public class CallFloatBoxView {
         params.x = context.getResources().getDisplayMetrics().widthPixels;
         params.y = 0;
 
-        mView = LayoutInflater.from(context).inflate(R.layout.rc_voip_float_box, null);
-        mView.setOnTouchListener(new View.OnTouchListener() {
+        View.OnTouchListener onTouchListener = new View.OnTouchListener() {
             float lastX, lastY;
             int oldOffsetX, oldOffsetY;
             int tag = 0;
@@ -121,6 +130,9 @@ public class CallFloatBoxView {
                     tag = 1;
                     if (mView != null)
                         wm.updateViewLayout(mView, params);
+                    if (remoteVideoContainer != null) {
+                        wm.updateViewLayout(remoteVideoContainer, params);
+                    }
                 } else if (action == MotionEvent.ACTION_UP) {
                     int newOffsetX = params.x;
                     int newOffsetY = params.y;
@@ -132,16 +144,41 @@ public class CallFloatBoxView {
                 }
                 return true;
             }
-        });
-        wm.addView(mView, params);
-        TextView timeV = (TextView) mView.findViewById(R.id.rc_time);
-        setupTime(timeV);
-        ImageView mediaIconV = (ImageView) mView.findViewById(R.id.rc_voip_media_type);
+        };
         RongCallCommon.CallMediaType mediaType = RongCallCommon.CallMediaType.valueOf(bundle.getInt("mediaType"));
-        if (mediaType.equals(RongCallCommon.CallMediaType.AUDIO)) {
-            mediaIconV.setImageResource(R.drawable.rc_voip_float_audio);
-        } else {
-            mediaIconV.setImageResource(R.drawable.rc_voip_float_video);
+        if (mediaType == RongCallCommon.CallMediaType.VIDEO && session != null
+                && session.getConversationType() == Conversation.ConversationType.PRIVATE) {
+            SurfaceView remoteVideo = null;
+            for (CallUserProfile profile : session.getParticipantProfileList()) {
+                if (!TextUtils.equals(profile.getUserId(), RongIMClient.getInstance().getCurrentUserId())) {
+                    remoteVideo = profile.getVideoView();
+                }
+            }
+            if (remoteVideo != null) {
+                ViewGroup parent = (ViewGroup) remoteVideo.getParent();
+                parent.removeView(remoteVideo);
+                Resources resources = mContext.getResources();
+                params.width = resources.getDimensionPixelSize(R.dimen.callkit_dimen_size_60);
+                params.height = resources.getDimensionPixelSize(R.dimen.callkit_dimen_size_80);
+                remoteVideoContainer = new FrameLayout(mContext);
+                remoteVideoContainer.addView(remoteVideo,
+                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                remoteVideoContainer.setOnTouchListener(onTouchListener);
+                wm.addView(remoteVideoContainer, params);
+            }
+        }
+        if (remoteVideoContainer == null) {
+            mView = LayoutInflater.from(context).inflate(R.layout.rc_voip_float_box, null);
+            mView.setOnTouchListener(onTouchListener);
+            wm.addView(mView, params);
+            TextView timeV = (TextView) mView.findViewById(R.id.rc_time);
+            setupTime(timeV);
+            ImageView mediaIconV = (ImageView) mView.findViewById(R.id.rc_voip_media_type);
+            if (mediaType.equals(RongCallCommon.CallMediaType.AUDIO)) {
+                mediaIconV.setImageResource(R.drawable.rc_voip_float_audio);
+            } else {
+                mediaIconV.setImageResource(R.drawable.rc_voip_float_video);
+            }
         }
         RongCallClient.getInstance().setVoIPCallListener(new IRongCallListener() {
             @Override
@@ -215,14 +252,24 @@ public class CallFloatBoxView {
 
                 if (wm != null && mView != null) {
                     wm.removeView(mView);
+                    mView = null;
+                }
+                if (remoteVideoContainer != null) {
+                    wm.removeView(remoteVideoContainer);
+                    remoteVideoContainer.setOnTouchListener(null);
+                    remoteVideoContainer = null;
+                }
+                if (timer != null) {
                     timer.cancel();
                     timer = null;
-                    isShown = false;
-                    mView = null;
-                    mTime = 0;
                 }
+                isShown = false;
+                mTime = 0;
+                setAudioMode(AudioManager.MODE_NORMAL);
+                AudioPlayManager.getInstance().setInVoipMode(false);
                 NotificationUtil.clearNotification(mContext, BaseCallActivity.CALL_NOTIFICATION_ID);
                 RongCallClient.getInstance().setVoIPCallListener(RongCallProxy.getInstance());
+                BluetoothUtil.stopBlueToothSco(mContext);
             }
 
             @Override
@@ -242,17 +289,25 @@ public class CallFloatBoxView {
 
             @Override
             public void onMediaTypeChanged(String userId, RongCallCommon.CallMediaType mediaType, SurfaceView video) {
-
+                ImageView mediaIconV = (ImageView) mView.findViewById(R.id.rc_voip_media_type);
+                if (mediaType.equals(RongCallCommon.CallMediaType.AUDIO)) {
+                    mediaIconV.setImageResource(R.drawable.rc_voip_float_audio);
+                } else {
+                    mediaIconV.setImageResource(R.drawable.rc_voip_float_video);
+                }
             }
 
             @Override
             public void onError(RongCallCommon.CallErrorCode errorCode) {
-
+                setAudioMode(AudioManager.MODE_NORMAL);
+                AudioPlayManager.getInstance().setInVoipMode(false);
             }
 
             @Override
             public void onCallConnected(RongCallSession callInfo, SurfaceView localVideo) {
                 CallKitUtils.isDial=false;
+                setAudioMode(AudioManager.MODE_IN_COMMUNICATION);
+                AudioPlayManager.getInstance().setInVoipMode(true);
             }
 
             @Override
@@ -261,47 +316,17 @@ public class CallFloatBoxView {
             }
 
             @Override
-            public void onWhiteBoardURL(String url) {
+            public void onNetworkReceiveLost(String userId, int lossRate) {
 
             }
 
             @Override
-            public void onNetworkReceiveLost(int lossRate) {
+            public void onNetworkSendLost(int lossRate, int delay) {
 
             }
 
             @Override
-            public void onNetworkSendLost(int lossRate) {
-
-            }
-
-            @Override
-            public void onNotifySharingScreen(String userId, boolean isSharing) {
-
-            }
-
-            @Override
-            public void onNotifyDegradeNormalUserToObserver(String userId) {
-
-            }
-
-            @Override
-            public void onNotifyAnswerObserverRequestBecomeNormalUser(String userId, long status) {
-
-            }
-
-            @Override
-            public void onNotifyUpgradeObserverToNormalUser() {
-
-            }
-
-            @Override
-            public void onNotifyHostControlUserDevice(String userId, int dType, int isOpen) {
-
-            }
-
-            @Override
-            public void onNotifyAnswerUpgradeObserverToNormalUser(String userId, SurfaceView remoteVideo) {
+            public void onFirstRemoteVideoFrame(String userId, int height, int width) {
 
             }
         });
@@ -464,8 +489,12 @@ public class CallFloatBoxView {
                     mView = null;
                     mTime = 0;
                 }
+                setAudioMode(AudioManager.MODE_NORMAL);
+                AudioPlayManager.getInstance().setInVoipMode(false);
                 NotificationUtil.clearNotification(mContext, BaseCallActivity.CALL_NOTIFICATION_ID);
                 RongCallClient.getInstance().setVoIPCallListener(RongCallProxy.getInstance());
+                AudioManager am = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+                BluetoothUtil.stopBlueToothSco(mContext);
             }
 
             @Override
@@ -475,11 +504,18 @@ public class CallFloatBoxView {
 
             @Override
             public void onMediaTypeChanged(String userId, RongCallCommon.CallMediaType mediaType, SurfaceView video) {
-
+                ImageView mediaIconV = (ImageView) mView.findViewById(R.id.rc_voip_media_type);
+                if (mediaType.equals(RongCallCommon.CallMediaType.AUDIO)) {
+                    mediaIconV.setImageResource(R.drawable.rc_voip_float_audio);
+                } else {
+                    mediaIconV.setImageResource(R.drawable.rc_voip_float_video);
+                }
             }
 
             @Override
             public void onError(RongCallCommon.CallErrorCode errorCode) {
+                setAudioMode(AudioManager.MODE_NORMAL);
+                AudioPlayManager.getInstance().setInVoipMode(false);
             }
 
             @Override
@@ -488,6 +524,8 @@ public class CallFloatBoxView {
                     CallFloatBoxView.showFloatBoxToCallTime();
                     CallKitUtils.isDial=false;
                 }
+                AudioPlayManager.getInstance().setInVoipMode(true);
+                setAudioMode(AudioManager.MODE_IN_COMMUNICATION);
             }
 
 
@@ -510,47 +548,17 @@ public class CallFloatBoxView {
             }
 
             @Override
-            public void onWhiteBoardURL(String url) {
+            public void onNetworkReceiveLost(String userId, int lossRate) {
 
             }
 
             @Override
-            public void onNetworkReceiveLost(int lossRate) {
+            public void onNetworkSendLost(int lossRate, int delay) {
 
             }
 
             @Override
-            public void onNetworkSendLost(int lossRate) {
-
-            }
-
-            @Override
-            public void onNotifySharingScreen(String userId, boolean isSharing) {
-
-            }
-
-            @Override
-            public void onNotifyDegradeNormalUserToObserver(String userId) {
-
-            }
-
-            @Override
-            public void onNotifyAnswerObserverRequestBecomeNormalUser(String userId, long status) {
-
-            }
-
-            @Override
-            public void onNotifyUpgradeObserverToNormalUser() {
-
-            }
-
-            @Override
-            public void onNotifyHostControlUserDevice(String userId, int dType, int isOpen) {
-
-            }
-
-            @Override
-            public void onNotifyAnswerUpgradeObserverToNormalUser(String userId, SurfaceView remoteVideo) {
+            public void onFirstRemoteVideoFrame(String userId, int height, int width) {
 
             }
         });
@@ -575,8 +583,13 @@ public class CallFloatBoxView {
 
     public static void hideFloatBox() {
         RongCallClient.getInstance().setVoIPCallListener(RongCallProxy.getInstance());
-        if (isShown && null != mView) {
-            wm.removeView(mView);
+        if (isShown) {
+            if (mView != null) {
+                wm.removeView(mView);
+            }
+            if (remoteVideoContainer != null) {
+                wm.removeView(remoteVideoContainer);
+            }
             if(null!=timer){
                 timer.cancel();
                 timer = null;
@@ -648,5 +661,12 @@ public class CallFloatBoxView {
 
         timer = new Timer();
         timer.schedule(task, 0, 1000);
+    }
+
+    private static void setAudioMode(int mode) {
+        AudioManager audioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+        if (audioManager != null) {
+            audioManager.setMode(mode);
+        }
     }
 }

@@ -117,65 +117,23 @@ public class RongCallProxy implements IRongCallListener {
     }
 
     @Override
-    public void onWhiteBoardURL(String url) {
+    public void onNetworkSendLost(int lossRate, int delay) {
         if (mCallListener != null) {
-            mCallListener.onWhiteBoardURL(url);
+            mCallListener.onNetworkSendLost(lossRate, delay);
         }
     }
 
     @Override
-    public void onNetworkSendLost(int lossRate) {
+    public void onFirstRemoteVideoFrame(String userId, int height, int width) {
         if (mCallListener != null) {
-            mCallListener.onNetworkSendLost(lossRate);
+            mCallListener.onFirstRemoteVideoFrame(userId, height,width);
         }
     }
 
     @Override
-    public void onNetworkReceiveLost(int lossRate) {
+    public void onNetworkReceiveLost(String userId, int lossRate) {
         if (mCallListener != null) {
-            mCallListener.onNetworkReceiveLost(lossRate);
-        }
-    }
-
-    @Override
-    public void onNotifySharingScreen(String userId, boolean isSharing) {
-        if (mCallListener != null) {
-            mCallListener.onNotifySharingScreen(userId, isSharing);
-        }
-    }
-
-    @Override
-    public void onNotifyDegradeNormalUserToObserver(String userId) {
-        if (mCallListener != null) {
-            mCallListener.onNotifyDegradeNormalUserToObserver(userId);
-        }
-    }
-
-    @Override
-    public void onNotifyAnswerObserverRequestBecomeNormalUser(String userId, long status) {
-        if (mCallListener != null) {
-            mCallListener.onNotifyAnswerObserverRequestBecomeNormalUser(userId, status);
-        }
-    }
-
-    @Override
-    public void onNotifyUpgradeObserverToNormalUser() {
-        if (mCallListener != null) {
-            mCallListener.onNotifyUpgradeObserverToNormalUser();
-        }
-    }
-
-    @Override
-    public void onNotifyHostControlUserDevice(String userId, int dType, int isOpen) {
-        if (mCallListener != null) {
-            mCallListener.onNotifyHostControlUserDevice(userId, dType, isOpen);
-        }
-    }
-
-    @Override
-    public void onNotifyAnswerUpgradeObserverToNormalUser(String userId, SurfaceView remoteVideo) {
-        if (mCallListener != null) {
-            mCallListener.onNotifyAnswerUpgradeObserverToNormalUser(userId,remoteVideo);
+            mCallListener.onNetworkReceiveLost(userId, lossRate);
         }
     }
 

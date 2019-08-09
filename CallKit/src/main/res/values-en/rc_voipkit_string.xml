@@ -48,5 +48,6 @@
     <string name="rc_audio_call_on_going">Tap to continue as voice call in progress</string>
     <string name="rc_video_call_on_going">Tap to continue as video call is on</string>
     <string name="rc_voip_over_limit">Up to %d members</string>
+    <string name="rc_voip_connecting">Connecting...</string>
     <string name="rc_voip_unstable_call_connection">Unstable call connection</string>
 </resources>

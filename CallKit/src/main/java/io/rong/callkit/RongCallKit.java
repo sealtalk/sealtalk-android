@@ -210,7 +210,7 @@ public class RongCallKit {
      */
     public static boolean isInVoipCall(Context context) {
         RongCallSession callSession = RongCallClient.getInstance().getCallSession();
-        if (callSession != null && callSession.getActiveTime() > 0) {
+        if (callSession != null && callSession.getStartTime() > 0) {
             Toast.makeText(context,
                     callSession.getMediaType() == RongCallCommon.CallMediaType.AUDIO ?
                             context.getResources().getString(R.string.rc_voip_call_audio_start_fail) :

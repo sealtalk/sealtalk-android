@@ -28,6 +28,7 @@ public class MultiCallEndMessageProvider extends IContainerItemProvider.MessageP
     protected static class ViewHolder {
         public TextView textView;
     }
+
     @Override
     public View newView(Context context, ViewGroup group) {
         View v = LayoutInflater.from(context)
@@ -42,8 +43,9 @@ public class MultiCallEndMessageProvider extends IContainerItemProvider.MessageP
     public void bindView(View v, int position, MultiCallEndMessage content, UIMessage message) {
         Context context = v.getContext();
         String msg = "";
-
-        if (content.getReason() == RongCallCommon.CallDisconnectedReason.REMOTE_NO_RESPONSE) {
+        if (content.getReason() == RongCallCommon.CallDisconnectedReason.OTHER_DEVICE_HAD_ACCEPTED) {
+            msg = context.getResources().getString(R.string.rc_voip_call_other);
+        } else if (content.getReason() == RongCallCommon.CallDisconnectedReason.REMOTE_NO_RESPONSE) {
             if (content.getMediaType() == RongIMClient.MediaType.AUDIO) {
                 msg = context.getResources().getString(R.string.rc_voip_audio_no_response);
             } else if (content.getMediaType() == RongIMClient.MediaType.VIDEO) {

@@ -70,9 +70,9 @@ dependencies {
     api 'com.meizu.flyme.internet:push-internal:3.6.+@aar'
     api 'com.google.code.gson:gson:2.8.1'
 
-    api 'cn.rongcloud.sdk:im_kit:2.9.20'
+    api 'cn.rongcloud.sdk:im_kit:2.9.21'
     //im_kit必须依赖im_lib，所以需要加入对应依赖
-    api 'cn.rongcloud.sdk:im_lib:2.9.20'
+    api 'cn.rongcloud.sdk:im_lib:2.9.21'
 
     api 'cn.rongcloud.sdk:rcsticker:2.9.17'
     api 'cn.rongcloud.sdk:redpacket:2.9.17'

@@ -25,7 +25,7 @@ public interface UserService {
     @POST(SealTalkUrl.LOGIN)
     LiveData<Result<LoginResult>> loginLiveData(@Body RequestBody body);
 
-    @POST(SealTalkUrl.GET_TOKEN)
+    @GET(SealTalkUrl.GET_TOKEN)
     Call<Result<LoginResult>> getToken();
 
     @GET(SealTalkUrl.GET_USER_INFO)

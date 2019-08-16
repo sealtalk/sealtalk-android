@@ -129,6 +129,8 @@ public class CameraPreview extends ViewGroup {
     // Size of the framing rectangle. If null, defaults to using a margin percentage.
     private Size framingRectSize = null;
 
+    private int framingRectMarginTop;
+
     // Fraction of the width / heigth to use as a margin. This fraction is used on each size, so
     // must be smaller than 0.5;
     private double marginFraction = 0.1d;
@@ -266,6 +268,7 @@ public class CameraPreview extends ViewGroup {
 
         int framingRectWidth = (int) styledAttributes.getDimension(R.styleable.zxing_camera_preview_zxing_framing_rect_width, -1);
         int framingRectHeight = (int) styledAttributes.getDimension(R.styleable.zxing_camera_preview_zxing_framing_rect_height, -1);
+        framingRectMarginTop = (int)styledAttributes.getDimension(R.styleable.zxing_camera_preview_zxing_framing_rect_margin_top, -1);
 
         if (framingRectWidth > 0 && framingRectHeight > 0) {
             this.framingRectSize = new Size(framingRectWidth, framingRectHeight);
@@ -785,8 +788,17 @@ public class CameraPreview extends ViewGroup {
         if(framingRectSize != null) {
             // Specific size is specified. Make sure it's not larger than the container or surface.
             int horizontalMargin = Math.max(0, (intersection.width() - framingRectSize.width) / 2);
-            int verticalMargin = Math.max(0, (intersection.height() - framingRectSize.height) / 2);
-            intersection.inset(horizontalMargin, verticalMargin);
+            int verticalMargin;
+            if(framingRectMarginTop >= 0){
+                verticalMargin = framingRectMarginTop;
+                intersection.left += horizontalMargin;
+                intersection.right -= horizontalMargin;
+                intersection.top += verticalMargin;
+                intersection.bottom = framingRectMarginTop + framingRectSize.height;
+            } else {
+                verticalMargin = Math.max(0, (intersection.height() - framingRectSize.height) / 2);
+                intersection.inset(horizontalMargin, verticalMargin);
+            }
             return intersection;
         }
         // margin as 10% (default) of the smaller of width, height

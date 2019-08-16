@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="@dimen/common_dialog_width"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/common_dialog_min_height"
+    android:background="@drawable/common_dialog_bg"
+    >
+
+    <LinearLayout
+        android:id="@+id/dialog_content_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/common_dialog_common_min_height"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+        <TextView
+            android:id="@+id/dialog_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/common_dialog_text_margin_right"
+            android:textColor="@color/color_black_text"
+            android:textSize="@dimen/seal_update_staccount_dialog_title"/>
+        <TextView
+            android:id="@+id/dialog_tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/seal_update_staccount_dialog_title"
+            android:textColor="@color/text_black"
+            android:paddingLeft="@dimen/common_dialog_text_margin_left"
+            android:paddingRight="@dimen/common_dialog_text_margin_right"
+            android:paddingTop="@dimen/common_dialog_text_margin_top"
+            android:paddingBottom="@dimen/common_dialog_text_margin_bottom"
+            android:gravity="center"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_dialog_line_width"
+        android:background="@color/common_dialog_base_line"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_dialog_button_height"
+        android:orientation="horizontal"
+        >
+
+        <Button
+            android:id="@+id/dialog_btn_negative"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/common_dialog_negative_seletor"
+            android:textSize="@dimen/common_dialog_text_size"
+            android:textColor="@color/common_dialog_base_text"
+            android:text="@string/common_cancel"
+            />
+        <View
+            android:id="@+id/dialog_v_btn_separate"
+            android:layout_width="@dimen/common_dialog_line_width"
+            android:layout_height="match_parent"
+            android:background="@color/common_dialog_base_line"
+            />
+        <Button
+            android:id="@+id/dialog_btn_positive"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/common_dialog_positive_seletor"
+            android:textSize="@dimen/common_dialog_text_size"
+            android:textColor="@color/default_clickable_text"
+            android:text="@string/common_confirm"
+
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

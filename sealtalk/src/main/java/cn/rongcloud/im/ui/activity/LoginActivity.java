@@ -15,7 +15,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import cn.rongcloud.im.R;
+import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.ui.BaseActivity;
+import cn.rongcloud.im.ui.dialog.CommonDialog;
 import cn.rongcloud.im.ui.fragment.LoginFindPasswordFragment;
 import cn.rongcloud.im.ui.fragment.LoginFragment;
 import cn.rongcloud.im.ui.fragment.LoginRegisterFragment;
@@ -50,7 +52,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         setContentView(R.layout.login_activity_login);
 
         // 复原上次选的 Fragment
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             currentFragmentIndex = savedInstanceState.getInt(BUNDLE_LAST_SELECTED_FRAGMENT, FRAGMENT_LOGIN);
         }
 
@@ -80,6 +82,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         controlBottomView(currentFragmentIndex);
 
         startBgAnimation();
+
+        // 判断是否被其他用户踢出到此界面
+        Intent intent = getIntent();
+        boolean isKicked = intent.getBooleanExtra(IntentExtra.BOOLEAN_KICKED_BY_OTHER_USER, false);
+        if (isKicked) {
+            showKickedByOtherDialog();
+        }
     }
 
 
@@ -136,12 +145,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         FragmentManager supportFragmentManager = getSupportFragmentManager();
         if (i == FRAGMENT_LOGIN) {
             fragment = supportFragmentManager.findFragmentByTag(LoginFragment.class.getCanonicalName());
-            if(fragment == null) {
+            if (fragment == null) {
                 fragment = new LoginFragment();
             }
         } else if (i == FRAGMENT_REGISTER) {
             fragment = supportFragmentManager.findFragmentByTag(LoginRegisterFragment.class.getCanonicalName());
-            if(fragment == null) {
+            if (fragment == null) {
                 LoginRegisterFragment loginRegisterFragment = new LoginRegisterFragment();
                 loginRegisterFragment.setOnOnRegisterListener(new LoginRegisterFragment.OnRegisterListener() {
                     @Override
@@ -154,7 +163,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             }
         } else if (i == FRAGMENT_FIND_PASSWORD) {
             fragment = supportFragmentManager.findFragmentByTag(LoginFindPasswordFragment.class.getCanonicalName());
-            if(fragment == null) {
+            if (fragment == null) {
                 LoginFindPasswordFragment loginFindPasswordFragment = new LoginFindPasswordFragment();
                 loginFindPasswordFragment.setOnResetPasswordListener(new LoginFindPasswordFragment.OnResetPasswordListener() {
                     @Override
@@ -177,11 +186,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         appViewModel.getLanguageLocal().observe(this, new Observer<LangUtils.RCLocale>() {
             @Override
             public void onChanged(LangUtils.RCLocale rcLocale) {
-               if (rcLocale == LangUtils.RCLocale.LOCALE_US) {
-                   changLang.setText(R.string.lang_chs);
-               } else {
-                   changLang.setText(R.string.lang_en);
-               }
+                if (rcLocale == LangUtils.RCLocale.LOCALE_US) {
+                    changLang.setText(R.string.lang_chs);
+                } else {
+                    changLang.setText(R.string.lang_en);
+                }
             }
         });
     }
@@ -232,9 +241,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         finish();
     }
 
+    /**
+     * 显示他人登录对话框
+     */
+    private void showKickedByOtherDialog() {
+        CommonDialog.Builder builder = new CommonDialog.Builder();
+        builder.setContentMessage(getString(R.string.seal_login_kick_by_other));
+        builder.setIsOnlyConfirm(true);
+        builder.isCancelable(false);
+        CommonDialog dialog = builder.build();
+        dialog.show(getSupportFragmentManager(), null);
+    }
+
 
     /**
      * 切换语言
+     *
      * @param locale
      */
     private void changeLanguage(LangUtils.RCLocale locale) {
@@ -252,5 +274,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         super.onSaveInstanceState(outState);
         // 保存当前选择的小标
         outState.putInt(BUNDLE_LAST_SELECTED_FRAGMENT, currentFragmentIndex);
+    }
+
+    /**
+     * 不监听登出事件
+     *
+     * @return
+     */
+    @Override
+    public boolean isObserveLogout() {
+        return false;
     }
 }

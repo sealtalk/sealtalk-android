@@ -62,6 +62,7 @@ public class NewFriendListAdapter extends BaseAdapter {
             holder.messageTv = (TextView) convertView.findViewById(R.id.tv_message);
             holder.headIv = (SelectableRoundedImageView) convertView.findViewById(R.id.iv_new_header);
             holder.stateTv = (TextView) convertView.findViewById(R.id.tv_state);
+            holder.ignoreTv = convertView.findViewById(R.id.tv_ignore);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -85,27 +86,43 @@ public class NewFriendListAdapter extends BaseAdapter {
             }
         });
 
+        holder.ignoreTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnItemButtonClick != null) {
+                    mOnItemButtonClick.onIgnore(v, position, info);
+                }
+            }
+        });
+
         switch (FriendStatus.getStatus(info.getStatus())) {
             case RECEIVE_REQUEST: //收到了好友邀请
                 holder.stateTv.setText(R.string.seal_new_friend_agree);
                 holder.stateTv.setBackgroundDrawable(parent.getContext().getResources().getDrawable(R.drawable.seal_new_friend_add_friend_selector));
+                holder.ignoreTv.setVisibility(View.VISIBLE);
                 break;
             case SEND_REQUEST: // 发出了好友邀请
                 holder.stateTv.setText(R.string.seal_new_friend_request);
                 holder.stateTv.setBackgroundDrawable(null);
+                holder.ignoreTv.setVisibility(View.GONE);
                 break;
             case IGNORE_REQUEST: // 忽略好友邀请
                 holder.stateTv.setText(R.string.seal_new_friend_ignore);
                 holder.stateTv.setBackgroundDrawable(null);
+                holder.ignoreTv.setVisibility(View.GONE);
                 break;
             case IS_FRIEND: // 已是好友
                 holder.stateTv.setText(R.string.seal_new_friend_added);
                 holder.stateTv.setBackgroundDrawable(null);
+                holder.ignoreTv.setVisibility(View.GONE);
                 break;
             case DELETE_FRIEND: // 删除了好友关系
                 holder.stateTv.setText(R.string.seal_new_friend_deleted);
                 holder.stateTv.setBackgroundDrawable(null);
+                holder.ignoreTv.setVisibility(View.GONE);
                 break;
+            default:
+                holder.ignoreTv.setVisibility(View.GONE);
         }
         return convertView;
     }
@@ -122,6 +139,7 @@ public class NewFriendListAdapter extends BaseAdapter {
         TextView nameTv;
         TextView stateTv;
         TextView messageTv;
+        TextView ignoreTv;
     }
 
 
@@ -139,6 +157,8 @@ public class NewFriendListAdapter extends BaseAdapter {
      */
     public interface OnItemButtonClick {
         boolean onButtonClick(View view, int position, FriendShipInfo info);
+
+        boolean onIgnore(View view, int position, FriendShipInfo info);
     }
 
 }

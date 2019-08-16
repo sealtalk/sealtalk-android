@@ -49,7 +49,8 @@ public class SearchFriendActivity extends TitleBaseActivity implements OnSearchF
             }
         });
         setContentView(R.layout.activity_friend_search_content);
-        searchFriendFragment = new SearchFriendNetFragment(this);
+        searchFriendFragment = new SearchFriendNetFragment();
+        searchFriendFragment.setOnSearchFriendClickListener(this);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fl_fragment_container, searchFriendFragment).commit();
         viewModel = ViewModelProviders.of(this).get(SearchFriendNetViewModel.class);
@@ -102,8 +103,12 @@ public class SearchFriendActivity extends TitleBaseActivity implements OnSearchF
     }
 
     @Override
-    public void onSearchClick(String region, String phone) {
-        viewModel.searchFriendFromServer(region, phone);
+    public void onSearchClick(String region, String searchContent) {
+        if(TextUtils.isDigitsOnly(searchContent)){
+            viewModel.searchFriendFromServer(null, region, searchContent);
+        } else {
+            viewModel.searchFriendFromServer(searchContent, null, null);
+        }
     }
 
     @Override

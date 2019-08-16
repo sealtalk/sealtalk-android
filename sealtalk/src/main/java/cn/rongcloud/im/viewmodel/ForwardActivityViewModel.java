@@ -22,6 +22,7 @@ import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
+import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
 import io.rong.message.LocationMessage;
 
@@ -70,11 +71,12 @@ public class ForwardActivityViewModel extends AndroidViewModel {
      */
     private void forwardMessage(Conversation.ConversationType conversationType, String targetId, List<Message> messageList) {
         for (Message fwdMessage : messageList) {
-            if (fwdMessage != null && fwdMessage.getContent() != null) {
-                fwdMessage.getContent().setUserInfo(null);
+            MessageContent messageContent = fwdMessage.getContent();
+            if (messageContent != null) {
+                messageContent.setUserInfo(null);
             }
-            if (fwdMessage.getContent() != null && fwdMessage.getContent() instanceof ContactMessage) {
-                String portraitUrl = ((ContactMessage) fwdMessage.getContent()).getImgUrl();
+            if (messageContent instanceof ContactMessage) {
+                String portraitUrl = ((ContactMessage) messageContent).getImgUrl();
                 if (TextUtils.isEmpty(portraitUrl) || portraitUrl.toLowerCase().startsWith("file://")) {
                     portraitUrl = null;
                 }
@@ -83,17 +85,17 @@ public class ForwardActivityViewModel extends AndroidViewModel {
                 if (userInfo != null) {
                     sendContactMsgUserName = userInfo.getName();
                 }
-                ContactMessage contactMessage = ContactMessage.obtain(((ContactMessage) fwdMessage.getContent()).getId(),
-                        ((ContactMessage) fwdMessage.getContent()).getName(), portraitUrl,
+                ContactMessage contactMessage = ContactMessage.obtain(((ContactMessage) messageContent).getId(),
+                        ((ContactMessage) messageContent).getName(), portraitUrl,
                         RongIM.getInstance().getCurrentUserId(), sendContactMsgUserName, null);
                 Message message = Message.obtain(targetId, conversationType, contactMessage);
                 sendMessage(message);
 
-            } else if (fwdMessage.getContent() != null && fwdMessage.getContent() instanceof LocationMessage) {//判断是否是定位消息
-                Message message = Message.obtain(targetId, conversationType, fwdMessage.getContent());
+            } else if (messageContent instanceof LocationMessage) {//判断是否是定位消息
+                Message message = Message.obtain(targetId, conversationType, messageContent);
                 sendMessage(message);
             } else {
-                Message message = Message.obtain(targetId, conversationType, fwdMessage.getContent());
+                Message message = Message.obtain(targetId, conversationType, messageContent);
                 sendMessage(message);
 
             }

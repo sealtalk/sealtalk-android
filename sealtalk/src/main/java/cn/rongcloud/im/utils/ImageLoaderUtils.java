@@ -33,8 +33,7 @@ public class ImageLoaderUtils {
 
     private static DisplayImageOptions createDefaultDisplayOptions(int defaultImgId) {
         DisplayImageOptions.Builder builder = new DisplayImageOptions.Builder();
-        builder.showImageOnLoading(defaultImgId == 0 ? R.drawable.rc_default_portrait : defaultImgId) //设置加载失败的图片
-                .showImageOnFail(defaultImgId == 0 ? R.drawable.rc_default_portrait : defaultImgId)
+        builder.showImageOnFail(defaultImgId == 0 ? R.drawable.rc_default_portrait : defaultImgId) //设置加载失败的图片
                 .cacheInMemory(true)
                 .cacheOnDisk(true)
                 .bitmapConfig(Bitmap.Config.RGB_565)

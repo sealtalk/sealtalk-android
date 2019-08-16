@@ -65,6 +65,46 @@ public class GroupEntity implements Parcelable {
      */
     @ColumnInfo(name = "is_in_contact")
     private int isInContact;
+    /**
+     * 定时删除时间状态
+     */
+    @ColumnInfo(name = "regular_clear_state")
+    private int regularClearState;
+    /**
+     * 全员禁言
+     */
+    @ColumnInfo(name = "is_mute_all")
+    private int isMute;
+
+    /**
+     * 入群认证
+     */
+    @ColumnInfo(name = "certification_status")
+    private int certiStatus;
+
+    public int getIsMute() {
+        return isMute;
+    }
+
+    public void setIsMute(int isMute) {
+        this.isMute = isMute;
+    }
+
+    public int getRegularClearState() {
+        return regularClearState;
+    }
+
+    public void setRegularClearState(int regularClearState) {
+        this.regularClearState = regularClearState;
+    }
+
+    public int getCertiStatus() {
+        return certiStatus;
+    }
+
+    public void setCertiStatus(int certiStatus) {
+        this.certiStatus = certiStatus;
+    }
 
     @NonNull
     public String getId() {
@@ -184,6 +224,32 @@ public class GroupEntity implements Parcelable {
         return id.hashCode();
     }
 
+    public GroupEntity() {
+    }
+
+    @Override
+    public String toString() {
+        return "GroupEntity{" +
+                "id='" + id + '\'' +
+                ", portraitUri='" + portraitUri + '\'' +
+                ", name='" + name + '\'' +
+                ", nameSpelling='" + nameSpelling + '\'' +
+                ", nameSpellingInitial='" + nameSpellingInitial + '\'' +
+                ", orderSpelling='" + orderSpelling + '\'' +
+                ", memberCount=" + memberCount +
+                ", maxMemberCount=" + maxMemberCount +
+                ", creatorId='" + creatorId + '\'' +
+                ", type=" + type +
+                ", bulletin='" + bulletin + '\'' +
+                ", bulletinTime=" + bulletinTime +
+                ", deletedAt=" + deletedAt +
+                ", isInContact=" + isInContact +
+                ", regularClearState=" + regularClearState +
+                ", isMuteAll=" + isMute +
+                ", certiStatus=" + certiStatus +
+                '}';
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -205,9 +271,9 @@ public class GroupEntity implements Parcelable {
         dest.writeLong(this.bulletinTime);
         dest.writeLong(this.deletedAt != null ? this.deletedAt.getTime() : -1);
         dest.writeInt(this.isInContact);
-    }
-
-    public GroupEntity() {
+        dest.writeInt(this.regularClearState);
+        dest.writeInt(this.isMute);
+        dest.writeInt(this.certiStatus);
     }
 
     protected GroupEntity(Parcel in) {
@@ -226,9 +292,12 @@ public class GroupEntity implements Parcelable {
         long tmpDeletedAt = in.readLong();
         this.deletedAt = tmpDeletedAt == -1 ? null : new Date(tmpDeletedAt);
         this.isInContact = in.readInt();
+        this.regularClearState = in.readInt();
+        this.isMute = in.readInt();
+        this.certiStatus = in.readInt();
     }
 
-    public static final Parcelable.Creator<GroupEntity> CREATOR = new Parcelable.Creator<GroupEntity>() {
+    public static final Creator<GroupEntity> CREATOR = new Creator<GroupEntity>() {
         @Override
         public GroupEntity createFromParcel(Parcel source) {
             return new GroupEntity(source);
@@ -239,24 +308,4 @@ public class GroupEntity implements Parcelable {
             return new GroupEntity[size];
         }
     };
-
-    @Override
-    public String toString() {
-        return "GroupEntity{" +
-                "id='" + id + '\'' +
-                ", portraitUri='" + portraitUri + '\'' +
-                ", name='" + name + '\'' +
-                ", nameSpelling='" + nameSpelling + '\'' +
-                ", nameSpellingInitial='" + nameSpellingInitial + '\'' +
-                ", orderSpelling='" + orderSpelling + '\'' +
-                ", memberCount=" + memberCount +
-                ", maxMemberCount=" + maxMemberCount +
-                ", creatorId='" + creatorId + '\'' +
-                ", type=" + type +
-                ", bulletin='" + bulletin + '\'' +
-                ", bulletinTime=" + bulletinTime +
-                ", deletedAt=" + deletedAt +
-                ", isInContact=" + isInContact +
-                '}';
-    }
 }

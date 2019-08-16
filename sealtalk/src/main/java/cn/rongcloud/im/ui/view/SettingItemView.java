@@ -204,6 +204,15 @@ public class SettingItemView extends LinearLayout {
     }
 
     /**
+     * 设置右侧图片的隐藏
+     *
+     * @param visibility
+     */
+    public void setRightImageVisibility(int visibility) {
+        ivRightImage.setVisibility(visibility);
+    }
+
+    /**
      * 设置标示图片显示隐藏
      *
      * @param visibility
@@ -240,6 +249,10 @@ public class SettingItemView extends LinearLayout {
         sbSwitch.setOnCheckedChangeListener(listener);
     }
 
+    public void setSwitchTouchListener(OnTouchListener listener) {
+        sbSwitch.setOnTouchListener(listener);
+    }
+
 
     /**
      * 设置 value 值 显示隐藏
@@ -272,6 +285,7 @@ public class SettingItemView extends LinearLayout {
 
     /**
      * 获取value
+     *
      * @return
      */
     public String getValue() {
@@ -333,6 +347,13 @@ public class SettingItemView extends LinearLayout {
      */
     public void setCheckedImmediately(boolean isChecked) {
         sbSwitch.setCheckedImmediately(isChecked);
+    }
+
+    /**
+     * 获取当前 switch 状态
+     */
+    public boolean isChecked() {
+        return sbSwitch.isChecked();
     }
 
     @Override

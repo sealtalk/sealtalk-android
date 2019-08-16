@@ -12,9 +12,12 @@ import cn.rongcloud.im.db.model.BlackListEntity;
 import cn.rongcloud.im.db.model.FriendInfo;
 import cn.rongcloud.im.db.model.GroupEntity;
 import cn.rongcloud.im.db.model.GroupMemberInfoEntity;
+import cn.rongcloud.im.db.model.GroupNoticeInfo;
+import cn.rongcloud.im.db.model.PhoneContactInfoEntity;
 import cn.rongcloud.im.db.model.UserInfo;
 
-@Database(entities = {UserInfo.class, FriendInfo.class, GroupEntity.class, GroupMemberInfoEntity.class, BlackListEntity.class}, version = 1, exportSchema = false)
+@Database(entities = {UserInfo.class, FriendInfo.class, GroupEntity.class, GroupMemberInfoEntity.class,
+        BlackListEntity.class, GroupNoticeInfo.class, PhoneContactInfoEntity.class}, version = 2, exportSchema = false)
 @TypeConverters(cn.rongcloud.im.db.TypeConverters.class)
 public abstract class SealTalkDatabase extends RoomDatabase {
     public abstract UserDao getUserDao();

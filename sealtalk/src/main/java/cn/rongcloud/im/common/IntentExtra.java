@@ -38,6 +38,10 @@ public class IntentExtra {
 
     public static final String GROUP_ID = "group_id";
 
+    public final static String BOOLEAN_ENABLE_TOAST = "enable_toast";
+
+    public final static String BOOLEAN_KICKED_BY_OTHER_USER = "kick_by_other_user";
+
     /**
      * 创建群组时是否返回结果，默认是 false ，代表创建群组后直接跳转到群聊界面
      */

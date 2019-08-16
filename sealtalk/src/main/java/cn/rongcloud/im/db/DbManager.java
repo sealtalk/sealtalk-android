@@ -56,7 +56,9 @@ public class DbManager {
         }
         currentUserId = userId;
         String userIdMD5 = MD5.encrypt(userId);
-        database = Room.databaseBuilder(context, SealTalkDatabase.class, String.format(DB_NAME_FORMAT, userIdMD5)).build();
+        database = Room.databaseBuilder(context, SealTalkDatabase.class, String.format(DB_NAME_FORMAT, userIdMD5))
+                .fallbackToDestructiveMigration()
+                .build();
         SLog.d(LogTag.DB, "openDb,userId:" + currentUserId);
     }
 

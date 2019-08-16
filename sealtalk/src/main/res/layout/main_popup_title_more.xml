@@ -49,4 +49,18 @@
         android:textColor="@color/seal_main_title_more_text_color"
         android:textSize="@dimen/seal_main_title_item_text_size" />
 
+    <Button
+        android:id="@+id/btn_scan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/seal_ic_pop_scan"
+        android:drawablePadding="@dimen/seal_main_title_popup_item_drawable_padding_2"
+        android:paddingLeft="@dimen/seal_main_title_popup_item_padding_2"
+        android:paddingRight="@dimen/seal_main_title_popup_item_padding_2"
+        android:gravity="center_vertical"
+        android:background= "@null"
+        android:text="@string/seal_main_title_scan"
+        android:textColor="@color/seal_main_title_more_text_color"
+        android:textSize="@dimen/seal_main_title_item_text_size" />
+
 </LinearLayout>

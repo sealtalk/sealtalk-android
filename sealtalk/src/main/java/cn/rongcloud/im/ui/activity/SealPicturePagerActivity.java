@@ -45,7 +45,20 @@ public class SealPicturePagerActivity extends PicturePagerActivity {
         } else {
             return false;
         }
-        String[] items = new String[]{getString(io.rong.imkit.R.string.rc_save_picture), getString(R.string.zxing_distinguish_picture)};
+
+        /*
+         * 长按时先扫描图片中是否有二维码，再决定是否显示扫描二维码选项
+         */
+        String qrCodeResult = QRCodeUtils.analyzeImage(file.getPath());
+        SLog.d(LogTag.COMMON, "SealPicturePagerActivity scan QR Code is " + qrCodeResult);
+
+        String[] items;
+        if (TextUtils.isEmpty(qrCodeResult)) {
+            items = new String[]{getString(io.rong.imkit.R.string.rc_save_picture)};
+        } else {
+            items = new String[]{getString(io.rong.imkit.R.string.rc_save_picture), getString(R.string.zxing_distinguish_picture)};
+        }
+
         OptionsPopupDialog.newInstance(this, items).setOptionsPopupDialogListener(new OptionsPopupDialog.OnOptionsItemClickedListener() {
             @Override
             public void onOptionsItemClicked(int which) {
@@ -65,12 +78,8 @@ public class SealPicturePagerActivity extends PicturePagerActivity {
                         ToastUtils.showToast(getString(io.rong.imkit.R.string.rc_src_file_not_found));
                     }
                 } else if (which == 1) {
-                    String qrCodeResult = QRCodeUtils.analyzeImage(file.getPath());
-                    SLog.d(LogTag.COMMON, "SealPicturePagerActivity scan QR Code is " + qrCodeResult);
                     if (!TextUtils.isEmpty(qrCodeResult)) {
                         handleQRCodeResult(qrCodeResult);
-                    } else {
-                        ToastUtils.showToast(getString(R.string.zxing_qr_can_not_recognized));
                     }
                 }
             }
@@ -90,11 +99,11 @@ public class SealPicturePagerActivity extends PicturePagerActivity {
         resourceLiveData.observe(this, new Observer<Resource<String>>() {
             @Override
             public void onChanged(Resource<String> resource) {
-                if(resource.status != Status.LOADING){
+                if (resource.status != Status.LOADING) {
                     resourceLiveData.removeObserver(this);
                 }
 
-                if(resource.status == Status.SUCCESS){
+                if (resource.status == Status.SUCCESS) {
                     finish();
                 } else {
                     String errorMsg = resource.data;

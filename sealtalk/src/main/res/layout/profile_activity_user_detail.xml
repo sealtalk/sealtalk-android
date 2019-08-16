@@ -39,6 +39,7 @@
                 android:id="@+id/profile_tv_detail_display_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:ellipsize="end"
                 android:maxLength="16"
                 android:maxLines="1"
@@ -93,6 +94,7 @@
             android:id="@+id/profile_siv_detail_blacklist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:item_divider="true"
             app:item_content="@string/profile_detail_join_the_blacklist"
             android:layout_marginTop="@dimen/seal_user_detail_item_margin"
             >
@@ -104,7 +106,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:item_content="@string/profile_delete_from_contact"
-            android:visibility="gone"
             >
 
         </cn.rongcloud.im.ui.view.SettingItemView>

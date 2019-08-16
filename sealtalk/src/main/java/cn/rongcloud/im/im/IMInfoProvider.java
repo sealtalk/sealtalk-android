@@ -18,6 +18,7 @@ import cn.rongcloud.im.db.dao.GroupMemberDao;
 import cn.rongcloud.im.db.model.FriendDetailInfo;
 import cn.rongcloud.im.db.model.FriendShipInfo;
 import cn.rongcloud.im.db.model.GroupEntity;
+import cn.rongcloud.im.db.model.GroupNoticeInfo;
 import cn.rongcloud.im.db.model.UserInfo;
 import cn.rongcloud.im.model.GroupMember;
 import cn.rongcloud.im.model.Resource;
@@ -39,10 +40,10 @@ public class IMInfoProvider {
     private FriendTask friendTask;
     private DbManager dbManager;
 
-    public IMInfoProvider(){
+    public IMInfoProvider() {
     }
 
-    public void init(Context context){
+    public void init(Context context) {
         initTask(context);
         initInfoProvider(context);
         dbManager = DbManager.getInstance(context);
@@ -126,7 +127,7 @@ public class IMInfoProvider {
      *
      * @param groupId
      */
-    public void updateGroupInfo(String groupId){
+    public void updateGroupInfo(String groupId) {
         ThreadManager.getInstance().runOnUIThread(() -> {
             LiveData<Resource<GroupEntity>> groupSource = groupTask.getGroupInfo(groupId);
             triggerLiveData.addSource(groupSource, resource -> {
@@ -144,7 +145,7 @@ public class IMInfoProvider {
      *
      * @param groupId
      */
-    public void updateGroupMember(String groupId){
+    public void updateGroupMember(String groupId) {
         ThreadManager.getInstance().runOnUIThread(() -> {
             // 考虑到在群内频繁调用此方法,当有请求时不进行请求
             if (groupMemberIsRequest) return;
@@ -168,7 +169,7 @@ public class IMInfoProvider {
      * @param groupId
      * @param callback
      */
-    private void updateIMGroupMember(String groupId, RongIM.IGroupMemberCallback callback){
+    private void updateIMGroupMember(String groupId, RongIM.IGroupMemberCallback callback) {
         ThreadManager.getInstance().runOnUIThread(() -> {
             // 考虑到在群内频繁调用此方法,当有请求时进行请求
             if (groupMemberIsRequest) return;
@@ -262,7 +263,7 @@ public class IMInfoProvider {
      *
      * @param contactInfoCallback
      */
-    public void getAllContactUserInfo(IContactCardInfoProvider.IContactCardInfoCallback contactInfoCallback){
+    public void getAllContactUserInfo(IContactCardInfoProvider.IContactCardInfoCallback contactInfoCallback) {
         ThreadManager.getInstance().runOnUIThread(() -> {
             LiveData<Resource<List<FriendShipInfo>>> allFriends = friendTask.getAllFriends();
             triggerLiveData.addSource(allFriends, resource -> {
@@ -292,7 +293,7 @@ public class IMInfoProvider {
      * @param userId
      * @param contactInfoCallback
      */
-    public void getContactUserInfo(String userId, IContactCardInfoProvider.IContactCardInfoCallback contactInfoCallback){
+    public void getContactUserInfo(String userId, IContactCardInfoProvider.IContactCardInfoCallback contactInfoCallback) {
         ThreadManager.getInstance().runOnUIThread(() -> {
             LiveData<Resource<FriendShipInfo>> friendInfo = friendTask.getFriendInfo(userId);
             triggerLiveData.addSource(friendInfo, resource -> {
@@ -309,6 +310,21 @@ public class IMInfoProvider {
                         }
                     }
                     contactInfoCallback.getContactCardInfoCallback(userInfoList);
+                }
+            });
+        });
+    }
+
+    /**
+     * 刷新群通知信息
+     */
+    public void refreshGroupNotideInfo() {
+        ThreadManager.getInstance().runOnUIThread(() -> {
+            LiveData<Resource<List<GroupNoticeInfo>>> groupNoticeInfo = groupTask.getGroupNoticeInfo();
+            triggerLiveData.addSource(groupNoticeInfo, resource -> {
+                if (resource.status == Status.SUCCESS || resource.status == Status.ERROR) {
+                    // 确认成功或失败后，移除数据源
+                    triggerLiveData.removeSource(groupNoticeInfo);
                 }
             });
         });

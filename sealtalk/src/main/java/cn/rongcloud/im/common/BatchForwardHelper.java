@@ -6,7 +6,10 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.IRongCallback;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Message;
+import io.rong.imlib.model.MessageContent;
+import io.rong.message.ImageMessage;
 
 /**
  * 批量发送消息工具类，将消息排序延迟 300ms 发送
@@ -37,8 +40,16 @@ public class BatchForwardHelper {
                                 object.wait();
                             }
                         }
-                        MessageWrapper wapper = messagelist.poll();
-                        RongIM.getInstance().sendMessage(wapper.getMessage(), null, null, wapper.getCallback());
+                        MessageWrapper wrapper = messagelist.poll();
+                        if(wrapper == null) continue;
+
+                        Message message = wrapper.getMessage();
+                        MessageContent messageContent = message.getContent();
+                        if(messageContent instanceof ImageMessage &&((ImageMessage)messageContent).getRemoteUri() == null){
+                            RongIM.getInstance().sendImageMessage(message, null, null, new SendImageMessageWrapper(wrapper.getCallback()));
+                        } else {
+                            RongIM.getInstance().sendMessage(message, null, null, wrapper.getCallback());
+                        }
                         Thread.sleep(300);//这里需要延迟 300ms 来发送，防止消息阻塞
                     }
                 } catch (InterruptedException e) {
@@ -70,6 +81,34 @@ public class BatchForwardHelper {
 
         public IRongCallback.ISendMediaMessageCallback getCallback() {
             return callback;
+        }
+    }
+
+    private class SendImageMessageWrapper extends RongIMClient.SendImageMessageCallback{
+        private IRongCallback.ISendMediaMessageCallback callback;
+
+        public SendImageMessageWrapper(IRongCallback.ISendMediaMessageCallback callback){
+         this.callback = callback;
+        }
+
+        @Override
+        public void onAttached(Message message) {
+            callback.onAttached(message);
+        }
+
+        @Override
+        public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+            callback.onError(message, errorCode);
+        }
+
+        @Override
+        public void onSuccess(Message message) {
+            callback.onSuccess(message);
+        }
+
+        @Override
+        public void onProgress(Message message, int i) {
+            callback.onProgress(message, i);
         }
     }
 

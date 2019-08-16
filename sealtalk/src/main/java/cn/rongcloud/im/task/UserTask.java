@@ -48,6 +48,7 @@ import cn.rongcloud.im.utils.NetworkOnlyResource;
 import cn.rongcloud.im.utils.RongGenerate;
 import cn.rongcloud.im.utils.SearchUtils;
 import cn.rongcloud.im.utils.log.SLog;
+import io.rong.imlib.model.Conversation;
 import okhttp3.RequestBody;
 
 /**
@@ -153,6 +154,14 @@ public class UserTask {
                         userInfo.setPortraitUri(portraitUri);
                     }
 
+                    String stAccount = userInfo.getStAccount();
+                    if (!TextUtils.isEmpty(stAccount)) {
+                        userDao.updateSAccount(userInfo.getId(), stAccount);
+                    }
+                    String gender = userInfo.getGender();
+                    if (!TextUtils.isEmpty(gender)) {
+                        userDao.updateGender(userInfo.getId(), gender);
+                    }
                     // 更新现有用户信息若没有则创建新的用户信息，防止覆盖其他已有字段
                     int resultCount = userDao.updateNameAndPortrait(userInfo.getId(), userInfo.getName(), nameSpelling, portraitUri);
                     if (resultCount == 0) {
@@ -199,7 +208,7 @@ public class UserTask {
      * @return
      */
     public UserInfo getUserInfoSync(final String userId) {
-       return dbManager.getUserDao().getUserByIdSync(userId);
+        return dbManager.getUserDao().getUserByIdSync(userId);
     }
 
 
@@ -423,6 +432,59 @@ public class UserTask {
         }.asLiveData();
     }
 
+    /**
+     * 设置 SealTalk 账号
+     *
+     * @param stAccount
+     * @return
+     */
+    public LiveData<Resource<Result>> setStAccount(String stAccount) {
+        return new NetworkOnlyResource<Result, Result>() {
+            @NonNull
+            @Override
+            protected LiveData<Result> createCall() {
+                HashMap<String, Object> paramMap = new HashMap<>();
+                paramMap.put("stAccount", stAccount);
+                RequestBody body = RetrofitUtil.createJsonRequest(paramMap);
+                return userService.setStAccount(body);
+            }
+
+            @Override
+            protected Result transformRequestType(Result response) {
+                return response;
+            }
+
+            @Override
+            protected void saveCallResult(@NonNull Result item) {
+                updateStAccount(IMManager.getInstance().getCurrentId(), stAccount);
+            }
+        }.asLiveData();
+
+    }
+
+    public LiveData<Resource<Result>> setGender(String gender) {
+        return new NetworkOnlyResource<Result, Result>() {
+            @NonNull
+            @Override
+            protected LiveData<Result> createCall() {
+                HashMap<String, Object> paramMap = new HashMap<>();
+                paramMap.put("gender", gender);
+                RequestBody body = RetrofitUtil.createJsonRequest(paramMap);
+                return userService.setGender(body);
+            }
+
+            @Override
+            protected Result transformRequestType(Result response) {
+                return response;
+            }
+
+            @Override
+            protected void saveCallResult(@NonNull Result item) {
+                updateGender(IMManager.getInstance().getCurrentId(), gender);
+            }
+        }.asLiveData();
+    }
+
     public LiveData<Resource<Result>> setPortrait(Uri imageUri) {
         MediatorLiveData<Resource<Result>> result = new MediatorLiveData<>();
         result.setValue(Resource.loading(null));
@@ -439,7 +501,7 @@ public class UserTask {
                     return;
                 }
 
-                if(resource.status == Status.SUCCESS) {
+                if (resource.status == Status.SUCCESS) {
                     LiveData<Resource<Result>> setPortrait = setPortrait(resource.data);
                     result.addSource(setPortrait, new Observer<Resource<Result>>() {
                         @Override
@@ -453,7 +515,7 @@ public class UserTask {
                                 result.setValue(Resource.error(resultResource.code, null));
                                 return;
                             }
-                            if(resultResource.status == Status.SUCCESS){
+                            if (resultResource.status == Status.SUCCESS) {
                                 result.setValue(resultResource);
                             }
                         }
@@ -545,6 +607,28 @@ public class UserTask {
             SLog.d("ss_update", "i=" + i);
 
             IMManager.getInstance().updateUserInfoCache(userId, nickName, Uri.parse(portraitUrl));
+        }
+    }
+
+    /**
+     * 更新数据库 SealTalk 号信息
+     *
+     * @param userId
+     * @param stAccount
+     */
+    public void updateStAccount(String userId, String stAccount) {
+        UserDao userDao = dbManager.getUserDao();
+        if (userDao != null) {
+            int i = userDao.updateSAccount(userId, stAccount);
+            SLog.d("st_update", "i=" + i);
+        }
+    }
+
+    public void updateGender(String userId, String gender) {
+        UserDao userDao = dbManager.getUserDao();
+        if (userDao != null) {
+            int i = userDao.updateGender(userId, gender);
+            SLog.d("gender_update", "i=" + i);
         }
     }
 
@@ -680,6 +764,8 @@ public class UserTask {
                     blackListEntity.setId(userId);
                     friendDao.addToBlackList(blackListEntity);
                 }
+
+                IMManager.getInstance().clearConversationAndMessage(userId, Conversation.ConversationType.PRIVATE);
             }
 
             @NonNull
@@ -722,21 +808,21 @@ public class UserTask {
      *
      * @return
      */
-    public LiveData<Resource<List<GroupEntity>>> getContactGroupList(){
+    public LiveData<Resource<List<GroupEntity>>> getContactGroupList() {
         return new NetworkBoundResource<List<GroupEntity>, Result<ContactGroupResult>>() {
             @Override
             protected void saveCallResult(@NonNull Result<ContactGroupResult> item) {
                 GroupDao groupDao = dbManager.getGroupDao();
-                if(groupDao == null) return;
+                if (groupDao == null) return;
                 // 先清除所有群组在通讯录状态
                 groupDao.clearAllGroupContact();
 
                 ContactGroupResult result = item.getResult();
-                if(result == null) return;
+                if (result == null) return;
                 List<GroupEntity> list = result.getList();
-                if(list != null && list.size() > 0){
+                if (list != null && list.size() > 0) {
                     // 设置默认头像和名称拼音
-                    for(GroupEntity groupEntity : list){
+                    for (GroupEntity groupEntity : list) {
                         String portraitUri = groupEntity.getPortraitUri();
                         if (TextUtils.isEmpty(portraitUri)) {
                             portraitUri = RongGenerate.generateDefaultAvatar(context, groupEntity.getId(), groupEntity.getName());
@@ -757,7 +843,7 @@ public class UserTask {
             @Override
             protected LiveData<List<GroupEntity>> loadFromDb() {
                 GroupDao groupDao = dbManager.getGroupDao();
-                if(groupDao != null){
+                if (groupDao != null) {
                     return groupDao.getContactGroupInfoList();
                 }
                 return new MutableLiveData<>(null);

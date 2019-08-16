@@ -60,6 +60,10 @@ public class CommonFunItemViewHolder extends BaseItemViewHolder<ListItemModel<Fu
             unreadTv.setVisibility(View.GONE);
         }
 
+        if (data.getDotNumber() > 0) {
+            unreadTv.setText(String.valueOf(data.getDotNumber()));
+        }
+
     }
 
 }

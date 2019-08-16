@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/default_main_area_background"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="55dp"
+        android:src="@drawable/add_friend_img_permission_to_contact" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/new_friend_no_permission_read_contact"
+        android:textColor="@color/default_main_text"
+        android:textSize="20dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:gravity="center"
+        android:text="@string/new_friend_to_setting_accept_contact_permission"
+        android:textColor="@color/default_main_text"
+        android:textSize="16dp" />
+
+
+    <TextView
+        android:id="@+id/request_permission_tv_to_setting"
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:text="@string/common_enter_setting"
+        android:textColor="@color/text_white"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:textSize="18dp"
+        android:gravity="center"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/seal_select_btn_blue"
+        />
+</LinearLayout>

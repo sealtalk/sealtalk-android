@@ -20,7 +20,7 @@ import cn.rongcloud.im.task.GroupTask;
  * 创建群组视图模型
  */
 public class CreateGroupViewModel extends AndroidViewModel {
-    private MediatorLiveData<Resource<String>> createGroupResult = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<GroupResult>> createGroupResult = new MediatorLiveData<>();
 
     private GroupTask groupTask;
 
@@ -41,17 +41,16 @@ public class CreateGroupViewModel extends AndroidViewModel {
                 GroupResult groupResult = groupResultResource.data;
                 if (groupResult != null) {
                     // 上传群组头像
-                    String groupId = groupResult.id;
                     if (groupPortrait != null) {
-                        nextToUploadPortraitResult(groupId, groupPortrait);
+                        nextToUploadPortraitResult(groupResult, groupPortrait);
                     } else {
-                        createGroupResult.setValue(Resource.success(groupId));
+                        createGroupResult.setValue(Resource.success(groupResult));
                     }
                 } else {
                     createGroupResult.setValue(Resource.error(ErrorCode.API_ERR_OTHER.getCode(), null));
                 }
             } else {
-                createGroupResult.setValue(Resource.error(groupResultResource.code, null));
+                createGroupResult.setValue(groupResultResource);
             }
         });
     }
@@ -59,21 +58,21 @@ public class CreateGroupViewModel extends AndroidViewModel {
     /**
      * 完成上传
      *
-     * @param groupId
+     * @param groupResult
      * @param groupPortrait
      */
-    private void nextToUploadPortraitResult(String groupId, Uri groupPortrait) {
+    private void nextToUploadPortraitResult(GroupResult groupResult, Uri groupPortrait) {
         // 进行上传群组头像
-        LiveData<Resource<Void>> uploadResource = groupTask.uploadAndSetGroupPortrait(groupId, groupPortrait);
+        LiveData<Resource<Void>> uploadResource = groupTask.uploadAndSetGroupPortrait(groupResult.id, groupPortrait);
         createGroupResult.addSource(uploadResource, resource -> {
             if (resource.status != Status.LOADING) {
                 createGroupResult.removeSource(uploadResource);
             }
             // 判断是否上传头像成功
             if (resource.status == Status.SUCCESS) {
-                createGroupResult.setValue(Resource.success(groupId));
+                createGroupResult.setValue(Resource.success(groupResult));
             } else {
-                createGroupResult.setValue(Resource.error(resource.code, groupId));
+                createGroupResult.setValue(Resource.error(resource.code, groupResult));
             }
         });
     }
@@ -83,7 +82,7 @@ public class CreateGroupViewModel extends AndroidViewModel {
      *
      * @return
      */
-    public LiveData<Resource<String>> getCreateGroupResult() {
+    public LiveData<Resource<GroupResult>> getCreateGroupResult() {
         return createGroupResult;
     }
 }

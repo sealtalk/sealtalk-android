@@ -13,7 +13,6 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Display;
 import android.view.Surface;
@@ -33,15 +32,15 @@ import java.util.List;
 import java.util.Map;
 
 import cn.rongcloud.im.R;
+import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.utils.qrcode.client.BeepManager;
 import cn.rongcloud.im.utils.qrcode.client.InactivityTimer;
 import cn.rongcloud.im.utils.qrcode.client.Intents;
-import cn.rongcloud.im.utils.log.SLog;
 
 
 
 /**
- * Manages barcode scanning for a CaptureActivity. This class may be used to have a custom Activity
+ * Manages barcode scanning for a ScanActivity. This class may be used to have a custom Activity
  * (e.g. with a customized look and feel, or a different superclass), but not the barcode scanning
  * process itself.
  * <p>
@@ -77,6 +76,8 @@ public class CaptureManager {
     private BeepManager beepManager;
 
     private Handler handler;
+
+    private OnCaptureResultListener resultListener;
 
     private BarcodeCallback callback = new BarcodeCallback() {
         @Override
@@ -385,10 +386,13 @@ public class CaptureManager {
     }
 
     protected void returnResult(BarcodeResult rawResult) {
-        SLog.e(TAG, "scanner returnResult");
-        Intent intent = resultIntent(rawResult, getBarcodeImagePath(rawResult));
-        activity.setResult(Activity.RESULT_OK, intent);
-        handleQrCode(intent);
+        SLog.d(TAG, "scanner returnResult:" + rawResult.toString());
+        if (resultListener != null) {
+            resultListener.onCaptureResult(rawResult);
+        } else {
+            Intent intent = resultIntent(rawResult, getBarcodeImagePath(rawResult));
+            activity.setResult(Activity.RESULT_OK, intent);
+        }
     }
 
     protected void displayFrameworkBugMessageAndExit() {
@@ -421,20 +425,15 @@ public class CaptureManager {
         CaptureManager.cameraPermissionReqCode = cameraPermissionReqCode;
     }
 
+    /**
+     * Set capture result listener.
+     * @param listener
+     */
+    public void setOnCaptureResultListener(OnCaptureResultListener listener){
+        this.resultListener = listener;
+    }
 
-    private void handleQrCode(Intent intent) {
-        Bundle bundle = intent.getExtras();
-        if (bundle == null) {
-            return;
-        }
-        final String result = bundle.getString(Intents.Scan.RESULT);
-        String ignoreCaseResult = result.toLowerCase();
-
-        if (TextUtils.isEmpty(result)) {
-            SLog.d(TAG, "scanner result is null");
-            return;
-        }
-
-        //TODO deal QR Code Result
+    public interface OnCaptureResultListener {
+        void onCaptureResult(BarcodeResult result);
     }
 }

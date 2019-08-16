@@ -8,11 +8,14 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.db.model.FriendDetailInfo;
 import cn.rongcloud.im.db.model.FriendShipInfo;
+import cn.rongcloud.im.db.model.FriendStatus;
 import cn.rongcloud.im.db.model.UserInfo;
 import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.model.Resource;
@@ -21,6 +24,7 @@ import cn.rongcloud.im.task.FriendTask;
 import cn.rongcloud.im.task.UserTask;
 import cn.rongcloud.im.ui.adapter.models.FunctionInfo;
 import cn.rongcloud.im.ui.adapter.models.ListItemModel;
+import cn.rongcloud.im.utils.SingleSourceLiveData;
 import cn.rongcloud.im.utils.SingleSourceMapLiveData;
 import cn.rongcloud.im.utils.log.SLog;
 import io.rong.imlib.model.Message;
@@ -33,8 +37,11 @@ public class MainContactsListViewModel extends CommonListBaseViewModel {
     private List<ListItemModel> functionList;
     private FriendShipInfo mySelfInfo;
     private List<FriendShipInfo> friendList = new ArrayList<>();
+    private Map<String, Integer> dotNumMap = new HashMap<>();
 
     private SingleSourceMapLiveData<Message, Integer> refreshItem;
+    private SingleSourceLiveData<Integer> dotNumData = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<List<FriendShipInfo>>> allFriendInfo = new SingleSourceLiveData<>();
 
 
     public MainContactsListViewModel(@NonNull Application application) {
@@ -49,15 +56,25 @@ public class MainContactsListViewModel extends CommonListBaseViewModel {
                     ContactNotificationMessage contactNotificationMessage = (ContactNotificationMessage) message.getContent();
                     if (contactNotificationMessage.getOperation().equals("Request") ||
                             contactNotificationMessage.getOperation().equals("AcceptResponse")) {
-                        return setFunctionShowRedDot("1", true);
+                        loadAllFriendInfo();
+                        //return setFunctionShowRedDot("1", true);
+                        return 0;
                     }
                 }
                 return 0;
             }
         });
 
-        // 添加好友通知监听。 目前去掉。 二期可能要重新添加回来
-//        refeshItem.setSource(IMManager.getInstance().getMessageRouter());
+        // 添加好友通知监听
+        refreshItem.setSource(IMManager.getInstance().getMessageRouter());
+    }
+
+    public void loadAllFriendInfo() {
+        allFriendInfo.setSource(friendTask.getAllFriends());
+    }
+
+    public LiveData<Resource<List<FriendShipInfo>>> getLoadAllFriendInfoResult() {
+        return allFriendInfo;
     }
 
 
@@ -69,6 +86,7 @@ public class MainContactsListViewModel extends CommonListBaseViewModel {
 
     /**
      * 功能项
+     *
      * @return
      */
     private List<ListItemModel> getFunctionList() {
@@ -117,19 +135,24 @@ public class MainContactsListViewModel extends CommonListBaseViewModel {
         });
 
         LiveData<Resource<List<FriendShipInfo>>> allFriends = friendTask.getAllFriends();
+        allFriendInfo.setSource(allFriends);
         conversationLiveData.addSource(allFriends, new Observer<Resource<List<FriendShipInfo>>>() {
             @Override
             public void onChanged(Resource<List<FriendShipInfo>> listResource) {
                 if (listResource.status != Status.LOADING) {
-                    if (listResource.data != null) {
+                    List<FriendShipInfo> dataList = listResource.data;
+                    if (dataList != null) {
                         friendList.clear();
-                        friendList.addAll(listResource.data);
+                        for(FriendShipInfo data : dataList){
+                            if(data.getStatus() == FriendStatus.IS_FRIEND.getStatusCode()) {
+                                friendList.add(data);
+                            }
+                        }
                         post(getFunctionList(), mySelfInfo, friendList);
                     }
                 }
             }
         });
-
     }
 
 
@@ -147,6 +170,7 @@ public class MainContactsListViewModel extends CommonListBaseViewModel {
 
     /**
      * 刷新某一项的监听
+     *
      * @return
      */
     public LiveData<Integer> getRefreshItem() {
@@ -154,7 +178,17 @@ public class MainContactsListViewModel extends CommonListBaseViewModel {
     }
 
     /**
+     * 刷新红点数量的监听
+     *
+     * @return
+     */
+    public LiveData<Integer> getRefreshDotNum() {
+        return dotNumData;
+    }
+
+    /**
      * 设置功能项的红点状态
+     *
      * @param id
      * @param isShow
      */
@@ -166,6 +200,7 @@ public class MainContactsListViewModel extends CommonListBaseViewModel {
 
     /**
      * 设置展示红点
+     *
      * @param id
      */
     private int setFunctionShowRedDot(String id, boolean isShow) {
@@ -183,6 +218,28 @@ public class MainContactsListViewModel extends CommonListBaseViewModel {
             }
         }
         return 0;
+    }
+
+    public int setFunctionShowRedDot(String id, int dotNum, boolean isShow) {
+        if (conversationLiveData.getValue() == null || conversationLiveData.getValue() == null) {
+            return 0;
+        }
+        for (int i = 0; i < conversationLiveData.getValue().size(); i++) {
+            Object o = conversationLiveData.getValue().get(i).getData();
+            if (o instanceof FunctionInfo) {
+                FunctionInfo functionInfo = (FunctionInfo) o;
+                if (functionInfo.getId().equals(id)) {
+                    functionInfo.setShowDot(isShow);
+                    functionInfo.setDotNumber(dotNum);
+                    return i;
+                }
+            }
+        }
+        return 0;
+    }
+
+    public LiveData<List<ListItemModel>> getConversationLiveData(){
+        return  conversationLiveData;
     }
 
 }

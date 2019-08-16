@@ -16,7 +16,9 @@ import cn.rongcloud.im.db.model.FriendShipInfo;
 import cn.rongcloud.im.db.model.UserInfo;
 import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.model.Resource;
+import cn.rongcloud.im.model.ScreenCaptureResult;
 import cn.rongcloud.im.task.FriendTask;
+import cn.rongcloud.im.task.PrivacyTask;
 import cn.rongcloud.im.task.UserTask;
 import cn.rongcloud.im.utils.SingleSourceLiveData;
 import io.rong.imlib.model.Conversation;
@@ -34,7 +36,10 @@ public class PrivateChatSettingViewModel extends AndroidViewModel {
     private SingleSourceLiveData<Resource<Boolean>> isNotifyLiveData = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<Boolean>> isTopLiveData = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<Boolean>> cleanMessageResult = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<ScreenCaptureResult>> screenCaptureResult = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<Void>> setScreenCaptureResult = new SingleSourceLiveData<>();
     private FriendTask friendTask;
+    private PrivacyTask privacyTask;
     private IMManager imManager;
 
     public PrivateChatSettingViewModel(@NonNull Application application) {
@@ -48,18 +53,45 @@ public class PrivateChatSettingViewModel extends AndroidViewModel {
 
         userTask = new UserTask(application);
         friendTask = new FriendTask(application);
+        privacyTask = new PrivacyTask(application);
         imManager = IMManager.getInstance();
         this.targetId = targetId;
         this.conversationType = conversationType;
 
         isNotifyLiveData.setSource(imManager.getConversationNotificationStatus(conversationType, targetId));
         isTopLiveData.setSource(imManager.getConversationIsOnTop(conversationType, targetId));
+        getScreenCaptureStatus();
     }
+
+    /**
+     * 获取是否开启截屏通知
+     */
+    private void getScreenCaptureStatus() {
+        screenCaptureResult.setSource(privacyTask.getScreenCapture(conversationType.getValue(), targetId));
+    }
+
+    public LiveData<Resource<ScreenCaptureResult>> getScreenCaptureStatusResult() {
+        return screenCaptureResult;
+    }
+
+    /**
+     * 设置是否开启截屏通知
+     *
+     * @param status
+     */
+    public void setScreenCaptureStatus(int status) {
+        setScreenCaptureResult.setSource(privacyTask.setScreenCapture(conversationType.getValue(), targetId, status));
+    }
+
+    public LiveData<Resource<Void>> getSetScreenCaptureResult(){
+        return  setScreenCaptureResult;
+    }
+
 
     /**
      * 请求好友信息.
      */
-    public void requestFriendInfo(){
+    public void requestFriendInfo() {
 
         // 支持加入信息是自己的话，支持查看自己， 则需要查询自己的信息
         if (IMManager.getInstance().getCurrentId().equals(targetId)) {
@@ -96,9 +128,10 @@ public class PrivateChatSettingViewModel extends AndroidViewModel {
 
     /**
      * 获取好友信息
+     *
      * @return
      */
-    public LiveData<Resource<FriendShipInfo>> getFriendInfo(){
+    public LiveData<Resource<FriendShipInfo>> getFriendInfo() {
         return friendShipInfoLiveData;
     }
 
@@ -107,11 +140,11 @@ public class PrivateChatSettingViewModel extends AndroidViewModel {
      *
      * @param isNotify
      */
-    public void setIsNotifyConversation(final boolean isNotify){
+    public void setIsNotifyConversation(final boolean isNotify) {
         Resource<Boolean> value = isNotifyLiveData.getValue();
-        if(value != null && value.data != null && value.data == isNotify) return;
+        if (value != null && value.data != null && value.data == isNotify) return;
 
-        isNotifyLiveData.setSource(imManager.setConversationNotificationStatus(conversationType, targetId,isNotify));
+        isNotifyLiveData.setSource(imManager.setConversationNotificationStatus(conversationType, targetId, isNotify));
     }
 
     /**
@@ -119,15 +152,16 @@ public class PrivateChatSettingViewModel extends AndroidViewModel {
      *
      * @param isTop
      */
-    public void setConversationOnTop(boolean isTop){
+    public void setConversationOnTop(boolean isTop) {
         Resource<Boolean> value = isTopLiveData.getValue();
-        if(value != null && value.data != null && value.data == isTop) return;
+        if (value != null && value.data != null && value.data == isTop) return;
 
         isTopLiveData.setSource(imManager.setConversationToTop(conversationType, targetId, isTop));
     }
 
     /**
      * 获取会话是否接受消息通知
+     *
      * @return
      */
     public MutableLiveData<Resource<Boolean>> getIsNotify() {
@@ -136,6 +170,7 @@ public class PrivateChatSettingViewModel extends AndroidViewModel {
 
     /**
      * 获取会话是否置顶
+     *
      * @return
      */
     public MutableLiveData<Resource<Boolean>> getIsTop() {
@@ -145,7 +180,7 @@ public class PrivateChatSettingViewModel extends AndroidViewModel {
     /**
      * 清除历史消息
      */
-    public void cleanHistoryMessage(){
+    public void cleanHistoryMessage() {
         cleanMessageResult.setSource(imManager.cleanHistoryMessage(conversationType, targetId));
     }
 
@@ -154,16 +189,16 @@ public class PrivateChatSettingViewModel extends AndroidViewModel {
      *
      * @return
      */
-    public LiveData<Resource<Boolean>> getCleanHistoryMessageResult(){
+    public LiveData<Resource<Boolean>> getCleanHistoryMessageResult() {
         return cleanMessageResult;
     }
 
-    public static class Factory implements ViewModelProvider.Factory  {
+    public static class Factory implements ViewModelProvider.Factory {
         private String targetId;
         private Conversation.ConversationType conversationType;
         private Application application;
 
-        public Factory(Application application,String targetId, Conversation.ConversationType conversationType) {
+        public Factory(Application application, String targetId, Conversation.ConversationType conversationType) {
             this.conversationType = conversationType;
             this.targetId = targetId;
             this.application = application;

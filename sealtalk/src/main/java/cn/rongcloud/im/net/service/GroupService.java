@@ -5,6 +5,9 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import cn.rongcloud.im.db.model.GroupEntity;
+import cn.rongcloud.im.db.model.GroupNoticeInfo;
+import cn.rongcloud.im.model.AddMemberResult;
+import cn.rongcloud.im.model.GroupNoticeInfoResult;
 import cn.rongcloud.im.model.GroupNoticeResult;
 import cn.rongcloud.im.model.GroupMemberInfoResult;
 import cn.rongcloud.im.model.GroupResult;
@@ -24,7 +27,7 @@ public interface GroupService {
     LiveData<Result<GroupResult>> createGroup(@Body RequestBody body);
 
     @POST(SealTalkUrl.GROUP_ADD_MEMBER)
-    LiveData<Result> addGroupMember(@Body RequestBody body);
+    LiveData<Result<List<AddMemberResult>>> addGroupMember(@Body RequestBody body);
 
     @POST(SealTalkUrl.GROUP_JOIN)
     LiveData<Result> joinGroup(@Body RequestBody body);
@@ -73,5 +76,26 @@ public interface GroupService {
 
     @HTTP(method = "DELETE", path = SealTalkUrl.GROUP_SAVE_TO_CONTACT, hasBody = true)
     LiveData<Result> removeFromContact(@Body RequestBody body);
+
+    @POST(SealTalkUrl.GROUP_SET_REGULAR_CLEAR)
+    LiveData<Result> setRegularClear(@Body RequestBody body);
+
+    @POST(SealTalkUrl.GROUP_GET_REGULAR_CLEAR_STATE)
+    LiveData<Result<Integer>> getRegularClearState(@Body RequestBody body);
+
+    @POST(SealTalkUrl.GROUP_MUTE_ALL)
+    LiveData<Result> muteAll(@Body RequestBody body);
+
+    @POST(SealTalkUrl.GROUP_SET_CERTIFICATION)
+    LiveData<Result<Void>> setCertification(@Body RequestBody body);
+
+    @GET(SealTalkUrl.GROUP_GET_NOTICE_INFO)
+    LiveData<Result<List<GroupNoticeInfoResult>>> getGroupNoticeInfo();
+
+    @POST(SealTalkUrl.GROUP_SET_NOTICE_STATUS)
+    LiveData<Result<Void>> setGroupNoticeStatus(@Body RequestBody body);
+
+    @POST(SealTalkUrl.GROUP_CLEAR_NOTICE)
+    LiveData<Result<Void>> clearGroupNotice();
 
 }

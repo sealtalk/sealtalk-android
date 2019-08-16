@@ -30,7 +30,7 @@ public class SearchFriendNetFragment extends Fragment implements View.OnClickLis
     private TextView tvPhone;
     private OnSearchFriendClickListener onSearchFriendClick;
 
-    public SearchFriendNetFragment(OnSearchFriendClickListener onSearchFriendClick) {
+    public void setOnSearchFriendClickListener(OnSearchFriendClickListener onSearchFriendClick) {
         this.onSearchFriendClick = onSearchFriendClick;
     }
 

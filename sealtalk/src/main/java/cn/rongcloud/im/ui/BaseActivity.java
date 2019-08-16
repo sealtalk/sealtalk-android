@@ -26,16 +26,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import cn.rongcloud.im.common.IntentExtra;
+import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.ui.activity.LoginActivity;
 import cn.rongcloud.im.ui.dialog.LoadingDialog;
 import cn.rongcloud.im.utils.ToastUtils;
-import cn.rongcloud.im.viewmodel.BaseActivityViewModel;
+import cn.rongcloud.im.utils.log.SLog;
 import io.rong.imkit.RongConfigurationManager;
 
 public class BaseActivity extends AppCompatActivity {
@@ -63,27 +64,33 @@ public class BaseActivity extends AppCompatActivity {
 
         if (isFullScreen()) {
             // 隐藏Activity顶部的状态栏
-            getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN , WindowManager.LayoutParams. FLAG_FULLSCREEN);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
 
         // 监听退出
-        if (isObserveLogout())  {
+        if (isObserveLogout()) {
             registerLogoutBoardcast();
+            IMManager.getInstance().getKickedOffline().observe(this, new Observer<Boolean>() {
+                @Override
+                public void onChanged(Boolean isLogout) {
+                    /*
+                     * 只有当前显示的 Activity 会走此段逻辑
+                     */
+                    if (isLogout) {
+                        SLog.d(BaseActivity.class.getCanonicalName(), "Log out.");
+                        sendLogoutNotify();
+                        IMManager.getInstance().resetKickedOfflineState();
+                        Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
+                        intent.putExtra(IntentExtra.BOOLEAN_KICKED_BY_OTHER_USER, true);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+            });
         }
 
         // 清除已存在的 Fragment 防止因没有复用导致叠加显示
         clearAllFragmentExistBeforeCreate();
-
-        final BaseActivityViewModel baseActivityViewModel = ViewModelProviders.of(this).get(BaseActivityViewModel.class);
-        baseActivityViewModel.getKickedOffline().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                sendLogoutNotify();
-                Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
     }
 
 
@@ -91,12 +98,12 @@ public class BaseActivity extends AppCompatActivity {
      * 清除所有已存在的 Fragment 防止因重建 Activity 时，前 Fragment 没有销毁和重新复用导致界面重复显示
      * 如果有自己实现 Fragment 的复用，请复写此方法并不实现内容
      */
-    public void clearAllFragmentExistBeforeCreate(){
+    public void clearAllFragmentExistBeforeCreate() {
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        if(fragments.size() == 0) return;
+        if (fragments.size() == 0) return;
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        for (Fragment fragment : fragments){
+        for (Fragment fragment : fragments) {
             fragmentTransaction.remove(fragment);
         }
         fragmentTransaction.commitNow();
@@ -104,6 +111,7 @@ public class BaseActivity extends AppCompatActivity {
 
     /**
      * 是否隐藏状态栏全屏
+     *
      * @return
      */
     protected boolean isFullScreen() {
@@ -165,7 +173,7 @@ public class BaseActivity extends AppCompatActivity {
     /**
      * 隐藏导航键
      */
-    public void hideNavigationBar(){
+    public void hideNavigationBar() {
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
@@ -312,22 +320,22 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
-
     // 退出应用
 
 
     /**
      * 是否监听退出应用操作，默认监听， 如果不像监听， 可复写
      * 此方法并返回 false
+     *
      * @return
      */
-    public  boolean isObserveLogout() {
+    public boolean isObserveLogout() {
         return true;
     }
 
     private void registerLogoutBoardcast() {
         IntentFilter intentFilter = new IntentFilter("com.rong.im.action.logout");
-        registerReceiver(logoutRecevier,intentFilter);
+        registerReceiver(logoutRecevier, intentFilter);
     }
 
     private void unRegisterLogoutBroadcast() {
@@ -335,7 +343,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * 通知发送退出应用广播。 关闭acitivity
+     * 通知通其他注册了登出广播的 Activity 关闭
      */
     public void sendLogoutNotify() {
         //发送广播
@@ -343,7 +351,7 @@ public class BaseActivity extends AppCompatActivity {
         sendBroadcast(intent);
     }
 
-    private BroadcastReceiver logoutRecevier  = new  BroadcastReceiver() {
+    private BroadcastReceiver logoutRecevier = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -354,8 +362,10 @@ public class BaseActivity extends AppCompatActivity {
 
     // 记录dialog 显示创建时间
     private long dialogCreateTime;
+
     /**
      * 显示加载 dialog
+     *
      * @param msg
      */
     public void showLoadingDialog(String msg) {
@@ -369,6 +379,7 @@ public class BaseActivity extends AppCompatActivity {
 
     /**
      * 显示加载 dialog
+     *
      * @param msgResId
      */
     public void showLoadingDialog(int msgResId) {
@@ -384,7 +395,7 @@ public class BaseActivity extends AppCompatActivity {
 
     /**
      * 取消加载dialog. 因为延迟， 所以要延时完成之后， 再在 runnable 中执行逻辑.
-     *
+     * <p>
      * 延迟关闭时间是因为接口有时返回太快。
      */
     public void dismissLoadingDialog(Runnable runnable) {
@@ -412,5 +423,4 @@ public class BaseActivity extends AppCompatActivity {
             }
         }
     }
-
 }

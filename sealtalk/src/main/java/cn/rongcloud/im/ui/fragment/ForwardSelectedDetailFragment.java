@@ -18,7 +18,7 @@ import cn.rongcloud.im.viewmodel.ForwardSelectedDetailViewModel;
 
 public class ForwardSelectedDetailFragment extends CommonListBaseFragment {
 
-    private ArrayList<GroupEntity> seletedGroup;
+    private ArrayList<GroupEntity> selectedGroup;
     private ArrayList<FriendShipInfo>  selectedFriends;
     private ForwardSelectedDetailViewModel forwardSelectedDetailViewModel;
     private OnLeftSelectedListener listener;
@@ -26,7 +26,7 @@ public class ForwardSelectedDetailFragment extends CommonListBaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        seletedGroup = getActivity().getIntent().getParcelableArrayListExtra(IntentExtra.GROUP_LIST);
+        selectedGroup = getActivity().getIntent().getParcelableArrayListExtra(IntentExtra.GROUP_LIST);
         selectedFriends = getActivity().getIntent().getParcelableArrayListExtra(IntentExtra.FRIEND_LIST);
 
         setOnItemClickListener(new CommonListAdapter.OnItemClickListener() {
@@ -48,9 +48,9 @@ public class ForwardSelectedDetailFragment extends CommonListBaseFragment {
                 }
 
 
-                forwardSelectedDetailViewModel.loadData(selectedFriends, seletedGroup);
+                forwardSelectedDetailViewModel.loadData(selectedFriends, selectedGroup);
                 if (listener != null) {
-                    listener.onLeftSelected(selectedFriends, seletedGroup);
+                    listener.onLeftSelected(selectedFriends, selectedGroup);
                 }
             }
         });
@@ -65,13 +65,13 @@ public class ForwardSelectedDetailFragment extends CommonListBaseFragment {
     @Override
     protected void onInitViewModel() {
         super.onInitViewModel();
-        forwardSelectedDetailViewModel.loadData(selectedFriends, seletedGroup);
+        forwardSelectedDetailViewModel.loadData(selectedFriends, selectedGroup);
     }
 
 
     private void removeAndUpdate(GroupEntity group) {
-        if (seletedGroup != null && seletedGroup.size() > 0 && group != null) {
-            seletedGroup.remove(group);
+        if (selectedGroup != null && selectedGroup.size() > 0 && group != null) {
+            selectedGroup.remove(group);
         }
     }
 

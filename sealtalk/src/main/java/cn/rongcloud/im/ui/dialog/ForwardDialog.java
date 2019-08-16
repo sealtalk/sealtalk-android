@@ -17,7 +17,14 @@ import cn.rongcloud.im.ui.view.UserInfoItemView;
 import cn.rongcloud.im.utils.ImageLoaderUtils;
 import io.rong.imkit.widget.AsyncImageView;
 import io.rong.imlib.model.Message;
+import io.rong.imlib.model.MessageContent;
+import io.rong.message.FileMessage;
+import io.rong.message.HQVoiceMessage;
+import io.rong.message.ImageMessage;
+import io.rong.message.LocationMessage;
+import io.rong.message.SightMessage;
 import io.rong.message.TextMessage;
+import io.rong.message.VoiceMessage;
 
 public class ForwardDialog extends CommonDialog {
 
@@ -87,23 +94,19 @@ public class ForwardDialog extends CommonDialog {
         if (messageList != null) {
             String content = "...";
             final Message message = messageList.get(0);
-            final String objectName = message.getObjectName();
-            if (objectName.equals("RC:TxtMsg")) {
+            final MessageContent messageContent = message.getContent();
+            if (messageContent instanceof TextMessage) {
                 content = ((TextMessage) message.getContent()).getContent();
-            } else if (objectName.equals("RC:VcMsg") || objectName.equals("RC:HQVCMsg")) {
+            } else if (messageContent instanceof VoiceMessage || messageContent instanceof HQVoiceMessage) {
                 content = getString(R.string.rc_message_content_voice);
-            } else if (objectName.equals("RC:FileMsg")) {
+            } else if (messageContent instanceof FileMessage) {
                 content = getString(R.string.rc_message_content_file);
-
-            } else if (objectName.equals("RC:ImgMsg")) {
+            } else if (messageContent instanceof ImageMessage) {
                 content = getString(R.string.rc_message_content_image);
-
-            } else if (objectName.equals("RC:LBSMsg")) {
+            } else if (messageContent instanceof LocationMessage) {
                 content = getString(R.string.rc_message_content_location);
-
-            } else if (objectName.equals("RC:SightMsg")) {
+            } else if (messageContent instanceof SightMessage) {
                 content = getString(R.string.rc_message_content_sight);
-
             }
 
             if (messageList.size() > 1) {

@@ -106,7 +106,8 @@ public class ListItemModel <T>{
             FUN(0),
             TEXT(1),
             GROUP(2),
-            FRIEND(3);
+            FRIEND(3),
+            OTHER(4);
 
             int value;
             Type(int value) {

@@ -3,23 +3,29 @@ package cn.rongcloud.im.ui.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.view.View;
+import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.Constant;
 import cn.rongcloud.im.common.IntentExtra;
+import cn.rongcloud.im.model.AddMemberResult;
+import cn.rongcloud.im.model.GroupResult;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.ui.dialog.SelectPictureBottomDialog;
 import cn.rongcloud.im.ui.view.SealTitleBar;
-import cn.rongcloud.im.ui.widget.ClearWriteEditText;
 import cn.rongcloud.im.utils.ToastUtils;
-import cn.rongcloud.im.viewmodel.CreateGroupViewModel;
 import cn.rongcloud.im.utils.log.SLog;
+import cn.rongcloud.im.viewmodel.CreateGroupViewModel;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.emoticon.AndroidEmoji;
 import io.rong.imkit.widget.AsyncImageView;
@@ -31,7 +37,7 @@ import io.rong.imlib.model.Conversation;
 public class CreateGroupActivity extends TitleBaseActivity implements View.OnClickListener {
     private final String TAG = "CreateGroupActivity";
 
-    private ClearWriteEditText groupNameEt;
+    private EditText groupNameEt;
     private AsyncImageView groupPortraitIv;
 
     private Uri groupPortraitUri;
@@ -43,6 +49,7 @@ public class CreateGroupActivity extends TitleBaseActivity implements View.OnCli
      * 是否返回创建群组结果
      */
     private boolean isReturnResult;
+    private boolean isCreatingGroup;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,7 +74,7 @@ public class CreateGroupActivity extends TitleBaseActivity implements View.OnCli
             return;
         }
         //加入自己
-        memberList.add(0,RongIM.getInstance().getCurrentUserId());
+        memberList.add(0, RongIM.getInstance().getCurrentUserId());
 
         initView();
         initViewModel();
@@ -76,6 +83,7 @@ public class CreateGroupActivity extends TitleBaseActivity implements View.OnCli
     private void initView() {
         groupNameEt = findViewById(R.id.main_et_create_group_name);
         groupNameEt.setHint(getString(R.string.profile_group_name_word_limit_format, Constant.GROUP_NAME_MIN_LENGTH, Constant.GROUP_NAME_MAX_LENGTH));
+        groupNameEt.setFilters(new InputFilter[]{emojiFilter, new InputFilter.LengthFilter(10)});
         groupPortraitIv = findViewById(R.id.main_iv_create_group_portrait);
         groupPortraitIv.setOnClickListener(this);
         findViewById(R.id.main_btn_confirm_create).setOnClickListener(this);
@@ -93,6 +101,9 @@ public class CreateGroupActivity extends TitleBaseActivity implements View.OnCli
                 if (resource.data != null) {
                     // 处理创建群组结果
                     processCreateResult(resource.data);
+                } else {
+                    // 仅有创建失败时重置创建群组状态
+                    isCreatingGroup = false;
                 }
 
                 ToastUtils.showToast(resource.message);
@@ -132,6 +143,8 @@ public class CreateGroupActivity extends TitleBaseActivity implements View.OnCli
      * 创建群组
      */
     private void createGroup() {
+        if (isCreatingGroup) return;
+
         String groupName = groupNameEt.getText().toString();
         groupName = groupName.trim();
 
@@ -147,23 +160,42 @@ public class CreateGroupActivity extends TitleBaseActivity implements View.OnCli
 
         createGroupName = groupName;
 
-        // 重命名群名称
+        // 标记创建群组状态
+        isCreatingGroup = true;
         createGroupViewModel.createGroup(groupName, groupPortraitUri, memberList);
     }
 
     /**
      * 处理创建结果
      *
-     * @param groupId
+     * @param groupResult
      */
-    private void processCreateResult(String groupId){
+    private void processCreateResult(GroupResult groupResult) {
+        String groupId = "";
+        if (groupResult != null) {
+            groupId = groupResult.id;
+
+            // 判断是否有人需要同意加入群，显示提示信息
+            if (groupResult.userStatus != null && groupResult.userStatus.size() > 0) {
+                String tips = getString(R.string.seal_create_success);
+                //1 为已加入, 2 为等待管理员同意, 3 为等待被邀请者同意
+                for (AddMemberResult result : groupResult.userStatus) {
+                    if (result.status == 3) {
+                        tips = getString(R.string.seal_add_need_member_agree);
+                        break;
+                    }
+                }
+                ToastUtils.showToast(tips);
+            }
+        }
+
         // 返回结果时候设置结果并结束
-        if(isReturnResult){
+        if (isReturnResult) {
             Intent resultIntent = new Intent();
             resultIntent.putExtra(IntentExtra.GROUP_ID, groupId);
             setResult(RESULT_OK, resultIntent);
             finish();
-        }else {
+        } else {
             //不返回结果时，创建成功后跳转到群组聊天中
             toGroupChat(groupId);
         }
@@ -176,4 +208,22 @@ public class CreateGroupActivity extends TitleBaseActivity implements View.OnCli
         RongIM.getInstance().startConversation(this, Conversation.ConversationType.GROUP, groupId, createGroupName);
         finish();
     }
+
+    /**
+     * 表情输入的过滤
+     */
+    InputFilter emojiFilter = new InputFilter() {
+        Pattern emoji = Pattern.compile("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",
+                Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            Matcher emojiMatcher = emoji.matcher(source);
+            if (emojiMatcher.find()) {
+                ToastUtils.showToast("不支持输入表情");
+                return "";
+            }
+            return null;
+        }
+    };
 }

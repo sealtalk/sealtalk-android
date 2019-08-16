@@ -3,6 +3,7 @@ package cn.rongcloud.im.im;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -20,9 +21,13 @@ import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.common.LogTag;
 import cn.rongcloud.im.common.ResultCallback;
 import cn.rongcloud.im.db.DbManager;
+import cn.rongcloud.im.im.message.GroupApplyMessage;
 import cn.rongcloud.im.im.message.SealContactNotificationMessage;
+import cn.rongcloud.im.im.message.SealGroupConNtfMessage;
 import cn.rongcloud.im.im.message.SealGroupNotificationMessage;
 import cn.rongcloud.im.im.provider.ContactNotificationMessageProvider;
+import cn.rongcloud.im.im.provider.GroupApplyMessageProvider;
+import cn.rongcloud.im.im.provider.SealGroupConNtfMessageProvider;
 import cn.rongcloud.im.im.provider.SealGroupNotificationMessageItemProvider;
 import cn.rongcloud.im.model.ChatRoomAction;
 import cn.rongcloud.im.model.ContactNotificationMessageData;
@@ -36,6 +41,7 @@ import cn.rongcloud.im.net.service.UserService;
 import cn.rongcloud.im.sp.UserCache;
 import cn.rongcloud.im.sp.UserConfigCache;
 import cn.rongcloud.im.ui.activity.ForwardActivity;
+import cn.rongcloud.im.ui.activity.GroupNoticeListActivity;
 import cn.rongcloud.im.ui.activity.NewFriendListActivity;
 import cn.rongcloud.im.ui.activity.SealPicturePagerActivity;
 import cn.rongcloud.im.ui.activity.UserDetailActivity;
@@ -165,7 +171,7 @@ public class IMManager {
     private void cacheConnectIM() {
         if (RongIM.getInstance().getCurrentConnectionStatus() == RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED) {
             autologinResult.setValue(true);
-            return ;
+            return;
         }
         // 用户设置缓存 sp
         configCache = new UserConfigCache(context.getApplicationContext());
@@ -460,6 +466,12 @@ public class IMManager {
         RongIM.setConversationListBehaviorListener(new RongIM.ConversationListBehaviorListener() {
             @Override
             public boolean onConversationPortraitClick(Context context, Conversation.ConversationType conversationType, String s) {
+                //如果是群通知，点击头像进入群通知页面
+                if (s.equals("__group_apply__")){
+                    Intent noticeListIntent = new Intent(context, GroupNoticeListActivity.class);
+                    context.startActivity(noticeListIntent);
+                    return true;
+                }
                 return false;
             }
 
@@ -499,6 +511,10 @@ public class IMManager {
                         context.startActivity(new Intent(context, NewFriendListActivity.class));
                     }
                     return true;
+                } else if (messageContent instanceof GroupApplyMessage) {
+                    Intent noticeListIntent = new Intent(context, GroupNoticeListActivity.class);
+                    context.startActivity(noticeListIntent);
+                    return true;
                 }
                 return false;
             }
@@ -513,8 +529,17 @@ public class IMManager {
      * @param portraitUri
      */
     public void updateUserInfoCache(String userId, String userName, Uri portraitUri) {
-        UserInfo userInfo = new UserInfo(userId, userName, portraitUri);
-        RongIM.getInstance().refreshUserInfoCache(userInfo);
+
+        UserInfo oldUserInfo = RongUserInfoManager.getInstance().getUserInfo(userId);
+        if (oldUserInfo == null
+                || (
+                !oldUserInfo.getName().equals(userName)
+                        || oldUserInfo.getPortraitUri() == null
+                        || !oldUserInfo.getPortraitUri().equals(portraitUri)
+        )) {
+            UserInfo userInfo = new UserInfo(userId, userName, portraitUri);
+            RongIM.getInstance().refreshUserInfoCache(userInfo);
+        }
     }
 
     /**
@@ -525,8 +550,16 @@ public class IMManager {
      * @param portraitUri
      */
     public void updateGroupInfoCache(String groupId, String groupName, Uri portraitUri) {
-        Group group = new Group(groupId, groupName, portraitUri);
-        RongIM.getInstance().refreshGroupInfoCache(group);
+        Group oldGroup = RongUserInfoManager.getInstance().getGroupInfo(groupId);
+        if (oldGroup == null
+                || (
+                !oldGroup.getName().equals(groupName)
+                        || oldGroup.getPortraitUri() == null
+                        || !oldGroup.getPortraitUri().equals(portraitUri)
+        )) {
+            Group group = new Group(groupId, groupName, portraitUri);
+            RongIM.getInstance().refreshGroupInfoCache(group);
+        }
     }
 
     /**
@@ -537,8 +570,15 @@ public class IMManager {
      * @param nickName
      */
     public void updateGroupMemberInfoCache(String groupId, String userId, String nickName) {
-        GroupUserInfo groupMemberInfo = new GroupUserInfo(groupId, userId, nickName);
-        RongIM.getInstance().refreshGroupUserInfoCache(groupMemberInfo);
+        GroupUserInfo oldGroupUserInfo = RongUserInfoManager.getInstance().getGroupUserInfo(groupId, userId);
+        if(oldGroupUserInfo == null
+            || (
+                    !oldGroupUserInfo.getNickname().equals(nickName)
+                )
+        ){
+            GroupUserInfo groupMemberInfo = new GroupUserInfo(groupId, userId, nickName);
+            RongIM.getInstance().refreshGroupUserInfoCache(groupMemberInfo);
+        }
     }
 
     /**
@@ -645,6 +685,11 @@ public class IMManager {
         RongIM.registerMessageTemplate(new ContactNotificationMessageProvider());
         RongIM.registerMessageTemplate(new SealGroupNotificationMessageItemProvider());
         RongIM.registerMessageTemplate(new RealTimeLocationMessageProvider());
+        RongIM.registerMessageType(SealGroupConNtfMessage.class);
+        RongIM.registerMessageTemplate(new SealGroupConNtfMessageProvider());
+        RongIM.registerMessageType(GroupApplyMessage.class);
+        RongIM.getInstance().registerConversationTemplate(new GroupApplyMessageProvider());
+        //RongIM.registerMessageTemplate(new GroupApplyMessageProvider());
     }
 
     /**
@@ -705,9 +750,6 @@ public class IMManager {
 
         // 可在初始 SDK 时直接带入融云 IM 申请的APP KEY
         RongIM.init(context, "n19jmcy59f1q9", true);
-
-//        RongIM.init(context, "kj7swf8o7dot2", true);
-
     }
 
     /**
@@ -801,7 +843,6 @@ public class IMManager {
                     if (contactNotificationMessage.getOperation().equals("Request")) {
 
                     } else if (contactNotificationMessage.getOperation().equals("AcceptResponse")) {
-
                         // 根据好友 id 进行获取好友信息并刷新
                         String sourceUserId = contactNotificationMessage.getSourceUserId();
                         imInfoProvider.updateFriendInfo(sourceUserId);
@@ -848,7 +889,7 @@ public class IMManager {
                                 }
                             }
                             // 如果未被提出，则更新群组信息和群成员
-                            if(!isKicked){
+                            if (!isKicked) {
                                 imInfoProvider.updateGroupInfo(groupID);
                                 imInfoProvider.updateGroupMember(groupID);
                             }
@@ -858,7 +899,7 @@ public class IMManager {
                             imInfoProvider.updateGroupMember(groupID);
                         } else if (groupNotificationMessage.getOperation().equals("Quit")) {
                             // 退出群组，当非自己退出室刷新群组信息
-                            if(!currentID.equals(groupNotificationMessage.getOperatorUserId())){
+                            if (!currentID.equals(groupNotificationMessage.getOperatorUserId())) {
                                 imInfoProvider.updateGroupInfo(groupID);
                                 imInfoProvider.updateGroupMember(groupID);
                             }
@@ -887,6 +928,8 @@ public class IMManager {
                         e.printStackTrace();
                     }
                     return true;
+                } else if (messageContent instanceof GroupApplyMessage) {
+                    imInfoProvider.refreshGroupNotideInfo();
                 }
                 return false;
             }
@@ -1280,6 +1323,7 @@ public class IMManager {
 
     /**
      * 获取连接状态
+     *
      * @return
      */
     public RongIMClient.ConnectionStatusListener.ConnectionStatus getConnectStatus() {
@@ -1287,11 +1331,23 @@ public class IMManager {
     }
 
     /**
-     * 被踢监听
+     * 被踢监听, true 为当前为被提出状态， false 为不需要处理踢出状态
+     *
      * @return
      */
     public LiveData<Boolean> getKickedOffline() {
         return kickedOffline;
+    }
+
+    /**
+     * 重置被提出状态为 false
+     */
+    public void resetKickedOfflineState() {
+        if (Looper.getMainLooper().getThread().equals(Thread.currentThread())) {
+            kickedOffline.setValue(false);
+        } else {
+            kickedOffline.postValue(false);
+        }
     }
 }
 

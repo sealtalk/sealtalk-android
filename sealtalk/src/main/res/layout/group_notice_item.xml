@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
+    <cn.rongcloud.im.ui.widget.SelectableRoundedImageView
+        android:id="@+id/iv_new_header"
+        android:layout_width="@dimen/seal_group_notice_item_header_width"
+        android:layout_height="@dimen/seal_group_notice_item_header_height"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/seal_new_friend_header_margin_left"
+        android:layout_marginTop="@dimen/seal_new_friend_header_margin_top"
+        android:layout_marginBottom="@dimen/seal_new_friend_header_margin_bottom"
+        android:scaleType="centerCrop"
+        app:sriv_left_bottom_corner_radius="@dimen/seal_new_friend_header_radius"
+        app:sriv_left_top_corner_radius="@dimen/seal_new_friend_header_radius"
+        app:sriv_right_bottom_corner_radius="@dimen/seal_new_friend_header_radius"
+        app:sriv_right_top_corner_radius="@dimen/seal_new_friend_header_radius" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/seal_new_friend_content_margin_left"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_group_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/seal_new_friend_content_name_margin"
+            android:maxLines="1"
+            android:textColor="@color/seal_new_friends_name_text"
+            android:textSize="@dimen/seal_group_notice_item_text_14" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/seal_new_friend_content_message_margin"
+            android:layout_marginTop="@dimen/seal_group_notice_item_margin_7"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/tv_request_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:textColor="@color/seal_login_text_button_color"
+                android:textSize="@dimen/seal_group_notice_item_text_14" />
+
+            <TextView
+                android:id="@+id/tv_request_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/seal_new_friend_content_message_margin"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textColor="@color/seal_login_text_button_color"
+                android:textSize="@dimen/seal_group_notice_item_text_14" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="@dimen/seal_new_friend_status_margin_right"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:textColor="@color/seal_group_notice_item_time"
+            android:textSize="@dimen/seal_group_notice_item_text_12" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/seal_new_friend_status_margin_right"
+                android:paddingLeft="@dimen/seal_new_friend_status_padding_left"
+                android:paddingTop="@dimen/seal_group_notice_item_margin_7"
+                android:paddingRight="@dimen/seal_new_friend_status_padding_right"
+                android:text="@string/seal_group_notice_ignore"
+                android:textColor="@color/color_black_text"
+                android:textSize="@dimen/seal_group_notice_item_text_14" />
+
+            <TextView
+                android:id="@+id/tv_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:paddingLeft="@dimen/seal_new_friend_status_padding_left"
+                android:paddingTop="@dimen/seal_group_notice_item_margin_7"
+                android:text="@string/seal_group_notice_agree"
+                android:textColor="@color/seal_group_notice_item_agree"
+                android:textSize="@dimen/seal_group_notice_item_text_14" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

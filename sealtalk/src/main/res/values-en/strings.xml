@@ -31,6 +31,7 @@
     <string name="login_error_send_message_frequency">SMS sending frequency is exceeded</string>
     <string name="login_error_captcha_overdue">The verification code is expired, please try again</string>
     <string name="login_verification_code_error">Verification code is incorrect</string>
+    <string name="seal_login_kick_by_other">Your account is logged-in on another device and  you are forced to logout!</string>
 
     <string name="common_chat_room">Chatroom</string>
     <string name="discovery_chat_room_one">Chatroom1</string>
@@ -63,6 +64,9 @@
     <string name="common_add_successful">Added</string>
     <string name="common_remove_successful">Removed</string>
     <string name="common_delete_successful">Deleted</string>
+    <string name="common_album">Album</string>
+    <string name="common_share_success">Share success</string>
+    <string name="common_share_failed">Share failed</string>
 
     <string name="common_member_count" formatted="true">%d Person(s)</string>
 
@@ -110,6 +114,7 @@
 
     <string name="seal_new_friend_list_no_data">No Data</string>
     <string name="seal_new_friend_agree">Accept</string>
+    <string name="seal_new_friend_agree_ignore">Ignore</string>
     <string name="seal_new_friend_request">Sent</string>
     <string name="seal_new_friend_ignore">Ignored</string>
     <string name="seal_new_friend_added">Added</string>
@@ -117,11 +122,17 @@
     <string name="seal_title_add_contacts">Add Contacts</string>
     <string name="seal_title_group_chat">Create Groups</string>
     <string name="seal_title_private_chat">Start Chat</string>
+    <string name="seal_new_friend_add">Add</string>
+
     <!-- chat detail reference -->
     <string name="profile_search_message">Search Chat History</string>
     <string name="profile_message_notice">Mute Notifications</string>
     <string name="profile_set_top">Stick On Top</string>
     <string name="profile_clean_message">Clear Chat History</string>
+    <string name="profile_screen_shot_notification">Screenshot Notification</string>
+    <string name="profile_screen_shot_notification_tips">All members will be notified when take a screenshot after enabled</string>
+    <string name="profile_clean_timing">Clear Message Regularly </string>
+    <string name="profile_clean_timing_tips">After the scheduled cleaning is performed, the system periodically cleans up the group messages before the time. The cleaned messages cannot be restored. Please set them carefully.</string>
     <string name="profile_user_details">User Info</string>
     <string name="profile_clean_private_chat_history">Confirm to clear the history?</string>
     <string name="profile_clean_group_chat_history">Confirm to clear the group history?</string>
@@ -173,6 +184,7 @@
     <string name="seal_main_title_start_chat">Start Chat</string>
     <string name="seal_main_title_create_group">Create Groups</string>
     <string name="seal_main_title_add_friends">Add Contacts</string>
+    <string name="seal_main_title_scan">Scan</string>
 
     <string name="seal_main_mine_set_account">Account Settings</string>
     <string name="seal_main_mine_setting_language">Language</string>
@@ -183,7 +195,7 @@
     <string name="seal_main_mine_online_custom_service">Online customer service</string>
     <string name="seal_userinfo_item_user_portrait">User Portrait</string>
     <string name="seal_mine_set_account_change_password">Change Password</string>
-    <string name="seal_mine_set_account_privacy">Private</string>
+    <string name="seal_mine_set_account_privacy">Security and Privacy</string>
     <string name="seal_mine_set_account_new_message_show">New Message Notification</string>
     <string name="seal_mine_set_account_clear_cache">Clear Cache</string>
     <string name="seal_mine_set_account_logout">Logout</string>
@@ -203,7 +215,34 @@
     <string name="common_clear_failure">Clear failed</string>
     <string name="seal_mine_my_account_portrait">Portrait</string>
     <string name="seal_mine_my_account_nickname">Nickname</string>
-    <string name="seal_mine_my_account_phone_number">Mobile Number</string>
+    <string name="seal_st_account_content_format">SealTalk Account：%s</string>
+
+    <!--stAccount-->
+    <string name="seal_mine_my_account_sknumber">SealTalk Number</string>
+    <string name="seal_mine_my_account_notset">Not Set</string>
+    <string name="seal_update_staccout_edittext_hint">Start with a letter, 6-20 letters, numbers, underscores, or minus signs</string>
+    <string name="seal_update_staccout_red_tips">SealTalk number only supports to start with a letter, 6~20 letters, numbers, underscores</string>
+    <string name="seal_update_staccout_exit">This SealTalk number already exists, please reset</string>
+    <string name="seal_update_staccount_tips">1.The SealTalk number is the unique certificate for the account and can only be set once.\n2.After setting the SealTalk account, you can add your friend by searching for the SealTalk number.</string>
+    <string name="seal_update_staccount_edit_digist">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-</string>
+    <string name="seal_update_staccount_title">Set up the SealTalk number</string>
+    <string name="seal_update_staccount_save">Save</string>
+    <string name="seal_staccount_dialog_title">Confirm this Sealtalk number</string>
+    <string name="seal_staccount_dialog_title_format_error">Set up SealTalk number failed</string>
+    <string name="seal_staccount_dialog_content">Are you sure set the SealTalk number to @ ? it will not be modified after confirmation</string>
+    <string name="seal_staccount_set_success">Set up SealTalk number success</string>
+    <string name="seal_phone_or_sealtalk_account">Phone number/SealTalk number</string>>
+
+    <!--gender-->
+    <string name="seal_mine_my_account_gender">Gender</string>
+    <string name="seal_gender_man">male</string>
+    <string name="seal_gender_female">female</string>
+    <string name="seal_gender_save">save</string>
+    <string name="seal_gender_set_success">Success</string>
+    <string name="seal_gender_set_fail">Failed</string>
+
+    <string name="seal_mine_my_account_st_account">SealTalk number</string>
+    <string name="seal_mine_my_account_phone_number">Phone number</string>
     <string name="seal_mine_my_account">My Account</string>
     <string name="seal_select_group_member">Select Members</string>
     <string name="seal_select_friend">Select Friends</string>
@@ -237,9 +276,13 @@
     <string name="seal_set_account_dialog_clear_cache_message">Do you want to clear cache?</string>
     <string name="seal_privacy_blacklist_is_empty">Blacklist is empty</string>
     <string name="seal_privacy_blacklist">BlackList</string>
+    <string name="seal_privacy_search_phone">Search By Mobile</string>
+    <string name="seal_privacy_search_st_account">Search By Sealtalk No.</string>
+    <string name="seal_privacy_friend_verify">Adding Verification</string>
+    <string name="seal_privacy_group_verify">Add To Group Chat</string>
 
-    <string name="msg_contact_notification_someone_agree_your_request">has accepted to your friend request.</string>
-    <string name="msg_contact_notification_agree_your_request">Receiptant has accepted to you friend request.</string>
+    <string name="msg_contact_notification_someone_agree_your_request">accepted to your friend request.</string>
+    <string name="msg_contact_notification_agree_your_request">Receiptant accepted to you friend request.</string>
     <string name="msg_dialog_item_message_delete">Delete Message</string>
     <string name="seal_search_chatting_records">See More Chat History</string>
     <string name="seal_search_more_friend">See More Contacts</string>
@@ -263,14 +306,45 @@
     <string name="seal_member_mention_all_member">All</string>
 
     <string name="seal_search_phone_number">Enter mobile (i.e.): (86)137XXXXX</string>
+    <string name="seal_search_phone_numeber_and_account">Mobile/SealTalk account</string>
     <string name="seal_add_friend">Add To Friend</string>
     <string name="seal_add_text">Friend adding info</string>
     <string name="seal_inivte_firend_descprtion_format" formatted="true">I am %s</string>
     <string name="seal_account_not_exist">User does not exist.</string>
     <string name="seal_quest_failed_error_code">Request failed, error code:%d</string>
+
+    <string name="new_friend_title">Add friends</string>
+    <string name="new_friend_add_from_phone_contact">Phonebook</string>
+    <string name="new_friend_add_from_phone_contact_description">Add friends in your contacts</string>
+    <string name="new_friend_scan_description">Scan friend\'s QR code</string>
+    <string name="new_friend_invite_wechat_friend">Invite WeChat friends</string>
+    <string name="new_friend_invite_wechat_friend_dialog_content">To invite friends from WeChat</string>
+    <string name="new_friend_invite_wechat_friend_description">Invites friends from WeChat</string>
+    <string name="new_friend_invite_from_phone_contact">Invite from phonebook</string>
+    <string name="new_friend_invite_from_phone_contact_description">SMS invites friends in the phonebook</string>
+    <string name="new_friend_invite_from_phone_contact_error">Unable to jump to send SMS. Shared content has been copied to clipboard.</string>
+    <string name="new_friend_phone_contact_friend">Address book friends</string>
+    <string name="new_friend_invite_phone_friend">Invite from phonebook</string>
+
+    <string name="new_friend_request_permission_title">mobile phonebook matching</string>
+    <string name="new_friend_read_contact_dialog_title">SealTalk Want to access your address book</string>
+    <string name="new_friend_read_contact_dialog_content">Allow Sealtalk to get your address book, to match friends with the server, SealTalk will not save your address book.</string>
+    <string name="new_friend_no_permission_read_contact">Unable to get address book information</string>
+    <string name="new_friend_to_setting_accept_contact_permission">Please go to "Settings" to allow this app to get contacts</string>
+    <string name="common_enter_setting">Enter settings</string>
+    <string name="new_friend_no_permission_can_not_to_setting">Unable to jump to the Settings, please manually set.</string>
+
+    <string name="wx_share_invite_friend_title">Global Internet Communication Cloud</string>
+    <string name="wx_share_invite_friend_content">Add me as a friend and Let\'s chat on Sealtalk !</string>
+    <string name="sms_share_invite_friend_content_format">Hi~ I am using SealTalk now, a chat app tailored for the best, come and try it! download it from: %s</string>
+
     <string name="zxing_msg_camera_framework_bug">Sorry, the Android camera encountered a problem. You may need to restart the device.</string>
     <string name="zxing_distinguish_picture">Identify the Qrcode from the image</string>
     <string name="zxing_qr_can_not_recognized">The QR code can’t be recognized</string>
+    <string name="zxing_open_light">Open</string>
+    <string name="zxing_close_light">Close</string>
+    <string name="zxing_tips_qrcode_scan">Put the QR code into the frame that it can be scanned automatically.</string>
+    <string name="zxing_scan_from_picture">Select image</string>
 
     <string name="seal_mine_set_account_dialog_logout_message">Do you want to log out?</string>
     <string name="seal_download_app_browser_download">Open By Browser</string>
@@ -305,17 +379,20 @@
     <string name="seal_selected_only_group">%d group(s)</string>
     <string name="seal_forward__message_success">Sent successfully</string>
     <string name="seal_select_forward_message_defeat">Send failed</string>
-    <!-- TODO 以下部分需要翻译英文 -->
+
     <string name="profile_qrcode_group_tips">Scan the group QR code to join the group immediately</string>
     <string name="profile_qrcode_private_tips">Scan the QR code to add me as a friend</string>
-    <string name="profile_qrcode_save_to_phone">Save to mobile/phone</string>
+    <string name="profile_qrcode_save_to_phone">Save the picture</string>
+    <string name="profile_qrcode_group_need_verify">The group has enable verification, only allow friends invitation to enter the group</string>
+    <string name="profile_qrcode_share_to_sealtalk">Share to SealTalk</string>
+    <string name="profile_qrcode_share_to_wechat">Share to Wechat</string>
     <string name="profile_group_qrcode">Group QR code</string>
     <string name="seal_main_mine_qrcode">My QR code</string>
     <string name="profile_join_group">Join the group</string>
     <string name="profile_delete_from_contact">Delete contacts</string>
     <string name="profile_add_to_blacklist_tips">You will not be able to receive the message and delete the chat history with the contact after added the contacts to blacklist.</string>
     <string name="profile_remove_from_contact_tips_html_format" formatted="true"><Data><![CDATA[Remove <font color="#368AE8">%1$s</font> from the contacts list and clear all the chat history at the same time]]></Data></string>
-    <string name="seal_group_action_transfer_group_owner">%1$s has became the group holder</string>
+    <string name="seal_group_action_transfer_group_owner">%1$s became the group holder</string>
     <string name="profile_group_manager">Group admin</string>
     <string name="profile_group_notice_tips">After the release, the group announcement will be sent as a system message, visible to all members.</string>
     <string name="profile_group_notice_update_time_format" formatted="true">Release time：%s</string>
@@ -348,6 +425,51 @@
     <string name="seal_group_management_toast_management_already_reached_max_size">Group admin member can not over %1$d </string>
     <string name="seal_group_management_managements">Group admin</string>
     <string name="profile_group_notice_content_over_max_length">Over max length</string>
-    <string name="seal_forward_selected_detail_comfirm">确定</string>
-    <string name="seal_forward_selected_detail_title">已选择联系人</string>
+    <string name="seal_forward_selected_detail_comfirm">Confirm</string>
+    <string name="seal_forward_selected_detail_title">Selected contacts</string>
+
+    <!--clean_time_group-->
+    <string name="seal_dialog_select_clean_time_36">Clean up the message of 36 hours ago</string>
+    <string name="seal_dialog_select_clean_time_3">Clean up the message of 3 days ago</string>
+    <string name="seal_dialog_select_clean_time_7">Clean up the message of 7 days ago</string>
+    <string name="seal_dialog_select_clean_not">No more clean up</string>
+    <string name="seal_set_clean_time_success">Success</string>
+    <string name="seal_set_clean_time_fail">Failed</string>
+    <string name="seal_set_clean_time_state_not">Please Set Time</string>
+    <string name="seal_set_clean_time_notification_open">Group holder has enabled the timing group message cleanup</string>
+    <string name="seal_set_clean_time_notification_close">Group holder has disabled the timing group message cleanup</string>
+    <string name="seal_set_screen_capture_open">&#160;enabled the screenshot notification</string>
+    <string name="seal_set_screen_capture_close">&#160;disabled the screenshot notification</string>
+    <string name="seal_set_screen_capture_use">captured the screen during chatting</string>
+    <string name="seal_set_screen_capture_you">You</string>
+    <string name="seal_set_clean_time_not_owner_tip">Only the group holder is allowed to setup</string>
+    <string name="seal_mute_all">All members are banned</string>
+    <string name="seal_mute_all_tips">After being enabled, only the group holder and the administrator can speak.</string>
+    <string name="seal_add_certification">Whether to enable group authentication</string>
+    <string name="seal_add_certification_tips">After being enabled, it\'s need to agree with group administrator to join the group, and the scanning QR code is disabled.</string>
+    <string name="seal_add_certification_close">After the group verification is disabled, all the group request will be expired， please confirm?</string>
+    <string name="seal_add_certification_need_certifi">The Group has enabled verification, please wait for group admin to confirm~</string>
+    <string name="seal_add_need_member_agree">Invited, Please wait for confirmation</string>
+    <string name="seal_add_need_manager_agree">Invited, please wait for group admin to confirm</string>
+    <string name="seal_add_success">Added successfully</string>
+    <string name="seal_create_success">Created successfully</string>
+    <!--group-->
+    <string name="seal_conversation_notification_group">Group Notification</string>
+    <string name="seal_conversation_notification_group_tips">invited you to join the group</string>
+    <string name="seal_conversation_notification_group_tips_add">Request to join </string>
+    <string name="seal_group_notice_null_tips">No more group verification</string>
+    <string name="seal_group_notice_agree">Agree</string>
+    <string name="seal_group_notice_ignore">Ignore</string>
+    <string name="seal_group_notice_agreed">Agreed</string>
+    <string name="seal_group_notice_ignored">Ignored</string>
+    <string name="seal_group_notice_overdue">Expired</string>
+    <string name="seal_group_notice_no_group">The invited group no longer exists</string>
+    <string name="seal_group_notice_success">Success</string>
+    <string name="seal_dialog_clean_group_notice">Empty the verification messages</string>
+    <string name="seal_group_notice_clean_success">Clear</string>
+    <string name="seal_group_notice_add">invite %1$s to group</string>
+    <string name="seal_grant_permissions">You need to open permissions in settings.</string>
+
+    <string name="seal_edit_text_no_emoji">Input expressions are not supported</string>
+
 </resources>

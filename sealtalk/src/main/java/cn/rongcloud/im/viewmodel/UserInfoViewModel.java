@@ -25,6 +25,8 @@ public class UserInfoViewModel extends AndroidViewModel {
     private SingleSourceLiveData<Resource<Result>> setNameResult = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<Result>> uploadPotraitResult = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<Result>> changePasswordResult = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<Result>> setStAccountResult = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<Result>> setGenderResult = new SingleSourceLiveData<>();
 
     public UserInfoViewModel(@NonNull Application application) {
         super(application);
@@ -58,6 +60,23 @@ public class UserInfoViewModel extends AndroidViewModel {
         return setNameResult;
     }
 
+    /**
+     * 设置 StAccount 结果
+     *
+     * @return
+     */
+    public LiveData<Resource<Result>> getSetStAccountResult() {
+        return setStAccountResult;
+    }
+
+    /**
+     * 设置性别结果
+     *
+     * @return
+     */
+    public LiveData<Resource<Result>> getSetGenderResult() {
+        return setGenderResult;
+    }
 
     /**
      * 上传头像结果
@@ -86,6 +105,23 @@ public class UserInfoViewModel extends AndroidViewModel {
         setNameResult.setSource(userTask.setMyNickName(newName));
     }
 
+    /**
+     * 设置自己的 SealTalk 账号
+     *
+     * @param stAccount
+     */
+    public void setStAccount(String stAccount) {
+        setStAccountResult.setSource(userTask.setStAccount(stAccount));
+    }
+
+    /**
+     * 设置性别
+     *
+     * @param gender
+     */
+    public void setGender(String gender) {
+        setGenderResult.setSource(userTask.setGender(gender));
+    }
 
     /**
      * 上传头像

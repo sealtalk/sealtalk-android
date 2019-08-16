@@ -21,6 +21,9 @@ public class SealTitleBar extends RelativeLayout {
     private TextView tvRight;
     private TextView tvTyping;
     private View flContent;
+    private Type type;
+
+    private OnSearchClearTextClickedListener searchClearTextClickedListener;
 
     public SealTitleBar(Context context) {
         super(context);
@@ -55,6 +58,9 @@ public class SealTitleBar extends RelativeLayout {
                     if (event.getRawX() >= (etSearch.getRight() - 2 * etSearch.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
                         etSearch.setText("");
                         etSearch.clearFocus();
+                        if(searchClearTextClickedListener != null){
+                            searchClearTextClickedListener.onSearchClearTextClicked();
+                        }
                         return true;
                     }
                 }
@@ -85,7 +91,7 @@ public class SealTitleBar extends RelativeLayout {
         return tvRight;
     }
 
-    public enum  Type {
+    public enum Type {
         /**
          * 正常的模式， 有左右按钮和 title
          */
@@ -93,14 +99,14 @@ public class SealTitleBar extends RelativeLayout {
         /**
          * 搜索框， 有左边按钮和搜索框
          */
-        SEACHE,
+        SEARCH,
         /**
          * 正在输入
          */
         TYPING
     }
 
-    public void setType (Type type) {
+    public void setType(Type type) {
         switch (type) {
             case NORMAL:
                 btnLeft.setVisibility(View.VISIBLE);
@@ -111,7 +117,7 @@ public class SealTitleBar extends RelativeLayout {
                 tvTyping.setVisibility(View.GONE);
                 flContent.setVisibility(View.VISIBLE);
                 break;
-            case SEACHE:
+            case SEARCH:
                 btnLeft.setVisibility(View.VISIBLE);
                 btnRight.setVisibility(View.GONE);
                 tvTitle.setVisibility(View.GONE);
@@ -134,10 +140,21 @@ public class SealTitleBar extends RelativeLayout {
                 // Do nothing
                 break;
         }
+        this.type = type;
+    }
+
+    /**
+     * 返回当前标题类型
+     *
+     * @return
+     */
+    public Type getType(){
+        return type;
     }
 
     /**
      * 正在输入内容
+     *
      * @param resId
      */
     public void setTyping(int resId) {
@@ -146,6 +163,7 @@ public class SealTitleBar extends RelativeLayout {
 
     /**
      * 正在输入内容
+     *
      * @param text
      */
     public void setTyping(String text) {
@@ -154,14 +172,16 @@ public class SealTitleBar extends RelativeLayout {
 
     /**
      * 做按钮监听
+     *
      * @param leftClickListener
      */
-    public void setOnBtnLeftClickListener (OnClickListener leftClickListener) {
+    public void setOnBtnLeftClickListener(OnClickListener leftClickListener) {
         btnLeft.setOnClickListener(leftClickListener);
     }
 
     /**
      * 右按钮监听
+     *
      * @param rightClickListener
      */
     public void setOnBtnRightClickListener(OnClickListener rightClickListener) {
@@ -172,6 +192,7 @@ public class SealTitleBar extends RelativeLayout {
 
     /**
      * 右按钮监听
+     *
      * @param rightClickListener
      */
     public void setOnBtnRightClickListener(String text, OnClickListener rightClickListener) {
@@ -182,13 +203,16 @@ public class SealTitleBar extends RelativeLayout {
 
     /**
      * 设置有按钮文本
+     *
      * @param text
      */
     public void setRightText(String text) {
         tvRight.setText(text);
     }
+
     /**
      * 设置有按钮文本
+     *
      * @param resId
      */
     public void setRightText(int resId) {
@@ -197,6 +221,7 @@ public class SealTitleBar extends RelativeLayout {
 
     /**
      * 设置 title
+     *
      * @param textResId
      */
     public void setTitle(int textResId) {
@@ -205,6 +230,7 @@ public class SealTitleBar extends RelativeLayout {
 
     /**
      * 设置title
+     *
      * @param title
      */
     public void setTitle(String title) {
@@ -213,9 +239,26 @@ public class SealTitleBar extends RelativeLayout {
 
     /**
      * 添加edit 内容变化监听
+     *
      * @param watcher
      */
-    public void addSeachTextChangedListener (TextWatcher watcher) {
+    public void addSeachTextChangedListener(TextWatcher watcher) {
         etSearch.addTextChangedListener(watcher);
+    }
+
+    /**
+     * 设置当清除搜索内容点击事件
+     *
+     * @param listener
+     */
+    public void setOnSearchClearTextClickedListener(OnSearchClearTextClickedListener listener) {
+        searchClearTextClickedListener = listener;
+    }
+
+    /**
+     * 当搜索模式时点击清除搜索监听
+     */
+    public interface OnSearchClearTextClickedListener {
+        void onSearchClearTextClicked();
     }
 }

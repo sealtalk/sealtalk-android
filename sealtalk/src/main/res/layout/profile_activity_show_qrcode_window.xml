@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profile_ll_qr_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/transparent"
+    >
+
+    <LinearLayout
+        android:id="@+id/profile_ll_qr_card_container"
+        android:layout_width="310dp"
+        android:layout_height="420dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/profile_bg_qrcode"
+        android:orientation="vertical"
+        android:clickable="true"
+        android:focusable="true"
+        >
+
+        <LinearLayout
+            android:id="@+id/profile_fl_card_capture_area_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/profile_rl_qr_card_info_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp">
+
+                <ImageView
+                    android:id="@+id/profile_iv_card_info_portrait"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    tools:src="@drawable/common_default_portrait" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_toRightOf="@id/profile_iv_card_info_portrait"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/profile_tv_qr_info_main"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textColor="@color/default_main_text"
+                        android:textSize="20dp"
+                        tools:text="主信息" />
+
+                    <TextView
+                        android:id="@+id/profile_tv_qr_info_sub"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/default_main_text"
+                        android:textSize="14dp"
+                        tools:text="子信息" />
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_divider_line" />
+
+            <ImageView
+                android:id="@+id/profile_iv_qr_code"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                tools:src="@drawable/common_default_portrait" />
+
+            <TextView
+                android:id="@+id/profile_tv_qr_card_info_describe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="20dp"
+                android:textColor="@color/color_gray_text"
+                tools:text="@string/profile_qrcode_group_tips" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/profile_tv_qr_card_info_no_code_describe"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/profile_qrcode_group_need_verify"
+            android:textColor="@color/default_main_text"
+            android:textSize="15sp"
+            android:visibility="gone" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/color_divider_line" />
+
+        <LinearLayout
+            android:id="@+id/profile_ll_qr_card_button_container"
+            android:layout_width="310dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/profile_ll_qr_card_container"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/profile_tv_qr_save_phone"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/profile_qrcode_save_to_phone"
+                android:textColor="@color/default_clickable_text"
+                android:textSize="13dp" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/color_divider_line" />
+
+            <TextView
+                android:id="@+id/profile_tv_qr_share_to_sealtalk"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/profile_qrcode_share_to_sealtalk"
+                android:textColor="@color/default_clickable_text"
+                android:textSize="13dp" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/color_divider_line" />
+
+            <TextView
+                android:id="@+id/profile_tv_qr_share_to_wechat"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/profile_qrcode_share_to_wechat"
+                android:textColor="@color/default_clickable_text"
+                android:textSize="13dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

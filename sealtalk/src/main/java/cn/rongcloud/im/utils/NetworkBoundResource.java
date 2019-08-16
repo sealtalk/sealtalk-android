@@ -6,19 +6,23 @@ import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.util.Objects;
 
 import cn.rongcloud.im.common.ErrorCode;
+import cn.rongcloud.im.common.LogTag;
 import cn.rongcloud.im.common.NetConstant;
 import cn.rongcloud.im.common.ThreadManager;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Result;
+import cn.rongcloud.im.utils.log.SLog;
 
 /**
  * 此类用于结合处理网络请求和数据库请求。
  * 返回结果始终来源于数据库，当有网络请求时将请求保存至数据库后返回数据库中结果。
- * @param <ResultType> 网络请求结果
+ *
+ * @param <ResultType>  网络请求结果
  * @param <RequestType> 数据库中数据结果
  */
 public abstract class NetworkBoundResource<ResultType, RequestType> {
@@ -30,15 +34,16 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
     public NetworkBoundResource() {
         this.threadManager = ThreadManager.getInstance();
 
-        if(threadManager.isInMainThread()) {
+        if (threadManager.isInMainThread()) {
             init();
-        }else {
+        } else {
             threadManager.runOnUIThread(() -> init());
         }
     }
-    private void init(){
+
+    private void init() {
         result.setValue(Resource.loading(null));
-        LiveData<ResultType> dbSource = loadFromDb();
+        LiveData<ResultType> dbSource = safeLoadFromDb();
         result.addSource(dbSource, data -> {
             result.removeSource(dbSource);
             if (shouldFetch(data)) {
@@ -67,9 +72,9 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 
             if (response != null) {
                 // 当数据结果属于 Result<> 结构，则判断当前的请求结果是否成功
-                if(response instanceof Result){
-                    int code = ((Result)response).code;
-                    if(code != NetConstant.REQUEST_SUCCESS_CODE){
+                if (response instanceof Result) {
+                    int code = ((Result) response).code;
+                    if (code != NetConstant.REQUEST_SUCCESS_CODE) {
                         onFetchFailed();
                         result.addSource(dbSource,
                                 newData -> setValue(Resource.error(code, newData)));
@@ -80,10 +85,16 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
                 }
                 threadManager.runOnWorkThread(() -> {
                     // 保存网络请求结果至数据库
-                    saveCallResult(processResponse(response));
+                    try {
+                        saveCallResult(processResponse(response));
+                    } catch (Exception e) {
+                        SLog.e(LogTag.DB, "saveCallResult failed:" + e.toString());
+                    }
+
                     threadManager.runOnUIThread(() ->
                             // 重新从数据库中获取结果，防止从旧数据源中获取到加载网络前的数据
-                            result.addSource(loadFromDb(),
+
+                            result.addSource(safeLoadFromDb(),
                                     newData -> setValue(Resource.success(newData)))
                     );
                 });
@@ -95,12 +106,24 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
         });
     }
 
+    private LiveData<ResultType> safeLoadFromDb(){
+        LiveData<ResultType> dbSource;
+        try {
+            dbSource = loadFromDb();
+        } catch (Exception e){
+            SLog.e(LogTag.DB, "loadFromDb failed:" + e.toString());
+            dbSource = new MutableLiveData<>(null);
+        }
+        return dbSource;
+    }
+
     protected void onFetchFailed() {
 
     }
 
     /**
      * 返回结果数据
+     *
      * @return
      */
     public LiveData<Resource<ResultType>> asLiveData() {
@@ -109,6 +132,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 
     /**
      * 过滤处理网络请求
+     *
      * @param response
      * @return
      */
@@ -119,6 +143,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 
     /**
      * 保存网络请求结果
+     *
      * @param item
      */
     @WorkerThread
@@ -126,11 +151,12 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 
     /**
      * 通过请求结果判断是否需要请求网络
+     *
      * @param data
      * @return
      */
     @MainThread
-    protected boolean shouldFetch(@Nullable ResultType data){
+    protected boolean shouldFetch(@Nullable ResultType data) {
         return true;
     }
 

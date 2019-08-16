@@ -81,6 +81,13 @@ public class NewFriendListActivity extends TitleBaseActivity {
                 }
                 return false;
             }
+
+            @Override
+            public boolean onIgnore(View view, int position, FriendShipInfo info) {
+                String friendId = info.getUser().getId();
+                ignoreFriends(friendId);
+                return false;
+            }
         });
         newFriendsList.setAdapter(adapter);
     }
@@ -111,6 +118,13 @@ public class NewFriendListActivity extends TitleBaseActivity {
                 
             }
         });
+
+        newFriendViewModel.getIngoreResult().observe(this, new Observer<Resource<Void>>() {
+            @Override
+            public void onChanged(Resource<Void> voidResource) {
+
+            }
+        });
     }
 
 
@@ -122,6 +136,16 @@ public class NewFriendListActivity extends TitleBaseActivity {
     private void agreeFriends(String friendId) {
         if (newFriendViewModel != null) {
             newFriendViewModel.agree(friendId);
+        }
+    }
+
+    /**
+     * 忽略好友请求
+     * @param friendId
+     */
+    private void ignoreFriends(String friendId) {
+        if (newFriendViewModel != null) {
+            newFriendViewModel.ingore(friendId);
         }
     }
 

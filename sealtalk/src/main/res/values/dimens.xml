@@ -142,7 +142,9 @@
     <dimen name="seal_main_title_popup_item_height">49dp</dimen>
     <dimen name="seal_main_title_more_margin_right">5dp</dimen>
     <dimen name="seal_main_title_popup_item_drawable_padding">10dp</dimen>
+    <dimen name="seal_main_title_popup_item_drawable_padding_2">16dp</dimen>
     <dimen name="seal_main_title_popup_item_padding">10dp</dimen>
+    <dimen name="seal_main_title_popup_item_padding_2">14dp</dimen>
     <dimen name="seal_main_title_item_text_size">16dp</dimen>
 
     <dimen name="seal_setting_item_def_height">48dp</dimen>
@@ -182,7 +184,7 @@
     <dimen name="seal_search_item_name_margin_bottom">11dp</dimen>
     <dimen name="seal_search_item_name_text_size">16sp</dimen>
     <dimen name="seal_search_item_detail_text_size">14sp</dimen>
-    <dimen name="seal_search_item_devi_height">1dp</dimen>
+    <dimen name="seal_search_item_devi_height">0.5dp</dimen>
     <dimen name="seal_search_item_devi_">1dp</dimen>
     <dimen name="seal_search_devi_color_margin_left">14dp</dimen>
     <dimen name="seal_search_devi_color_margin_right">14dp</dimen>
@@ -197,7 +199,13 @@
     <dimen name="seal_update_name_margin_top">7dp</dimen>
     <dimen name="seal_update_name_margin_left">14dp</dimen>
     <dimen name="seal_update_name_edit_margin">10dp</dimen>
+    <dimen name="seal_update_staccount_dialog_title">17sp</dimen>
+    <dimen name="seal_update_staccount_edit_margin">13.5dp</dimen>
+    <dimen name="seal_update_staccount_name_margin">8dp</dimen>
+    <dimen name="seal_update_staccount_name_size">15sp</dimen>
+    <dimen name="seal_update_staccount_hint_size">12sp</dimen>
     <dimen name="seal_update_name_edit_text_size">16dp</dimen>
+    <dimen name="seal_update_name_edit_height">50dp</dimen>
     <dimen name="seal_dialog_select_picture_btn_height">48dp</dimen>
     <dimen name="seal_dialog_select_picture_btn_text_size">18sp</dimen>
     <dimen name="seal_search_item_title_height">40dp</dimen>
@@ -210,11 +218,13 @@
     <dimen name="common_dialog_min_height">134dp</dimen>
     <dimen name="common_dialog_button_height">44dp</dimen>
     <dimen name="common_dialog_common_min_height">90dp</dimen>
+    <dimen name="common_dialog_title_text_size">22dp</dimen>
     <dimen name="common_dialog_text_size">18dp</dimen>
     <dimen name="common_dialog_text_margin_left">13dp</dimen>
     <dimen name="common_dialog_text_margin_right">13dp</dimen>
     <dimen name="common_dialog_text_margin_top">20dp</dimen>
-    <dimen name="common_dialog_text_margin_bottom">10dp</dimen>
+    <dimen name="common_dialog_title_text_margin_top">16dp</dimen>
+    <dimen name="common_dialog_text_margin_bottom">20dp</dimen>
     <dimen name="seal_mine_setting_item_tag_height">20dp</dimen>
     <dimen name="seal_mine_setting_item_tag_width">60dp</dimen>
     <dimen name="siv_sealtalk_version_tag_height">20dp</dimen>
@@ -308,6 +318,22 @@
     <dimen name="seal_common_list_divider_height">0.5dp</dimen>
     <dimen name="seal_unread_arrow_margin_right">10dp</dimen>
 
+    <!--群详情页-->
+    <dimen name="seal_group_detail_clean_tips_size">14sp</dimen>
+    <dimen name="seal_group_detail_clean_tips_margin_left">12dp</dimen>
+    <dimen name="seal_group_detail_clean_tips_margin_right">19.5dp</dimen>
+    <dimen name="seal_group_detail_clean_tips_margin_bottom">8dp</dimen>
+
     <!-- 界面改版使用 -->
+
+    <!--group notification -->
+    <dimen name="seal_group_notice_null_tip_size">20sp</dimen>
+    <dimen name="seal_group_notice_item_header_width">46dp</dimen>
+    <dimen name="seal_group_notice_item_header_height">46dp</dimen>
+    <dimen name="seal_group_notice_item_text_14">14sp</dimen>
+    <dimen name="seal_group_notice_item_text_12">12sp</dimen>
+    <dimen name="seal_group_notice_item_margin_2">2dp</dimen>
+    <dimen name="seal_group_notice_item_margin_3">3dp</dimen>
+    <dimen name="seal_group_notice_item_margin_7">7dp</dimen>
 
 </resources>

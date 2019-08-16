@@ -14,6 +14,7 @@ import cn.rongcloud.im.R;
 import cn.rongcloud.im.model.GroupMember;
 import cn.rongcloud.im.ui.widget.SelectableRoundedImageView;
 import cn.rongcloud.im.utils.ImageLoaderUtils;
+import io.rong.imageloader.core.ImageLoader;
 
 /**
  * 网格显示群成员的适配
@@ -54,6 +55,7 @@ public class GridGroupMemberAdapter extends BaseAdapter {
             // 允许减员
             if(isAllowDelete){
                 usernameTv.setText("");
+                ImageLoader.getInstance().cancelDisplayTask(avatarView);
                 avatarView.setImageDrawable(null);
                 avatarView.setBackgroundResource(R.drawable.profile_ic_grid_member_delete);
                 avatarView.setOnClickListener(v -> {
@@ -63,6 +65,7 @@ public class GridGroupMemberAdapter extends BaseAdapter {
                 });
             } else if(isAllowAdd){
                 usernameTv.setText("");
+                ImageLoader.getInstance().cancelDisplayTask(avatarView);
                 avatarView.setImageDrawable(null);
                 avatarView.setBackgroundResource(R.drawable.profile_ic_grid_member_add);
 
@@ -76,6 +79,7 @@ public class GridGroupMemberAdapter extends BaseAdapter {
             viewHolder.avatarUrl = null;
         } else if ((isAllowDelete && position == getCount() - 2) && isAllowAdd) {
             usernameTv.setText("");
+            ImageLoader.getInstance().cancelDisplayTask(avatarView);
             avatarView.setImageDrawable(null);
             avatarView.setBackgroundResource(R.drawable.profile_ic_grid_member_add);
             viewHolder.avatarUrl = null;

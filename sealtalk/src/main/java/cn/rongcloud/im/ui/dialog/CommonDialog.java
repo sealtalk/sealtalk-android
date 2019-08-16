@@ -32,6 +32,7 @@ public class CommonDialog extends DialogFragment {
         public OnDialogButtonClickListener listener;
         public int positiveText;
         public int negativeText;
+        public int titleText;
         private boolean isOnlyConfirm;
     }
 
@@ -61,6 +62,7 @@ public class CommonDialog extends DialogFragment {
         View btnSeparate = view.findViewById(R.id.dialog_v_btn_separate);
         RelativeLayout contentContainer = view.findViewById(R.id.dialog_content_container);
         TextView content = view.findViewById(R.id.dialog_tv_content);
+        TextView title = view.findViewById(R.id.dialog_tv_title);
         negative.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,6 +103,11 @@ public class CommonDialog extends DialogFragment {
 
             if (params.negativeText > 0) {
                 negative.setText(params.negativeText);
+            }
+
+            if (params.titleText > 0) {
+                title.setText(params.titleText);
+                title.setVisibility(View.VISIBLE);
             }
 
             if(params.isOnlyConfirm){
@@ -216,7 +223,10 @@ public class CommonDialog extends DialogFragment {
             return this;
         }
 
-
+        public Builder setTitleText(int titleText) {
+            params.titleText = titleText;
+            return this;
+        }
 
         public Builder setDialogButtonClickListener(OnDialogButtonClickListener listener) {
             params.listener = listener;

@@ -27,6 +27,8 @@ public class NewFriendViewModel extends AndroidViewModel {
 
     private SingleSourceMapLiveData<Resource<Boolean>,Resource<Boolean>> agreeResult;
 
+    private SingleSourceMapLiveData<Resource<Void>,Resource<Void>> ingoreResult;
+
     private FriendTask friendTask ;
     public NewFriendViewModel(@NonNull Application application) {
         super(application);
@@ -69,6 +71,14 @@ public class NewFriendViewModel extends AndroidViewModel {
             return resource;
         });
 
+        ingoreResult = new SingleSourceMapLiveData<>(resource -> {
+            if(resource.status == Status.SUCCESS){
+                // 成功之后刷新列表
+                getFriendsAllData();
+            }
+            return resource;
+        });
+
         getFriendsAllData();
     }
 
@@ -103,4 +113,19 @@ public class NewFriendViewModel extends AndroidViewModel {
     public void agree(String friendId) {
         agreeResult.setSource(friendTask.agree(friendId));
     }
+
+    /**
+     * 忽略好友请求结果
+     * @return
+     */
+    public LiveData<Resource<Void>> getIngoreResult() {
+        return ingoreResult;
+    }
+
+    /**
+     * 忽略好友请求
+     * @param friendId
+     */
+    public void ingore(String friendId) {
+        ingoreResult.setSource(friendTask.ingore(friendId));}
 }

@@ -2,6 +2,7 @@ package cn.rongcloud.im.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -54,9 +55,10 @@ public class UserDetailActivity extends TitleBaseActivity implements View.OnClic
 
     private SelectableRoundedImageView userPortraitIv;
     private TextView userDisplayNameTv;
+    //2.1 版本电话号码不显示，替换为 SealTalk 账号
     private TextView phoneTv;
     private TextView userNameTv;
-//    private TextView blackListTv;
+    //    private TextView blackListTv;
     private LinearLayout chatGroupLl;
     private LinearLayout friendMenuLl;
     private Button addFriendBtn;
@@ -67,6 +69,10 @@ public class UserDetailActivity extends TitleBaseActivity implements View.OnClic
     private UserInfo myUserInfo;
     private String fromGroupName;
     private boolean isInBlackList = false;
+    /**
+     * 是否在删除好友操作，如果在删除中则不更新好友状态，防止在删除时会有界面刷新
+     */
+    private boolean isInDeleteAction = false;
     private SettingItemView blacklistSiv;
 
     @Override
@@ -132,7 +138,8 @@ public class UserDetailActivity extends TitleBaseActivity implements View.OnClic
 
         // 获取用户状态
         userDetailViewModel.getUserInfo().observe(this, resource -> {
-            if (resource.data != null) {
+            if (resource.data != null
+                    && !isInDeleteAction) { //在删除好友时不进行好友信息的刷新，防止删除成功时画面会刷新再关闭
                 updateUserInfo(resource.data);
             }
         });
@@ -151,7 +158,9 @@ public class UserDetailActivity extends TitleBaseActivity implements View.OnClic
         userDetailViewModel.getIsInBlackList().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isInBlackList) {
-                updateBlackListItem(isInBlackList);
+                if(!isInDeleteAction){
+                    updateBlackListItem(isInBlackList);
+                }
             }
         });
 
@@ -185,7 +194,12 @@ public class UserDetailActivity extends TitleBaseActivity implements View.OnClic
             public void onChanged(Resource<Void> resource) {
                 if (resource.status == Status.SUCCESS) {
                     ToastUtils.showToast(R.string.common_delete_successful);
+
+                    // 删除成功后关闭界面
+                    finish();
                 } else if (resource.status == Status.ERROR) {
+                    // 删除失败时置回删除行为
+                    isInDeleteAction = false;
                     ToastUtils.showToast(resource.message);
                 }
             }
@@ -212,7 +226,8 @@ public class UserDetailActivity extends TitleBaseActivity implements View.OnClic
         latestUserInfo = userInfo;
 
         FriendStatus friendStatus = FriendStatus.getStatus(userInfo.getFriendStatus());
-        if (friendStatus == FriendStatus.IS_FRIEND) {
+        if (friendStatus == FriendStatus.IS_FRIEND
+                || friendStatus == FriendStatus.IN_BLACK_LIST) {
             // 显示好友相关设置
             friendMenuLl.setVisibility(View.VISIBLE);
 
@@ -236,9 +251,8 @@ public class UserDetailActivity extends TitleBaseActivity implements View.OnClic
             }
 
             // 当好友时显示手机号码
-            phoneTv.setVisibility(View.VISIBLE);
-            String phone = getString(R.string.seal_mine_my_account_phone_number) + ":" + userInfo.getPhoneNumber();
-            phoneTv.setText(phone);
+//            String phone = getString(R.string.seal_mine_my_account_phone_number) + ":" + userInfo.getPhoneNumber();
+//            phoneTv.setText(phone);
         } else {
             // 当非好友时隐藏聊天按钮组，显示添加好友
             chatGroupLl.setVisibility(View.GONE);
@@ -247,7 +261,7 @@ public class UserDetailActivity extends TitleBaseActivity implements View.OnClic
 
             userDisplayNameTv.setText(userInfo.getName());
             userNameTv.setVisibility(View.GONE);
-            phoneTv.setVisibility(View.GONE);
+            //phoneTv.setVisibility(View.GONE);
 
             // 自己时不显示添加好友
             if (userInfo.getId().equals(RongIM.getInstance().getCurrentUserId())) {
@@ -255,6 +269,23 @@ public class UserDetailActivity extends TitleBaseActivity implements View.OnClic
             } else {
                 addFriendBtn.setVisibility(View.VISIBLE);
             }
+        }
+        //显示性别图标
+        Drawable drawable;
+        if (TextUtils.isEmpty(userInfo.getGender()) || "male".equals(userInfo.getGender())) {
+            drawable = getResources().getDrawable(R.drawable.seal_account_man);
+        } else {
+            drawable = getResources().getDrawable(R.drawable.seal_account_female);
+        }
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(),
+                drawable.getIntrinsicHeight());
+        userDisplayNameTv.setCompoundDrawablePadding(14);
+        userDisplayNameTv.setCompoundDrawables(null, null, drawable, null);
+        //显示 SealTalk 账号
+        if (!TextUtils.isEmpty(userInfo.getStAccount())) {
+            phoneTv.setVisibility(View.VISIBLE);
+            String stAccount = getString(R.string.seal_mine_my_account_st_account) + "：" + userInfo.getStAccount();
+            phoneTv.setText(stAccount);
         }
         // 更新头像
         ImageLoaderUtils.displayUserPortraitImage(userInfo.getPortraitUri(), userPortraitIv);
@@ -353,6 +384,8 @@ public class UserDetailActivity extends TitleBaseActivity implements View.OnClic
                 .setDialogButtonClickListener(new CommonDialog.OnDialogButtonClickListener() {
                     @Override
                     public void onPositiveClick(View v, Bundle bundle) {
+                        // 标记正在删除好友
+                        isInDeleteAction = true;
                         userDetailViewModel.deleteFriend(userId);
                     }
 

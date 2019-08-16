@@ -29,7 +29,10 @@ public class MyAccountActivity extends TitleBaseActivity implements View.OnClick
     private UserInfoItemView userInfoUiv;
     private SettingItemView nicknameSiv;
     private SettingItemView phonenumberSiv;
+    private SettingItemView sAccountSiv;
+    private SettingItemView genderSiv;
     private UserInfoViewModel userInfoViewModel;
+    private boolean isCanSetStAccount;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,12 +54,16 @@ public class MyAccountActivity extends TitleBaseActivity implements View.OnClick
         userInfoUiv.setOnClickListener(this);
         nicknameSiv = findViewById(R.id.siv_nickname);
         nicknameSiv.setOnClickListener(this);
+        sAccountSiv = findViewById(R.id.siv_saccount);
+        sAccountSiv.setOnClickListener(this);
         phonenumberSiv = findViewById(R.id.siv_phonenumber);
+        genderSiv = findViewById(R.id.siv_gender);
+        genderSiv.setOnClickListener(this);
     }
 
 
     /**
-     *初始化 viewmodel
+     * 初始化 viewmodel
      */
     private void initViewModel() {
         userInfoViewModel = ViewModelProviders.of(this).get(UserInfoViewModel.class);
@@ -67,13 +74,25 @@ public class MyAccountActivity extends TitleBaseActivity implements View.OnClick
                 SLog.d("ss_update", "userInfo == " + resource.data);
                 if (resource.data != null) {
                     // 减少图片加载次数，改为失败（获取上一次数据库中数据）或成功时加载图片
-                    if(resource.status == Status.SUCCESS || resource.status == Status.ERROR){
+                    if (resource.status == Status.SUCCESS || resource.status == Status.ERROR) {
                         ImageLoaderUtils.displayUserPortraitImage(resource.data.getPortraitUri(), userInfoUiv.getHeaderImageView());
                     }
                     nicknameSiv.setValue(resource.data.getName());
-                    String phoneNumber = TextUtils.isEmpty(resource.data.getPhoneNumber())? "" : resource.data.getPhoneNumber();
+                    String phoneNumber = TextUtils.isEmpty(resource.data.getPhoneNumber()) ? "" : resource.data.getPhoneNumber();
                     phonenumberSiv.setValue(phoneNumber);
-
+                    isCanSetStAccount = TextUtils.isEmpty(resource.data.getStAccount());
+                    if (!isCanSetStAccount) {
+                        sAccountSiv.setValue(resource.data.getStAccount());
+                    } else {
+                        sAccountSiv.setValue(getString(R.string.seal_mine_my_account_notset));
+                    }
+                    String gender = resource.data.getGender();
+                    if (TextUtils.isEmpty(gender) || gender.equals("male")) {
+                        gender = getString(R.string.seal_gender_man);
+                    } else if (gender.equals("female")) {
+                        gender = getString(R.string.seal_gender_female);
+                    }
+                    genderSiv.setValue(gender);
                 }
             }
         });
@@ -102,6 +121,16 @@ public class MyAccountActivity extends TitleBaseActivity implements View.OnClick
                 Intent intent = new Intent(this, UpdateNameActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.siv_saccount:
+                if (isCanSetStAccount) {
+                    Intent intentSt = new Intent(this, UpdateStAccountActivity.class);
+                    startActivity(intentSt);
+                }
+                break;
+            case R.id.siv_gender:
+                Intent intentGender = new Intent(this,UpdateGenderActivity.class);
+                startActivity(intentGender);
+                break;
             default:
                 //DO nothing
                 break;
@@ -127,6 +156,7 @@ public class MyAccountActivity extends TitleBaseActivity implements View.OnClick
 
     /**
      * 上传头像
+     *
      * @param uri
      */
     private void uploadPortrait(Uri uri) {

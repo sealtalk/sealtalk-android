@@ -2,6 +2,7 @@
 package cn.rongcloud.im.ui.adapter;
 
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -37,6 +38,7 @@ public class CommonListAdapter extends ListWithSideBarBaseAdapter<ListItemModel,
     private List<ListItemModel> data;
     private List<String> selectedGroupIds = new ArrayList<>();
     private List<String> selectedFriendsIds = new ArrayList<>();
+    private List<String> selectedOtherIds = new ArrayList<>();
 
     private CommonListAdapter.OnItemClickListener listener;
 
@@ -66,7 +68,7 @@ public class CommonListAdapter extends ListWithSideBarBaseAdapter<ListItemModel,
     @NonNull
     @Override
     public BaseItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        final View view = View.inflate(parent.getContext(), viewType, null);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
         final BaseItemViewHolder viewHolder = ViewHolderFactory.getInstance().createViewHolder(viewType, view);
         return viewHolder;
     }
@@ -75,6 +77,7 @@ public class CommonListAdapter extends ListWithSideBarBaseAdapter<ListItemModel,
     @Override
     public void onBindViewHolder(@NonNull BaseItemViewHolder holder, int position) {
         ListItemModel listItemModel = data.get(position);
+
         holder.update(listItemModel);
         holder.setOnClickItemListener(new View.OnClickListener() {
             @Override
@@ -86,6 +89,7 @@ public class CommonListAdapter extends ListWithSideBarBaseAdapter<ListItemModel,
                 }
             }
         });
+
         int type = listItemModel.getItemView().getTypeValue();
         updateSelectedStatus(holder, listItemModel, type);
     }
@@ -103,6 +107,11 @@ public class CommonListAdapter extends ListWithSideBarBaseAdapter<ListItemModel,
             }
         } else if (type == ListItemModel.ItemView.Type.FRIEND.getValue()) {
             if (selectedFriendsIds.contains(checkableContactModel.getId())) {
+                holder.setChecked(true);
+            }
+        } else if (type == ListItemModel.ItemView.Type.OTHER.getValue()) {
+            if(selectedOtherIds.contains(checkableContactModel.getId())) {
+                checkableContactModel.setCheckStatus(ListItemModel.CheckStatus.CHECKED);
                 holder.setChecked(true);
             }
         }
@@ -126,7 +135,23 @@ public class CommonListAdapter extends ListWithSideBarBaseAdapter<ListItemModel,
             } else {
                 selectedFriendsIds.add(model.getId());
             }
+        } else if(model.getItemView().getType() == ListItemModel.ItemView.Type.OTHER) {
+            if(model.getCheckStatus() == ListItemModel.CheckStatus.CHECKED
+                    && !selectedOtherIds.contains(model.getId())) {
+                selectedOtherIds.add(model.getId());
+            } else if(model.getCheckStatus() != ListItemModel.CheckStatus.CHECKED) {
+                selectedOtherIds.remove(model.getId());
+            }
         }
+    }
+
+    /**
+     * 获取当前数据
+     *
+     * @return
+     */
+    public List<ListItemModel> getData(){
+        return data;
     }
 
 
@@ -182,6 +207,15 @@ public class CommonListAdapter extends ListWithSideBarBaseAdapter<ListItemModel,
      */
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
+    }
+
+    /**
+     * 获取其他类型选择的列表
+     *
+     * @return
+     */
+    public List<String> getSelectedOtherIds(){
+        return selectedOtherIds;
     }
 
     /**

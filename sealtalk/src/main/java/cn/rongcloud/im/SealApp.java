@@ -3,10 +3,13 @@ package cn.rongcloud.im;
 import androidx.multidex.MultiDexApplication;
 
 import com.facebook.stetho.Stetho;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import cn.rongcloud.im.common.ErrorCode;
+import cn.rongcloud.im.contact.PhoneContactManager;
 import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.utils.SearchUtils;
+import cn.rongcloud.im.wx.WXManager;
 import io.rong.imlib.ipc.RongExceptionHandler;
 
 import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
@@ -19,6 +22,9 @@ public class SealApp extends MultiDexApplication {
         super.onCreate();
 
         appInstance = this;
+
+        // 初始化 bugly BUG 统计
+        CrashReport.initCrashReport(getApplicationContext());
 
         ErrorCode.init(this);
 
@@ -38,6 +44,11 @@ public class SealApp extends MultiDexApplication {
         SearchUtils.init(this);
 
         Thread.setDefaultUncaughtExceptionHandler(new RongExceptionHandler(this));
+
+        // 微信分享初始化
+        WXManager.getInstance().init(this);
+
+        PhoneContactManager.getInstance().init(this);
     }
 
     public static SealApp getApplication(){

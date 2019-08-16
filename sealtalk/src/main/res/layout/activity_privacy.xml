@@ -1,17 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_search_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:item_content="@string/seal_privacy_search_phone"
+        app:item_divider="true"
+        app:item_switch="true" />
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_search_st_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:item_content="@string/seal_privacy_search_st_account"
+        app:item_switch="true" />
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_friend_verify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:item_content="@string/seal_privacy_friend_verify"
+        app:item_switch="true" />
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_group_verify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:item_content="@string/seal_privacy_group_verify"
+        app:item_switch="true" />
 
     <cn.rongcloud.im.ui.view.SettingItemView
         android:id="@+id/siv_blacklist"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_privacy_item_height"
         android:layout_marginTop="@dimen/seal_privacy_item_margin"
-        app:item_content="@string/seal_privacy_blacklist"
-        >
+        app:item_content="@string/seal_privacy_blacklist">
 
     </cn.rongcloud.im.ui.view.SettingItemView>
 </LinearLayout>

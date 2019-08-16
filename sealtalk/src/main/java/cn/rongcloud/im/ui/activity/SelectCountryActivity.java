@@ -37,7 +37,7 @@ public class SelectCountryActivity extends TitleBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity_select_country);
         // 设置成搜索输入框的 title
-        setTitleBarType(SealTitleBar.Type.SEACHE);
+        setTitleBarType(SealTitleBar.Type.SEARCH);
         initView();
         initViewModel();
         loadCountryDatas(null);

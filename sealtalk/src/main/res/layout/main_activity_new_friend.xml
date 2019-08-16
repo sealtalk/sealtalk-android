@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/default_main_area_background"
+    >
+    <TextView
+        android:id="@+id/add_friend_tv_search_friend"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/common_bg_edit_text_gray_edge"
+        android:drawableLeft="@drawable/seal_search_group_icon"
+        android:drawablePadding="12dp"
+        android:paddingLeft="12dp"
+        android:gravity="left|center_vertical"
+        android:text="@string/seal_search_phone_numeber_and_account"
+        />
+
+    <TextView
+        android:id="@+id/add_friend_tv_my_qrcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/seal_main_mine_qrcode"
+        android:layout_gravity="center"
+        android:layout_marginTop="6dp"
+        android:padding="8dp"
+        android:textSize="14dp"
+        android:textColor="@color/default_main_text"
+        android:drawableRight="@drawable/seal_ic_mine_qrcode_blue"
+        android:drawablePadding="5dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:layout_marginTop="4dp"
+        android:orientation="vertical"
+        >
+        <!-- 手机通讯录 -->
+        <LinearLayout
+            android:id="@+id/add_friend_ll_add_from_contact"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/seal_bg_list_item"
+            android:orientation="horizontal"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            >
+            <ImageView
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:src="@drawable/add_friend_ic_add_from_contact"
+                android:scaleType="centerInside"
+                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:textColor="@color/default_main_text"
+                    android:text="@string/new_friend_add_from_phone_contact"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12dp"
+                    android:textColor="@color/default_sub_text"
+                    android:text="@string/new_friend_add_from_phone_contact_description"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/color_divider_line"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            />
+
+        <!-- 扫一扫 -->
+        <LinearLayout
+            android:id="@+id/add_friend_ll_scan"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/seal_bg_list_item"
+            android:orientation="horizontal"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            >
+            <ImageView
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:src="@drawable/add_friend_ic_scan"
+                android:scaleType="centerInside"
+                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:textColor="@color/default_main_text"
+                    android:text="@string/seal_main_title_scan"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12dp"
+                    android:textColor="@color/default_sub_text"
+                    android:text="@string/new_friend_scan_description"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/color_divider_line"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            />
+
+        <!-- 邀请微信好友 -->
+        <LinearLayout
+            android:id="@+id/add_friend_ll_add_from_wechat"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/seal_bg_list_item"
+            android:orientation="horizontal"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            >
+            <ImageView
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:src="@drawable/add_friend_ic_wechat"
+                android:scaleType="centerInside"
+                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:textColor="@color/default_main_text"
+                    android:text="@string/new_friend_invite_wechat_friend"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12dp"
+                    android:textColor="@color/default_sub_text"
+                    android:text="@string/new_friend_invite_wechat_friend_description"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/color_divider_line"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            />
+
+        <!-- 邀请手机联系人 -->
+        <LinearLayout
+            android:id="@+id/add_friend_ll_invite_from_contact"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/seal_bg_list_item"
+            android:orientation="horizontal"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            >
+            <ImageView
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:src="@drawable/add_friend_ic_invite_from_contact"
+                android:scaleType="centerInside"
+                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:textColor="@color/default_main_text"
+                    android:text="@string/new_friend_invite_from_phone_contact"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12dp"
+                    android:textColor="@color/default_sub_text"
+                    android:text="@string/new_friend_invite_from_phone_contact_description"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/color_divider_line"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            />
+
+
+    </LinearLayout>
+
+</LinearLayout>

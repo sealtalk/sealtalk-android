@@ -31,7 +31,6 @@ import cn.rongcloud.im.utils.qrcode.client.Intents;
 public class DecoratedBarcodeView extends FrameLayout {
     private BarcodeView barcodeView;
     private NewViewfinderView viewFinder;
-    private TextView statusView;
 
     /**
      * The instance of @link TorchListener to send events callback.
@@ -94,7 +93,7 @@ public class DecoratedBarcodeView extends FrameLayout {
 
         if (barcodeView == null) {
             throw new IllegalArgumentException(
-                    "There is no a cn.rongcloud.rce.qrcode.barcodescanner.BarcodeView on provided layout " +
+                    "There is no a BarcodeView on provided layout " +
                             "with the id \"zxing_barcode_surface\".");
         }
 
@@ -106,7 +105,7 @@ public class DecoratedBarcodeView extends FrameLayout {
 
         if (viewFinder == null) {
             throw new IllegalArgumentException(
-                    "There is no a cn.rongcloud.rce.qrcode.barcodescanner.ViewfinderView on provided layout " +
+                    "There is no a ViewfinderView on provided layout " +
                             "with the id \"zxing_viewfinder_view\".");
         }
 
@@ -140,11 +139,6 @@ public class DecoratedBarcodeView extends FrameLayout {
             }
         }
 
-        String customPromptMessage = intent.getStringExtra(Intents.Scan.PROMPT_MESSAGE);
-        if (customPromptMessage != null) {
-            setStatusText(customPromptMessage);
-        }
-
         // Check to see if the scan should be inverted.
         boolean inverted = intent.getBooleanExtra(Intents.Scan.INVERTED_SCAN, false);
 
@@ -155,13 +149,6 @@ public class DecoratedBarcodeView extends FrameLayout {
 
         barcodeView.setCameraSettings(settings);
         barcodeView.setDecoderFactory(new DefaultDecoderFactory(decodeFormats, decodeHints, characterSet, inverted));
-    }
-
-    public void setStatusText(String text) {
-        // statusView is optional when using a custom layout
-        if (statusView != null) {
-            statusView.setText(text);
-        }
     }
 
     /**
@@ -184,10 +171,6 @@ public class DecoratedBarcodeView extends FrameLayout {
 
     public NewViewfinderView getViewFinder() {
         return viewFinder;
-    }
-
-    public TextView getStatusView() {
-        return statusView;
     }
 
     /**
@@ -231,29 +214,6 @@ public class DecoratedBarcodeView extends FrameLayout {
         if (torchListener != null) {
             torchListener.onTorchOff();
         }
-    }
-
-    /**
-     * Handles focus, camera, volume up and volume down keys.
-     * <p>
-     * Note that this view is not usually focused, so the Activity should call this directly.
-     */
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_FOCUS:
-            case KeyEvent.KEYCODE_CAMERA:
-                // Handle these events so they don't launch the Camera app
-                return true;
-            // Use volume up/down to turn on light
-            case KeyEvent.KEYCODE_VOLUME_DOWN: //音量键下关灯
-                setTorchOff();
-                return true;
-            case KeyEvent.KEYCODE_VOLUME_UP: // 音量键上开灯
-                setTorchOn();
-                return true;
-        }
-        return super.onKeyDown(keyCode, event);
     }
 
     public void setTorchListener(TorchListener listener) {

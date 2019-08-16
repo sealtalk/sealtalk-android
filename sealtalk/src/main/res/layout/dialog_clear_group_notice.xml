@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/btn_clear"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_dialog_select_picture_btn_height"
+        android:background="@drawable/seal_dialog_select_picture_btn_selector"
+        android:text="@string/seal_dialog_clean_group_notice"
+        android:textColor="@color/seal_dialog_select_picture_btn_text"
+        android:textSize="@dimen/seal_dialog_select_picture_btn_text_size"
+        style="?android:attr/borderlessButtonStyle"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/seal_dialog_select_picture_divider" />
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_dialog_select_picture_btn_height"
+        android:background="@drawable/seal_dialog_select_picture_btn_selector"
+        android:text="@string/seal_dialog_select_picture_cancel"
+        android:textColor="@color/seal_dialog_clean_notice_cancel"
+        android:textSize="@dimen/seal_dialog_select_picture_btn_text_size"
+        style="?android:attr/borderlessButtonStyle"
+        />
+
+</LinearLayout>

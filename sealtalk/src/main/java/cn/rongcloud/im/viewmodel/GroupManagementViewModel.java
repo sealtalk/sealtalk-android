@@ -17,11 +17,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import cn.rongcloud.im.db.model.GroupEntity;
 import cn.rongcloud.im.model.GroupMember;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.task.GroupTask;
 import cn.rongcloud.im.utils.CharacterParser;
+import cn.rongcloud.im.utils.SingleSourceLiveData;
 import cn.rongcloud.im.utils.SingleSourceMapLiveData;
 
 public class GroupManagementViewModel extends AndroidViewModel {
@@ -31,8 +33,11 @@ public class GroupManagementViewModel extends AndroidViewModel {
     private MediatorLiveData<Resource<Void>> removeManagerResult = new MediatorLiveData<>();
     private MediatorLiveData<Resource<Void>> addManagerResult = new MediatorLiveData<>();
     private MediatorLiveData<Resource<Void>> transferResult = new MediatorLiveData<>();
+    private MediatorLiveData<GroupEntity> groupInfo = new MediatorLiveData<>();
     private GroupTask groupTask;
-    private SingleSourceMapLiveData< Resource<List<GroupMember>>, List<GroupMember>> groupMembersWithoutGroupOwner;
+    private SingleSourceMapLiveData<Resource<List<GroupMember>>, List<GroupMember>> groupMembersWithoutGroupOwner;
+    private SingleSourceLiveData<Resource<Void>> muteAllResult = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<Void>> setCerifiResult = new SingleSourceLiveData<>();
 
     public GroupManagementViewModel(@NonNull Application application) {
         super(application);
@@ -43,6 +48,54 @@ public class GroupManagementViewModel extends AndroidViewModel {
         groupTask = new GroupTask(application);
         this.groupId = groupId;
         groupMemberInfo(groupId);
+        getGroupInfo(groupId);
+    }
+
+    private void getGroupInfo(String groupId) {
+        LiveData<GroupEntity> mGroupEntity = groupTask.getGroupInfoInDB(groupId);
+        groupInfo.addSource(mGroupEntity, new Observer<GroupEntity>() {
+            @Override
+            public void onChanged(GroupEntity groupEntity) {
+                if (groupEntity != null) {
+                    groupInfo.removeSource(mGroupEntity);
+                    groupInfo.postValue(groupEntity);
+                }
+            }
+        });
+    }
+
+    /**
+     * 设置入群认证
+     * @param certiStatus
+     */
+    public void setCerification(int certiStatus){
+        setCerifiResult.setSource(groupTask.setCertification(groupId,certiStatus));
+    }
+
+    public LiveData<Resource<Void>> getCerifiResult(){
+        return setCerifiResult;
+    }
+
+    /**
+     * 开启禁言
+     *
+     * @param muteAllState
+     */
+    public void setMuteAll(int muteAllState) {
+        muteAllResult.setSource(groupTask.setMuteAll(groupId, muteAllState, ""));
+    }
+
+    public LiveData<Resource<Void>> getMuteAllResult() {
+        return muteAllResult;
+    }
+
+    /**
+     * 获取群信息
+     *
+     * @return
+     */
+    public LiveData<GroupEntity> getGroupInfo() {
+        return groupInfo;
     }
 
     private void groupMemberInfo(String groupId) {
@@ -54,7 +107,7 @@ public class GroupManagementViewModel extends AndroidViewModel {
                 if (listResource != null && listResource.data != null && listResource.data.size() > 0) {
                     List<GroupMember> data = listResource.data;
                     for (GroupMember member : data) {
-                        if (member.getMemberRole() == GroupMember.Role.GROUP_OWNER ) {
+                        if (member.getMemberRole() == GroupMember.Role.GROUP_OWNER) {
                             groupOwner.postValue(member);
                         } else if (member.getMemberRole() == GroupMember.Role.MANAGEMENT) {
                             managements.add(member);
@@ -115,6 +168,7 @@ public class GroupManagementViewModel extends AndroidViewModel {
 
     /**
      * 群主
+     *
      * @return
      */
     public LiveData<GroupMember> getGroupOwner() {
@@ -123,6 +177,7 @@ public class GroupManagementViewModel extends AndroidViewModel {
 
     /**
      * 获去群管理
+     *
      * @return
      */
     public LiveData<Resource<List<GroupMember>>> getGroupManagements() {
@@ -131,6 +186,7 @@ public class GroupManagementViewModel extends AndroidViewModel {
 
     /**
      * 删除管理员结果
+     *
      * @return
      */
     public LiveData<Resource<Void>> getRemoveManagerResult() {
@@ -139,6 +195,7 @@ public class GroupManagementViewModel extends AndroidViewModel {
 
     /**
      * 添加管理员结果
+     *
      * @return
      */
     public LiveData<Resource<Void>> getAddManagerResult() {
@@ -148,6 +205,7 @@ public class GroupManagementViewModel extends AndroidViewModel {
 
     /**
      * 除群主之外的所有成员
+     *
      * @return
      */
     public LiveData<List<GroupMember>> getGroupMembersWithoutGroupOwner() {
@@ -156,6 +214,7 @@ public class GroupManagementViewModel extends AndroidViewModel {
 
     /**
      * 转让群角色结果
+     *
      * @return
      */
     public LiveData<Resource<Void>> getTransferResult() {
@@ -164,6 +223,7 @@ public class GroupManagementViewModel extends AndroidViewModel {
 
     /**
      * 删除管理员
+     *
      * @param member
      */
     public void deleteManagement(GroupMember member) {
@@ -188,7 +248,7 @@ public class GroupManagementViewModel extends AndroidViewModel {
                             }
                         }
                     });
-                }else {
+                } else {
                     removeManagerResult.postValue(resource);
                 }
             }
@@ -197,11 +257,12 @@ public class GroupManagementViewModel extends AndroidViewModel {
 
     /**
      * 添加管理员
+     *
      * @param membersIds
      */
     public void addManagement(List<String> membersIds) {
         String[] memIds = new String[membersIds.size()];
-        for (int i=0; i< membersIds.size(); i++) {
+        for (int i = 0; i < membersIds.size(); i++) {
             memIds[i] = membersIds.get(i);
         }
 
@@ -225,7 +286,7 @@ public class GroupManagementViewModel extends AndroidViewModel {
                             }
                         }
                     });
-                }else {
+                } else {
                     addManagerResult.postValue(resource);
                 }
             }
@@ -235,6 +296,7 @@ public class GroupManagementViewModel extends AndroidViewModel {
 
     /**
      * 转让群角色
+     *
      * @param groupId
      * @param userId
      */
@@ -266,7 +328,6 @@ public class GroupManagementViewModel extends AndroidViewModel {
             }
         });
     }
-
 
 
     public static class Factory extends ViewModelProvider.NewInstanceFactory {

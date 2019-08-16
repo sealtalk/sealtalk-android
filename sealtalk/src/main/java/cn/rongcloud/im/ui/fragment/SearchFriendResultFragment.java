@@ -23,6 +23,7 @@ public class SearchFriendResultFragment extends Fragment implements View.OnClick
     private SearchFriendInfo searchFriendInfo;
     private ImageView ivPortrait;
     private TextView tvName;
+    private TextView tvStAccount;
     private OnSearchFriendItemClickListener searchFriendItemClickListener;
 
     public SearchFriendResultFragment(OnSearchFriendItemClickListener listener, SearchFriendInfo searchFriendInfo) {
@@ -36,6 +37,7 @@ public class SearchFriendResultFragment extends Fragment implements View.OnClick
         View view = inflater.inflate(R.layout.activity_search_friend_result_net, container, false);
         ivPortrait = view.findViewById(R.id.search_header);
         tvName = view.findViewById(R.id.search_name);
+        tvStAccount = view.findViewById(R.id.search_sealtalk_acctount);
         view.setOnClickListener(this);
         initView();
         return view;
@@ -43,6 +45,10 @@ public class SearchFriendResultFragment extends Fragment implements View.OnClick
 
     private void initView() {
         tvName.setText(searchFriendInfo.getNickname());
+        String stAccount = searchFriendInfo.getStAccount();
+        if (!TextUtils.isEmpty(stAccount)) {
+            tvStAccount.setText(getString(R.string.seal_st_account_content_format, stAccount));
+        }
         String portraitUri = searchFriendInfo.getPortraitUri();
         if (TextUtils.isEmpty(portraitUri)) {
             String generateDefaultAvatar = RongGenerate.generateDefaultAvatar(getContext(), searchFriendInfo.getId(), searchFriendInfo.getNickname());

@@ -65,6 +65,7 @@ public class NewViewfinderView extends View {
     protected List<ResultPoint> possibleResultPoints;
     protected List<ResultPoint> lastPossibleResultPoints;
     protected CameraPreview cameraPreview;
+    private boolean allowScanAnimation = true;
 
     // Cache the framingRect and previewFramingRect, so that we can still draw it after the preview
     // stopped.
@@ -209,19 +210,21 @@ public class NewViewfinderView extends View {
             paint.setStyle(Paint.Style.FILL);
             canvas.drawRect(0, 0, width, height, paint);
         } else {
-            //循环划线，从上到下
-            if (lineOffsetCount > frame.bottom - frame.top - dp2px(10)) {
-                lineOffsetCount = 0;
-            } else {
-                lineOffsetCount = lineOffsetCount + 6;
-                Rect lineRect = new Rect();
-                lineRect.left = frame.left;
-                lineRect.top = frame.top + lineOffsetCount;
-                lineRect.right = frame.right;
-                lineRect.bottom = frame.top + dp2px(10) + lineOffsetCount;
-                canvas.drawBitmap(((BitmapDrawable) (getResources().getDrawable(R.drawable.zxing_scanline))).getBitmap(), null, lineRect, linePaint);
+            if(allowScanAnimation) {
+                //循环划线，从上到下
+                if (lineOffsetCount > frame.bottom - frame.top - dp2px(10)) {
+                    lineOffsetCount = 0;
+                } else {
+                    lineOffsetCount = lineOffsetCount + 6;
+                    Rect lineRect = new Rect();
+                    lineRect.left = frame.left;
+                    lineRect.top = frame.top + lineOffsetCount;
+                    lineRect.right = frame.right;
+                    lineRect.bottom = frame.top + dp2px(10) + lineOffsetCount;
+                    canvas.drawBitmap(((BitmapDrawable) (getResources().getDrawable(R.drawable.zxing_scanline))).getBitmap(), null, lineRect, linePaint);
+                }
+                postInvalidateDelayed(10L, frame.left, frame.top, frame.right, frame.bottom);
             }
-            postInvalidateDelayed(10L, frame.left, frame.top, frame.right, frame.bottom);
         }
         Paint paint = new Paint();
         paint.setStrokeWidth(2);
@@ -256,5 +259,13 @@ public class NewViewfinderView extends View {
     private int dp2px(int dp) {
         float density = getContext().getResources().getDisplayMetrics().density;
         return (int) (dp * density + 0.5f);
+    }
+
+    public boolean isAllowScanAnimation() {
+        return allowScanAnimation;
+    }
+
+    public void setAllowScanAnimation(boolean allowScanAnimation) {
+        this.allowScanAnimation = allowScanAnimation;
     }
 }

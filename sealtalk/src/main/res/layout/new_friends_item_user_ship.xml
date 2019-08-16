@@ -50,6 +50,22 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_ignore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/seal_new_friend_add_friend_selector"
+        android:layout_marginRight="@dimen/seal_new_friend_status_margin_right"
+        android:paddingBottom="@dimen/seal_new_friend_status_padding_bottom"
+        android:paddingLeft="@dimen/seal_new_friend_status_padding_left"
+        android:paddingRight="@dimen/seal_new_friend_status_padding_right"
+        android:paddingTop="@dimen/seal_new_friend_status_padding_top"
+        android:text="@string/seal_new_friend_agree_ignore"
+        android:textColor="@color/seal_new_friends_status_text"
+        android:textSize="@dimen/seal_new_friend_status_text_size"
+        android:visibility="gone"
+        />
 
     <TextView
         android:id="@+id/tv_state"

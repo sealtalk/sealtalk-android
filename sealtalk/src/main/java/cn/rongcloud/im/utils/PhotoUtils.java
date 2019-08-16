@@ -92,6 +92,7 @@ public class PhotoUtils {
         try {
             //每次选择图片吧之前的图片删除
             clearCropFile(buildUri(fragment.getActivity()));
+            clearCropFile(buildLocalFileUri());
 
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -129,7 +130,6 @@ public class PhotoUtils {
             e.printStackTrace();
         }
     }
-
 
 
     /***

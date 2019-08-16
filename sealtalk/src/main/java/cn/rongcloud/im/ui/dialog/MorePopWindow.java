@@ -24,6 +24,8 @@ public class MorePopWindow extends PopupWindow {
         void onCreateGroupClick();
 
         void onAddFriendClick();
+
+        void onScanClick();
     }
 
     @SuppressLint("InflateParams")
@@ -74,6 +76,15 @@ public class MorePopWindow extends PopupWindow {
             public void onClick(View v) {
                 if (listener != null) {
                     listener.onAddFriendClick();
+                }
+                dismiss();
+            }
+        });
+        contentView.findViewById(R.id.btn_scan).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onScanClick();
                 }
                 dismiss();
             }

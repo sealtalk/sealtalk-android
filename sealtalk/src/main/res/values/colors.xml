@@ -7,6 +7,7 @@
 
     <color name="seal_login_text_button_color">#999999</color>
     <color name="white">#FFFFFF</color>
+    <color name="dark_white">#E5E5E5</color>
     <color name="seal_search_title_bar_bg">#0195ff</color>
     <color name="seal_search_title_bar_et_hite">#8ed0ff</color>
     <color name="seal_search_title_bar_line">#0083e0</color>
@@ -20,6 +21,7 @@
     <color name="text_hint_gray">#e6e6e6</color>>
 
     <color name="common_divider">#dfdfdd</color>
+
 
     <color name="color_black_text">#333333</color>
     <color name="seal_evaluate_dialog_divider">#eceef3</color>
@@ -56,6 +58,7 @@
 
     <color name="seal_userinfo_item_divider">#dfdfdd</color>
     <color name="seal_update_name_text_color">#999999</color>
+    <color name="seal_update_name_tips">#FF1612</color>
     <color name="seal_update_name_edit">#353535</color>
     <color name="seal_dialog_select_picture_btn_text">#333333</color>
     <color name="seal_dialog_select_picture_divider">#dfdfdd</color>
@@ -71,6 +74,7 @@
 
     <!-- 界面改版使用 -->
     <color name="text_black">#262626</color>
+    <color name="light_gray">#e2e2e2</color>
     <color name="text_gray">#939393</color>
     <color name="text_light_gray">#BDBDBD</color>
     <color name="text_blue">#368AE8</color>
@@ -87,6 +91,15 @@
     <color name="color_primary">#3A91F3</color>
     <color name="color_main_tab">#f9f9f9</color>
     <color name="seal_user_detail_userinfo_text_color">#999999</color>
-    <color name="seal_group_manager_item_role">@color/text_gray </color>
+    <color name="seal_group_manager_item_role">@color/text_gray</color>
     <color name="seal_search_line_color">#DFDFDD</color>
+    <color name="edge_gray">@color/light_gray</color>
+    <!--个人信息-->
+    <color name="seal_account_staccount_edit_hint">#9A9A9A</color>
+
+    <color name="seal_group_notice_item_agree">#3098FC</color>
+    <color name="seal_group_notice_item_time">#9B9B9B</color>
+    <color name="seal_dialog_clean_notice_cancel">#0076FF</color>
+
+    <color name="seal_group_detail_clean_tips">#8B8B8B</color>
 </resources>

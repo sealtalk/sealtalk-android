@@ -9,7 +9,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowBackground">@color/seal_bg</item>
-        
+
         <item name="textAllCaps">false</item>
     </style>
 
@@ -84,6 +84,16 @@
     <style name="input_editview" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">@color/seal_search_line_color</item>
         <item name="colorControlActivated">@color/text_blue</item>
+    </style>
+
+    <style name="TranslucentNoTitleActivity" parent="@style/Base.Theme.AppCompat.Dialog">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
     </style>
 
 </resources>

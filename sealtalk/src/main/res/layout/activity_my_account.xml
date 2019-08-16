@@ -32,10 +32,30 @@
     </cn.rongcloud.im.ui.view.SettingItemView>
 
     <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_saccount"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_mine_my_account_item_height"
+        app:item_content="@string/seal_mine_my_account_sknumber"
+        app:item_divider="true"
+        >
+
+    </cn.rongcloud.im.ui.view.SettingItemView>
+
+    <cn.rongcloud.im.ui.view.SettingItemView
         android:id="@+id/siv_phonenumber"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_mine_my_account_item_height"
         app:item_content="@string/seal_mine_my_account_phone_number"
+        >
+
+    </cn.rongcloud.im.ui.view.SettingItemView>
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_gender"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/base_margin2"
+        android:layout_height="@dimen/seal_mine_my_account_item_height"
+        app:item_content="@string/seal_mine_my_account_gender"
         >
 
     </cn.rongcloud.im.ui.view.SettingItemView>

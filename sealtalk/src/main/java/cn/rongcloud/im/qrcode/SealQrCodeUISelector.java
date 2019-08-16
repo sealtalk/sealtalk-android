@@ -39,6 +39,7 @@ public class SealQrCodeUISelector {
 
     /**
      * 根据 QR 二维码中的 uri 进行相应的界面展示
+     *
      * @param uri
      * @return Resource 状态 success 为成功跳转，data 中值为 null ;error 为没有跳转成功，此时 data 中的值为 错误信息
      */
@@ -77,13 +78,8 @@ public class SealQrCodeUISelector {
                 GroupEntity data = resource.data;
 
                 if (data != null) {
-                    Date deletedAt = data.getDeletedAt();
-                    if (deletedAt == null) {
-                        String groupName = data.getName();
-                        checkIsInGroup(groupId, groupName, result);
-                    } else {
-                        result.postValue(Resource.error(ErrorCode.QRCODE_ERROR.getCode(), context.getString(R.string.profile_group_has_dismissed)));
-                    }
+                    String groupName = data.getName();
+                    checkIsInGroup(groupId, groupName, result);
                 } else if (resource.status == Status.ERROR) {
                     if (resource.code == ErrorCode.API_COMMON_ERROR.getCode()) {
                         result.postValue(Resource.error(ErrorCode.QRCODE_ERROR.getCode(), context.getString(R.string.profile_group_not_exist)));
@@ -108,24 +104,26 @@ public class SealQrCodeUISelector {
         groupMemberList.observeForever(new Observer<Resource<List<GroupMember>>>() {
             @Override
             public void onChanged(Resource<List<GroupMember>> resource) {
-                if (resource.status != Status.LOADING || resource.data != null) {
+                if (resource.status != Status.LOADING) {
                     groupMemberList.removeObserver(this);
                 }
                 // 获取成员列表
-                List<GroupMember> groupMemberList = resource.data;
-                if (groupMemberList != null) {
-                    for (GroupMember groupMember : groupMemberList) {
-                        String userId = groupMember.getUserId();
-                        if (currentUserId.equals(userId)) {
-                            // 群组中包含自己则跳转到群聊天界面
-                            toGroupChat(groupId, groupName, result);
-                            return;
+                if (resource.status == Status.SUCCESS) {
+                    List<GroupMember> groupMemberList = resource.data;
+                    if (groupMemberList != null) {
+                        for (GroupMember groupMember : groupMemberList) {
+                            String userId = groupMember.getUserId();
+                            if (currentUserId.equals(userId)) {
+                                // 群组中包含自己则跳转到群聊天界面
+                                toGroupChat(groupId, groupName, result);
+                                return;
+                            }
                         }
-                    }
 
-                    // 如果群组成员中没有自己则跳转到加入群组界面
-                    showJoinGroup(groupId, result);
-                    return;
+                        // 如果群组成员中没有自己则跳转到加入群组界面
+                        showJoinGroup(groupId, result);
+                        return;
+                    }
                 }
 
                 if (resource.status == Status.ERROR) {

@@ -127,8 +127,8 @@ public class JoinGroupActivity extends TitleBaseActivity implements View.OnClick
         if (deletedAt != null) {
             // 隐藏加入群组
             joinGroupBtn.setVisibility(View.VISIBLE);
-
-            ToastUtils.showToast(getString(R.string.profile_group_has_dismissed));
+            joinGroupBtn.setText(R.string.profile_group_has_dismissed);
+            joinGroupBtn.setEnabled(false);
         } else {
             // 显示加入群组
             joinGroupBtn.setVisibility(View.VISIBLE);

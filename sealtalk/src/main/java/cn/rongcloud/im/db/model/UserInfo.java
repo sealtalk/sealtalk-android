@@ -36,7 +36,26 @@ public class UserInfo {
     private int friendStatus;
     @ColumnInfo(name = "order_spelling")
     private String orderSpelling;
+    @ColumnInfo(name = "st_account")
+    private String stAccount;
+    @ColumnInfo(name = "gender")
+    private String gender;
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getStAccount() {
+        return stAccount;
+    }
+
+    public void setStAccount(String stAccount) {
+        this.stAccount = stAccount;
+    }
 
     public String getId() {
         return id;
@@ -150,6 +169,8 @@ public class UserInfo {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", friendStatus=" + friendStatus +
                 ", orderSpelling='" + orderSpelling + '\'' +
+                ", stAccount='" + stAccount + '\'' +
+                ", gender='" + gender + '\'' +
                 '}';
     }
 }

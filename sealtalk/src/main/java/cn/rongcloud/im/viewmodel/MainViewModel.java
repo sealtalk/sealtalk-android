@@ -20,9 +20,18 @@ public class MainViewModel extends AndroidViewModel {
     private Conversation.ConversationType[] conversationTypes;
     private final IMManager imManager;
     private MutableLiveData<Integer> unReadNum = new MutableLiveData<>();
+    private MutableLiveData<Integer> newFriendNum = new MutableLiveData<>();
     private LiveData<String> userId = new MutableLiveData<>();
     private MediatorLiveData<FriendShipInfo> privateChatLiveData = new MediatorLiveData<>();
     private FriendTask friendTask;
+    /**
+     * 群通知数
+     */
+    private int groupNotifyNum;
+    /**
+     * 未读消息数
+     */
+    private int unreadMessageNum;
 
     public MainViewModel(@NonNull Application application) {
         super(application);
@@ -50,6 +59,34 @@ public class MainViewModel extends AndroidViewModel {
         return unReadNum;
     }
 
+    /**
+     * 更新群通知未读消息的数量
+     *
+     * @param num
+     */
+    public void setGroupNotifyUnReadNum(int num) {
+        groupNotifyNum = num;
+        unReadNum.postValue(unreadMessageNum + groupNotifyNum);
+    }
+
+    /**
+     * 新朋友数量
+     *
+     * @return
+     */
+    public LiveData<Integer> getNewFriendNum() {
+        return newFriendNum;
+    }
+
+    /**
+     * 修改新朋友的数量
+     *
+     * @param count
+     */
+    public void setNewFriendNum(int count) {
+        newFriendNum.postValue(count);
+    }
+
     @Override
     protected void onCleared() {
         super.onCleared();
@@ -59,7 +96,8 @@ public class MainViewModel extends AndroidViewModel {
     IUnReadMessageObserver observer = new IUnReadMessageObserver() {
         @Override
         public void onCountChanged(int i) {
-            unReadNum.postValue(i);
+            unreadMessageNum = i;
+            unReadNum.postValue(unreadMessageNum + groupNotifyNum);
         }
     };
 

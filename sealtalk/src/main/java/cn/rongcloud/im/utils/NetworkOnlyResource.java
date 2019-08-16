@@ -7,10 +7,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
 import cn.rongcloud.im.common.ErrorCode;
+import cn.rongcloud.im.common.LogTag;
 import cn.rongcloud.im.common.NetConstant;
 import cn.rongcloud.im.common.ThreadManager;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Result;
+import cn.rongcloud.im.utils.log.SLog;
 
 public abstract class NetworkOnlyResource<ResultType,RequestType> {
     private final ThreadManager threadManager;
@@ -51,7 +53,11 @@ public abstract class NetworkOnlyResource<ResultType,RequestType> {
                     if(resultType == null){
                         resultType = transformDefault(response); //默认
                     }
-                    saveCallResult(resultType);
+                    try {
+                        saveCallResult(resultType);
+                    } catch (Exception e) {
+                        SLog.e(LogTag.DB, "saveCallResult failed:" + e.toString());
+                    }
                     result.postValue(Resource.success(resultType));
                 });
             } else {

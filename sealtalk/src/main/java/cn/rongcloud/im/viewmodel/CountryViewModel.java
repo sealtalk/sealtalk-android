@@ -50,41 +50,46 @@ public class CountryViewModel extends AndroidViewModel {
         countryInfoList = new SingleSourceMapLiveData<>(new Function<Resource<List<RegionResult>>, Resource<List<CountryInfo>>>() {
             @Override
             public Resource<List<CountryInfo>> apply(Resource<List<RegionResult>> input) {
-                if (input == null || input.data == null || input.data.size() <= 0) {
-                    return null;
+                if (input.status == Status.LOADING) {
+                    return Resource.loading(null);
+                }
+
+                if (input.status == Status.ERROR) {
+                    return Resource.error(input.code, null);
                 }
                 List<RegionResult> regionList = input.data;
-
                 List<CountryInfo> countryInfos = new ArrayList<>();
-                for (RegionResult region : regionList) {
-                    CountryInfo countryInfo = new CountryInfo();
+                if (regionList != null) {
+                    for (RegionResult region : regionList) {
+                        CountryInfo countryInfo = new CountryInfo();
 
-                    if(local == LangUtils.RCLocale.LOCALE_CHINA){
-                        countryInfo.setCountryName(region.locale.zh);
-                    }else if(local == LangUtils.RCLocale.LOCALE_US){
-                        countryInfo.setCountryName(region.locale.en);
-                    }else {
-                        countryInfo.setCountryName(region.locale.en);
-                    }
-                    countryInfo.setCountryNameCN(region.locale.zh);
-                    countryInfo.setCountryNameEN(region.locale.en);
-                    countryInfo.setZipCode("+" + region.region);
-                    //汉字转换成拼音
-                    String namePinyin = characterParser.getSpelling(countryInfo.getCountryName());
-                    String firstChar = namePinyin.substring(0, 1).toUpperCase();
-                    // 正则表达式，判断首字母是否是英文字母
-                    if (firstChar.matches("[A-Z]")) {
-                        countryInfo.setFirstChar(firstChar.toUpperCase());
-                    } else {
-                        countryInfo.setFirstChar("#");
-                    }
-                    countryInfos.add(countryInfo);
-                    Collections.sort(countryInfos, new Comparator<CountryInfo>() {
-                        @Override
-                        public int compare(CountryInfo lhs, CountryInfo rhs) {
-                            return lhs.getFirstChar().compareTo(rhs.getFirstChar());
+                        if (local == LangUtils.RCLocale.LOCALE_CHINA) {
+                            countryInfo.setCountryName(region.locale.zh);
+                        } else if (local == LangUtils.RCLocale.LOCALE_US) {
+                            countryInfo.setCountryName(region.locale.en);
+                        } else {
+                            countryInfo.setCountryName(region.locale.en);
                         }
-                    });
+                        countryInfo.setCountryNameCN(region.locale.zh);
+                        countryInfo.setCountryNameEN(region.locale.en);
+                        countryInfo.setZipCode("+" + region.region);
+                        //汉字转换成拼音
+                        String namePinyin = characterParser.getSpelling(countryInfo.getCountryName());
+                        String firstChar = namePinyin.substring(0, 1).toUpperCase();
+                        // 正则表达式，判断首字母是否是英文字母
+                        if (firstChar.matches("[A-Z]")) {
+                            countryInfo.setFirstChar(firstChar.toUpperCase());
+                        } else {
+                            countryInfo.setFirstChar("#");
+                        }
+                        countryInfos.add(countryInfo);
+                        Collections.sort(countryInfos, new Comparator<CountryInfo>() {
+                            @Override
+                            public int compare(CountryInfo lhs, CountryInfo rhs) {
+                                return lhs.getFirstChar().compareTo(rhs.getFirstChar());
+                            }
+                        });
+                    }
                 }
 
                 Resource<List<CountryInfo>> resource = new Resource<>(input.status, countryInfos, input.code);
@@ -96,6 +101,7 @@ public class CountryViewModel extends AndroidViewModel {
 
     /**
      * 获取当前的本地化语言
+     *
      * @param context
      * @return
      */
@@ -104,11 +110,11 @@ public class CountryViewModel extends AndroidViewModel {
         if (LangUtils.RCLocale.LOCALE_CHINA == appLocale
                 || LangUtils.RCLocale.LOCALE_US == appLocale) {
             return appLocale;
-        }else {
+        } else {
             Locale systemLocale = RongConfigurationManager.getInstance().getSystemLocale();
             if (systemLocale.getLanguage().equals(Locale.CHINESE.getLanguage())) {
                 RongConfigurationManager.getInstance().switchLocale(LangUtils.RCLocale.LOCALE_CHINA, context);
-                return  LangUtils.RCLocale.LOCALE_CHINA;
+                return LangUtils.RCLocale.LOCALE_CHINA;
             } else {
                 RongConfigurationManager.getInstance().switchLocale(LangUtils.RCLocale.LOCALE_US, context);
                 return LangUtils.RCLocale.LOCALE_US;
@@ -118,6 +124,7 @@ public class CountryViewModel extends AndroidViewModel {
 
     /**
      * 国家信息监听
+     *
      * @return
      */
     public LiveData<Resource<List<CountryInfo>>> getFilterCountryList() {
@@ -126,18 +133,20 @@ public class CountryViewModel extends AndroidViewModel {
 
     /**
      * 获取国家信息
+     *
      * @param filterStr
      */
     public void loadCountryDatas(String filterStr) {
         if (TextUtils.isEmpty(filterStr)) {
-            if (countryInfoList.getValue() == null) {
+            if (countryInfoList.getValue() == null || countryInfoList.getValue().status != Status.SUCCESS) {
                 filterCountryList.addSource(countryInfoList, new Observer<Resource<List<CountryInfo>>>() {
                     @Override
                     public void onChanged(Resource<List<CountryInfo>> listResource) {
-                        if (listResource.status == Status.SUCCESS) {
+                        if (listResource.status != Status.LOADING) {
                             filterCountryList.removeSource(countryInfoList);
-                            filterCountryList.postValue(listResource);
                         }
+
+                        filterCountryList.postValue(listResource);
                     }
                 });
                 countryInfoList.setSource(userTask.getRegionList());

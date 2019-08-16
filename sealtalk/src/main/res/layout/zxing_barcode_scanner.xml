@@ -1,13 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <cn.rongcloud.rce.kit.qrcode.barcodescanner.BarcodeView
+    <cn.rongcloud.im.utils.qrcode.barcodescanner.BarcodeView
         android:id="@+id/zxing_barcode_surface"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <cn.rongcloud.rce.kit.qrcode.barcodescanner.NewViewfinderView
+    <cn.rongcloud.im.utils.qrcode.barcodescanner.NewViewfinderView
         android:id="@+id/zxing_viewfinder_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-</merge>
+
+    <TextView
+        android:id="@+id/zxing_open_light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/zxing_open_light"
+        android:textColor="@color/text_white"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="332dp"
+        android:padding="12dp"
+        android:textSize="17dp"
+        />
+    <TextView
+        android:id="@+id/zxing_user_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/zxing_tips_qrcode_scan"
+        android:textColor="@color/default_sub_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:layout_below="@id/zxing_open_light"
+        />
+
+    <TextView
+        android:id="@+id/zxing_select_pic"
+        android:layout_width="135dp"
+        android:layout_height="35dp"
+        android:background="@drawable/common_btn_blue_selector"
+        android:text="@string/zxing_scan_from_picture"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_marginTop="28dp"
+        android:textColor="@color/text_white"
+        android:layout_below="@+id/zxing_user_tips"
+        />
+
+</RelativeLayout>

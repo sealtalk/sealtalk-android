@@ -19,7 +19,8 @@ import cn.rongcloud.im.utils.SingleSourceLiveData;
 public class DisplayQRCodeViewModel extends AndroidViewModel {
     private SingleSourceLiveData<Resource<Bitmap>> qrCodeResult = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<GroupEntity>> groupInfo = new SingleSourceLiveData<>();
-    private SingleSourceLiveData<Resource<String>> saveBitmapResult = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<String>> saveLocalBitmapResult = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<String>> saveCacheBitmapResult = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<UserInfo>> userInfoResult = new SingleSourceLiveData<>();
     private UserTask userTask;
     private GroupTask groupTask;
@@ -64,12 +65,19 @@ public class DisplayQRCodeViewModel extends AndroidViewModel {
     }
 
     public void saveQRCodeToLocal(Bitmap bitmap) {
-        saveBitmapResult.setSource(fileManager.saveBitmapToPictures(bitmap));
+        saveLocalBitmapResult.setSource(fileManager.saveBitmapToPictures(bitmap));
     }
 
-    public LiveData<Resource<String>> getSaveBitmapResult() {
-        return saveBitmapResult;
+    public LiveData<Resource<String>> getSaveLocalBitmapResult() {
+        return saveLocalBitmapResult;
     }
 
+    public SingleSourceLiveData<Resource<String>> getSaveCacheBitmapResult() {
+        return saveCacheBitmapResult;
+    }
+
+    public void saveQRCodeToCache(Bitmap bitmap) {
+        saveCacheBitmapResult.setSource(fileManager.saveBitmapToCache(bitmap));
+    }
 }
 

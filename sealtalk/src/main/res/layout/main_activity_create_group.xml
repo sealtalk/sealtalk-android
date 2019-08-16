@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
 
@@ -13,16 +14,19 @@
         android:layout_marginTop="80dp"
         android:src="@drawable/main_bg_add_group_portrait" />
 
-    <cn.rongcloud.im.ui.widget.ClearWriteEditText
+    <EditText
         android:id="@+id/main_et_create_group_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
         android:layout_marginBottom="40dp"
-        android:layout_marginLeft="35dp"
-        android:layout_marginRight="35dp"
-        android:background="@null"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:background="@drawable/seal_bg_edit_bottom_blue_line"
+        android:layout_gravity="center"
         android:layout_marginTop="80dp"
+        android:textColorHint="@color/default_sub_text"
         android:gravity="center"
+        tools:hint="@string/profile_group_name_word_limit_format"
         android:maxLength="10" />
 
     <Button

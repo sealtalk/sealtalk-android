@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="57.5dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
+    <CheckBox
+        android:id="@+id/item_cb_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/seal_search_item_checkbox_margin_left"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:background="@null"
+        android:button="@drawable/seal_checkbox_selector"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_toRightOf="@id/item_cb_select"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10.5dp"
+        android:gravity="center_vertical"
+        >
+        <TextView
+            android:id="@+id/item_tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/default_main_text"
+            tools:text="Lily"
+            android:textSize="16.5dp"
+            />
+        <TextView
+            android:id="@+id/item_tv_phone_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/default_sub_text"
+            android:textSize="14dp"
+            tools:text="(0000)0000-0000-000"
+            android:layout_marginTop="4dp"
+            />
+    </LinearLayout>
+
+    <View style="@style/ac_search_list_view_divider"
+        android:layout_alignParentBottom="true"
+        />
+
+</RelativeLayout>

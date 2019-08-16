@@ -24,6 +24,11 @@ public enum FriendStatus {
      * 删除了好友关系
      */
     DELETE_FRIEND(30),
+    /**
+     * 在黑名单中
+     */
+    IN_BLACK_LIST(31),
+
     NONE(0);
 
     int statusCode;

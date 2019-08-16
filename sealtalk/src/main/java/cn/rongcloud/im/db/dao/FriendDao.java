@@ -11,6 +11,8 @@ import java.util.List;
 import cn.rongcloud.im.db.model.BlackListEntity;
 import cn.rongcloud.im.db.model.FriendInfo;
 import cn.rongcloud.im.db.model.FriendShipInfo;
+import cn.rongcloud.im.db.model.PhoneContactInfoEntity;
+import cn.rongcloud.im.model.PhoneContactInfo;
 import cn.rongcloud.im.model.UserSimpleInfo;
 
 
@@ -97,4 +99,21 @@ public interface FriendDao {
 
     @Query("DELETE FROM friend WHERE id=:friendId")
     void deleteFriend(String friendId);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertPhoneContactInfo(List<PhoneContactInfoEntity> contactInfoEntityList);
+
+    @Query("SELECT phone_contact.user_id, phone_contact.phone_number, phone_contact.is_friend,phone_contact.contact_name, user.name, user.portrait_uri, user.name_spelling, user.st_account FROM phone_contact " +
+            "LEFT JOIN user " +
+            "ON phone_contact.user_id = user.id " +
+            "ORDER BY user.order_spelling")
+    LiveData<List<PhoneContactInfo>> getPhoneContactInfo();
+
+    @Query("SELECT phone_contact.user_id, phone_contact.phone_number, phone_contact.is_friend,phone_contact.contact_name, user.name, user.portrait_uri, user.name_spelling, user.st_account FROM phone_contact " +
+            "LEFT JOIN user " +
+            "ON phone_contact.user_id = user.id " +
+            "WHERE phone_contact.contact_name like '%' || :keyword || '%' " +
+            "OR user.st_account like '%' || :keyword || '%'" +
+            "ORDER BY user.order_spelling")
+    LiveData<List<PhoneContactInfo>> searchPhoneContactInfo(String keyword);
 }

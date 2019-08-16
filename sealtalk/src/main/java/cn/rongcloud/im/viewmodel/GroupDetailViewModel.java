@@ -20,39 +20,50 @@ import java.util.List;
 
 import cn.rongcloud.im.db.model.GroupEntity;
 import cn.rongcloud.im.im.IMManager;
+import cn.rongcloud.im.model.AddMemberResult;
 import cn.rongcloud.im.model.GroupMember;
 import cn.rongcloud.im.model.GroupNoticeResult;
+import cn.rongcloud.im.model.GroupRegularClearResult;
 import cn.rongcloud.im.model.Resource;
+import cn.rongcloud.im.model.Result;
+import cn.rongcloud.im.model.ScreenCaptureResult;
 import cn.rongcloud.im.task.GroupTask;
+import cn.rongcloud.im.task.PrivacyTask;
 import cn.rongcloud.im.utils.SingleSourceLiveData;
 import cn.rongcloud.im.utils.SingleSourceMapLiveData;
 import io.rong.imlib.model.Conversation;
 
 /**
  * 群组详情视图模型
- *
  */
 public class GroupDetailViewModel extends AndroidViewModel {
     private SingleSourceLiveData<Resource<GroupEntity>> groupInfoLiveData = new SingleSourceLiveData<>();
     private SingleSourceMapLiveData<Resource<List<GroupMember>>, Resource<List<GroupMember>>> groupMemberListLiveData;
     private SingleSourceLiveData<Resource<GroupNoticeResult>> groupNotice = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<Integer>> regularClearState = new SingleSourceLiveData<>();
 
     private String groupId;
     private Conversation.ConversationType conversationType;
     private GroupTask groupTask;
+    private PrivacyTask privacyTask;
 
     private SingleSourceLiveData<Resource<Boolean>> isNotifyLiveData = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<Boolean>> isTopLiveData = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<Boolean>> cleanMessageResult = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<Void>> uploadPortraitResult = new SingleSourceLiveData<>();
-    private SingleSourceMapLiveData<Resource<Void>,Resource<Void>> addGroupMemberResult;
-    private SingleSourceMapLiveData<Resource<Void>,Resource<Void>> removeGroupMemberResult;
+    private SingleSourceMapLiveData<Resource<List<AddMemberResult>>, Resource<List<AddMemberResult>>> addGroupMemberResult;
+    private SingleSourceMapLiveData<Resource<Void>, Resource<Void>> removeGroupMemberResult;
     private SingleSourceLiveData<Resource<Void>> renameGroupNameResult = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<Void>> exitGroupResult = new SingleSourceLiveData<>();
     private MediatorLiveData<GroupMember> myselfInfo = new MediatorLiveData<>();
 
     private SingleSourceLiveData<Resource<Void>> saveToContactResult = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<Void>> removeFromContactResult = new SingleSourceLiveData<>();
+
+    private SingleSourceLiveData<Resource<ScreenCaptureResult>> screenCaptureResult = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<Void>> setScreenCaptureResult = new SingleSourceLiveData<>();
+
+    private SingleSourceLiveData<Resource<Void>> setCleanTimeResult = new SingleSourceLiveData<>();
     private IMManager imManager;
 
     public GroupDetailViewModel(@NonNull Application application) {
@@ -62,11 +73,12 @@ public class GroupDetailViewModel extends AndroidViewModel {
         imManager = IMManager.getInstance();
     }
 
-    public GroupDetailViewModel(@NonNull Application application, String targetId, Conversation.ConversationType conversationType){
+    public GroupDetailViewModel(@NonNull Application application, String targetId, Conversation.ConversationType conversationType) {
         super(application);
         this.groupId = targetId;
         this.conversationType = conversationType;
 
+        privacyTask = new PrivacyTask(application);
         groupTask = new GroupTask(application);
         imManager = IMManager.getInstance();
 
@@ -90,9 +102,9 @@ public class GroupDetailViewModel extends AndroidViewModel {
                                 return -1;
                             } else if (lhs.getRole() == GroupMember.Role.MEMBER.getValue() && rhs.getRole() == GroupMember.Role.MANAGEMENT.getValue()) {
                                 return 1;
-                            } else if(lhs.getRole() == GroupMember.Role.MANAGEMENT.getValue() && rhs.getRole() == GroupMember.Role.MANAGEMENT.getValue()){
+                            } else if (lhs.getRole() == GroupMember.Role.MANAGEMENT.getValue() && rhs.getRole() == GroupMember.Role.MANAGEMENT.getValue()) {
                                 return lhs.getJoinTime() > rhs.getJoinTime() ? 1 : -1;
-                            } else if(lhs.getRole() == GroupMember.Role.MEMBER.getValue() && rhs.getRole() == GroupMember.Role.MEMBER.getValue()) {
+                            } else if (lhs.getRole() == GroupMember.Role.MEMBER.getValue() && rhs.getRole() == GroupMember.Role.MEMBER.getValue()) {
                                 return lhs.getJoinTime() > rhs.getJoinTime() ? 1 : -1;
                             }
 
@@ -138,13 +150,15 @@ public class GroupDetailViewModel extends AndroidViewModel {
         });
 
         requestGroupNotice(groupId);
+        requestRegularState(groupId);
+        getScreenCaptureStatus();
     }
 
     /**
      * 刷新群组信息
      * 此方法一般不需要调用，默认在初始化时会数据刷新，仅在特殊情况需要请求网络同步最新数据时需要
      */
-    public void refreshGroupInfo(){
+    public void refreshGroupInfo() {
         groupInfoLiveData.setSource(groupTask.getGroupInfo(groupId));
     }
 
@@ -152,7 +166,7 @@ public class GroupDetailViewModel extends AndroidViewModel {
      * 刷新群组成员列表
      * 此方法一般不需要调用，默认在初始化时会数据刷新，仅在特殊情况需要请求网络同步最新数据时需要
      */
-    public void refreshGroupMemberList(){
+    public void refreshGroupMemberList() {
         groupMemberListLiveData.setSource(groupTask.getGroupMemberInfoList(groupId));
     }
 
@@ -161,11 +175,11 @@ public class GroupDetailViewModel extends AndroidViewModel {
      *
      * @param isNotify
      */
-    public void setIsNotifyConversation(final boolean isNotify){
+    public void setIsNotifyConversation(final boolean isNotify) {
         Resource<Boolean> value = isNotifyLiveData.getValue();
-        if(value != null && value.data != null && value.data == isNotify) return;
+        if (value != null && value.data != null && value.data == isNotify) return;
 
-        isNotifyLiveData.setSource(imManager.setConversationNotificationStatus(conversationType, groupId,isNotify));
+        isNotifyLiveData.setSource(imManager.setConversationNotificationStatus(conversationType, groupId, isNotify));
     }
 
     /**
@@ -173,15 +187,16 @@ public class GroupDetailViewModel extends AndroidViewModel {
      *
      * @param isTop
      */
-    public void setConversationOnTop(boolean isTop){
+    public void setConversationOnTop(boolean isTop) {
         Resource<Boolean> value = isTopLiveData.getValue();
-        if(value != null && value.data != null && value.data == isTop) return;
+        if (value != null && value.data != null && value.data == isTop) return;
 
         isTopLiveData.setSource(imManager.setConversationToTop(conversationType, groupId, isTop));
     }
 
     /**
      * 获取会话是否接受消息通知
+     *
      * @return
      */
     public MutableLiveData<Resource<Boolean>> getIsNotify() {
@@ -190,6 +205,7 @@ public class GroupDetailViewModel extends AndroidViewModel {
 
     /**
      * 获取会话是否置顶
+     *
      * @return
      */
     public MutableLiveData<Resource<Boolean>> getIsTop() {
@@ -199,7 +215,7 @@ public class GroupDetailViewModel extends AndroidViewModel {
     /**
      * 清除历史消息
      */
-    public void cleanHistoryMessage(){
+    public void cleanHistoryMessage() {
         cleanMessageResult.setSource(imManager.cleanHistoryMessage(conversationType, groupId));
     }
 
@@ -208,7 +224,7 @@ public class GroupDetailViewModel extends AndroidViewModel {
      *
      * @return
      */
-    public LiveData<Resource<Boolean>> getCleanHistoryMessageResult(){
+    public LiveData<Resource<Boolean>> getCleanHistoryMessageResult() {
         return cleanMessageResult;
     }
 
@@ -217,7 +233,7 @@ public class GroupDetailViewModel extends AndroidViewModel {
      *
      * @return
      */
-    public LiveData<Resource<GroupEntity>> getGroupInfo(){
+    public LiveData<Resource<GroupEntity>> getGroupInfo() {
         return groupInfoLiveData;
     }
 
@@ -226,7 +242,7 @@ public class GroupDetailViewModel extends AndroidViewModel {
      *
      * @param imageUri
      */
-    public void setGroupPortrait(Uri imageUri){
+    public void setGroupPortrait(Uri imageUri) {
         uploadPortraitResult.setSource(groupTask.uploadAndSetGroupPortrait(groupId, imageUri));
     }
 
@@ -235,12 +251,13 @@ public class GroupDetailViewModel extends AndroidViewModel {
      *
      * @return
      */
-    public LiveData<Resource<Void>> getUploadPortraitResult(){
+    public LiveData<Resource<Void>> getUploadPortraitResult() {
         return uploadPortraitResult;
     }
 
     /**
      * 获取群组成员列表
+     *
      * @return
      */
     public LiveData<Resource<List<GroupMember>>> getGroupMemberList() {
@@ -253,7 +270,7 @@ public class GroupDetailViewModel extends AndroidViewModel {
      * @param memberIdList
      */
     public void addGroupMember(List<String> memberIdList) {
-        if(memberIdList != null && memberIdList.size() > 0){
+        if (memberIdList != null && memberIdList.size() > 0) {
             addGroupMemberResult.setSource(groupTask.addGroupMember(groupId, memberIdList));
         }
     }
@@ -264,7 +281,7 @@ public class GroupDetailViewModel extends AndroidViewModel {
      * @param memberIdList
      */
     public void removeGroupMember(List<String> memberIdList) {
-        if(memberIdList != null && memberIdList.size() > 0){
+        if (memberIdList != null && memberIdList.size() > 0) {
             removeGroupMemberResult.setSource(groupTask.kickGroupMember(groupId, memberIdList));
         }
     }
@@ -274,7 +291,7 @@ public class GroupDetailViewModel extends AndroidViewModel {
      *
      * @return
      */
-    public LiveData<Resource<Void>> getAddGroupMemberResult(){
+    public LiveData<Resource<List<AddMemberResult>>> getAddGroupMemberResult() {
         return addGroupMemberResult;
     }
 
@@ -283,7 +300,7 @@ public class GroupDetailViewModel extends AndroidViewModel {
      *
      * @return
      */
-    public LiveData<Resource<Void>> getRemoveGroupMemberResult(){
+    public LiveData<Resource<Void>> getRemoveGroupMemberResult() {
         return removeGroupMemberResult;
     }
 
@@ -292,7 +309,7 @@ public class GroupDetailViewModel extends AndroidViewModel {
      *
      * @param newGroupName
      */
-    public void renameGroupName(String newGroupName){
+    public void renameGroupName(String newGroupName) {
         renameGroupNameResult.setSource(groupTask.renameGroup(groupId, newGroupName));
     }
 
@@ -301,34 +318,36 @@ public class GroupDetailViewModel extends AndroidViewModel {
      *
      * @return
      */
-    public LiveData<Resource<Void>> getRenameGroupResult(){
+    public LiveData<Resource<Void>> getRenameGroupResult() {
         return renameGroupNameResult;
     }
 
     /**
      * 解散群组
      */
-    public void dismissGroup(){
+    public void dismissGroup() {
         exitGroupResult.setSource(groupTask.dismissGroup(groupId));
     }
 
     /**
      * 退出群组
      */
-    public void exitGroup(){
+    public void exitGroup() {
         exitGroupResult.setSource(groupTask.quitGroup(groupId));
     }
 
     /**
      * 获取退出或解散群组的结果
+     *
      * @return
      */
-    public LiveData<Resource<Void>> getExitGroupResult(){
+    public LiveData<Resource<Void>> getExitGroupResult() {
         return exitGroupResult;
     }
 
     /**
      * 获取用户信息
+     *
      * @return
      */
     public LiveData<GroupMember> getMyselfInfo() {
@@ -338,52 +357,112 @@ public class GroupDetailViewModel extends AndroidViewModel {
     /**
      * 保存到通讯录
      */
-    public void saveToContact(){
+    public void saveToContact() {
         Resource<GroupEntity> value = groupInfoLiveData.getValue();
-        if(value != null && value.data != null && value.data.getIsInContact() == 1) return;
+        if (value != null && value.data != null && value.data.getIsInContact() == 1) return;
         saveToContactResult.setSource(groupTask.saveGroupToContact(groupId));
     }
 
     /**
      * 获取保存到通讯录结果
+     *
      * @return
      */
-    public LiveData<Resource<Void>> getSaveToContact(){
+    public LiveData<Resource<Void>> getSaveToContact() {
         return saveToContactResult;
     }
 
     /**
      * 从通讯录中删除
      */
-    public void removeFromContact(){
+    public void removeFromContact() {
         Resource<GroupEntity> value = groupInfoLiveData.getValue();
-        if(value != null && value.data != null && value.data.getIsInContact() == 0) return;
+        if (value != null && value.data != null && value.data.getIsInContact() == 0) return;
 
         removeFromContactResult.setSource(groupTask.removeGroupFromContact(groupId));
     }
 
     /**
      * 获取通讯录删除结果
+     *
      * @return
      */
-    public LiveData<Resource<Void>> getRemoveFromContactResult(){
+    public LiveData<Resource<Void>> getRemoveFromContactResult() {
         return removeFromContactResult;
     }
 
     /**
      * 请求群公告
+     *
      * @param groupId
      */
-    public void requestGroupNotice(String groupId){
+    public void requestGroupNotice(String groupId) {
         groupNotice.setSource(groupTask.getGroupNotice(groupId));
     }
 
     /**
-     * 获取群公告
+     * 请求设置定时清理时间状态
+     *
+     * @param groupId
+     */
+    public void requestRegularState(String groupId) {
+        regularClearState.setSource(groupTask.getRegularClearState(groupId));
+    }
+
+    public LiveData<Resource<Integer>> getRegularState() {
+        return regularClearState;
+    }
+
+    /**
+     * 设置定时清理群消息
+     *
+     * @param regularClearState
+     */
+    public void setRegularClear(int regularClearState) {
+        setCleanTimeResult.setSource(groupTask.setRegularClear(groupId, regularClearState));
+    }
+
+    /**
+     * 设置定时清理群消息结果
+     *
      * @return
      */
-    public LiveData<Resource<GroupNoticeResult>> getGroupNoticeResult(){
+    public LiveData<Resource<Void>> getRegularClearResult() {
+        return setCleanTimeResult;
+    }
+
+
+    /**
+     * 获取群公告
+     *
+     * @return
+     */
+    public LiveData<Resource<GroupNoticeResult>> getGroupNoticeResult() {
         return groupNotice;
+    }
+
+    /**
+     * 获取是否开启截屏通知(群内聊天 targetId 为 groupId)
+     */
+    private void getScreenCaptureStatus() {
+        screenCaptureResult.setSource(privacyTask.getScreenCapture(conversationType.getValue(), groupId));
+    }
+
+    public LiveData<Resource<ScreenCaptureResult>> getScreenCaptureStatusResult() {
+        return screenCaptureResult;
+    }
+
+    /**
+     * 设置是否开启截屏通知
+     *
+     * @param status
+     */
+    public void setScreenCaptureStatus(int status) {
+        setScreenCaptureResult.setSource(privacyTask.setScreenCapture(conversationType.getValue(), groupId, status));
+    }
+
+    public LiveData<Resource<Void>> getSetScreenCaptureResult(){
+        return  setScreenCaptureResult;
     }
 
     public static class Factory implements ViewModelProvider.Factory {
@@ -391,7 +470,7 @@ public class GroupDetailViewModel extends AndroidViewModel {
         private Conversation.ConversationType conversationType;
         private Application application;
 
-        public Factory(Application application,String targetId, Conversation.ConversationType conversationType) {
+        public Factory(Application application, String targetId, Conversation.ConversationType conversationType) {
             this.conversationType = conversationType;
             this.targetId = targetId;
             this.application = application;

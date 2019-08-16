@@ -52,6 +52,12 @@ public interface UserService {
     @POST(SealTalkUrl.SET_NICK_NAME)
     LiveData<Result> setMyNickName(@Body RequestBody requestBody);
 
+    @POST(SealTalkUrl.SET_ST_ACCOUNT)
+    LiveData<Result> setStAccount(@Body RequestBody requestBody);
+
+    @POST(SealTalkUrl.SET_GENDER)
+    LiveData<Result> setGender(@Body RequestBody requestBody);
+
     @GET(SealTalkUrl.GET_IMAGE_UPLOAD_TOKEN)
     LiveData<Result<UploadTokenResult>> getImageUploadToken();
 
@@ -72,6 +78,7 @@ public interface UserService {
 
     /**
      * 添加到黑名单
+     *
      * @param body
      * @return
      */
@@ -80,6 +87,7 @@ public interface UserService {
 
     /**
      * 移除黑名单
+     *
      * @param body
      * @return
      */

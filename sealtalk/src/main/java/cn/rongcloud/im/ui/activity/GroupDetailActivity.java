@@ -1,14 +1,21 @@
 package cn.rongcloud.im.ui.activity;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -19,23 +26,30 @@ import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.Constant;
 import cn.rongcloud.im.common.ErrorCode;
 import cn.rongcloud.im.common.IntentExtra;
+import cn.rongcloud.im.common.ThreadManager;
 import cn.rongcloud.im.db.model.GroupEntity;
 import cn.rongcloud.im.im.IMManager;
+import cn.rongcloud.im.model.AddMemberResult;
 import cn.rongcloud.im.model.GroupMember;
 import cn.rongcloud.im.model.GroupNoticeResult;
+import cn.rongcloud.im.model.GroupRegularClearResult;
 import cn.rongcloud.im.model.Resource;
+import cn.rongcloud.im.model.Result;
+import cn.rongcloud.im.model.ScreenCaptureResult;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.model.qrcode.QrCodeDisplayType;
 import cn.rongcloud.im.ui.adapter.GridGroupMemberAdapter;
 import cn.rongcloud.im.ui.dialog.CommonDialog;
 import cn.rongcloud.im.ui.dialog.GroupNoticeDialog;
 import cn.rongcloud.im.ui.dialog.LoadingDialog;
+import cn.rongcloud.im.ui.dialog.SelectCleanTimeDialog;
 import cn.rongcloud.im.ui.dialog.SelectPictureBottomDialog;
 import cn.rongcloud.im.ui.dialog.SimpleInputDialog;
 import cn.rongcloud.im.ui.view.SealTitleBar;
 import cn.rongcloud.im.ui.view.SettingItemView;
 import cn.rongcloud.im.ui.view.UserInfoItemView;
 import cn.rongcloud.im.ui.widget.WrapHeightGridView;
+import cn.rongcloud.im.utils.CheckPermissionUtils;
 import cn.rongcloud.im.utils.ImageLoaderUtils;
 import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.viewmodel.GroupDetailViewModel;
@@ -85,10 +99,17 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
     private SettingItemView isToContactSiv;
     private SettingItemView groupManagerSiv;
     private SettingItemView groupNoticeSiv;
+    private SettingItemView cleanTimingSiv;
+    private SettingItemView screenShotSiv;
+    private TextView screenShotTip;
 
+    private boolean isScreenShotSivClicked;
     private String lastGroupNoticeContent;
     private long lastGroupNoticeTime;
     private String groupCreatorId;
+
+    private final int REQUEST_CODE_PERMISSION = 115;
+    private String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
 
 
     @Override
@@ -179,6 +200,37 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
                 }
             }
         });
+        //截屏通知
+        screenShotTip = findViewById(R.id.tv_screen_shot_tip);
+        screenShotSiv = findViewById(R.id.profile_siv_group_screen_shot_notification);
+        screenShotSiv.setSwitchTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (!isScreenShotSivClicked) {
+                    isScreenShotSivClicked = true;
+                }
+                return false;
+            }
+        });
+        screenShotSiv.setSwitchCheckListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                //初始化不触发逻辑
+                if (!isScreenShotSivClicked) {
+                    return;
+                }
+                // 0 关闭 1 打开
+                if (isChecked) {
+                    //没有权限不开启设置
+                    if (!requestReadPermissions()) {
+                        return;
+                    }
+                    groupDetailViewModel.setScreenCaptureStatus(1);
+                } else {
+                    groupDetailViewModel.setScreenCaptureStatus(0);
+                }
+            }
+        });
 
         // 消息删除
         findViewById(R.id.profile_siv_group_clean_message).setOnClickListener(this);
@@ -189,6 +241,14 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
 
 
         groupManagerSiv.setOnClickListener(this);
+
+        //定时清理群消息
+        cleanTimingSiv = findViewById(R.id.profile_siv_group_clean_timming);
+        cleanTimingSiv.setOnClickListener(this);
+    }
+
+    private boolean requestReadPermissions() {
+        return CheckPermissionUtils.requestPermissions(this, permissions, REQUEST_CODE_PERMISSION);
     }
 
     private void initViewModel() {
@@ -206,18 +266,25 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
                     // 根据是否是群组判断是否可以选择删除成员
                     memberAdapter.setAllowDeleteMember(true);
                     groupManagerSiv.setVisibility(View.VISIBLE);
+                    //设置截屏通知开关是否可见
+                    screenShotSiv.setVisibility(View.VISIBLE);
+                    screenShotTip.setVisibility(View.VISIBLE);
                 } else if (member.getMemberRole() == GroupMember.Role.MANAGEMENT) {
                     groupPortraitUiv.setClickable(false);
                     groupNameSiv.setClickable(false);
                     quitGroupBtn.setText(R.string.profile_quit_group);
                     memberAdapter.setAllowDeleteMember(true);
                     groupManagerSiv.setVisibility(View.GONE);
+                    screenShotSiv.setVisibility(View.VISIBLE);
+                    screenShotTip.setVisibility(View.VISIBLE);
                 } else {
                     groupPortraitUiv.setClickable(false);
                     groupNameSiv.setClickable(false);
                     quitGroupBtn.setText(R.string.profile_quit_group);
                     memberAdapter.setAllowDeleteMember(false);
                     groupManagerSiv.setVisibility(View.GONE);
+                    screenShotSiv.setVisibility(View.GONE);
+                    screenShotTip.setVisibility(View.GONE);
                 }
             }
         });
@@ -232,7 +299,7 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
                 ToastUtils.showErrorToast(resource.code);
             }
 
-            if(resource.status == Status.SUCCESS && resource.data == null){
+            if (resource.status == Status.SUCCESS && resource.data == null) {
                 backToMain();
             }
         });
@@ -247,7 +314,7 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
                 ToastUtils.showErrorToast(resource.code);
             }
 
-            if(resource.status == Status.SUCCESS && resource.data == null){
+            if (resource.status == Status.SUCCESS && resource.data == null) {
                 backToMain();
             }
         });
@@ -319,11 +386,26 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
         });
 
         // 添加群组成员结果
-        groupDetailViewModel.getAddGroupMemberResult().observe(this, new Observer<Resource<Void>>() {
+        groupDetailViewModel.getAddGroupMemberResult().observe(this, new Observer<Resource<List<AddMemberResult>>>() {
             @Override
-            public void onChanged(Resource<Void> resource) {
+            public void onChanged(Resource<List<AddMemberResult>> resource) {
                 if (resource.status == Status.ERROR) {
                     ToastUtils.showToast(resource.message);
+                } else if (resource.status == Status.SUCCESS) {
+                    if (resource.data != null && resource.data.size() > 0) {
+                        String tips = getString(R.string.seal_add_success);
+                        //1 为已加入, 2 为等待管理员同意, 3 为等待被邀请者同意
+                        for (AddMemberResult result : resource.data) {
+                            if (result.status == 3) {
+                                tips = getString(R.string.seal_add_need_member_agree);
+                            } else if (result.status == 2) {
+                                if (!tips.equals(getString(R.string.seal_add_need_member_agree))) {
+                                    tips = getString(R.string.seal_add_need_manager_agree);
+                                }
+                            }
+                        }
+                        ToastUtils.showToast(tips);
+                    }
                 }
             }
         });
@@ -344,7 +426,7 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
             public void onChanged(Resource<Void> resource) {
                 if (resource.status == Status.ERROR) {
                     ToastUtils.showToast(resource.message);
-                } else if(resource.status == Status.SUCCESS){
+                } else if (resource.status == Status.SUCCESS) {
                     // 考虑到群名称修改时，默认的群头像也要更新，所以直接刷新群信息
                     groupDetailViewModel.refreshGroupInfo();
                 }
@@ -391,25 +473,87 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
         groupDetailViewModel.getGroupNoticeResult().observe(this, new Observer<Resource<GroupNoticeResult>>() {
             @Override
             public void onChanged(Resource<GroupNoticeResult> resource) {
-                if(resource.status == Status.SUCCESS){
+                if (resource.status == Status.SUCCESS) {
                     GroupNoticeResult lastGroupNotice = resource.data;
-                    if(lastGroupNotice != null){
+                    if (lastGroupNotice != null) {
                         lastGroupNoticeContent = lastGroupNotice.getContent();
                         lastGroupNoticeTime = lastGroupNotice.getTimestamp();
                     }
                 }
             }
         });
+
+        groupDetailViewModel.getRegularClearResult().observe(this, new Observer<Resource<Void>>() {
+            @Override
+            public void onChanged(Resource<Void> resultResource) {
+                if (resultResource.status == Status.SUCCESS) {
+                    ToastUtils.showToast(getString(R.string.seal_set_clean_time_success));
+                    groupDetailViewModel.requestRegularState(groupId);
+                } else {
+                    ToastUtils.showToast(getString(R.string.seal_set_clean_time_fail));
+                }
+            }
+        });
+
+        groupDetailViewModel.getRegularState().observe(this, new Observer<Resource<Integer>>() {
+            @Override
+            public void onChanged(Resource<Integer> groupRegularClearResultResource) {
+                if (groupRegularClearResultResource.data != null) {
+                    updateCleanTimingSiv(groupRegularClearResultResource.data);
+                } else {
+                    cleanTimingSiv.setValue(getString(R.string.seal_set_clean_time_state_not));
+                }
+            }
+        });
+
+        // 获取截屏通知结果
+        groupDetailViewModel.getScreenCaptureStatusResult().observe(this, new Observer<Resource<ScreenCaptureResult>>() {
+            @Override
+            public void onChanged(Resource<ScreenCaptureResult> screenCaptureResultResource) {
+                if (screenCaptureResultResource.status == Status.SUCCESS) {
+                    //0 关闭 1 打开
+                    if (screenCaptureResultResource.data != null && screenCaptureResultResource.data.status == 1) {
+                        screenShotSiv.setCheckedImmediately(true);
+                    }
+                }
+            }
+        });
+
+        // 获取设置截屏通知结果
+        groupDetailViewModel.getSetScreenCaptureResult().observe(this, new Observer<Resource<Void>>() {
+            @Override
+            public void onChanged(Resource<Void> voidResource) {
+                if (voidResource.status == Status.SUCCESS) {
+                    ToastUtils.showToast(getString(R.string.seal_set_clean_time_success));
+                } else if (voidResource.status == Status.ERROR) {
+                    ToastUtils.showToast(getString(R.string.seal_set_clean_time_fail));
+                }
+            }
+        });
     }
+
+    private void updateCleanTimingSiv(int state) {
+        if (state == SelectCleanTimeDialog.CLEAR_STATUS_NOT) {
+            cleanTimingSiv.setValue(getString(R.string.seal_set_clean_time_state_not));
+        } else if (state == SelectCleanTimeDialog.CLEAR_STATUS_THIRTY_SIX) {
+            cleanTimingSiv.setValue(getString(R.string.seal_dialog_select_clean_time_36));
+        } else if (state == SelectCleanTimeDialog.CLEAR_STATUS_THREE) {
+            cleanTimingSiv.setValue(getString(R.string.seal_dialog_select_clean_time_3));
+        } else if (state == SelectCleanTimeDialog.CLEAR_STATUS_SEVEN) {
+            cleanTimingSiv.setValue(getString(R.string.seal_dialog_select_clean_time_7));
+        }
+    }
+
 
     /**
      * 是否是群主
+     *
      * @return
      */
     private boolean isGroupOwner() {
         if (groupDetailViewModel != null) {
             GroupMember selfGroupInfo = groupDetailViewModel.getMyselfInfo().getValue();
-            if(selfGroupInfo != null){
+            if (selfGroupInfo != null) {
                 return selfGroupInfo.getMemberRole() == GroupMember.Role.GROUP_OWNER;
             } else {
                 return false;
@@ -425,9 +569,9 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
      * @return
      */
     private boolean isGroupManager() {
-        if(groupDetailViewModel != null){
+        if (groupDetailViewModel != null) {
             GroupMember selfGroupInfo = groupDetailViewModel.getMyselfInfo().getValue();
-            if(selfGroupInfo != null){
+            if (selfGroupInfo != null) {
                 return selfGroupInfo.getMemberRole() == GroupMember.Role.MANAGEMENT;
             }
         }
@@ -511,6 +655,9 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
                 intent.putExtra(IntentExtra.GROUP_ID, groupId);
                 startActivity(intent);
                 break;
+            case R.id.profile_siv_group_clean_timming:
+                showRegualrClearDialog();
+                break;
             default:
                 break;
         }
@@ -549,7 +696,7 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
             excludeList.add(currentId);
 
             // 判断自己是否为群主，若非群主则添加群主至不可选择列表
-            if(groupCreatorId != null && !currentId.equals(groupCreatorId)){
+            if (groupCreatorId != null && !currentId.equals(groupCreatorId)) {
                 excludeList.add(groupCreatorId);
             }
 
@@ -642,7 +789,7 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
      */
     private void showGroupNotice() {
         // 判断是否是群组或管理员
-        if(isGroupOwner() || isGroupManager()){
+        if (isGroupOwner() || isGroupManager()) {
             Intent intent = new Intent(this, GroupNoticeActivity.class);
             intent.putExtra(IntentExtra.STR_TARGET_ID, groupId);
             intent.putExtra(IntentExtra.SERIA_CONVERSATION_TYPE, Conversation.ConversationType.GROUP);
@@ -695,6 +842,43 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
                 }).show();
     }
 
+    /**
+     * 显示定时清理时间选择框
+     */
+    private void showRegualrClearDialog() {
+        if (!isGroupOwner()) {
+            ToastUtils.showToast(getString(R.string.seal_set_clean_time_not_owner_tip));
+            return;
+        }
+        SelectCleanTimeDialog dialog = new SelectCleanTimeDialog();
+        dialog.setOnDialogButtonClickListener(new SelectCleanTimeDialog.OnDialogButtonClickListener() {
+            @Override
+            public void onThirtySixHourClick() {
+                setRegularClear(SelectCleanTimeDialog.CLEAR_STATUS_THIRTY_SIX);
+            }
+
+            @Override
+            public void onThreeDayClick() {
+                setRegularClear(SelectCleanTimeDialog.CLEAR_STATUS_THREE);
+            }
+
+            @Override
+            public void onSevenDayClick() {
+                setRegularClear(SelectCleanTimeDialog.CLEAR_STATUS_SEVEN);
+            }
+
+            @Override
+            public void onNotCleanClick() {
+                setRegularClear(SelectCleanTimeDialog.CLEAR_STATUS_NOT);
+            }
+        });
+        dialog.show(getSupportFragmentManager(), "regular_clear");
+    }
+
+    private void setRegularClear(int time) {
+        groupDetailViewModel.setRegularClear(time);
+    }
+
     private void backToMain() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -718,6 +902,43 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
             List<String> removeMemberList = data.getStringArrayListExtra(IntentExtra.LIST_STR_ID_LIST);
             SLog.i(TAG, "removeMemberList.size(): " + removeMemberList.size());
             groupDetailViewModel.removeGroupMember(removeMemberList);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CODE_PERMISSION && !CheckPermissionUtils.allPermissionGranted(grantResults)) {
+            List<String> permissionsNotGranted = new ArrayList<>();
+            for (String permission : permissions) {
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+                    permissionsNotGranted.add(permission);
+                }
+            }
+            if (permissionsNotGranted.size() > 0) {
+                DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case DialogInterface.BUTTON_POSITIVE:
+                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                Uri uri = Uri.fromParts("package", getPackageName(), null);
+                                intent.setData(uri);
+                                startActivityForResult(intent, requestCode);
+                                break;
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                };
+                CheckPermissionUtils.showPermissionAlert(this, getResources().getString(R.string.seal_grant_permissions) + CheckPermissionUtils.getNotGrantedPermissionMsg(this, permissionsNotGranted), listener);
+            } else {
+                ToastUtils.showToast(getString(R.string.seal_set_clean_time_fail));
+            }
+        } else {
+            //权限获得后在请求次网络设置状态
+            groupDetailViewModel.setScreenCaptureStatus(1);
         }
     }
 }

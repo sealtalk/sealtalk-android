@@ -27,6 +27,12 @@ public interface UserDao {
     @Query("UPDATE user SET name=:name, name_spelling=:nameSpelling, portrait_uri=:portraitUrl WHERE id=:id")
     int updateNameAndPortrait(String id,String name, String nameSpelling, String portraitUrl);
 
+    @Query("UPDATE user SET st_account=:sAccount WHERE id=:id")
+    int updateSAccount(String id,String sAccount);
+
+    @Query("UPDATE user SET gender=:gender WHERE id=:id")
+    int updateGender(String id,String gender);
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertUserListIgnoreExist(List<UserInfo> userInfoList);
 

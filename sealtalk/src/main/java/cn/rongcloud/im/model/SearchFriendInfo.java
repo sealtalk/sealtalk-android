@@ -4,6 +4,9 @@ public class SearchFriendInfo {
     private String id;
     private String nickname;
     private String portraitUri;
+    private String stAccount;
+    private String gender;
+
 
     public void setId(String id) {
         this.id = id;
@@ -27,5 +30,21 @@ public class SearchFriendInfo {
 
     public String getPortraitUri() {
         return portraitUri;
+    }
+
+    public String getStAccount() {
+        return stAccount;
+    }
+
+    public void setStAccount(String stAccount) {
+        this.stAccount = stAccount;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

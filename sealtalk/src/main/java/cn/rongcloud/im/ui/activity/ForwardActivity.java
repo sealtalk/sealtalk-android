@@ -1,5 +1,6 @@
 package cn.rongcloud.im.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -31,7 +32,7 @@ import cn.rongcloud.im.ui.interfaces.OnForwardComfirmListener;
 import cn.rongcloud.im.viewmodel.ForwardActivityViewModel;
 import io.rong.imlib.model.Message;
 
-import static cn.rongcloud.im.ui.view.SealTitleBar.Type.SEACHE;
+import static cn.rongcloud.im.ui.view.SealTitleBar.Type.SEARCH;
 
 /**
  * 此界面有三个 fragment ：
@@ -70,11 +71,18 @@ public class ForwardActivity extends TitleBaseActivity {
      */
     private int selectPageIndex = Type.SINGLE.getValue();
 
+    /**
+     * 是否在转发成功后弹出提示
+     */
+    private boolean enableResultToast = true;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activty_forward);
-        messageList = getIntent().getParcelableArrayListExtra(IntentExtra.FORWARD_MESSAGE_LIST);
+        Intent intent = getIntent();
+        messageList = intent.getParcelableArrayListExtra(IntentExtra.FORWARD_MESSAGE_LIST);
+        enableResultToast = intent.getBooleanExtra(IntentExtra.BOOLEAN_ENABLE_TOAST, true);
         initView();
         initViewModel();
     }
@@ -98,7 +106,7 @@ public class ForwardActivity extends TitleBaseActivity {
                 search(s.toString());
             }
         });
-        getTitleBar().setType(SEACHE);
+        getTitleBar().setType(SEARCH);
         getTitleBar().setOnBtnRightClickListener(getString(R.string.seal_select_forward_contact_multi),new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -315,13 +323,19 @@ public class ForwardActivity extends TitleBaseActivity {
             @Override
             public void onChanged(Resource resource) {
                 if (resource.status == Status.SUCCESS) {
-                    showToast(R.string.seal_forward__message_success);
-                } else {
-                    if (resource.code == ErrorCode.NETWORK_ERROR.getCode()) {
-                        showToast(resource.message);
-                    } else {
-                        showToast(R.string.seal_select_forward_message_defeat);
+                    if (enableResultToast) {
+                        showToast(R.string.seal_forward__message_success);
                     }
+                    setResult(RESULT_OK);
+                } else {
+                    if (enableResultToast) {
+                        if (resource.code == ErrorCode.NETWORK_ERROR.getCode()) {
+                            showToast(resource.message);
+                        } else {
+                            showToast(R.string.seal_select_forward_message_defeat);
+                        }
+                    }
+                    setResult(RESULT_FIRST_USER);
                 }
                 finish();
             }

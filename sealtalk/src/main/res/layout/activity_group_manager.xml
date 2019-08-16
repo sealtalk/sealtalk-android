@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <cn.rongcloud.im.ui.view.SettingItemView
         android:id="@+id/siv_set_group_manager"
@@ -23,5 +23,43 @@
         app:item_divider="true">
 
     </cn.rongcloud.im.ui.view.SettingItemView>
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_mute_all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/seal_profile_group_item_margin"
+        app:item_content="@string/seal_mute_all"
+        app:item_divider="true"
+        app:item_switch="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/seal_group_detail_clean_tips_margin_left"
+        android:layout_marginTop="@dimen/seal_main_item_margin_bottom"
+        android:layout_marginRight="@dimen/seal_group_detail_clean_tips_margin_right"
+        android:layout_marginBottom="@dimen/seal_group_detail_clean_tips_margin_bottom"
+        android:text="@string/seal_mute_all_tips"
+        android:textSize="@dimen/seal_group_detail_clean_tips_size" />
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_add_certification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/seal_profile_group_item_margin"
+        app:item_content="@string/seal_add_certification"
+        app:item_divider="true"
+        app:item_switch="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/seal_group_detail_clean_tips_margin_left"
+        android:layout_marginTop="@dimen/seal_main_item_margin_bottom"
+        android:layout_marginRight="@dimen/seal_group_detail_clean_tips_margin_right"
+        android:layout_marginBottom="@dimen/seal_group_detail_clean_tips_margin_bottom"
+        android:text="@string/seal_add_certification_tips"
+        android:textSize="@dimen/seal_group_detail_clean_tips_size" />
 
 </LinearLayout>

@@ -5,6 +5,7 @@ public class FunctionInfo {
     private String name;
     private int drawableRes;
     private boolean isShowDot;
+    private int dotNumber;
     private boolean isShowArrow = true;
 
     public FunctionInfo(String id, String name, int drawableRes) {
@@ -52,5 +53,13 @@ public class FunctionInfo {
 
     public void setShowArrow(boolean showArrow) {
         isShowArrow = showArrow;
+    }
+
+    public int getDotNumber() {
+        return dotNumber;
+    }
+
+    public void setDotNumber(int dotNumber) {
+        this.dotNumber = dotNumber;
     }
 }

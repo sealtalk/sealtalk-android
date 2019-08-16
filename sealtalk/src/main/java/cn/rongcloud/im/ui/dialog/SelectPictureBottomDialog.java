@@ -20,7 +20,7 @@ import static io.rong.imkit.plugin.image.PictureSelectorActivity.REQUEST_CODE_AS
 
 public class SelectPictureBottomDialog extends BaseBottomDialog {
 
-    private PhotoUtils photoUtils ;
+    private PhotoUtils photoUtils;
     private static OnSelectPictureListener listener;
 
     @Nullable
@@ -33,9 +33,9 @@ public class SelectPictureBottomDialog extends BaseBottomDialog {
                 if (Build.VERSION.SDK_INT >= 23) {
                     int checkPermission = getActivity().checkSelfPermission(Manifest.permission.CAMERA);
                     if (checkPermission != PackageManager.PERMISSION_GRANTED) {
-                        if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
-                            requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_ASK_PERMISSIONS);
-                        }
+                        //if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+                        requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_ASK_PERMISSIONS);
+                        //}
                         return;
                     }
 

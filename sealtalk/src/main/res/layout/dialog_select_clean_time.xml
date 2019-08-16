@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/btn_clean_thirty_six_hour"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_dialog_select_picture_btn_height"
+        android:background="@drawable/seal_dialog_select_picture_btn_selector"
+        android:text="@string/seal_dialog_select_clean_time_36"
+        android:textColor="@color/seal_dialog_select_picture_btn_text"
+        android:textSize="@dimen/seal_dialog_select_picture_btn_text_size"
+        style="?android:attr/borderlessButtonStyle"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/seal_dialog_select_picture_divider" />
+
+    <Button
+        android:id="@+id/btn_clean_three_day"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_dialog_select_picture_btn_height"
+        android:background="@drawable/seal_dialog_select_picture_btn_selector"
+        android:text="@string/seal_dialog_select_clean_time_3"
+        android:textColor="@color/seal_dialog_select_picture_btn_text"
+        android:textSize="@dimen/seal_dialog_select_picture_btn_text_size"
+        style="?android:attr/borderlessButtonStyle"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/seal_dialog_select_picture_divider" />
+
+    <Button
+        android:id="@+id/btn_clean_seven_day"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_dialog_select_picture_btn_height"
+        android:background="@drawable/seal_dialog_select_picture_btn_selector"
+        android:text="@string/seal_dialog_select_clean_time_7"
+        android:textColor="@color/seal_dialog_select_picture_btn_text"
+        android:textSize="@dimen/seal_dialog_select_picture_btn_text_size"
+        style="?android:attr/borderlessButtonStyle"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/seal_dialog_select_picture_divider" />
+
+    <Button
+        android:id="@+id/btn_not_clean"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_dialog_select_picture_btn_height"
+        android:background="@drawable/seal_dialog_select_picture_btn_selector"
+        android:text="@string/seal_dialog_select_clean_not"
+        android:textColor="@color/red_dark"
+        android:textSize="@dimen/seal_dialog_select_picture_btn_text_size"
+        style="?android:attr/borderlessButtonStyle"
+        />
+
+</LinearLayout>

@@ -16,6 +16,9 @@
     <ListView
         android:id="@+id/lv_black_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:divider="@color/white"
+        android:dividerHeight="0.5dp"
+        />
 
 </FrameLayout>

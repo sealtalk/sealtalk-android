@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cn.rongcloud.im">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="MediaStore.Images.Media.INTERNAL_CONTENT_URI"/>
+    <uses-permission android:name="MediaStore.Images.Media.EXTERNAL_CONTENT_URI"/>
 
     <!-- ⼩米 配置开始 < -->
     <permission
@@ -45,6 +48,9 @@
     <!-- OPPPO 权限配置-->
     <uses-permission android:name="com.coloros.mcs.permission.SEND_MCS_MESSAGE" />
     <!-- OPPO 配置结束-->
+
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
 
     <application
@@ -125,7 +131,11 @@
         <activity
             android:name=".ui.activity.NewFriendListActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity
+            android:name=".ui.activity.GroupNoticeListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
             android:name=".ui.activity.SealSearchActivity"
             android:screenOrientation="portrait" />
@@ -214,6 +224,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.SelectCreateGroupActivity"
+            android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.ForwardActivity"
@@ -222,10 +233,16 @@
             />
         <activity
             android:name=".ui.activity.MyAccountActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.UpdateNameActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.UpdateStAccountActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.UpdateGenderActivity"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".ui.activity.CreateGroupActivity"
@@ -255,6 +272,11 @@
             android:name=".ui.activity.QrCodeDisplayActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".ui.activity.QrCodeDisplayWindowActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/TranslucentNoTitleActivity"
+            />
+
         <activity
             android:name=".ui.activity.SealPicturePagerActivity"
             android:screenOrientation="portrait"
@@ -280,9 +302,22 @@
             android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.ForwardSelectedDetailActivity"
             android:screenOrientation="portrait"
-            >
-
-        </activity>
+            />
+        <activity android:name=".ui.activity.ScanActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".ui.activity.AddFriendActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".ui.activity.AddFriendFromContactActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".ui.activity.InviteFriendFromContactActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".ui.activity.RequestContactPermissionActivity"
+            android:screenOrientation="portrait"
+            />
 
         <!-- 请将CHANNAL改为app的发布渠道 < -->
         <meta-data
@@ -478,6 +513,16 @@
         <activity
             android:name=".ui.activity.GroupReadReceiptDetailActivity"
             android:screenOrientation="portrait" />
+
+        <!-- 微信 接收微信的请求及返回值 -->
+        <activity android:name=".wxapi.WXEntryActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:exported="true"
+            android:taskAffinity="net.sourceforge.simcpux"
+            android:launchMode="singleTask"
+            />
+
         <!--推送配置项-->
         <meta-data
             android:name="com.vivo.push.api_key"
@@ -507,6 +552,11 @@
 
         <!--第三方推送的权限 广播 服务 配置结束-->
         <!-- push end -->
+
+        <!-- bugly 配置 APP ID -->
+        <meta-data
+            android:name="BUGLY_APPID"
+            android:value="cb8ebab203" />
 
 
         <provider

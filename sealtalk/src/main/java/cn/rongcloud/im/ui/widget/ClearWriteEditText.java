@@ -139,5 +139,7 @@ public class ClearWriteEditText extends EditText implements View.OnFocusChangeLi
 
     public void setClearDrawable(Drawable mClearDrawable) {
         this.mClearDrawable = mClearDrawable;
+        this.mClearDrawable.setBounds(0, 0, this.mClearDrawable.getIntrinsicWidth(), this.mClearDrawable.getIntrinsicHeight());
+        setClearIconVisible(false);
     }
 }

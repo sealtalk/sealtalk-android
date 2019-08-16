@@ -1,24 +1,37 @@
 package cn.rongcloud.im.ui.activity;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.db.model.FriendDetailInfo;
 import cn.rongcloud.im.db.model.FriendShipInfo;
+import cn.rongcloud.im.model.Resource;
+import cn.rongcloud.im.model.ScreenCaptureResult;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.ui.view.SealTitleBar;
 import cn.rongcloud.im.ui.view.SettingItemView;
 import cn.rongcloud.im.ui.widget.SelectableRoundedImageView;
+import cn.rongcloud.im.utils.CheckPermissionUtils;
 import cn.rongcloud.im.utils.ImageLoaderUtils;
 import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.viewmodel.PrivateChatSettingViewModel;
@@ -37,6 +50,7 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
 
     private SettingItemView isNotifySb;
     private SettingItemView isTopSb;
+    private SettingItemView isScreenShotSiv;
 
     private String targetId;
     private String name;
@@ -44,6 +58,10 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
     private Conversation.ConversationType conversationType;
     private SelectableRoundedImageView portraitIv;
     private TextView nameTv;
+    private boolean isScreenShotSivClicked = false;
+
+    private final int REQUEST_CODE_PERMISSION = 114;
+    private String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,7 +113,39 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
         isTopSb.setSwitchCheckListener((buttonView, isChecked) ->
                 privateChatSettingViewModel.setConversationOnTop(isChecked));
 
+        isScreenShotSiv = findViewById(R.id.profile_siv_group_screen_shot_notification);
+        isScreenShotSiv.setSwitchTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (!isScreenShotSivClicked) {
+                    isScreenShotSivClicked = true;
+                }
+                return false;
+            }
+        });
+        isScreenShotSiv.setSwitchCheckListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                //初始化不触发逻辑
+                if (!isScreenShotSivClicked) {
+                    return;
+                }
+                // 0 关闭 1 打开
+                if (isChecked) {
+                    //没有权限不开启设置
+                    if (!requestReadPermissions()) {
+                        return;
+                    }
+                    privateChatSettingViewModel.setScreenCaptureStatus(1);
+                } else {
+                    privateChatSettingViewModel.setScreenCaptureStatus(0);
+                }
+            }
+        });
+    }
 
+    private boolean requestReadPermissions() {
+        return CheckPermissionUtils.requestPermissions(this, permissions, REQUEST_CODE_PERMISSION);
     }
 
     private void initViewModel() {
@@ -168,6 +218,30 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
                 ToastUtils.showToast(R.string.common_clear_failure);
             }
         });
+
+        // 获取截屏通知结果
+        privateChatSettingViewModel.getScreenCaptureStatusResult().observe(this, new Observer<Resource<ScreenCaptureResult>>() {
+            @Override
+            public void onChanged(Resource<ScreenCaptureResult> screenCaptureResultResource) {
+                if (screenCaptureResultResource.status == Status.SUCCESS) {
+                    //0 关闭 1 打开
+                    if (screenCaptureResultResource.data != null && screenCaptureResultResource.data.status == 1) {
+                        isScreenShotSiv.setCheckedImmediately(true);
+                    }
+                }
+            }
+        });
+        // 获取设置截屏通知结果
+        privateChatSettingViewModel.getSetScreenCaptureResult().observe(this, new Observer<Resource<Void>>() {
+            @Override
+            public void onChanged(Resource<Void> voidResource) {
+                if (voidResource.status == Status.SUCCESS) {
+                    ToastUtils.showToast(getString(R.string.seal_set_clean_time_success));
+                } else if (voidResource.status == Status.ERROR) {
+                    ToastUtils.showToast(getString(R.string.seal_set_clean_time_fail));
+                }
+            }
+        });
     }
 
     private void initData() {
@@ -236,6 +310,43 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
             Intent intent = new Intent(this, CreateGroupActivity.class);
             intent.putExtra(IntentExtra.LIST_STR_ID_LIST, memberList);
             startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CODE_PERMISSION && !CheckPermissionUtils.allPermissionGranted(grantResults)) {
+            List<String> permissionsNotGranted = new ArrayList<>();
+            for (String permission : permissions) {
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+                    permissionsNotGranted.add(permission);
+                }
+            }
+            if (permissionsNotGranted.size() > 0) {
+                DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case DialogInterface.BUTTON_POSITIVE:
+                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                Uri uri = Uri.fromParts("package", getPackageName(), null);
+                                intent.setData(uri);
+                                startActivityForResult(intent, requestCode);
+                                break;
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                };
+                CheckPermissionUtils.showPermissionAlert(this, getResources().getString(R.string.seal_grant_permissions) + CheckPermissionUtils.getNotGrantedPermissionMsg(this, permissionsNotGranted), listener);
+            } else {
+                ToastUtils.showToast(getString(R.string.seal_set_clean_time_fail));
+            }
+        } else {
+            //权限获得后在请求次网络设置状态
+            privateChatSettingViewModel.setScreenCaptureStatus(1);
         }
     }
 }

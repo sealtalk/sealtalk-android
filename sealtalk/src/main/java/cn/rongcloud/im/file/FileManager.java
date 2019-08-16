@@ -70,6 +70,25 @@ public class FileManager {
     }
 
     /**
+     * 保存图片至缓存文件中
+     *
+     * @param bitmap
+     * @return
+     */
+    public LiveData<Resource<String>> saveBitmapToCache(Bitmap bitmap, String fileName){
+        MutableLiveData<Resource<String>> result = new MutableLiveData<>();
+        result.postValue(Resource.loading(null));
+        ThreadManager.getInstance().runOnWorkThread(new Runnable() {
+            @Override
+            public void run() {
+                String path = FileUtils.saveBitmapToCache(bitmap, fileName);
+                result.postValue(Resource.success(path));
+            }
+        });
+        return result;
+    }
+
+    /**
      * 保存图片至公共下载下载中,使用时间作为文件名
      *
      * @param bitmap
@@ -78,6 +97,17 @@ public class FileManager {
     public LiveData<Resource<String>> saveBitmapToPictures(Bitmap bitmap){
         String fileName = System.currentTimeMillis() + ".png";
         return saveBitmapToPictures(bitmap, fileName);
+    }
+
+    /**
+     * 保存图片至缓存文件中,使用时间作为文件名
+     *
+     * @param bitmap
+     * @return
+     */
+    public LiveData<Resource<String>> saveBitmapToCache(Bitmap bitmap){
+        String fileName = System.currentTimeMillis() + ".png";
+        return saveBitmapToCache(bitmap, fileName);
     }
 
     /**

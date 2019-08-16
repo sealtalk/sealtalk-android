@@ -15,11 +15,11 @@ public class ViewCapture {
         Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         Drawable bgDrawable = view.getBackground();
+        canvas.drawColor(Color.WHITE);  // 默认为白色背景
         if (bgDrawable != null) {
             bgDrawable.draw(canvas);
-        } else {
-            canvas.drawColor(Color.WHITE);
         }
+
         view.draw(canvas);
         return bitmap;
     }

@@ -1,7 +1,7 @@
 package cn.rongcloud.im.net;
 
 public class SealTalkUrl {
-    public static final String DOMAIN = "http://api.sealtalk.im";
+    public static final String DOMAIN = 这里请替换为您所部署的 SealTalk Server 地址;
 
     public static final String LOGIN = "/user/login";
 

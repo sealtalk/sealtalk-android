@@ -664,15 +664,15 @@ public class IMManager {
          * 根据需求配置各个平台的推送
          * 配置推送需要在初始化 融云 SDK 之前
          */
-        PushConfig config = new PushConfig
-                .Builder()
-                .enableHWPush(true)
-                .enableMiPush("2882303761517473625", "5451747338625")
-                .enableMeiZuPush("112988", "2fa951a802ac4bd5843d694517307896")
-                .enableVivoPush(true)
-                .enableFCM(true)
-                .build();
-        RongPushClient.setPushConfig(config);
+        //PushConfig config = new PushConfig
+        //        .Builder()
+        //        .enableHWPush(true)        // 在 AndroidManifest.xml 中搜索 com.huawei.hms.client.appid 进行设置
+        //        .enableMiPush("替换为您的小米推送 AppId", "替换为您的小米推送 AppKey")
+        //        .enableMeiZuPush("替换为您的魅族推送 AppId", "替换为您的魅族推送 AppKey")
+        //        .enableVivoPush(true)     // 在 AndroidManifest.xml 中搜索 com.vivo.push.api_key 和 com.vivo.push.app_id 进行设置
+        //        .enableFCM(true)          // 在 google-services.json 文件中进行配置
+        //        .build();
+        //RongPushClient.setPushConfig(config);
     }
 
     /**
@@ -749,7 +749,7 @@ public class IMManager {
         //RongIM.init(this);
 
         // 可在初始 SDK 时直接带入融云 IM 申请的APP KEY
-        RongIM.init(context, "n19jmcy59f1q9", true);
+        RongIM.init(context, 这里请替换为您的融云 AppKey, true);
     }
 
     /**

@@ -14,6 +14,91 @@ SealTalk 自从 1.3.14 版本起，CallLib 模块引用的音视频引擎已替�
 * 单聊,群组,聊天室多种社交场景满足你的需求,如果还想要 [视频直播](http://rongcloud.cn/live) 都可以。
 * 一行代码搞定 [客服](http://rongcloud.cn/customservice)? 你没有听错,比你想象的还要简单。
 
+## 运行 SealTalk-Android
+1.  替换 SealTalkUrl.java 中的 DOMAIN 常量值为您所部署的 SealTalk 服务地址。  
+```
+public class SealTalkUrl {
+    public static final String DOMAIN = 这里请替换为您所部署的 SealTalk Server 地址;
+```
+2. 替换 IMManager.java 中，init 方法中调用融云初始化的代码 RongIM.init 替换为您所申请的融云 AppKey。  
+```
+    private void initRongIM(Context context) {
+        ...
+        
+        // 可在初始 SDK 时直接带入融云 IM 申请的APP KEY
+        RongIM.init(context, 这里请替换为您的融云 AppKey, true);
+```
+3. 若使用第三方推送，请参考 IMManager.java 中 initPush 方法，打开注释并替换成您申请的各平台的推送信息
+```
+    /**
+     * 初始化推送
+     */
+    private void initPush() {
+        /*
+         * 配置 融云 IM 消息推送
+         * 根据需求配置各个平台的推送
+         * 配置推送需要在初始化 融云 SDK 之前
+         */
+        //PushConfig config = new PushConfig
+        //        .Builder()
+        //        .enableHWPush(true)        // 在 AndroidManifest.xml 中搜索 com.huawei.hms.client.appid 进行设置
+        //        .enableMiPush("替换为您的小米推送 AppId", "替换为您的小米推送 AppKey")
+        //        .enableMeiZuPush("替换为您的魅族推送 AppId", "替换为您的魅族推送 AppKey")
+        //        .enableVivoPush(true)     // 在 AndroidManifest.xml 中搜索 com.vivo.push.api_key 和 com.vivo.push.app_id 进行设置
+        //        .enableFCM(true)          // 打开 build.gradle 和 AndroidManifest.xml 中的相关注释，并在 google-services.json 文件中进行配置
+        //        .build();
+        //RongPushClient.setPushConfig(config);
+    }
+```
+若您要接入 FCM 推送，需要做以下几步工作:
+* 打开 AndroidManifest.xml 解除掉以下注释。
+```
+<!-- [START firebase_service] -->
+        <!--
+        <service
+            android:name="io.rong.push.platform.google.RongFirebaseMessagingService"
+            android:stopWithTask="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <meta-data
+            android:name="firebase_messaging_auto_init_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="false" />
+         -->
+        <!-- [END firebase_service] -->
+```
+* 在 build.gradle 中解除以下注释
+```
+//apply plugin: 'com.google.gms.google-services'
+... 
+//api 'com.google.firebase:firebase-messaging:17.6.0'
+...
+* 
+```
+* 编译 google-services.json 配置为您的 FCM 推送相关配置参数  
+4. 若使用地图相关功能，在 AndroidManifest.xml 中搜索 com.amap.api.v2.apikey 修改为您的高德地图 ApiKey
+```
+<!-- 高德地图-->
+        <!--
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="替换你申请的高德地图 ApiKey" />
+        -->
+```
+5. 若使用微信相关功能，请替换 WXManager.java 中 APP_ID 为您申请的 AppId
+```
+public class WXManager {
+    private static final String TAG = "WXManager";
+    private static final String APP_ID = "替换为您的微信开放平台 AppId";
+```
+备注：  
+SealTalk Server 源码可以参考[这里](https://github.com/sealtalk/sealtalk-server)
+
+
 ## Gif
 ### 新增红包
 ![image](./images/redpacket.gif)<br/>

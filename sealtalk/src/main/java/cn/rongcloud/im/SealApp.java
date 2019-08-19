@@ -24,7 +24,7 @@ public class SealApp extends MultiDexApplication {
         appInstance = this;
 
         // 初始化 bugly BUG 统计
-        CrashReport.initCrashReport(getApplicationContext());
+        //CrashReport.initCrashReport(getApplicationContext());
 
         ErrorCode.init(this);
 

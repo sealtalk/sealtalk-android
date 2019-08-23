@@ -171,13 +171,5 @@ Task 直接进行网络请求并返回数据.
 
 
 ### 比你想象的更强大, 敬请期待更多精彩! 
-[融云官网](http://rongcloud.cn/downloads)
-
-
-
-
-
-
-
-
-
+[融云官网](http://rongcloud.cn/downloads)  
+[注册融云](https://developer.rongcloud.cn/signup)  

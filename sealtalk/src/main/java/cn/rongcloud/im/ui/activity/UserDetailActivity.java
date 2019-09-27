@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -18,6 +19,8 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import java.util.Locale;
+
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.db.model.FriendDescription;
@@ -25,6 +28,7 @@ import cn.rongcloud.im.db.model.FriendStatus;
 import cn.rongcloud.im.db.model.GroupEntity;
 import cn.rongcloud.im.db.model.GroupMemberInfoDes;
 import cn.rongcloud.im.db.model.UserInfo;
+import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.ui.dialog.CommonDialog;
@@ -35,14 +39,16 @@ import cn.rongcloud.im.ui.view.SettingItemView;
 import cn.rongcloud.im.ui.widget.SelectableRoundedImageView;
 import cn.rongcloud.im.utils.ImageLoaderUtils;
 import cn.rongcloud.im.utils.ToastUtils;
-import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.viewmodel.UserDetailViewModel;
 import cn.rongcloud.im.viewmodel.UserInfoViewModel;
+import cn.rongcloud.im.utils.log.SLog;
+import io.rong.callkit.RongCallAction;
+import io.rong.callkit.RongVoIPIntent;
+import io.rong.calllib.RongCallClient;
+import io.rong.calllib.RongCallCommon;
+import io.rong.calllib.RongCallSession;
 import io.rong.imkit.RongIM;
-import io.rong.signalingkit.RCSCall;
-import io.rong.signalingkit.RCSCallClient;
-import io.rong.signalingkit.RCSCallCommon;
-import io.rong.signalingkit.RCSCallSession;
+import io.rong.imlib.model.Conversation;
 
 /**
  * 用户详细界面
@@ -288,7 +294,7 @@ public class UserDetailActivity extends TitleBaseActivity implements View.OnClic
                     //提示群保护(自己不显示),自己不显示个人信息
                     if (!latestUserInfo.getId().equals(RongIM.getInstance().getCurrentUserId())) {
                         groupProtectionTv.setVisibility(View.VISIBLE);
-                    } else {
+                    }else{
                         sivGroupInfo.setVisibility(View.GONE);
                     }
                 }
@@ -387,6 +393,10 @@ public class UserDetailActivity extends TitleBaseActivity implements View.OnClic
                 userDisplayNameTv.setText(userInfo.getName());
                 userNameTv.setVisibility(View.GONE);
             }
+
+            // 当好友时显示手机号码
+//            String phone = getString(R.string.seal_mine_my_account_phone_number) + ":" + userInfo.getPhoneNumber();
+//            phoneTv.setText(phone);
         } else {
             // 当非好友时隐藏聊天按钮组，显示添加好友
             chatGroupLl.setVisibility(View.GONE);
@@ -570,25 +580,29 @@ public class UserDetailActivity extends TitleBaseActivity implements View.OnClic
      */
     public void startVoice() {
         if (latestUserInfo == null) return;
+
+        RongCallSession profile = RongCallClient.getInstance().getCallSession();
+        if (profile != null && profile.getActiveTime() > 0) {
+            ToastUtils.showToast(profile.getMediaType() == RongCallCommon.CallMediaType.AUDIO ?
+                            getString(io.rong.callkit.R.string.rc_voip_call_audio_start_fail) :
+                            getString(io.rong.callkit.R.string.rc_voip_call_video_start_fail),
+                    Toast.LENGTH_SHORT);
+            return;
+        }
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
         if (networkInfo == null || !networkInfo.isConnected() || !networkInfo.isAvailable()) {
-            ToastUtils.showToast(getString(R.string.network_error), Toast.LENGTH_SHORT);
+            ToastUtils.showToast(getString(io.rong.callkit.R.string.rc_voip_call_network_error), Toast.LENGTH_SHORT);
             return;
         }
 
-        // 判断是否已在音频或视频
-        RCSCallSession callSession = RCSCallClient.getInstance().getCallSession();
-        if (callSession != null) {
-            ToastUtils.showToast(
-                    callSession.getMediaType() == RCSCallCommon.CallMediaType.AUDIO ?
-                            getString(R.string.rc_voip_call_audio_start_fail)
-                            : getString(R.string.rc_voip_call_video_start_fail)
-                    , Toast.LENGTH_SHORT);
-            return;
-        }
-
-        RCSCall.startSingleCall(this, latestUserInfo.getId(), RCSCallCommon.CallMediaType.AUDIO);
+        Intent intent = new Intent(RongVoIPIntent.RONG_INTENT_ACTION_VOIP_SINGLEAUDIO);
+        intent.putExtra("conversationType", Conversation.ConversationType.PRIVATE.getName().toLowerCase(Locale.US));
+        intent.putExtra("targetId", latestUserInfo.getId());
+        intent.putExtra("callAction", RongCallAction.ACTION_OUTGOING_CALL.getName());
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setPackage(getPackageName());
+        getApplicationContext().startActivity(intent);
     }
 
     /**
@@ -596,25 +610,29 @@ public class UserDetailActivity extends TitleBaseActivity implements View.OnClic
      */
     public void startVideo() {
         if (latestUserInfo == null) return;
+
+        RongCallSession profile = RongCallClient.getInstance().getCallSession();
+        if (profile != null && profile.getActiveTime() > 0) {
+            ToastUtils.showToast(
+                    profile.getMediaType() == RongCallCommon.CallMediaType.AUDIO ?
+                            getString(io.rong.callkit.R.string.rc_voip_call_audio_start_fail) :
+                            getString(io.rong.callkit.R.string.rc_voip_call_video_start_fail),
+                    Toast.LENGTH_SHORT);
+            return;
+        }
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
         if (networkInfo == null || !networkInfo.isConnected() || !networkInfo.isAvailable()) {
-            ToastUtils.showToast(getString(R.string.network_error), Toast.LENGTH_SHORT);
+            ToastUtils.showToast(getString(io.rong.callkit.R.string.rc_voip_call_network_error), Toast.LENGTH_SHORT);
             return;
         }
-
-        // 判断是否已在音频或视频
-        RCSCallSession callSession = RCSCallClient.getInstance().getCallSession();
-        if (callSession != null) {
-            ToastUtils.showToast(
-                    callSession.getMediaType() == RCSCallCommon.CallMediaType.AUDIO ?
-                            getString(R.string.rc_voip_call_audio_start_fail)
-                            : getString(R.string.rc_voip_call_video_start_fail)
-                    , Toast.LENGTH_SHORT);
-            return;
-        }
-
-        RCSCall.startSingleCall(this, latestUserInfo.getId(), RCSCallCommon.CallMediaType.VIDEO);
+        Intent intent = new Intent(RongVoIPIntent.RONG_INTENT_ACTION_VOIP_SINGLEVIDEO);
+        intent.putExtra("conversationType", Conversation.ConversationType.PRIVATE.getName().toLowerCase(Locale.US));
+        intent.putExtra("targetId", latestUserInfo.getId());
+        intent.putExtra("callAction", RongCallAction.ACTION_OUTGOING_CALL.getName());
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setPackage(getPackageName());
+        getApplicationContext().startActivity(intent);
     }
 
     /**

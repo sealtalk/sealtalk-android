@@ -28,6 +28,7 @@ import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.task.FriendTask;
 import cn.rongcloud.im.task.GroupTask;
 import cn.rongcloud.im.task.UserTask;
+import io.rong.callkit.RongCallKit;
 import io.rong.contactcard.IContactCardInfoProvider;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.tools.CharacterParser;
@@ -96,6 +97,14 @@ public class IMInfoProvider {
         RongIM.getInstance().setGroupMembersProvider((gid, callback) -> {
             updateIMGroupMember(gid, callback);
         });
+
+
+        // RongCallkit 设置 成员信息
+        RongCallKit.setGroupMemberProvider((groupId, result) -> {
+            updateCallGroupMember(groupId, result);
+            return null;
+        });
+
     }
 
     private void initData(){
@@ -199,6 +208,40 @@ public class IMInfoProvider {
                         userInfoList.add(info);
                     }
                     callback.onGetGroupMembersResult(userInfoList);
+                }
+            });
+        });
+    }
+
+    /**
+     * 请求音视频中更新群组成员
+     *
+     * @param groupId
+     * @param result
+     */
+    private void updateCallGroupMember(String groupId, RongCallKit.OnGroupMembersResult result) {
+        ThreadManager.getInstance().runOnUIThread(() -> {
+            // 考虑到在群内频繁调用此方法,当有请求时进行请求
+            if (groupMemberIsRequest) return;
+
+            groupMemberIsRequest = true;
+            LiveData<Resource<List<GroupMember>>> groupMemberSource = groupTask.getGroupMemberInfoList(groupId);
+            triggerLiveData.addSource(groupMemberSource, resource -> {
+                if (resource.status == Status.SUCCESS || resource.status == Status.ERROR) {
+                    // 确认成功或失败后，移除数据源
+                    // 在请求成功后，会在插入数据时同步更新缓存
+                    triggerLiveData.removeSource(groupMemberSource);
+                    groupMemberIsRequest = false;
+
+                }
+
+                if (resource.status == Status.SUCCESS && resource.data != null && result != null) {
+                    List<GroupMember> data = resource.data;
+                    ArrayList<String> userInfoIdList = new ArrayList<>();
+                    for (GroupMember member : data) {
+                        userInfoIdList.add(member.getUserId());
+                    }
+                    result.onGotMemberList(userInfoIdList);
                 }
             });
         });

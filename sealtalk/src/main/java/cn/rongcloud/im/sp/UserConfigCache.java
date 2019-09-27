@@ -11,6 +11,9 @@ public class UserConfigCache {
     private static final Object SP_NEW_MESSAGE_QUIET_HOURS_STARTTIME = "new_message_notifi_quiet_hours_start_time";
     private static final String SP_NEW_MESSAGE_QUIET_HOURS_SPANMINUTES = "new_message_notifi_quiet_hours_spanminutes";
     private static final Object SP_NEW_MESSAGE_QUIET_DONOT_DISTRAB = "new_message_notifi_quiet_donot_distrab";
+    private static final String SP_CHAT_BACKGROUND = "chat_bg";
+    private static final String SP_SCREEN_STATUS = "screen_capture_status";
+    private static final String SP_RECEIVE_POKE_MESSAGE = "receive_poke_message";
     private final SharedPreferences sp;
 
     public UserConfigCache(Context context) {
@@ -19,6 +22,7 @@ public class UserConfigCache {
 
     /**
      * 新消息通知接受设置
+     *
      * @param userId
      * @param remind
      */
@@ -28,6 +32,7 @@ public class UserConfigCache {
 
     /**
      * 获取新消息通知设置
+     *
      * @param userId
      * @return
      */
@@ -37,6 +42,7 @@ public class UserConfigCache {
 
     /**
      * 设置免打扰时间
+     *
      * @param userId
      * @param startTime
      * @param spanMinutes
@@ -49,6 +55,7 @@ public class UserConfigCache {
 
     /**
      * 获取免打扰时间
+     *
      * @param userId
      * @return
      */
@@ -65,6 +72,7 @@ public class UserConfigCache {
 
     /**
      * 设置消息免打扰状态
+     *
      * @param userId
      * @param status
      */
@@ -75,10 +83,68 @@ public class UserConfigCache {
 
     /**
      * 获取免打扰设置
+     *
      * @param userId
      * @return
      */
     public boolean getNotifiDonotDistrabStatus(String userId) {
         return sp.getBoolean(SP_NEW_MESSAGE_QUIET_DONOT_DISTRAB + userId, false);
+    }
+
+    /**
+     * 设置背景图片 uri
+     *
+     * @param uri
+     * @return
+     */
+    public void setChatbgUri(String uri) {
+        sp.edit().putString(SP_CHAT_BACKGROUND, uri).commit();
+    }
+
+    /**
+     * 获取背景图片 uri
+     *
+     * @return
+     */
+    public String getChatbgUri() {
+        return sp.getString(SP_CHAT_BACKGROUND, "");
+    }
+
+    /**
+     * 设置是否开启截屏通知功能状态
+     *
+     * @param status
+     */
+    public void setScreenCaptureStatus(int status) {
+        sp.edit().putInt(SP_SCREEN_STATUS, status).commit();
+    }
+
+    /**
+     * 获取是否开启截屏通知功能状态
+     *
+     * @return
+     */
+    public int getScreenCaptureStatus() {
+        return sp.getInt(SP_SCREEN_STATUS, 0);
+    }
+
+    /**
+     * 设置接收戳一下消息状态
+     *
+     * @param userId
+     * @param isReceive
+     */
+    public void setReceivePokeMessageStatus(String userId, boolean isReceive) {
+        sp.edit().putBoolean(SP_RECEIVE_POKE_MESSAGE + userId, isReceive).apply();
+    }
+
+    /**
+     * 获取接收戳一下消息状态
+     *
+     * @param userId
+     * @return
+     */
+    public boolean getReceivePokeMessageStatus(String userId) {
+        return sp.getBoolean(SP_RECEIVE_POKE_MESSAGE + userId, true);
     }
 }

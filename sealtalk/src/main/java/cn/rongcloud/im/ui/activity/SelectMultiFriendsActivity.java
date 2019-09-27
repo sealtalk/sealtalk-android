@@ -1,6 +1,7 @@
 package cn.rongcloud.im.ui.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -47,6 +48,8 @@ public class SelectMultiFriendsActivity extends SelectBaseActivity implements Vi
         selectMultiViewModel.getSelectedCount().observe(this, selectCount -> {
             if (selectCount > 0) {
                 setConfirmEnable(true);
+            } else if (confirmEnabledWhenNoChecked()) {
+                setConfirmEnable(true);
             } else {
                 setConfirmEnable(false);
             }
@@ -90,8 +93,6 @@ public class SelectMultiFriendsActivity extends SelectBaseActivity implements Vi
     }
 
 
-
-
     @Override
     public void onSelectCountChange(int groupCount, int userCount) {
     }
@@ -102,5 +103,31 @@ public class SelectMultiFriendsActivity extends SelectBaseActivity implements Vi
 
     public ArrayList<String> getCheckedGroupIds() {
         return selectMultiFriendFragment.getCheckedGroupList();
+    }
+
+    /**
+     * 是否在没有选择时可以点击确定,默认为未选择时不可点击
+     * 重写此方法以开启状态在未选择时可点击确认
+     *
+     * @return
+     */
+    public boolean confirmEnabledWhenNoChecked() {
+        return false;
+    }
+
+    @Override
+    protected boolean isSearchable() {
+        return true;
+    }
+
+    @Override
+    public void onSearch(String keyword) {
+        if(selectMultiFriendFragment != null){
+            if(TextUtils.isEmpty(keyword)){
+                selectMultiFriendFragment.loadAll();
+            }else {
+                selectMultiFriendFragment.search(keyword);
+            }
+        }
     }
 }

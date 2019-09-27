@@ -52,6 +52,11 @@ public class CommonGroupItemViewHolder extends BaseItemViewHolder<ListItemModel<
     }
 
     @Override
+    public void setOnLongClickItemListener(View.OnLongClickListener listener) {
+
+    }
+
+    @Override
     public void update(ListItemModel<GroupEntity> groupEntityContactModel) {
 
         model = groupEntityContactModel;

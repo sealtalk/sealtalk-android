@@ -213,7 +213,7 @@
     <dimen name="seal_search_item_div_height">14dp</dimen>
     <dimen name="seal_search_item_title_text_size">14sp</dimen>
     <dimen name="seal_search_show_more_text_size">16sp</dimen>
-    <dimen name="common_dialog_width">320dp</dimen>
+    <dimen name="common_dialog_width">300dp</dimen>
     <dimen name="common_dialog_line_width">1dp</dimen>
     <dimen name="common_dialog_min_height">134dp</dimen>
     <dimen name="common_dialog_button_height">44dp</dimen>

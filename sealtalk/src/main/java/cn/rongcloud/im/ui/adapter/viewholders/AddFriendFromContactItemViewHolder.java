@@ -47,6 +47,11 @@ public class AddFriendFromContactItemViewHolder extends BaseItemViewHolder<ListI
     public void setOnClickItemListener(View.OnClickListener listener) {
     }
 
+    @Override
+    public void setOnLongClickItemListener(View.OnLongClickListener listener) {
+
+    }
+
 
     @Override
     public void update(ListItemModel<PhoneContactInfo> phoneContactInfoListItemModel) {

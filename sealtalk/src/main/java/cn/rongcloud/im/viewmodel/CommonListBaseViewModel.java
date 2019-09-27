@@ -259,7 +259,10 @@ public abstract class CommonListBaseViewModel extends AppViewModel {
             if (type == ListItemModel.ItemView.Type.GROUP
                     || type == ListItemModel.ItemView.Type.FRIEND
                     || type == ListItemModel.ItemView.Type.OTHER) {
-                String c = model.getFirstChar().substring(0, 1);
+                String c = "";
+                if (model.getFirstChar() != null && model.getFirstChar().length() > 0) {
+                    c = model.getFirstChar().substring(0, 1);
+                }
                 if (TextUtils.isEmpty(c)) {
                     out.add(createTextModel("#"));
                     temp = "#";

@@ -3,6 +3,7 @@ package cn.rongcloud.im.ui.dialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,7 +34,7 @@ public class ForwardDialog extends CommonDialog {
     private ArrayList<Message> messageList;
 
     @Override
-    protected View onCreateContentView() {
+    protected View onCreateContentView(ViewGroup container) {
         View view = View.inflate(getContext(), R.layout.dialog_forward, null);
         View multiLayout = view.findViewById(R.id.hsv_container);
         LinearLayout multiContainer = view.findViewById(R.id.ll_selected_contact_container);

@@ -1,5 +1,7 @@
 package cn.rongcloud.im.common;
 
+import android.net.Uri;
+
 import java.util.HashMap;
 import java.util.Set;
 
@@ -11,7 +13,7 @@ public class ApiErrorCodeMap {
     /**
      * 一般 url 映射表
      */
-    private final static HashMap<String, Integer> FULL_PATH_PREFIX_MAP = new HashMap<String, Integer>(){
+    private final static HashMap<String, Integer> FULL_PATH_PREFIX_MAP = new HashMap<String, Integer>() {
         {
             put(SealTalkUrl.LOGIN, SealTalkUrlCode.LOGIN);
             put(SealTalkUrl.GET_TOKEN, SealTalkUrlCode.GET_TOKEN);
@@ -51,6 +53,14 @@ public class ApiErrorCodeMap {
             put(SealTalkUrl.GET_DISCOVERY_CHAT_ROOM, SealTalkUrlCode.GET_DISCOVERY_CHAT_ROOM);
             put(SealTalkUrl.GROUP_REMOVE_MANAGER, SealTalkUrlCode.GROUP_REMOVE_MANAGER);
             put(SealTalkUrl.GROUP_ADD_MANAGER, SealTalkUrlCode.GROUP_ADD_MANAGER);
+            put(SealTalkUrl.GROUP_COPY, SealTalkUrlCode.GROUP_COPY);
+            put(SealTalkUrl.GROUP_MUTE_ALL, SealTalkUrlCode.GROUP_MUTE_ALL);
+            put(SealTalkUrl.GROUP_SET_CERTIFICATION, SealTalkUrlCode.GROUP_SET_CERTIFICATION);
+            put(SealTalkUrl.SET_PRIVACY, SealTalkUrlCode.SET_PRIVACY);
+            put(SealTalkUrl.GET_PRIVACY, SealTalkUrlCode.GET_PRIVACY);
+            put(SealTalkUrl.GET_SCREEN_CAPTURE, SealTalkUrlCode.GET_SCREEN_CAPTURE);
+            put(SealTalkUrl.SET_SCREEN_CAPTURE, SealTalkUrlCode.SET_SCREEN_CAPTURE);
+            put(SealTalkUrl.SEND_SC_MSG, SealTalkUrlCode.SEND_SC_MSG);
         }
     };
 
@@ -58,11 +68,11 @@ public class ApiErrorCodeMap {
      * 查询类 url 映射
      * 由于此类 url 没法直接用 key 去进行查询，所以单独列出，用正则去区分查询
      */
-    public final static HashMap<String, Integer> QUERY_PATH_REG_PREFIX_MAP = new HashMap<String, Integer>(){
+    public final static HashMap<String, Integer> QUERY_PATH_REG_PREFIX_MAP = new HashMap<String, Integer>() {
         {
-            put("/user/[a-zA-Z0-9+=-_]*",SealTalkUrlCode.GET_USER_INFO);
-            put("/group/[a-zA-Z0-9+=-_]*",SealTalkUrlCode.GROUP_GET_INFO);
-            put("/group/[a-zA-Z0-9+=-_]*/members",SealTalkUrlCode.GROUP_GET_MEMBER_INFO);
+            put("/user/[a-zA-Z0-9+=-_]*", SealTalkUrlCode.GET_USER_INFO);
+            put("/group/[a-zA-Z0-9+=-_]*", SealTalkUrlCode.GROUP_GET_INFO);
+            put("/group/[a-zA-Z0-9+=-_]*/members", SealTalkUrlCode.GROUP_GET_MEMBER_INFO);
             put("/friendship/[a-zA-Z0-9+=-_]*/profile", SealTalkUrlCode.GET_FRIEND_PROFILE);
             put("/user/find/[a-zA-Z0-9+=-_]*/[a-zA-Z0-9+=-_]*", SealTalkUrlCode.FIND_FRIEND);
         }
@@ -71,21 +81,26 @@ public class ApiErrorCodeMap {
 
     /**
      * 获取 API 返回的错误码中对应的全局错误码
+     *
      * @param apiPath
      * @param apiErrorCode
      * @return
      */
-    public static int getApiErrorCode(String apiPath, int apiErrorCode){
+    public static int getApiErrorCode(String apiPath, int apiErrorCode) {
         ErrorCode errorCode = ErrorCode.API_ERR_OTHER;
-        Integer prefix = FULL_PATH_PREFIX_MAP.get(apiPath);
+        //删除返回 url 的前缀
+        Uri baseUri = Uri.parse(SealTalkUrl.DOMAIN);
+        String removeValue = baseUri.getPath() + "/";
+        String realPath = apiPath.substring(apiPath.indexOf(removeValue) + 1);
+        Integer prefix = FULL_PATH_PREFIX_MAP.get(realPath);
         // 如果在一般路径中没有找到此 api 则从查询 api 中查询
-        if(prefix == null){
-            prefix = getPrefixFromQueryPath(apiPath);
+        if (prefix == null) {
+            prefix = getPrefixFromQueryPath(realPath);
         }
 
-        if(prefix != null){
+        if (prefix != null) {
             errorCode = ErrorCode.fromCode(prefix + apiErrorCode);
-            if(errorCode == ErrorCode.UNKNOWN_ERROR){
+            if (errorCode == ErrorCode.UNKNOWN_ERROR) {
                 errorCode = ErrorCode.API_ERR_OTHER;
             }
         }
@@ -93,11 +108,11 @@ public class ApiErrorCodeMap {
         return errorCode.getCode();
     }
 
-    private static Integer getPrefixFromQueryPath(String apiPath){
+    private static Integer getPrefixFromQueryPath(String apiPath) {
         Integer prefix = null;
         Set<String> pathSet = QUERY_PATH_REG_PREFIX_MAP.keySet();
-        for(String pathReg : pathSet){
-            if(apiPath.matches(pathReg)){
+        for (String pathReg : pathSet) {
+            if (apiPath.matches(pathReg)) {
                 prefix = QUERY_PATH_REG_PREFIX_MAP.get(pathReg);
                 break;
             }

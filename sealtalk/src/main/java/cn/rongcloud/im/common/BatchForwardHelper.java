@@ -1,6 +1,8 @@
 package cn.rongcloud.im.common;
 
 
+import android.location.LocationManager;
+
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingDeque;
 
@@ -9,7 +11,10 @@ import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
+import io.rong.message.GIFMessage;
 import io.rong.message.ImageMessage;
+import io.rong.message.LocationMessage;
+import io.rong.message.MediaMessageContent;
 
 /**
  * 批量发送消息工具类，将消息排序延迟 300ms 发送
@@ -41,12 +46,41 @@ public class BatchForwardHelper {
                             }
                         }
                         MessageWrapper wrapper = messagelist.poll();
-                        if(wrapper == null) continue;
+                        if (wrapper == null) continue;
 
                         Message message = wrapper.getMessage();
                         MessageContent messageContent = message.getContent();
-                        if(messageContent instanceof ImageMessage &&((ImageMessage)messageContent).getRemoteUri() == null){
+                        if ((messageContent instanceof ImageMessage && ((ImageMessage) messageContent).getRemoteUri() == null) || messageContent instanceof GIFMessage) {
                             RongIM.getInstance().sendImageMessage(message, null, null, new SendImageMessageWrapper(wrapper.getCallback()));
+                        } else if (messageContent instanceof LocationMessage) {
+                            RongIM.getInstance().sendLocationMessage(message, null, null, null);
+                        } else if (messageContent instanceof MediaMessageContent) {
+                            RongIM.getInstance().sendMediaMessage(message, null, null, new IRongCallback.ISendMediaMessageCallback() {
+                                @Override
+                                public void onProgress(Message message, int i) {
+
+                                }
+
+                                @Override
+                                public void onCanceled(Message message) {
+
+                                }
+
+                                @Override
+                                public void onAttached(Message message) {
+
+                                }
+
+                                @Override
+                                public void onSuccess(Message message) {
+
+                                }
+
+                                @Override
+                                public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+
+                                }
+                            });
                         } else {
                             RongIM.getInstance().sendMessage(message, null, null, wrapper.getCallback());
                         }
@@ -84,11 +118,11 @@ public class BatchForwardHelper {
         }
     }
 
-    private class SendImageMessageWrapper extends RongIMClient.SendImageMessageCallback{
+    private class SendImageMessageWrapper extends RongIMClient.SendImageMessageCallback {
         private IRongCallback.ISendMediaMessageCallback callback;
 
-        public SendImageMessageWrapper(IRongCallback.ISendMediaMessageCallback callback){
-         this.callback = callback;
+        public SendImageMessageWrapper(IRongCallback.ISendMediaMessageCallback callback) {
+            this.callback = callback;
         }
 
         @Override

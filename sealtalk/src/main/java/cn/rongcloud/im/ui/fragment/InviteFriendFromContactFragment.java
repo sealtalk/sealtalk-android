@@ -53,9 +53,13 @@ public class InviteFriendFromContactFragment extends CommonListBaseFragment {
         List<SimplePhoneContactInfo> result = new ArrayList<>();
         CommonListAdapter listAdapter = (CommonListAdapter) getListAdapter();
         List<ListItemModel> data = listAdapter.getData();
+        List<String> selectedOtherIds = listAdapter.getSelectedOtherIds();
         if (data != null) {
             for (ListItemModel model : data) {
-                if (model.getData() instanceof SimplePhoneContactInfo && model.getCheckStatus() == ListItemModel.CheckStatus.CHECKED) {
+                if (model.getData() instanceof SimplePhoneContactInfo &&
+                        (model.getCheckStatus() == ListItemModel.CheckStatus.CHECKED
+                         || selectedOtherIds.contains(model.getId()) // 当 adapter 未执行 onBindViewHolder 时，部分选择状态没有被刷新
+                        )) {
                     SimplePhoneContactInfo info = (SimplePhoneContactInfo) model.getData();
                     result.add(info);
                 }

@@ -11,10 +11,7 @@ import java.util.ArrayList;
 
 import cn.rongcloud.im.R;
 
-public class SelectBaseActivity extends TitleBaseActivity {
-
-    //    getIntent().getStringArrayListExtra(LIST_CAN_NOT_CHECK_ID_LIST); //不可选的列表
-//    getIntent().getStringArrayListExtra(LIST_ALREADY_CHECKED_FRIEND_ID_LIST);    //已经选择的列表
+public class SelectBaseActivity extends TitleAndSearchBaseActivity {
     private TextView tvSelectCount;
     private TextView tvConfirm;
     private View bottomLayout;
@@ -40,6 +37,20 @@ public class SelectBaseActivity extends TitleBaseActivity {
             }
         });
 
+        // 若没有开启搜索则隐藏搜索框
+        if(!isSearchable()){
+            getSearchTextView().setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * 重写此方法来实现搜索刷新逻辑
+     * 当标题栏中的输入框输入文字时回调此方法
+     * 此方法会在输入文字一定时间延迟内没有再输入文字时会回调
+     * @param keyword
+     */
+    @Override
+    public void onSearch(String keyword) {
     }
 
     /**
@@ -63,6 +74,17 @@ public class SelectBaseActivity extends TitleBaseActivity {
      */
     protected void onSelectedDetail() {
 
+    }
+
+    /**
+     * 是否可以搜索
+     * 重写此方法返回 true 来启用搜索
+     * 需要实现 onSearch 方法具体实现搜索逻辑
+     *
+     * @return
+     */
+    protected boolean isSearchable(){
+        return false;
     }
 
     protected void showBottomSelectedCount(boolean isShow){

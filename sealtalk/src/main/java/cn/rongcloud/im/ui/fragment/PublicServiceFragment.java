@@ -26,7 +26,7 @@ public class PublicServiceFragment extends Fragment {
     protected PublicServiceViewModel viewModel;
     private PublicServiceAdapter adapter;
 
-    public PublicServiceFragment(OnPublicServiceClickListener listener) {
+    public void setOnPublicServiceClickListener(OnPublicServiceClickListener listener){
         adapter = new PublicServiceAdapter(listener);
     }
 

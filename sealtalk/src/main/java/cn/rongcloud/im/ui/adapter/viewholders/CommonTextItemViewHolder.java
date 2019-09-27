@@ -21,6 +21,10 @@ public class CommonTextItemViewHolder extends BaseItemViewHolder<ListItemModel<S
 
     }
 
+    @Override
+    public void setOnLongClickItemListener(View.OnLongClickListener listener) {
+
+    }
 
     @Override
     public void update(ListItemModel<String> contactModel) {

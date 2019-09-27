@@ -52,6 +52,8 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+
 
     <application
         android:name=".SealApp"
@@ -73,12 +75,23 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
-                    android:scheme="sealtalk"
                     android:host="*"
-                    />
+                    android:scheme="sealtalk" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="cn.rongcloud.im"
+                    android:pathPrefix="/conversationlist/"
+                    android:scheme="rong" />
             </intent-filter>
         </activity>
 
@@ -131,11 +144,11 @@
         <activity
             android:name=".ui.activity.NewFriendListActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".ui.activity.GroupNoticeListActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".ui.activity.SealSearchActivity"
             android:screenOrientation="portrait" />
@@ -211,38 +224,40 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.SelectSingleFriendActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.SelectGroupMemberActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.SelectFriendExcluedGroupActivity"
-            android:screenOrientation="portrait"></activity>
+            android:name=".ui.activity.SelectGroupMemberAllowEmptyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.SelectFriendExcludeGroupActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.activity.SelectForwardCreateChatActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.SelectCreateGroupActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ui.activity.ForwardActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.activity.MyAccountActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.UpdateNameActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.UpdateStAccountActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.UpdateGenderActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.activity.CreateGroupActivity"
@@ -260,6 +275,15 @@
             android:name=".ui.activity.BlackListActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.activity.GroupUserInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.SelectChatBgActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ImagePreviewActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.activity.NewMessageRemindActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -272,10 +296,10 @@
             android:name=".ui.activity.QrCodeDisplayActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activity.QrCodeDisplayWindowActivity"
+        <activity
+            android:name=".ui.activity.QrCodeDisplayWindowActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/TranslucentNoTitleActivity"
-            />
+            android:theme="@style/TranslucentNoTitleActivity" />
 
         <activity
             android:name=".ui.activity.SealPicturePagerActivity"
@@ -298,26 +322,49 @@
             android:name=".ui.activity.GroupSetNewGroupOwnerActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.activity.GroupCopyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.GroupExitedListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ClearChatMessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.EditUserDescribeActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.activity.SelectForwardMoreContactActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.ForwardSelectedDetailActivity"
+        <activity
+            android:name=".ui.activity.ForwardSelectedDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ScanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.AddFriendActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.AddFriendFromContactActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.InviteFriendFromContactActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.RequestContactPermissionActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.PokeInviteChatActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            />
-        <activity android:name=".ui.activity.ScanActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".ui.activity.AddFriendActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".ui.activity.AddFriendFromContactActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".ui.activity.InviteFriendFromContactActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".ui.activity.RequestContactPermissionActivity"
-            android:screenOrientation="portrait"
-            />
+            android:theme="@style/DeepBlackTranslucentNoTitleActivity" />
+
+        <activity
+            android:name=".ui.activity.MultiDeleteFriendsActivity"
+            android:screenOrientation="portrait" />
+
 
         <!-- 请将CHANNAL改为app的发布渠道 < -->
         <meta-data

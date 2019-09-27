@@ -55,6 +55,7 @@
             android:id="@+id/dpv_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_marginTop="@dimen/seal_main_item_tab_unread_margin_top"
             android:layout_alignRight="@id/ll_tab"
             android:textColor="@android:color/white"

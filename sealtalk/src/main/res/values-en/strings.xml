@@ -158,7 +158,12 @@
     <string name="profile_group_notice_prefix">\@all\n</string>
     <string name="profile_confirm_quit_group">Confirm to quit the group?</string>
     <string name="profile_confirm_dismiss_group">Confirm to dismiss the group?</string>
-    <string name="profile_set_display_name">Setting Remarks</string>
+    <string name="profile_set_display_name">Set up remarks and descriptions</string>
+    <string name="profile_picture_detail">Image details</string>
+    <string name="profile_picture_more">More</string>
+    <string name="profile_set_group_info">Personal information</string>
+    <string name="profile_set_display_des">Description</string>
+    <string name="profile_set_display_phone">Phone number</string>
     <string name="profile_detail_start_chat">Start Chat</string>
     <string name="profile_detail_start_voice">Voice Call</string>
     <string name="profile_detail_start_video">Video Call</string>
@@ -198,6 +203,8 @@
     <string name="seal_mine_set_account_privacy">Security and Privacy</string>
     <string name="seal_mine_set_account_new_message_show">New Message Notification</string>
     <string name="seal_mine_set_account_clear_cache">Clear Cache</string>
+    <string name="seal_mine_set_account_chat_bg">Chat background</string>
+    <string name="seal_mine_set_account_clear_message_cache">Clean up chat history</string>
     <string name="seal_mine_set_account_logout">Logout</string>
     <string name="seal_mine_set_account_push_language">Setting Push To Chinese</string>
     <string name="seal_mine_set_account_push_content">Display Push Content</string>
@@ -242,6 +249,7 @@
     <string name="seal_gender_set_fail">Failed</string>
 
     <string name="seal_mine_my_account_st_account">SealTalk number</string>
+    <string name="seal_mine_my_account_group_nick_name">Group nickname:</string>
     <string name="seal_mine_my_account_phone_number">Phone number</string>
     <string name="seal_mine_my_account">My Account</string>
     <string name="seal_select_group_member">Select Members</string>
@@ -300,7 +308,7 @@
 
 
     <string name="seal_search_empty">Not related to content of %s </string>
-    <string name="seal_main_chat_tab_more_read_message">...</string>
+    <string name="seal_main_chat_tab_more_read_message">···</string>
     <string name="seal_main_toast_unread_clear_success">Cleared</string>
     <string name="seal_public_account_information">Public account Info</string>
     <string name="seal_member_mention_all_member">All</string>
@@ -312,6 +320,7 @@
     <string name="seal_inivte_firend_descprtion_format" formatted="true">I am %s</string>
     <string name="seal_account_not_exist">User does not exist.</string>
     <string name="seal_quest_failed_error_code">Request failed, error code:%d</string>
+    <string name="setting_new_message_receive_poke_message">Accept the poke message</string>
 
     <string name="new_friend_title">Add friends</string>
     <string name="new_friend_add_from_phone_contact">Phonebook</string>
@@ -356,6 +365,8 @@
     <string name="seal_select_forward_contact_single">Single-Select</string>
     <string name="seal_group_manager_set_manager">Set up group management</string>
     <string name="seal_group_manager_transfer">Group admin transfer</string>
+    <string name="seal_group_manager_copy">Copy new group with one click</string>
+    <string name="seal_group_manager_exited">Quitted member list</string>
     <string name="seal_group_detail_group_manager">Group management/admin</string>
     <string name="seal_group_management_group_owner">Group holder</string>
     <string name="seal_group_management_group_managements">Group admin</string>
@@ -390,10 +401,12 @@
     <string name="seal_main_mine_qrcode">My QR code</string>
     <string name="profile_join_group">Join the group</string>
     <string name="profile_delete_from_contact">Delete contacts</string>
+    <string name="profile_group_protection_tips">The group owner has turned on the group member protection mode, it is unable to add friends in the group.</string>
     <string name="profile_add_to_blacklist_tips">You will not be able to receive the message and delete the chat history with the contact after added the contacts to blacklist.</string>
     <string name="profile_remove_from_contact_tips_html_format" formatted="true"><Data><![CDATA[Remove <font color="#368AE8">%1$s</font> from the contacts list and clear all the chat history at the same time]]></Data></string>
     <string name="seal_group_action_transfer_group_owner">%1$s became the group holder</string>
     <string name="profile_group_manager">Group admin</string>
+    <string name="profile_group_user_info">My information in this group</string>
     <string name="profile_group_notice_tips">After the release, the group announcement will be sent as a system message, visible to all members.</string>
     <string name="profile_group_notice_update_time_format" formatted="true">Release time：%s</string>
     <string name="profile_group_notice_clear_confirm">Confirm to clear the group announcement?</string>
@@ -405,6 +418,8 @@
     <string name="seal_group_manager_set_manager_toast_set_management_failed">Failed</string>
     <string name="seal_group_action_set_manager">Group holder sets %1$s as a group admin</string>
     <string name="seal_group_action_remove_manager">Group holder has removed %1$s from a group admin</string>
+    <string name="seal_group_member_protection_open">Enabled the group member protection mode</string>
+    <string name="seal_group_member_protection_close">Disabled the group member protection mode</string>
     <string name="seal_qrcode_jump_without_login">No user information, please make sure register first</string>
     <string name="seal_mine_about_toast_app_downloading">Downloading now….</string>
     <string name="seal_mine_about_notifi_loading">Now is downloading the latest version….</string>
@@ -445,9 +460,12 @@
     <string name="seal_set_clean_time_not_owner_tip">Only the group holder is allowed to setup</string>
     <string name="seal_mute_all">All members are banned</string>
     <string name="seal_mute_all_tips">After being enabled, only the group holder and the administrator can speak.</string>
-    <string name="seal_add_certification">Whether to enable group authentication</string>
+    <string name="seal_goup_member_protect">Group member protection mode</string>
+    <string name="seal_goup_member_protect_tips">Group members cannot add friends through the group after enabled.</string>
+    <string name="seal_add_certification">Enable Group Verification</string>
     <string name="seal_add_certification_tips">After being enabled, it\'s need to agree with group administrator to join the group, and the scanning QR code is disabled.</string>
     <string name="seal_add_certification_close">After the group verification is disabled, all the group request will be expired， please confirm?</string>
+    <string name="seal_add_friend_protect">Group members are allowed to add friends to each other after when its switched off, do you confirm?</string>
     <string name="seal_add_certification_need_certifi">The Group has enabled verification, please wait for group admin to confirm~</string>
     <string name="seal_add_need_member_agree">Invited, Please wait for confirmation</string>
     <string name="seal_add_need_manager_agree">Invited, please wait for group admin to confirm</string>
@@ -472,4 +490,103 @@
 
     <string name="seal_edit_text_no_emoji">Input expressions are not supported</string>
 
+    <string name="seal_group_manager_set_success">Success</string>
+    <string name="seal_group_manager_set_fail">Failed</string>
+    <!--copy_group-->
+    <string name="seal_group_manager_copy_title">Copy a new group with one click</string>
+    <string name="seal_group_manager_copy_tip_title">Prompt:</string>
+    <string name="seal_group_manager_copy_tip_content">The new generated group only supports copy group member information, all existing settings is unable to be copied.</string>
+    <string name="seal_group_manager_copy_btn_content">Confirm to copy?</string>
+    <string name="seal_group_manager_copy_tips">Are you sure to copy new group?</string>
+    <string name="seal_group_manager_copy_in_protect">The group is under a protection period within 7 days.</string>
+    <string name="seal_group_manager_copy_copied_7">A group can only be copied once in 7 days</string>
+    <string name="seal_group_manager_copy_not_exist">Group does not exist or is dissolved</string>
+    <string name="seal_group_manager_copy_fail">Copy Fail</string>
+
+    <!--group_exited-->
+    <string name="seal_group_manager_exited_null_tips">There is no group member quitting currently</string>
+    <string name="seal_group_manager_exited_title">Exit group member list</string>
+    <string name="seal_group_manager_exited_content_owner">You have removed from the group by %1$s</string>
+    <string name="seal_group_manager_exited_content_manager">You have removed by admin %1$s</string>
+    <string name="seal_group_manager_exited_content_active">Quit the group</string>
+
+    <!--clear_chat_message-->
+    <string name="seal_clear_chat_message_select_title">Clear chat history</string>
+    <string name="seal_clear_chat_message_select_all">Select all</string>
+    <string name="seal_clear_chat_message_select_delete">Delete</string>
+    <string name="seal_clear_chat_message_delete_dialog">Are you sure you want to delete your chat history?</string>
+    <string name="seal_clear_chat_message_delete_success">Deleted</string>
+
+    <!--user_describe-->
+    <string name="seal_describe_alias">Remark</string>
+    <string name="seal_describe_alias_hint">Add remark</string>
+    <string name="seal_describe_phone">Phone number</string>
+    <string name="seal_describe_phone_hint">Please enter mobile number</string>
+    <string name="seal_describe_more">More description</string>
+    <string name="seal_describe_more_num">%d/400</string>
+    <string name="seal_describe_more_hint">Please add description</string>
+    <string name="seal_describe_more_photo">Taking photos and photos</string>
+    <string name="seal_describe_more_photo_hint">Add a business card or related image</string>
+    <string name="seal_describe_more_btn_complete">Complete</string>
+    <string name="seal_describe_more_btn_set_success">Success</string>
+    <string name="seal_describe_more_btn_set_fail">Failed</string>
+    <string name="seal_describe_more_save_tips">Are you sure to save the changes?</string>
+    <string name="seal_dialog_describe_more_save">Save to album</string>
+    <string name="seal_dialog_describe_more_delete">Delete the image</string>
+    <string name="seal_dialog_describe_more_cancel">Cancel</string>
+    <string name="seal_dialog_describe_more_save_success">Success</string>
+
+    <!--user_info-->
+    <string name="seal_group_user_info_title">Personal information</string>
+    <string name="seal_group_user_info_name">Group nickname</string>
+    <string name="seal_group_user_info_name_mine">Nickname in the group</string>
+    <string name="seal_group_user_info_name_hint">Please enter the nickname</string>
+    <string name="seal_group_user_info_phone">Phone number</string>
+    <string name="seal_group_user_info_phone_hint">Please enter mobile number</string>
+    <string name="seal_group_user_info_vchat">Wechat account</string>
+    <string name="seal_group_user_info_vchat_hint">Please enter Wechat account</string>
+    <string name="seal_group_user_info_alipay">Alipay account</string>
+    <string name="seal_group_user_info_alipay_hint">Please enter Alipay account</string>
+    <string name="seal_group_user_info_description">Description</string>
+    <string name="seal_group_user_info_des_hint">Please enter the description</string>
+    <string name="seal_group_user_info_des_add">Add the description</string>
+    <string name="seal_group_user_info_des_del">Delete</string>
+    <string name="seal_group_user_info_des_confirm">Complete</string>
+    <string name="seal_group_user_info_des_confirm_success">Information is changed</string>
+    <string name="seal_group_user_info_des_no_set">Not set</string>
+
+    <string name="im_plugin_poke_title">Poke</string>
+    <string name="imt_plugin_poke_send_to_format" formatted="true">Send notification to %s</string>
+    <string name="im_plugin_poke_multi_send_to">Send a notification to</string>
+    <string name="im_plugin_poke_multi_all_in_group">All</string>
+    <string name="im_message_content_poke">[Poke]</string>
+    <string name="im_plugin_poke_message_default">Have a quick chat</string>
+    <string name="poke_start_chat">Enter the chat</string>
+    <string name="poke_ignore_message">Ignore</string>
+    <string name="poke_allow_next_send_message_time_msg">Please poke again after %d seconds</string>
+    <string name="poke_only_group_owner_and_manager_can_send">Only the group holder and managers can operate management</string>
+    <string name="poke_message_max_allow_length">Allow up to 20 characters to be entered</string>
+
+    <!--chat_bg-->
+    <string name="seal_select_chat_bg_title">Chat background</string>
+        <string name="seal_select_chat_bg_album">From photo album</string>
+    <string name="seal_select_chat_bg_set">Setting</string>
+    <string name="seal_select_chat_bg_set_success">Success</string>
+    <string name="seal_select_chat_bg_cancel">Cancel</string>
+    <string name="seal_select_chat_bg_complete">Complete</string>
+    <string name="seal_select_chat_bg_origin">Original</string>
+    <string name="seal_select_chat_bg_send">Send</string>
+
+    <!--recently_picture-->
+    <string name="seal_popup_recent_picture_tip">Photo you wish to send:</string>
+
+    <!--operate_phone_dialog-->
+    <string name="seal_dialog_operate_phone_num_call">Call</string>
+    <string name="seal_dialog_operate_phone_num_copy">Copy numbers</string>
+    <string name="seal_dialog_operate_phone_num_copy_success">Successful copy</string>
+
+    <string name="contact_multi_delete_friend">Delete friends in bulk</string>
+    <string name="contact_multi_delete_friend_conf" formatted="true">
+        <Data><![CDATA[Selected friends will be deleted after confirmed,<br> confirm to delete?]]></Data>
+        </string>
 </resources>

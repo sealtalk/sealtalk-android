@@ -41,7 +41,7 @@ public class SealGroupNotificationMessageItemProvider extends GroupNotificationM
                             JSONObject jsonObject = new JSONObject(data);
                             JSONArray targetUserDisplayNames = jsonObject.getJSONArray("targetUserDisplayNames");
                             StringBuffer buffer = new StringBuffer();
-                            for (int i=0; i< targetUserDisplayNames.length(); i++) {
+                            for (int i = 0; i < targetUserDisplayNames.length(); i++) {
                                 buffer.append(targetUserDisplayNames.get(i));
                                 buffer.append(",");
                             }
@@ -61,7 +61,7 @@ public class SealGroupNotificationMessageItemProvider extends GroupNotificationM
                             JSONObject jsonObject = new JSONObject(data);
                             JSONArray targetUserDisplayNames = jsonObject.getJSONArray("targetUserDisplayNames");
                             StringBuffer buffer = new StringBuffer();
-                            for (int i=0; i< targetUserDisplayNames.length(); i++) {
+                            for (int i = 0; i < targetUserDisplayNames.length(); i++) {
                                 buffer.append(targetUserDisplayNames.get(i));
                                 buffer.append(",");
                             }
@@ -82,7 +82,7 @@ public class SealGroupNotificationMessageItemProvider extends GroupNotificationM
                             JSONObject jsonObject = new JSONObject(data);
                             JSONArray targetUserDisplayNames = jsonObject.getJSONArray("targetUserDisplayNames");
                             StringBuffer buffer = new StringBuffer();
-                            for (int i=0; i< targetUserDisplayNames.length(); i++) {
+                            for (int i = 0; i < targetUserDisplayNames.length(); i++) {
                                 buffer.append(targetUserDisplayNames.get(i));
                                 buffer.append(",");
                             }
@@ -93,6 +93,14 @@ public class SealGroupNotificationMessageItemProvider extends GroupNotificationM
                             e.printStackTrace();
                         }
                     }
+                } else if (content.getOperation().equals("openMemberProtection")) {
+                    TextView textView = v.findViewById(R.id.rc_msg);
+                    String contentStr = v.getContext().getResources().getString(R.string.seal_group_member_protection_open);
+                    textView.setText(contentStr);
+                } else if (content.getOperation().equals("closeMemberProtection")) {
+                    TextView textView = v.findViewById(R.id.rc_msg);
+                    String contentStr = v.getContext().getResources().getString(R.string.seal_group_member_protection_close);
+                    textView.setText(contentStr);
                 } else {
                     super.bindView(v, position, content, message);
                 }
@@ -117,7 +125,7 @@ public class SealGroupNotificationMessageItemProvider extends GroupNotificationM
                         JSONObject jsonObject = new JSONObject(data);
                         JSONArray targetUserDisplayNames = jsonObject.getJSONArray("targetUserDisplayNames");
                         StringBuffer buffer = new StringBuffer();
-                        for (int i=0; i< targetUserDisplayNames.length(); i++) {
+                        for (int i = 0; i < targetUserDisplayNames.length(); i++) {
                             buffer.append(targetUserDisplayNames.get(i));
                             buffer.append(",");
                         }
@@ -136,7 +144,7 @@ public class SealGroupNotificationMessageItemProvider extends GroupNotificationM
                         JSONObject jsonObject = new JSONObject(data);
                         JSONArray targetUserDisplayNames = jsonObject.getJSONArray("targetUserDisplayNames");
                         StringBuffer buffer = new StringBuffer();
-                        for (int i=0; i< targetUserDisplayNames.length(); i++) {
+                        for (int i = 0; i < targetUserDisplayNames.length(); i++) {
                             buffer.append(targetUserDisplayNames.get(i));
                             buffer.append(",");
                         }
@@ -155,7 +163,7 @@ public class SealGroupNotificationMessageItemProvider extends GroupNotificationM
                         JSONObject jsonObject = new JSONObject(data);
                         JSONArray targetUserDisplayNames = jsonObject.getJSONArray("targetUserDisplayNames");
                         StringBuffer buffer = new StringBuffer();
-                        for (int i=0; i< targetUserDisplayNames.length(); i++) {
+                        for (int i = 0; i < targetUserDisplayNames.length(); i++) {
                             buffer.append(targetUserDisplayNames.get(i));
                             buffer.append(",");
                         }
@@ -166,6 +174,12 @@ public class SealGroupNotificationMessageItemProvider extends GroupNotificationM
                         e.printStackTrace();
                     }
                 }
+            } else if (message.getOperation().equals("openMemberProtection")) {
+                String contentStr = context.getResources().getString(R.string.seal_group_member_protection_open);
+                return new SpannableString(contentStr);
+            } else if (message.getOperation().equals("closeMemberProtection")) {
+                String contentStr = context.getResources().getString(R.string.seal_group_member_protection_close);
+                return new SpannableString(contentStr);
             }
 
         }

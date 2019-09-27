@@ -48,6 +48,10 @@ public class PhotoUtils {
 
     public static final String CROP_FILE_NAME = "crop_file.jpg";
 
+    //不需要裁剪图片
+    public static final int NO_CROP = 0x1772;
+    private int mType;
+
     /**
      * PhotoUtils对象
      **/
@@ -56,6 +60,11 @@ public class PhotoUtils {
 
     public PhotoUtils(OnPhotoResultListener onPhotoResultListener) {
         this.onPhotoResultListener = onPhotoResultListener;
+    }
+
+    public PhotoUtils(OnPhotoResultListener onPhotoResultListener, int type) {
+        this.onPhotoResultListener = onPhotoResultListener;
+        mType = type;
     }
 
     /**
@@ -268,6 +277,11 @@ public class PhotoUtils {
             //拍照
             case INTENT_TAKE:
                 if (new File(buildLocalFileUri().getPath()).exists()) {
+                    if (mType == NO_CROP) {
+                        //不需要裁剪
+                        onPhotoResultListener.onPhotoResult(buildLocalFileUri());
+                        return;
+                    }
                     if (corp(activity, buildUri(activity))) {
                         return;
                     }
@@ -279,6 +293,11 @@ public class PhotoUtils {
             case INTENT_SELECT:
                 if (data != null && data.getData() != null) {
                     Uri imageUri = data.getData();
+                    //不需要裁剪
+                    if (mType == NO_CROP) {
+                        onPhotoResultListener.onPhotoResult(imageUri);
+                        return;
+                    }
                     if (corp(activity, imageUri)) {
                         return;
                     }
@@ -313,6 +332,11 @@ public class PhotoUtils {
             //拍照
             case INTENT_TAKE:
                 if (new File(buildLocalFileUri().getPath()).exists()) {
+                    //不需要裁剪
+                    if (mType == NO_CROP) {
+                        onPhotoResultListener.onPhotoResult(buildLocalFileUri());
+                        return;
+                    }
                     if (corp(fragment, buildUri(fragment.getActivity()))) {
                         return;
                     }
@@ -324,6 +348,11 @@ public class PhotoUtils {
             case INTENT_SELECT:
                 if (data != null && data.getData() != null) {
                     Uri imageUri = data.getData();
+                    //不需要裁剪
+                    if (mType == NO_CROP) {
+                        onPhotoResultListener.onPhotoResult(imageUri);
+                        return;
+                    }
                     if (corp(fragment, imageUri)) {
                         return;
                     }

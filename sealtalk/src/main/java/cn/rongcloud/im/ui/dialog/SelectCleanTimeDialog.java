@@ -17,10 +17,6 @@ import cn.rongcloud.im.R;
 public class SelectCleanTimeDialog extends DialogFragment implements View.OnClickListener {
 
     private OnDialogButtonClickListener mListener;
-    public static final int CLEAR_STATUS_THIRTY_SIX = 36;
-    public static final int CLEAR_STATUS_THREE = 3;
-    public static final int CLEAR_STATUS_SEVEN = 7;
-    public static final int CLEAR_STATUS_NOT = 0;
 
     @Nullable
     @Override

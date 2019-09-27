@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="100dp"
+    android:layout_height="143dp"
+    android:background="@drawable/seal_ic_popup_bg_top"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="5dp"
+        android:text="@string/seal_popup_recent_picture_tip"
+        android:textColor="@color/seal_setting_item_value"
+        android:textSize="10sp" />
+
+    <ImageView
+        android:id="@+id/iv_picture"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/seal_ic_splash"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>

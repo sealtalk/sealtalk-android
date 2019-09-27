@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 import cn.rongcloud.im.common.IntentExtra;
-import cn.rongcloud.im.ui.fragment.SelectFriendsExcluedGroupFragment;
+import cn.rongcloud.im.ui.fragment.SelectFriendsExcludeGroupFragment;
 import cn.rongcloud.im.ui.fragment.SelectMultiFriendFragment;
 
 import static cn.rongcloud.im.common.IntentExtra.STR_TARGET_ID;
@@ -16,7 +16,7 @@ import static cn.rongcloud.im.common.IntentExtra.STR_TARGET_ID;
 /**
  * 除了当前群组 groupId 之外的人
  */
-public class SelectFriendExcluedGroupActivity extends SelectMultiFriendsActivity {
+public class SelectFriendExcludeGroupActivity extends SelectMultiFriendsActivity {
     private String groupId;
 
     @Override
@@ -27,7 +27,9 @@ public class SelectFriendExcluedGroupActivity extends SelectMultiFriendsActivity
 
     @Override
     protected SelectMultiFriendFragment getSelectMultiFriendFragment() {
-        return new SelectFriendsExcluedGroupFragment(groupId);
+        SelectFriendsExcludeGroupFragment fragment = new SelectFriendsExcludeGroupFragment();
+        fragment.setGroupId(groupId);
+        return fragment;
     }
 
     @Override

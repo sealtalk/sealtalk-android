@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="@string/seal_describe_alias"
+            android:textColor="@color/seal_login_text_button_color"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/et_display_name"
+            style="@style/EditUserDesEditText"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:hint="@string/seal_describe_alias_hint"
+            android:maxLength="16"
+            android:paddingLeft="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="@string/seal_describe_phone"
+            android:textColor="@color/seal_login_text_button_color"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_region"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="+86"
+                android:textColor="@color/color_black_text"
+                android:textSize="15sp" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:background="@color/color_gray_97" />
+
+            <EditText
+                android:id="@+id/et_phone"
+                style="@style/EditUserDesEditText"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_toRightOf="@id/tv_region"
+                android:hint="@string/seal_describe_phone_hint"
+                android:inputType="phone"
+                android:maxLength="11"
+                android:paddingLeft="10dp" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="@string/seal_describe_more"
+                android:textColor="@color/seal_login_text_button_color"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_more_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:paddingTop="5dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="5dp"
+                android:text="@string/seal_describe_more_num"
+                android:textColor="@color/seal_login_text_button_color"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/et_more"
+            style="@style/EditUserDesEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/seal_describe_more_hint"
+            android:maxLength="400"
+            android:minHeight="44dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="@string/seal_describe_more_photo"
+            android:textColor="@color/seal_login_text_button_color"
+            android:textSize="12sp" />
+
+        <FrameLayout
+            android:id="@+id/fl_more"
+            android:layout_width="match_parent"
+            android:layout_height="147dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/common_dash_bg"
+                android:gravity="center"
+                android:text="@string/seal_describe_more_photo_hint"
+                android:textColor="@color/seal_login_text_button_color"
+                android:textSize="16sp" />
+
+            <io.rong.imkit.widget.AsyncImageView
+                android:id="@+id/iv_photo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+
+        </FrameLayout>
+    </LinearLayout>
+
+</ScrollView>

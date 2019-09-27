@@ -22,6 +22,7 @@ public class SelectPictureBottomDialog extends BaseBottomDialog {
 
     private PhotoUtils photoUtils;
     private static OnSelectPictureListener listener;
+    private int mType;
 
     @Nullable
     @Override
@@ -85,7 +86,7 @@ public class SelectPictureBottomDialog extends BaseBottomDialog {
             public void onPhotoCancel() {
                 dismiss();
             }
-        });
+        },mType);
         return view;
     }
 
@@ -123,6 +124,14 @@ public class SelectPictureBottomDialog extends BaseBottomDialog {
      */
     public interface OnSelectPictureListener {
         void onSelectPicture(Uri uri);
+    }
+
+    /**
+     * 设置是否需要裁剪的类型
+     * @param type
+     */
+    public void setType(int type){
+        mType = type;
     }
 
 }

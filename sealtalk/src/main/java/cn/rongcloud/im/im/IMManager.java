@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Looper;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import com.google.gson.Gson;
 
@@ -16,24 +18,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.rongcloud.im.R;
+import cn.rongcloud.im.SealApp;
 import cn.rongcloud.im.common.ErrorCode;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.common.LogTag;
 import cn.rongcloud.im.common.ResultCallback;
 import cn.rongcloud.im.db.DbManager;
 import cn.rongcloud.im.im.message.GroupApplyMessage;
+import cn.rongcloud.im.im.message.GroupClearMessage;
+import cn.rongcloud.im.im.message.PokeMessage;
 import cn.rongcloud.im.im.message.SealContactNotificationMessage;
 import cn.rongcloud.im.im.message.SealGroupConNtfMessage;
 import cn.rongcloud.im.im.message.SealGroupNotificationMessage;
+import cn.rongcloud.im.im.plugin.PokeExtensionModule;
 import cn.rongcloud.im.im.provider.ContactNotificationMessageProvider;
 import cn.rongcloud.im.im.provider.GroupApplyMessageProvider;
+import cn.rongcloud.im.im.provider.PokeMessageItemProvider;
 import cn.rongcloud.im.im.provider.SealGroupConNtfMessageProvider;
 import cn.rongcloud.im.im.provider.SealGroupNotificationMessageItemProvider;
 import cn.rongcloud.im.model.ChatRoomAction;
 import cn.rongcloud.im.model.ContactNotificationMessageData;
+import cn.rongcloud.im.model.ConversationRecord;
 import cn.rongcloud.im.model.LoginResult;
 import cn.rongcloud.im.model.QuietHours;
 import cn.rongcloud.im.model.Resource;
+import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.model.UserCacheInfo;
 import cn.rongcloud.im.net.CallBackWrapper;
 import cn.rongcloud.im.net.HttpClientManager;
@@ -43,6 +52,7 @@ import cn.rongcloud.im.sp.UserConfigCache;
 import cn.rongcloud.im.ui.activity.ForwardActivity;
 import cn.rongcloud.im.ui.activity.GroupNoticeListActivity;
 import cn.rongcloud.im.ui.activity.NewFriendListActivity;
+import cn.rongcloud.im.ui.activity.PokeInviteChatActivity;
 import cn.rongcloud.im.ui.activity.SealPicturePagerActivity;
 import cn.rongcloud.im.ui.activity.UserDetailActivity;
 import cn.rongcloud.im.utils.log.SLog;
@@ -55,8 +65,10 @@ import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.RongMessageItemLongClickActionManager;
 import io.rong.imkit.manager.IUnReadMessageObserver;
+import io.rong.imkit.manager.SendImageManager;
 import io.rong.imkit.mention.IMentionedInputListener;
 import io.rong.imkit.mention.RongMentionManager;
+import io.rong.imkit.model.Event;
 import io.rong.imkit.model.GroupNotificationMessageData;
 import io.rong.imkit.model.GroupUserInfo;
 import io.rong.imkit.model.UIConversation;
@@ -101,8 +113,13 @@ public class IMManager {
     private MutableLiveData<Boolean> autologinResult = new MutableLiveData<>();
     private MutableLiveData<Message> messageRouter = new MutableLiveData<>();
     private MutableLiveData<Boolean> kickedOffline = new MutableLiveData<>();
+    /**
+     * 接收戳一下消息
+     */
+    private volatile Boolean isReceivePokeMessage = null;
 
     private IMInfoProvider imInfoProvider;
+    private ConversationRecord lastConversationRecord;
 
 
     private IMManager() {
@@ -124,6 +141,9 @@ public class IMManager {
      */
     public void init(Context context) {
         this.context = context.getApplicationContext();
+
+        // 初始化 IM 相关缓存
+        initIMCache();
 
         // 初始化推送
         initPush();
@@ -173,9 +193,6 @@ public class IMManager {
             autologinResult.setValue(true);
             return;
         }
-        // 用户设置缓存 sp
-        configCache = new UserConfigCache(context.getApplicationContext());
-        userCache = new UserCache(context.getApplicationContext());
 
         UserCacheInfo userCache = this.userCache.getUserCache();
         if (userCache == null) {
@@ -404,6 +421,51 @@ public class IMManager {
     }
 
     /**
+     * @param conversationType
+     * @param targetId
+     * @param recordTime       删除此时间之前的数据
+     * @param cleanRemote      是否删除远端数据
+     * @return
+     */
+    public LiveData<Resource<Boolean>> cleanHistoryMessage(Conversation.ConversationType conversationType, String targetId, long recordTime,
+                                                           boolean cleanRemote) {
+        MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
+        result.postValue(Resource.loading(null));
+
+        RongIMClient.getInstance().cleanHistoryMessages(conversationType, targetId, recordTime, cleanRemote, new RongIMClient.OperationCallback() {
+
+            @Override
+            public void onSuccess() {
+                result.postValue(Resource.success(true));
+                //如过没有会话界面没有消息的话，直接清除会话列表的最新消息
+                RongIMClient.getInstance().getLatestMessages(conversationType, targetId, 1, new RongIMClient.ResultCallback<List<Message>>() {
+                    @Override
+                    public void onSuccess(List<Message> messages) {
+                        if (messages == null || messages.size() <= 0) {
+                            RongContext.getInstance().getEventBus().post(new Event.MessagesClearEvent(conversationType, targetId));
+                        }
+                    }
+
+                    @Override
+                    public void onError(RongIMClient.ErrorCode errorCode) {
+
+                    }
+                });
+
+
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                SLog.e(LogTag.IM, "clean history message, msg:" + errorCode.getMessage() + ", code:" + errorCode.getValue());
+                result.postValue(Resource.error(ErrorCode.IM_ERROR.getCode(), false));
+            }
+        });
+
+        return result;
+    }
+
+    /**
      * 初始化会话相关
      */
     private void initConversation() {
@@ -421,6 +483,7 @@ public class IMManager {
                 if (conversationType == Conversation.ConversationType.GROUP) {
                     Group groupInfo = RongUserInfoManager.getInstance().getGroupInfo(s);
                     if (groupInfo != null) {
+                        intent.putExtra(IntentExtra.GROUP_ID, groupInfo.getId());
                         intent.putExtra(IntentExtra.STR_GROUP_NAME, groupInfo.getName());
                     }
                 }
@@ -455,7 +518,15 @@ public class IMManager {
                 return false;
             }
         });
+    }
 
+    /**
+     * 初始化 IM 相关缓存
+     */
+    private void initIMCache() {
+        // 用户设置缓存 sp
+        configCache = new UserConfigCache(context.getApplicationContext());
+        userCache = new UserCache(context.getApplicationContext());
     }
 
     /**
@@ -467,7 +538,7 @@ public class IMManager {
             @Override
             public boolean onConversationPortraitClick(Context context, Conversation.ConversationType conversationType, String s) {
                 //如果是群通知，点击头像进入群通知页面
-                if (s.equals("__group_apply__")){
+                if (s.equals("__group_apply__")) {
                     Intent noticeListIntent = new Intent(context, GroupNoticeListActivity.class);
                     context.startActivity(noticeListIntent);
                     return true;
@@ -688,7 +759,10 @@ public class IMManager {
         RongIM.registerMessageType(SealGroupConNtfMessage.class);
         RongIM.registerMessageTemplate(new SealGroupConNtfMessageProvider());
         RongIM.registerMessageType(GroupApplyMessage.class);
+        RongIM.registerMessageType(GroupClearMessage.class);
         RongIM.getInstance().registerConversationTemplate(new GroupApplyMessageProvider());
+        RongIM.registerMessageType(PokeMessage.class);
+        RongIM.registerMessageTemplate(new PokeMessageItemProvider());
         //RongIM.registerMessageTemplate(new GroupApplyMessageProvider());
     }
 
@@ -725,6 +799,8 @@ public class IMManager {
         RongExtensionManager.getInstance().registerExtensionModule(new RecognizeExtensionModule());
         // 小视频
         RongExtensionManager.getInstance().registerExtensionModule(new SightExtensionModule());
+        // 戳一下
+        RongExtensionManager.getInstance().registerExtensionModule(new PokeExtensionModule());
     }
 
     /**
@@ -838,6 +914,7 @@ public class IMManager {
             public boolean onReceived(Message message, int i) {
                 messageRouter.postValue(message);
                 MessageContent messageContent = message.getContent();
+                String targetId = message.getTargetId();
                 if (messageContent instanceof ContactNotificationMessage) { // 添加好友状态信息
                     ContactNotificationMessage contactNotificationMessage = (ContactNotificationMessage) messageContent;
                     if (contactNotificationMessage.getOperation().equals("Request")) {
@@ -851,7 +928,7 @@ public class IMManager {
                     GroupNotificationMessage groupNotificationMessage = (GroupNotificationMessage) messageContent;
                     SLog.d(LogTag.IM, "onReceived GroupNotificationMessage:" + groupNotificationMessage.getMessage());
 
-                    String groupID = message.getTargetId();
+                    String groupID = targetId;
                     GroupNotificationMessageData data = null;
                     try {
                         String currentID = RongIM.getInstance().getCurrentUserId();
@@ -898,6 +975,8 @@ public class IMManager {
                             imInfoProvider.updateGroupInfo(groupID);
                             imInfoProvider.updateGroupMember(groupID);
                         } else if (groupNotificationMessage.getOperation().equals("Quit")) {
+                            //刷新退群列表
+                            imInfoProvider.refreshGroupExitedInfo(groupID);
                             // 退出群组，当非自己退出室刷新群组信息
                             if (!currentID.equals(groupNotificationMessage.getOperatorUserId())) {
                                 imInfoProvider.updateGroupInfo(groupID);
@@ -930,6 +1009,62 @@ public class IMManager {
                     return true;
                 } else if (messageContent instanceof GroupApplyMessage) {
                     imInfoProvider.refreshGroupNotideInfo();
+                    return true;
+                } else if (messageContent instanceof PokeMessage) {
+                    PokeMessage pokeMessage = (PokeMessage) messageContent;
+                    if (getReceivePokeMessageStatus()) {
+                        // 显示戳一下界面
+                        // 判断当前是否在目标的会话界面中
+                        boolean isInConversation = false;
+                        ConversationRecord lastConversationRecord = IMManager.getInstance().getLastConversationRecord();
+                        if (lastConversationRecord != null && targetId.equals(lastConversationRecord.targetId)) {
+                            isInConversation = true;
+                        }
+                        // 当戳一下的目标不在会话界面且在前台时显示戳一下界面
+                        if (!isInConversation) {
+                            Intent showPokeIntent = new Intent(context, PokeInviteChatActivity.class);
+                            showPokeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            showPokeIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                            showPokeIntent.putExtra(IntentExtra.START_FROM_ID, message.getSenderUserId());
+                            showPokeIntent.putExtra(IntentExtra.STR_POKE_MESSAGE, pokeMessage.getContent());
+                            if (message.getConversationType() == Conversation.ConversationType.GROUP) {
+                                Group groupInfo = RongUserInfoManager.getInstance().getGroupInfo(targetId);
+                                if (groupInfo != null) {
+                                    showPokeIntent.putExtra(IntentExtra.STR_GROUP_NAME, groupInfo.getName());
+                                }
+                            }
+                            showPokeIntent.putExtra(IntentExtra.SERIA_CONVERSATION_TYPE, message.getConversationType());
+                            showPokeIntent.putExtra(IntentExtra.STR_TARGET_ID, targetId);
+                            /*
+                             * 判断是否在在前台，如果不在前台则下次进入 app 时进行弹出
+                             * 再判断是否已进入到了主界面，反正拉取离线消息时再未进入主界面前弹出戳一下界面
+                             */
+                            if (SealApp.getApplication().isAppInForeground()
+                                    && SealApp.getApplication().isMainActivityCreated()) {
+                                context.startActivity(showPokeIntent);
+                            } else {
+                                // 若之前有未启动的戳一下消息则默认启动第一个戳一下消息
+                                Intent lastIntent = SealApp.getApplication().getLastOnAppForegroundStartIntent();
+                                if (lastIntent == null
+                                        || (lastIntent.getComponent() != null
+                                        && !lastIntent.getComponent().getClassName().equals(PokeInviteChatActivity.class.getName()))) {
+                                    SealApp.getApplication().setOnAppForegroundStartIntent(showPokeIntent);
+                                }
+                            }
+                        }
+                        return false;
+                    } else {
+                        // 如果不接受戳一下消息则什么也不做
+                        return true;
+                    }
+                } else if (messageContent instanceof GroupClearMessage) {
+                    GroupClearMessage groupClearMessage = (GroupClearMessage) messageContent;
+                    SLog.i("GroupClearMessage", groupClearMessage.toString() + "***" + message.getTargetId());
+                    if (groupClearMessage.getClearTime() > 0) {
+                        cleanHistoryMessage(message.getConversationType(), message.getTargetId()
+                                , groupClearMessage.getClearTime(), true);
+                    }
+                    return true;
                 }
                 return false;
             }
@@ -1349,6 +1484,105 @@ public class IMManager {
             kickedOffline.postValue(false);
         }
     }
+
+    /**
+     * 发送图片消息
+     *
+     * @param conversationType
+     * @param targetId
+     * @param imageList
+     * @param origin
+     */
+    public void sendImageMessage(Conversation.ConversationType conversationType, String targetId, List<Uri> imageList, boolean origin) {
+        SendImageManager.getInstance().sendImages(conversationType, targetId, imageList, origin);
+    }
+
+    /**
+     * 获取是否接受戳一下消息
+     *
+     * @return
+     */
+    public boolean getReceivePokeMessageStatus() {
+        if (isReceivePokeMessage == null) {
+            // 第一次获取时
+            boolean receivePokeMessageStatus = configCache.getReceivePokeMessageStatus(getCurrentId());
+            imInfoProvider.refreshReceivePokeMessageStatus();
+            isReceivePokeMessage = receivePokeMessageStatus;
+        }
+
+        return isReceivePokeMessage;
+    }
+
+    /**
+     * 更新是否接受戳一下消息状态
+     *
+     * @param isReceive
+     */
+    public void updateReceivePokeMessageStatus(boolean isReceive) {
+        if (isReceivePokeMessage == null || isReceivePokeMessage != isReceive) {
+            isReceivePokeMessage = isReceive;
+            configCache.setReceivePokeMessageStatus(getCurrentId(), isReceive);
+        }
+    }
+
+    /**
+     * 发送戳一下消息给单人
+     */
+    public void sendPokeMessageToPrivate(String targetId, String content, IRongCallback.ISendMessageCallback callback) {
+        PokeMessage pokeMessage = PokeMessage.obtain(content);
+        Message message = Message.obtain(targetId, Conversation.ConversationType.PRIVATE, pokeMessage);
+        RongIM.getInstance().sendMessage(message, null, null, callback);
+    }
+
+    /**
+     * 发送戳一下消息给群组
+     *
+     * @param targetId
+     * @param content
+     * @param userIds  发送目标用户 id，当为 null 时发给群内所有人
+     * @param callback
+     */
+    public void sendPokeMessageToGroup(String targetId, String content, String[] userIds, IRongCallback.ISendMessageCallback callback) {
+        PokeMessage pokeMessage = PokeMessage.obtain(content);
+        if (userIds != null && userIds.length > 0) {
+            RongIM.getInstance().sendDirectionalMessage(Conversation.ConversationType.GROUP, targetId, pokeMessage, userIds, null, null, callback);
+        } else {
+            Message message = Message.obtain(targetId, Conversation.ConversationType.GROUP, pokeMessage);
+            RongIM.getInstance().sendMessage(message, null, null, callback);
+        }
+    }
+
+    /**
+     * 记录最新的会话信息
+     *
+     * @param targetId
+     * @param conversationType
+     */
+    public void setLastConversationRecord(String targetId, Conversation.ConversationType conversationType) {
+        ConversationRecord record = new ConversationRecord();
+        record.targetId = targetId;
+        record.conversationType = conversationType;
+        lastConversationRecord = record;
+    }
+
+    /**
+     * 清除最后的会话信息
+     */
+    public void clearConversationRecord(String targetId) {
+        if (lastConversationRecord != null && lastConversationRecord.targetId.equals(targetId)) {
+            lastConversationRecord = null;
+        }
+    }
+
+    /**
+     * 获取最后的会话信息
+     *
+     * @return
+     */
+    public ConversationRecord getLastConversationRecord() {
+        return lastConversationRecord;
+    }
+
 }
 
 

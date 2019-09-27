@@ -8,6 +8,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import cn.rongcloud.im.db.model.GroupMemberInfoDes;
 import cn.rongcloud.im.db.model.GroupMemberInfoEntity;
 import cn.rongcloud.im.model.GroupMember;
 
@@ -43,4 +44,10 @@ public interface GroupMemberDao {
 
     @Query("DELETE FROM group_member where group_id=:groupId")
     void deleteGroupMember(String groupId);
+
+    @Query("SELECT * from `group_member_info_des` WHERE groupId=:groupId And memberId=:memberId")
+    GroupMemberInfoDes getGroupMemberInfoDes(String groupId, String memberId);
+
+    @Query("update group_member set nickname=:value where group_id=:groupId And user_id=:userId")
+    void updateMemberNickName(String value, String groupId, String userId);
 }

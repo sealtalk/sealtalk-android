@@ -43,6 +43,7 @@ public abstract class CommonListBaseFragment extends ListBaseFragment {
 
     private CommonListAdapter listAdapter;
     private CommonListAdapter.OnItemClickListener listener;
+    private CommonListAdapter.OnItemLongClickListener longClickListener;
 
     @Override
     protected ListWithSideBarBaseAdapter getListAdapter() {
@@ -62,6 +63,13 @@ public abstract class CommonListBaseFragment extends ListBaseFragment {
         this.listener = listener;
     }
 
+    /**
+     * 设置 item 长按点击事件
+     * @param listener
+     */
+    public void setOnItemLongClickListener(CommonListAdapter.OnItemLongClickListener listener){
+        this.longClickListener = listener;
+    }
     /**
      * 设置同步已经选择的人
      * @param selectGroupIds
@@ -88,6 +96,15 @@ public abstract class CommonListBaseFragment extends ListBaseFragment {
                 if (listener != null) {
                     listener.onClick(v, position, data);
                 }
+            }
+        });
+        listAdapter.setOnItemLongClickListener(new CommonListAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onLongClick(View v, int position, ListItemModel data) {
+                if (longClickListener != null){
+                    return longClickListener.onLongClick(v, position, data);
+                }
+                return false;
             }
         });
     }

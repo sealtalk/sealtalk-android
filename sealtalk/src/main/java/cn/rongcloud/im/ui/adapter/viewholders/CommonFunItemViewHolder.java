@@ -39,6 +39,11 @@ public class CommonFunItemViewHolder extends BaseItemViewHolder<ListItemModel<Fu
     }
 
     @Override
+    public void setOnLongClickItemListener(View.OnLongClickListener listener) {
+    }
+
+
+    @Override
     public void update(ListItemModel<FunctionInfo> model) {
         final FunctionInfo data = model.getData();
         itemUiv.setName(model.getDisplayName());

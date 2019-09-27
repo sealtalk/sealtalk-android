@@ -38,6 +38,10 @@ public class InviteFriendFromContactItemViewHolder extends BaseItemViewHolder<Li
         checkBoxClickListener = listener;
     }
 
+    @Override
+    public void setOnLongClickItemListener(View.OnLongClickListener listener) {
+
+    }
 
     @Override
     public void update(ListItemModel<SimplePhoneContactInfo> phoneContactInfoListItemModel) {

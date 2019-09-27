@@ -96,4 +96,31 @@
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
     </style>
 
+    <style name="DeepBlackTranslucentNoTitleActivity" parent="@style/Base.Theme.AppCompat.Dialog">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@color/deep_black_transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+    </style>
+
+    <!--GroupUserInfo-->
+    <style name="GroupUserInfoEditText">
+        <item name="android:background">@null</item>
+        <item name="android:gravity">right|center</item>
+        <item name="android:textColor">@color/color_black_text</item>
+        <item name="android:textColorHint">@color/seal_login_text_button_color</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <!--EditUserDes-->
+    <style name="EditUserDesEditText">
+        <item name="android:background">@color/white</item>
+        <item name="android:textColor">@color/color_black_text</item>
+        <item name="android:textColorHint">@color/seal_login_text_button_color</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
 </resources>

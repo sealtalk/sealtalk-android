@@ -139,6 +139,8 @@
     <string name="seal_mine_set_account_privacy">安全与隐私</string>
     <string name="seal_mine_set_account_new_message_show">新消息通知</string>
     <string name="seal_mine_set_account_clear_cache">清除缓存</string>
+    <string name="seal_mine_set_account_chat_bg">聊天背景</string>
+    <string name="seal_mine_set_account_clear_message_cache">清理聊天记录</string>
     <string name="seal_mine_set_account_logout">退出登录</string>
     <string name="seal_mine_set_account_push_language">设置 Push 中文</string>
     <string name="seal_mine_set_account_push_content">显示 Push 内容</string>
@@ -191,7 +193,12 @@
     <string name="profile_group_notice_prefix">\@所有人\n</string>
     <string name="profile_confirm_quit_group">确认退出群组?</string>
     <string name="profile_confirm_dismiss_group">确认解散群组?</string>
-    <string name="profile_set_display_name">设置备注</string>
+    <string name="profile_set_display_name">设置备注和描述</string>
+    <string name="profile_picture_detail">图片详情</string>
+    <string name="profile_picture_more">更多</string>
+    <string name="profile_set_group_info">个人信息</string>
+    <string name="profile_set_display_des">描述</string>
+    <string name="profile_set_display_phone">手机号</string>
     <string name="profile_detail_start_chat">发起聊天</string>
     <string name="profile_detail_start_voice">语音通话</string>
     <string name="profile_detail_start_video">视频聊天</string>
@@ -245,7 +252,8 @@
     <string name="seal_gender_set_success">设置成功</string>
     <string name="seal_gender_set_fail">设置失败</string>
 
-    <string name="seal_mine_my_account_st_account">SealTalk 号</string>
+    <string name="seal_mine_my_account_st_account">SealTalk 号：</string>
+    <string name="seal_mine_my_account_group_nick_name">群昵称：</string>
     <string name="seal_mine_my_account_phone_number">手机号</string>
     <string name="seal_mine_my_account">"个人账号"</string>
     <string name="seal_select_group_member">选择群组成员</string>
@@ -305,7 +313,7 @@
     <string name="seal_new_message_donot_disturb_end">结束时间</string>
     <string name="seal_new_message_donot_disturb">消息免打扰</string>
     <string name="seal_search_empty">没有搜到%s相关的信息</string>
-    <string name="seal_main_chat_tab_more_read_message">...</string>
+    <string name="seal_main_chat_tab_more_read_message">···</string>
     <string name="seal_main_toast_unread_clear_success">清除成功</string>
     <string name="seal_public_account_information">公众号信息</string>
     <string name="seal_member_mention_all_member">所有人</string>
@@ -316,6 +324,7 @@
     <string name="seal_account_not_exist">用户不存在</string>
     <string name="seal_inivte_firend_descprtion_format" formatted="true">我是%s</string>
     <string name="seal_quest_failed_error_code">请求失败 错误码:%d</string>
+    <string name="setting_new_message_receive_poke_message">接受戳一下消息</string>
 
     <string name="new_friend_title">添加朋友</string>
     <string name="new_friend_add_from_phone_contact">手机通讯录</string>
@@ -361,6 +370,8 @@
     <string name="seal_select_forward_contact_single">单选</string>
     <string name="seal_group_manager_set_manager">设置管理员</string>
     <string name="seal_group_manager_transfer">群主管理权转让</string>
+    <string name="seal_group_manager_copy">一键复制新群</string>
+    <string name="seal_group_manager_exited">退群成员列表</string>
     <string name="seal_group_detail_group_manager">群管理</string>
     <string name="seal_group_management_group_owner">群主</string>
     <string name="seal_group_management_group_managements">群管理员</string>
@@ -394,10 +405,12 @@
     <string name="seal_main_mine_qrcode">我的二维码</string>
     <string name="profile_join_group">加入该群</string>
     <string name="profile_delete_from_contact">删除联系人</string>
+    <string name="profile_group_protection_tips">群主已开启群成员保护模式，无法通过该群添加好友，请通过其他方式添加用户</string>
     <string name="profile_add_to_blacklist_tips">加入黑名单后，你将不再收到对方的消息，同时删除与该联系人的聊天记录</string>
     <string name="profile_remove_from_contact_tips_html_format" formatted="true"><Data><![CDATA[将联系人 <font color="#368AE8">%1$s</font> 删除同时删除与该联系人的聊天记录]]></Data></string>
     <string name="seal_group_action_transfer_group_owner">%1$s 成为新群主</string>
     <string name="profile_group_manager">群管理</string>
+    <string name="profile_group_user_info">我在本群信息</string>
     <string name="profile_group_notice_tips">发布后将以系统消息发送群聊，全员成员可见</string>
     <string name="profile_group_notice_update_time_format" formatted="true">发布时间：%s</string>
     <string name="profile_group_notice_clear_confirm">确定清空群公告？</string>
@@ -409,6 +422,8 @@
     <string name="seal_group_manager_set_manager_toast_set_management_failed">设置失败</string>
     <string name="seal_group_action_set_manager">群主将 %1$s 设置为管理员</string>
     <string name="seal_group_action_remove_manager">群主移除了 %1$s 的管理员身份</string>
+    <string name="seal_group_member_protection_open">开启了群成员保护</string>
+    <string name="seal_group_member_protection_close">关闭了群成员保护</string>
     <string name="seal_qrcode_jump_without_login">无用户信息，请先注册</string>
     <string name="seal_mine_about_toast_app_downloading">正在后台下载...</string>
     <string name="seal_mine_about_notifi_loading">正在下载新版本</string>
@@ -449,9 +464,12 @@
     <string name="seal_set_clean_time_not_owner_tip">只有群主可以设置</string>
     <string name="seal_mute_all">全员禁言</string>
     <string name="seal_mute_all_tips">开启后，仅群主和管理员可以发言</string>
+    <string name="seal_goup_member_protect">群成员保护模式</string>
+    <string name="seal_goup_member_protect_tips">开启后，群成员无法通过该群添加好友</string>
     <string name="seal_add_certification">是否开启群认证</string>
     <string name="seal_add_certification_tips">开启后，需要群管理同意后才能加入群聊，同时停用扫描二维码进群方式</string>
     <string name="seal_add_certification_close">关闭群认证后，所有的进群申请将过期，是否确认～</string>
+    <string name="seal_add_friend_protect">关闭此开关后，允许群组内成员相互加好友，是否确认？</string>
     <string name="seal_add_certification_need_certifi">该群已开启群认证，请等待管理员审核～</string>
     <string name="seal_add_need_member_agree">已邀请，等待确认</string>
     <string name="seal_add_need_manager_agree">已邀请，等待管理员确认</string>
@@ -476,4 +494,101 @@
     <string name="seal_grant_permissions">您需要在设置中打开权限</string>
     <string name="seal_edit_text_no_emoji">不支持输入表情</string>
 
+    <string name="seal_group_manager_set_success">设置成功</string>
+    <string name="seal_group_manager_set_fail">设置失败</string>
+    <!--copy_group-->
+    <string name="seal_group_manager_copy_title">一键复制新群</string>
+    <string name="seal_group_manager_copy_tip_title">温馨提示:</string>
+    <string name="seal_group_manager_copy_tip_content">生成的新群仅支持复制群成员信息，现有的所有设置无法复制</string>
+    <string name="seal_group_manager_copy_btn_content">确认复制</string>
+    <string name="seal_group_manager_copy_tips">是否复制新群</string>
+    <string name="seal_group_manager_copy_in_protect">该群处于保护期，7日内无法复制</string>
+    <string name="seal_group_manager_copy_copied_7">一个群7天内只能被复制一次</string>
+    <string name="seal_group_manager_copy_not_exist">群不存在或被解散</string>
+    <string name="seal_group_manager_copy_fail">复制失败</string>
+
+    <!--group_exited-->
+    <string name="seal_group_manager_exited_null_tips">当前没有成员退出</string>
+    <string name="seal_group_manager_exited_title">退群成员列表</string>
+    <string name="seal_group_manager_exited_content_owner">被群主%1$s移除群聊</string>
+    <string name="seal_group_manager_exited_content_manager">被管理员%1$s移除群聊</string>
+    <string name="seal_group_manager_exited_content_active">主动退出群聊</string>
+    <!--clear_chat_message-->
+    <string name="seal_clear_chat_message_select_title">清理聊天记录</string>
+    <string name="seal_clear_chat_message_select_all">全选</string>
+    <string name="seal_clear_chat_message_select_delete">删除</string>
+    <string name="seal_clear_chat_message_delete_dialog">确认要删除聊天记录吗？</string>
+    <string name="seal_clear_chat_message_delete_success">删除成功</string>
+
+    <!--user_describe-->
+    <string name="seal_describe_alias">备注</string>
+    <string name="seal_describe_alias_hint">请添加备注</string>
+    <string name="seal_describe_phone">手机号</string>
+    <string name="seal_describe_phone_hint">请输入手机号</string>
+    <string name="seal_describe_more">更多描述</string>
+    <string name="seal_describe_more_num">%d/400</string>
+    <string name="seal_describe_more_hint">请添加描述</string>
+    <string name="seal_describe_more_photo">拍照和照片</string>
+    <string name="seal_describe_more_photo_hint">添加名片或相关图片</string>
+    <string name="seal_describe_more_btn_complete">完成</string>
+    <string name="seal_describe_more_btn_set_success">设置成功</string>
+    <string name="seal_describe_more_btn_set_fail">设置失败</string>
+    <string name="seal_describe_more_save_tips">是否保存修改内容?</string>
+    <string name="seal_dialog_describe_more_save">保存至相册</string>
+    <string name="seal_dialog_describe_more_delete">删除图片</string>
+    <string name="seal_dialog_describe_more_cancel">取消</string>
+    <string name="seal_dialog_describe_more_save_success">保存成功</string>
+
+    <!--user_info-->
+    <string name="seal_group_user_info_title">个人信息</string>
+    <string name="seal_group_user_info_name">群昵称</string>
+    <string name="seal_group_user_info_name_mine">我在本群的昵称</string>
+    <string name="seal_group_user_info_name_hint">请输入您的昵称</string>
+    <string name="seal_group_user_info_phone">手机号</string>
+    <string name="seal_group_user_info_phone_hint">请输入您的手机号</string>
+    <string name="seal_group_user_info_vchat">微信号</string>
+    <string name="seal_group_user_info_vchat_hint">请输入您的微信号</string>
+    <string name="seal_group_user_info_alipay">支付宝账号</string>
+    <string name="seal_group_user_info_alipay_hint">请输入您的支付宝账号</string>
+    <string name="seal_group_user_info_description">描述</string>
+    <string name="seal_group_user_info_des_hint">请输入您的描述</string>
+    <string name="seal_group_user_info_des_add">添加描述</string>
+    <string name="seal_group_user_info_des_del">删除</string>
+    <string name="seal_group_user_info_des_confirm">完成</string>
+    <string name="seal_group_user_info_des_confirm_success">修改信息成功</string>
+    <string name="seal_group_user_info_des_no_set">未设置</string>
+
+    <!-- 戳一下相关 -->
+    <string name="im_plugin_poke_title">戳一下</string>
+    <string name="imt_plugin_poke_send_to_format" formatted="true">向 %s 发起通知</string>
+    <string name="im_plugin_poke_multi_send_to">发送给</string>
+    <string name="im_plugin_poke_multi_all_in_group">群内所有人</string>
+    <string name="im_message_content_poke">[戳一下]</string>
+    <string name="im_plugin_poke_message_default">快来聊天</string>
+    <string name="poke_start_chat">进入聊天</string>
+    <string name="poke_ignore_message">忽略</string>
+    <string name="poke_allow_next_send_message_time_msg">请%d秒后再次发起戳一下</string>
+    <string name="poke_only_group_owner_and_manager_can_send">仅群主和管理员可操作</string>
+    <string name="poke_message_max_allow_length">最多允许输入20个字符</string>
+
+    <!--chat_bg-->
+    <string name="seal_select_chat_bg_title">聊天背景</string>
+    <string name="seal_select_chat_bg_album">从手机相册选择</string>
+    <string name="seal_select_chat_bg_set">设置</string>
+    <string name="seal_select_chat_bg_set_success">设置成功</string>
+    <string name="seal_select_chat_bg_cancel">取消</string>
+    <string name="seal_select_chat_bg_complete">完成</string>
+    <string name="seal_select_chat_bg_origin">原图</string>
+    <string name="seal_select_chat_bg_send">发送</string>
+
+    <!--recently_picture-->
+    <string name="seal_popup_recent_picture_tip">你可能要发送的图片:</string>
+
+    <!--operate_phone_dialog-->
+    <string name="seal_dialog_operate_phone_num_call">呼叫</string>
+    <string name="seal_dialog_operate_phone_num_copy">复制号码</string>
+    <string name="seal_dialog_operate_phone_num_copy_success">复制成功</string>
+
+    <string name="contact_multi_delete_friend">批量删除好友</string>
+    <string name="contact_multi_delete_friend_conf" formatted="true"><Data><![CDATA[确认后将删除所选好友， <br> 是否确认删除]]></Data></string>
 </resources>

@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 
 import cn.rongcloud.im.ui.adapter.models.PublicServiceModel;
 import cn.rongcloud.im.ui.interfaces.OnPublicServiceClickListener;
+import cn.rongcloud.im.utils.ImageLoaderUtils;
 import io.rong.imkit.widget.AsyncImageView;
 import io.rong.imlib.model.PublicServiceProfile;
 
@@ -37,7 +38,8 @@ public class PublicServiceViewHolder extends BaseViewHolder<PublicServiceModel> 
     @Override
     public void update(PublicServiceModel publicServiceModel) {
         profile = publicServiceModel.getBean();
-        portrait.setResource(profile.getPortraitUri());
+        String portraitUri = profile.getPortraitUri() != null ? profile.getPortraitUri().toString() : "";
+        ImageLoaderUtils.displayUserPortraitImage(portraitUri, portrait);
         name.setText(profile.getName());
         introduction.setText(profile.getIntroduction());
     }

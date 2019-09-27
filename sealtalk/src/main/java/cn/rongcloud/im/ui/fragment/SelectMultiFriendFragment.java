@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.lifecycle.ViewModelProviders;
 
+import java.util.ArrayList;
+
 import cn.rongcloud.im.ui.adapter.models.CheckableContactModel;
 import cn.rongcloud.im.ui.interfaces.OnSelectCountChangeListener;
 import cn.rongcloud.im.viewmodel.SelectBaseViewModel;
@@ -13,6 +15,7 @@ import cn.rongcloud.im.viewmodel.SelectMultiViewModel;
 public class SelectMultiFriendFragment extends SelectBaseFragment {
     private static final String TAG = "SelectMultiFriendFragment";
     private OnSelectCountChangeListener onSelectCountChangeListener;
+    private SelectMultiViewModel selectMultiViewModel;
 
     @Override
     protected void onInitView(Bundle savedInstanceState, Intent intent) {
@@ -21,7 +24,8 @@ public class SelectMultiFriendFragment extends SelectBaseFragment {
 
     @Override
     protected SelectBaseViewModel getViewModel() {
-        return ViewModelProviders.of(getActivity()).get(SelectMultiViewModel.class);
+        selectMultiViewModel = ViewModelProviders.of(getActivity()).get(SelectMultiViewModel.class);
+        return selectMultiViewModel;
     }
 
     @Override
@@ -42,10 +46,32 @@ public class SelectMultiFriendFragment extends SelectBaseFragment {
     private void changeCheckCount() {
         if (onSelectCountChangeListener != null) {
             int groupCount = 0;
-            if (getCheckedGroupList() != null) {
-                groupCount = getCheckedGroupList().size();
+            ArrayList<String> checkedGroupList = getCheckedGroupList();
+            if (checkedGroupList != null) {
+                groupCount = checkedGroupList.size();
             }
-            onSelectCountChangeListener.onSelectCountChange(groupCount, getCheckedList().size());
+
+            int friendCount = 0;
+            ArrayList<String> checkedFriendList = getCheckedFriendList();
+            if(checkedFriendList != null){
+                friendCount = checkedFriendList.size();
+            }
+
+            onSelectCountChangeListener.onSelectCountChange(groupCount, friendCount);
         }
     }
+
+    @Override
+    protected void onLoadData(SelectBaseViewModel viewModel) {
+        viewModel.loadFriendShip(uncheckableInitIdList, checkedInitIdList, checkedInitGroupList);
+    }
+
+    public void search(String keyword){
+        selectMultiViewModel.searchFriend(keyword);
+    }
+
+    public void loadAll(){
+        selectMultiViewModel.loadFriendShip();
+    }
+
 }

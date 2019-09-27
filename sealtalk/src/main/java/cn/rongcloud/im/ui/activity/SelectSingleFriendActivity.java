@@ -53,4 +53,14 @@ public class SelectSingleFriendActivity extends SelectBaseActivity implements Vi
         }
         finish();
     }
+
+    @Override
+    protected boolean isSearchable() {
+        return true;
+    }
+
+    @Override
+    public void onSearch(String keyword) {
+        selectSingleFragment.searchFriend(keyword);
+    }
 }

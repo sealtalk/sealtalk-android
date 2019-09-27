@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <cn.rongcloud.im.ui.view.SwipeMenuLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="44dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingLeft="19dp"
+                android:paddingRight="19dp"
+                android:text="@string/seal_group_user_info_description"
+                android:textColor="@color/text_black"
+                android:textSize="15sp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/color_gray_d8" />
+
+            <cn.rongcloud.im.ui.widget.ClearWriteEditText
+                android:id="@+id/cet_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="44dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="12dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:background="@null"
+                android:gravity="left|center_vertical"
+                android:hint="@string/seal_group_user_info_des_hint"
+                android:textColor="@color/color_black_text"
+                android:textColorHint="@color/seal_account_staccount_edit_hint"
+                android:maxLength="70"
+                android:textSize="@dimen/seal_update_staccount_name_size" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/red_dark"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="@string/seal_group_user_info_des_del"
+            android:textColor="@color/white" />
+    </cn.rongcloud.im.ui.view.SwipeMenuLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="10dp"
+        android:background="@color/dark_white" />
+
+</LinearLayout>

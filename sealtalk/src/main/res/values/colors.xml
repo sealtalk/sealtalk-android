@@ -5,7 +5,12 @@
     <color name="colorAccent">#0083e0</color>
     <color name="main_theme_color">#0195ff</color>
 
+    <color name="color_black_38">#383838</color>
+    <color name="color_gray_d8">#D8D8D8</color>
+    <color name="color_gray_97">#979797</color>
+    <color name="color_blue_9F">#0099FF </color>
     <color name="seal_login_text_button_color">#999999</color>
+    <color name="read_ff">#FF0000</color>
     <color name="white">#FFFFFF</color>
     <color name="dark_white">#E5E5E5</color>
     <color name="seal_search_title_bar_bg">#0195ff</color>
@@ -75,6 +80,9 @@
     <!-- 界面改版使用 -->
     <color name="text_black">#262626</color>
     <color name="light_gray">#e2e2e2</color>
+    <color name="deep_gray">#999999</color>
+    <color name="light_black">#555555</color>
+    <color name="deep_black_transparent">#E7000000</color>
     <color name="text_gray">#939393</color>
     <color name="text_light_gray">#BDBDBD</color>
     <color name="text_blue">#368AE8</color>

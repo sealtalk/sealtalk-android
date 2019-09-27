@@ -24,6 +24,7 @@ import cn.rongcloud.im.model.AddMemberResult;
 import cn.rongcloud.im.model.GroupMember;
 import cn.rongcloud.im.model.GroupNoticeResult;
 import cn.rongcloud.im.model.GroupRegularClearResult;
+import cn.rongcloud.im.model.RegularClearStatusResult;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Result;
 import cn.rongcloud.im.model.ScreenCaptureResult;

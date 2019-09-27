@@ -43,7 +43,17 @@ public class CheckableContactViewHolder extends CheckableBaseViewHolder<Checkabl
         model = friendShipInfoCheckableContactModel;
         FriendShipInfo friendShipInfo = friendShipInfoCheckableContactModel.getBean();
         FriendDetailInfo info = friendShipInfo.getUser();
-        nameTextView.setText(TextUtils.isEmpty(friendShipInfo.getDisplayName()) ? info.getNickname() : friendShipInfo.getDisplayName());
+        String name;
+        String groupDisplayName = friendShipInfo.getGroupDisplayName();
+        String displayName = friendShipInfo.getDisplayName();
+        if(!TextUtils.isEmpty(groupDisplayName)){
+            name = groupDisplayName;
+        } else if(!TextUtils.isEmpty(displayName)){
+            name = displayName;
+        } else {
+            name = info.getNickname();
+        }
+        nameTextView.setText(name);
         ImageLoaderUtils.displayUserPortraitImage(info.getPortraitUri(), protraitImageView);
         updateCheck(checkBox, friendShipInfoCheckableContactModel.getCheckType());
     }

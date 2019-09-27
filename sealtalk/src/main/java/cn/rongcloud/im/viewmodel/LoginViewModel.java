@@ -240,24 +240,29 @@ public class LoginViewModel extends AndroidViewModel {
      */
     public void checkPhoneAndSendCode(String phoneCode, String phoneNumber) {
         checkPhoneAvailable(phoneCode, phoneNumber);
+        checkPhoneAndSendCodeResult.removeSource(checkPhoneResult);
         checkPhoneAndSendCodeResult.addSource(checkPhoneResult, new Observer<Resource<Boolean>>() {
             @Override
             public void onChanged(Resource<Boolean> resource) {
                 if (resource.status == Status.SUCCESS) {
                     checkPhoneAndSendCodeResult.removeSource(checkPhoneResult);
                     sendCode(phoneCode, phoneNumber);
+                    checkPhoneAndSendCodeResult.removeSource(sendCodeState);
                     checkPhoneAndSendCodeResult.addSource(sendCodeState, new Observer<Resource<String>>() {
                         @Override
                         public void onChanged(Resource<String> resource) {
                             if (resource.status == Status.SUCCESS) {
+                                checkPhoneAndSendCodeResult.removeSource(sendCodeState);
                                 checkPhoneAndSendCodeResult.removeSource(checkPhoneAndSendCodeResult);
                                 checkPhoneAndSendCodeResult.postValue(resource);
                             } else if (resource.status == Status.ERROR) {
+                                checkPhoneAndSendCodeResult.removeSource(sendCodeState);
                                 checkPhoneAndSendCodeResult.postValue(resource);
                             }
                         }
                     });
                 } else if (resource.status == Status.ERROR) {
+                    checkPhoneAndSendCodeResult.removeSource(checkPhoneResult);
                     Resource<String> resourceTmp = new Resource<>(resource.status, null, resource.code);
                     checkPhoneAndSendCodeResult.postValue(resourceTmp);
                 }

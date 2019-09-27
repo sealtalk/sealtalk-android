@@ -21,4 +21,13 @@ public class Constant {
      */
     public final static int GROUP_NOTICE_MAX_LENGTH = 100;
 
+    /**
+     * 戳一下消息最长文字限制
+     */
+    public final static int POKE_MESSAGE_MEX_LENGTH = 20;
+
+    /**
+     * 发送戳一下消息间隔时间
+     */
+    public final static long POKE_MESSAGE_INTERVAL = 60 * 1000;
 }

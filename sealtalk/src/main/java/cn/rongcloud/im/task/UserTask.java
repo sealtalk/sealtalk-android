@@ -28,6 +28,7 @@ import cn.rongcloud.im.file.FileManager;
 import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.model.BlackListUser;
 import cn.rongcloud.im.model.ContactGroupResult;
+import cn.rongcloud.im.model.GetPokeResult;
 import cn.rongcloud.im.model.LoginResult;
 import cn.rongcloud.im.model.RegionResult;
 import cn.rongcloud.im.model.RegisterResult;
@@ -178,7 +179,13 @@ public class UserTask {
                 }
 
                 // 更新 IMKit 显示缓存
-                IMManager.getInstance().updateUserInfoCache(userInfo.getId(), userInfo.getName(), Uri.parse(userInfo.getPortraitUri()));
+                String alias = "";
+                if (userDao != null) {
+                    alias = userDao.getUserByIdSync(userInfo.getId()).getAlias();
+                }
+                //有备注名的时，使用备注名
+                String name = TextUtils.isEmpty(alias) ? userInfo.getName() : alias;
+                IMManager.getInstance().updateUserInfoCache(userInfo.getId(), name, Uri.parse(userInfo.getPortraitUri()));
             }
 
             @NonNull
@@ -908,5 +915,48 @@ public class UserTask {
     public void logout() {
         userCache.logoutClear();
         dbManager.closeDb();
+    }
+
+    /**
+     * 设置是否接收戳一下消息
+     *
+     * @param isReceive
+     * @return
+     */
+    public LiveData<Resource<Void>> setReceivePokeMessageState(boolean isReceive) {
+        return new NetworkOnlyResource<Void, Result>() {
+            @Override
+            protected void saveCallResult(@NonNull Void item) {
+                IMManager.getInstance().updateReceivePokeMessageStatus(isReceive);
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<Result> createCall() {
+                HashMap<String, Object> bodyMap = new HashMap<>();
+                bodyMap.put("pokeStatus", isReceive ? 1 : 0); // 0 不允许; 1 允许
+                return userService.setReceivePokeMessageStatus(RetrofitUtil.createJsonRequest(bodyMap));
+            }
+        }.asLiveData();
+    }
+
+    /**
+     * 获取是否接收戳一下消息状态
+     *
+     * @return
+     */
+    public LiveData<Resource<GetPokeResult>> getReceivePokeMessageState() {
+        return new NetworkOnlyResource<GetPokeResult, Result<GetPokeResult>>() {
+            @Override
+            protected void saveCallResult(@NonNull GetPokeResult item) {
+                IMManager.getInstance().updateReceivePokeMessageStatus(item.isReceivePokeMessage());
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<Result<GetPokeResult>> createCall() {
+                return userService.getReceivePokeMessageStatus();
+            }
+        }.asLiveData();
     }
 }

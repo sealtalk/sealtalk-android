@@ -1,14 +1,12 @@
 package cn.rongcloud.im.ui.adapter;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import cn.rongcloud.im.R;
@@ -64,7 +62,6 @@ public class GroupNoticeListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         GroupNoticeInfo info = datas.get(position);
-        Log.e("GroupNoticeInfo", info.toString());
         // 0: 忽略、1: 同意、2: 等待 3 已过期
         if (info.getStatus() == 0) {
             holder.tvLeft.setVisibility(View.GONE);

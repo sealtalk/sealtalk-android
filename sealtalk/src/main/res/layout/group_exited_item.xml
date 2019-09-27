@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
+    <cn.rongcloud.im.ui.widget.SelectableRoundedImageView
+        android:id="@+id/iv_portrait"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/seal_new_friend_header_margin_left"
+        android:layout_marginTop="@dimen/seal_new_friend_header_margin_top"
+        android:layout_marginBottom="@dimen/seal_new_friend_header_margin_bottom"
+        android:scaleType="centerCrop"
+        app:sriv_left_bottom_corner_radius="@dimen/seal_new_friend_header_radius"
+        app:sriv_left_top_corner_radius="@dimen/seal_new_friend_header_radius"
+        app:sriv_right_bottom_corner_radius="@dimen/seal_new_friend_header_radius"
+        app:sriv_right_top_corner_radius="@dimen/seal_new_friend_header_radius" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="9dp"
+        android:layout_marginRight="10dp"
+        android:layout_gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_exited_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:maxLines="1"
+            android:textColor="@color/seal_new_friends_name_text"
+            android:textSize="@dimen/seal_update_staccount_dialog_title"
+            tool:text="我们" />
+
+        <TextView
+            android:id="@+id/tv_exited_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/seal_login_text_button_color"
+            android:textSize="@dimen/seal_group_notice_item_text_12"
+            tool:text="被群主xx移除群聊" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="right"
+            android:textColor="@color/seal_group_notice_item_time"
+            android:textSize="@dimen/seal_group_notice_item_text_12"
+            tool:text="昨天下午" />
+    </RelativeLayout>
+
+</LinearLayout>

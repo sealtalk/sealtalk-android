@@ -14,13 +14,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import java.util.List;
 
+import cn.rongcloud.im.db.model.FriendDescription;
 import cn.rongcloud.im.db.model.FriendShipInfo;
+import cn.rongcloud.im.db.model.GroupEntity;
+import cn.rongcloud.im.db.model.GroupMemberInfoDes;
 import cn.rongcloud.im.db.model.UserInfo;
 import cn.rongcloud.im.model.AddFriendResult;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.model.UserSimpleInfo;
 import cn.rongcloud.im.task.FriendTask;
+import cn.rongcloud.im.task.GroupTask;
 import cn.rongcloud.im.task.UserTask;
 import cn.rongcloud.im.utils.SingleSourceLiveData;
 import cn.rongcloud.im.utils.SingleSourceMapLiveData;
@@ -35,10 +39,14 @@ public class UserDetailViewModel extends AndroidViewModel {
     private SingleSourceMapLiveData<Resource<Void>, Resource<Void>> removeBlackListResult;
     private SingleSourceLiveData<Resource<Void>> removeFriendResult = new SingleSourceLiveData<>();
     private LiveData<Boolean> isInBlackList;
+    private SingleSourceLiveData<Resource<FriendDescription>> friendDescription = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<GroupMemberInfoDes>> groupMemberInfoDes = new SingleSourceLiveData<>();
+    private MediatorLiveData<GroupEntity> groupInfo = new MediatorLiveData<>();
 
     private String userId;
     private UserTask userTask;
     private FriendTask friendTask;
+    private GroupTask groupTask;
 
     public UserDetailViewModel(@NonNull Application application) {
         super(application);
@@ -51,6 +59,7 @@ public class UserDetailViewModel extends AndroidViewModel {
 
         userTask = new UserTask(application);
         friendTask = new FriendTask(application);
+        groupTask = new GroupTask(application);
 
         // 获取用于信息前先获取好友信息
         LiveData<Resource<FriendShipInfo>> friendInfo = friendTask.getFriendInfo(userId);
@@ -101,6 +110,7 @@ public class UserDetailViewModel extends AndroidViewModel {
             }
         });
 
+        requestFriendDescription();
     }
 
     /**
@@ -202,6 +212,53 @@ public class UserDetailViewModel extends AndroidViewModel {
                 }
             }
         });
+    }
+
+    /**
+     * 获取朋友描述
+     */
+    public void requestFriendDescription() {
+        friendDescription.setSource(friendTask.getFriendDescription(userId));
+    }
+
+    public LiveData<Resource<FriendDescription>> getFriendDescription() {
+        return friendDescription;
+    }
+
+    /**
+     * 获取群成员用户信息
+     *
+     * @param groupId
+     * @param memberId
+     */
+    public void requestMemberInfoDes(String groupId, String memberId) {
+        groupMemberInfoDes.setSource(groupTask.getGroupMemberInfoDes(groupId, memberId));
+    }
+
+    public LiveData<Resource<GroupMemberInfoDes>> getGroupMemberInfoDes() {
+        return groupMemberInfoDes;
+    }
+
+    /**
+     * 获取群信息
+     *
+     * @param groupId
+     */
+    public void getGroupInfo(String groupId) {
+        LiveData<GroupEntity> mGroupEntity = groupTask.getGroupInfoInDB(groupId);
+        groupInfo.addSource(mGroupEntity, new Observer<GroupEntity>() {
+            @Override
+            public void onChanged(GroupEntity groupEntity) {
+                if (groupEntity != null) {
+                    groupInfo.removeSource(mGroupEntity);
+                    groupInfo.postValue(groupEntity);
+                }
+            }
+        });
+    }
+
+    public LiveData<GroupEntity> groupInfoResult() {
+        return groupInfo;
     }
 
     public static class Factory implements ViewModelProvider.Factory {

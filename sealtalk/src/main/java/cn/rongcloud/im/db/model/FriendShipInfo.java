@@ -25,6 +25,10 @@ public class FriendShipInfo implements Parcelable {
     private FriendDetailInfo user;
     @ColumnInfo(name = "alias_spelling")
     private String disPlayNameSpelling;
+    @ColumnInfo(name= "nickname")
+    private String groupDisplayName;
+    @ColumnInfo(name= "nickname_spelling")
+    private String groupDisplayNameSpelling;
 
     public String getDisplayName() {
         return displayName;
@@ -75,6 +79,22 @@ public class FriendShipInfo implements Parcelable {
         this.disPlayNameSpelling = disPlayNameSpelling;
     }
 
+    public String getGroupDisplayName() {
+        return groupDisplayName;
+    }
+
+    public void setGroupDisplayName(String groupDisplayName) {
+        this.groupDisplayName = groupDisplayName;
+    }
+
+    public String getGroupDisplayNameSpelling() {
+        return groupDisplayNameSpelling;
+    }
+
+    public void setGroupDisplayNameSpelling(String groupDisplayNameSpelling) {
+        this.groupDisplayNameSpelling = groupDisplayNameSpelling;
+    }
+
     @Override
     public String toString() {
         return "FriendShipInfo{" +
@@ -84,6 +104,8 @@ public class FriendShipInfo implements Parcelable {
                 ", updatedAt=" + updatedAt +
                 ", user=" + user +
                 ", disPlayNameSpelling='" + disPlayNameSpelling + '\'' +
+                ", groupDisplayName='" + groupDisplayName + '\'' +
+                ", groupDisplayNameSpelling='" + groupDisplayNameSpelling + '\'' +
                 '}';
     }
 
@@ -100,6 +122,8 @@ public class FriendShipInfo implements Parcelable {
         dest.writeLong(this.updatedAt != null ? this.updatedAt.getTime() : -1);
         dest.writeParcelable(this.user, flags);
         dest.writeString(this.disPlayNameSpelling);
+        dest.writeString(this.groupDisplayName);
+        dest.writeString(this.groupDisplayNameSpelling);
     }
 
     public FriendShipInfo() {
@@ -113,6 +137,8 @@ public class FriendShipInfo implements Parcelable {
         this.updatedAt = tmpUpdatedAt == -1 ? null : new Date(tmpUpdatedAt);
         this.user = in.readParcelable(FriendDetailInfo.class.getClassLoader());
         this.disPlayNameSpelling = in.readString();
+        this.groupDisplayName = in.readString();
+        this.groupDisplayNameSpelling = in.readString();
     }
 
     public static final Parcelable.Creator<FriendShipInfo> CREATOR = new Parcelable.Creator<FriendShipInfo>() {

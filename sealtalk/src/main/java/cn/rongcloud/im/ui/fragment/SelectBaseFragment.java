@@ -16,7 +16,7 @@ import cn.rongcloud.im.ui.interfaces.OnCheckContactClickListener;
 import cn.rongcloud.im.viewmodel.SelectBaseViewModel;
 import cn.rongcloud.im.utils.log.SLog;
 
-import static cn.rongcloud.im.common.IntentExtra.LIST_ALREADY_CHECKED_FRIEND_ID_LIST;
+import static cn.rongcloud.im.common.IntentExtra.LIST_ALREADY_CHECKED_USER_ID_LIST;
 import static cn.rongcloud.im.common.IntentExtra.LIST_ALREADY_CHECKED_GROUP_ID_LIST;
 import static cn.rongcloud.im.common.IntentExtra.LIST_CAN_NOT_CHECK_ID_LIST;
 import static cn.rongcloud.im.common.IntentExtra.LIST_EXCLUDE_ID_LIST;
@@ -43,7 +43,7 @@ public class SelectBaseFragment extends BaseContactFragment implements OnCheckCo
         recyclerView.setAdapter(adapter);
         viewModel = getViewModel();
         if (viewModel == null) return;
-        checkedInitIdList = intent.getStringArrayListExtra(LIST_ALREADY_CHECKED_FRIEND_ID_LIST);    //已经选择的列表
+        checkedInitIdList = intent.getStringArrayListExtra(LIST_ALREADY_CHECKED_USER_ID_LIST);    //已经选择的列表
         checkedInitGroupList = intent.getStringArrayListExtra(LIST_ALREADY_CHECKED_GROUP_ID_LIST); //已经选择的群组
         viewModel.getFriendShipLiveData().observe(this, observable);
         viewModel.getGroupMembersLiveData().observe(this, observable);
@@ -70,6 +70,15 @@ public class SelectBaseFragment extends BaseContactFragment implements OnCheckCo
 
     protected void onLoadData(SelectBaseViewModel viewModel) {
         viewModel.loadFriendShip(uncheckableInitIdList, checkedInitIdList, checkedInitGroupList);
+    }
+
+    /**
+     * 搜索好友
+     *
+     * @param keyword
+     */
+    public void searchFriend(String keyword){
+        viewModel.searchFriend(keyword);
     }
 
     public String getTitle() {
@@ -100,7 +109,7 @@ public class SelectBaseFragment extends BaseContactFragment implements OnCheckCo
     }
 
     public ArrayList<String> getCheckedFriendList() {
-        return viewModel.getCheckedList();
+        return viewModel.getCheckedFriendIdList();
     }
 
     public ArrayList<String> getCheckedGroupList() {

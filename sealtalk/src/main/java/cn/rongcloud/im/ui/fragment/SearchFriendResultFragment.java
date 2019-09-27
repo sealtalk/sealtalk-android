@@ -26,7 +26,7 @@ public class SearchFriendResultFragment extends Fragment implements View.OnClick
     private TextView tvStAccount;
     private OnSearchFriendItemClickListener searchFriendItemClickListener;
 
-    public SearchFriendResultFragment(OnSearchFriendItemClickListener listener, SearchFriendInfo searchFriendInfo) {
+    public void setData(OnSearchFriendItemClickListener listener, SearchFriendInfo searchFriendInfo){
         this.searchFriendInfo = searchFriendInfo;
         searchFriendItemClickListener = listener;
     }

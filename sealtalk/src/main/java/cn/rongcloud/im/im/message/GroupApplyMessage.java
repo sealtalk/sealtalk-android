@@ -1,9 +1,6 @@
 package cn.rongcloud.im.im.message;
 
 import android.os.Parcel;
-import android.util.Log;
-
-import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;

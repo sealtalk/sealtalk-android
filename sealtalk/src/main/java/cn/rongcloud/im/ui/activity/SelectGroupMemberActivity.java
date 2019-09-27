@@ -29,7 +29,9 @@ public class SelectGroupMemberActivity extends SelectMultiFriendsActivity {
 
     @Override
     protected SelectMultiFriendFragment getSelectMultiFriendFragment() {
-        return new SelectGroupMemberMultiFragment(groupId);
+        SelectGroupMemberMultiFragment fragment = new SelectGroupMemberMultiFragment();
+        fragment.setGroupId(groupId);
+        return fragment;
     }
 
     @Override

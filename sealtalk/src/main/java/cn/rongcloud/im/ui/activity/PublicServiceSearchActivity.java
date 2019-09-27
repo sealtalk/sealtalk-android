@@ -26,7 +26,8 @@ public class PublicServiceSearchActivity extends TitleBaseActivity implements On
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fragment = new PublicServiceSearchFragment(this);
+        fragment = new PublicServiceSearchFragment();
+        fragment.setOnPublicServiceClickListener(this);
         getTitleBar().setType(NORMAL);
         getTitleBar().setTitle(R.string.seal_search);
         setContentView(R.layout.activity_public_service_search_content);

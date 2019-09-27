@@ -10,9 +10,11 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.Observer;
 
 import cn.rongcloud.im.im.IMManager;
+import cn.rongcloud.im.model.GetPokeResult;
 import cn.rongcloud.im.model.QuietHours;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Status;
+import cn.rongcloud.im.task.UserTask;
 import cn.rongcloud.im.utils.SingleSourceLiveData;
 import cn.rongcloud.im.utils.SingleSourceMapLiveData;
 
@@ -21,12 +23,17 @@ public class NewMessageViewModel extends AndroidViewModel {
     private IMManager imManager;
     private SingleSourceLiveData<Resource<Boolean>> removeNotifiQuietHoursResult = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<QuietHours>> setNotifiQuietHoursResult = new SingleSourceLiveData<>();
-    private SingleSourceMapLiveData<Boolean, Boolean> remindStatus ;
+    private SingleSourceMapLiveData<Boolean, Boolean> remindStatus;
     private MediatorLiveData<QuietHours> donotDistrabStatus = new MediatorLiveData<>();
+    private SingleSourceLiveData<Resource<Void>> setReceivePokeMsgStatusResult = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<GetPokeResult>> getReceivePokeMsgStatusResult = new SingleSourceLiveData<>();
+
+    private UserTask userTask;
 
     public NewMessageViewModel(@NonNull Application application) {
         super(application);
         imManager = IMManager.getInstance();
+        userTask = new UserTask(application);
         remindStatus = new SingleSourceMapLiveData<>(new Function<Boolean, Boolean>() {
             @Override
             public Boolean apply(Boolean input) {
@@ -74,6 +81,7 @@ public class NewMessageViewModel extends AndroidViewModel {
 
     /**
      * 设置新消息提醒状态
+     *
      * @param status
      */
     public void setRemindStatus(boolean status) {
@@ -106,4 +114,34 @@ public class NewMessageViewModel extends AndroidViewModel {
         setNotifiQuietHoursResult.setSource(imManager.setNotificationQuietHours(startTime, spanMinutes, true));
     }
 
+    /**
+     * 设置接受戳一下消息
+     */
+    public void setReceivePokeMessageStatus(boolean isReceive) {
+        setReceivePokeMsgStatusResult.setSource(userTask.setReceivePokeMessageState(isReceive));
+    }
+
+    /**
+     * 获取设置接受戳一下消息结果
+     *
+     * @return
+     */
+    public LiveData<Resource<Void>> getSetReceivePokeMessageStatusResult() {
+        return setReceivePokeMsgStatusResult;
+    }
+
+    /**
+     * 请求获取接受戳一下消息状态
+     */
+    public void requestReceivePokeMessageStatus(){
+        getReceivePokeMsgStatusResult.setSource(userTask.getReceivePokeMessageState());
+    }
+
+    /**
+     * 获取接受戳一下消息状态结果
+     * @return
+     */
+    public SingleSourceLiveData<Resource<GetPokeResult>> getReceivePokeMsgStatusResult(){
+        return getReceivePokeMsgStatusResult;
+    }
 }

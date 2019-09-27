@@ -59,7 +59,8 @@ public class SearchFriendActivity extends TitleBaseActivity implements OnSearchF
             public void onChanged(Resource<SearchFriendInfo> searchFriendInfoResource) {
                 if (searchFriendInfoResource.status == Status.SUCCESS) {
                     SearchFriendInfo friendInfo = searchFriendInfoResource.data;
-                    searchFriendResultFragment = new SearchFriendResultFragment(SearchFriendActivity.this, searchFriendInfoResource.data);
+                    searchFriendResultFragment = new SearchFriendResultFragment();
+                    searchFriendResultFragment.setData(SearchFriendActivity.this, searchFriendInfoResource.data);
                     pushFragment(searchFriendResultFragment);
                     viewModel.isFriend(friendInfo.getId());
                 } else if (searchFriendInfoResource.status == Status.ERROR) {

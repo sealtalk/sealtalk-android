@@ -44,9 +44,18 @@ public class CommonDialog extends DialogFragment {
     public void onStart() {
         super.onStart();
         //透明化背景
-        Window window = getDialog().getWindow();
-        //背景色
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Dialog dialog = getDialog();
+        if (dialog != null) {
+            Window window = dialog.getWindow();
+            //背景色
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+            int dialogWidth = getDialogWidth();
+            if (dialogWidth > 0) {
+
+                dialog.getWindow().setLayout((int) dialogWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
+            }
+        }
     }
 
     @Nullable
@@ -57,6 +66,11 @@ public class CommonDialog extends DialogFragment {
         if (view == null) {
             view = View.inflate(getContext(), R.layout.commom_dialog_base, null);
         }
+
+        if (params == null) {
+            params = new ControllerParams();
+        }
+
         Button negative = view.findViewById(R.id.dialog_btn_negative);
         Button positive = view.findViewById(R.id.dialog_btn_positive);
         View btnSeparate = view.findViewById(R.id.dialog_v_btn_separate);
@@ -68,7 +82,7 @@ public class CommonDialog extends DialogFragment {
             public void onClick(View v) {
                 dismiss();
                 if (onNegativeClick()) {
-                    return ;
+                    return;
                 }
                 if (params.listener != null) {
                     params.listener.onNegativeClick(v, getNegativeDatas());
@@ -80,7 +94,7 @@ public class CommonDialog extends DialogFragment {
             public void onClick(View v) {
                 dismiss();
                 if (onPositiveClick()) {
-                    return ;
+                    return;
                 }
                 if (params.listener != null) {
                     params.listener.onPositiveClick(v, getPositiveDatas());
@@ -88,39 +102,37 @@ public class CommonDialog extends DialogFragment {
             }
         });
 
-        if (params != null) {
-            View contentView = onCreateContentView();
-            if (contentView != null) {
-                contentContainer.removeAllViews();
-                contentContainer.addView(contentView);
-            } else if (!TextUtils.isEmpty(params.contentMessage)) {
-                content.setText(Html.fromHtml(params.contentMessage.toString()));
-            }
-
-            if (params.positiveText > 0) {
-                positive.setText(params.positiveText);
-            }
-
-            if (params.negativeText > 0) {
-                negative.setText(params.negativeText);
-            }
-
-            if (params.titleText > 0) {
-                title.setText(params.titleText);
-                title.setVisibility(View.VISIBLE);
-            }
-
-            if(params.isOnlyConfirm){
-                negative.setVisibility(View.GONE);
-                btnSeparate.setVisibility(View.GONE);
-                positive.setBackgroundResource(R.drawable.common_dialog_single_positive_seletor);
-            }
-
-            setCancelable(params.isCancelable);
+        View contentView = onCreateContentView(contentContainer);
+        if (contentView != null) {
+            contentContainer.removeAllViews();
+            contentContainer.addView(contentView);
+        } else if (!TextUtils.isEmpty(params.contentMessage)) {
+            content.setText(Html.fromHtml(params.contentMessage.toString()));
         }
 
+        if (params.positiveText > 0) {
+            positive.setText(params.positiveText);
+        }
+
+        if (params.negativeText > 0) {
+            negative.setText(params.negativeText);
+        }
+
+        if (params.titleText > 0) {
+            title.setText(params.titleText);
+            title.setVisibility(View.VISIBLE);
+        }
+
+        if (params.isOnlyConfirm) {
+            negative.setVisibility(View.GONE);
+            btnSeparate.setVisibility(View.GONE);
+            positive.setBackgroundResource(R.drawable.common_dialog_single_positive_seletor);
+        }
+
+        setCancelable(params.isCancelable);
+
         Dialog dialog = getDialog();
-        if(dialog != null){
+        if (dialog != null) {
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         }
 
@@ -130,9 +142,10 @@ public class CommonDialog extends DialogFragment {
 
     /**
      * 此方法只提供给布局改变， 但是控件id 不变的自定义 dialog 使用
+     *
      * @return
      */
-    protected  View getDialogView() {
+    protected View getDialogView() {
         return null;
     }
 
@@ -140,14 +153,16 @@ public class CommonDialog extends DialogFragment {
     /**
      * 通过复写此方法， 在子类中，可重新创建设置
      * 新的内容布局
+     *
      * @return
      */
-    protected View onCreateContentView() {
+    protected View onCreateContentView(ViewGroup container) {
         return null;
     }
 
     /**
      * 复写此方法， 并可在此方法中设置，回调监听确定按钮所需的数据
+     *
      * @return
      */
     protected Bundle getPositiveDatas() {
@@ -156,6 +171,7 @@ public class CommonDialog extends DialogFragment {
 
     /**
      * 复写此方法， 并可在此方法中设置，回调监听取消按钮所需的数据
+     *
      * @return
      */
     protected Bundle getNegativeDatas() {
@@ -164,6 +180,7 @@ public class CommonDialog extends DialogFragment {
 
     /**
      * 集成的子类假如想在内部处理 Positive 点击监听， 可复写此方法。 返回 true 则可拦截，不会走外部设置的点击监听
+     *
      * @return true 拦截监听， false 不拦截
      */
     protected boolean onPositiveClick() {
@@ -171,13 +188,23 @@ public class CommonDialog extends DialogFragment {
     }
 
     /**
-     *  集成的子类假如想在内部处理 Negative 点击监听， 可复写此方法。 返回 true 则可拦截，不会走外部设置的点击监听
+     * 集成的子类假如想在内部处理 Negative 点击监听， 可复写此方法。 返回 true 则可拦截，不会走外部设置的点击监听
+     *
      * @return
      */
     protected boolean onNegativeClick() {
         return false;
     }
 
+    /**
+     * 获取对话框宽度,重写此方法来设置对话框的宽度
+     * 默认接近占满整个屏幕
+     *
+     * @return
+     */
+    protected int getDialogWidth() {
+        return 0;
+    }
 
     private void setParams(ControllerParams params) {
         this.params = params;
@@ -185,7 +212,7 @@ public class CommonDialog extends DialogFragment {
 
     public Bundle getExpandParams() {
         if (params == null) {
-            return  null;
+            return null;
         }
         return params.expandParams;
     }
@@ -193,6 +220,7 @@ public class CommonDialog extends DialogFragment {
 
     public interface OnDialogButtonClickListener {
         void onPositiveClick(View v, Bundle bundle);
+
         void onNegativeClick(View v, Bundle bundle);
     }
 
@@ -202,7 +230,8 @@ public class CommonDialog extends DialogFragment {
      * getCurrentDialog 方法，返回子类的dialog 对象
      */
     public static class Builder {
-        private ControllerParams params ;
+        private ControllerParams params;
+
         public Builder() {
             params = new ControllerParams();
         }
@@ -239,7 +268,7 @@ public class CommonDialog extends DialogFragment {
             return this;
         }
 
-        public Builder setIsOnlyConfirm(boolean isOnlyConfirm){
+        public Builder setIsOnlyConfirm(boolean isOnlyConfirm) {
             params.isOnlyConfirm = isOnlyConfirm;
             return this;
         }

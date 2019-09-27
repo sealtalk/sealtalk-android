@@ -95,7 +95,7 @@ public class GroupNoticeActivity extends TitleBaseActivity {
                 if(currentTxt.length() > Constant.GROUP_NOTICE_MAX_LENGTH){
                     int selectionStart = noticeInputEt.getSelectionStart() - 1; // 向后退 1 位，减 1
                     noticeInputEt.setText(lastTxt);
-                    if(selectionStart <= Constant.GROUP_NOTICE_MAX_LENGTH) {
+                    if(selectionStart <= lastTxt.length()) {
                         noticeInputEt.setSelection(selectionStart);
                     } else {
                         noticeInputEt.setSelection(lastTxt.length());

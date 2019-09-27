@@ -15,17 +15,19 @@ import cn.rongcloud.im.model.ScreenCaptureResult;
 import cn.rongcloud.im.net.HttpClientManager;
 import cn.rongcloud.im.net.RetrofitUtil;
 import cn.rongcloud.im.net.service.PrivacyService;
+import cn.rongcloud.im.sp.UserConfigCache;
 import cn.rongcloud.im.utils.NetworkOnlyResource;
-import io.rong.callkit.util.SPUtils;
 
 public class PrivacyTask {
 
     private DbManager dbManager;
     private PrivacyService privacyService;
     private Context context;
+    private UserConfigCache userConfigCache;
 
     public PrivacyTask(Context context) {
         this.context = context.getApplicationContext();
+        userConfigCache = new UserConfigCache(context);
         dbManager = DbManager.getInstance(context);
         privacyService = HttpClientManager.getInstance(context).getClient().createService(PrivacyService.class);
     }
@@ -102,7 +104,7 @@ public class PrivacyTask {
             @Override
             protected void saveCallResult(@NonNull ScreenCaptureResult item) {
                 super.saveCallResult(item);
-                SPUtils.put(context, "ScreenCaptureStatus", item.status);
+                userConfigCache.setScreenCaptureStatus(item.status);
             }
         }.asLiveData();
     }
@@ -131,7 +133,7 @@ public class PrivacyTask {
             @Override
             protected void saveCallResult(@NonNull Void item) {
                 super.saveCallResult(item);
-                SPUtils.put(context, "ScreenCaptureStatus", noticeStatus);
+                userConfigCache.setScreenCaptureStatus(noticeStatus);
             }
         }.asLiveData();
     }

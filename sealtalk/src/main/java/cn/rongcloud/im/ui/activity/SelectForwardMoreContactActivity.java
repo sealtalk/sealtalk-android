@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import cn.rongcloud.im.R;
 
 import static cn.rongcloud.im.common.IntentExtra.BOOLEAN_CONFIRM_FORWARD;
-import static cn.rongcloud.im.common.IntentExtra.LIST_ALREADY_CHECKED_FRIEND_ID_LIST;
+import static cn.rongcloud.im.common.IntentExtra.LIST_ALREADY_CHECKED_USER_ID_LIST;
 import static cn.rongcloud.im.common.IntentExtra.LIST_ALREADY_CHECKED_GROUP_ID_LIST;
 
 /**
@@ -41,7 +41,7 @@ public class SelectForwardMoreContactActivity extends SelectMultiFriendsActivity
 
     private void setResult(ArrayList<String> fiends, ArrayList<String> groups, boolean isConfirmForward) {
         Intent intent = new Intent();
-        intent.putStringArrayListExtra(LIST_ALREADY_CHECKED_FRIEND_ID_LIST, fiends);
+        intent.putStringArrayListExtra(LIST_ALREADY_CHECKED_USER_ID_LIST, fiends);
         intent.putStringArrayListExtra(LIST_ALREADY_CHECKED_GROUP_ID_LIST, groups);
         intent.putExtra(BOOLEAN_CONFIRM_FORWARD, isConfirmForward);//已经确认转发
         setResult(RESULT_OK, intent);

@@ -16,6 +16,7 @@ public class CommonFriendItemViewHolder extends BaseItemViewHolder<ListItemModel
     private ListItemModel<FriendShipInfo> model;
     private CheckBox checkBox;
     private View.OnClickListener listener;
+    private View.OnLongClickListener longClickListener;
 
     public CommonFriendItemViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -32,7 +33,7 @@ public class CommonFriendItemViewHolder extends BaseItemViewHolder<ListItemModel
                         if (model.getCheckStatus() == ListItemModel.CheckStatus.CHECKED) {
                             model.setCheckStatus(ListItemModel.CheckStatus.UNCHECKED);
                             checkBox.setChecked(false);
-                        } else  if (model.getCheckStatus() == ListItemModel.CheckStatus.UNCHECKED) {
+                        } else if (model.getCheckStatus() == ListItemModel.CheckStatus.UNCHECKED) {
                             model.setCheckStatus(ListItemModel.CheckStatus.CHECKED);
                             checkBox.setChecked(true);
                         }
@@ -44,6 +45,16 @@ public class CommonFriendItemViewHolder extends BaseItemViewHolder<ListItemModel
                 }
             }
         });
+        itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (longClickListener != null) {
+                    longClickListener.onLongClick(v);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
 
@@ -53,13 +64,18 @@ public class CommonFriendItemViewHolder extends BaseItemViewHolder<ListItemModel
     }
 
     @Override
+    public void setOnLongClickItemListener(View.OnLongClickListener listener) {
+        this.longClickListener = listener;
+    }
+
+    @Override
     public void update(ListItemModel<FriendShipInfo> friendShipInfoListItemModel) {
         model = friendShipInfoListItemModel;
 
         // 更接数据类型进行显示
         if (model.getCheckStatus() == ListItemModel.CheckStatus.NONE) {
             checkBox.setVisibility(View.GONE);
-        } else  if (model.getCheckStatus() == ListItemModel.CheckStatus.DISABLE) {
+        } else if (model.getCheckStatus() == ListItemModel.CheckStatus.DISABLE) {
             checkBox.setVisibility(View.VISIBLE);
             checkBox.setEnabled(false);
         } else {

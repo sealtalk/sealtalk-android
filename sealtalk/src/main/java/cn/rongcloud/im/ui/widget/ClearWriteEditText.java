@@ -21,12 +21,15 @@ import cn.rongcloud.im.R;
  * Company RongCloud
  */
 @SuppressLint("AppCompatCustomView")
-public class ClearWriteEditText extends EditText implements View.OnFocusChangeListener , TextWatcher {
+public class ClearWriteEditText extends EditText implements View.OnFocusChangeListener, TextWatcher {
 
     /**
      * 删除按钮的引用
      */
     private Drawable mClearDrawable;
+
+    private boolean neverShowClearDrawable;
+    private boolean showClearDrawableNoFocus;
 
     public ClearWriteEditText(Context context) {
         this(context, null);
@@ -55,18 +58,21 @@ public class ClearWriteEditText extends EditText implements View.OnFocusChangeLi
      */
     @Override
     public void onTextChanged(CharSequence s, int start, int count, int after) {
-        setClearIconVisible(s.length() > 0);
+        if (!neverShowClearDrawable) {
+            setClearIconVisible(s.length() > 0);
+        }
     }
 
 
     /**
      * 设置清除图标的显示与隐藏，调用setCompoundDrawables为EditText绘制上去
+     *
      * @param visible
      */
     protected void setClearIconVisible(boolean visible) {
         Drawable right = visible ? mClearDrawable : null;
         setCompoundDrawables(getCompoundDrawables()[0],
-                             getCompoundDrawables()[1], right, getCompoundDrawables()[3]);
+                getCompoundDrawables()[1], right, getCompoundDrawables()[3]);
     }
 
     /**
@@ -79,8 +85,8 @@ public class ClearWriteEditText extends EditText implements View.OnFocusChangeLi
         if (getCompoundDrawables()[2] != null) {
             if (event.getAction() == MotionEvent.ACTION_UP) {
                 boolean touchable = event.getX() > (getWidth()
-                                                    - getPaddingRight() - mClearDrawable.getIntrinsicWidth())
-                                    && (event.getX() < ((getWidth() - getPaddingRight())));
+                        - getPaddingRight() - mClearDrawable.getIntrinsicWidth())
+                        && (event.getX() < ((getWidth() - getPaddingRight())));
                 if (touchable) {
                     this.setText("");
                 }
@@ -95,10 +101,12 @@ public class ClearWriteEditText extends EditText implements View.OnFocusChangeLi
      */
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
-        if (hasFocus) {
+        if (hasFocus && !neverShowClearDrawable) {
             setClearIconVisible(getText().length() > 0);
         } else {
-            setClearIconVisible(false);
+            if (!showClearDrawableNoFocus){
+                setClearIconVisible(false);
+            }
         }
     }
 
@@ -120,9 +128,9 @@ public class ClearWriteEditText extends EditText implements View.OnFocusChangeLi
     }
 
 
-
     /**
      * 晃动动画
+     *
      * @param counts 半秒钟晃动多少下
      * @return
      */
@@ -141,5 +149,13 @@ public class ClearWriteEditText extends EditText implements View.OnFocusChangeLi
         this.mClearDrawable = mClearDrawable;
         this.mClearDrawable.setBounds(0, 0, this.mClearDrawable.getIntrinsicWidth(), this.mClearDrawable.getIntrinsicHeight());
         setClearIconVisible(false);
+    }
+
+    public void setClearDrawableNeverShow(boolean neverShow) {
+        neverShowClearDrawable = neverShow;
+    }
+
+    public void setShowClearDrawableNoFocus(boolean needShow) {
+        showClearDrawableNoFocus = needShow;
     }
 }

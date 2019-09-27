@@ -98,6 +98,14 @@
 
             </cn.rongcloud.im.ui.view.SettingItemView>
 
+            <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/profile_siv_group_user_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:item_content="@string/profile_group_user_info"
+                app:item_divider="true">
+
+            </cn.rongcloud.im.ui.view.SettingItemView>
 
             <cn.rongcloud.im.ui.view.SettingItemView
                 android:id="@+id/profile_siv_group_manager"
@@ -165,14 +173,12 @@
                 android:id="@+id/profile_siv_group_clean_timming"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 app:item_value_text_color="@color/seal_login_text_button_color"
                 app:item_content="@string/profile_clean_timing" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_marginLeft="@dimen/seal_group_detail_clean_tips_margin_left"
                 android:layout_marginTop="@dimen/seal_main_item_margin_bottom"
                 android:layout_marginRight="@dimen/seal_group_detail_clean_tips_margin_right"

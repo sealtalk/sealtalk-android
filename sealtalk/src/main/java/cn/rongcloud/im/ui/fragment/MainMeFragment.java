@@ -125,11 +125,10 @@ public class MainMeFragment extends BaseFragment {
 
                 break;
             case R.id.siv_about:
-                sivAbout.setTagImageVisibility(View.GONE);
                 Intent intent = new Intent(getActivity(), AboutSealTalkActivity.class);
-                VersionInfo.AndroidVersion data = appViewModel.getHasNewVersion().getValue().data;
-                if (data != null && !TextUtils.isEmpty(data.getUrl())) {
-                    intent.putExtra(IntentExtra.URL, data.getUrl());
+                Resource<VersionInfo.AndroidVersion> resource = appViewModel.getHasNewVersion().getValue();
+                if (resource != null && resource.data != null && !TextUtils.isEmpty(resource.data.getUrl())) {
+                    intent.putExtra(IntentExtra.URL, resource.data.getUrl());
                 }
                 startActivity(intent);
                 break;

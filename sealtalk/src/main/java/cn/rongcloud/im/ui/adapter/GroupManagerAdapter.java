@@ -41,6 +41,35 @@ public class GroupManagerAdapter extends BaseAdapter implements SectionIndexer {
 
     public void updateList(List<GroupMember> list) {
         datas = list;
+
+        // 当更新列表时，从已选中人列表中移除掉不存在的人
+        int selectSize = selected.size();
+        boolean isSelectedChanged = false;  // 已选列表是否发生了改变
+        if (datas != null && selectSize > 0) {
+            for (int i = selectSize - 1; i >= 0; i--) {
+                String selectedId = selected.get(i).getUserId();
+                boolean isContain = false;
+                for (GroupMember groupMember : datas) {
+                    if(groupMember.getUserId() != null && groupMember.getUserId().equals(selectedId)){
+                        // 因原保存的对象与新的对象不同所以移除并替换
+                        selected.remove(i);
+                        selected.add(groupMember);
+                        isContain = true;
+                        break;
+                    }
+                }
+                if(!isContain) {
+                    selected.remove(i);
+                    isSelectedChanged = true;
+                }
+            }
+        }
+
+        // 当已选列表发生了改变，则提示监听
+        if(isSelectedChanged && listener != null){
+            listener.onSelected(selected.size(), selected);
+        }
+
         notifyDataSetChanged();
     }
 
@@ -49,7 +78,7 @@ public class GroupManagerAdapter extends BaseAdapter implements SectionIndexer {
         notifyDataSetChanged();
     }
 
-    public void setOnGroupManagerListener (OnGroupManagerListener listener) {
+    public void setOnGroupManagerListener(OnGroupManagerListener listener) {
         this.listener = listener;
     }
 
@@ -60,16 +89,16 @@ public class GroupManagerAdapter extends BaseAdapter implements SectionIndexer {
 
     @Override
     public int getCount() {
-        return datas == null? 0 : datas.size();
+        return datas == null ? 0 : datas.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return datas == null? null : datas.get(position);
+        return datas == null ? null : datas.get(position);
     }
 
     @Override
-    public View getView(int position,  View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = new GroupManagerItem(parent.getContext());
         }
@@ -156,6 +185,7 @@ public class GroupManagerAdapter extends BaseAdapter implements SectionIndexer {
 
     /**
      * 获取选择的
+     *
      * @return
      */
     public List<GroupMember> getSelectedMember() {

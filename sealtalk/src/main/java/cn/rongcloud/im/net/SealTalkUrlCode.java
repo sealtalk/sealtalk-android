@@ -4,7 +4,7 @@ package cn.rongcloud.im.net;
  * API 接口的代码，用于区分错误码
  */
 public class SealTalkUrlCode {
-    public static final int API_CODE_PREFIX = 10000;
+    public static final int API_CODE_PREFIX = 100000;
 
     public static final int LOGIN = 1 * API_CODE_PREFIX;
 
@@ -91,4 +91,20 @@ public class SealTalkUrlCode {
     public static final int GROUP_REMOVE_MANAGER = 42 * API_CODE_PREFIX;
 
     public static final int GROUP_ADD_MANAGER = 43 * API_CODE_PREFIX;
+
+    public static final int GROUP_MUTE_ALL = 44 * API_CODE_PREFIX;
+
+    public static final int GROUP_SET_CERTIFICATION = 45 * API_CODE_PREFIX;
+
+    public static final int SET_PRIVACY = 46 * API_CODE_PREFIX;
+
+    public static final int GET_PRIVACY = 47 * API_CODE_PREFIX;
+
+    public static final int GET_SCREEN_CAPTURE = 48 * API_CODE_PREFIX;
+
+    public static final int SET_SCREEN_CAPTURE = 49 * API_CODE_PREFIX;
+
+    public static final int SEND_SC_MSG = 50 * API_CODE_PREFIX;
+
+    public static final int GROUP_COPY = 51 * API_CODE_PREFIX;
 }

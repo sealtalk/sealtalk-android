@@ -14,10 +14,12 @@ public class ImageLoaderUtils {
 
      private static DisplayImageOptions privateOptions;
      private static DisplayImageOptions groupOptions;
+    private static DisplayImageOptions descriptionOptions;
 
      static {
          privateOptions = createDefaultDisplayOptions(R.drawable.rc_default_portrait);
          groupOptions = createDefaultDisplayOptions(R.drawable.rc_default_group_portrait);
+         descriptionOptions = createDefaultDisplayOptions(R.color.transparent);
      }
 
     public static void displayUserPortraitImage(String uri, ImageView imageView) {
@@ -28,6 +30,10 @@ public class ImageLoaderUtils {
 
     public static void displayGroupPortraitImage(String uri, ImageView imageView) {
         ImageLoader.getInstance().displayImage(uri, imageView, groupOptions, null);
+    }
+
+    public static void displayUserDescritpionImage(String uri, ImageView imageView) {
+        ImageLoader.getInstance().displayImage(uri, imageView, descriptionOptions, null);
     }
 
 

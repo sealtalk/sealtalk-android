@@ -24,10 +24,12 @@ public class SelectSingleViewModel extends SelectBaseViewModel {
                 break;
             case CHECKED:
                 checkableContactModel.setCheckType(CheckType.NONE);
+                removeFromCheckedList(checkableContactModel);
                 break;
             case NONE:
                 cancelAllCheck();
                 checkableContactModel.setCheckType(CheckType.CHECKED);
+                addToCheckedList(checkableContactModel);
                 break;
             default:
                 break;

@@ -36,14 +36,30 @@
     </cn.rongcloud.im.ui.view.SettingItemView>
 
     <cn.rongcloud.im.ui.view.SettingItemView
-        android:id="@+id/siv_clear_cache"
+        android:id="@+id/siv_chat_bg"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_mine_account_setting_item_height"
         android:layout_marginTop="@dimen/seal_mine_account_setting_item_margin_top"
+        app:item_content="@string/seal_mine_set_account_chat_bg"
+        app:item_divider="true"
+        />
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_clear_cache"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_mine_account_setting_item_height"
         app:item_content="@string/seal_mine_set_account_clear_cache"
+        app:item_divider="true"
         >
 
     </cn.rongcloud.im.ui.view.SettingItemView>
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_clear_message_cache"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_mine_account_setting_item_height"
+        app:item_content="@string/seal_mine_set_account_clear_message_cache"
+        />
 
     <cn.rongcloud.im.ui.view.SettingItemView
         android:id="@+id/siv_push_language"

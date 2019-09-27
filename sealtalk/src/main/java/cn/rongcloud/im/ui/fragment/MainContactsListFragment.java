@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import java.util.List;
 
+import cn.rongcloud.im.R;
 import cn.rongcloud.im.db.model.FriendShipInfo;
 import cn.rongcloud.im.db.model.FriendStatus;
 import cn.rongcloud.im.im.IMManager;
@@ -19,6 +20,7 @@ import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.ui.activity.GroupListActivity;
 import cn.rongcloud.im.ui.activity.MainActivity;
+import cn.rongcloud.im.ui.activity.MultiDeleteFriendsActivity;
 import cn.rongcloud.im.ui.activity.NewFriendListActivity;
 import cn.rongcloud.im.ui.activity.PublicServiceActivity;
 import cn.rongcloud.im.ui.activity.UserDetailActivity;
@@ -28,6 +30,7 @@ import cn.rongcloud.im.ui.adapter.models.ListItemModel;
 import cn.rongcloud.im.viewmodel.CommonListBaseViewModel;
 import cn.rongcloud.im.viewmodel.MainContactsListViewModel;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.utilities.OptionsPopupDialog;
 import io.rong.imlib.model.Conversation;
 
 import static cn.rongcloud.im.common.IntentExtra.STR_TARGET_ID;
@@ -61,6 +64,21 @@ public class MainContactsListFragment extends CommonListBaseFragment {
                         //Do nothing
                         break;
                 }
+            }
+        });
+
+        // 好友长按点击事件
+        setOnItemLongClickListener(new CommonListAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onLongClick(View v, int position, ListItemModel data) {
+                final ListItemModel.ItemView.Type type = data.getItemView().getType();
+                if(type == ListItemModel.ItemView.Type.FRIEND) {
+                    FriendShipInfo friendShipInfo = (FriendShipInfo) data.getData();
+                    handleFriendItemLongClick(friendShipInfo);
+                    return true;
+                }
+
+                return false;
             }
         });
     }
@@ -153,6 +171,26 @@ public class MainContactsListFragment extends CommonListBaseFragment {
             intent.putExtra(STR_TARGET_ID, friendShipInfo.getUser().getId());
             startActivity(intent);
         }
+    }
+
+    /**
+     * 处理 好友 item 长按点击事件
+     * @param friendShipInfo
+     */
+    private void handleFriendItemLongClick(FriendShipInfo friendShipInfo) {
+        String[] items = new String[]{getString(R.string.contact_multi_delete_friend)};
+        OptionsPopupDialog.newInstance(getContext(), items).setOptionsPopupDialogListener(new OptionsPopupDialog.OnOptionsItemClickedListener() {
+
+            @Override
+            public void onOptionsItemClicked(int index) {
+                switch (index){
+                    case  0:
+                        Intent intent = new Intent(getContext(), MultiDeleteFriendsActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+            }
+        }).show();
     }
 
 

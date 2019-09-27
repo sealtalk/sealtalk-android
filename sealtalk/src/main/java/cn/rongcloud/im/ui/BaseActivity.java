@@ -43,6 +43,7 @@ public class BaseActivity extends AppCompatActivity {
     private boolean mEnableListenKeyboardState = false;
     private LoadingDialog dialog;
     private Handler handler = new Handler();
+    private long lastClickTime;
 
 
     @Override
@@ -409,8 +410,10 @@ public class BaseActivity extends AppCompatActivity {
                         if (runnable != null) {
                             runnable.run();
                         }
-                        dialog.dismiss();
-                        dialog = null;
+                        if (dialog != null) {
+                            dialog.dismiss();
+                            dialog = null;
+                        }
                     }
                 }, 1000);
 
@@ -422,5 +425,19 @@ public class BaseActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    /**
+     * 为防止多次重复点击
+     *
+     * @return
+     */
+    public synchronized boolean isFastClick() {
+        long time = System.currentTimeMillis();
+        if (time - lastClickTime < 500) {
+            return true;
+        }
+        lastClickTime = time;
+        return false;
     }
 }

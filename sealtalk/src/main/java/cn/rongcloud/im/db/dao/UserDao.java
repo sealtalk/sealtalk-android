@@ -25,13 +25,13 @@ public interface UserDao {
     void insertUserList(List<UserInfo> userInfo);
 
     @Query("UPDATE user SET name=:name, name_spelling=:nameSpelling, portrait_uri=:portraitUrl WHERE id=:id")
-    int updateNameAndPortrait(String id,String name, String nameSpelling, String portraitUrl);
+    int updateNameAndPortrait(String id, String name, String nameSpelling, String portraitUrl);
 
     @Query("UPDATE user SET st_account=:sAccount WHERE id=:id")
-    int updateSAccount(String id,String sAccount);
+    int updateSAccount(String id, String sAccount);
 
     @Query("UPDATE user SET gender=:gender WHERE id=:id")
-    int updateGender(String id,String gender);
+    int updateGender(String id, String gender);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertUserListIgnoreExist(List<UserInfo> userInfoList);
@@ -47,5 +47,11 @@ public interface UserDao {
 
     @Query("UPDATE user SET friend_status=:friendStatus WHERE id=:id")
     int updateFriendStatus(String id, int friendStatus);
+
+    @Query("UPDATE user SET alias=:alias WHERE id=:id")
+    int updateAlias(String id, String alias);
+
+    @Query("UPDATE user SET friend_status=:friendStatus WHERE id in (:idList)")
+    int updateFriendsStatus(List<String> idList, int friendStatus);
 
 }

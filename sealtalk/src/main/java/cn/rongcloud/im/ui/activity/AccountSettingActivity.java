@@ -35,6 +35,8 @@ public class AccountSettingActivity extends TitleBaseActivity implements View.On
         findViewById(R.id.siv_show_new_msg).setOnClickListener(this);
         findViewById(R.id.siv_clear_cache).setOnClickListener(this);
         findViewById(R.id.btn_logout).setOnClickListener(this);
+        findViewById(R.id.siv_clear_message_cache).setOnClickListener(this);
+        findViewById(R.id.siv_chat_bg).setOnClickListener(this);
     }
 
     @Override
@@ -51,7 +53,6 @@ public class AccountSettingActivity extends TitleBaseActivity implements View.On
             case R.id.siv_show_new_msg:
                 //新消息通知
                 startActivity(new Intent(this, NewMessageRemindActivity.class));
-
                 break;
             case R.id.siv_clear_cache:
                 //清理缓存
@@ -60,6 +61,12 @@ public class AccountSettingActivity extends TitleBaseActivity implements View.On
             case R.id.btn_logout:
                 //退出
                 showExitDialog();
+                break;
+            case R.id.siv_clear_message_cache:
+                startActivity(new Intent(this, ClearChatMessageActivity.class));
+                break;
+            case R.id.siv_chat_bg:
+                startActivity(new Intent(this, SelectChatBgActivity.class));
                 break;
             default:
                 //DO nothing

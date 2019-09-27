@@ -41,6 +41,7 @@ public class CommonListAdapter extends ListWithSideBarBaseAdapter<ListItemModel,
     private List<String> selectedOtherIds = new ArrayList<>();
 
     private CommonListAdapter.OnItemClickListener listener;
+    private CommonListAdapter.OnItemLongClickListener longClickListener;
 
     public CommonListAdapter() {
         data = new ArrayList<>();
@@ -87,6 +88,16 @@ public class CommonListAdapter extends ListWithSideBarBaseAdapter<ListItemModel,
                 if (listener != null) {
                     listener.onClick(v, position, listItemModel);
                 }
+            }
+        });
+
+        holder.setOnLongClickItemListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (longClickListener != null) {
+                    return longClickListener.onLongClick(v, position, listItemModel);
+                }
+                return false;
             }
         });
 
@@ -210,6 +221,14 @@ public class CommonListAdapter extends ListWithSideBarBaseAdapter<ListItemModel,
     }
 
     /**
+     * 设置长按点击监听
+     * @param listener
+     */
+    public void setOnItemLongClickListener(OnItemLongClickListener listener){
+        this.longClickListener = listener;
+    }
+
+    /**
      * 获取其他类型选择的列表
      *
      * @return
@@ -229,6 +248,19 @@ public class CommonListAdapter extends ListWithSideBarBaseAdapter<ListItemModel,
          * @param data item 的数据
          */
         void onClick(View v, int position, ListItemModel data);
+    }
+
+    /**
+     * 长按点击监听接口
+     */
+    public interface OnItemLongClickListener {
+        /**
+         * 长按回调方法
+         * @param v
+         * @param position
+         * @param data
+         */
+        boolean onLongClick(View v, int position, ListItemModel data);
     }
 
 }

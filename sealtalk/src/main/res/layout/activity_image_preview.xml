@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <io.rong.imkit.widget.AsyncImageView
+        android:id="@+id/iv_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
+        android:id="@+id/ll_set"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:text="@string/seal_select_chat_bg_cancel"
+            android:textColor="@color/seal_login_text_button_color"/>
+
+        <TextView
+            android:id="@+id/tv_set"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:text="@string/seal_select_chat_bg_set"
+            android:textColor="@color/color_blue_9F"/>
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/rl_orgin"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:visibility="gone"
+        android:background="@color/color_black_38">
+
+        <LinearLayout
+            android:id="@+id/ll_select_orgin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/seal_search_item_checkbox_margin_left"
+            android:paddingRight="12dp">
+
+            <CheckBox
+                android:id="@+id/cb_select_orgin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@null"
+                android:button="@drawable/seal_checkbox_selector"
+                android:clickable="false"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3dp"
+                android:layout_toRightOf="@id/cb_select_all"
+                android:text="@string/seal_select_chat_bg_origin"
+                android:textColor="@color/white"
+                android:textSize="@dimen/seal_update_staccount_dialog_title" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_send"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:text="@string/seal_select_chat_bg_send"
+            android:textColor="@color/color_blue_9F"
+            android:textSize="@dimen/seal_update_staccount_dialog_title" />
+
+    </RelativeLayout>
+</LinearLayout>

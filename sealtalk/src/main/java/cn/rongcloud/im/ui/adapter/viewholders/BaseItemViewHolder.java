@@ -16,8 +16,9 @@ public abstract class BaseItemViewHolder<T> extends RecyclerView.ViewHolder {
 
     public abstract void setOnClickItemListener(View.OnClickListener listener);
 
-    public abstract void update(T t);
+    public abstract void setOnLongClickItemListener(View.OnLongClickListener listener);
 
+    public abstract void update(T t);
 
     public void setChecked(boolean b) {
 

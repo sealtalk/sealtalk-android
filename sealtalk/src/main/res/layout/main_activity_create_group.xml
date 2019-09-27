@@ -12,6 +12,7 @@
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="80dp"
+        android:scaleType="centerCrop"
         android:src="@drawable/main_bg_add_group_portrait" />
 
     <EditText

@@ -2,6 +2,7 @@ package cn.rongcloud.im.net;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -31,6 +32,14 @@ public class RetrofitClient {
                 .readTimeout(NetConstant.API_READ_TIME_OUT, TimeUnit.SECONDS)
                 .writeTimeout(NetConstant.API_WRITE_TIME_OUT, TimeUnit.SECONDS);
 
+        /*
+         * 当 baseUrl 没有以 "/" 结尾时加入 "/"
+         * 防止当 baseUrl 为非纯域名的，如：域名+ path 时，如果不以 "/" 结尾，Retrofit 会抛出异常
+         */
+        if (!TextUtils.isEmpty(baseUrl)
+                && baseUrl.lastIndexOf("/") != baseUrl.length() - 1) {
+            baseUrl = baseUrl + "/";
+        }
         mRetrofit = new Retrofit.Builder()
                 .client(okHttpBuilder.build())
                 .baseUrl(baseUrl) //设置网络请求的Url地址
@@ -92,7 +101,7 @@ public class RetrofitClient {
 
             //添加用户登录认证
             String auth = preferences.getString(NetConstant.API_SP_KEY_NET_HEADER_AUTH, null);
-            if(auth != null) {
+            if (auth != null) {
                 builder.addHeader("Authorization", auth);
             }
 

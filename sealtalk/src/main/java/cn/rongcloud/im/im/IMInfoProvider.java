@@ -18,15 +18,16 @@ import cn.rongcloud.im.db.dao.GroupMemberDao;
 import cn.rongcloud.im.db.model.FriendDetailInfo;
 import cn.rongcloud.im.db.model.FriendShipInfo;
 import cn.rongcloud.im.db.model.GroupEntity;
+import cn.rongcloud.im.db.model.GroupExitedMemberInfo;
 import cn.rongcloud.im.db.model.GroupNoticeInfo;
 import cn.rongcloud.im.db.model.UserInfo;
+import cn.rongcloud.im.model.GetPokeResult;
 import cn.rongcloud.im.model.GroupMember;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.task.FriendTask;
 import cn.rongcloud.im.task.GroupTask;
 import cn.rongcloud.im.task.UserTask;
-import io.rong.callkit.RongCallKit;
 import io.rong.contactcard.IContactCardInfoProvider;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.tools.CharacterParser;
@@ -46,6 +47,7 @@ public class IMInfoProvider {
     public void init(Context context) {
         initTask(context);
         initInfoProvider(context);
+        initData();
         dbManager = DbManager.getInstance(context);
     }
 
@@ -94,14 +96,10 @@ public class IMInfoProvider {
         RongIM.getInstance().setGroupMembersProvider((gid, callback) -> {
             updateIMGroupMember(gid, callback);
         });
+    }
 
-
-        // RongCallkit 设置 成员信息
-        RongCallKit.setGroupMemberProvider((groupId, result) -> {
-            updateCallGroupMember(groupId, result);
-            return null;
-        });
-
+    private void initData(){
+        refreshReceivePokeMessageStatus();
     }
 
     /**
@@ -207,40 +205,6 @@ public class IMInfoProvider {
     }
 
     /**
-     * 请求音视频中更新群组成员
-     *
-     * @param groupId
-     * @param result
-     */
-    private void updateCallGroupMember(String groupId, RongCallKit.OnGroupMembersResult result) {
-        ThreadManager.getInstance().runOnUIThread(() -> {
-            // 考虑到在群内频繁调用此方法,当有请求时进行请求
-            if (groupMemberIsRequest) return;
-
-            groupMemberIsRequest = true;
-            LiveData<Resource<List<GroupMember>>> groupMemberSource = groupTask.getGroupMemberInfoList(groupId);
-            triggerLiveData.addSource(groupMemberSource, resource -> {
-                if (resource.status == Status.SUCCESS || resource.status == Status.ERROR) {
-                    // 确认成功或失败后，移除数据源
-                    // 在请求成功后，会在插入数据时同步更新缓存
-                    triggerLiveData.removeSource(groupMemberSource);
-                    groupMemberIsRequest = false;
-
-                }
-
-                if (resource.status == Status.SUCCESS && resource.data != null && result != null) {
-                    List<GroupMember> data = resource.data;
-                    ArrayList<String> userInfoIdList = new ArrayList<>();
-                    for (GroupMember member : data) {
-                        userInfoIdList.add(member.getUserId());
-                    }
-                    result.onGotMemberList(userInfoIdList);
-                }
-            });
-        });
-    }
-
-    /**
      * 请求更新好友信息
      *
      * @param friendId
@@ -331,6 +295,21 @@ public class IMInfoProvider {
     }
 
     /**
+     * 刷新退群列表
+     */
+    public void refreshGroupExitedInfo(String groupId) {
+        ThreadManager.getInstance().runOnUIThread(() -> {
+            LiveData<Resource<List<GroupExitedMemberInfo>>> groupExitedInfo = groupTask.getGroupExitedMemberInfo(groupId);
+            triggerLiveData.addSource(groupExitedInfo, resource -> {
+                if (resource.status == Status.SUCCESS || resource.status == Status.ERROR) {
+                    // 确认成功或失败后，移除数据源
+                    triggerLiveData.removeSource(groupExitedInfo);
+                }
+            });
+        });
+    }
+
+    /**
      * 更新数据库中群组名称
      *
      * @param groupId
@@ -368,6 +347,20 @@ public class IMInfoProvider {
             if (groupMemberDao != null) {
                 groupMemberDao.deleteGroupMember(groupId);
             }
+        });
+    }
+
+    /**
+     * 获取接收戳一下消息状态
+     */
+    public void refreshReceivePokeMessageStatus() {
+        ThreadManager.getInstance().runOnUIThread(() -> {
+            LiveData<Resource<GetPokeResult>> receivePokeMessageState = userTask.getReceivePokeMessageState();
+            triggerLiveData.addSource(receivePokeMessageState, resource -> {
+                if (resource.status != Status.LOADING) {
+                    triggerLiveData.removeSource(receivePokeMessageState);
+                }
+            });
         });
     }
 

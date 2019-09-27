@@ -37,6 +37,7 @@ public class GroupManagementViewModel extends AndroidViewModel {
     private GroupTask groupTask;
     private SingleSourceMapLiveData<Resource<List<GroupMember>>, List<GroupMember>> groupMembersWithoutGroupOwner;
     private SingleSourceLiveData<Resource<Void>> muteAllResult = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<Void>> memberProtectionResult = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<Void>> setCerifiResult = new SingleSourceLiveData<>();
 
     public GroupManagementViewModel(@NonNull Application application) {
@@ -66,13 +67,14 @@ public class GroupManagementViewModel extends AndroidViewModel {
 
     /**
      * 设置入群认证
+     *
      * @param certiStatus
      */
-    public void setCerification(int certiStatus){
-        setCerifiResult.setSource(groupTask.setCertification(groupId,certiStatus));
+    public void setCerification(int certiStatus) {
+        setCerifiResult.setSource(groupTask.setCertification(groupId, certiStatus));
     }
 
-    public LiveData<Resource<Void>> getCerifiResult(){
+    public LiveData<Resource<Void>> getCerifiResult() {
         return setCerifiResult;
     }
 
@@ -87,6 +89,19 @@ public class GroupManagementViewModel extends AndroidViewModel {
 
     public LiveData<Resource<Void>> getMuteAllResult() {
         return muteAllResult;
+    }
+
+    /**
+     * 设置成员保护
+     *
+     * @param memberProtection
+     */
+    public void setMemberProtection(int memberProtection) {
+        memberProtectionResult.setSource(groupTask.setMemberProtection(groupId, memberProtection));
+    }
+
+    public LiveData<Resource<Void>> getMemberProtectionResult() {
+        return memberProtectionResult;
     }
 
     /**

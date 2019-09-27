@@ -23,6 +23,7 @@ import cn.rongcloud.im.model.GroupResult;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.ui.dialog.SelectPictureBottomDialog;
 import cn.rongcloud.im.ui.view.SealTitleBar;
+import cn.rongcloud.im.utils.ImageLoaderUtils;
 import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.viewmodel.CreateGroupViewModel;
@@ -132,7 +133,8 @@ public class CreateGroupActivity extends TitleBaseActivity implements View.OnCli
         SelectPictureBottomDialog.Builder builder = new SelectPictureBottomDialog.Builder();
         builder.setOnSelectPictureListener(uri -> {
             SLog.d(TAG, "select picture, uri:" + uri);
-            groupPortraitIv.setResource(uri);
+            groupPortraitIv.setImageURI(null);
+            groupPortraitIv.setImageURI(uri);
             groupPortraitUri = uri;
         });
         SelectPictureBottomDialog dialog = builder.build();

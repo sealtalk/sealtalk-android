@@ -23,8 +23,10 @@ public class PublicServiceActivity extends TitleBaseActivity implements OnPublic
         getTitleBar().getBtnRight().setImageDrawable(getResources().getDrawable(R.drawable.seal_ic_main_more));
         getTitleBar().getBtnRight().setOnClickListener(this);
         setContentView(R.layout.activity_public_service_content);
+        PublicServiceFragment publicServiceFragment = new PublicServiceFragment();
+        publicServiceFragment.setOnPublicServiceClickListener(this);
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fl_fragment_container, new PublicServiceFragment(this))
+                .add(R.id.fl_fragment_container, publicServiceFragment)
                 .commit();
     }
 

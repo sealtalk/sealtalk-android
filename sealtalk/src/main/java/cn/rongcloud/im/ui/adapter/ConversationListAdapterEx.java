@@ -1,11 +1,16 @@
 package cn.rongcloud.im.ui.adapter;
 
 import android.content.Context;
+import android.text.SpannableString;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import java.util.List;
+
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.db.model.GroupNoticeInfo;
 import cn.rongcloud.im.im.message.GroupApplyMessage;
@@ -50,19 +55,28 @@ public class ConversationListAdapterEx extends ConversationListAdapter {
             if (data.getConversationType().equals(Conversation.ConversationType.DISCUSSION)) {
                 data.setUnreadType(UIConversation.UnreadRemindType.REMIND_ONLY);
             }
-        }
-        super.bindView(v, position, data);
-        if (data.getMessageContent() != null) {
-            if (data.getMessageContent() instanceof GroupApplyMessage) {
-                groupView = v;
-                groupAllyData = data;
-                //设置头像
-                ImageView leftImg = v.findViewById(R.id.rc_left);
-                leftImg.setImageDrawable(v.getContext().getResources().getDrawable(R.drawable.group_notice));
-                //更新未读消息数
-                updateGroupApplyView(groupView);
+            //将缓存消息内容放入刷新数据中，防止队列刷新时内容丢失
+            if (isGroupApplyMessage(data) && !TextUtils.isEmpty(mContent)) {
+                data.setConversationContent(new SpannableString(mContent));
             }
         }
+        super.bindView(v, position, data);
+        if (isGroupApplyMessage(data)) {
+            groupView = v;
+            groupAllyData = data;
+            //设置头像
+            ImageView leftImg = v.findViewById(R.id.rc_left);
+            leftImg.setImageDrawable(v.getContext().getResources().getDrawable(R.drawable.group_notice));
+            //更新未读消息数
+            updateGroupApplyView(groupView);
+        }
+    }
+
+    private boolean isGroupApplyMessage(UIConversation data) {
+        if (data.getMessageContent() != null) {
+            return data.getMessageContent() instanceof GroupApplyMessage;
+        }
+        return false;
     }
 
     /**
@@ -73,11 +87,6 @@ public class ConversationListAdapterEx extends ConversationListAdapter {
     private void updateGroupApplyView(View v) {
         if (v != null) {
             ViewHolder holder = (ViewHolder) v.getTag();
-            if (mContent != null) {
-                View view = holder.contentView.getCurrentInflateView();
-                TextView tvCotent = view.findViewById(R.id.rc_conversation_content);
-                tvCotent.setText(mContent);
-            }
             if (mGroupNotifyUnReadCount == 0) {
                 holder.unReadMsgCountIcon.setVisibility(View.GONE);
                 holder.unReadMsgCount.setVisibility(View.GONE);
@@ -91,6 +100,11 @@ public class ConversationListAdapterEx extends ConversationListAdapter {
                     holder.unReadMsgCount.setVisibility(View.VISIBLE);
                 }
                 holder.unReadMsgCount.setText(String.valueOf(mGroupNotifyUnReadCount));
+            }
+            if (mContent != null) {
+                View view = holder.contentView.getCurrentInflateView();
+                TextView tvCotent = view.findViewById(R.id.rc_conversation_content);
+                tvCotent.setText(new SpannableString(mContent));
             }
         }
     }

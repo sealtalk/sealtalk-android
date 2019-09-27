@@ -7,6 +7,7 @@ import java.util.List;
 import cn.rongcloud.im.db.model.FriendBlackInfo;
 import cn.rongcloud.im.db.model.UserInfo;
 import cn.rongcloud.im.model.ContactGroupResult;
+import cn.rongcloud.im.model.GetPokeResult;
 import cn.rongcloud.im.model.LoginResult;
 import cn.rongcloud.im.model.RegionResult;
 import cn.rongcloud.im.model.RegisterResult;
@@ -101,4 +102,21 @@ public interface UserService {
      */
     @GET(SealTalkUrl.GROUP_GET_ALL_IN_CONTACT)
     LiveData<Result<ContactGroupResult>> getGroupListInContact();
+
+    /**
+     * 设置接收戳一下消息状态
+     *
+     * @param body
+     * @return
+     */
+    @POST(SealTalkUrl.SET_RECEIVE_POKE_MESSAGE_STATUS)
+    LiveData<Result> setReceivePokeMessageStatus(@Body RequestBody body);
+
+    /**
+     * 获取接收戳一下消息状态
+     *
+     * @return
+     */
+    @GET(SealTalkUrl.GET_RECEIVE_POKE_MESSAGE_STATUS)
+    LiveData<Result<GetPokeResult>> getReceivePokeMessageStatus();
 }

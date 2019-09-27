@@ -282,7 +282,11 @@ public class CharacterParser {
                     if (firstIndex >= 5) {
                         smallerString = content.substring(firstIndex - 5, firstIndex + 7);
                         smallerStringLowerCase = lowerCaseText.substring(firstIndex - 5, firstIndex + 7);
-                        index = smallerStringLowerCase.indexOf(lowerCaseFilterStr);
+                        String smallerFilter = lowerCaseFilterStr;
+                        if(smallerFilter.length() > 7){
+                            smallerFilter = lowerCaseFilterStr.substring(0,7);
+                        }
+                        index = smallerStringLowerCase.indexOf(smallerFilter);
                     } else {
                         smallerString = content.substring(firstIndex, firstIndex + 12);
                         smallerStringLowerCase = lowerCaseText.substring(firstIndex, firstIndex + 12);

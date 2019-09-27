@@ -24,17 +24,14 @@ import java.util.List;
 
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.Constant;
-import cn.rongcloud.im.common.ErrorCode;
 import cn.rongcloud.im.common.IntentExtra;
-import cn.rongcloud.im.common.ThreadManager;
 import cn.rongcloud.im.db.model.GroupEntity;
 import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.model.AddMemberResult;
 import cn.rongcloud.im.model.GroupMember;
 import cn.rongcloud.im.model.GroupNoticeResult;
-import cn.rongcloud.im.model.GroupRegularClearResult;
+import cn.rongcloud.im.model.RegularClearStatusResult;
 import cn.rongcloud.im.model.Resource;
-import cn.rongcloud.im.model.Result;
 import cn.rongcloud.im.model.ScreenCaptureResult;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.model.qrcode.QrCodeDisplayType;
@@ -99,6 +96,7 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
     private SettingItemView isToContactSiv;
     private SettingItemView groupManagerSiv;
     private SettingItemView groupNoticeSiv;
+    private SettingItemView groupUserInfoSiv;
     private SettingItemView cleanTimingSiv;
     private SettingItemView screenShotSiv;
     private TextView screenShotTip;
@@ -174,6 +172,9 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
         // 群公告
         groupNoticeSiv = findViewById(R.id.profile_siv_group_notice);
         groupNoticeSiv.setOnClickListener(this);
+        //群组用户信息
+        groupUserInfoSiv = findViewById(R.id.profile_siv_group_user_info);
+        groupUserInfoSiv.setOnClickListener(this);
 
         groupManagerSiv = findViewById(R.id.profile_siv_group_manager);
 
@@ -488,8 +489,8 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
             public void onChanged(Resource<Void> resultResource) {
                 if (resultResource.status == Status.SUCCESS) {
                     ToastUtils.showToast(getString(R.string.seal_set_clean_time_success));
-                    groupDetailViewModel.requestRegularState(groupId);
-                } else {
+                    //groupDetailViewModel.requestRegularState(groupId);
+                } else if (resultResource.status == Status.ERROR) {
                     ToastUtils.showToast(getString(R.string.seal_set_clean_time_fail));
                 }
             }
@@ -498,9 +499,9 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
         groupDetailViewModel.getRegularState().observe(this, new Observer<Resource<Integer>>() {
             @Override
             public void onChanged(Resource<Integer> groupRegularClearResultResource) {
-                if (groupRegularClearResultResource.data != null) {
+                if (groupRegularClearResultResource.status != Status.LOADING && groupRegularClearResultResource.data != null) {
                     updateCleanTimingSiv(groupRegularClearResultResource.data);
-                } else {
+                } else if (groupRegularClearResultResource.status != Status.LOADING) {
                     cleanTimingSiv.setValue(getString(R.string.seal_set_clean_time_state_not));
                 }
             }
@@ -533,13 +534,13 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
     }
 
     private void updateCleanTimingSiv(int state) {
-        if (state == SelectCleanTimeDialog.CLEAR_STATUS_NOT) {
+        if (state == RegularClearStatusResult.ClearStatus.CLOSE.getValue()) {
             cleanTimingSiv.setValue(getString(R.string.seal_set_clean_time_state_not));
-        } else if (state == SelectCleanTimeDialog.CLEAR_STATUS_THIRTY_SIX) {
+        } else if (state == RegularClearStatusResult.ClearStatus.THIRTY_SIX_HOUR.getValue()) {
             cleanTimingSiv.setValue(getString(R.string.seal_dialog_select_clean_time_36));
-        } else if (state == SelectCleanTimeDialog.CLEAR_STATUS_THREE) {
+        } else if (state == RegularClearStatusResult.ClearStatus.THREE_DAYS.getValue()) {
             cleanTimingSiv.setValue(getString(R.string.seal_dialog_select_clean_time_3));
-        } else if (state == SelectCleanTimeDialog.CLEAR_STATUS_SEVEN) {
+        } else if (state == RegularClearStatusResult.ClearStatus.SEVEN_DAYS.getValue()) {
             cleanTimingSiv.setValue(getString(R.string.seal_dialog_select_clean_time_7));
         }
     }
@@ -607,11 +608,6 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
         }
 
         groupCreatorId = groupInfo.getCreatorId();
-
-        //TODO 目前借口群组中返回的群公告信息为空
-        // 最后群组通知消息
-        //lastGroupNoticeContent = groupInfo.getBulletin();
-        //lastGroupNoticeTime = groupInfo.getBulletinTime();
     }
 
     /**
@@ -644,6 +640,12 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
             case R.id.profile_siv_group_notice:
                 showGroupNotice();
                 break;
+            case R.id.profile_siv_group_user_info:
+                Intent intentUserInfo = new Intent(this, GroupUserInfoActivity.class);
+                intentUserInfo.putExtra(IntentExtra.GROUP_ID, groupId);
+                intentUserInfo.putExtra(IntentExtra.STR_TARGET_ID, IMManager.getInstance().getCurrentId());
+                startActivity(intentUserInfo);
+                break;
             case R.id.profile_siv_group_clean_message:
                 showCleanMessageDialog();
                 break;
@@ -671,6 +673,7 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
     private void showMemberInfo(GroupMember groupMember) {
         Intent intent = new Intent(this, UserDetailActivity.class);
         intent.putExtra(IntentExtra.STR_TARGET_ID, groupMember.getUserId());
+        intent.putExtra(IntentExtra.GROUP_ID, groupMember.getGroupId());
         Group groupInfo = RongUserInfoManager.getInstance().getGroupInfo(groupId);
         if (groupInfo != null) {
             intent.putExtra(IntentExtra.STR_GROUP_NAME, groupInfo.getName());
@@ -685,7 +688,7 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
      */
     private void toMemberManage(boolean isAdd) {
         if (isAdd) {
-            Intent intent = new Intent(this, SelectFriendExcluedGroupActivity.class);
+            Intent intent = new Intent(this, SelectFriendExcludeGroupActivity.class);
             intent.putExtra(IntentExtra.STR_TARGET_ID, groupId);
             startActivityForResult(intent, REQUEST_ADD_GROUP_MEMBER);
         } else {
@@ -854,22 +857,22 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
         dialog.setOnDialogButtonClickListener(new SelectCleanTimeDialog.OnDialogButtonClickListener() {
             @Override
             public void onThirtySixHourClick() {
-                setRegularClear(SelectCleanTimeDialog.CLEAR_STATUS_THIRTY_SIX);
+                setRegularClear(RegularClearStatusResult.ClearStatus.THIRTY_SIX_HOUR.getValue());
             }
 
             @Override
             public void onThreeDayClick() {
-                setRegularClear(SelectCleanTimeDialog.CLEAR_STATUS_THREE);
+                setRegularClear(RegularClearStatusResult.ClearStatus.THREE_DAYS.getValue());
             }
 
             @Override
             public void onSevenDayClick() {
-                setRegularClear(SelectCleanTimeDialog.CLEAR_STATUS_SEVEN);
+                setRegularClear(RegularClearStatusResult.ClearStatus.SEVEN_DAYS.getValue());
             }
 
             @Override
             public void onNotCleanClick() {
-                setRegularClear(SelectCleanTimeDialog.CLEAR_STATUS_NOT);
+                setRegularClear(RegularClearStatusResult.ClearStatus.CLOSE.getValue());
             }
         });
         dialog.show(getSupportFragmentManager(), "regular_clear");

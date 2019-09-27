@@ -5,12 +5,15 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import cn.rongcloud.im.db.model.GroupEntity;
-import cn.rongcloud.im.db.model.GroupNoticeInfo;
+import cn.rongcloud.im.db.model.GroupExitedMemberInfo;
+import cn.rongcloud.im.db.model.GroupMemberInfoDes;
 import cn.rongcloud.im.model.AddMemberResult;
+import cn.rongcloud.im.model.CopyGroupResult;
 import cn.rongcloud.im.model.GroupNoticeInfoResult;
 import cn.rongcloud.im.model.GroupNoticeResult;
 import cn.rongcloud.im.model.GroupMemberInfoResult;
 import cn.rongcloud.im.model.GroupResult;
+import cn.rongcloud.im.model.RegularClearStatusResult;
 import cn.rongcloud.im.model.Result;
 import cn.rongcloud.im.net.SealTalkUrl;
 import okhttp3.RequestBody;
@@ -81,10 +84,13 @@ public interface GroupService {
     LiveData<Result> setRegularClear(@Body RequestBody body);
 
     @POST(SealTalkUrl.GROUP_GET_REGULAR_CLEAR_STATE)
-    LiveData<Result<Integer>> getRegularClearState(@Body RequestBody body);
+    LiveData<Result<RegularClearStatusResult>> getRegularClearState(@Body RequestBody body);
 
     @POST(SealTalkUrl.GROUP_MUTE_ALL)
     LiveData<Result> muteAll(@Body RequestBody body);
+
+    @POST(SealTalkUrl.GROUP_MEMBER_PROTECTION)
+    LiveData<Result> setGroupProtection(@Body RequestBody body);
 
     @POST(SealTalkUrl.GROUP_SET_CERTIFICATION)
     LiveData<Result<Void>> setCertification(@Body RequestBody body);
@@ -97,5 +103,17 @@ public interface GroupService {
 
     @POST(SealTalkUrl.GROUP_CLEAR_NOTICE)
     LiveData<Result<Void>> clearGroupNotice();
+
+    @POST(SealTalkUrl.GROUP_COPY)
+    LiveData<Result<CopyGroupResult>> copyGroup(@Body RequestBody body);
+
+    @POST(SealTalkUrl.GROUP_GET_EXITED)
+    LiveData<Result<List<GroupExitedMemberInfo>>> getGroupExitedMemberInfo(@Body RequestBody body);
+
+    @POST(SealTalkUrl.GROUP_GET_MEMBER_INFO_DES)
+    LiveData<Result<GroupMemberInfoDes>> getGroupInfoDes(@Body RequestBody body);
+
+    @POST(SealTalkUrl.GROUP_SET_MEMBER_INFO_DES)
+    LiveData<Result<Void>> setGroupInfoDes(@Body RequestBody body);
 
 }

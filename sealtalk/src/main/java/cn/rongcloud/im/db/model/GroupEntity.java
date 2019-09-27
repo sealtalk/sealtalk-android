@@ -82,6 +82,20 @@ public class GroupEntity implements Parcelable {
     @ColumnInfo(name = "certification_status")
     private int certiStatus;
 
+    /**
+     * 成员保护
+     */
+    @ColumnInfo(name = "member_protection")
+    private int memberProtection;
+
+    public int getMemberProtection() {
+        return memberProtection;
+    }
+
+    public void setMemberProtection(int memberProtection) {
+        this.memberProtection = memberProtection;
+    }
+
     public int getIsMute() {
         return isMute;
     }
@@ -219,36 +233,6 @@ public class GroupEntity implements Parcelable {
         this.isInContact = isInContact;
     }
 
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
-
-    public GroupEntity() {
-    }
-
-    @Override
-    public String toString() {
-        return "GroupEntity{" +
-                "id='" + id + '\'' +
-                ", portraitUri='" + portraitUri + '\'' +
-                ", name='" + name + '\'' +
-                ", nameSpelling='" + nameSpelling + '\'' +
-                ", nameSpellingInitial='" + nameSpellingInitial + '\'' +
-                ", orderSpelling='" + orderSpelling + '\'' +
-                ", memberCount=" + memberCount +
-                ", maxMemberCount=" + maxMemberCount +
-                ", creatorId='" + creatorId + '\'' +
-                ", type=" + type +
-                ", bulletin='" + bulletin + '\'' +
-                ", bulletinTime=" + bulletinTime +
-                ", deletedAt=" + deletedAt +
-                ", isInContact=" + isInContact +
-                ", regularClearState=" + regularClearState +
-                ", isMuteAll=" + isMute +
-                ", certiStatus=" + certiStatus +
-                '}';
-    }
 
     @Override
     public int describeContents() {
@@ -274,6 +258,10 @@ public class GroupEntity implements Parcelable {
         dest.writeInt(this.regularClearState);
         dest.writeInt(this.isMute);
         dest.writeInt(this.certiStatus);
+        dest.writeInt(this.memberProtection);
+    }
+
+    public GroupEntity() {
     }
 
     protected GroupEntity(Parcel in) {
@@ -295,6 +283,7 @@ public class GroupEntity implements Parcelable {
         this.regularClearState = in.readInt();
         this.isMute = in.readInt();
         this.certiStatus = in.readInt();
+        this.memberProtection = in.readInt();
     }
 
     public static final Creator<GroupEntity> CREATOR = new Creator<GroupEntity>() {
@@ -308,4 +297,28 @@ public class GroupEntity implements Parcelable {
             return new GroupEntity[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "GroupEntity{" +
+                "id='" + id + '\'' +
+                ", portraitUri='" + portraitUri + '\'' +
+                ", name='" + name + '\'' +
+                ", nameSpelling='" + nameSpelling + '\'' +
+                ", nameSpellingInitial='" + nameSpellingInitial + '\'' +
+                ", orderSpelling='" + orderSpelling + '\'' +
+                ", memberCount=" + memberCount +
+                ", maxMemberCount=" + maxMemberCount +
+                ", creatorId='" + creatorId + '\'' +
+                ", type=" + type +
+                ", bulletin='" + bulletin + '\'' +
+                ", bulletinTime=" + bulletinTime +
+                ", deletedAt=" + deletedAt +
+                ", isInContact=" + isInContact +
+                ", regularClearState=" + regularClearState +
+                ", isMute=" + isMute +
+                ", certiStatus=" + certiStatus +
+                ", memberProtection=" + memberProtection +
+                '}';
+    }
 }

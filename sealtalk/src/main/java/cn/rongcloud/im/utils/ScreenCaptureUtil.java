@@ -6,9 +6,14 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
 
+import androidx.loader.content.CursorLoader;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +34,16 @@ public class ScreenCaptureUtil {
     private static final String[] MEDIA_PROJECTIONS = {
             MediaStore.Images.ImageColumns.DATA,
             MediaStore.Images.ImageColumns.DATE_TAKEN,
+    };
+
+    private static final String[] projection = {
+            MediaStore.Files.FileColumns._ID,
+            MediaStore.Files.FileColumns.DATA,
+            MediaStore.Files.FileColumns.DATE_ADDED,
+            MediaStore.Files.FileColumns.MEDIA_TYPE,
+            MediaStore.Files.FileColumns.MIME_TYPE,
+            MediaStore.Files.FileColumns.TITLE,
+            MediaStore.Video.Media.DURATION
     };
 
     private HandlerThread mHandlerThread;
@@ -177,7 +192,9 @@ public class ScreenCaptureUtil {
 
         } catch (Exception e) {
             e.printStackTrace();
-
+            if (screenShotListener != null) {
+                screenShotListener.onFaild(e);
+            }
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
@@ -186,9 +203,131 @@ public class ScreenCaptureUtil {
     }
 
     /**
+     * 获取相册最新图片
+     *
+     * @param context
+     * @return
+     */
+    public MediaItem getLastPictureItems(Context context) {
+        String selection;
+        selection = MediaStore.Files.FileColumns.MEDIA_TYPE + "="
+                + MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
+        Uri queryUri = MediaStore.Files.getContentUri("external");
+        CursorLoader cursorLoader = new CursorLoader(
+                context,
+                queryUri,
+                projection,
+                selection,
+                null, // Selection args (none).
+                MediaStore.Files.FileColumns.DATE_ADDED + " DESC" // Sort order.
+        );
+
+        Cursor cursor = cursorLoader.loadInBackground();
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    MediaItem item = new MediaItem();
+                    item.name = cursor.getString(5);
+                    item.mediaType = cursor.getInt(3);
+                    item.mimeType = cursor.getString(4);
+                    item.uri = cursor.getString(1);
+                    item.duration = cursor.getInt(6);
+                    item.addTime = cursor.getLong(2);
+                    item.id = cursor.getString(0);
+                    if (item.uri == null) {
+                        continue;
+                    }
+                    File file = new File(item.uri);
+                    if (!file.exists() || file.length() == 0) {
+                        continue;
+                    }
+                    int last = item.uri.lastIndexOf("/");
+                    if (last == -1) {
+                        continue;
+                    }
+                    return item;
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+        return null;
+    }
+
+    public class MediaItem implements Parcelable {
+        public String id;
+        public String name;
+        public int mediaType;
+        public String mimeType;
+        public String uri;
+        public boolean selected;
+        public int duration;
+        public long addTime;
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.id);
+            dest.writeString(this.name);
+            dest.writeInt(this.mediaType);
+            dest.writeString(this.mimeType);
+            dest.writeString(this.uri);
+            dest.writeByte(this.selected ? (byte) 1 : (byte) 0);
+            dest.writeInt(this.duration);
+            dest.writeLong(this.addTime);
+        }
+
+        public MediaItem() {
+        }
+
+        protected MediaItem(Parcel in) {
+            this.id = in.readString();
+            this.name = in.readString();
+            this.mediaType = in.readInt();
+            this.mimeType = in.readString();
+            this.uri = in.readString();
+            this.selected = in.readByte() != 0;
+            this.duration = in.readInt();
+            this.addTime = in.readLong();
+        }
+
+        public final Creator<ScreenCaptureUtil.MediaItem> CREATOR = new Creator<MediaItem>() {
+            @Override
+            public MediaItem createFromParcel(Parcel source) {
+                return new ScreenCaptureUtil.MediaItem(source);
+            }
+
+            @Override
+            public MediaItem[] newArray(int size) {
+                return new MediaItem[size];
+            }
+        };
+
+        @Override
+        public String toString() {
+            return "MediaItem{" +
+                    "id='" + id + '\'' +
+                    ", name='" + name + '\'' +
+                    ", mediaType=" + mediaType +
+                    ", mimeType='" + mimeType + '\'' +
+                    ", uri='" + uri + '\'' +
+                    ", selected=" + selected +
+                    ", duration=" + duration +
+                    ", addTime=" + addTime +
+                    ", CREATOR=" + CREATOR +
+                    '}';
+        }
+    }
+
+    /**
      * 截屏后的通知回调
      */
     public interface ScreenShotListener {
         void onScreenShotComplete(String data, long dateTaken);
+
+        void onFaild(Exception e);
     }
 }

@@ -90,7 +90,7 @@
 
                 <data
                     android:host="cn.rongcloud.im"
-                    android:pathPrefix="/conversationlist/"
+                    android:pathPrefix="/conversationlist"
                     android:scheme="rong" />
             </intent-filter>
         </activity>

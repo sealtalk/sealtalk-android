@@ -87,8 +87,6 @@ public class SplashActivity extends BaseActivity {
 
                 if(resource.status == Status.SUCCESS){
                     finish();
-                }else if(resource.status == Status.ERROR){
-                    ToastUtils.showToast(resource.data);
                 }
             }
         });

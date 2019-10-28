@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
+
     <TextView
         android:id="@+id/conversation_tv_read_member_prompt_text"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:gravity="center"
         android:visibility="gone" />
+
     <GridView
         android:id="@+id/conversation_gv_read_member"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="start"
+        android:numColumns="4"
         android:paddingLeft="1dp"
-        android:paddingRight="1dp"
-        android:numColumns="4">
-    </GridView>
+        android:paddingRight="1dp" />
 </FrameLayout>

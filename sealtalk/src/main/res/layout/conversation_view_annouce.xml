@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/seal_conversation_annouce_height"
     android:background="@color/seal_conversation_annouce_bg"
+    android:focusable="true"
     android:clickable="true"
     android:descendantFocusability="blocksDescendants"
     >

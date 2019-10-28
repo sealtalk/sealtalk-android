@@ -69,7 +69,7 @@ public class GroupReadReceiptDetailActivity extends TitleBaseActivity {
     TextView unReadUnderLineTv;
 
     private GroupReadReceiptViewModel receiptViewModel;
-    private ReadReceiptViewPager memberViewPager;
+    private ViewPager memberViewPager;
     private List<View> pageContainer = new ArrayList<>();
 
     // 消息区是否展开

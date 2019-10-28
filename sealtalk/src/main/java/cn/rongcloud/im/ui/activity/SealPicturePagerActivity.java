@@ -28,6 +28,9 @@ import io.rong.imkit.utilities.PermissionCheckUtil;
 import io.rong.imkit.utilities.RongUtils;
 
 public class SealPicturePagerActivity extends PicturePagerActivity {
+
+    private String qrCodeResult;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,10 +49,15 @@ public class SealPicturePagerActivity extends PicturePagerActivity {
             return false;
         }
 
+        if (file == null || !file.exists()) {
+            return true;
+        }
+
+
         /*
          * 长按时先扫描图片中是否有二维码，再决定是否显示扫描二维码选项
          */
-        String qrCodeResult = QRCodeUtils.analyzeImage(file.getPath());
+        qrCodeResult = QRCodeUtils.analyzeImage(file.getPath());
         SLog.d(LogTag.COMMON, "SealPicturePagerActivity scan QR Code is " + qrCodeResult);
 
         String[] items;

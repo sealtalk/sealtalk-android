@@ -175,7 +175,11 @@ public class PokeInviteChatActivity extends BaseActivity implements View.OnClick
      */
     private void stopNoticeAndVibrator() {
         if (mediaPlayer != null) {
-            mediaPlayer.pause();
+            try {
+                mediaPlayer.stop();
+            }catch (IllegalStateException e){
+                SLog.e(TAG, "stopNoticeAndVibrator", e);
+            }
         }
 
         VibratorUtils.cancelVibrator(this);

@@ -37,7 +37,7 @@ public class AnnouceView extends RelativeLayout {
         msgTv = view.findViewById(R.id.tv_announce_msg);
         announceIv = view.findViewById(R.id.iv_announce);
         arrowIv = view.findViewById(R.id.iv_announce_arrow);
-        setOnClickListener(new OnClickListener() {
+        view.findViewById(R.id.ll_annouce).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null && !TextUtils.isEmpty(url)) {
@@ -60,6 +60,7 @@ public class AnnouceView extends RelativeLayout {
             setClickable(false);
             arrowIv.setVisibility(View.GONE);
         } else {
+            setFocusable(true);
             setClickable(true);
             arrowIv.setVisibility(View.VISIBLE);
         }

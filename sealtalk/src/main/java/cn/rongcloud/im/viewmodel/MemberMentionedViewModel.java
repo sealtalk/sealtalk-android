@@ -9,6 +9,7 @@ import androidx.arch.core.util.Function;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -20,6 +21,9 @@ import java.util.List;
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.model.GroupMember;
+import cn.rongcloud.im.model.Resource;
+import cn.rongcloud.im.model.Status;
+import cn.rongcloud.im.task.GroupTask;
 import cn.rongcloud.im.utils.CharacterParser;
 import cn.rongcloud.im.utils.SingleSourceLiveData;
 import cn.rongcloud.im.utils.SingleSourceMapLiveData;
@@ -30,8 +34,9 @@ import io.rong.imlib.model.UserInfo;
 public class MemberMentionedViewModel extends AndroidViewModel {
 
     private IMManager imManager;
-    private SingleSourceMapLiveData<List<UserInfo>, List<GroupMember>> memberListResult;
-    private SingleSourceLiveData<List<UserInfo>> memberList = new SingleSourceLiveData<>();
+    private GroupTask groupTask;
+    private SingleSourceMapLiveData<Resource<List<GroupMember>>, List<GroupMember>> memberListResult;
+    private SingleSourceLiveData<Resource<List<GroupMember>>> memberList = new SingleSourceLiveData<>();
     private MutableLiveData<List<GroupMember>> filterMemberResult = new MutableLiveData<>();
 
     public MemberMentionedViewModel(@NonNull Application application) {
@@ -42,25 +47,31 @@ public class MemberMentionedViewModel extends AndroidViewModel {
         super(application);
 
         imManager = IMManager.getInstance();
+        groupTask = new GroupTask(application.getApplicationContext());
 
-        memberListResult = new SingleSourceMapLiveData<>(new Function<List<UserInfo>, List<GroupMember>>() {
+        memberListResult = new SingleSourceMapLiveData<>(new Function<Resource<List<GroupMember>>, List<GroupMember>>() {
             @Override
-            public List<GroupMember> apply(List<UserInfo> input) {
-
-                if (input == null || input.size() <= 0) {
+            public List<GroupMember> apply(Resource<List<GroupMember>> input) {
+                if (input.status == Status.LOADING || input.data == null || input.data.size() <= 0) {
                     return null;
                 }
 
                 List<GroupMember> groupMembers = new ArrayList<>();
-                for (UserInfo info : input) {
+                List<GroupMember> originGroupMember = input.data;
+                for (GroupMember info : originGroupMember) {
                     if (info != null && !info.getUserId().equals(imManager.getCurrentId())) {
                         GroupMember member = new GroupMember();
                         member.setUserId(info.getUserId());
                         member.setName(info.getName());
-                        member.setPortraitUri(info.getPortraitUri().toString());
+                        member.setGroupNickName(info.getGroupNickName());
+                        member.setAlias(info.getAlias());
+                        member.setPortraitUri(info.getPortraitUri());
                         String sortString = "#";
                         //汉字转换成拼音
-                        String pinyin = CharacterParser.getInstance().getSpelling(info.getName());
+                        String displayName = TextUtils.isEmpty(info.getGroupNickName())?
+                                (TextUtils.isEmpty(info.getAlias()) ? info.getName() : info.getAlias())
+                                : info.getGroupNickName();
+                        String pinyin = CharacterParser.getInstance().getSpelling(displayName);
                         if (pinyin != null) {
                             if (pinyin.length() > 0) {
                                 sortString = pinyin.substring(0, 1).toUpperCase();
@@ -106,6 +117,7 @@ public class MemberMentionedViewModel extends AndroidViewModel {
 
     /**
      * 成员列表
+     *
      * @return
      */
     public LiveData<List<GroupMember>> getMemberListResult() {
@@ -114,6 +126,7 @@ public class MemberMentionedViewModel extends AndroidViewModel {
 
     /**
      * 过滤的成员列表
+     *
      * @return
      */
     public LiveData<List<GroupMember>> getFilterMenberList() {
@@ -130,7 +143,7 @@ public class MemberMentionedViewModel extends AndroidViewModel {
         if (conversationType.equals(Conversation.ConversationType.GROUP)) {
             getGroupMembers(targerId);
         } else if (conversationType.equals(Conversation.ConversationType.DISCUSSION)) {
-            getDiscussionMenbers(targerId);
+            getDiscussionMembers(targerId);
         }
     }
 
@@ -140,7 +153,7 @@ public class MemberMentionedViewModel extends AndroidViewModel {
      * @param targetId
      */
     private void getGroupMembers(String targetId) {
-        memberList.setSource(imManager.getGroupMembers(targetId));
+        memberList.setSource(groupTask.getGroupMemberInfoList(targetId));
     }
 
     /**
@@ -148,12 +161,39 @@ public class MemberMentionedViewModel extends AndroidViewModel {
      *
      * @param targetId
      */
-    private void getDiscussionMenbers(String targetId) {
-        memberList.setSource(imManager.getDiscussionMembers(targetId));
+    private void getDiscussionMembers(String targetId) {
+        memberList.setSource(Transformations.map(imManager.getDiscussionMembers(targetId), input -> {
+            List<GroupMember> groupMembers = new ArrayList<>();
+            for (UserInfo info : input) {
+                if (info != null && !info.getUserId().equals(imManager.getCurrentId())) {
+                    GroupMember member = new GroupMember();
+                    member.setUserId(info.getUserId());
+                    member.setName(info.getName());
+                    member.setPortraitUri(info.getPortraitUri().toString());
+                    String sortString = "#";
+                    //汉字转换成拼音
+                    String pinyin = CharacterParser.getInstance().getSpelling(info.getName());
+                    if (pinyin != null) {
+                        if (pinyin.length() > 0) {
+                            sortString = pinyin.substring(0, 1).toUpperCase();
+                        }
+                    }
+                    // 正则表达式，判断首字母是否是英文字母
+                    if (sortString.matches("[A-Z]")) {
+                        member.setNameSpelling(sortString.toUpperCase());
+                    } else {
+                        member.setNameSpelling("#");
+                    }
+                    groupMembers.add(member);
+                }
+            }
+            return new Resource<>(Status.SUCCESS, groupMembers, 0);
+    }));
     }
 
     /**
      * 过滤的成员列表
+     *
      * @param filterStr
      */
     public void filterMember(String filterStr) {
@@ -171,7 +211,7 @@ public class MemberMentionedViewModel extends AndroidViewModel {
         for (GroupMember member : value) {
             String name = member.getName();
             if (name != null) {
-                if (name != null && (name.indexOf(filterStr) != -1 || CharacterParser.getInstance().getSpelling(name).startsWith(filterStr))){
+                if (name != null && (name.indexOf(filterStr) != -1 || CharacterParser.getInstance().getSpelling(name).startsWith(filterStr))) {
                     filterMembers.add(member);
                 }
             }
@@ -194,6 +234,7 @@ public class MemberMentionedViewModel extends AndroidViewModel {
 
     /**
      * 设置 @ 成员
+     *
      * @param member
      */
     public void setMentionMember(GroupMember member) {

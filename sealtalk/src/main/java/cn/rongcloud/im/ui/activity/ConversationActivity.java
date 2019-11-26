@@ -57,6 +57,7 @@ import cn.rongcloud.im.utils.ScreenCaptureUtil;
 import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.viewmodel.ConversationViewModel;
 import cn.rongcloud.im.viewmodel.GroupManagementViewModel;
+import cn.rongcloud.im.viewmodel.PrivateChatSettingViewModel;
 import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.RongKitIntent;
@@ -72,6 +73,7 @@ public class ConversationActivity extends TitleBaseActivity {
     private AnnouceView annouceView;
     private ConversationViewModel conversationViewModel;
     private GroupManagementViewModel groupManagementViewModel;
+    private PrivateChatSettingViewModel privateChatSettingViewModel;
     private String title;
     private boolean isExtensionHeightInit = false;
     private boolean isSoftKeyOpened = false;
@@ -346,6 +348,25 @@ public class ConversationActivity extends TitleBaseActivity {
                 }
             });
         }
+
+        //判断截屏通知状态
+        if (conversationType == Conversation.ConversationType.GROUP || conversationType == Conversation.ConversationType.PRIVATE) {
+            privateChatSettingViewModel = ViewModelProviders.of(this, new PrivateChatSettingViewModel.Factory(getApplication(), targetId, conversationType)).get(PrivateChatSettingViewModel.class);
+            privateChatSettingViewModel.getScreenCaptureStatusResult().observe(this, new Observer<Resource<ScreenCaptureResult>>() {
+                @Override
+                public void onChanged(Resource<ScreenCaptureResult> screenCaptureResultResource) {
+                    if (screenCaptureResultResource.status == Status.SUCCESS) {
+                        //0 关闭 1 打开
+                        if (screenCaptureResultResource.data != null && screenCaptureResultResource.data.status == 1) {
+                            //判断是否有读取文件的权限
+                            if (!CheckPermissionUtils.requestPermissions(ConversationActivity.this, permissions, REQUEST_CODE_PERMISSION)) {
+                                return;
+                            }
+                        }
+                    }
+                }
+            });
+        }
     }
 
     /**
@@ -459,7 +480,7 @@ public class ConversationActivity extends TitleBaseActivity {
             return;
         }
         //判断是否有读取文件的权限
-        if (!CheckPermissionUtils.requestPermissions(ConversationActivity.this, permissions, REQUEST_CODE_PERMISSION)){
+        if (!CheckPermissionUtils.requestPermissions(ConversationActivity.this, permissions, REQUEST_CODE_PERMISSION)) {
             return;
         }
         ScreenCaptureUtil.MediaItem mediaItem = screenCaptureUtil.getLastPictureItems(this);
@@ -681,6 +702,15 @@ public class ConversationActivity extends TitleBaseActivity {
                 };
                 CheckPermissionUtils.showPermissionAlert(this, getResources().getString(R.string.seal_grant_permissions) + CheckPermissionUtils.getNotGrantedPermissionMsg(this, permissionsNotGranted), listener);
             }
+        }
+    }
+
+    /**
+     * 显示软键盘
+     */
+    public void showSoftInput() {
+        if (fragment != null && fragment.getRongExtension() != null) {
+            fragment.getRongExtension().showSoftInput();
         }
     }
 

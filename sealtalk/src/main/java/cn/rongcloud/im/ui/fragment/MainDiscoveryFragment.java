@@ -7,6 +7,7 @@ import android.view.View;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.rongcloud.im.R;
@@ -51,7 +52,15 @@ public class MainDiscoveryFragment extends BaseFragment {
         appViewModel.getChatRoonList().observe(this, listResource -> {
             List<ChatRoomResult> chatRoomResultList = listResource.data;
             if (chatRoomResultList != null) {
-                latestChatRoomList = chatRoomResultList;
+                latestChatRoomList = new ArrayList<>();
+                /**
+                 * 筛选出结果中 type 为 chatroom 的结果
+                 */
+                for (ChatRoomResult roomResult : chatRoomResultList) {
+                    if ("chatroom".equals(roomResult.getType())) {
+                        latestChatRoomList.add(roomResult);
+                    }
+                }
             }
         });
 

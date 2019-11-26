@@ -73,7 +73,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/seal_user_detail_userinfo_text_margin"
                 android:ellipsize="end"
-                android:maxLength="16"
                 android:maxLines="1"
                 android:visibility="gone"
                 android:textColor="@color/seal_user_detail_userinfo_text_color"

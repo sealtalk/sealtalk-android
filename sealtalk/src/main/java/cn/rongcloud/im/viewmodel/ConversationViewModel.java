@@ -113,6 +113,7 @@ public class ConversationViewModel extends AndroidViewModel {
                                 typing.userId = status.getUserId();
                                 typingsList.add(typing);
                             }
+                            info.typingList = typingsList;
                         }
 
                         typingStatusInfo.postValue(info);

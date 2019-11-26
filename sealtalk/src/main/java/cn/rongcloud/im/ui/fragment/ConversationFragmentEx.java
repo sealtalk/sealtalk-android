@@ -115,7 +115,15 @@ public class ConversationFragmentEx extends ConversationFragment {
     public void onShowAnnounceView(String announceMsg, String announceUrl) {
         // 此处为接收到通知消息， 然后回调到 activity 显示。
         if (onShowAnnounceListener != null) {
-            onShowAnnounceListener.onShowAnnounceView(announceMsg, announceUrl);
+            String announceMsgNew = announceMsg;
+            //去除智齿客户返回的通知栏标题带的 <p></p> 网页标签
+            if (announceMsgNew.contains("<p>")) {
+                announceMsgNew = announceMsg.replace("<p>", "");
+            }
+            if (announceMsgNew.contains("</p>")) {
+                announceMsgNew = announceMsgNew.replace("</p>", "");
+            }
+            onShowAnnounceListener.onShowAnnounceView(announceMsgNew, announceUrl);
         }
     }
 
@@ -194,7 +202,7 @@ public class ConversationFragmentEx extends ConversationFragment {
             if (length <= 20) {
                 time = 10L;
             } else {
-                time = Math.round((double)(length - 20) * 0.5D + 10.0D);
+                time = Math.round((double) (length - 20) * 0.5D + 10.0D);
             }
 
             textMessage.setDestructTime(time);
@@ -211,7 +219,7 @@ public class ConversationFragmentEx extends ConversationFragment {
             textMessage.setMentionedInfo(mentionedInfo);
         }
         io.rong.imlib.model.Message message = io.rong.imlib.model.Message.obtain(getTargetId(), getConversationType(), textMessage);
-        RongIM.getInstance().sendMessage(message, this.rongExtension.isFireStatus() ? getString(R.string.rc_message_content_burn) : null, null, (IRongCallback.ISendMessageCallback)null);
+        RongIM.getInstance().sendMessage(message, this.rongExtension.isFireStatus() ? getString(R.string.rc_message_content_burn) : null, null, (IRongCallback.ISendMessageCallback) null);
     }
 
     @Override
@@ -277,6 +285,10 @@ public class ConversationFragmentEx extends ConversationFragment {
 
     public void setOnExtensionChangeListener(OnExtensionChangeListener listener) {
         onExtensionChangeListener = listener;
+    }
+
+    public RongExtension getRongExtension() {
+        return rongExtension;
     }
 
     /**

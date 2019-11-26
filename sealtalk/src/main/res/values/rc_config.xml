@@ -16,4 +16,11 @@
 
     <!--PictureSelectorActivity 选择媒体资源时，是否包含视频文件 -->
     <bool name="rc_media_selector_contain_video">true</bool>
+
+    <!--设置输入状态监听 -->
+    <bool name="rc_typing_status">true</bool>
+
+    <!--是否允许 WebView 加载 JavaScript-->
+    <bool name="rc_set_java_script_enabled">true</bool>
+
 </resources>

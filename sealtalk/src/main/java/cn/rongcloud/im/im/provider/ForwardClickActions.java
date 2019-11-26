@@ -75,6 +75,7 @@ public class ForwardClickActions implements IClickActions {
             Intent intent = new Intent(curFragment.getActivity(), ForwardActivity.class);
             intent.putParcelableArrayListExtra(IntentExtra.FORWARD_MESSAGE_LIST, (ArrayList<? extends Parcelable>) forwardMessagesList);
             curFragment.getActivity().startActivity(intent);
+            fragment.resetMoreActionState();
         } else if (!allMessagesAllowForward) {
             new AlertDialog.Builder(curFragment.getActivity())
                     .setTitle(R.string.seal_not_support_forward_pic)

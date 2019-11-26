@@ -2,6 +2,7 @@ package cn.rongcloud.im.common;
 
 
 import android.location.LocationManager;
+import android.text.TextUtils;
 
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingDeque;
@@ -54,7 +55,8 @@ public class BatchForwardHelper {
                             RongIM.getInstance().sendImageMessage(message, null, null, new SendImageMessageWrapper(wrapper.getCallback()));
                         } else if (messageContent instanceof LocationMessage) {
                             RongIM.getInstance().sendLocationMessage(message, null, null, null);
-                        } else if (messageContent instanceof MediaMessageContent) {
+                        } else if (messageContent instanceof MediaMessageContent && (((MediaMessageContent) messageContent).getMediaUrl() == null
+                                || TextUtils.isEmpty(((MediaMessageContent) messageContent).getMediaUrl().toString()))) {
                             RongIM.getInstance().sendMediaMessage(message, null, null, new IRongCallback.ISendMediaMessageCallback() {
                                 @Override
                                 public void onProgress(Message message, int i) {

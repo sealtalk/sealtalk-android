@@ -1,6 +1,8 @@
 package cn.rongcloud.im.ui.activity;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -115,6 +117,28 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
         setContentView(R.layout.main_activity_main);
         initView();
         initViewModel();
+        clearBadgeStatu();
+    }
+
+    //清除华为的角标
+    private void clearBadgeStatu() {
+        if (Build.MANUFACTURER.equalsIgnoreCase("HUAWEI")) {
+            try {
+                String packageName = getPackageName();
+                String launchClassName = getPackageManager()
+                        .getLaunchIntentForPackage(packageName)
+                        .getComponent().getClassName();
+                Bundle bundle = new Bundle();//需要存储的数据
+                bundle.putString("package", packageName);//包名
+                bundle.putString("class", launchClassName);//启动的Activity完整名称
+                bundle.putInt("badgenumber", 0);//未读信息条数清空
+                getContentResolver().call(
+                        Uri.parse("content://com.huawei.android.launcher.settings/badge/"),
+                        "change_badge", null, bundle);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 

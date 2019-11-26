@@ -81,7 +81,7 @@ public class SealSearchActivity extends SealSearchBaseActivity implements TextWa
             RongIM.getInstance().startConversation(this,
                     result.getConversation().getConversationType(),
                     result.getConversation().getTargetId(),
-                    searchConversationModel.getName());
+                    searchConversationModel.getName(),result.getConversation().getSentTime());
         } else {
 
             searchMessageFragment = new SearchMessageFragment();

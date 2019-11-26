@@ -107,7 +107,7 @@ public class IMInfoProvider {
 
     }
 
-    private void initData(){
+    private void initData() {
         refreshReceivePokeMessageStatus();
     }
 
@@ -391,6 +391,23 @@ public class IMInfoProvider {
                 groupMemberDao.deleteGroupMember(groupId);
             }
         });
+    }
+
+    /**
+     * 获取群组成员的原用户信息
+     *
+     * @param groupId
+     * @param targetId
+     * @return
+     */
+    public io.rong.imlib.model.UserInfo getGroupMemberUserInfo(String groupId, String targetId) {
+        GroupMember groupMember = dbManager.getGroupMemberDao().getGroupMemberInfoSync(groupId, targetId);
+        io.rong.imlib.model.UserInfo userInfo = null;
+        if (groupMember != null) {
+            userInfo = new io.rong.imlib.model.UserInfo(groupMember.getUserId(), groupMember.getName(),
+                    Uri.parse(groupMember.getPortraitUri()));
+        }
+        return userInfo;
     }
 
     /**

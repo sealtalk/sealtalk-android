@@ -582,7 +582,7 @@ public class UserDetailActivity extends TitleBaseActivity implements View.OnClic
         if (latestUserInfo == null) return;
 
         RongCallSession profile = RongCallClient.getInstance().getCallSession();
-        if (profile != null && profile.getActiveTime() > 0) {
+        if (profile != null && profile.getStartTime() > 0) {
             ToastUtils.showToast(profile.getMediaType() == RongCallCommon.CallMediaType.AUDIO ?
                             getString(io.rong.callkit.R.string.rc_voip_call_audio_start_fail) :
                             getString(io.rong.callkit.R.string.rc_voip_call_video_start_fail),
@@ -612,7 +612,7 @@ public class UserDetailActivity extends TitleBaseActivity implements View.OnClic
         if (latestUserInfo == null) return;
 
         RongCallSession profile = RongCallClient.getInstance().getCallSession();
-        if (profile != null && profile.getActiveTime() > 0) {
+        if (profile != null && profile.getStartTime() > 0) {
             ToastUtils.showToast(
                     profile.getMediaType() == RongCallCommon.CallMediaType.AUDIO ?
                             getString(io.rong.callkit.R.string.rc_voip_call_audio_start_fail) :

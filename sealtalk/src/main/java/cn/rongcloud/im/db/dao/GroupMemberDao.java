@@ -39,6 +39,12 @@ public interface GroupMemberDao {
             "ORDER BY join_time asc")
     LiveData<List<GroupMember>> getGroupMemberList(String groupId, String filterByName);
 
+    @Query("SELECT group_member.user_id, group_member.group_id, group_member.nickname, group_member.role, group_member.join_time, nickname_spelling,user.name, user.name_spelling, user.portrait_uri, user.alias" +
+            " FROM group_member " +
+            "INNER JOIN user ON group_member.user_id = user.id " +
+            "where group_id=:groupId and group_member.user_id=:memberId")
+    GroupMember getGroupMemberInfoSync(String groupId, String memberId);
+
     @Query("DELETE FROM group_member where group_id=:groupId and user_id in (:memberIdList)")
     void deleteGroupMember(String groupId, List<String> memberIdList);
 

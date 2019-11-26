@@ -45,7 +45,7 @@ public class ForwardSelectedViewHolder extends BaseItemViewHolder<ListItemModel>
             if (model.getItemView().getType() == ListItemModel.ItemView.Type.GROUP ) {
                 GroupEntity group = (GroupEntity)model.getData();
               userInfoUiv.setName(model.getDisplayName() + "（" + group.getMemberCount()+"）");
-            } else if (model.getItemView().getType() == ListItemModel.ItemView.Type.GROUP ) {
+            } else if (model.getItemView().getType() == ListItemModel.ItemView.Type.FRIEND ) {
                 userInfoUiv.setName(model.getDisplayName());
             }
             ImageLoaderUtils.displayGroupPortraitImage(model.getPortraitUrl(), userInfoUiv.getHeaderImageView());

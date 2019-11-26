@@ -1,6 +1,7 @@
 package cn.rongcloud.im.ui.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,7 +23,7 @@ import cn.rongcloud.im.ui.dialog.CommonDialog;
 import cn.rongcloud.im.ui.widget.SideBar;
 import cn.rongcloud.im.viewmodel.GroupManagementViewModel;
 
-public class GroupSetManagementsActivity extends TitleBaseActivity{
+public class GroupSetManagementsActivity extends TitleBaseActivity {
     private String groupId;
     private GroupManagerAdapter groupManagerAdapter;
     private GroupManagementViewModel groupManagementViewModel;
@@ -42,7 +43,7 @@ public class GroupSetManagementsActivity extends TitleBaseActivity{
     private void initView() {
 
         getTitleBar().setTitle(R.string.seal_group_management_group_managements);
-        getTitleBar().setOnBtnRightClickListener(getString(R.string.seal_group_manager_confirm), new View.OnClickListener(){
+        getTitleBar().setOnBtnRightClickListener(getString(R.string.seal_group_manager_confirm), new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -64,7 +65,7 @@ public class GroupSetManagementsActivity extends TitleBaseActivity{
             @Override
             public void onSelected(int number, List<GroupMember> selected) {
                 if (number > 0) {
-                    getTitleBar().setRightText(getString(R.string.seal_group_manager_confirm) + "("+ number+")");
+                    getTitleBar().setRightText(getString(R.string.seal_group_manager_confirm) + "(" + number + ")");
                 } else {
                     getTitleBar().setRightText(getString(R.string.seal_group_manager_confirm));
                 }
@@ -118,8 +119,12 @@ public class GroupSetManagementsActivity extends TitleBaseActivity{
                 if (resource.status == Status.SUCCESS) {
                     showToast(R.string.seal_group_manager_set_manager_toast_set_management_success);
                     finish();
-                } else if (resource.status == Status.ERROR){
-                    showToast(R.string.seal_group_manager_set_manager_toast_set_management_failed);
+                } else if (resource.status == Status.ERROR) {
+                    if (!TextUtils.isEmpty(resource.message)) {
+                        showToast(resource.message);
+                    } else {
+                        showToast(R.string.seal_group_manager_set_manager_toast_set_management_failed);
+                    }
                 } else {
                     // TODO loading
                 }
@@ -129,6 +134,7 @@ public class GroupSetManagementsActivity extends TitleBaseActivity{
 
     /**
      * 添加管理员
+     *
      * @param selectsIds
      */
     private void addManagemenet(List<String> selectsIds) {
@@ -147,7 +153,7 @@ public class GroupSetManagementsActivity extends TitleBaseActivity{
             buffer.append(member.getName());
             buffer.append(",");
         }
-        buffer.deleteCharAt(buffer.length() -1);
+        buffer.deleteCharAt(buffer.length() - 1);
 
         CommonDialog.Builder builder = new CommonDialog.Builder();
         String content = getString(R.string.seal_group_manager_select_managements_dialog_content, buffer.toString());

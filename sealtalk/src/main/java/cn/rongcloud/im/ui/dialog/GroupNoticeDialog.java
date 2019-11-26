@@ -48,6 +48,7 @@ public class GroupNoticeDialog extends DialogFragment {
         // 群公告内容
         if(TextUtils.isEmpty(noticeContent)){
             noticeContent = getString(R.string.profile_group_has_no_notice);
+            noticeTimeTv.setVisibility(View.INVISIBLE);
         }
         noticeContentTv.setText(noticeContent);
 

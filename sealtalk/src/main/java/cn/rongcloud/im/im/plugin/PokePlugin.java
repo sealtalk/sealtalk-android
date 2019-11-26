@@ -36,7 +36,7 @@ public class PokePlugin implements IPluginModule {
 
     @Override
     public Drawable obtainDrawable(Context context) {
-        return context.getResources().getDrawable(R.drawable.im_plugin_icon_poke);
+        return context.getResources().getDrawable(R.drawable.rc_ext_plugin_poke_selector);
     }
 
     @Override

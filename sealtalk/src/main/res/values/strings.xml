@@ -108,8 +108,8 @@
     <string name="seal_conversation_sub_system">"系统消息"</string>
     <string name="seal_conversation_sub_defult">"聊天"</string>
     <string name="seal_conversation_read_receipt_detail">回执详情</string>
-    <string name="seal_conversation_read_receipt_unread_persons_format">%1$d人未读</string>
-    <string name="seal_conversation_read_receipt_read_persons_format">%1$d人已读</string>
+    <string name="seal_conversation_read_receipt_unread_persons_format">%1$d 人未读</string>
+    <string name="seal_conversation_read_receipt_read_persons_format">%1$d 人已读</string>
     <string name="seal_conversation_read_receipt_no_person_read">全部未读</string>
     <string name="seal_conversation_read_receipt_no_person_unread">全部已读</string>
 
@@ -591,4 +591,6 @@
 
     <string name="contact_multi_delete_friend">批量删除好友</string>
     <string name="contact_multi_delete_friend_conf" formatted="true"><Data><![CDATA[确认后将删除所选好友， <br> 是否确认删除]]></Data></string>
+
+    <string name="seal_dialog_wait_tips">请稍后...</string>
 </resources>

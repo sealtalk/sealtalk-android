@@ -88,6 +88,12 @@ public class ClearChatMessageActivity extends TitleBaseActivity implements OnChe
             tvRemove.setClickable(false);
             tvRemove.setTextColor(getResources().getColor(android.R.color.darker_gray));
         }
+        //判断全选状态
+        if (integer > 0 && integer == currentChatMessageCount) {
+            ckSelectAll.setChecked(true);
+        } else {
+            ckSelectAll.setChecked(false);
+        }
     }
 
     @Override
@@ -124,10 +130,11 @@ public class ClearChatMessageActivity extends TitleBaseActivity implements OnChe
     private void selectAll() {
         if (!ckSelectAll.isChecked()) {
             selectConversationViewModel.selectAllCheck();
+            ckSelectAll.setChecked(true);
         } else {
             selectConversationViewModel.cancelAllCheck();
+            ckSelectAll.setChecked(false);
         }
-        ckSelectAll.setChecked(!ckSelectAll.isChecked());
     }
 
     @Override

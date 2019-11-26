@@ -203,6 +203,7 @@ public class SelectConversationViewModel extends AndroidViewModel {
                 }
             }
             coversationLiveData.setValue(checkableContactModels);
+            selectedCount.setValue(0);
         }
     }
 }

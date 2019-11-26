@@ -2,7 +2,7 @@
     <string name="app_name">SealTalk</string>
     <string name="title_activity_main">MainActivity</string>
     <!-- login-->
-    <string name="seal_login_text_new_user">New User</string>
+    <string name="seal_login_text_new_user">Sign Up</string>
     <string name="seal_login_text_forget_password">Find Password</string>
     <string name="seal_login_text_login">Login</string>
     <string name="seal_login_countries_and_regions">Countries/Regions</string>
@@ -589,4 +589,6 @@
     <string name="contact_multi_delete_friend_conf" formatted="true">
         <Data><![CDATA[Selected friends will be deleted after confirmed,<br> confirm to delete?]]></Data>
         </string>
+
+    <string name="seal_dialog_wait_tips">Please wait...</string>
 </resources>

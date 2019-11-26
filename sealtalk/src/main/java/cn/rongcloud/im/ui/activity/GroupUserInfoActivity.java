@@ -119,6 +119,10 @@ public class GroupUserInfoActivity extends TitleBaseActivity {
                 if (voidResource.status == Status.SUCCESS) {
                     ToastUtils.showToast(R.string.seal_group_user_info_des_confirm_success);
                     finish();
+                } else if (voidResource.status == Status.ERROR) {
+                    if (!TextUtils.isEmpty(voidResource.message)) {
+                        ToastUtils.showToast(voidResource.message);
+                    }
                 }
             }
         });
@@ -129,7 +133,7 @@ public class GroupUserInfoActivity extends TitleBaseActivity {
             etNickName.setText(data.getGroupNickname(), TextView.BufferType.EDITABLE);
         }
         if (!TextUtils.isEmpty(data.getRegion())) {
-            tvRegion.setText("+"+data.getRegion());
+            tvRegion.setText("+" + data.getRegion());
         }
         if (!TextUtils.isEmpty(data.getPhone())) {
             etPhone.setText(data.getPhone());
@@ -148,7 +152,7 @@ public class GroupUserInfoActivity extends TitleBaseActivity {
     private void setMemberInfoDes() {
         //国家码需去掉 '+' 号
         groupUserInfoViewModel.setMemberInfoDes(groupId, memberId, etNickName.getText().toString()
-                , tvRegion.getText().toString().replace("+",""), etPhone.getText().toString(), etVchat.getText().toString()
+                , tvRegion.getText().toString().replace("+", ""), etPhone.getText().toString(), etVchat.getText().toString()
                 , etAliPay.getText().toString(), mAdapter.getData());
     }
 

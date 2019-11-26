@@ -121,8 +121,9 @@ public class MainMeFragment extends BaseFragment {
                 CSCustomServiceInfo.Builder builder = new CSCustomServiceInfo.Builder();
                 builder.province(getString(R.string.beijing));
                 builder.city(getString(R.string.beijing));
-                RongIM.getInstance().startCustomerServiceChat(getActivity(), "KEFU146001495753714", getString(R.string.seal_main_mine_online_custom_service), builder.build());
-
+                //佳信客服配置
+                builder.referrer("10001");
+                RongIM.getInstance().startCustomerServiceChat(getActivity(), "service", getString(R.string.seal_main_mine_online_custom_service), builder.build());
                 break;
             case R.id.siv_about:
                 Intent intent = new Intent(getActivity(), AboutSealTalkActivity.class);

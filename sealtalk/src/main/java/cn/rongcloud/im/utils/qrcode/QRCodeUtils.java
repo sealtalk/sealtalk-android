@@ -118,17 +118,16 @@ public class QRCodeUtils {
             /**
              * 首先判断图片的大小,若图片过大,则执行图片的裁剪操作,防止OOM
              */
+            Bitmap mBitmap;
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true; // 先获取原大小
-            Bitmap mBitmap;
-            options.inJustDecodeBounds = false; // 获取新的大小
-
+            BitmapFactory.decodeFile(path,options);
             int sampleSize = (int) (options.outHeight / (float) 400);
-
             if (sampleSize <= 0)
                 sampleSize = 1;
             options.inSampleSize = sampleSize;
-            mBitmap = BitmapFactory.decodeFile(path);
+            options.inJustDecodeBounds = false; // 获取新的大小
+            mBitmap = BitmapFactory.decodeFile(path,options);
             mBitmap = zoomImg(mBitmap, mBitmap.getWidth() * 3, mBitmap.getHeight() * 3);
             return analyzeBitmap(mBitmap);
         }

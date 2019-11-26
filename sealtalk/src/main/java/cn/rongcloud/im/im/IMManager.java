@@ -5,12 +5,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Looper;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 
 import com.google.gson.Gson;
 
@@ -23,6 +21,7 @@ import cn.rongcloud.im.common.ErrorCode;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.common.LogTag;
 import cn.rongcloud.im.common.ResultCallback;
+import cn.rongcloud.im.common.ThreadManager;
 import cn.rongcloud.im.db.DbManager;
 import cn.rongcloud.im.im.message.GroupApplyMessage;
 import cn.rongcloud.im.im.message.GroupClearMessage;
@@ -42,13 +41,13 @@ import cn.rongcloud.im.model.ConversationRecord;
 import cn.rongcloud.im.model.LoginResult;
 import cn.rongcloud.im.model.QuietHours;
 import cn.rongcloud.im.model.Resource;
-import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.model.UserCacheInfo;
 import cn.rongcloud.im.net.CallBackWrapper;
 import cn.rongcloud.im.net.HttpClientManager;
 import cn.rongcloud.im.net.service.UserService;
 import cn.rongcloud.im.sp.UserCache;
 import cn.rongcloud.im.sp.UserConfigCache;
+import cn.rongcloud.im.ui.activity.ConversationActivity;
 import cn.rongcloud.im.ui.activity.ForwardActivity;
 import cn.rongcloud.im.ui.activity.GroupNoticeListActivity;
 import cn.rongcloud.im.ui.activity.NewFriendListActivity;
@@ -493,6 +492,27 @@ public class IMManager {
 
             @Override
             public boolean onUserPortraitLongClick(Context context, Conversation.ConversationType conversationType, UserInfo userInfo, String s) {
+                if(conversationType == Conversation.ConversationType.GROUP){
+                    // 当在群组时长按用户在输入框中加入 @ 信息
+                    ThreadManager.getInstance().runOnWorkThread(() -> {
+                        // 获取该群成员的用户名并显示在 @ 中的信息
+                        UserInfo groupMemberInfo = imInfoProvider.getGroupMemberUserInfo(s, userInfo.getUserId());
+                        if(groupMemberInfo != null){
+                            groupMemberInfo.setName("@" + groupMemberInfo.getName());
+                            ThreadManager.getInstance().runOnUIThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    RongMentionManager.getInstance().mentionMember(groupMemberInfo);
+                                    // 填充完用户@信息后弹出软键盘
+                                    if(context instanceof ConversationActivity){
+                                        ((ConversationActivity)context).showSoftInput();
+                                    }
+                                }
+                            });
+                        }
+                    });
+                    return true;
+                }
                 return false;
             }
 

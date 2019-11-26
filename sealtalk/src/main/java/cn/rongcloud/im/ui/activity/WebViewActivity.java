@@ -64,7 +64,7 @@ public class WebViewActivity extends TitleBaseActivity {
         public void onPageStarted(WebView view, String url, Bitmap favicon) {//网页页面开始加载的时候
             if (progressDialog == null) {
                 progressDialog = new ProgressDialog(WebViewActivity.this);
-                progressDialog.setMessage("Please wait...");
+                progressDialog.setMessage(getString(R.string.seal_dialog_wait_tips));
                 progressDialog.show();
                 webview.setEnabled(false);// 当加载网页的时候将网页进行隐藏
             }

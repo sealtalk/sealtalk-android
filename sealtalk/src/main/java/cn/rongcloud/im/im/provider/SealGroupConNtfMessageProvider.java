@@ -111,6 +111,11 @@ public class SealGroupConNtfMessageProvider extends IContainerItemProvider.Messa
     }
 
     @Override
+    public void onItemLongClick(View view, int position, SealGroupConNtfMessage content, UIMessage message) {
+
+    }
+
+    @Override
     public View newView(Context context, ViewGroup viewGroup) {
         View view = LayoutInflater.from(context).inflate(R.layout.rc_group_regular_clear_notification_message, null);
         ViewHolder viewHolder = new ViewHolder();

@@ -83,42 +83,35 @@ public class ConversationViewModel extends AndroidViewModel {
          */
         imManager.setTypingStatusListener(new RongIMClient.TypingStatusListener() {
             @Override
-            public void onTypingStatusChanged(Conversation.ConversationType conversationType, String s, Collection<TypingStatus> collection) {
-                RongIMClient.setTypingStatusListener(new RongIMClient.TypingStatusListener() {
-                    @Override
-                    public void onTypingStatusChanged(Conversation.ConversationType type, String targetId, Collection<TypingStatus> typingStatusSet) {
+            public void onTypingStatusChanged(Conversation.ConversationType type, String targetId, Collection<TypingStatus> typingStatusSet) {
+                TypingInfo info = new TypingInfo();
+                info.conversationType = type;
+                info.targetId = targetId;
+                int count = typingStatusSet.size();
+                if (count > 0) {
+                    List<TypingInfo.Typing> typingsList = new ArrayList<>();
+                    Iterator iterator = typingStatusSet.iterator();
+                    while (iterator.hasNext()) {
+                        TypingInfo.Typing typing = new TypingInfo.Typing();
+                        TypingStatus status = (TypingStatus) iterator.next();
+                        String objectName = status.getTypingContentType();
+                        MessageTag textTag = TextMessage.class.getAnnotation(MessageTag.class);
+                        MessageTag voiceTag = VoiceMessage.class.getAnnotation(MessageTag.class);
 
-                        TypingInfo info = new TypingInfo();
-                        info.conversationType = type;
-                        info.targetId = targetId;
-                        int count = typingStatusSet.size();
-                        if (count > 0) {
-                            List<TypingInfo.Typing> typingsList = new ArrayList<>();
-                            Iterator iterator = typingStatusSet.iterator();
-                            while (iterator.hasNext()) {
-                                TypingInfo.Typing typing = new TypingInfo.Typing();
-                                TypingStatus status = (TypingStatus) iterator.next();
-                                String objectName = status.getTypingContentType();
-                                MessageTag textTag = TextMessage.class.getAnnotation(MessageTag.class);
-                                MessageTag voiceTag = VoiceMessage.class.getAnnotation(MessageTag.class);
-
-                                //匹配对方正在输入的是文本消息还是语音消息
-                                if (objectName.equals(textTag.value())) {
-                                    typing.type = TypingInfo.Typing.Type.text;
-                                } else if (objectName.equals(voiceTag.value())) {
-                                    typing.type = TypingInfo.Typing.Type.voice;
-                                }
-
-                                typing.sendTime = status.getSentTime();
-                                typing.userId = status.getUserId();
-                                typingsList.add(typing);
-                            }
-                            info.typingList = typingsList;
+                        //匹配对方正在输入的是文本消息还是语音消息
+                        if (objectName.equals(textTag.value())) {
+                            typing.type = TypingInfo.Typing.Type.text;
+                        } else if (objectName.equals(voiceTag.value())) {
+                            typing.type = TypingInfo.Typing.Type.voice;
                         }
 
-                        typingStatusInfo.postValue(info);
+                        typing.sendTime = status.getSentTime();
+                        typing.userId = status.getUserId();
+                        typingsList.add(typing);
                     }
-                });
+                    info.typingList = typingsList;
+                }
+                typingStatusInfo.postValue(info);
             }
         });
 

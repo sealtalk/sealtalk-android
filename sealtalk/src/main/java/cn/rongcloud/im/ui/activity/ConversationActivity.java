@@ -39,6 +39,7 @@ import java.util.Locale;
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.common.ThreadManager;
+import cn.rongcloud.im.event.DeleteFriendEvent;
 import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.model.GroupMember;
 import cn.rongcloud.im.model.Resource;
@@ -58,6 +59,7 @@ import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.viewmodel.ConversationViewModel;
 import cn.rongcloud.im.viewmodel.GroupManagementViewModel;
 import cn.rongcloud.im.viewmodel.PrivateChatSettingViewModel;
+import io.rong.eventbus.EventBus;
 import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.RongKitIntent;
@@ -129,6 +131,7 @@ public class ConversationActivity extends TitleBaseActivity {
         setListenerToRootView();
         initView();
         initViewModel();
+        EventBus.getDefault().register(this);
 //        initScreenShotListener();
     }
 
@@ -159,6 +162,7 @@ public class ConversationActivity extends TitleBaseActivity {
         // 清除会话记录
         IMManager.getInstance().clearConversationRecord(targetId);
         mHandler.removeCallbacksAndMessages(null);
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -730,5 +734,17 @@ public class ConversationActivity extends TitleBaseActivity {
      */
     public boolean isGroupManager() {
         return isGroupManager;
+    }
+
+    /**
+     * 删除联系人成功的事件
+     *
+     * @param event 删除结果事件
+     */
+    public void onEventMainThread(DeleteFriendEvent event) {
+        if (event.result && event.userId.equals(targetId)) {
+            SLog.i(TAG, "DeleteFriend Success");
+            finish();
+        }
     }
 }

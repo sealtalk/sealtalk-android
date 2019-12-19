@@ -29,22 +29,24 @@ public class AppTask {
 
     private AppService appsService;
     private Context context;
-    public AppTask(Context context){
+
+    public AppTask(Context context) {
         appsService = HttpClientManager.getInstance(context).getClient().createService(AppService.class);
         this.context = context.getApplicationContext();
     }
 
     /**
      * 获取当前的最新版本
+     *
      * @return
      */
     public LiveData<Resource<VersionInfo>> getNewVersion() {
-        return new NetworkOnlyResource<VersionInfo, VersionInfo>(){
+        return new NetworkOnlyResource<VersionInfo, VersionInfo>() {
 
             @NonNull
             @Override
             protected LiveData<VersionInfo> createCall() {
-                return appsService.getNewVersion ();
+                return appsService.getNewVersion();
             }
 
             @Override
@@ -68,7 +70,7 @@ public class AppTask {
      *
      * @return
      */
-    public LiveData<Resource<List<ChatRoomResult>>> getDiscoveryChatRoom(){
+    public LiveData<Resource<List<ChatRoomResult>>> getDiscoveryChatRoom() {
         return new NetworkOnlyResource<List<ChatRoomResult>, Result<List<ChatRoomResult>>>() {
             @NonNull
             @Override
@@ -80,6 +82,7 @@ public class AppTask {
 
     /**
      * 获取当前app 的语音设置
+     *
      * @return
      */
     public LangUtils.RCLocale getLanguageLocal() {
@@ -100,16 +103,16 @@ public class AppTask {
 
     /**
      * 设置当前应用的 语音
+     *
      * @param selectedLocale
      */
     public boolean changeLanguage(LangUtils.RCLocale selectedLocale) {
         LangUtils.RCLocale appLocale = RongConfigurationManager.getInstance().getAppLocale(context);
-        if( selectedLocale == appLocale) {
+        if (selectedLocale == appLocale) {
             return false;
         }
 
         if (selectedLocale == LangUtils.RCLocale.LOCALE_CHINA) {
-            RongConfigurationManager.getInstance().switchLocale(LangUtils.RCLocale.LOCALE_CHINA, context);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Resources resources = context.getResources();
                 DisplayMetrics dm = resources.getDisplayMetrics();
@@ -118,10 +121,13 @@ public class AppTask {
                 LocaleList.setDefault(localeList);
                 config.setLocales(localeList);
                 resources.updateConfiguration(config, dm);
+                // 保存语言状态
+                LangUtils.saveLocale(context, selectedLocale);
+            } else {
+                RongConfigurationManager.getInstance().switchLocale(LangUtils.RCLocale.LOCALE_CHINA, context);
             }
             setPushLanguage(RongIMClient.PushLanguage.ZH_CN);
-        } else if(selectedLocale == LangUtils.RCLocale.LOCALE_US) {
-            RongConfigurationManager.getInstance().switchLocale(LangUtils.RCLocale.LOCALE_US, context);
+        } else if (selectedLocale == LangUtils.RCLocale.LOCALE_US) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Resources resources = context.getResources();
                 DisplayMetrics dm = resources.getDisplayMetrics();
@@ -130,6 +136,9 @@ public class AppTask {
                 LocaleList.setDefault(localeList);
                 config.setLocales(localeList);
                 resources.updateConfiguration(config, dm);
+                LangUtils.saveLocale(context, selectedLocale);
+            } else {
+                RongConfigurationManager.getInstance().switchLocale(LangUtils.RCLocale.LOCALE_US, context);
             }
             setPushLanguage(RongIMClient.PushLanguage.EN_US);
         }
@@ -139,6 +148,7 @@ public class AppTask {
 
     /**
      * 设置 push 的语言
+     *
      * @param language
      */
     public void setPushLanguage(RongIMClient.PushLanguage language) {
@@ -158,6 +168,7 @@ public class AppTask {
 
     /**
      * 是否是 Debug 模式
+     *
      * @return
      */
     public boolean isDebugMode() {

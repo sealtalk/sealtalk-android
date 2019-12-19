@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
@@ -30,17 +31,25 @@
     <LinearLayout
         android:id="@+id/discovery_ll_chat_room_1"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="64dp"
         android:background="@drawable/seal_bg_list_item"
         android:clickable="true">
+
+        <io.rong.imkit.widget.AsyncImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="14dp"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            app:RCCornerRadius="3dp"
+            app:RCDefDrawable="@drawable/discovery_ic_chat_room_1"
+            app:RCShape="square" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:layout_marginLeft="14dp"
-            android:drawableLeft="@drawable/discovery_ic_chat_room_1"
-            android:drawablePadding="14dp"
+            android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
             android:text="@string/discovery_chat_room_one"
             android:textColor="@color/color_black_text" />
@@ -58,17 +67,25 @@
     <LinearLayout
         android:id="@+id/discovery_ll_chat_room_2"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="64dp"
         android:background="@drawable/seal_bg_list_item"
         android:clickable="true">
+
+        <io.rong.imkit.widget.AsyncImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="14dp"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            app:RCCornerRadius="3dp"
+            app:RCDefDrawable="@drawable/discovery_ic_chat_room_2"
+            app:RCShape="square" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="14dp"
-            android:drawableLeft="@drawable/discovery_ic_chat_room_2"
-            android:drawablePadding="14dp"
             android:gravity="center_vertical"
             android:text="@string/discovery_chat_room_two"
             android:textColor="@color/color_black_text" />
@@ -86,17 +103,25 @@
     <LinearLayout
         android:id="@+id/discovery_ll_chat_room_3"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="64dp"
         android:background="@drawable/seal_bg_list_item"
         android:clickable="true">
+
+        <io.rong.imkit.widget.AsyncImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="14dp"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            app:RCCornerRadius="3dp"
+            app:RCDefDrawable="@drawable/discovery_ic_chat_room_3"
+            app:RCShape="square" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="14dp"
-            android:drawableLeft="@drawable/discovery_ic_chat_room_3"
-            android:drawablePadding="14dp"
             android:gravity="center_vertical"
             android:text="@string/discovery_chat_room_three"
             android:textColor="@color/color_black_text" />
@@ -114,17 +139,25 @@
     <LinearLayout
         android:id="@+id/discovery_ll_chat_room_4"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="64dp"
         android:background="@drawable/seal_bg_list_item"
         android:clickable="true">
+
+        <io.rong.imkit.widget.AsyncImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="14dp"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            app:RCCornerRadius="3dp"
+            app:RCDefDrawable="@drawable/discovery_ic_chat_room_4"
+            app:RCShape="square" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="14dp"
-            android:drawableLeft="@drawable/discovery_ic_chat_room_4"
-            android:drawablePadding="14dp"
             android:gravity="center_vertical"
             android:text="@string/discovery_chat_room_four"
             android:textColor="@color/color_black_text" />

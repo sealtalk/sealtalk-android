@@ -22,6 +22,7 @@ import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.im.provider.ForwardClickActions;
 import cn.rongcloud.im.sp.UserConfigCache;
+import cn.rongcloud.im.ui.activity.ForwardActivity;
 import cn.rongcloud.im.ui.activity.GroupReadReceiptDetailActivity;
 import cn.rongcloud.im.ui.dialog.EvaluateBottomDialog;
 import io.rong.common.RLog;
@@ -134,12 +135,18 @@ public class ConversationFragmentEx extends ConversationFragment {
         showEvaluateDialog(dialogId);
     }
 
+//    @Override
+//    public List<IClickActions> getMoreClickActions() {
+//        List<IClickActions> actions = new ArrayList();
+//        actions.addAll(super.getMoreClickActions());
+//        actions.add(0, new ForwardClickActions());
+//        return actions;
+//    }
+
+
     @Override
-    public List<IClickActions> getMoreClickActions() {
-        List<IClickActions> actions = new ArrayList();
-        actions.addAll(super.getMoreClickActions());
-        actions.add(0, new ForwardClickActions());
-        return actions;
+    public Intent getSelectIntentForForward() {
+        return new Intent(getActivity(), ForwardActivity.class);
     }
 
     /**

@@ -326,7 +326,7 @@
     <string name="seal_quest_failed_error_code">请求失败 错误码:%d</string>
     <string name="setting_new_message_receive_poke_message">接受戳一下消息</string>
 
-    <string name="new_friend_title">添加朋友</string>
+    <string name="new_friend_title">添加好友</string>
     <string name="new_friend_add_from_phone_contact">手机通讯录</string>
     <string name="new_friend_add_from_phone_contact_description">添加通讯录中的朋友</string>
     <string name="new_friend_scan_description">扫描好友二维码</string>
@@ -459,7 +459,7 @@
     <string name="seal_set_clean_time_notification_close">群主已关闭群消息定时清理</string>
     <string name="seal_set_screen_capture_open">开启了截屏通知</string>
     <string name="seal_set_screen_capture_close">关闭了截屏通知</string>
-    <string name="seal_set_screen_capture_use">在聊天中截了屏</string>
+    <string name="seal_set_screen_capture_use">在聊天中截屏了</string>
     <string name="seal_set_screen_capture_you">你</string>
     <string name="seal_set_clean_time_not_owner_tip">只有群主可以设置</string>
     <string name="seal_mute_all">全员禁言</string>

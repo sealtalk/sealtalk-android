@@ -10,7 +10,8 @@
     <LinearLayout
         android:id="@+id/profile_ll_qr_card_container"
         android:layout_width="310dp"
-        android:layout_height="420dp"
+        android:layout_height="wrap_content"
+        android:minHeight="420dp"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="44.5dp"

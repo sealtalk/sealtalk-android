@@ -210,6 +210,11 @@ public class ForwardActivity extends TitleBaseActivity {
                 public void onForward(List<GroupEntity> groups, List<FriendShipInfo> friendShipInfos) {
                     showForwardDialog(groups, friendShipInfos, messageList);
                 }
+
+                @Override
+                public void onForwardNoDialog(List<GroupEntity> groups, List<FriendShipInfo> friendShipInfos) {
+                    forwardMessage(groups, friendShipInfos, messageList);
+                }
             });
             fragment = singleFragment;
         } else if (index == Type.MULTI.getValue()) {
@@ -218,6 +223,11 @@ public class ForwardActivity extends TitleBaseActivity {
                 @Override
                 public void onForward(List<GroupEntity> groups, List<FriendShipInfo> friends) {
                     showForwardDialog(groups, friends, messageList);
+                }
+
+                @Override
+                public void onForwardNoDialog(List<GroupEntity> groups, List<FriendShipInfo> friendShipInfos) {
+                    forwardMessage(groups, friendShipInfos, messageList);
                 }
             });
             fragment = multiFragment;
@@ -347,7 +357,7 @@ public class ForwardActivity extends TitleBaseActivity {
      */
     private void forwardMessage(List<GroupEntity> groups, List<FriendShipInfo> friends, List<Message> messageList) {
         if (forwardActivityViewModel != null) {
-            forwardActivityViewModel.ForwardMessage(groups, friends, messageList);
+            forwardActivityViewModel.ForwardMessage(ForwardActivity.this,groups, friends, messageList);
         }
     }
 

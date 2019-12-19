@@ -51,7 +51,8 @@ public class BatchForwardHelper {
 
                         Message message = wrapper.getMessage();
                         MessageContent messageContent = message.getContent();
-                        if ((messageContent instanceof ImageMessage && ((ImageMessage) messageContent).getRemoteUri() == null) || messageContent instanceof GIFMessage) {
+                        if ((messageContent instanceof ImageMessage && ((ImageMessage) messageContent).getRemoteUri() == null)
+                                || (messageContent instanceof GIFMessage && ((GIFMessage) messageContent).getRemoteUri() == null)) {
                             RongIM.getInstance().sendImageMessage(message, null, null, new SendImageMessageWrapper(wrapper.getCallback()));
                         } else if (messageContent instanceof LocationMessage) {
                             RongIM.getInstance().sendLocationMessage(message, null, null, null);

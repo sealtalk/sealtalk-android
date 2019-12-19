@@ -165,6 +165,7 @@ public class ForwardMultiFragment extends BaseFragment implements SearchableInte
 
     /**
      * 群组fragment
+     *
      * @return
      */
     private Fragment createCroupsFragment() {
@@ -178,7 +179,7 @@ public class ForwardMultiFragment extends BaseFragment implements SearchableInte
                 final ListItemModel.ItemView.Type type = data.getItemView().getType();
                 switch (type) {
                     case GROUP:
-                        final GroupEntity groupEntity = (GroupEntity)data.getData();
+                        final GroupEntity groupEntity = (GroupEntity) data.getData();
                         handleGroupClicked(groupEntity);
                         break;
                     default:
@@ -204,10 +205,10 @@ public class ForwardMultiFragment extends BaseFragment implements SearchableInte
                 switch (type) {
                     case FUN:
                         showFragment(Type.GROUPS.getValue());
-                        ((ForwardGroupListFragment)fragments[Type.GROUPS.getValue()]).setSelectedIds(getSelectGourpIds(), getSelectFriendIds());
+                        ((ForwardGroupListFragment) fragments[Type.GROUPS.getValue()]).setSelectedIds(getSelectGourpIds(), getSelectFriendIds());
                         break;
                     case FRIEND:
-                        final FriendShipInfo friendShipInfo = (FriendShipInfo)data.getData();
+                        final FriendShipInfo friendShipInfo = (FriendShipInfo) data.getData();
                         handleFriendClicked(friendShipInfo);
                         break;
                     default:
@@ -264,12 +265,12 @@ public class ForwardMultiFragment extends BaseFragment implements SearchableInte
                         ((ForwardSelectContactFragment) fragments[Type.CONTACTS.getValue()]).setSelectedIds(getSelectGourpIds(), getSelectFriendIds());
                         break;
                     case GROUP:
-                        final GroupEntity groupEntity = (GroupEntity)data.getData();
+                        final GroupEntity groupEntity = (GroupEntity) data.getData();
                         handleGroupClicked(groupEntity);
                         break;
                     case FRIEND:
-                        final FriendShipInfo friendShipInfo = (FriendShipInfo)data.getData();
-                            handleFriendClicked(friendShipInfo);
+                        final FriendShipInfo friendShipInfo = (FriendShipInfo) data.getData();
+                        handleFriendClicked(friendShipInfo);
                         break;
                     default:
                         //DO Nothing
@@ -295,7 +296,7 @@ public class ForwardMultiFragment extends BaseFragment implements SearchableInte
         String countString = "";
         int colorResId = -1;
 
-        if (groupCount == 0 && userCount== 0) {
+        if (groupCount == 0 && userCount == 0) {
             colorResId = R.color.text_gray;
             countString = String.format(userOnly, userCount);
             selectedConfirmTv.setClickable(false);
@@ -494,16 +495,20 @@ public class ForwardMultiFragment extends BaseFragment implements SearchableInte
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == REQUEST_SELECT_DETAIL) {
             boolean finish = data.getBooleanExtra(IntentExtra.FORWARD_FINISH, false);
+            boolean confirm = data.getBooleanExtra(IntentExtra.CONFIRM_SEND, false);
             if (finish) {
                 getActivity().finish();
             } else {
                 selectedGroups = data.getParcelableArrayListExtra(IntentExtra.GROUP_LIST);
                 selectedFriends = data.getParcelableArrayListExtra(IntentExtra.FRIEND_LIST);
-                updateBottomCount(selectedGroups == null? 0 : selectedGroups.size(), selectedFriends ==null? 0 : selectedFriends.size());
+                updateBottomCount(selectedGroups == null ? 0 : selectedGroups.size(), selectedFriends == null ? 0 : selectedFriends.size());
                 if (currentFragmentIndex == Type.RECENT_LIST.getValue()) {
                     ((ForwordRecentMultiSelectListFragment) fragments[Type.RECENT_LIST.getValue()]).setSelectedIds(getSelectGourpIds(), getSelectFriendIds());
                 } else if (currentFragmentIndex == Type.CONTACTS.getValue()) {
                     ((ForwardSelectContactFragment) fragments[Type.CONTACTS.getValue()]).setSelectedIds(getSelectGourpIds(), getSelectFriendIds());
+                }
+                if (confirm){
+                    listener.onForwardNoDialog(selectedGroups, selectedFriends);
                 }
             }
 

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -28,7 +27,7 @@ import cn.rongcloud.im.db.model.FriendStatus;
 import cn.rongcloud.im.db.model.GroupEntity;
 import cn.rongcloud.im.db.model.GroupMemberInfoDes;
 import cn.rongcloud.im.db.model.UserInfo;
-import cn.rongcloud.im.im.IMManager;
+import cn.rongcloud.im.event.DeleteFriendEvent;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.ui.dialog.CommonDialog;
@@ -47,6 +46,7 @@ import io.rong.callkit.RongVoIPIntent;
 import io.rong.calllib.RongCallClient;
 import io.rong.calllib.RongCallCommon;
 import io.rong.calllib.RongCallSession;
+import io.rong.eventbus.EventBus;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 
@@ -197,10 +197,12 @@ public class UserDetailActivity extends TitleBaseActivity implements View.OnClic
         userDetailViewModel.getAddBlackListResult().observe(this, new Observer<Resource<Void>>() {
             @Override
             public void onChanged(Resource<Void> resource) {
-                if (resource.status == Status.SUCCESS) {
-                    ToastUtils.showToast(R.string.common_add_successful);
-                } else if (resource.status == Status.ERROR) {
-                    ToastUtils.showToast(resource.message);
+                if (!isInDeleteAction){
+                    if (resource.status == Status.SUCCESS) {
+                        ToastUtils.showToast(R.string.common_add_successful);
+                    } else if (resource.status == Status.ERROR) {
+                        ToastUtils.showToast(resource.message);
+                    }
                 }
             }
         });
@@ -223,7 +225,7 @@ public class UserDetailActivity extends TitleBaseActivity implements View.OnClic
             public void onChanged(Resource<Void> resource) {
                 if (resource.status == Status.SUCCESS) {
                     ToastUtils.showToast(R.string.common_delete_successful);
-
+                    EventBus.getDefault().post(new DeleteFriendEvent(userId,true));
                     // 删除成功后关闭界面
                     finish();
                 } else if (resource.status == Status.ERROR) {
@@ -552,6 +554,7 @@ public class UserDetailActivity extends TitleBaseActivity implements View.OnClic
                         // 标记正在删除好友
                         isInDeleteAction = true;
                         userDetailViewModel.deleteFriend(userId);
+                        userDetailViewModel.addToBlackList();
                     }
 
                     @Override

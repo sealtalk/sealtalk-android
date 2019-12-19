@@ -1,6 +1,7 @@
 package cn.rongcloud.im;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -15,6 +16,7 @@ import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.ui.activity.MainActivity;
 import cn.rongcloud.im.utils.SearchUtils;
 import cn.rongcloud.im.wx.WXManager;
+import io.rong.imkit.RongConfigurationManager;
 import io.rong.imlib.ipc.RongExceptionHandler;
 
 import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
@@ -28,6 +30,12 @@ public class SealApp extends MultiDexApplication {
     private String lastVisibleActivityName;
     private Intent nextOnForegroundIntent;
     private boolean isMainActivityIsCreated;
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        Context context = RongConfigurationManager.getInstance().getConfigurationContext(base);
+        super.attachBaseContext(context);
+    }
 
     @Override
     public void onCreate() {

@@ -25,6 +25,7 @@ import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.db.model.FriendDetailInfo;
 import cn.rongcloud.im.db.model.FriendShipInfo;
+import cn.rongcloud.im.event.DeleteFriendEvent;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.ScreenCaptureResult;
 import cn.rongcloud.im.model.Status;
@@ -36,6 +37,7 @@ import cn.rongcloud.im.utils.ImageLoaderUtils;
 import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.viewmodel.PrivateChatSettingViewModel;
 import cn.rongcloud.im.utils.log.SLog;
+import io.rong.eventbus.EventBus;
 import io.rong.imkit.utilities.PromptPopupDialog;
 import io.rong.imlib.model.Conversation;
 
@@ -82,6 +84,7 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
         initView();
         initViewModel();
         initData();
+        EventBus.getDefault().register(this);
     }
 
     private void initView() {
@@ -347,6 +350,24 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
         } else {
             //权限获得后在请求次网络设置状态
             privateChatSettingViewModel.setScreenCaptureStatus(1);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    /**
+     * 删除联系人成功的事件
+     *
+     * @param event 删除结果事件
+     */
+    public void onEventMainThread(DeleteFriendEvent event) {
+        if (event.result && event.userId.equals(targetId)) {
+            SLog.i(TAG, "DeleteFriend Success");
+            finish();
         }
     }
 }

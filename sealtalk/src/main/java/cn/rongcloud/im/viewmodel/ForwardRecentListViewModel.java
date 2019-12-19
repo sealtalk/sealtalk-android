@@ -52,6 +52,9 @@ public class ForwardRecentListViewModel extends CommonListBaseViewModel {
     }
 
     private void convertConversationAndSetValue(List<Conversation> conversations) {
+        if (conversations == null) {
+            return;
+        }
         final ModelBuilder modelBuilder = builderModel();
 
         List<ListItemModel> berforeItems = getBeforeItems();
@@ -76,6 +79,7 @@ public class ForwardRecentListViewModel extends CommonListBaseViewModel {
 
     /**
      * 前置功能项
+     *
      * @return
      */
     protected List<ListItemModel> getBeforeItems() {
@@ -83,7 +87,7 @@ public class ForwardRecentListViewModel extends CommonListBaseViewModel {
         berforeItems.add(createFunModel("1", getApplication().getString(R.string.seal_select_forward_create_new_chat)));
         berforeItems.add(createFunModel("2", getApplication().getString(R.string.seal_select_forward_select_group)));
         berforeItems.add(createTextModel(getApplication().getString(R.string.seal_select_forward_message_recent_chat)));
-       return berforeItems;
+        return berforeItems;
     }
 
 

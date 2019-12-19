@@ -62,4 +62,5 @@ public class IntentExtra {
     public static final String IS_SELECT = "is_select";
 
     public static final String STR_POKE_MESSAGE = "poke_message";
+    public static final String CONFIRM_SEND = "confirm_send";
 }

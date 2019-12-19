@@ -15,6 +15,7 @@ import java.util.List;
 
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.db.model.FriendShipInfo;
+import cn.rongcloud.im.db.model.FriendStatus;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.task.FriendTask;
 import cn.rongcloud.im.ui.adapter.models.CharacterTitleInfo;
@@ -78,7 +79,7 @@ public class SelectBaseViewModel extends AndroidViewModel {
         currentLiveData = friendsLiveData;
     }
 
-    public void loadFriendShip(){
+    public void loadFriendShip() {
         friendsLiveData.setSource(friendTask.getAllFriends());
         currentLiveData = friendsLiveData;
     }
@@ -175,7 +176,7 @@ public class SelectBaseViewModel extends AndroidViewModel {
      * @param groupId
      * @param keyword
      */
-    public void searchGroupMemberExclude(String groupId, String keyword){
+    public void searchGroupMemberExclude(String groupId, String keyword) {
         groupMembersLiveData.setSource(friendTask.searchFriendsIncludeGroup(groupId, keyword));
     }
 
@@ -190,7 +191,7 @@ public class SelectBaseViewModel extends AndroidViewModel {
             Object o = currentLiveData.getValue().get(i).getBean();
             if (o instanceof CharacterTitleInfo) {
                 CharacterTitleInfo characterParser = (CharacterTitleInfo) o;
-                if (characterParser.equals(s)) {
+                if (s.equals(characterParser.getCharacter())) {
                     return i;
                 }
             }
@@ -214,15 +215,19 @@ public class SelectBaseViewModel extends AndroidViewModel {
                     continue;
                 }
             }
+            // 非好友不添加入列表
+            if (friendShipInfo.getStatus() != FriendStatus.IS_FRIEND.getStatusCode()) {
+                continue;
+            }
 
             String firstChar;
             String groupDisplayName = friendShipInfo.getGroupDisplayName();
             String displayName = friendShipInfo.getDisplayName();
             String nameFirstChar = friendShipInfo.getUser().getFirstCharacter();
-            if(!TextUtils.isEmpty(groupDisplayName)){
-                firstChar = CharacterParser.getInstance().getSpelling(groupDisplayName).substring(0,1).toUpperCase();
-            } else if(!TextUtils.isEmpty(displayName)){
-                firstChar = CharacterParser.getInstance().getSpelling(displayName).substring(0,1).toUpperCase();
+            if (!TextUtils.isEmpty(groupDisplayName)) {
+                firstChar = CharacterParser.getInstance().getSpelling(groupDisplayName).substring(0, 1).toUpperCase();
+            } else if (!TextUtils.isEmpty(displayName)) {
+                firstChar = CharacterParser.getInstance().getSpelling(displayName).substring(0, 1).toUpperCase();
             } else {
                 firstChar = nameFirstChar;
             }
@@ -296,7 +301,7 @@ public class SelectBaseViewModel extends AndroidViewModel {
                 checkableContactModel.setCheckType(CheckType.NONE);
             }
         }
-        if(checkedFriendIdList != null){
+        if (checkedFriendIdList != null) {
             checkedFriendIdList.clear();
         }
     }

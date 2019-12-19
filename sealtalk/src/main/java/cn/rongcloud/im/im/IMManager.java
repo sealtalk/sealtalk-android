@@ -79,6 +79,7 @@ import io.rong.imkit.widget.provider.RealTimeLocationMessageProvider;
 import io.rong.imlib.CustomServiceConfig;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.common.DeviceUtils;
 import io.rong.imlib.cs.CustomServiceManager;
 import io.rong.imlib.location.message.RealTimeLocationStartMessage;
 import io.rong.imlib.model.Conversation;
@@ -176,9 +177,6 @@ public class IMManager {
 
         // 初始化聊天室监听
         initChatRoomActionListener();
-
-        // 长按消息转发等功能
-        initMessageItemLongClickAction(context);
 
         // 缓存连接
         cacheConnectIM();
@@ -477,35 +475,37 @@ public class IMManager {
         RongIM.setConversationClickListener(new RongIM.ConversationClickListener() {
             @Override
             public boolean onUserPortraitClick(Context context, Conversation.ConversationType conversationType, UserInfo userInfo, String s) {
-                Intent intent = new Intent(context, UserDetailActivity.class);
-                intent.putExtra(IntentExtra.STR_TARGET_ID, userInfo.getUserId());
-                if (conversationType == Conversation.ConversationType.GROUP) {
-                    Group groupInfo = RongUserInfoManager.getInstance().getGroupInfo(s);
-                    if (groupInfo != null) {
-                        intent.putExtra(IntentExtra.GROUP_ID, groupInfo.getId());
-                        intent.putExtra(IntentExtra.STR_GROUP_NAME, groupInfo.getName());
+                if (conversationType != Conversation.ConversationType.CUSTOMER_SERVICE) {
+                    Intent intent = new Intent(context, UserDetailActivity.class);
+                    intent.putExtra(IntentExtra.STR_TARGET_ID, userInfo.getUserId());
+                    if (conversationType == Conversation.ConversationType.GROUP) {
+                        Group groupInfo = RongUserInfoManager.getInstance().getGroupInfo(s);
+                        if (groupInfo != null) {
+                            intent.putExtra(IntentExtra.GROUP_ID, groupInfo.getId());
+                            intent.putExtra(IntentExtra.STR_GROUP_NAME, groupInfo.getName());
+                        }
                     }
+                    context.startActivity(intent);
                 }
-                context.startActivity(intent);
                 return true;
             }
 
             @Override
             public boolean onUserPortraitLongClick(Context context, Conversation.ConversationType conversationType, UserInfo userInfo, String s) {
-                if(conversationType == Conversation.ConversationType.GROUP){
+                if (conversationType == Conversation.ConversationType.GROUP) {
                     // 当在群组时长按用户在输入框中加入 @ 信息
                     ThreadManager.getInstance().runOnWorkThread(() -> {
                         // 获取该群成员的用户名并显示在 @ 中的信息
                         UserInfo groupMemberInfo = imInfoProvider.getGroupMemberUserInfo(s, userInfo.getUserId());
-                        if(groupMemberInfo != null){
+                        if (groupMemberInfo != null) {
                             groupMemberInfo.setName("@" + groupMemberInfo.getName());
                             ThreadManager.getInstance().runOnUIThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     RongMentionManager.getInstance().mentionMember(groupMemberInfo);
                                     // 填充完用户@信息后弹出软键盘
-                                    if(context instanceof ConversationActivity){
-                                        ((ConversationActivity)context).showSoftInput();
+                                    if (context instanceof ConversationActivity) {
+                                        ((ConversationActivity) context).showSoftInput();
                                     }
                                 }
                             });
@@ -784,6 +784,9 @@ public class IMManager {
         RongIM.registerMessageType(PokeMessage.class);
         RongIM.registerMessageTemplate(new PokeMessageItemProvider());
         //RongIM.registerMessageTemplate(new GroupApplyMessageProvider());
+
+        // 开启高清语音
+        RongIM.getInstance().setVoiceMessageType(RongIM.VoiceMessageType.HighQuality);
     }
 
     /**
@@ -963,10 +966,6 @@ public class IMManager {
                             imInfoProvider.updateGroupInfo(groupID);
                             imInfoProvider.updateGroupMember(groupID);
                         } else if (groupNotificationMessage.getOperation().equals("Dismiss")) {
-                            // 删除数据库中群组
-                            imInfoProvider.deleteGroupInfoInDb(groupID);
-                            // 删除群组会话和消息
-                            clearConversationAndMessage(groupID, Conversation.ConversationType.GROUP);
 
                         } else if (groupNotificationMessage.getOperation().equals("Kicked")) {
                             //群组踢人
@@ -1302,6 +1301,26 @@ public class IMManager {
                 if (conversations != null && conversations.size() > 0) {
                     for (Conversation c : conversations) {
                         RongIM.getInstance().clearMessagesUnreadStatus(c.getConversationType(), c.getTargetId(), null);
+                        if (c.getConversationType() == Conversation.ConversationType.PRIVATE || c.getConversationType() == Conversation.ConversationType.ENCRYPTED) {
+                            RongIMClient.getInstance().sendReadReceiptMessage(c.getConversationType(), c.getTargetId(), c.getSentTime(), new IRongCallback.ISendMessageCallback() {
+
+                                @Override
+                                public void onAttached(Message message) {
+
+                                }
+
+                                @Override
+                                public void onSuccess(Message message) {
+
+                                }
+
+                                @Override
+                                public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+
+                                }
+                            });
+                        }
+                        RongIMClient.getInstance().syncConversationReadStatus(c.getConversationType(), c.getTargetId(), c.getSentTime(), null);
                     }
                 }
             }
@@ -1311,6 +1330,11 @@ public class IMManager {
 
             }
         }, conversationTypes);
+    }
+
+    private String getSavedReadReceiptTimeName(String targetId, Conversation.ConversationType conversationType) {
+        String savedId = DeviceUtils.ShortMD5(RongIM.getInstance().getCurrentUserId(), targetId, conversationType.getName());
+        return "ReadReceipt" + savedId + "Time";
     }
 
     /**

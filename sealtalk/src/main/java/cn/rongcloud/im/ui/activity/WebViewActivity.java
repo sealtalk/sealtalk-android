@@ -1,7 +1,9 @@
 package cn.rongcloud.im.ui.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -43,6 +45,7 @@ public class WebViewActivity extends TitleBaseActivity {
         webview.getSettings().setLoadWithOverviewMode(true);
         webview.getSettings().setBuiltInZoomControls(true);
         webview.getSettings().setSupportZoom(true);
+        webview.getSettings().setDomStorageEnabled(true);//开启本地DOM存储
         //自适应屏幕
         webview.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webview.getSettings().setLoadWithOverviewMode(true);
@@ -83,7 +86,14 @@ public class WebViewActivity extends TitleBaseActivity {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) { //网页加载时的连接的网址
-            view.loadUrl(url);
+            if (url.startsWith("tel:")) {
+                Intent intent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(url));
+                startActivity(intent);
+                return true;
+            } else {
+                view.loadUrl(url);
+            }
             return false;
         }
     }

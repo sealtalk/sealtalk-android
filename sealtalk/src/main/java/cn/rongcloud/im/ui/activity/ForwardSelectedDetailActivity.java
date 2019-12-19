@@ -60,10 +60,12 @@ public class ForwardSelectedDetailActivity extends TitleBaseActivity {
                         showToast(R.string.seal_select_forward_message_defeat);
                     }
                 }
-                Intent intent = new Intent();
-                intent.putExtra(IntentExtra.FORWARD_FINISH, true);
-                setResult(RESULT_OK, intent);
-                finish();
+                if (resource.status == Status.SUCCESS) {
+                    Intent intent = new Intent();
+                    intent.putExtra(IntentExtra.FORWARD_FINISH, true);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
             }
         });
     }
@@ -73,7 +75,7 @@ public class ForwardSelectedDetailActivity extends TitleBaseActivity {
      */
     private void forwardMessage(List<GroupEntity> groups, List<FriendShipInfo> friends, List<Message> messages) {
         if (forwardActivityViewModel != null) {
-            forwardActivityViewModel.ForwardMessage(groups, friends, messages);
+            forwardActivityViewModel.ForwardMessage(ForwardSelectedDetailActivity.this,groups, friends, messages);
         }
     }
 
@@ -145,10 +147,12 @@ public class ForwardSelectedDetailActivity extends TitleBaseActivity {
         builder.setDialogButtonClickListener(new CommonDialog.OnDialogButtonClickListener() {
             @Override
             public void onPositiveClick(View v, Bundle bundle) {
-                final ArrayList<GroupEntity> groupEntities = bundle.getParcelableArrayList(IntentExtra.GROUP_LIST);
-                final ArrayList<FriendShipInfo> friendShipInfos = bundle.getParcelableArrayList(IntentExtra.FRIEND_LIST);
-                final ArrayList<Message> messages = bundle.getParcelableArrayList(IntentExtra.FORWARD_MESSAGE_LIST);
-                forwardMessage(groupEntities, friendShipInfos, messages);
+                Intent intent = new Intent();
+                intent.putParcelableArrayListExtra(IntentExtra.GROUP_LIST, seletedGroup);
+                intent.putParcelableArrayListExtra(IntentExtra.FRIEND_LIST, selectedFriends);
+                intent.putExtra(IntentExtra.CONFIRM_SEND,true);
+                setResult(RESULT_OK,intent);
+                finish();
             }
 
             @Override

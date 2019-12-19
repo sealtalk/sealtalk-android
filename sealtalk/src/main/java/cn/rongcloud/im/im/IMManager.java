@@ -1090,39 +1090,6 @@ public class IMManager {
         });
     }
 
-
-    private void initMessageItemLongClickAction(Context context) {
-        MessageItemLongClickAction action = new MessageItemLongClickAction.Builder()
-                .titleResId(R.string.seal_forward_message)
-                .showFilter(new MessageItemLongClickAction.Filter() {
-                    @Override
-                    public boolean filter(UIMessage message) {
-                        MessageContent messageContent = message.getContent();
-                        return !(messageContent instanceof NotificationMessage)
-                                && !(messageContent instanceof VoiceMessage)
-                                && !(messageContent instanceof RealTimeLocationStartMessage)
-                                && message.getSentStatus() != Message.SentStatus.FAILED
-                                && message.getSentStatus() != Message.SentStatus.CANCELED
-                                && !message.getConversationType().equals(Conversation.ConversationType.ENCRYPTED);
-                    }
-                })
-                .actionListener(new MessageItemLongClickAction.MessageItemLongClickListener() {
-                    @Override
-                    public boolean onMessageItemLongClick(Context context, UIMessage message) {
-                        Message forwardMesage = message.getMessage();
-                        Intent intent = new Intent(context, ForwardActivity.class);
-                        ArrayList<Message> messageList = new ArrayList<>();
-                        messageList.add(forwardMesage);
-                        intent.putParcelableArrayListExtra(IntentExtra.FORWARD_MESSAGE_LIST, messageList);
-                        context.startActivity(intent);
-                        return true;
-                    }
-                })
-                .build();
-
-        RongMessageItemLongClickActionManager.getInstance().addMessageItemLongClickAction(action, -1);
-    }
-
     /**
      * 设置通知消息免打扰
      *

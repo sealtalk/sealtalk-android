@@ -36,7 +36,7 @@ public class SelectFriendAdapter extends RecyclerView.Adapter<BaseViewHolder<Con
     public BaseViewHolder<ContactModel> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         BaseViewHolder viewHolder = null;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View itemView = inflater.inflate(viewType, null, false);
+        View itemView = inflater.inflate(viewType, parent, false);
         switch (viewType) {
             case R.layout.select_fragment_friend_item:
                 viewHolder = new CheckableContactViewHolder(itemView, checkableItemClickListener);

@@ -51,16 +51,6 @@
         </cn.rongcloud.im.ui.view.SettingItemView>
 
         <cn.rongcloud.im.ui.view.SettingItemView
-            android:id="@+id/siv_my_wallet"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/seal_mine_setting_item_height"
-            android:layout_marginTop="@dimen/seal_mine_setting_item_margin_top"
-            app:item_content="@string/seal_main_mine_my_wallet"
-            app:item_image="@drawable/seal_ic_mine_wallet">
-
-        </cn.rongcloud.im.ui.view.SettingItemView>
-
-        <cn.rongcloud.im.ui.view.SettingItemView
             android:id="@+id/siv_feedback"
             android:layout_width="match_parent"
             android:layout_height="@dimen/seal_mine_setting_item_height"

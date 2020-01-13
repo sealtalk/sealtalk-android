@@ -20,6 +20,10 @@ import android.widget.ListView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -224,7 +228,19 @@ public class ContactListActivity extends RongBaseNoActionbarActivity {
             }
             UserInfo userInfo = mList.get(position).userInfo;
             if (userInfo != null) {
-                viewHolder.name.setText(userInfo.getName());
+                if (!TextUtils.isEmpty(userInfo.getExtra())) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(userInfo.getExtra());
+                        if (jsonObject.has("displayName")) {
+                            viewHolder.name.setText(jsonObject.getString("displayName"));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        viewHolder.name.setText(userInfo.getName());
+                    }
+                } else {
+                    viewHolder.name.setText(userInfo.getName());
+                }
                 viewHolder.portrait.setAvatar(userInfo.getPortraitUri());
             }
 

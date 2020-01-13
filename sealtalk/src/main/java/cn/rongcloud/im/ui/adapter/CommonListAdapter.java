@@ -21,18 +21,16 @@ import cn.rongcloud.im.viewmodel.CommonListBaseViewModel;
  * 通用列表 Adapter 类。 支持的数据类型为{@link ListItemModel}.
  * Adapter 可更具View 的资源 id 通过 {@link ViewHolderFactory#createViewHolder(int, View)}
  * 方法去获取对应的ViewHolder 进行使用。
- *
+ * <p>
  * 所以要特别注意的是。如果想单独使用此 Adapter 的时候。 需要记得提前在 ViewHolderFactory 中添加展示所需的布局 viewResId
  * 和其对应的 ViewHolder 的映射关系。否则会找不到ViewHolder 的构造， 从而出现崩溃。
- *
+ * <p>
  * 如果是和 {@link CommonListBaseViewModel} 类配合使用的话， 则使用其内部类{@link CommonListBaseViewModel.ModelBuilder}
  * 类进行构造的话， 就会自动添加 View 资源和ViewHolder 的映射关系，则无需手动添加。
- *
  *
  * @see CommonListBaseViewModel
  * @see CommonListBaseViewModel.ModelBuilder
  * @see ListItemModel
- *
  */
 public class CommonListAdapter extends ListWithSideBarBaseAdapter<ListItemModel, BaseItemViewHolder> {
     private List<ListItemModel> data;
@@ -43,8 +41,15 @@ public class CommonListAdapter extends ListWithSideBarBaseAdapter<ListItemModel,
     private CommonListAdapter.OnItemClickListener listener;
     private CommonListAdapter.OnItemLongClickListener longClickListener;
 
+    public static int CHECK_MODE_UNCHECK = 1;// 不启动选择模式
+    private int mCheckMode;
+
     public CommonListAdapter() {
         data = new ArrayList<>();
+    }
+
+    public CommonListAdapter(int checkMode) {
+        this.mCheckMode = checkMode;
     }
 
     @Override
@@ -83,8 +88,10 @@ public class CommonListAdapter extends ListWithSideBarBaseAdapter<ListItemModel,
         holder.setOnClickItemListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                handleSelectedStatusCache(listItemModel);
+                // 非点击选中模式不处理此事件
+                if (mCheckMode != CHECK_MODE_UNCHECK) {
+                    handleSelectedStatusCache(listItemModel);
+                }
                 if (listener != null) {
                     listener.onClick(v, position, listItemModel);
                 }
@@ -107,6 +114,7 @@ public class CommonListAdapter extends ListWithSideBarBaseAdapter<ListItemModel,
 
     /**
      * 处理更新item 的选择状态。如果有其他的处理， 可在子类中对此方法进行复写修改逻辑
+     *
      * @param holder
      * @param checkableContactModel
      * @param type
@@ -121,7 +129,7 @@ public class CommonListAdapter extends ListWithSideBarBaseAdapter<ListItemModel,
                 holder.setChecked(true);
             }
         } else if (type == ListItemModel.ItemView.Type.OTHER.getValue()) {
-            if(selectedOtherIds.contains(checkableContactModel.getId())) {
+            if (selectedOtherIds.contains(checkableContactModel.getId())) {
                 checkableContactModel.setCheckStatus(ListItemModel.CheckStatus.CHECKED);
                 holder.setChecked(true);
             }
@@ -131,6 +139,7 @@ public class CommonListAdapter extends ListWithSideBarBaseAdapter<ListItemModel,
 
     /**
      * 处理更新item 集合的维护状态。如果有其他的处理， 可在子类中对此方法进行复写修改逻辑
+     *
      * @param model
      */
     protected void handleSelectedStatusCache(ListItemModel model) {
@@ -146,11 +155,11 @@ public class CommonListAdapter extends ListWithSideBarBaseAdapter<ListItemModel,
             } else {
                 selectedFriendsIds.add(model.getId());
             }
-        } else if(model.getItemView().getType() == ListItemModel.ItemView.Type.OTHER) {
-            if(model.getCheckStatus() == ListItemModel.CheckStatus.CHECKED
+        } else if (model.getItemView().getType() == ListItemModel.ItemView.Type.OTHER) {
+            if (model.getCheckStatus() == ListItemModel.CheckStatus.CHECKED
                     && !selectedOtherIds.contains(model.getId())) {
                 selectedOtherIds.add(model.getId());
-            } else if(model.getCheckStatus() != ListItemModel.CheckStatus.CHECKED) {
+            } else if (model.getCheckStatus() != ListItemModel.CheckStatus.CHECKED) {
                 selectedOtherIds.remove(model.getId());
             }
         }
@@ -161,7 +170,7 @@ public class CommonListAdapter extends ListWithSideBarBaseAdapter<ListItemModel,
      *
      * @return
      */
-    public List<ListItemModel> getData(){
+    public List<ListItemModel> getData() {
         return data;
     }
 
@@ -201,9 +210,10 @@ public class CommonListAdapter extends ListWithSideBarBaseAdapter<ListItemModel,
     public int getPositionForSection(int sectionIndex) {
         for (int i = 0; i < getItemCount(); i++) {
             final ListItemModel model = data.get(i);
-            final String firstChar = model.getFirstChar();
-            if (!TextUtils.isEmpty(firstChar)) {
-                int index = firstChar.toUpperCase().charAt(0);
+            final String displayName = model.getDisplayName();
+            ListItemModel.ItemView.Type type = model.getItemView().getType();
+            if (!TextUtils.isEmpty(displayName) && type.getValue() == ListItemModel.ItemView.Type.TEXT.getValue()) {
+                int index = displayName.toUpperCase().charAt(0);
                 if (index == sectionIndex) {
                     return i;
                 }
@@ -214,6 +224,7 @@ public class CommonListAdapter extends ListWithSideBarBaseAdapter<ListItemModel,
 
     /**
      * 设置点击监听
+     *
      * @param listener
      */
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -222,9 +233,10 @@ public class CommonListAdapter extends ListWithSideBarBaseAdapter<ListItemModel,
 
     /**
      * 设置长按点击监听
+     *
      * @param listener
      */
-    public void setOnItemLongClickListener(OnItemLongClickListener listener){
+    public void setOnItemLongClickListener(OnItemLongClickListener listener) {
         this.longClickListener = listener;
     }
 
@@ -233,7 +245,7 @@ public class CommonListAdapter extends ListWithSideBarBaseAdapter<ListItemModel,
      *
      * @return
      */
-    public List<String> getSelectedOtherIds(){
+    public List<String> getSelectedOtherIds() {
         return selectedOtherIds;
     }
 
@@ -243,9 +255,10 @@ public class CommonListAdapter extends ListWithSideBarBaseAdapter<ListItemModel,
     public interface OnItemClickListener {
         /**
          * 点击回调方法
+         *
          * @param v
          * @param position 位置
-         * @param data item 的数据
+         * @param data     item 的数据
          */
         void onClick(View v, int position, ListItemModel data);
     }
@@ -256,6 +269,7 @@ public class CommonListAdapter extends ListWithSideBarBaseAdapter<ListItemModel,
     public interface OnItemLongClickListener {
         /**
          * 长按回调方法
+         *
          * @param v
          * @param position
          * @param data

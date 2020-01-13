@@ -101,7 +101,7 @@ public class GridGroupMemberAdapter extends BaseAdapter {
                 usernameTv.setText(groupMember.getName());
             }
 
-            avatarView.setBackgroundResource(R.color.transparent);
+            avatarView.setBackgroundResource(android.R.color.transparent);
             String portraitUri = groupMember.getPortraitUri();
             if(portraitUri != null && !portraitUri.equals(viewHolder.avatarUrl)){
                 ImageLoaderUtils.displayUserPortraitImage(portraitUri, avatarView);

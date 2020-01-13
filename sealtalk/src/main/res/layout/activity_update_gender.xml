@@ -9,7 +9,7 @@
     <cn.rongcloud.im.ui.view.SettingItemView
         android:id="@+id/siv_gender_man"
         android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/base_margin2"
+        android:layout_marginTop="@dimen/seal_common_normal_margin"
         android:layout_height="@dimen/seal_mine_my_account_item_height"
         app:item_content="@string/seal_gender_man"
         app:item_right_image="@drawable/seal_cb_select_friend_pic_btn_selected"

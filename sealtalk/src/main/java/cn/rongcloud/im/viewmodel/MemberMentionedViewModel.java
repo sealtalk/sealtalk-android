@@ -238,7 +238,8 @@ public class MemberMentionedViewModel extends AndroidViewModel {
      * @param member
      */
     public void setMentionMember(GroupMember member) {
-        UserInfo userInfo = new UserInfo(member.getUserId(), member.getName(), Uri.parse(member.getPortraitUri()));
+        String groupMemberName = TextUtils.isEmpty(member.getGroupNickName()) ? member.getName():member.getGroupNickName();
+        UserInfo userInfo = new UserInfo(member.getUserId(), groupMemberName, Uri.parse(member.getPortraitUri()));
         RongMentionManager.getInstance().mentionMember(userInfo);
     }
 

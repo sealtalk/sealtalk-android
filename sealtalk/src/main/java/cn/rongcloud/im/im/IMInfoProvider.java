@@ -8,6 +8,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.Observer;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -284,6 +287,11 @@ public class IMInfoProvider {
                             FriendDetailInfo friendUser = info.getUser();
                             if (friendUser != null) {
                                 io.rong.imlib.model.UserInfo user = new io.rong.imlib.model.UserInfo(friendUser.getId(), friendUser.getNickname(), Uri.parse(friendUser.getPortraitUri()));
+                                if (!TextUtils.isEmpty(info.getDisplayName())){
+                                    JsonObject jsonObject = new JsonObject();
+                                    jsonObject.addProperty("displayName", info.getDisplayName());
+                                    user.setExtra(jsonObject.toString());
+                                }
                                 userInfoList.add(user);
                             }
                         }
@@ -394,7 +402,7 @@ public class IMInfoProvider {
     }
 
     /**
-     * 获取群组成员的原用户信息
+     * 获取群组成员信息，当没有群昵称时使用原用户名，而不是备注名
      *
      * @param groupId
      * @param targetId
@@ -404,7 +412,8 @@ public class IMInfoProvider {
         GroupMember groupMember = dbManager.getGroupMemberDao().getGroupMemberInfoSync(groupId, targetId);
         io.rong.imlib.model.UserInfo userInfo = null;
         if (groupMember != null) {
-            userInfo = new io.rong.imlib.model.UserInfo(groupMember.getUserId(), groupMember.getName(),
+            String groupMemberName = TextUtils.isEmpty(groupMember.getGroupNickName()) ? groupMember.getName() : groupMember.getGroupNickName();
+            userInfo = new io.rong.imlib.model.UserInfo(groupMember.getUserId(), groupMemberName,
                     Uri.parse(groupMember.getPortraitUri()));
         }
         return userInfo;

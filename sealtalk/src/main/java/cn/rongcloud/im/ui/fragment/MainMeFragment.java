@@ -8,8 +8,6 @@ import android.view.View;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.jrmf360.rylib.JrmfClient;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.db.model.UserInfo;
@@ -50,7 +48,6 @@ public class MainMeFragment extends BaseFragment {
         findView(R.id.siv_setting_qrcode, true);
         findView(R.id.siv_setting_account, true);
         sivLanguage = findView(R.id.siv_language, true);
-        findView(R.id.siv_my_wallet, true);
         findView(R.id.siv_feedback, true);
         sivAbout = findView(R.id.siv_about, true);
     }
@@ -113,9 +110,6 @@ public class MainMeFragment extends BaseFragment {
             case R.id.siv_language:
                 startActivity(new Intent(getActivity(), ChangeLanguageActivity.class));
 
-                break;
-            case R.id.siv_my_wallet:
-                JrmfClient.intentWallet(getActivity());
                 break;
             case R.id.siv_feedback:
                 CSCustomServiceInfo.Builder builder = new CSCustomServiceInfo.Builder();

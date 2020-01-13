@@ -630,7 +630,7 @@ public class FriendTask {
                 if (friendDao != null) {
                     friendDao.insertFriendDescription(friendDescription);
                 }
-                if (friendDescription.getDisplayName() != null) {
+                if (!TextUtils.isEmpty(friendDescription.getDisplayName())) {
                     updateAlias(friendId, friendDescription.getDisplayName());
                 }
             }
@@ -780,7 +780,7 @@ public class FriendTask {
             , String phone, String description, Uri imageUri) {
         MediatorLiveData<Resource<Void>> result = new MediatorLiveData<>();
         // 先上传图片文件
-        Log.e("setDesAndUploadImage",imageUri.toString());
+        Log.e("setDesAndUploadImage", imageUri.toString());
         LiveData<Resource<String>> uploadResource = fileManager.uploadCompressImage(imageUri);
         result.addSource(uploadResource, resource -> {
             if (resource.status != Status.LOADING) {

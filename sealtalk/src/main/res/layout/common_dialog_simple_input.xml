@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_margin="10dp"
-        android:background="@color/transparent"
+        android:background="@android:color/transparent"
         android:ellipsize="end"
         android:gravity="center"
         android:maxLength="10"

@@ -58,7 +58,7 @@ public class ConversationFragmentEx extends ConversationFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
-        v.setBackgroundColor(getResources().getColor(R.color.transparent));
+        v.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         rongExtension = (RongExtension) v.findViewById(io.rong.imkit.R.id.rc_extension);
         rongExtension.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override

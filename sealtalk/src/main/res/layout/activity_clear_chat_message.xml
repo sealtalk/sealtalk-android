@@ -48,7 +48,7 @@
                 android:layout_marginLeft="3dp"
                 android:layout_toRightOf="@id/cb_select_all"
                 android:text="@string/seal_clear_chat_message_select_all"
-                android:textColor="@color/black"
+                android:textColor="@color/text_black"
                 android:textSize="@dimen/seal_update_staccount_dialog_title" />
 
         </LinearLayout>

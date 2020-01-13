@@ -25,6 +25,7 @@ import cn.rongcloud.im.ui.activity.NewFriendListActivity;
 import cn.rongcloud.im.ui.activity.PublicServiceActivity;
 import cn.rongcloud.im.ui.activity.UserDetailActivity;
 import cn.rongcloud.im.ui.adapter.CommonListAdapter;
+import cn.rongcloud.im.ui.adapter.ListWithSideBarBaseAdapter;
 import cn.rongcloud.im.ui.adapter.models.FunctionInfo;
 import cn.rongcloud.im.ui.adapter.models.ListItemModel;
 import cn.rongcloud.im.viewmodel.CommonListBaseViewModel;
@@ -45,42 +46,6 @@ public class MainContactsListFragment extends CommonListBaseFragment {
     @Override
     protected void onInitView(Bundle savedInstanceState, Intent intent) {
         super.onInitView(savedInstanceState, intent);
-
-        // Adapter 的点击监听
-        setOnItemClickListener(new CommonListAdapter.OnItemClickListener() {
-            @Override
-            public void onClick(View v, int position, ListItemModel data) {
-                final ListItemModel.ItemView.Type type = data.getItemView().getType();
-                switch (type) {
-                    case FUN:
-                        FunctionInfo functionInfo = (FunctionInfo) data.getData();
-                        handleFunItemClick(functionInfo);
-                        break;
-                    case FRIEND:
-                        FriendShipInfo friendShipInfo = (FriendShipInfo) data.getData();
-                        handleFriendItemClick(friendShipInfo);
-                        break;
-                    default:
-                        //Do nothing
-                        break;
-                }
-            }
-        });
-
-        // 好友长按点击事件
-        setOnItemLongClickListener(new CommonListAdapter.OnItemLongClickListener() {
-            @Override
-            public boolean onLongClick(View v, int position, ListItemModel data) {
-                final ListItemModel.ItemView.Type type = data.getItemView().getType();
-                if(type == ListItemModel.ItemView.Type.FRIEND) {
-                    FriendShipInfo friendShipInfo = (FriendShipInfo) data.getData();
-                    handleFriendItemLongClick(friendShipInfo);
-                    return true;
-                }
-
-                return false;
-            }
-        });
     }
 
 
@@ -157,6 +122,53 @@ public class MainContactsListFragment extends CommonListBaseFragment {
         super.onResume();
     }
 
+    @Override
+    protected ListWithSideBarBaseAdapter getListAdapter() {
+        return createAdapter();
+    }
+
+    /**
+     * 创建 Adapter
+     */
+    private CommonListAdapter createAdapter() {
+        CommonListAdapter listAdapter = new CommonListAdapter(CommonListAdapter.CHECK_MODE_UNCHECK);
+        // Adapter 的点击监听
+        listAdapter.setOnItemClickListener(new CommonListAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(View v, int position, ListItemModel data) {
+                final ListItemModel.ItemView.Type type = data.getItemView().getType();
+                switch (type) {
+                    case FUN:
+                        FunctionInfo functionInfo = (FunctionInfo) data.getData();
+                        handleFunItemClick(functionInfo);
+                        break;
+                    case FRIEND:
+                        FriendShipInfo friendShipInfo = (FriendShipInfo) data.getData();
+                        handleFriendItemClick(friendShipInfo);
+                        break;
+                    default:
+                        //Do nothing
+                        break;
+                }
+            }
+        });
+        // 好友长按点击事件
+        listAdapter.setOnItemLongClickListener(new CommonListAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onLongClick(View v, int position, ListItemModel data) {
+                final ListItemModel.ItemView.Type type = data.getItemView().getType();
+                if (type == ListItemModel.ItemView.Type.FRIEND) {
+                    FriendShipInfo friendShipInfo = (FriendShipInfo) data.getData();
+                    handleFriendItemLongClick(friendShipInfo);
+                    return true;
+                }
+
+                return false;
+            }
+        });
+        return listAdapter;
+    }
+
     /**
      * 处理 好友 item 点击事件
      *
@@ -175,6 +187,7 @@ public class MainContactsListFragment extends CommonListBaseFragment {
 
     /**
      * 处理 好友 item 长按点击事件
+     *
      * @param friendShipInfo
      */
     private void handleFriendItemLongClick(FriendShipInfo friendShipInfo) {
@@ -183,8 +196,8 @@ public class MainContactsListFragment extends CommonListBaseFragment {
 
             @Override
             public void onOptionsItemClicked(int index) {
-                switch (index){
-                    case  0:
+                switch (index) {
+                    case 0:
                         Intent intent = new Intent(getContext(), MultiDeleteFriendsActivity.class);
                         startActivity(intent);
                         break;

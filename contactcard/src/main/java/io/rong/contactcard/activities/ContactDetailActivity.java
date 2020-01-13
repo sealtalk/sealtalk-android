@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -200,6 +201,10 @@ public class ContactDetailActivity extends RongBaseNoActionbarActivity {
                         getUserInfo(RongIMClient.getInstance().getCurrentUserId());
                 String sendUserName = sendUserInfo == null ? "" : sendUserInfo.getName();
                 String friendPortrait = mContactFriend.getPortraitUri() == null ? "" : mContactFriend.getPortraitUri().toString();
+                // 如果为本地地址则直接传 null
+                if (TextUtils.isEmpty(friendPortrait) || friendPortrait.toLowerCase().startsWith("file://")) {
+                    friendPortrait = null;
+                }
                 ContactMessage contactMessage = ContactMessage.obtain(mContactFriend.getUserId(),
                         mContactFriend.getName(), friendPortrait, RongIMClient.getInstance().getCurrentUserId(), sendUserName, "");
                 String pushContent = String.format(RongContext.getInstance().getResources().getString(R.string.rc_recommend_clause_to_me), sendUserName, contactMessage.getName());

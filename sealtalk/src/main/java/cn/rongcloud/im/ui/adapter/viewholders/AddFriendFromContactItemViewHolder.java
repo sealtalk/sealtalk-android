@@ -85,7 +85,7 @@ public class AddFriendFromContactItemViewHolder extends BaseItemViewHolder<ListI
             addTv.setText(R.string.seal_new_friend_added);
             addTv.setPadding(0, 0, 0, 0);
             addTv.setTextColor(context.getResources().getColor(R.color.default_sub_text));
-            addTv.setBackgroundResource(R.color.transparent);
+            addTv.setBackgroundResource(android.R.color.transparent);
             addTv.setOnClickListener(null);
         }
 

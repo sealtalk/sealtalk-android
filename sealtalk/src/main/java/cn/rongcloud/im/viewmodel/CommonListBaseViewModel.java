@@ -2,6 +2,7 @@ package cn.rongcloud.im.viewmodel;
 
 import android.app.Application;
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -260,6 +261,7 @@ public abstract class CommonListBaseViewModel extends AppViewModel {
                     || type == ListItemModel.ItemView.Type.FRIEND
                     || type == ListItemModel.ItemView.Type.OTHER) {
                 String c = "";
+                Log.e("handleFirstChar",model.getFirstChar()+"****"+model.getDisplayName());
                 if (model.getFirstChar() != null && model.getFirstChar().length() > 0) {
                     c = model.getFirstChar().substring(0, 1);
                 }

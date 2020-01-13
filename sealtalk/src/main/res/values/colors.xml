@@ -23,7 +23,8 @@
     <color name="seal_title_bg">#0195ff</color>
     <color name="seal_bg">#f0f0f6</color>
     <color name="seal_title_bar_line">#0083e0</color>
-    <color name="text_hint_gray">#e6e6e6</color>>
+    <color name="text_hint_gray">#e6e6e6</color>
+    <color name="red_dark">#e54141</color>
 
     <color name="common_divider">#dfdfdd</color>
 

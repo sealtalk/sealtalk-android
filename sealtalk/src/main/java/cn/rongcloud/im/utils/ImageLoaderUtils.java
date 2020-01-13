@@ -19,7 +19,7 @@ public class ImageLoaderUtils {
      static {
          privateOptions = createDefaultDisplayOptions(R.drawable.rc_default_portrait);
          groupOptions = createDefaultDisplayOptions(R.drawable.rc_default_group_portrait);
-         descriptionOptions = createDefaultDisplayOptions(R.color.transparent);
+         descriptionOptions = createDefaultDisplayOptions(android.R.color.transparent);
      }
 
     public static void displayUserPortraitImage(String uri, ImageView imageView) {

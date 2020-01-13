@@ -1,5 +1,6 @@
 package cn.rongcloud.im.ui.activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -67,9 +68,13 @@ public class WebViewActivity extends TitleBaseActivity {
         public void onPageStarted(WebView view, String url, Bitmap favicon) {//网页页面开始加载的时候
             if (progressDialog == null) {
                 progressDialog = new ProgressDialog(WebViewActivity.this);
+                progressDialog.setOwnerActivity(WebViewActivity.this);
                 progressDialog.setMessage(getString(R.string.seal_dialog_wait_tips));
-                progressDialog.show();
                 webview.setEnabled(false);// 当加载网页的时候将网页进行隐藏
+            }
+            Activity activity = progressDialog.getOwnerActivity();
+            if (activity != null && !activity.isFinishing()) {
+                progressDialog.show();
             }
             super.onPageStarted(view, url, favicon);
         }
@@ -78,7 +83,10 @@ public class WebViewActivity extends TitleBaseActivity {
         public void onPageFinished(WebView view, String url) {//网页加载结束的时候
             //super.onPageFinished(view, url);
             if (progressDialog != null && progressDialog.isShowing()) {
-                progressDialog.dismiss();
+                Activity activity = progressDialog.getOwnerActivity();
+                if (activity != null && !activity.isFinishing()) {
+                    progressDialog.dismiss();
+                }
                 progressDialog = null;
                 webview.setEnabled(true);
             }

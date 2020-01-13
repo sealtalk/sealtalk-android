@@ -53,7 +53,7 @@
     <cn.rongcloud.im.ui.view.SettingItemView
         android:id="@+id/siv_gender"
         android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/base_margin2"
+        android:layout_marginTop="@dimen/seal_common_normal_margin"
         android:layout_height="@dimen/seal_mine_my_account_item_height"
         app:item_content="@string/seal_mine_my_account_gender"
         >

@@ -11,6 +11,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import cn.rongcloud.im.R;
@@ -209,6 +211,7 @@ public class SelectBaseViewModel extends AndroidViewModel {
         List<ContactModel> output = new ArrayList<>();
         ContactModel model = null;
         String temp = "";
+        sortByFirstChar(input);
         for (FriendShipInfo friendShipInfo : input) {
             if (excludeFriendIdList != null) {
                 if (excludeFriendIdList.contains(friendShipInfo.getUser().getId())) {
@@ -220,18 +223,7 @@ public class SelectBaseViewModel extends AndroidViewModel {
                 continue;
             }
 
-            String firstChar;
-            String groupDisplayName = friendShipInfo.getGroupDisplayName();
-            String displayName = friendShipInfo.getDisplayName();
-            String nameFirstChar = friendShipInfo.getUser().getFirstCharacter();
-            if (!TextUtils.isEmpty(groupDisplayName)) {
-                firstChar = CharacterParser.getInstance().getSpelling(groupDisplayName).substring(0, 1).toUpperCase();
-            } else if (!TextUtils.isEmpty(displayName)) {
-                firstChar = CharacterParser.getInstance().getSpelling(displayName).substring(0, 1).toUpperCase();
-            } else {
-                firstChar = nameFirstChar;
-            }
-
+            String firstChar = getFirstChar(friendShipInfo);
             if (TextUtils.isEmpty(firstChar)) {
                 model = new ContactModel(new CharacterTitleInfo("#"), R.layout.contact_friend_title);
                 temp = "#";
@@ -357,4 +349,45 @@ public class SelectBaseViewModel extends AndroidViewModel {
     public LiveData<Integer> getSelectedCount() {
         return selectedCount;
     }
+
+    /**
+     * 好友首字母排序
+     *
+     * @param models
+     */
+    private void sortByFirstChar(List<FriendShipInfo> models) {
+        Collections.sort(models, new Comparator<FriendShipInfo>() {
+            @Override
+            public int compare(FriendShipInfo lhs, FriendShipInfo rhs) {
+                if (TextUtils.isEmpty(getFirstChar(lhs))) {
+                    return -1;
+                }
+                if (TextUtils.isEmpty(getFirstChar(rhs))) {
+                    return 1;
+                }
+                return getFirstChar(lhs).compareTo(getFirstChar(rhs));
+            }
+        });
+    }
+
+    // 获取首字母
+    private String getFirstChar(FriendShipInfo info) {
+        String firstChar;
+        String groupDisplayName = info.getGroupDisplayName();
+        String displayName = info.getDisplayName();
+        String nameFirstChar = info.getUser().getFirstCharacter();
+        if (!TextUtils.isEmpty(groupDisplayName)) {
+            firstChar = CharacterParser.getInstance().getSpelling(groupDisplayName).substring(0, 1).toUpperCase();
+        } else if (!TextUtils.isEmpty(displayName)) {
+            firstChar = CharacterParser.getInstance().getSpelling(displayName).substring(0, 1).toUpperCase();
+        } else {
+            firstChar = nameFirstChar;
+        }
+        if (TextUtils.isEmpty(firstChar)) {
+            firstChar = "#";
+        }
+        return firstChar;
+    }
+
+
 }

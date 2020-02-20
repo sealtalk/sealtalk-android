@@ -24,7 +24,7 @@ public class IflytekSpeech {
     public static void initSDK (@NonNull Context context, @Nullable String appID) {
         if (SpeechUtility.getUtility() == null) {
             if (appID == null) {
-                appID = "5be142c2"; // 默认的、最初的
+                appID = "5a430817"; // 默认的、最初的
             }
 
             String params = SpeechConstant.APPID + "=" + appID;

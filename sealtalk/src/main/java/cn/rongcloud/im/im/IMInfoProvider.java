@@ -20,6 +20,7 @@ import cn.rongcloud.im.db.dao.GroupDao;
 import cn.rongcloud.im.db.dao.GroupMemberDao;
 import cn.rongcloud.im.db.model.FriendDetailInfo;
 import cn.rongcloud.im.db.model.FriendShipInfo;
+import cn.rongcloud.im.db.model.FriendStatus;
 import cn.rongcloud.im.db.model.GroupEntity;
 import cn.rongcloud.im.db.model.GroupExitedMemberInfo;
 import cn.rongcloud.im.db.model.GroupNoticeInfo;
@@ -284,10 +285,13 @@ public class IMInfoProvider {
                     List<io.rong.imlib.model.UserInfo> userInfoList = new ArrayList<>();
                     if (friendShipInfoList != null) {
                         for (FriendShipInfo info : friendShipInfoList) {
+                            if (info.getStatus() != FriendStatus.IS_FRIEND.getStatusCode()) {
+                                continue;
+                            }
                             FriendDetailInfo friendUser = info.getUser();
                             if (friendUser != null) {
                                 io.rong.imlib.model.UserInfo user = new io.rong.imlib.model.UserInfo(friendUser.getId(), friendUser.getNickname(), Uri.parse(friendUser.getPortraitUri()));
-                                if (!TextUtils.isEmpty(info.getDisplayName())){
+                                if (!TextUtils.isEmpty(info.getDisplayName())) {
                                     JsonObject jsonObject = new JsonObject();
                                     jsonObject.addProperty("displayName", info.getDisplayName());
                                     user.setExtra(jsonObject.toString());

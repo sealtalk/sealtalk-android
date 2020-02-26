@@ -592,4 +592,6 @@
     <string name="contact_multi_delete_friend_conf" formatted="true"><Data><![CDATA[确认后将删除所选好友， <br> 是否确认删除]]></Data></string>
 
     <string name="seal_dialog_wait_tips">请稍后...</string>
+
+    <string name="seal_login_private_service_error">登录失败 Status :34005</string>
 </resources>

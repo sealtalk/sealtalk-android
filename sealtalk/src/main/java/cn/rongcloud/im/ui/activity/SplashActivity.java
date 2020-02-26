@@ -23,10 +23,20 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 处理小米手机按 home 键重新进入会重新打开初始化的页面
+        if (!this.isTaskRoot()) {
+            Intent mainIntent = getIntent();
+            String action = mainIntent.getAction();
+            if (mainIntent.hasCategory(Intent.CATEGORY_LAUNCHER) && action.equals(Intent.ACTION_MAIN)) {
+                finish();
+                return;
+            }
+        }
+
         setContentView(R.layout.activity_splash);
 
         Intent intent = getIntent();
-        if(intent != null){
+        if (intent != null) {
             intentUri = intent.getData();
         }
         initViewModel();
@@ -35,7 +45,7 @@ public class SplashActivity extends BaseActivity {
     /**
      * 初始化ViewModel
      */
-    private  void initViewModel() {
+    private void initViewModel() {
         SplashViewModel splashViewModel = ViewModelProviders.of(this).get(SplashViewModel.class);
         splashViewModel.getAutoLoginResult().observe(this, new Observer<Boolean>() {
             @Override
@@ -45,7 +55,7 @@ public class SplashActivity extends BaseActivity {
                 if (result) {
                     goToMain();
                 } else {
-                    if(intentUri != null){
+                    if (intentUri != null) {
                         ToastUtils.showToast(R.string.seal_qrcode_jump_without_login);
                     }
                     goToLogin();
@@ -81,11 +91,11 @@ public class SplashActivity extends BaseActivity {
         result.observe(this, new Observer<Resource<String>>() {
             @Override
             public void onChanged(Resource<String> resource) {
-                if(resource.status != Status.LOADING){
+                if (resource.status != Status.LOADING) {
                     result.removeObserver(this);
                 }
 
-                if(resource.status == Status.SUCCESS){
+                if (resource.status == Status.SUCCESS) {
                     finish();
                 }
             }

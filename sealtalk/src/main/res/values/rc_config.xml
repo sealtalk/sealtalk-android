@@ -29,4 +29,7 @@
     <!--是否开启合并转发功能-->
     <bool name="rc_enable_send_combine_message">true</bool>
 
+    <!-- 退出客服页面是否关闭客服 -->
+    <bool name="rc_stop_custom_service_when_quit">true</bool>
+
 </resources>

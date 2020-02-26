@@ -26,6 +26,7 @@ import cn.rongcloud.im.utils.ImageLoaderUtils;
 import cn.rongcloud.im.viewmodel.AppViewModel;
 import cn.rongcloud.im.viewmodel.UserInfoViewModel;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imkit.utilities.LangUtils;
 import io.rong.imlib.model.CSCustomServiceInfo;
 
@@ -115,6 +116,10 @@ public class MainMeFragment extends BaseFragment {
                 CSCustomServiceInfo.Builder builder = new CSCustomServiceInfo.Builder();
                 builder.province(getString(R.string.beijing));
                 builder.city(getString(R.string.beijing));
+                io.rong.imlib.model.UserInfo info = RongUserInfoManager.getInstance().getUserInfo(RongIM.getInstance().getCurrentUserId());
+                if (info != null && !TextUtils.isEmpty(info.getName())) {
+                    builder.name(info.getName());
+                }
                 //佳信客服配置
                 builder.referrer("10001");
                 RongIM.getInstance().startCustomerServiceChat(getActivity(), "service", getString(R.string.seal_main_mine_online_custom_service), builder.build());

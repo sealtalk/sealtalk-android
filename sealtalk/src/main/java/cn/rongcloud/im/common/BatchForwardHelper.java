@@ -55,35 +55,10 @@ public class BatchForwardHelper {
                                 || (messageContent instanceof GIFMessage && ((GIFMessage) messageContent).getRemoteUri() == null)) {
                             RongIM.getInstance().sendImageMessage(message, null, null, new SendImageMessageWrapper(wrapper.getCallback()));
                         } else if (messageContent instanceof LocationMessage) {
-                            RongIM.getInstance().sendLocationMessage(message, null, null, null);
+                            RongIM.getInstance().sendLocationMessage(message, null, null, wrapper.getCallback());
                         } else if (messageContent instanceof MediaMessageContent && (((MediaMessageContent) messageContent).getMediaUrl() == null
                                 || TextUtils.isEmpty(((MediaMessageContent) messageContent).getMediaUrl().toString()))) {
-                            RongIM.getInstance().sendMediaMessage(message, null, null, new IRongCallback.ISendMediaMessageCallback() {
-                                @Override
-                                public void onProgress(Message message, int i) {
-
-                                }
-
-                                @Override
-                                public void onCanceled(Message message) {
-
-                                }
-
-                                @Override
-                                public void onAttached(Message message) {
-
-                                }
-
-                                @Override
-                                public void onSuccess(Message message) {
-
-                                }
-
-                                @Override
-                                public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-
-                                }
-                            });
+                            RongIM.getInstance().sendMediaMessage(message, null, null, wrapper.getCallback());
                         } else {
                             RongIM.getInstance().sendMessage(message, null, null, wrapper.getCallback());
                         }

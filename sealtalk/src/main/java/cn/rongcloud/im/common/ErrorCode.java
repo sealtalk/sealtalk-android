@@ -17,6 +17,7 @@ import cn.rongcloud.im.utils.log.SLog;
  */
 public enum ErrorCode {
     API_COMMON_ERROR(400, 0),
+    LOGIN_PRIVATE_SERVICE_ERROR(34005, R.string.seal_login_private_service_error),
     REGION_AND_PHONE_INVALID(SealTalkUrlCode.LOGIN + 400, R.string.seal_login_toast_no_register),
     PHONE_NO_REGISTER(SealTalkUrlCode.LOGIN + 1000, R.string.seal_login_toast_no_register),
     USERNAME_OR_PASSWORD_INVALID(SealTalkUrlCode.LOGIN + 1001, R.string.seal_login_toast_phone_or_psw_error),

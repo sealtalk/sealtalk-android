@@ -2,15 +2,12 @@ package cn.rongcloud.im.viewmodel;
 
 import android.app.Application;
 import android.text.TextUtils;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import cn.rongcloud.im.R;
@@ -25,6 +22,7 @@ import cn.rongcloud.im.ui.adapter.viewholders.CommonFunItemViewHolder;
 import cn.rongcloud.im.ui.adapter.viewholders.CommonTextItemViewHolder;
 import cn.rongcloud.im.ui.adapter.viewholders.ViewHolderFactory;
 import cn.rongcloud.im.ui.fragment.CommonListBaseFragment;
+import cn.rongcloud.im.utils.CharacterParser;
 
 
 /**
@@ -149,24 +147,34 @@ public abstract class CommonListBaseViewModel extends AppViewModel {
      * @param models
      */
     private void sortByFirstChar(List<ListItemModel> models) {
-        Collections.sort(models, new Comparator<ListItemModel>() {
-            @Override
-            public int compare(ListItemModel lhs, ListItemModel rhs) {
-                if (lhs.getItemView().getType() == ListItemModel.ItemView.Type.FUN || lhs.getItemView().getType() == ListItemModel.ItemView.Type.TEXT) {
-                    return -1;
-                } else if (rhs.getItemView().getType() == ListItemModel.ItemView.Type.FUN || rhs.getItemView().getType() == ListItemModel.ItemView.Type.TEXT) {
-                    return 1;
-                } else {
-                    if (TextUtils.isEmpty(lhs.getFirstChar())) {
-                        return -1;
-                    }
-                    if (TextUtils.isEmpty(rhs.getFirstChar())) {
-                        return 1;
-                    }
-                    return lhs.getFirstChar().compareTo(rhs.getFirstChar());
+//        Collections.sort(models, new Comparator<ListItemModel>() {
+//            @Override
+//            public int compare(ListItemModel lhs, ListItemModel rhs) {
+//                if (lhs.getItemView().getType() == ListItemModel.ItemView.Type.FUN || lhs.getItemView().getType() == ListItemModel.ItemView.Type.TEXT) {
+//                    return -1;
+//                } else if (rhs.getItemView().getType() == ListItemModel.ItemView.Type.FUN || rhs.getItemView().getType() == ListItemModel.ItemView.Type.TEXT) {
+//                    return 1;
+//                } else {
+//                    if (TextUtils.isEmpty(lhs.getFirstChar())) {
+//                        return -1;
+//                    }
+//                    if (TextUtils.isEmpty(rhs.getFirstChar())) {
+//                        return 1;
+//                    }
+//                    return lhs.getFirstChar().compareTo(rhs.getFirstChar());
+//                }
+//            }
+//        });
+        List<ListItemModel> tempModels = new ArrayList<>();
+        tempModels.addAll(models);
+        for (int i = 0; i < tempModels.size(); i++) {
+            String firstChar = tempModels.get(i).getFirstChar();
+            if (!TextUtils.isEmpty(firstChar)) {
+                if (!firstChar.substring(0, 1).matches("^[A-Za-z]")) {
+                    models.add(models.remove(models.indexOf(tempModels.get(i))));
                 }
             }
-        });
+        }
     }
 
 
@@ -253,17 +261,20 @@ public abstract class CommonListBaseViewModel extends AppViewModel {
         }
         List<ListItemModel> out = new ArrayList<>();
         String temp = "";
-
         sortByFirstChar(models);
+
         for (ListItemModel model : models) {
             ListItemModel.ItemView.Type type = model.getItemView().getType();
             if (type == ListItemModel.ItemView.Type.GROUP
                     || type == ListItemModel.ItemView.Type.FRIEND
                     || type == ListItemModel.ItemView.Type.OTHER) {
                 String c = "";
-                Log.e("handleFirstChar",model.getFirstChar()+"****"+model.getDisplayName());
                 if (model.getFirstChar() != null && model.getFirstChar().length() > 0) {
-                    c = model.getFirstChar().substring(0, 1);
+                    if (!model.getFirstChar().substring(0, 1).matches("^[A-Za-z]")) {
+                        c = "#";
+                    } else {
+                        c = model.getFirstChar().substring(0, 1);
+                    }
                 }
                 if (TextUtils.isEmpty(c)) {
                     out.add(createTextModel("#"));
@@ -276,6 +287,7 @@ public abstract class CommonListBaseViewModel extends AppViewModel {
             out.add(model);
         }
 
+//        sortByFirstChar(out);
         return out;
     }
 

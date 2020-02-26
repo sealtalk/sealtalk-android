@@ -590,4 +590,6 @@
         </string>
 
     <string name="seal_dialog_wait_tips">Please wait...</string>
+
+    <string name="seal_login_private_service_error">Login Fail Status :34005</string>
 </resources>

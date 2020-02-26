@@ -1444,11 +1444,17 @@ public class IMManager {
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
                 SLog.e(LogTag.IM, "connect error - code:" + errorCode.getValue() + ", msg:" + errorCode.getMessage());
-                if (callback != null) {
-                    callback.onFail(errorCode.getValue());
+                if (errorCode == RongIMClient.ErrorCode.RC_CONN_REDIRECTED) {
+                    // 重定向错误，直接调用重新连接
+                    connectIM(token,getTokenOnIncorrect,callback);
                 } else {
-                    // do nothing
+                    if (callback != null) {
+                        callback.onFail(errorCode.getValue());
+                    } else {
+                        // do nothing
+                    }
                 }
+
             }
         });
     }

@@ -1,7 +1,6 @@
 package cn.rongcloud.im.viewmodel;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
@@ -129,7 +128,6 @@ public class MainContactsListViewModel extends CommonListBaseViewModel {
                         friendDetailInfo.setRegion(data.getRegion());
                         info.setUser(friendDetailInfo);
                         mySelfInfo = info;
-                        Log.e("handleFirstChar post","1****"+resource.status);
                         post(getFunctionList(), mySelfInfo, friendList);
                     }
                 }
@@ -150,7 +148,6 @@ public class MainContactsListViewModel extends CommonListBaseViewModel {
                                 friendList.add(data);
                             }
                         }
-                        Log.e("handleFirstChar post","2****"+listResource.status);
                         post(getFunctionList(), mySelfInfo, friendList);
                     }
                 }
@@ -161,9 +158,6 @@ public class MainContactsListViewModel extends CommonListBaseViewModel {
 
     private void post(List<ListItemModel> funs, FriendShipInfo myself, List<FriendShipInfo> friendShipInfos) {
         ModelBuilder builder = new ModelBuilder();
-        for (FriendShipInfo info:friendShipInfos){
-            Log.e("handleFirstChar post",info.getUser().getFirstCharacter()+"****"+info.getUser().getNickname());
-        }
         builder.addFriendList(friendShipInfos);
         builder.buildFirstChar();
         if (myself != null) {

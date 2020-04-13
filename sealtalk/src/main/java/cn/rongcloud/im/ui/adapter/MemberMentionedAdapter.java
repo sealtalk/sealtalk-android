@@ -64,10 +64,7 @@ public class MemberMentionedAdapter extends BaseAdapter  implements SectionIndex
         if (member != null) {
             String name = member.getGroupNickName();
             if (TextUtils.isEmpty(name)) {
-                name = member.getAlias();
-                if (TextUtils.isEmpty(name)) {
-                    name = member.getName();
-                }
+                name = member.getName();
             }
             viewHolder.name.setText(name);
             if (!TextUtils.isEmpty(member.getPortraitUri())) {

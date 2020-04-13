@@ -17,7 +17,7 @@ public interface GroupMemberDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertGroupMemberList(List<GroupMemberInfoEntity> groupMemberInfoEntities);
 
-    @Query("SELECT group_member.user_id, group_member.group_id, group_member.nickname, group_member.role, group_member.join_time, nickname_spelling,user.name, user.name_spelling, user.portrait_uri, user.alias" +
+    @Query("SELECT group_member.user_id, group_member.group_id, group_member.nickname, group_member.role, group_member.join_time, nickname_spelling,user.name, user.name_spelling, user.portrait_uri" +
             " FROM group_member " +
             "INNER JOIN user ON group_member.user_id = user.id " +
             "where group_id=:groupId " +
@@ -56,4 +56,18 @@ public interface GroupMemberDao {
 
     @Query("update group_member set nickname=:value where group_id=:groupId And user_id=:userId")
     void updateMemberNickName(String value, String groupId, String userId);
+
+    @Query("SELECT group_member.user_id, group_member.group_id, group_member.nickname, group_member.role, group_member.join_time, nickname_spelling,user.name, user.name_spelling, user.portrait_uri, user.alias" +
+            " FROM group_member " +
+            "INNER JOIN user ON group_member.user_id = user.id " +
+            "where group_id=:groupId and " +
+            "(" +
+            "user.name like '%' || :matchSearch || '%'" +
+            "OR user.name_spelling like '%$' || :matchSearch || '%' " +
+            "OR user.name_spelling_initial  like '%' || :matchSearch || '%' " +
+            "OR group_member.nickname like '%' || :matchSearch || '%' " +
+            "OR group_member.nickname_spelling like '%' || :matchSearch || '%' " +
+            ") " +
+            "ORDER BY user.order_spelling")
+    LiveData<List<GroupMember>> searchGroupMember(String groupId, String matchSearch);
 }

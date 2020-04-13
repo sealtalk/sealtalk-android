@@ -115,15 +115,9 @@ public class SealSearchViewModel extends AndroidViewModel {
     }
 
     public void searchGroupByName(String match) {
-        SLog.i(TAG, "searchGroupByName match: " + match);
-        groupMatchbyName = match;
-        groupSearhByName.setSource(groupTask.searchGroupByName(match));
-    }
-
-    public void searchGroupContactByName(String match) {
         SLog.i(TAG, "searchGroupContactByName match: " + match);
         groupContactMatchByName = match;
-        groupContactSearhByName.setSource(groupTask.searchGroupContactByName(match));
+        groupContactSearhByName.setSource(groupTask.searchGroupByName(match));
     }
 
     /**

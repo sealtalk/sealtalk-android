@@ -1,7 +1,6 @@
 package cn.rongcloud.im.ui.fragment;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +51,7 @@ public class SearchGroupByNameFragment extends SearchBaseFragment {
     public void search(String search) {
         super.search(search);
         if (viewModel != null) {
-            viewModel.searchGroupContactByName(search);
+            viewModel.searchGroupByName(search);
             lastSearchWord = search;
         }
     }

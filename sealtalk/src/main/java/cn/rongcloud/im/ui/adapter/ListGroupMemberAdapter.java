@@ -59,8 +59,6 @@ public class ListGroupMemberAdapter extends BaseAdapter {
 
         if (!TextUtils.isEmpty(groupNickName)) {
             holder.userInfoUiv.setName(groupNickName);
-        } else if(!TextUtils.isEmpty(groupMember.getAlias())) {
-            holder.userInfoUiv.setName(groupMember.getAlias());
         } else {
             holder.userInfoUiv.setName(groupMember.getName());
         }

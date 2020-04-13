@@ -202,10 +202,7 @@ public class IMInfoProvider {
                     for (GroupMember member : data) {
                         String name = member.getGroupNickName();
                         if (TextUtils.isEmpty(name)) {
-                            name = member.getAlias();
-                            if (TextUtils.isEmpty(name)) {
-                                name = member.getName();
-                            }
+                            name = member.getName();
                         }
 
                         io.rong.imlib.model.UserInfo info = new io.rong.imlib.model.UserInfo(member.getUserId(), name, Uri.parse(member.getPortraitUri()));

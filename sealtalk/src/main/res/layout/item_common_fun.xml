@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/ll_frienditem"
+    android:id="@+id/ll_contact_item"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/seal_contact_friend_item_height"
+    android:layout_height="@dimen/seal_contact_item_height"
     android:background="@drawable/seal_bg_list_item"
     android:orientation="horizontal"
     >

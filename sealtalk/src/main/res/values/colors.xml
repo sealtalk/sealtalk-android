@@ -45,8 +45,8 @@
     <color name="seal_contact_content_bg">#0ff</color>
     <color name="seal_contact_rv_bg">#ebebeb</color>
     <color name="seal_contact_dialog_text_color">#ffffffff</color>
-    <color name="seal_contact_friend_item_name_bg">#353535</color>
-    <color name="seal_contact_friend_devi_color">#ccc</color>
+    <color name="seal_contact_item_name_bg">#353535</color>
+    <color name="seal_contact_devi_color">#ccc</color>
 
     <color name="seal_main_title_bg">#0195ff</color>
     <color name="seal_main_title_more_text_color">#353535</color>

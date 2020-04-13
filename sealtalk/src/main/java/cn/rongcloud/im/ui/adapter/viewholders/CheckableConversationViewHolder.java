@@ -29,7 +29,7 @@ public class CheckableConversationViewHolder extends CheckableBaseViewHolder<Che
         super(itemView);
         mContext = itemView.getContext();
         protraitImageView = itemView.findViewById(R.id.iv_portrait);
-        nameTextView = itemView.findViewById(R.id.tv_friendname);
+        nameTextView = itemView.findViewById(R.id.tv_contact_name);
         checkBox = itemView.findViewById(R.id.cb_select);
         mListener = listener;
         itemView.setOnClickListener(new View.OnClickListener() {

@@ -40,8 +40,6 @@ public class GroupMember {
     private String name;
     @ColumnInfo(name = "name_spelling")
     private String nameSpelling;
-    @ColumnInfo(name = "alias")
-    private String alias;
     @ColumnInfo(name = "role")
     private int role;
     @ColumnInfo(name = "join_time")
@@ -102,14 +100,6 @@ public class GroupMember {
 
     public void setNameSpelling(String nameSpelling) {
         this.nameSpelling = nameSpelling;
-    }
-
-    public String getAlias() {
-        return alias;
-    }
-
-    public void setAlias(String alias) {
-        this.alias = alias;
     }
 
     public int getRole() {

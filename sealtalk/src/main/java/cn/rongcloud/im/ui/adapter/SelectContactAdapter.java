@@ -17,11 +17,11 @@ import cn.rongcloud.im.ui.adapter.viewholders.CheckableContactViewHolder;
 import cn.rongcloud.im.ui.adapter.viewholders.TitleViewHolder;
 import cn.rongcloud.im.ui.interfaces.OnCheckContactClickListener;
 
-public class SelectFriendAdapter extends RecyclerView.Adapter<BaseViewHolder<ContactModel>> {
+public class SelectContactAdapter extends RecyclerView.Adapter<BaseViewHolder<ContactModel>> {
     private List<ContactModel> data;
     private OnCheckContactClickListener checkableItemClickListener;
 
-    public SelectFriendAdapter(OnCheckContactClickListener onContactItemClickListener) {
+    public SelectContactAdapter(OnCheckContactClickListener onContactItemClickListener) {
         this.data = new ArrayList<ContactModel>();
         this.checkableItemClickListener = onContactItemClickListener;
     }
@@ -38,10 +38,10 @@ public class SelectFriendAdapter extends RecyclerView.Adapter<BaseViewHolder<Con
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate(viewType, parent, false);
         switch (viewType) {
-            case R.layout.select_fragment_friend_item:
+            case R.layout.select_fragment_contact_item:
                 viewHolder = new CheckableContactViewHolder(itemView, checkableItemClickListener);
                 break;
-            case R.layout.contact_friend_title:
+            case R.layout.contact_contact_title:
                 viewHolder = new TitleViewHolder(itemView);
                 break;
             default:

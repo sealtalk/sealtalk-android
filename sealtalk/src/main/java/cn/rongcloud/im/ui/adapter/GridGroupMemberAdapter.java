@@ -95,9 +95,7 @@ public class GridGroupMemberAdapter extends BaseAdapter {
             String groupNickName = groupMember.getGroupNickName();
             if (!TextUtils.isEmpty(groupNickName)) {
                 usernameTv.setText(groupNickName);
-            } else if(!TextUtils.isEmpty(groupMember.getAlias())) {
-                usernameTv.setText(groupMember.getAlias());
-            }else {
+            } else {
                 usernameTv.setText(groupMember.getName());
             }
 

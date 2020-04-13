@@ -64,13 +64,11 @@ public class MemberMentionedViewModel extends AndroidViewModel {
                         member.setUserId(info.getUserId());
                         member.setName(info.getName());
                         member.setGroupNickName(info.getGroupNickName());
-                        member.setAlias(info.getAlias());
                         member.setPortraitUri(info.getPortraitUri());
                         String sortString = "#";
                         //汉字转换成拼音
                         String displayName = TextUtils.isEmpty(info.getGroupNickName())?
-                                (TextUtils.isEmpty(info.getAlias()) ? info.getName() : info.getAlias())
-                                : info.getGroupNickName();
+                                info.getName() : info.getGroupNickName();
                         String pinyin = CharacterParser.getInstance().getSpelling(displayName);
                         if (pinyin != null) {
                             if (pinyin.length() > 0) {

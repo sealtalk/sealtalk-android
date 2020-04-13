@@ -68,14 +68,6 @@ public interface GroupDao {
             "order by name_spelling ")
     LiveData<List<GroupEntity>> searchGroupByName(String matchSearch);
 
-    @Query("SELECT * " +
-            "from `group` " +
-            "where is_in_contact = 1 and (name like '%' || :matchSearch || '%' " +
-            "OR name_spelling like '%' || :matchSearch || '%' " +
-            "OR name_spelling_initial like '%' || :matchSearch || '%' )" +
-            "order by name_spelling ")
-    LiveData<List<GroupEntity>> searchGroupContactByName(String matchSearch);
-
     @Query("SELECT * FROM `group` WHERE id IN (:groupIds)")
     List<GroupEntity> getGroupInfoListSync(String[] groupIds);
 

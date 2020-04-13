@@ -619,7 +619,6 @@ public class GroupTask {
 
                 GroupMemberDao groupMemberDao = dbManager.getGroupMemberDao();
                 UserDao userDao = dbManager.getUserDao();
-                FriendDao friendDao = dbManager.getFriendDao();
 
                 // 获取新数据前清除掉原成员信息
                 if (groupMemberDao != null) {
@@ -636,19 +635,10 @@ public class GroupTask {
 
                     // 默认优先显示群备注名。当没有群备注时，则看此用户为当前用户的好友，如果是好友则显示备注名称。其次再试显示用户名
                     String displayName = TextUtils.isEmpty(info.getDisplayName()) ? "" : info.getDisplayName();
-                    String cacheName = displayName;
+                    String nameInKitCache = displayName;
 
-                    if (TextUtils.isEmpty(cacheName)) {
-                        // Kit 缓存中是需要优先显示备注备注的
-                        FriendShipInfo friendInfoSync = friendDao.getFriendInfoSync(user.getId());
-                        if (friendInfoSync != null) {
-                            cacheName = friendInfoSync.getDisplayName();
-                            if (TextUtils.isEmpty(cacheName)) {
-                                cacheName = friendInfoSync.getUser().getNickname();
-                            }
-                        } else {
-                            cacheName = user.getName();
-                        }
+                    if (TextUtils.isEmpty(nameInKitCache)) {
+                        nameInKitCache = user.getName();
                     }
 
                     groupEntity.setNickName(displayName);
@@ -661,7 +651,7 @@ public class GroupTask {
                     groupEntityList.add(groupEntity);
 
                     // 更新 IMKit 缓存群组成员数据
-                    IMManager.getInstance().updateGroupMemberInfoCache(groupId, user.getId(), cacheName);
+                    IMManager.getInstance().updateGroupMemberInfoCache(groupId, user.getId(), nameInKitCache);
 
                     if (userDao != null) {
                         // 更新已存在的用户信息
@@ -748,6 +738,14 @@ public class GroupTask {
         return null;
     }
 
+    public LiveData<List<GroupMember>> searchGroupMemberInDB(final String groupId, String searchKey) {
+        GroupMemberDao groupMemberDao = dbManager.getGroupMemberDao();
+        if (groupMemberDao != null) {
+            return groupMemberDao.searchGroupMember(groupId, searchKey);
+        }
+        return null;
+    }
+
     public LiveData<List<SearchGroupMember>> searchGroup(String match) {
         return dbManager.getGroupDao().searchGroup(match);
     }
@@ -755,11 +753,6 @@ public class GroupTask {
     public LiveData<List<GroupEntity>> searchGroupByName(String match) {
         return dbManager.getGroupDao().searchGroupByName(match);
     }
-
-    public LiveData<List<GroupEntity>> searchGroupContactByName(String match) {
-        return dbManager.getGroupDao().searchGroupContactByName(match);
-    }
-
 
     /**
      * 删除管理员

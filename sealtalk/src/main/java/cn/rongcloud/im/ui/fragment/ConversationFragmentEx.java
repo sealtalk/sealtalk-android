@@ -162,6 +162,7 @@ public class ConversationFragmentEx extends ConversationFragment {
             onExtensionChangeListener.onPluginToggleClick(v, extensionBoard);
         }
         setMessageListLast();
+        hideReferenceView();
     }
 
     @Override
@@ -199,6 +200,7 @@ public class ConversationFragmentEx extends ConversationFragment {
             return;
         }
 
+        if (isSendReferenceMsg(text)) return;
         TextMessage textMessage = TextMessage.obtain(text);
 
         // 当是阅后即焚消息时，设置焚烧时间

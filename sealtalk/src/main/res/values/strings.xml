@@ -379,7 +379,7 @@
     <string name="seal_select_forward_create_new_chat">创建一个新聊天</string>
     <string name="seal_select_forward_select_group">选择一个群</string>
     <string name="seal_select_forward_message_recent_chat">最近聊天</string>
-    <string name="seal_selected_contact_title">确定发送给：</string>
+    <string name="seal_selected_contact_title">发送给：</string>
     <string name="seal_multi_selected_contact_title">分别发送给：</string>
     <string name="seal_group_tag_all">全员</string>
     <string name="seal_group_tag_company">公司</string>

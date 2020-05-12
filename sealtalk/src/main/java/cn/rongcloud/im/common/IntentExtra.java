@@ -40,6 +40,10 @@ public class IntentExtra {
 
     public final static String FORWARD_MESSAGE_LIST = "forward_message_list";
 
+    public final static String FORWARD_MESSAGE_ID_LIST = "messageIds";
+
+    public final static String BOOLEAN_FORWARD_USE_SDK = "forward_use_sdk";
+
     public static final String GROUP_ID = "group_id";
 
     public static final String GROUP_NICK_NAME = "group_nick_name";

@@ -17,6 +17,7 @@ import cn.rongcloud.im.db.model.GroupEntity;
 import cn.rongcloud.im.ui.view.UserInfoItemView;
 import cn.rongcloud.im.utils.ImageLoaderUtils;
 import io.rong.imkit.widget.AsyncImageView;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
 import io.rong.message.FileMessage;
@@ -32,6 +33,7 @@ public class ForwardDialog extends CommonDialog {
     private ArrayList<GroupEntity> groupList;
     private ArrayList<FriendShipInfo> friendList;
     private ArrayList<Message> messageList;
+    private ArrayList<Integer> messageIdList;
 
     @Override
     protected View onCreateContentView(ViewGroup container) {
@@ -46,6 +48,7 @@ public class ForwardDialog extends CommonDialog {
             messageList = expandParams.getParcelableArrayList(IntentExtra.FORWARD_MESSAGE_LIST);
             groupList = expandParams.getParcelableArrayList(IntentExtra.GROUP_LIST);
             friendList = expandParams.getParcelableArrayList(IntentExtra.FRIEND_LIST);
+            messageIdList = expandParams.getIntegerArrayList(IntentExtra.FORWARD_MESSAGE_ID_LIST);
         }
 
         int groupSize = groupList == null ? 0 : groupList.size();
@@ -62,7 +65,7 @@ public class ForwardDialog extends CommonDialog {
 
             if (friendList != null && friendList.size() > 0) {
                 final FriendShipInfo friendShipInfo = friendList.get(0);
-                selectSingleUiv.setName(TextUtils.isEmpty(friendShipInfo.getDisplayName()) ?  friendShipInfo.getUser().getNickname() : friendShipInfo.getDisplayName());
+                selectSingleUiv.setName(TextUtils.isEmpty(friendShipInfo.getDisplayName()) ? friendShipInfo.getUser().getNickname() : friendShipInfo.getDisplayName());
                 ImageLoaderUtils.displayGroupPortraitImage(friendShipInfo.getUser().getPortraitUri(), selectSingleUiv.getHeaderImageView());
             }
 
@@ -92,9 +95,36 @@ public class ForwardDialog extends CommonDialog {
             }
         }
 
-        if (messageList != null) {
+        if (messageList != null && messageList.size() > 0) {
             String content = "...";
-            final Message message = messageList.get(0);
+            Message message = messageList.get(0);
+            content = getMessageContent(message);
+            if (messageList.size() > 1) {
+                content = content + "...";
+            }
+            messageTv.setText(content);
+        } else if (messageIdList != null && messageIdList.size() > 0) {
+            RongIMClient.getInstance().getMessage(messageIdList.get(0), new RongIMClient.ResultCallback<Message>() {
+                @Override
+                public void onSuccess(Message message) {
+                    String content = getMessageContent(message);
+                    if (messageIdList.size() > 1) {
+                        content = content + "...";
+                    }
+                    messageTv.setText(content);
+                }
+
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+                }
+            });
+        }
+        return view;
+    }
+
+    private String getMessageContent(Message message) {
+        String content = "";
+        if (message != null) {
             final MessageContent messageContent = message.getContent();
             if (messageContent instanceof TextMessage) {
                 content = ((TextMessage) message.getContent()).getContent();
@@ -109,14 +139,8 @@ public class ForwardDialog extends CommonDialog {
             } else if (messageContent instanceof SightMessage) {
                 content = getString(R.string.rc_message_content_sight);
             }
-
-            if (messageList.size() > 1) {
-                content = content + "...";
-            }
-            messageTv.setText(content);
         }
-
-        return view;
+        return content;
     }
 
 

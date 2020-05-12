@@ -260,6 +260,7 @@ public class QrCodeDisplayActivity extends TitleBaseActivity implements View.OnC
             messageList.add(message);
             intent.putParcelableArrayListExtra(IntentExtra.FORWARD_MESSAGE_LIST, messageList);
             intent.putExtra(IntentExtra.BOOLEAN_ENABLE_TOAST, false);
+            intent.putExtra(IntentExtra.BOOLEAN_FORWARD_USE_SDK, false);
             startActivityForResult(intent, REQUEST_CODE_FORWARD_TO_SEALTALK);
         } else {
             if (!checkHasStoragePermission()) {

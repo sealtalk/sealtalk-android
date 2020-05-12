@@ -53,20 +53,29 @@ public class ForwardActivityViewModel extends AndroidViewModel {
         return isSingleLiveData;
     }
 
+    public void ForwardMessage(Activity activity, List<GroupEntity> groupEntityList, List<FriendShipInfo> friendShipInfoList, List<Message> messageList) {
+        ForwardMessage(activity, groupEntityList, friendShipInfoList, messageList, true);
+    }
 
-    public void ForwardMessage(Activity activity, List<GroupEntity> groupEntityList, List<FriendShipInfo> friendShipInfoList, List<Message> messageListe) {
+    public void ForwardMessage(Activity activity, List<GroupEntity> groupEntityList, List<FriendShipInfo> friendShipInfoList, List<Message> messageList, boolean useSDKForward) {
         ArrayList<Conversation> conversationList = new ArrayList<>();
         if (groupEntityList != null) {
             for (GroupEntity groupEntity : groupEntityList) {
-//                forwardMessage(Conversation.ConversationType.GROUP, groupEntity.getId(), messageListe);
-                conversationList.add(Conversation.obtain(Conversation.ConversationType.GROUP, groupEntity.getId(), ""));
+                if (useSDKForward) {
+                    conversationList.add(Conversation.obtain(Conversation.ConversationType.GROUP, groupEntity.getId(), ""));
+                } else {
+                    forwardMessage(Conversation.ConversationType.GROUP, groupEntity.getId(), messageList);
+                }
             }
 
         }
         if (friendShipInfoList != null) {
             for (FriendShipInfo friendShipInfo : friendShipInfoList) {
-//                forwardMessage(Conversation.ConversationType.PRIVATE, friendShipInfo.getUser().getId(), messageListe);
-                conversationList.add(Conversation.obtain(Conversation.ConversationType.PRIVATE, friendShipInfo.getUser().getId(), ""));
+                if (useSDKForward) {
+                    conversationList.add(Conversation.obtain(Conversation.ConversationType.PRIVATE, friendShipInfo.getUser().getId(), ""));
+                } else {
+                    forwardMessage(Conversation.ConversationType.PRIVATE, friendShipInfo.getUser().getId(), messageList);
+                }
             }
         }
         if (conversationList.size() > 0) {

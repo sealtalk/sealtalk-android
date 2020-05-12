@@ -76,6 +76,11 @@ public class ForwardActivity extends TitleBaseActivity {
      */
     private boolean enableResultToast = true;
 
+    /**
+     * 使用融云自带的转发功能
+     */
+    private boolean enableSDKForward = true;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +88,7 @@ public class ForwardActivity extends TitleBaseActivity {
         Intent intent = getIntent();
         messageList = intent.getParcelableArrayListExtra(IntentExtra.FORWARD_MESSAGE_LIST);
         enableResultToast = intent.getBooleanExtra(IntentExtra.BOOLEAN_ENABLE_TOAST, true);
+        enableSDKForward = intent.getBooleanExtra(IntentExtra.BOOLEAN_FORWARD_USE_SDK, true);
         initView();
         initViewModel();
     }
@@ -107,7 +113,7 @@ public class ForwardActivity extends TitleBaseActivity {
             }
         });
         getTitleBar().setType(SEARCH);
-        getTitleBar().setOnBtnRightClickListener(getString(R.string.seal_select_forward_contact_multi),new View.OnClickListener() {
+        getTitleBar().setOnBtnRightClickListener(getString(R.string.seal_select_forward_contact_multi), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (selectPageIndex == Type.SINGLE.getValue()) {
@@ -145,6 +151,7 @@ public class ForwardActivity extends TitleBaseActivity {
 
     /**
      * 单选页面和多选页面的切换
+     *
      * @param type
      */
     private void changeSelectPage(Type type) {
@@ -164,9 +171,9 @@ public class ForwardActivity extends TitleBaseActivity {
     }
 
 
-
     /**
      * 显示framgne
+     *
      * @param index 下标, 可通过 Type 的getValue() 获取对应 fragment 的 index
      */
     private void showFragment(int index) {
@@ -198,6 +205,7 @@ public class ForwardActivity extends TitleBaseActivity {
 
     /**
      * 创建fragment
+     *
      * @param index
      * @return
      */
@@ -237,15 +245,22 @@ public class ForwardActivity extends TitleBaseActivity {
 
     /**
      * 转发给多人的 dialog
+     *
      * @param groups
      * @param friendShipInfos
      */
     private void showForwardDialog(List<GroupEntity> groups, List<FriendShipInfo> friendShipInfos, List<Message> messageList) {
         ForwardDialog.Builder builder = new ForwardDialog.Builder();
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(IntentExtra.GROUP_LIST, groups == null? null : (ArrayList<GroupEntity>) groups);
-        bundle.putParcelableArrayList(IntentExtra.FRIEND_LIST, friendShipInfos == null? null : (ArrayList<FriendShipInfo>) friendShipInfos);
-        bundle.putParcelableArrayList(IntentExtra.FORWARD_MESSAGE_LIST, (ArrayList<Message>)messageList);
+        bundle.putParcelableArrayList(IntentExtra.GROUP_LIST, groups == null ? null : (ArrayList<GroupEntity>) groups);
+        bundle.putParcelableArrayList(IntentExtra.FRIEND_LIST, friendShipInfos == null ? null : (ArrayList<FriendShipInfo>) friendShipInfos);
+        bundle.putParcelableArrayList(IntentExtra.FORWARD_MESSAGE_LIST, (ArrayList<Message>) messageList);
+        if (enableSDKForward) {
+            Intent intent = getIntent();
+            if (intent != null) {
+                bundle.putIntegerArrayList(IntentExtra.FORWARD_MESSAGE_ID_LIST, intent.getIntegerArrayListExtra(IntentExtra.FORWARD_MESSAGE_ID_LIST));
+            }
+        }
         builder.setExpandParams(bundle);
         builder.setDialogButtonClickListener(new CommonDialog.OnDialogButtonClickListener() {
             @Override
@@ -267,6 +282,7 @@ public class ForwardActivity extends TitleBaseActivity {
 
     /**
      * 搜索
+     *
      * @param filterText
      */
     private void search(String filterText) {
@@ -288,10 +304,10 @@ public class ForwardActivity extends TitleBaseActivity {
         } else {
             if (selectPageIndex == Type.SINGLE.getValue()) {
                 showFragment(Type.SINGLE.getValue());
-                ((ForwardSingleFragment)fragments[Type.SINGLE.getValue()]).search(filterText);
+                ((ForwardSingleFragment) fragments[Type.SINGLE.getValue()]).search(filterText);
             } else {
                 showFragment(Type.MULTI.getValue());
-                ((ForwardMultiFragment)fragments[Type.MULTI.getValue()]).search(filterText);
+                ((ForwardMultiFragment) fragments[Type.MULTI.getValue()]).search(filterText);
             }
         }
     }
@@ -357,7 +373,7 @@ public class ForwardActivity extends TitleBaseActivity {
      */
     private void forwardMessage(List<GroupEntity> groups, List<FriendShipInfo> friends, List<Message> messageList) {
         if (forwardActivityViewModel != null) {
-            forwardActivityViewModel.ForwardMessage(ForwardActivity.this,groups, friends, messageList);
+            forwardActivityViewModel.ForwardMessage(ForwardActivity.this, groups, friends, messageList, enableSDKForward);
         }
     }
 

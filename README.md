@@ -15,20 +15,15 @@ SealTalk 自从 1.3.14 版本起，CallLib 模块引用的音视频引擎已替�
 * 一行代码搞定 [客服](http://rongcloud.cn/customservice)? 你没有听错,比你想象的还要简单。
 
 ## 运行 SealTalk-Android
-1.  替换 SealTalkUrl.java 中的 DOMAIN 常量值为您所部署的 SealTalk 服务地址。  
+1.  替换 sealtalk 中 gradle.properties 中的 SEALTALK_SERVER 值为您所部署的 SealTalk 服务地址。
 ```
-public class SealTalkUrl {
-    public static final String DOMAIN = 这里请替换为您所部署的 SealTalk Server 地址;
+    SEALTALK_SERVER="这里请替换为您所部署的 SealTalk Server 地址"
 ```
-2. 替换 IMManager.java 中，init 方法中调用融云初始化的代码 RongIM.init 替换为您所申请的融云 AppKey。  
+2.  替换 sealtalk 中 gradle.properties 中的 SEALTALK_APP_KEY 替换为您所申请的融云 AppKey。
 ```
-    private void initRongIM(Context context) {
-        ...
-        
-        // 可在初始 SDK 时直接带入融云 IM 申请的APP KEY
-        RongIM.init(context, 这里请替换为您的融云 AppKey, true);
+    SEALTALK_APP_KEY="这里请替换为您的融云 AppKey"
 ```
-3. 若使用第三方推送，请参考 IMManager.java 中 initPush 方法，打开注释并替换成您申请的各平台的推送信息
+3. 若使用第三方推送，请参考 IMManager.java 中 initPush 方法，打开注释并在 sealtalk 中 gradle.properties 中各个平台参数替换成您申请的各平台的推送信息
 ```
     /**
      * 初始化推送
@@ -42,15 +37,15 @@ public class SealTalkUrl {
         //PushConfig config = new PushConfig
         //        .Builder()
         //        .enableHWPush(true)        // 在 AndroidManifest.xml 中搜索 com.huawei.hms.client.appid 进行设置
-        //        .enableMiPush("替换为您的小米推送 AppId", "替换为您的小米推送 AppKey")
-        //        .enableMeiZuPush("替换为您的魅族推送 AppId", "替换为您的魅族推送 AppKey")
+        //        .enableMiPush(BuildConfig.SEALTALK_MI_PUSH_APPID, BuildConfig.SEALTALK_MI_PUSH_APPKEY)
+        //        .enableMeiZuPush(BuildConfig.SEALTALK_MIZU_PUSH_APPID, BuildConfig.SEALTALK_MIZU_PUSH_APPKEY)
         //        .enableVivoPush(true)     // 在 AndroidManifest.xml 中搜索 com.vivo.push.api_key 和 com.vivo.push.app_id 进行设置
-        //        .enableFCM(true)          // 打开 build.gradle 和 AndroidManifest.xml 中的相关注释，并在 google-services.json 文件中进行配置
+        //        .enableFCM(true)          // 在 google-services.json 文件中进行配置
         //        .build();
         //RongPushClient.setPushConfig(config);
     }
 ```
-若您要接入 FCM 推送，需要做以下几步工作:
+4. 若您要接入 FCM 推送，需要做以下几步工作:
 * 打开 AndroidManifest.xml 解除掉以下注释。
 ```
 <!-- [START firebase_service] -->
@@ -79,7 +74,21 @@ public class SealTalkUrl {
 ...
 * 
 ```
-* 编译 google-services.json 配置为您的 FCM 推送相关配置参数  
+* 编译 google-services.json 配置为您的 FCM 推送相关配置参数
+
+5. 若您要接入华为 4.0 推送，您需要做以下几步工作：
+* 解除 sealtalk 中 build.gralde 中的注释
+```
+// apply plugin: 'com.huawei.agconnect'
+```
+* 解除工程跟目录下的 build.gradle 中的以下注释:
+```
+ dependencies {
+        // 华为推送需要开启下面注释
+        // classpath 'com.huawei.agconnect:agcp:1.1.1.300'
+```
+* 登录华为开发者后台，在我的应⽤->开发->概览->下载 agconnect-servics.json, .将下载好的 agconnect-servics.json ⽂件放到 sealtalk 模块下的根⽬录。
+
 4. 若使用地图相关功能，在 AndroidManifest.xml 中搜索 com.amap.api.v2.apikey 修改为您的高德地图 ApiKey
 ```
 <!-- 高德地图-->
@@ -164,7 +173,6 @@ Task 直接进行网络请求并返回数据.
 - TargetVersion 版本需 26 及以上版本
 
 ## 支持
- - [App 解析文档](https://github.com/sealtalk/sealtalk-android/blob/master/sealtalk_parser.md)
  - [知识库](http://support.rongcloud.cn/)
  - [工单](https://developer.rongcloud.cn/signin?returnUrl=%2Fticket),需要登录融云开发者账号
  - [Android 视频教程](http://www.rongcloud.cn/docs/android_video_tutorials.html)

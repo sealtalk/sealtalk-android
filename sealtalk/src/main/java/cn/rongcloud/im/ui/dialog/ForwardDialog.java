@@ -100,7 +100,8 @@ public class ForwardDialog extends CommonDialog {
             Message message = messageList.get(0);
             content = getMessageContent(message);
             if (messageList.size() > 1) {
-                content = content + "...";
+//                content = content + "...";
+                content = getString(R.string.seal_selected_contact_content,content.length());
             }
             messageTv.setText(content);
         } else if (messageIdList != null && messageIdList.size() > 0) {
@@ -109,7 +110,8 @@ public class ForwardDialog extends CommonDialog {
                 public void onSuccess(Message message) {
                     String content = getMessageContent(message);
                     if (messageIdList.size() > 1) {
-                        content = content + "...";
+//                        content = content + "...";
+                        content = getString(R.string.seal_selected_contact_content,messageIdList.size());
                     }
                     messageTv.setText(content);
                 }

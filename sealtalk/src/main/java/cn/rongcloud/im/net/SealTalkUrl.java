@@ -1,7 +1,9 @@
 package cn.rongcloud.im.net;
 
+import cn.rongcloud.im.BuildConfig;
+
 public class SealTalkUrl {
-    public static final String DOMAIN = 这里请替换为您所部署的 SealTalk Server 地址;
+    public static final String DOMAIN = BuildConfig.SEALTALK_SERVER;
 
     public static final String LOGIN = "user/login";
 

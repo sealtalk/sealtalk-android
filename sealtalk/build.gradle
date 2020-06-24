@@ -7,13 +7,24 @@ android {
         applicationId "cn.rongcloud.im"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 2020051211
-        versionName "2.2.7"
+        versionCode 2020062411
+        versionName "4.0.0.1"
         ndk {
             abiFilters "armeabi-v7a", 'x86'
         }
         // 若集成过多第三方库时可能导致方法超过65536时需要开启
         multiDexEnabled true
+
+        buildConfigField "String", "SEALTALK_SERVER", "${SEALTALK_SERVER}"
+        buildConfigField "String", "SEALTALK_NAVI_SERVER", "${SEALTALK_NAVI_SERVER}"
+        buildConfigField "String", "SEALTALK_FILE_SERVER", "${SEALTALK_FILE_SERVER}"
+        buildConfigField "String", "SEALTALK_APP_KEY", "${SEALTALK_APP_KEY}"
+        buildConfigField "String", "SEALTALK_APP_NAME", "${SEALTALK_APP_NAME}"
+        buildConfigField "String", "SEALTALK_MI_PUSH_APPID", "${SEALTALK_MI_PUSH_APPID}"
+        buildConfigField "String", "SEALTALK_MI_PUSH_APPKEY", "${SEALTALK_MI_PUSH_APPKEY}"
+        buildConfigField "String", "SEALTALK_MIZU_PUSH_APPID", "${SEALTALK_MIZU_PUSH_APPID}"
+        buildConfigField "String", "SEALTALK_MIZU_PUSH_APPKEY", "${SEALTALK_MIZU_PUSH_APPKEY}"
+        manifestPlaceholders = [SEALTALK_HW_PUSH_APPID: SEALTALK_HW_PUSH_APPID.replaceAll('"', '')]
     }
 
     buildTypes {
@@ -41,6 +52,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+    implementation 'com.huawei.hms:push:4.0.2.300'
     implementation 'androidx.appcompat:appcompat:1.1.0-beta01'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta1'
     implementation 'androidx.multidex:multidex:2.0.1'
@@ -59,7 +71,6 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.1.0'
     //api 'com.google.firebase:firebase-messaging:17.6.0'
 
-    api 'com.huawei.android.hms:push:2.6.1.301'
     api 'com.meizu.flyme.internet:push-internal:3.6.+@aar'
     api 'com.google.code.gson:gson:2.8.1'
     api 'com.googlecode.mp4parser:isoparser:1.0.6'
@@ -68,17 +79,18 @@ dependencies {
     implementation 'com.tencent.bugly:nativecrashreport:3.7.1'
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
 
-    api 'cn.rongcloud.sdk:im_kit:2.10.6'
+    api 'cn.rongcloud.sdk:im_kit:4.0.0.1'
     //im_kit必须依赖im_lib，所以需要加入对应依赖
-    api 'cn.rongcloud.sdk:im_lib:2.10.6'
+    api 'cn.rongcloud.sdk:im_lib:4.0.0.1'
 
-    api 'cn.rongcloud.sdk:rcsticker:2.10.6'
-    api 'cn.rongcloud.sdk:sight:2.10.6'
+    api 'cn.rongcloud.sdk:rcsticker:4.0.0.1'
+    api 'cn.rongcloud.sdk:sight:4.0.0.1'
 
-    api 'cn.rongcloud.sdk:call_lib:2.10.6'
-    api 'cn.rongcloud.sdk:call_kit:2.10.6'
+    api 'cn.rongcloud.sdk:call_lib:4.0.0.1'
+    api 'cn.rongcloud.sdk:call_kit:4.0.0.1'
 
     api project(path: ':contactcard')
     api project(path: ':recognizer')
     api project(path: ':pushpermission')
 }
+// apply plugin: 'com.huawei.agconnect'

@@ -52,6 +52,8 @@ public class IntentExtra {
 
     public final static String BOOLEAN_KICKED_BY_OTHER_USER = "kick_by_other_user";
 
+    public final static String BOOLEAN_CONNECT_TIME_OUT = "connect_timeout";
+
     public final static String OPERATE_PICTURE_ACTION = "operate_picture_action";
 
     /**

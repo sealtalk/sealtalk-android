@@ -52,9 +52,10 @@ public class SealGroupConNtfMessageProvider extends IContainerItemProvider.Messa
                     }
                     if (!TextUtils.isEmpty(operatorUserName)) {
                         if (content.getOperatorUserId().equals(RongIM.getInstance().getCurrentUserId())){
-                            operatorUserName = view.getContext().getResources().getString(R.string.seal_set_screen_capture_you);
+                            contentStr = view.getContext().getResources().getString(R.string.seal_set_screen_capture_you)+ contentStr;
+                        } else{
+                            contentStr = operatorUserName + " " + contentStr;
                         }
-                        contentStr = operatorUserName + " " + contentStr;
                     }
                 }
                 if (!TextUtils.isEmpty(contentStr)) {

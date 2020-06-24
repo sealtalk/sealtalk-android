@@ -14,7 +14,6 @@
     <string name="seal_login_nick_name">Nickname</string>
     <string name="seal_login_confirm">Confirm</string>
     <string name="seal_login_confirm_password">Confirm Password</string>
-
     <string name="seal_login_toast_name_is_null">Nickname input cannot be empty</string>
     <string name="seal_login_toast_name_contain_spaces">Nickname cannot contain spaces</string>
     <string name="seal_login_toast_phone_number_is_null">Mobile number cannot be empty</string>
@@ -32,6 +31,7 @@
     <string name="login_error_captcha_overdue">The verification code is expired, please try again</string>
     <string name="login_verification_code_error">Verification code is incorrect</string>
     <string name="seal_login_kick_by_other">Your account is logged-in on another device and  you are forced to logout!</string>
+    <string name="seal_login_connect_time_out">Login time out, please try again</string>
 
     <string name="common_chat_room">Chatroom</string>
     <string name="discovery_chat_room_one">Chatroom1</string>
@@ -376,6 +376,7 @@
     <string name="seal_select_forward_select_group">Select a Group Chat</string>
     <string name="seal_select_forward_message_recent_chat">Recent Chats</string>
     <string name="seal_selected_contact_title">Send to:</string>
+    <string name="seal_selected_contact_content">Has forwarded %d messages</string>
     <string name="seal_multi_selected_contact_title">One-by-One Forward:</string>
     <string name="seal_group_tag_all">All</string>
     <string name="seal_group_tag_company">Corp.</string>
@@ -568,7 +569,7 @@
 
     <!--chat_bg-->
     <string name="seal_select_chat_bg_title">Chat background</string>
-        <string name="seal_select_chat_bg_album">From photo album</string>
+    <string name="seal_select_chat_bg_album">From photo album</string>
     <string name="seal_select_chat_bg_set">Setting</string>
     <string name="seal_select_chat_bg_set_success">Success</string>
     <string name="seal_select_chat_bg_cancel">Cancel</string>

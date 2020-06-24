@@ -456,70 +456,6 @@
         </receiver>
         <!-- 小米 配置结束 < -->
 
-        <!-- HMS 配置开始-->
-        <!--
-        <meta-data
-            android:name="com.huawei.hms.client.appid"
-            android:value="替换为您申请的华为推送 AppId" />
-        -->
-
-        <!-- BridgeActivity定义了HMS-SDK中一些跳转所需要的透明页面-->
-        <activity
-            android:name="com.huawei.hms.activity.BridgeActivity"
-            android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"
-            android:excludeFromRecents="true"
-            android:exported="false"
-            android:hardwareAccelerated="true"
-            android:theme="@android:style/Theme.Translucent">
-            <meta-data
-                android:name="hwc-theme"
-                android:value="androidhwext:style/Theme.Emui.Translucent" />
-        </activity>
-
-        <!-- 解决华为移动服务升级问题的透明界面（必须声明）-->
-        <activity
-            android:name="io.rong.push.platform.hms.common.HMSAgentActivity"
-            android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"
-            android:excludeFromRecents="true"
-            android:exported="false"
-            android:hardwareAccelerated="true"
-            android:theme="@android:style/Theme.Translucent">
-            <meta-data
-                android:name="hwc-theme"
-                android:value="androidhwext:style/Theme.Emui.Translucent" />
-        </activity>
-
-        <provider
-            android:name="com.huawei.hms.update.provider.UpdateProvider"
-            android:authorities="cn.rongcloud.im.hms.update.provider"
-            android:exported="false"
-            android:grantUriPermissions="true"></provider>
-
-
-        <!-- 第三方相关 :接收Push消息（注册、Push消息、Push连接状态）广播 -->
-
-
-        <receiver android:name="io.rong.push.platform.hms.HMSReceiver">
-            <intent-filter>
-                <!-- 必须,用于接收token -->
-                <action android:name="com.huawei.android.push.intent.REGISTRATION" />
-                <!-- 必须，用于接收消息 -->
-                <action android:name="com.huawei.android.push.intent.RECEIVE" />
-                <!-- 可选，用于点击通知栏或通知栏上的按钮后触发onEvent回调 -->
-                <action android:name="com.huawei.android.push.intent.CLICK" />
-                <!-- 可选，查看push通道是否连接，不查看则不需要 -->
-                <action android:name="com.huawei.intent.action.PUSH_STATE" />
-            </intent-filter>
-        </receiver>
-        <receiver android:name="com.huawei.hms.support.api.push.PushEventReceiver">
-            <intent-filter>
-
-                <!-- 接收通道发来的通知栏消息，兼容老版本Push -->
-                <action android:name="com.huawei.intent.action.PUSH" />
-            </intent-filter>
-        </receiver>
-        <!-- HMS 配置结束-->
-
         <!-- [START firebase_service] -->
         <!--
         <service
@@ -537,7 +473,6 @@
             android:value="false" />
          -->
         <!-- [END firebase_service] -->
-
 
         <!-- MeiZu 配置开始 < -->
         <receiver android:name="io.rong.push.platform.meizu.MeiZuReceiver">
@@ -601,16 +536,6 @@
         </receiver>
         <!-- vivo 推送配置 结束 -->
 
-        <!-- OPPO push 配置开始-->
-        <service
-            android:name="com.coloros.mcssdk.PushService"
-            android:permission="com.coloros.mcs.permission.SEND_MCS_MESSAGE">
-            <intent-filter>
-                <action android:name="com.coloros.mcs.action.RECEIVE_MCS_MESSAGE" />
-            </intent-filter>
-        </service>
-        <!-- OPPO push 配置结束-->
-
         <!--第三方推送的权限 广播 服务 配置结束-->
         <!-- push end -->
 
@@ -630,6 +555,11 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/rc_file_path" />
         </provider>
+
+        <service android:name="io.rong.push.platform.hms.HMSPushService" android:exported="false">
+            <intent-filter>
+                <action android:name="com.huawei.push.action.MESSAGING_EVENT" /> </intent-filter>
+        </service>
     </application>
 
 </manifest>

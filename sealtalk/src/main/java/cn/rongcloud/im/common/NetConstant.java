@@ -2,6 +2,7 @@ package cn.rongcloud.im.common;
 
 public class NetConstant {
     public final static int API_CONNECT_TIME_OUT = 10;
+    public final static int API_IM_CONNECT_TIME_OUT = 10;
     public final static int API_READ_TIME_OUT = 10;
     public final static int API_WRITE_TIME_OUT = 10;
     public final static String API_SP_NAME_NET = "net";

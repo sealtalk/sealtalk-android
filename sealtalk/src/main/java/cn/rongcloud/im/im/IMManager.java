@@ -15,11 +15,13 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.rongcloud.im.BuildConfig;
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.SealApp;
 import cn.rongcloud.im.common.ErrorCode;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.common.LogTag;
+import cn.rongcloud.im.common.NetConstant;
 import cn.rongcloud.im.common.ResultCallback;
 import cn.rongcloud.im.common.ThreadManager;
 import cn.rongcloud.im.db.DbManager;
@@ -211,7 +213,8 @@ public class IMManager {
 
             @Override
             public void onFail(int errorCode) {
-                autologinResult.setValue(false);
+                // 缓存登录时可以认为缓存了之前连接成功过的结果，所以当再次连接失败时可以通过 SDK 自动重连连接成功
+                autologinResult.postValue(true);
             }
         });
     }
@@ -758,8 +761,8 @@ public class IMManager {
         //PushConfig config = new PushConfig
         //        .Builder()
         //        .enableHWPush(true)        // 在 AndroidManifest.xml 中搜索 com.huawei.hms.client.appid 进行设置
-        //        .enableMiPush("替换为您的小米推送 AppId", "替换为您的小米推送 AppKey")
-        //        .enableMeiZuPush("替换为您的魅族推送 AppId", "替换为您的魅族推送 AppKey")
+        //        .enableMiPush(BuildConfig.SEALTALK_MI_PUSH_APPID, BuildConfig.SEALTALK_MI_PUSH_APPKEY)
+        //        .enableMeiZuPush(BuildConfig.SEALTALK_MIZU_PUSH_APPID, BuildConfig.SEALTALK_MIZU_PUSH_APPKEY)
         //        .enableVivoPush(true)     // 在 AndroidManifest.xml 中搜索 com.vivo.push.api_key 和 com.vivo.push.app_id 进行设置
         //        .enableFCM(true)          // 在 google-services.json 文件中进行配置
         //        .build();
@@ -816,12 +819,14 @@ public class IMManager {
 
         RongExtensionManager.getInstance().registerExtensionModule(new SealExtensionModule(context));
 
-        // 个人名片
-        RongExtensionManager.getInstance().registerExtensionModule(createContactCardExtensionModule());
         // 语音输入
         RongExtensionManager.getInstance().registerExtensionModule(new RecognizeExtensionModule());
-        // 小视频
-        RongExtensionManager.getInstance().registerExtensionModule(new SightExtensionModule());
+
+        // 个人名片
+        RongExtensionManager.getInstance().registerExtensionModule(createContactCardExtensionModule());
+
+        // 小视频 为了调整位置将此注册放入 SealExtensionModule 中进行，无此需求可直接在此注册
+//        RongExtensionManager.getInstance().registerExtensionModule(new SightExtensionModule());
         // 戳一下
         RongExtensionManager.getInstance().registerExtensionModule(new PokeExtensionModule());
     }
@@ -836,7 +841,7 @@ public class IMManager {
          * 如果是连接到私有云需要在此配置服务器地址
          * 如果是公有云则不需要调用此方法
          */
-        //RongIM.setServerInfo("nav.cn.ronghub.com", "up.qbox.me");
+        //RongIM.setServerInfo(BuildConfig.SEALTALK_NAVI_SERVER, BuildConfig.SEALTALK_FILE_SERVER);
 
         /*
          * 初始化 SDK，在整个应用程序全局，只需要调用一次。建议在 Application 继承类中调用。
@@ -848,7 +853,7 @@ public class IMManager {
         //RongIM.init(this);
 
         // 可在初始 SDK 时直接带入融云 IM 申请的APP KEY
-        RongIM.init(context, 这里请替换为您的融云 AppKey, true);
+        RongIM.init(context, BuildConfig.SEALTALK_APP_KEY, true);
     }
 
     /**
@@ -1403,34 +1408,33 @@ public class IMManager {
      * 连接 IM 服务
      *
      * @param token
-     * @param getTokenOnIncorrect
+     * @param autoConnect 是否在连接失败时无限时间自动重连
      * @param callback
      */
-    public void connectIM(String token, boolean getTokenOnIncorrect, ResultCallback<String> callback) {
+    public void connectIM(String token, boolean autoConnect, ResultCallback<String> callback) {
+        if (autoConnect) {
+            connectIM(token, 0, callback);
+        } else {
+            connectIM(token, NetConstant.API_IM_CONNECT_TIME_OUT, callback);
+        }
+    }
+
+    /**
+     * 连接 IM 服务
+     *
+     * @param token
+     * @param timeOut 自动重连超时时间。
+     * @param callback
+     */
+    public void connectIM(String token, int timeOut, ResultCallback<String> callback) {
         /*
          *  考虑到会有后台调用此方法，所以不采用 LiveData 做返回值
          */
-        RongIM.connect(token, new RongIMClient.ConnectCallback() {
+        RongIM.connect(token, timeOut, new RongIMClient.ConnectCallback() {
             @Override
-            public void onTokenIncorrect() {
-                if (getTokenOnIncorrect) {
-                    getToken(new ResultCallback<LoginResult>() {
-                        @Override
-                        public void onSuccess(LoginResult loginResult) {
-                            connectIM(loginResult.token, false, callback);
-                        }
-
-                        @Override
-                        public void onFail(int errorCode) {
-                            callback.onFail(errorCode);
-                        }
-                    });
-                } else {
-                    if (callback != null) {
-                        callback.onFail(ErrorCode.IM_ERROR.getCode());
-                    } else {
-                        // do nothing
-                    }
+            public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus databaseOpenStatus) {
+                if (callback != null) {
+                    callback.onSuccess(RongIMClient.getInstance().getCurrentUserId());
                 }
             }
 
@@ -1441,20 +1445,27 @@ public class IMManager {
                 callback.onSuccess(s);
             }
 
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-                SLog.e(LogTag.IM, "connect error - code:" + errorCode.getValue() + ", msg:" + errorCode.getMessage());
-                if (errorCode == RongIMClient.ErrorCode.RC_CONN_REDIRECTED) {
-                    // 重定向错误，直接调用重新连接
-                    connectIM(token,getTokenOnIncorrect,callback);
+            public void onError(RongIMClient.ConnectionErrorCode errorCode) {
+                SLog.e(LogTag.IM, "connect error - code:" + errorCode.getValue());
+                if (errorCode == RongIMClient.ConnectionErrorCode.RC_CONN_TOKEN_INCORRECT) {
+                    getToken(new ResultCallback<LoginResult>() {
+                        @Override
+                        public void onSuccess(LoginResult loginResult) {
+                            connectIM(loginResult.token, timeOut, callback);
+                        }
+
+                        @Override
+                        public void onFail(int errorCode) {
+                            callback.onFail(errorCode);
+                        }
+                    });;
                 } else {
                     if (callback != null) {
-                        callback.onFail(errorCode.getValue());
+                        callback.onFail(ErrorCode.IM_ERROR.getCode());
                     } else {
                         // do nothing
                     }
                 }
-
             }
         });
     }
@@ -1598,6 +1609,62 @@ public class IMManager {
      */
     public ConversationRecord getLastConversationRecord() {
         return lastConversationRecord;
+    }
+
+    /**
+     * 设置推送消息通知是否显示信息
+     *
+     * @param isDetail 是否显示通知详情
+     */
+    public LiveData<Resource<Boolean>> setPushDetailContentStatus(boolean isDetail) {
+        MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
+        RongIMClient.getInstance().setPushContentShowStatus(isDetail, new RongIMClient.OperationCallback() {
+            @Override
+            public void onSuccess() {
+                result.postValue(Resource.success(isDetail));
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                int errCode = ErrorCode.IM_ERROR.getCode();
+                if (errorCode == RongIMClient.ErrorCode.RC_NET_CHANNEL_INVALID
+                        || errorCode == RongIMClient.ErrorCode.RC_NET_UNAVAILABLE
+                        || errorCode == RongIMClient.ErrorCode.RC_NETWORK_IS_DOWN_OR_UNREACHABLE) {
+                    errCode = ErrorCode.NETWORK_ERROR.getCode();
+                }
+                result.postValue(Resource.error(errCode, !isDetail));
+            }
+        });
+
+        return result;
+    }
+
+    /**
+     * 获取推送消息通知详情状态
+     *
+     * @return Resource 结果为 success 时，data 值为当前是否为显示消息通知详情。
+     */
+    public LiveData<Resource<Boolean>> getPushDetailContentStatus() {
+        MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
+        RongIMClient.getInstance().getPushContentShowStatus(new RongIMClient.ResultCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean isDetail) {
+                result.postValue(Resource.success(isDetail));
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                int errCode = ErrorCode.IM_ERROR.getCode();
+                if (errorCode == RongIMClient.ErrorCode.RC_NET_CHANNEL_INVALID
+                        || errorCode == RongIMClient.ErrorCode.RC_NET_UNAVAILABLE
+                        || errorCode == RongIMClient.ErrorCode.RC_NETWORK_IS_DOWN_OR_UNREACHABLE) {
+                    errCode = ErrorCode.NETWORK_ERROR.getCode();
+                }
+                result.postValue(Resource.error(errCode, false));
+            }
+        });
+
+        return result;
     }
 
 }

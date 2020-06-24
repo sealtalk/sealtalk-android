@@ -13,6 +13,7 @@
         android:layout_marginTop="@dimen/seal_update_name_edit_margin"
         android:maxLength="32"
         android:maxLines="1"
+        android:inputType="text"
         android:textColor="@color/seal_update_name_edit"
         android:textSize="@dimen/seal_update_name_edit_text_size" />
 

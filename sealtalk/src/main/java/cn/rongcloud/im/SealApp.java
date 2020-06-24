@@ -54,6 +54,7 @@ public class SealApp extends MultiDexApplication {
         if (!getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
             return;
         }
+
         /*
          * 以下部分仅在主进程中进行执行
          */

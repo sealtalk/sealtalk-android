@@ -27,6 +27,7 @@ public class NewMessageViewModel extends AndroidViewModel {
     private MediatorLiveData<QuietHours> donotDistrabStatus = new MediatorLiveData<>();
     private SingleSourceLiveData<Resource<Void>> setReceivePokeMsgStatusResult = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<GetPokeResult>> getReceivePokeMsgStatusResult = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<Boolean>> getPushNotifyDetailResult = new SingleSourceLiveData<>();
 
     private UserTask userTask;
 
@@ -44,6 +45,7 @@ public class NewMessageViewModel extends AndroidViewModel {
 
         remindStatus.setValue(imManager.getRemindStatus());
         donotDistrabStatus.setValue(imManager.getNotifiQuietHours());
+        getPushNotifyDetailResult.setSource(imManager.getPushDetailContentStatus());
     }
 
     /**
@@ -133,15 +135,35 @@ public class NewMessageViewModel extends AndroidViewModel {
     /**
      * 请求获取接受戳一下消息状态
      */
-    public void requestReceivePokeMessageStatus(){
+    public void requestReceivePokeMessageStatus() {
         getReceivePokeMsgStatusResult.setSource(userTask.getReceivePokeMessageState());
     }
 
     /**
      * 获取接受戳一下消息状态结果
+     *
      * @return
      */
-    public SingleSourceLiveData<Resource<GetPokeResult>> getReceivePokeMsgStatusResult(){
+    public SingleSourceLiveData<Resource<GetPokeResult>> getReceivePokeMsgStatusResult() {
         return getReceivePokeMsgStatusResult;
     }
+
+    /**
+     * 设置推送消息通知是否显示详细内容
+     *
+     * @param isDetail 是否显示详细的通知消息内容。
+     */
+    public void setPushMsgDetailStatus(boolean isDetail) {
+        getPushNotifyDetailResult.setSource(imManager.setPushDetailContentStatus(isDetail));
+    }
+
+    /**
+     * 获取推送消息通知详细详细状态
+     *
+     * @return 当前是否显示消息通知详情状态。
+     */
+    public LiveData<Resource<Boolean>> getPushMsgDetailStatus() {
+        return getPushNotifyDetailResult;
+    }
+
 }

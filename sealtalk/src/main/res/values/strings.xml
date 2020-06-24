@@ -14,7 +14,6 @@
     <string name="seal_login_send_code">发送验证码</string>
     <string name="seal_login_confirm">确认</string>
     <string name="seal_login_confirm_password">确认密码</string>
-
     <string name="seal_login_toast_name_is_null">昵称不能为空</string>
     <string name="seal_login_toast_name_contain_spaces">昵称不能包含空格</string>
     <string name="seal_login_toast_phone_number_is_null">手机号不能为空</string>
@@ -32,7 +31,7 @@
     <string name="login_error_captcha_overdue">验证码过期,请重新请求</string>
     <string name="login_verification_code_error">验证码错误</string>
     <string name="seal_login_kick_by_other">您的账号在别的设备上登录，您被迫下线!</string>
-
+    <string name="seal_login_connect_time_out">连接超时，请重新登录</string>
     <string name="common_chat_room">聊天室</string>
     <string name="discovery_chat_room_one">聊天室 I</string>
     <string name="discovery_chat_room_two">聊天室 II</string>
@@ -305,7 +304,7 @@
 
 
     <string name="seal_new_message_remind_new_message">接收新消息通知</string>
-    <string name="seal_new_message_remind_message_show_details">通知显示消息详情</string>
+    <string name="seal_new_message_remind_message_show_details">显示远程推送的内容</string>
     <string name="seal_new_message_donot_disturb_new_message_notice">开启消息免打扰</string>
     <string name="seal_new_message_donot_disturb_notification_information">开启后，在设定时间段内收到新消息时不会响铃或振动。</string>
     <string name="seal_new_message_donot_disturb_start">开始时间</string>
@@ -380,6 +379,7 @@
     <string name="seal_select_forward_select_group">选择一个群</string>
     <string name="seal_select_forward_message_recent_chat">最近聊天</string>
     <string name="seal_selected_contact_title">发送给：</string>
+    <string name="seal_selected_contact_content">[转发]共%d条消息</string>
     <string name="seal_multi_selected_contact_title">分别发送给：</string>
     <string name="seal_group_tag_all">全员</string>
     <string name="seal_group_tag_company">公司</string>

@@ -4,20 +4,30 @@ import android.content.Context;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import io.rong.callkit.AudioPlugin;
+import io.rong.callkit.VideoPlugin;
+import io.rong.common.rlog.RLog;
 import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.RongExtension;
+import io.rong.imkit.RongIM;
 import io.rong.imkit.emoticon.IEmoticonTab;
 import io.rong.imkit.plugin.DefaultLocationPlugin;
 import io.rong.imkit.plugin.IPluginModule;
 import io.rong.imkit.plugin.ImagePlugin;
 import io.rong.imkit.widget.provider.FilePlugin;
+import io.rong.imkit.widget.provider.SightMessageItemProvider;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
+import io.rong.message.SightMessage;
+import io.rong.sight.SightPlugin;
 
 
 public class SealExtensionModule extends DefaultExtensionModule {
+    private IPluginModule sightPlugin;
+    private final String TAG = "SealExtensionModule";
 
     public SealExtensionModule(Context context) {
         super(context);
@@ -25,6 +35,10 @@ public class SealExtensionModule extends DefaultExtensionModule {
 
     @Override
     public void onInit(String appKey) {
+        RLog.i(TAG, "onInit......");
+        sightPlugin = new SightPlugin();
+        RongIM.registerMessageType(SightMessage.class);
+        RongIM.registerMessageTemplate(new SightMessageItemProvider());
         super.onInit(appKey);
     }
 
@@ -84,11 +98,36 @@ public class SealExtensionModule extends DefaultExtensionModule {
                             break;
                         }
                     }
+                    pluginModules.add(1, sightPlugin);
                 }
             }
             return pluginModules;
         } else {
-            return super.getPluginModules(conversationType);
+            List<IPluginModule> pluginModules = super.getPluginModules(conversationType);
+            // 用于排序的 list
+            if (pluginModules != null) {
+                Iterator<IPluginModule> iterator = pluginModules.iterator();
+                IPluginModule audioPlugin = null;
+                IPluginModule videoPlugin = null;
+                while (iterator.hasNext()) {
+                    IPluginModule module = iterator.next();
+                    if (module instanceof AudioPlugin) {
+                        audioPlugin = module;
+                        iterator.remove();
+                    } else if (module instanceof VideoPlugin) {
+                        videoPlugin = module;
+                        iterator.remove();
+                    }
+                }
+                pluginModules.add(1, sightPlugin);
+                if (audioPlugin != null) {
+                    pluginModules.add(audioPlugin);
+                }
+                if (videoPlugin != null) {
+                    pluginModules.add(videoPlugin);
+                }
+            }
+            return pluginModules;
         }
     }
 

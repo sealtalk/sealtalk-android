@@ -17,10 +17,20 @@
 
     </cn.rongcloud.im.ui.view.SettingItemView>
     <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_detail"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_new_message_remind_item_height"
+        app:item_switch="true"
+        app:item_divider="true"
+        app:item_content="@string/seal_new_message_remind_message_show_details"
+        >
+    </cn.rongcloud.im.ui.view.SettingItemView>
+
+    <cn.rongcloud.im.ui.view.SettingItemView
         android:id="@+id/siv_notice"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_new_message_remind_item_height"
-        app:item_content="@string/seal_new_message_remind_message_show_details"
+        app:item_content="@string/seal_new_message_donot_disturb"
         >
     </cn.rongcloud.im.ui.view.SettingItemView>
 

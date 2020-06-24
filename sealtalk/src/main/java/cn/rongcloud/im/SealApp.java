@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.multidex.MultiDexApplication;
 
@@ -54,6 +55,9 @@ public class SealApp extends MultiDexApplication {
         if (!getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
             return;
         }
+
+        // 检查是否争取配置了 SealTalk 参数
+        checkSealConfig();
 
         /*
          * 以下部分仅在主进程中进行执行
@@ -179,6 +183,27 @@ public class SealApp extends MultiDexApplication {
      */
     public boolean isMainActivityCreated(){
         return isMainActivityIsCreated;
+    }
+
+    /**
+     * 检查是否正确的配置 SealTalk 中的一些必要环境。
+     */
+    private void checkSealConfig(){
+        if(!BuildConfig.SEALTALK_SERVER.startsWith("http")){
+            Log.e("SealTalk 集成错误", "\n" +
+                    "您需要确认是否将 sealtalk 目录下 gradle.properties " +
+                    "文件中的 SEALTALK_SERVER 参数修改为了您所部署的 SealTalk 服务器。\n" +
+                    "同时，建议您阅读下 README.MD 中的关于【运行 SealTalk-Android】部分，以便您能正常运行。");
+            throw new IllegalArgumentException("需要运行 SealTalk 您先要正确的指定您的 SealTalk 服务器。");
+        }
+
+        if(BuildConfig.SEALTALK_APP_KEY.contains("AppKey")){
+            Log.e("SealTalk 集成错误", "\n" +
+                    "您需要确认是否将 sealtalk 目录下 gradle.properties " +
+                    "文件中的 SEALTALK_APP_KEY 参数修改为了您在融云所申请的 AppKey。\n" +
+                    "同时，建议您阅读下 README.MD 中的关于【运行 SealTalk-Android】部分，以便您能正常运行。");
+            throw new IllegalArgumentException("需要运行 SealTalk 您需要指定您所申请融云的 Appkey。");
+        }
     }
 
 }

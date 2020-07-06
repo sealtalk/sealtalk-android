@@ -208,7 +208,7 @@ public class IMManager {
         connectIM(loginToken, true, new ResultCallback<String>() {
             @Override
             public void onSuccess(String s) {
-                autologinResult.setValue(true);
+                autologinResult.postValue(true);
             }
 
             @Override
@@ -1442,7 +1442,6 @@ public class IMManager {
             public void onSuccess(String s) {
                 // 连接 IM 成功后，初始化数据库
                 DbManager.getInstance(context).openDb(s);
-                callback.onSuccess(s);
             }
 
             public void onError(RongIMClient.ConnectionErrorCode errorCode) {

@@ -130,7 +130,7 @@ public class SealSearchViewModel extends AndroidViewModel {
         conversationMatch = match;
         RongIMClient.getInstance().searchConversations(match,
                 new Conversation.ConversationType[]{Conversation.ConversationType.PRIVATE, Conversation.ConversationType.GROUP},
-                new String[]{"RC:TxtMsg", "RC:ImgTextMsg", "RC:FileMsg"}, new RongIMClient.ResultCallback<List<SearchConversationResult>>() {
+                new String[]{"RC:TxtMsg", "RC:ImgTextMsg", "RC:FileMsg", "RC:ReferenceMsg"}, new RongIMClient.ResultCallback<List<SearchConversationResult>>() {
 
                     @Override
                     public void onSuccess(List<SearchConversationResult> searchConversationResults) {

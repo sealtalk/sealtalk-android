@@ -8,6 +8,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import cn.rongcloud.im.R;
@@ -147,24 +149,25 @@ public abstract class CommonListBaseViewModel extends AppViewModel {
      * @param models
      */
     private void sortByFirstChar(List<ListItemModel> models) {
-//        Collections.sort(models, new Comparator<ListItemModel>() {
-//            @Override
-//            public int compare(ListItemModel lhs, ListItemModel rhs) {
-//                if (lhs.getItemView().getType() == ListItemModel.ItemView.Type.FUN || lhs.getItemView().getType() == ListItemModel.ItemView.Type.TEXT) {
-//                    return -1;
-//                } else if (rhs.getItemView().getType() == ListItemModel.ItemView.Type.FUN || rhs.getItemView().getType() == ListItemModel.ItemView.Type.TEXT) {
-//                    return 1;
-//                } else {
-//                    if (TextUtils.isEmpty(lhs.getFirstChar())) {
-//                        return -1;
-//                    }
-//                    if (TextUtils.isEmpty(rhs.getFirstChar())) {
-//                        return 1;
-//                    }
-//                    return lhs.getFirstChar().compareTo(rhs.getFirstChar());
-//                }
-//            }
-//        });
+        Collections.sort(models, new Comparator<ListItemModel>() {
+            @Override
+            public int compare(ListItemModel lhs, ListItemModel rhs) {
+                if (lhs.getItemView().getType() == ListItemModel.ItemView.Type.FUN || lhs.getItemView().getType() == ListItemModel.ItemView.Type.TEXT) {
+                    return -1;
+                } else if (rhs.getItemView().getType() == ListItemModel.ItemView.Type.FUN || rhs.getItemView().getType() == ListItemModel.ItemView.Type.TEXT) {
+                    return 1;
+                } else {
+                    if (TextUtils.isEmpty(lhs.getFirstChar())) {
+                        return -1;
+                    }
+                    if (TextUtils.isEmpty(rhs.getFirstChar())) {
+                        return 1;
+                    }
+                    return lhs.getFirstChar().compareTo(rhs.getFirstChar());
+                }
+            }
+        });
+
         List<ListItemModel> tempModels = new ArrayList<>();
         tempModels.addAll(models);
         for (int i = 0; i < tempModels.size(); i++) {

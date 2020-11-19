@@ -1,5 +1,6 @@
 package cn.rongcloud.im.ui.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.qrcode.SealQrCodeUISelector;
 import cn.rongcloud.im.ui.view.SealTitleBar;
+import cn.rongcloud.im.utils.CheckPermissionUtils;
 import cn.rongcloud.im.utils.NetworkUtils;
 import cn.rongcloud.im.utils.PhotoUtils;
 import cn.rongcloud.im.utils.ToastUtils;
@@ -68,6 +70,7 @@ public class ScanActivity extends TitleBaseActivity implements View.OnClickListe
             public void onPhotoCancel() {
             }
         });
+        CheckPermissionUtils.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE}, 1000);
     }
 
     private void initView(Bundle savedInstanceState) {

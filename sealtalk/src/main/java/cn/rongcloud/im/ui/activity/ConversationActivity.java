@@ -302,7 +302,7 @@ public class ConversationActivity extends TitleBaseActivity {
             @Override
             public void onChanged(String s) {
                 // 跳转选择界面
-                Intent intent = new Intent(RongContext.getInstance(), MemberMentionedExActivity.class);
+                Intent intent = new Intent(ConversationActivity.this, MemberMentionedExActivity.class);
                 intent.putExtra("conversationType", conversationType.getValue());
                 intent.putExtra("targetId", targetId);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

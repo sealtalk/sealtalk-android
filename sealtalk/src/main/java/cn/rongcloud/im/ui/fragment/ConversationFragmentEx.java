@@ -162,7 +162,7 @@ public class ConversationFragmentEx extends ConversationFragment {
             onExtensionChangeListener.onPluginToggleClick(v, extensionBoard);
         }
         setMessageListLast();
-        hideReferenceView();
+//        hideReferenceView();
     }
 
     @Override

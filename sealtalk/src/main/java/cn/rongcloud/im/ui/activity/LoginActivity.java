@@ -86,9 +86,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         // 判断是否被其他用户踢出到此界面
         Intent intent = getIntent();
         boolean isKicked = intent.getBooleanExtra(IntentExtra.BOOLEAN_KICKED_BY_OTHER_USER, false);
+        boolean isTimeout = intent.getBooleanExtra(IntentExtra.BOOLEAN_CONNECT_TIME_OUT, false);
         if (isKicked) {
             showKickedByOtherDialog();
+        } else if (isTimeout) {
+            showConnectTimeOutDialog();
         }
+
     }
 
 
@@ -232,6 +236,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
         }
     }
+
+    /**
+     * 显示他人登录对话框
+     */
+    private void showConnectTimeOutDialog() {
+        CommonDialog.Builder builder = new CommonDialog.Builder();
+        builder.setContentMessage(getString(R.string.seal_login_connect_time_out));
+        builder.setIsOnlyConfirm(true);
+        builder.isCancelable(false);
+        CommonDialog dialog = builder.build();
+        dialog.show(getSupportFragmentManager(), null);
+    }
+
+
 
     /**
      * 设置切换语言后， 重启activity

@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 import cn.rongcloud.im.R;
+import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.model.ContactNotificationMessageData;
 import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
@@ -39,11 +40,11 @@ public class ContactNotificationMessageProvider extends IContainerItemProvider.M
                 } finally {
                     if (bean != null && !TextUtils.isEmpty(bean.getSourceUserNickname())) {
                         if (content.getOperation().equals("AcceptResponse")) {
-                            viewHolder.contentTextView.setText(RongContext.getInstance().getResources().getString(R.string.msg_contact_notification_someone_agree_your_request));
+                            viewHolder.contentTextView.setText(IMManager.getInstance().getContext().getResources().getString(R.string.msg_contact_notification_someone_agree_your_request));
                         }
                     } else {
                         if (content.getOperation().equals("AcceptResponse")) {
-                            viewHolder.contentTextView.setText(RongContext.getInstance().getResources().getString(R.string.msg_contact_notification_agree_your_request));
+                            viewHolder.contentTextView.setText(IMManager.getInstance().getContext().getResources().getString(R.string.msg_contact_notification_agree_your_request));
                         }
                     }
                     if (content.getOperation().equals("Request")) {

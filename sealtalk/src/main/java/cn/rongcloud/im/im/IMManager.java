@@ -115,6 +115,8 @@ public class IMManager {
     private MutableLiveData<Boolean> autologinResult = new MutableLiveData<>();
     private MutableLiveData<Message> messageRouter = new MutableLiveData<>();
     private MutableLiveData<Boolean> kickedOffline = new MutableLiveData<>();
+    private MutableLiveData<Boolean> connectTimeOut = new MutableLiveData<>();
+
     /**
      * 接收戳一下消息
      */
@@ -184,6 +186,10 @@ public class IMManager {
         cacheConnectIM();
     }
 
+    public Context getContext() {
+        return this.context;
+    }
+
     /**
      * 缓存登录
      */
@@ -204,6 +210,11 @@ public class IMManager {
             autologinResult.setValue(false);
             return;
         }
+
+        // 当有缓存时直接打开数据库
+        String id = userCache.getId();
+        DbManager.getInstance(context).openDb(id);
+
 
         connectIM(loginToken, true, new ResultCallback<String>() {
             @Override
@@ -544,15 +555,6 @@ public class IMManager {
     }
 
     /**
-     * 初始化 IM 相关缓存
-     */
-    private void initIMCache() {
-        // 用户设置缓存 sp
-        configCache = new UserConfigCache(context.getApplicationContext());
-        userCache = new UserCache(context.getApplicationContext());
-    }
-
-    /**
      * 初始化会话列表相关事件
      */
     private void initConversationList() {
@@ -665,11 +667,11 @@ public class IMManager {
      */
     public void updateGroupMemberInfoCache(String groupId, String userId, String nickName) {
         GroupUserInfo oldGroupUserInfo = RongUserInfoManager.getInstance().getGroupUserInfo(groupId, userId);
-        if(oldGroupUserInfo == null
-            || (
-                    !oldGroupUserInfo.getNickname().equals(nickName)
-                )
-        ){
+        if (oldGroupUserInfo == null
+                || (
+                !oldGroupUserInfo.getNickname().equals(nickName)
+        )
+        ) {
             GroupUserInfo groupMemberInfo = new GroupUserInfo(groupId, userId, nickName);
             RongIM.getInstance().refreshGroupUserInfoCache(groupMemberInfo);
         }
@@ -695,7 +697,7 @@ public class IMManager {
     public LiveData<Resource<Message>> sendToAll(String targetId, Conversation.ConversationType conversationType, String message) {
         MutableLiveData<Resource<Message>> result = new MutableLiveData<>();
 
-        TextMessage textMessage = TextMessage.obtain(RongContext.getInstance().getString(R.string.profile_group_notice_prefix) + message);
+        TextMessage textMessage = TextMessage.obtain(context.getString(R.string.profile_group_notice_prefix) + message);
         MentionedInfo mentionedInfo = new MentionedInfo(MentionedInfo.MentionedType.ALL, null, null);
         textMessage.setMentionedInfo(mentionedInfo);
 
@@ -793,6 +795,16 @@ public class IMManager {
     }
 
     /**
+     * 初始化 IM 相关缓存
+     */
+    private void initIMCache() {
+        // 用户设置缓存 sp
+        configCache = new UserConfigCache(context.getApplicationContext());
+        userCache = new UserCache(context.getApplicationContext());
+    }
+
+
+    /**
      * 初始化扩展模块
      *
      * @param context
@@ -841,7 +853,7 @@ public class IMManager {
          * 如果是连接到私有云需要在此配置服务器地址
          * 如果是公有云则不需要调用此方法
          */
-        //RongIM.setServerInfo(BuildConfig.SEALTALK_NAVI_SERVER, BuildConfig.SEALTALK_FILE_SERVER);
+        RongIM.setServerInfo(BuildConfig.SEALTALK_NAVI_SERVER, BuildConfig.SEALTALK_FILE_SERVER);
 
         /*
          * 初始化 SDK，在整个应用程序全局，只需要调用一次。建议在 Application 继承类中调用。
@@ -926,9 +938,12 @@ public class IMManager {
                 if (connectionStatus.equals(ConnectionStatus.KICKED_OFFLINE_BY_OTHER_CLIENT)) {
                     //被其他提出时，需要返回登录界面
                     kickedOffline.postValue(true);
-                } else if (connectionStatus == ConnectionStatus.TOKEN_INCORRECT) {
-                    //TODO token 错误时，重新登录
+                } else if (connectionStatus == ConnectionStatus.TIMEOUT) {
+                    if (userCache != null) {
+                        cacheConnectIM();
+                    }
                 }
+
             }
         });
     }
@@ -1423,7 +1438,7 @@ public class IMManager {
      * 连接 IM 服务
      *
      * @param token
-     * @param timeOut 自动重连超时时间。
+     * @param timeOut  自动重连超时时间。
      * @param callback
      */
     public void connectIM(String token, int timeOut, ResultCallback<String> callback) {
@@ -1457,7 +1472,8 @@ public class IMManager {
                         public void onFail(int errorCode) {
                             callback.onFail(errorCode);
                         }
-                    });;
+                    });
+                    ;
                 } else {
                     if (callback != null) {
                         callback.onFail(ErrorCode.IM_ERROR.getCode());
@@ -1502,6 +1518,15 @@ public class IMManager {
     }
 
     /**
+     * 被连接超时, true 为当前为超时状态， false 为不需要处理
+     *
+     * @return
+     */
+    public LiveData<Boolean> getConnectTimeout() {
+        return connectTimeOut;
+    }
+
+    /**
      * 重置被提出状态为 false
      */
     public void resetKickedOfflineState() {
@@ -1510,6 +1535,13 @@ public class IMManager {
         } else {
             kickedOffline.postValue(false);
         }
+    }
+
+    /**
+     * 重置登出状态为 false
+     */
+    public void resetConnectTimeOutState() {
+        connectTimeOut.postValue(false);
     }
 
     /**

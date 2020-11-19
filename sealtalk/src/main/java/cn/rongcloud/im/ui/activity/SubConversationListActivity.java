@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.fragment.app.FragmentTransaction;
 
 import cn.rongcloud.im.R;
+import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.ui.adapter.SubConversationListAdapterEx;
 import io.rong.imkit.RongContext;
 import io.rong.imkit.fragment.SubConversationListFragment;
@@ -21,7 +22,7 @@ public class SubConversationListActivity extends TitleBaseActivity {
 
         setContentView(R.layout.conversation_activity_subconversation_list);
         SubConversationListFragment fragment = new SubConversationListFragment();
-        fragment.setAdapter(new SubConversationListAdapterEx(RongContext.getInstance()));
+        fragment.setAdapter(new SubConversationListAdapterEx(IMManager.getInstance().getContext()));
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.rong_content, fragment);
         transaction.commit();

@@ -1,0 +1,11 @@
+{
+  "client": {
+    "cp_id": "请自行申请",
+    "product_id": "请自行申请",
+    "client_id": "请自行申请",
+    "client_secret": "请自行申请",
+    "app_id": "请自行申请",
+    "package_name": "cn.rongcloud.im"
+  },
+  "configuration_version": "1.0"
+}

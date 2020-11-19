@@ -78,11 +78,28 @@ public class BaseActivity extends AppCompatActivity {
                      * 只有当前显示的 Activity 会走此段逻辑
                      */
                     if (isLogout) {
-                        SLog.d(BaseActivity.class.getCanonicalName(), "Log out.");
+                        SLog.d(BaseActivity.class.getCanonicalName(), "Log out By Kicked by other user.");
                         sendLogoutNotify();
                         IMManager.getInstance().resetKickedOfflineState();
                         Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
                         intent.putExtra(IntentExtra.BOOLEAN_KICKED_BY_OTHER_USER, true);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+            });
+            IMManager.getInstance().getConnectTimeout().observe(this, new Observer<Boolean>() {
+                @Override
+                public void onChanged(Boolean isLogout) {
+                    /*
+                     * 只有当前显示的 Activity 会走此段逻辑
+                     */
+                    if (isLogout) {
+                        SLog.d(BaseActivity.class.getCanonicalName(), "Log out By Connect Timeout");
+                        sendLogoutNotify();
+                        IMManager.getInstance().resetConnectTimeOutState();
+                        Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
+                        intent.putExtra(IntentExtra.BOOLEAN_CONNECT_TIME_OUT, true);
                         startActivity(intent);
                         finish();
                     }

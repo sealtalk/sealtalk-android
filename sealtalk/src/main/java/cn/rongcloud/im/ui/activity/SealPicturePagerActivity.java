@@ -23,6 +23,7 @@ import cn.rongcloud.im.utils.log.SLog;
 import io.rong.common.FileUtils;
 import io.rong.imageloader.core.ImageLoader;
 import io.rong.imkit.activity.PicturePagerActivity;
+import io.rong.imkit.utilities.KitStorageUtils;
 import io.rong.imkit.utilities.OptionsPopupDialog;
 import io.rong.imkit.utilities.PermissionCheckUtil;
 import io.rong.imkit.utilities.RongUtils;
@@ -78,9 +79,7 @@ public class SealPicturePagerActivity extends PicturePagerActivity {
 
                     String saveImagePath = RongUtils.getImageSavePath(SealPicturePagerActivity.this);
                     if (file != null && file.exists()) {
-                        String name = System.currentTimeMillis() + ".jpg";
-                        FileUtils.copyFile(file, saveImagePath + File.separator, name);
-                        MediaScannerConnection.scanFile(SealPicturePagerActivity.this, new String[]{saveImagePath + File.separator + name}, null, null);
+                        KitStorageUtils.saveMediaToPublicDir(SealPicturePagerActivity.this,file, KitStorageUtils.MediaType.IMAGE);
                         ToastUtils.showToast(getString(io.rong.imkit.R.string.rc_save_picture_at));
                     } else {
                         ToastUtils.showToast(getString(io.rong.imkit.R.string.rc_src_file_not_found));

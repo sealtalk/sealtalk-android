@@ -103,7 +103,7 @@ public class UserTask {
                 result.removeSource(login);
                 LoginResult loginResult = loginResultResource.data;
                 if (loginResult != null) {
-                    imManager.connectIM(loginResult.token, true, new ResultCallback<String>() {
+                    imManager.connectIM(loginResult.token, false, new ResultCallback<String>() {
                         @Override
                         public void onSuccess(String s) {
                             result.postValue(Resource.success(s));

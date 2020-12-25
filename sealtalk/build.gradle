@@ -7,8 +7,8 @@ android {
         applicationId "cn.rongcloud.im"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 2020080411
-        versionName "4.0.4"
+        versionCode 20201225
+        versionName "4.1.0"
         ndk {
             abiFilters "armeabi-v7a", 'x86'
         }
@@ -79,15 +79,15 @@ dependencies {
     implementation 'com.tencent.bugly:nativecrashreport:3.7.1'
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
 
-    api 'cn.rongcloud.sdk:im_kit:4.0.4'
+    api 'cn.rongcloud.sdk:im_kit:4.1.0'
     //im_kit必须依赖im_lib，所以需要加入对应依赖
-    api 'cn.rongcloud.sdk:im_lib:4.0.4'
+    api 'cn.rongcloud.sdk:im_lib:4.1.0'
 
-    api 'cn.rongcloud.sdk:rcsticker:4.0.4'
-    api 'cn.rongcloud.sdk:sight:4.0.4'
+    api 'cn.rongcloud.sdk:rcsticker:4.1.0'
+    api 'cn.rongcloud.sdk:sight:4.1.0'
 
-    api 'cn.rongcloud.sdk:call_lib:4.0.4'
-    api 'cn.rongcloud.sdk:call_kit:4.0.4'
+    api 'cn.rongcloud.sdk:call_lib:4.1.0'
+    api 'cn.rongcloud.sdk:call_kit:4.1.0'
 
     api project(path: ':contactcard')
     api project(path: ':recognizer')

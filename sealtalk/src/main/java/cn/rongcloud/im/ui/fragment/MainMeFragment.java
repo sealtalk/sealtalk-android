@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+
+import com.bumptech.glide.Glide;
 
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
@@ -25,10 +28,15 @@ import cn.rongcloud.im.ui.view.UserInfoItemView;
 import cn.rongcloud.im.utils.ImageLoaderUtils;
 import cn.rongcloud.im.viewmodel.AppViewModel;
 import cn.rongcloud.im.viewmodel.UserInfoViewModel;
+import io.rong.common.RLog;
+import io.rong.eventbus.EventBus;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.model.UIMessage;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imkit.utilities.LangUtils;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.CSCustomServiceInfo;
+import io.rong.imlib.model.Conversation;
 
 public class MainMeFragment extends BaseFragment {
 
@@ -63,10 +71,13 @@ public class MainMeFragment extends BaseFragment {
             public void onChanged(Resource<UserInfo> resource) {
                 if (resource.data != null) {
                     UserInfo info = resource.data;
+                    if (resource.status == Status.SUCCESS || resource.status == Status.ERROR) {
+                        if (!TextUtils.isEmpty(info.getPortraitUri()) && getActivity() != null) {
+                            Glide.with(getActivity()).load(info.getPortraitUri()).placeholder(R.drawable.rc_default_portrait).into(uivUserInfo.getHeaderImageView());
+                        }
+                    }
                     uivUserInfo.setName(info.getName());
-                    ImageLoaderUtils.displayUserPortraitImage(info.getPortraitUri(), uivUserInfo.getHeaderImageView());
                 }
-
             }
         });
 
@@ -134,6 +145,25 @@ public class MainMeFragment extends BaseFragment {
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    public void onEventMainThread(io.rong.imlib.model.UserInfo userInfo) {
+        if (userInfo != null && getActivity() != null && userInfo.getUserId().equals(RongIMClient.getInstance().getCurrentUserId())) {
+            Glide.with(getActivity()).load(userInfo.getPortraitUri()).placeholder(R.drawable.rc_default_portrait).into(uivUserInfo.getHeaderImageView());
+            uivUserInfo.setName(userInfo.getName());
         }
     }
 }

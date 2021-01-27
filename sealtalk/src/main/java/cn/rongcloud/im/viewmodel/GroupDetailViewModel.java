@@ -48,9 +48,6 @@ public class GroupDetailViewModel extends AndroidViewModel {
     private GroupTask groupTask;
     private PrivacyTask privacyTask;
 
-    private SingleSourceLiveData<Resource<Boolean>> isNotifyLiveData = new SingleSourceLiveData<>();
-    private SingleSourceLiveData<Resource<Boolean>> isTopLiveData = new SingleSourceLiveData<>();
-    private SingleSourceLiveData<Resource<Boolean>> cleanMessageResult = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<Void>> uploadPortraitResult = new SingleSourceLiveData<>();
     private SingleSourceMapLiveData<Resource<List<AddMemberResult>>, Resource<List<AddMemberResult>>> addGroupMemberResult;
     private SingleSourceMapLiveData<Resource<Void>, Resource<Void>> removeGroupMemberResult;
@@ -120,9 +117,6 @@ public class GroupDetailViewModel extends AndroidViewModel {
 
         groupMemberListLiveData.setSource(groupTask.getGroupMemberInfoList(groupId));
 
-        isNotifyLiveData.setSource(imManager.getConversationNotificationStatus(conversationType, targetId));
-        isTopLiveData.setSource(imManager.getConversationIsOnTop(conversationType, targetId));
-
         addGroupMemberResult = new SingleSourceMapLiveData<>(resource -> {
             // 考虑到新增成员后一些数据需要同步所以重新加载群组信息和新成员信息
             refreshGroupInfo();
@@ -169,64 +163,6 @@ public class GroupDetailViewModel extends AndroidViewModel {
      */
     public void refreshGroupMemberList() {
         groupMemberListLiveData.setSource(groupTask.getGroupMemberInfoList(groupId));
-    }
-
-    /**
-     * 设置是否消息免打扰
-     *
-     * @param isNotify
-     */
-    public void setIsNotifyConversation(final boolean isNotify) {
-        Resource<Boolean> value = isNotifyLiveData.getValue();
-        if (value != null && value.data != null && value.data == isNotify) return;
-
-        isNotifyLiveData.setSource(imManager.setConversationNotificationStatus(conversationType, groupId, isNotify));
-    }
-
-    /**
-     * 设置会话置顶
-     *
-     * @param isTop
-     */
-    public void setConversationOnTop(boolean isTop) {
-        Resource<Boolean> value = isTopLiveData.getValue();
-        if (value != null && value.data != null && value.data == isTop) return;
-
-        isTopLiveData.setSource(imManager.setConversationToTop(conversationType, groupId, isTop));
-    }
-
-    /**
-     * 获取会话是否接受消息通知
-     *
-     * @return
-     */
-    public MutableLiveData<Resource<Boolean>> getIsNotify() {
-        return isNotifyLiveData;
-    }
-
-    /**
-     * 获取会话是否置顶
-     *
-     * @return
-     */
-    public MutableLiveData<Resource<Boolean>> getIsTop() {
-        return isTopLiveData;
-    }
-
-    /**
-     * 清除历史消息
-     */
-    public void cleanHistoryMessage() {
-        cleanMessageResult.setSource(imManager.cleanHistoryMessage(conversationType, groupId));
-    }
-
-    /**
-     * 获取清除历史消息结果
-     *
-     * @return
-     */
-    public LiveData<Resource<Boolean>> getCleanHistoryMessageResult() {
-        return cleanMessageResult;
     }
 
     /**

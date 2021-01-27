@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rc_plugin_recognize">مدخل الصو</string>
+    <string name="rc_plugin_recognize_clear"> واضح </string>
+    <string name="rc_plugin_recognize_check_network"> إرجاء فحص الأنترنت </string>
+</resources>

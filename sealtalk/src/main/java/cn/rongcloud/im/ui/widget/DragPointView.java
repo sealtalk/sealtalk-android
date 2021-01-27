@@ -61,10 +61,7 @@ public class DragPointView extends TextView {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int w = getMeasuredWidth();
         int h = getMeasuredHeight();
-        if (w != h) { // 简单的将宽高搞成一样的,如果有更好的方法欢迎在我博客下方留言!
-            int x = Math.max(w, h);
-            setMeasuredDimension(x, x);
-        }
+        setMeasuredDimension(w, h);
     }
 
     @SuppressWarnings("deprecation")

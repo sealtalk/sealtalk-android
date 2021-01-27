@@ -51,6 +51,7 @@
     <string name="lang_en">EN</string>
     <string name="lang_english">English</string>
     <string name="lang_chs">简体中文</string>
+    <string name="lang_arab">Arab</string>
     <string name="seal_search">Search</string>
     <string name="beijing">Beijing</string>
 
@@ -75,9 +76,9 @@
 
     <!--Main-->
     <string-array name="tab_names">
-        <item>Chats</item>
+        <item>Messages</item>
         <item>Contacts</item>
-        <item>Discover</item>
+        <item>ChatRoom</item>
         <item>Me</item>
     </string-array>
 
@@ -97,7 +98,7 @@
     <string name="seal_conversation_remote_side_is_typing">Typing &#046;&#046;&#046;</string>
     <string name="seal_conversation_remote_side_speaking">Speaking &#046;&#046;&#046;</string>
     <string name="seal_conversation_title_discussion_group">Discussion Group</string>
-    <string name="seal_conversation_title_system">System Notification</string>
+    <string name="seal_conversation_title_system">System messages assistant</string>
     <string name="seal_conversation_title_feedback">Feedback</string>
     <string name="seal_conversation_title_defult">Chat</string>
 
@@ -107,8 +108,8 @@
     <string name="seal_conversation_sub_discussion">"My discussion"</string>
     <string name="seal_conversation_sub_defult">"Chat"</string>
     <string name="seal_conversation_read_receipt_detail">Read Receipt Detail</string>
-    <string name="seal_conversation_read_receipt_unread_persons_format">%1$d Unread</string>
-    <string name="seal_conversation_read_receipt_read_persons_format">%1$d Read</string>
+    <string name="seal_conversation_read_receipt_unread_persons_format">Unread(%1$d)</string>
+    <string name="seal_conversation_read_receipt_read_persons_format">Read(%1$d)</string>
     <string name="seal_conversation_read_receipt_no_person_read">All Read</string>
     <string name="seal_conversation_read_receipt_no_person_unread">All Unread</string>
 
@@ -134,6 +135,7 @@
     <string name="profile_clean_timing">Clear Message Regularly </string>
     <string name="profile_clean_timing_tips">After the scheduled cleaning is performed, the system periodically cleans up the group messages before the time. The cleaned messages cannot be restored. Please set them carefully.</string>
     <string name="profile_user_details">User Info</string>
+    <string name="profile_chat_details">Chat Detail</string>
     <string name="profile_clean_private_chat_history">Confirm to clear the history?</string>
     <string name="profile_clean_group_chat_history">Confirm to clear the group history?</string>
     <string name="profile_clean_discussion_chat_history">Confirm to clear the discussion history?</string>
@@ -214,7 +216,9 @@
     <string name="seal_mine_about_rongcloud_web">Official Website</string>
     <string name="seal_mine_about_seal_talk_version">SealTalk Version</string>
     <string name="seal_mine_about_sdk_version">SDK Version</string>
+    <string name="debug_mode_is_open">Debug mode is on</string>
     <string name="seal_mine_about_close_debug_mode">Turn Off Debug Mode</string>
+    <string name="seal_mine_about_debug_setting">Setting</string>
     <string name="seal_mine_about_user_online_status">Setting User Online Status</string>
     <string name="common_set_failed">Set failed</string>
     <string name="common_clear_success">Cleared</string>
@@ -307,7 +311,7 @@
 
 
     <string name="seal_search_empty">Not related to content of %s </string>
-    <string name="seal_main_chat_tab_more_read_message">···</string>
+    <string name="seal_main_chat_tab_more_read_message">99+</string>
     <string name="seal_main_toast_unread_clear_success">Cleared</string>
     <string name="seal_public_account_information">Public account Info</string>
     <string name="seal_member_mention_all_member">All</string>
@@ -372,6 +376,7 @@
     <string name="seal_group_management_add_group_managements">Add group admin</string>
     <string name="seal_group_management_dialog_delete_content"><![CDATA[Do you want to remove <font color="#0195ff">%1$s</font> from the group admin list]]> </string>
 
+    <string name="seal_select_forward_title">Select a chat</string>
     <string name="seal_select_forward_create_new_chat">Create a New Chat</string>
     <string name="seal_select_forward_select_group">Select a Group Chat</string>
     <string name="seal_select_forward_message_recent_chat">Recent Chats</string>
@@ -585,6 +590,7 @@
     <string name="seal_dialog_operate_phone_num_copy">Copy numbers</string>
     <string name="seal_dialog_operate_phone_num_copy_success">Successful copy</string>
 
+    <string name="seal_choose_members">Select Members</string>
     <string name="contact_multi_delete_friend">Delete friends in bulk</string>
     <string name="contact_multi_delete_friend_conf" formatted="true">
         <Data><![CDATA[Selected friends will be deleted after confirmed,<br> confirm to delete?]]></Data>
@@ -593,4 +599,14 @@
     <string name="seal_dialog_wait_tips">Please wait...</string>
 
     <string name="seal_login_private_service_error">Login Fail Status :34005</string>
+    <string name="seal_system_conversation_title">System messages assistant</string>
+
+    <string name="seal_friend_message">Friends news</string>
+
+
+    <!--debug mode-->
+    <string name="setting_open_debug_prompt">Is the App Debug mode enabled (requires re-login to the app)?</string>
+    <string name="setting_close_debug_promt">Is the App Debug mode disabled (requires re-login to the app)?</string>
+    <string name="seal_mine_about_push_config">Set Push Config</string>
+    <string name="seal_mine_about_debug_setting_push_language">Set push language</string>
 </resources>

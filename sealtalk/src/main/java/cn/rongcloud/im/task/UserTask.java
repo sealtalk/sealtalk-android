@@ -16,7 +16,7 @@ import java.util.List;
 
 import cn.rongcloud.im.common.ErrorCode;
 import cn.rongcloud.im.common.ResultCallback;
-import cn.rongcloud.im.db.DbManager;
+import cn.rongcloud.im.db.DBManager;
 import cn.rongcloud.im.db.dao.FriendDao;
 import cn.rongcloud.im.db.dao.GroupDao;
 import cn.rongcloud.im.db.dao.UserDao;
@@ -59,7 +59,7 @@ public class UserTask {
     private FileManager fileManager;
     private UserService userService;
     private Context context;
-    private DbManager dbManager;
+    private DBManager dbManager;
     private IMManager imManager;
     //存储当前最新一次登录的用户信息
     private UserCache userCache;
@@ -69,7 +69,7 @@ public class UserTask {
     public UserTask(Context context) {
         this.context = context.getApplicationContext();
         userService = HttpClientManager.getInstance(context).getClient().createService(UserService.class);
-        dbManager = DbManager.getInstance(context.getApplicationContext());
+        dbManager = DBManager.getInstance(context.getApplicationContext());
         fileManager = new FileManager(context.getApplicationContext());
         userCache = new UserCache(context.getApplicationContext());
         countryCache = new CountryCache(context.getApplicationContext());
@@ -103,7 +103,7 @@ public class UserTask {
                 result.removeSource(login);
                 LoginResult loginResult = loginResultResource.data;
                 if (loginResult != null) {
-                    imManager.connectIM(loginResult.token, false, new ResultCallback<String>() {
+                    imManager.connectIM(loginResult.token, true, new ResultCallback<String>() {
                         @Override
                         public void onSuccess(String s) {
                             result.postValue(Resource.success(s));

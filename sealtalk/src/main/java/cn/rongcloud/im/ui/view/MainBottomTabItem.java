@@ -1,6 +1,7 @@
 package cn.rongcloud.im.ui.view;
 
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,12 +10,14 @@ import android.widget.TextView;
 
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.widget.DragPointView;
+import cn.rongcloud.im.ui.widget.TabItem;
 
 public class MainBottomTabItem extends RelativeLayout {
     private ImageView tabImage;
     private TextView tabText;
     private ImageView redIv;
     private DragPointView numDpv;
+    private TabItem.AnimationDrawableBean mAnimationDrawable;
 
     public MainBottomTabItem(Context context) {
         super(context);
@@ -43,19 +46,40 @@ public class MainBottomTabItem extends RelativeLayout {
         tabText.setText(name);
     }
 
+    public void setAnimationDrawable(TabItem.AnimationDrawableBean animationDrawableBean) {
+        this.mAnimationDrawable = animationDrawableBean;
+        setDrawable(mAnimationDrawable.drawableNormal);
+    }
+
     public void setDrawable(int drawable) {
-        tabImage.setBackgroundResource(drawable);
+        tabImage.setImageResource(drawable);
     }
 
     @Override
     public void setSelected(boolean selected) {
         super.setSelected(selected);
+        if (mAnimationDrawable != null) {
+            if (selected) {
+                AnimationDrawable animationDrawable = (AnimationDrawable) getResources().getDrawable(mAnimationDrawable.drawableAnimation);
+                tabImage.setImageDrawable(animationDrawable);
+                animationDrawable.setOneShot(true);
+                animationDrawable.start();
+            } else {
+                // 防止点击过快动画还未结束
+//                AnimationDrawable animationDrawable = (AnimationDrawable) tabImage.getBackground();
+//                if (animationDrawable!=null && animationDrawable.isRunning()){
+//                    animationDrawable.stop();
+//                }
+                tabImage.setImageDrawable(getResources().getDrawable(mAnimationDrawable.drawableNormal));
+            }
+        }
         tabImage.setSelected(selected);
         tabText.setSelected(selected);
     }
 
     /**
      * 红点
+     *
      * @param visibility
      */
     public void setRedVisibility(int visibility) {
@@ -64,6 +88,7 @@ public class MainBottomTabItem extends RelativeLayout {
 
     /**
      * 数量
+     *
      * @param visibility
      */
     public void setNumVisibility(int visibility) {
@@ -72,6 +97,7 @@ public class MainBottomTabItem extends RelativeLayout {
 
     /**
      * 消息数
+     *
      * @param num
      */
     public void setNum(String num) {
@@ -80,6 +106,7 @@ public class MainBottomTabItem extends RelativeLayout {
 
     /**
      * 设置未读书多拽监听
+     *
      * @param listener
      */
     public void setTabUnReadNumDragListener(DragPointView.OnDragListencer listener) {

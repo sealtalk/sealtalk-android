@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true">
 
-        <io.rong.imkit.widget.AsyncImageView
+        <cn.rongcloud.im.utils.AsyncImageView
             android:id="@+id/iv_avatar"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -20,6 +20,7 @@
 
         <TextView
             android:id="@+id/tv_username"
+            style="@style/TextStyle.Alignment"
             android:layout_width="56dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

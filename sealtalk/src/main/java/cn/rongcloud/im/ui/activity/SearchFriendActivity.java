@@ -28,7 +28,8 @@ import cn.rongcloud.im.ui.interfaces.OnSearchFriendClickListener;
 import cn.rongcloud.im.ui.interfaces.OnSearchFriendItemClickListener;
 import cn.rongcloud.im.viewmodel.SearchFriendNetViewModel;
 import io.rong.imkit.RongIM;
-import io.rong.imkit.userInfoCache.RongUserInfoManager;
+import io.rong.imkit.userinfo.RongUserInfoManager;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
 
 public class SearchFriendActivity extends TitleBaseActivity implements OnSearchFriendClickListener,
@@ -114,7 +115,7 @@ public class SearchFriendActivity extends TitleBaseActivity implements OnSearchF
 
     @Override
     public void onSearchFriendItemClick(SearchFriendInfo searchFriendInfo) {
-        if (isFriend || searchFriendInfo.getId().equals(RongIM.getInstance().getCurrentUserId())) {
+        if (isFriend || searchFriendInfo.getId().equals(RongIMClient.getInstance().getCurrentUserId())) {
             toDetailActivity(searchFriendInfo.getId());
         } else {
             showAddFriendDialog(searchFriendInfo.getId());

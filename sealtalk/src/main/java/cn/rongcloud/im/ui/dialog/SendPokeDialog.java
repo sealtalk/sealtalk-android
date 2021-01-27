@@ -23,8 +23,8 @@ import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.ui.activity.SelectGroupMemberAllowEmptyActivity;
 import cn.rongcloud.im.utils.ToastUtils;
-import io.rong.imkit.model.GroupUserInfo;
-import io.rong.imkit.userInfoCache.RongUserInfoManager;
+import io.rong.imkit.userinfo.model.GroupUserInfo;
+import io.rong.imkit.userinfo.RongUserInfoManager;
 import io.rong.imlib.model.UserInfo;
 
 /**

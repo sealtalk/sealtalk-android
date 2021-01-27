@@ -12,20 +12,21 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/seal_new_friend_header_margin_left"
+        android:layout_marginStart="@dimen/seal_new_friend_header_margin_left"
         android:layout_marginTop="@dimen/seal_new_friend_header_margin_top"
         android:layout_marginBottom="@dimen/seal_new_friend_header_margin_bottom"
         android:scaleType="centerCrop"
         app:sriv_left_bottom_corner_radius="@dimen/seal_new_friend_header_radius"
         app:sriv_left_top_corner_radius="@dimen/seal_new_friend_header_radius"
         app:sriv_right_bottom_corner_radius="@dimen/seal_new_friend_header_radius"
-        app:sriv_right_top_corner_radius="@dimen/seal_new_friend_header_radius" />
+        app:sriv_right_top_corner_radius="@dimen/seal_new_friend_header_radius"
+        app:sriv_oval="true"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginLeft="9dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginEnd="10dp"
         android:layout_gravity="center_vertical">
 
         <TextView
@@ -45,7 +46,7 @@
             android:layout_alignParentBottom="true"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/seal_login_text_button_color"
+            android:textColor="#A0A5AB"
             android:textSize="@dimen/seal_group_notice_item_text_12"
             tool:text="被群主xx移除群聊" />
 
@@ -53,10 +54,10 @@
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="right"
-            android:textColor="@color/seal_group_notice_item_time"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="end"
+            android:textColor="#C7CBCE"
             android:textSize="@dimen/seal_group_notice_item_text_12"
             tool:text="昨天下午" />
     </RelativeLayout>

@@ -27,7 +27,7 @@ import cn.rongcloud.im.task.GroupTask;
 import cn.rongcloud.im.utils.CharacterParser;
 import cn.rongcloud.im.utils.SingleSourceLiveData;
 import cn.rongcloud.im.utils.SingleSourceMapLiveData;
-import io.rong.imkit.mention.RongMentionManager;
+import io.rong.imkit.feature.mention.RongMentionManager;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 
@@ -140,8 +140,6 @@ public class MemberMentionedViewModel extends AndroidViewModel {
     private void getMemberListData(String targerId, Conversation.ConversationType conversationType) {
         if (conversationType.equals(Conversation.ConversationType.GROUP)) {
             getGroupMembers(targerId);
-        } else if (conversationType.equals(Conversation.ConversationType.DISCUSSION)) {
-            getDiscussionMembers(targerId);
         }
     }
 
@@ -152,41 +150,6 @@ public class MemberMentionedViewModel extends AndroidViewModel {
      */
     private void getGroupMembers(String targetId) {
         memberList.setSource(groupTask.getGroupMemberInfoList(targetId));
-    }
-
-    /**
-     * 获取讨论组
-     *
-     * @param targetId
-     */
-    private void getDiscussionMembers(String targetId) {
-        memberList.setSource(Transformations.map(imManager.getDiscussionMembers(targetId), input -> {
-            List<GroupMember> groupMembers = new ArrayList<>();
-            for (UserInfo info : input) {
-                if (info != null && !info.getUserId().equals(imManager.getCurrentId())) {
-                    GroupMember member = new GroupMember();
-                    member.setUserId(info.getUserId());
-                    member.setName(info.getName());
-                    member.setPortraitUri(info.getPortraitUri().toString());
-                    String sortString = "#";
-                    //汉字转换成拼音
-                    String pinyin = CharacterParser.getInstance().getSpelling(info.getName());
-                    if (pinyin != null) {
-                        if (pinyin.length() > 0) {
-                            sortString = pinyin.substring(0, 1).toUpperCase();
-                        }
-                    }
-                    // 正则表达式，判断首字母是否是英文字母
-                    if (sortString.matches("[A-Z]")) {
-                        member.setNameSpelling(sortString.toUpperCase());
-                    } else {
-                        member.setNameSpelling("#");
-                    }
-                    groupMembers.add(member);
-                }
-            }
-            return new Resource<>(Status.SUCCESS, groupMembers, 0);
-    }));
     }
 
     /**

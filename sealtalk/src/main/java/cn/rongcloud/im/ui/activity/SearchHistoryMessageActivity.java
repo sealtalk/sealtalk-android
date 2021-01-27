@@ -13,6 +13,7 @@ import cn.rongcloud.im.ui.interfaces.OnMessageRecordClickListener;
 import cn.rongcloud.im.viewmodel.SearchMessageModel;
 import io.rong.imkit.RongIM;
 
+import io.rong.imkit.utils.RouteUtils;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 
@@ -40,10 +41,10 @@ public class SearchHistoryMessageActivity extends SealSearchBaseActivity impleme
     @Override
     public void onMessageRecordClick(SearchMessageModel searchMessageModel) {
         Message message = searchMessageModel.getBean();
-        RongIM.getInstance().startConversation(this,
-                message.getConversationType(),
-                message.getTargetId(), searchMessageModel.getName(),
-                message.getSentTime());
+        Bundle bundle = new Bundle();
+        bundle.putString(RouteUtils.TITLE, searchMessageModel.getName());
+        bundle.putLong(RouteUtils.INDEX_MESSAGE_TIME, message.getSentTime());
+        RouteUtils.routeToConversationActivity(this, message.getConversationType(), message.getTargetId(), bundle);
     }
 
 

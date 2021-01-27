@@ -88,12 +88,7 @@ public class FriendDetailInfo implements Parcelable {
     public void setOrderSpelling(String orderSpelling) {
         this.orderSpelling = orderSpelling;
         if (!TextUtils.isEmpty(orderSpelling)) {
-            if (orderSpelling.startsWith("unknown")) {
-                // 未知符号提示为 #
-                firstCharacter = "#";
-            } else {
-                firstCharacter = orderSpelling.substring(0, 1).toUpperCase();
-            }
+            firstCharacter = orderSpelling.substring(0, 1).toUpperCase();
         }
     }
 

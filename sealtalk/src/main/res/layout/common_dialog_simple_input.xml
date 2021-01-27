@@ -29,6 +29,7 @@
 
         <TextView
             android:id="@+id/common_tv_dialog_cancel"
+            style="@style/TextStyle.Alignment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -45,6 +46,7 @@
 
         <TextView
             android:id="@+id/common_tv_dialog_confirm"
+            style="@style/TextStyle.Alignment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

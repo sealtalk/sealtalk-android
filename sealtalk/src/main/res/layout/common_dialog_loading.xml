@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/color_black_text"
         tools:text="Loading..."
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:visibility="gone"
         />
 </LinearLayout>

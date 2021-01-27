@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -14,14 +15,12 @@ import androidx.annotation.Nullable;
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.ui.dialog.OperatePictureBottomDialog;
-import cn.rongcloud.im.ui.dialog.SelectCleanTimeDialog;
 import cn.rongcloud.im.ui.view.SealTitleBar;
 import cn.rongcloud.im.utils.ImageLoaderUtils;
-import io.rong.imkit.widget.AsyncImageView;
 
 public class ImagePreviewActivity extends TitleBaseActivity implements View.OnClickListener {
 
-    private AsyncImageView ivCotnet;
+    private ImageView ivCotnet;
     private TextView tvCancel;
     private TextView tvSet;
     private TextView tvSend;

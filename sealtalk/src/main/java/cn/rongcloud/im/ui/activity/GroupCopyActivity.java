@@ -28,7 +28,7 @@ import cn.rongcloud.im.utils.ImageLoaderUtils;
 import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.viewmodel.CopyGroupViewModel;
 import io.rong.imkit.RongIM;
-import io.rong.imkit.userInfoCache.RongUserInfoManager;
+import io.rong.imkit.userinfo.RongUserInfoManager;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 
@@ -102,7 +102,7 @@ public class GroupCopyActivity extends TitleBaseActivity implements View.OnClick
 
     private void updateGroupInfo(GroupEntity groupInfo) {
         ImageLoaderUtils.displayUserPortraitImage(groupInfo.getPortraitUri(), groupPortrait);
-        tvGroupMemberNum.setText(getString(R.string.profile_group_has_members_format, groupInfo.getMemberCount()));
+        tvGroupMemberNum.setText(getString(R.string.common_member_count, groupInfo.getMemberCount()));
     }
 
     private void copyGroup() {

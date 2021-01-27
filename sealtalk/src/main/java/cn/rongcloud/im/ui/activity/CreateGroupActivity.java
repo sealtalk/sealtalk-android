@@ -7,6 +7,7 @@ import android.text.InputFilter;
 import android.text.Spanned;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
@@ -23,13 +24,12 @@ import cn.rongcloud.im.model.GroupResult;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.ui.dialog.SelectPictureBottomDialog;
 import cn.rongcloud.im.ui.view.SealTitleBar;
-import cn.rongcloud.im.utils.ImageLoaderUtils;
 import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.viewmodel.CreateGroupViewModel;
-import io.rong.imkit.RongIM;
-import io.rong.imkit.emoticon.AndroidEmoji;
-import io.rong.imkit.widget.AsyncImageView;
+import io.rong.imkit.conversation.extension.component.emoticon.AndroidEmoji;
+import io.rong.imkit.utils.RouteUtils;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 
 /**
@@ -39,7 +39,7 @@ public class CreateGroupActivity extends TitleBaseActivity implements View.OnCli
     private final String TAG = "CreateGroupActivity";
 
     private EditText groupNameEt;
-    private AsyncImageView groupPortraitIv;
+    private ImageView groupPortraitIv;
 
     private Uri groupPortraitUri;
     private CreateGroupViewModel createGroupViewModel;
@@ -75,7 +75,7 @@ public class CreateGroupActivity extends TitleBaseActivity implements View.OnCli
             return;
         }
         //加入自己
-        memberList.add(0, RongIM.getInstance().getCurrentUserId());
+        memberList.add(0, RongIMClient.getInstance().getCurrentUserId());
 
         initView();
         initViewModel();
@@ -207,7 +207,7 @@ public class CreateGroupActivity extends TitleBaseActivity implements View.OnCli
      * 跳转到群组聊天
      */
     private void toGroupChat(String groupId) {
-        RongIM.getInstance().startConversation(this, Conversation.ConversationType.GROUP, groupId, createGroupName);
+        RouteUtils.routeToConversationActivity(this, Conversation.ConversationType.GROUP, groupId);
         finish();
     }
 

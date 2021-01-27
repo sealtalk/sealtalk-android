@@ -2,14 +2,9 @@ package cn.rongcloud.im.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.widget.EditText;
 import android.widget.ListView;
-
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.db.model.GroupEntity;
@@ -20,16 +15,15 @@ import cn.rongcloud.im.ui.view.SealTitleBar;
 import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.viewmodel.GroupMemberListViewModel;
 import cn.rongcloud.im.utils.log.SLog;
-import io.rong.imkit.userInfoCache.RongUserInfoManager;
+import io.rong.imkit.userinfo.RongUserInfoManager;
 import io.rong.imlib.model.Group;
 
 /**
  * 群组成员一览界面
  */
-public class GroupMemberListActivity extends TitleBaseActivity {
+public class GroupMemberListActivity extends TitleAndSearchBaseActivity {
     private final static String TAG = "GroupMemberListActivity";
     private SealTitleBar sealTitleBar;
-    private EditText groupMemberSearchEt;
     private ListView groupMemberList;
     private ListGroupMemberAdapter listGroupMemberAdapter;
     private GroupMemberListViewModel groupMemberListViewModel;
@@ -63,8 +57,13 @@ public class GroupMemberListActivity extends TitleBaseActivity {
         initViewModel();
     }
 
+    @Override
+    public void onSearch(String keyword) {
+        groupMemberListViewModel.requestGroupMember(keyword);
+
+    }
+
     private void initView(){
-        groupMemberSearchEt = findViewById(R.id.profile_et_group_member_search);
         groupMemberList = findViewById(R.id.profile_lv_group_member_list);
         listGroupMemberAdapter = new ListGroupMemberAdapter(this);
         groupMemberList.setAdapter(listGroupMemberAdapter);
@@ -73,20 +72,6 @@ public class GroupMemberListActivity extends TitleBaseActivity {
             showGroupMemberInfo(groupMember);
         });
 
-        groupMemberSearchEt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                groupMemberListViewModel.requestGroupMember(s.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
     }
 
     private void initViewModel(){

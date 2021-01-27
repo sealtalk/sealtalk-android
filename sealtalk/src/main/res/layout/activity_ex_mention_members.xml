@@ -12,6 +12,7 @@
 
     <EditText
         android:id="@+id/et_menber_search"
+        style="@style/EditTextStyle.Alignment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/rc_search"
@@ -27,10 +28,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:divider="@null"></ListView>
+            android:divider="@null"/>
 
         <TextView
             android:id="@+id/tv_popup_bg"
+            style="@style/TextStyle.Alignment"
             android:layout_width="80.0dip"
             android:layout_height="80.0dip"
             android:layout_gravity="center"
@@ -44,6 +46,6 @@
             android:id="@+id/sb_sidebar"
             android:layout_width="20.0dip"
             android:layout_height="match_parent"
-            android:layout_gravity="right|center" />
+            android:layout_gravity="end|center" />
     </FrameLayout>
 </LinearLayout>

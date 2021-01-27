@@ -26,7 +26,7 @@
         android:layout_height="match_parent"
         app:item_userinfo_divider="true"
         app:item_userifo_null_background="false"
-        android:layout_toRightOf="@id/cb_select"
+        android:layout_toEndOf="@id/cb_select"
         >
 
     </cn.rongcloud.im.ui.view.UserInfoItemView>

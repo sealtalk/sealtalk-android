@@ -17,12 +17,13 @@
 
         <EditText
             android:id="@+id/search_edit"
+            style="@style/EditTextStyle.Alignment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="14dp"
-            android:layout_marginRight="14dp"
-            android:drawableLeft="@drawable/seal_search_group_icon"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:drawableStart="@drawable/seal_search_group_icon"
             android:drawablePadding="6dp"
             android:hint="@string/seal_search_phone_number"
             android:imeOptions="actionSearch"
@@ -48,31 +49,33 @@
             android:id="@+id/search_country_select"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
+                style="@style/TextStyle.Alignment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10dip"
-                android:paddingRight="10dip"
+                android:paddingStart="10dip"
+                android:paddingEnd="10dip"
                 android:text="@string/seal_login_countries_and_regions"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium.Inverse"
                 android:textColor="@color/seal_dialog_select_picture_btn_text" />
 
             <TextView
                 android:id="@+id/search_country_name"
+                style="@style/TextStyle.Alignment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:gravity="left"
+                android:gravity="start"
                 android:maxLines="1"
-                android:paddingLeft="10dip"
-                android:paddingRight="10dip"
+                android:paddingStart="10dip"
+                android:paddingEnd="10dip"
                 android:text="@string/china"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium.Inverse"
                 android:textColor="@color/seal_dialog_select_picture_btn_text" />
@@ -86,24 +89,26 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/search_country_code"
+                style="@style/TextStyle.Alignment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10dip"
-                android:paddingRight="10dip"
+                android:paddingStart="10dip"
+                android:paddingEnd="10dip"
                 android:text="+86"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium.Inverse"
                 android:textColor="@color/seal_dialog_select_picture_btn_text" />
 
             <cn.rongcloud.im.ui.widget.ClearWriteEditText
                 android:id="@+id/search_phone"
+                style="@style/EditTextStyle.Alignment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -113,8 +118,8 @@
                 android:inputType="text"
                 android:maxLength="20"
                 android:maxLines="1"
-                android:paddingLeft="10dip"
-                android:paddingRight="10dip"
+                android:paddingStart="10dip"
+                android:paddingEnd="10dip"
                 android:theme="@style/input_editview"
                 android:textColor="@color/seal_dialog_select_picture_btn_text"
                 android:textColorHint="@color/seal_setting_item_value" />
@@ -123,17 +128,18 @@
 
         <TextView
             android:id="@+id/search_search"
+            style="@style/TextStyle.Alignment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
+            android:layout_gravity="end"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/seal_select_btn_blue"
             android:clickable="false"
-            android:paddingLeft="24dp"
+            android:paddingStart="24dp"
             android:paddingTop="8dp"
-            android:paddingRight="24dp"
+            android:paddingEnd="24dp"
             android:paddingBottom="8dp"
             android:text="@string/seal_search"
             android:textColor="#FFF" />

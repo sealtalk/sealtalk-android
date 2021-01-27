@@ -38,6 +38,7 @@ public class GroupExitedListActivity extends TitleBaseActivity {
 
     private void initView() {
         getTitleBar().setTitle(getString(R.string.seal_group_manager_exited_title));
+        getTitleBar().getBtnLeft().setText(getResources().getString(R.string.seal_group_exit_list_left_title));
         groupExitedList = findViewById(R.id.lv_group_exited_list);
         isNull = findViewById(R.id.tv_is_null);
         mAdapter = new GroupExitedListAdapter();

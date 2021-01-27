@@ -1,8 +1,6 @@
 package cn.rongcloud.im.ui.activity;
 
 import android.os.Bundle;
-import android.text.InputFilter;
-import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -10,16 +8,12 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.db.model.UserInfo;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Result;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.ui.widget.ClearWriteEditText;
-import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.viewmodel.UserInfoViewModel;
 
 public class UpdateNameActivity extends TitleBaseActivity {
@@ -42,7 +36,7 @@ public class UpdateNameActivity extends TitleBaseActivity {
     private void initView() {
 
         getTitleBar().setTitle(R.string.seal_update_name);
-        getTitleBar().setOnBtnRightClickListener(getString(R.string.seal_update_name_save_update),new View.OnClickListener() {
+        getTitleBar().setOnBtnRightClickListener(getString(R.string.seal_update_name_save_update), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String newName = updateNameCet.getText().toString().trim();
@@ -56,7 +50,6 @@ public class UpdateNameActivity extends TitleBaseActivity {
         });
 
         updateNameCet = findViewById(R.id.cet_update_name);
-        updateNameCet.setFilters(new InputFilter[]{emojiFilter, new InputFilter.LengthFilter(10)});
     }
 
     /**
@@ -70,9 +63,12 @@ public class UpdateNameActivity extends TitleBaseActivity {
             @Override
             public void onChanged(Resource<UserInfo> resource) {
                 if (resource.data != null) {
-                    String name = TextUtils.isEmpty(resource.data.getName())? "" : resource.data.getName();
+                    String name = TextUtils.isEmpty(resource.data.getName()) ? "" : resource.data.getName();
                     updateNameCet.setText(name);
-                    updateNameCet.setSelection(name.length());
+                    int length = name.length();
+                    if (length <= 32) {
+                        updateNameCet.setSelection(length);
+                    }
                 }
             }
         });
@@ -93,6 +89,7 @@ public class UpdateNameActivity extends TitleBaseActivity {
 
     /**
      * 更新name
+     *
      * @param newName
      */
     private void updateName(String newName) {
@@ -100,22 +97,4 @@ public class UpdateNameActivity extends TitleBaseActivity {
             userInfoViewModel.setName(newName);
         }
     }
-
-    /**
-     * 表情输入的过滤
-     */
-    InputFilter emojiFilter = new InputFilter() {
-        Pattern emoji = Pattern.compile("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",
-                Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
-
-        @Override
-        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-            Matcher emojiMatcher = emoji.matcher(source);
-            if (emojiMatcher.find()) {
-                ToastUtils.showToast("不支持输入表情");
-                return "";
-            }
-            return null;
-        }
-    };
 }

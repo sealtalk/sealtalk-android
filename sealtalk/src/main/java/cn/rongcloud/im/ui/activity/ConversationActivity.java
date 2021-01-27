@@ -4,24 +4,22 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -49,31 +47,36 @@ import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.model.TypingInfo;
 import cn.rongcloud.im.sp.UserConfigCache;
 import cn.rongcloud.im.ui.dialog.RencentPicturePopWindow;
-import cn.rongcloud.im.ui.fragment.ConversationFragmentEx;
 import cn.rongcloud.im.ui.view.AnnouceView;
-import cn.rongcloud.im.ui.view.SealTitleBar;
 import cn.rongcloud.im.utils.CheckPermissionUtils;
 import cn.rongcloud.im.utils.NavigationBarUtil;
 import cn.rongcloud.im.utils.ScreenCaptureUtil;
+import cn.rongcloud.im.utils.StatusBarUtil;
 import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.viewmodel.ConversationViewModel;
 import cn.rongcloud.im.viewmodel.GroupManagementViewModel;
 import cn.rongcloud.im.viewmodel.PrivateChatSettingViewModel;
-import io.rong.eventbus.EventBus;
-import io.rong.imkit.RongContext;
-import io.rong.imkit.RongIM;
-import io.rong.imkit.RongKitIntent;
+import io.rong.imkit.activity.RongBaseActivity;
+import io.rong.imkit.conversation.ConversationFragment;
+import io.rong.imkit.conversation.extension.RongExtensionViewModel;
+import io.rong.imkit.conversation.messgelist.viewmodel.MessageViewModel;
+import io.rong.imkit.manager.UnReadMessageManager;
+import io.rong.imkit.utils.RouteUtils;
+import io.rong.imkit.widget.TitleBar;
 import io.rong.imlib.model.Conversation;
 
 /**
  * 会话页面
  */
-public class ConversationActivity extends TitleBaseActivity {
+public class ConversationActivity extends RongBaseActivity implements UnReadMessageManager.IUnReadMessageObserver {
 
     private String TAG = ConversationActivity.class.getSimpleName();
-    private ConversationFragmentEx fragment;
+    private ConversationFragment fragment;
+    private String mTargetId;
+    private Conversation.ConversationType mConversationType;
     private AnnouceView annouceView;
     private ConversationViewModel conversationViewModel;
+    private RongExtensionViewModel extensionViewModel;
     private GroupManagementViewModel groupManagementViewModel;
     private PrivateChatSettingViewModel privateChatSettingViewModel;
     private String title;
@@ -89,14 +92,7 @@ public class ConversationActivity extends TitleBaseActivity {
     private UserConfigCache userConfigCache;
     private final int REQUEST_CODE_PERMISSION = 118;
     private String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
-    /**
-     * 对方id
-     */
-    private String targetId;
-    /**
-     * 会话类型
-     */
-    private Conversation.ConversationType conversationType;
+
     private ScreenCaptureUtil screenCaptureUtil;
 
     /**
@@ -115,34 +111,83 @@ public class ConversationActivity extends TitleBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.conversation_activity_conversation);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            StatusBarUtil.setStatusBarColor(this, getResources().getColor(R.color.rc_background_main_color)); //Color.parseColor("#F5F6F9")
+        }
         // 没有intent 的则直接返回
         Intent intent = getIntent();
-        if (intent == null || intent.getData() == null) {
+        if (intent == null) {
             finish();
             return;
         }
 
-        targetId = intent.getData().getQueryParameter("targetId");
-        conversationType = Conversation.ConversationType.valueOf(intent.getData()
-                .getLastPathSegment().toUpperCase(Locale.US));
-        title = intent.getData().getQueryParameter("title");
+        mTargetId = getIntent().getStringExtra(RouteUtils.TARGET_ID);
+        mConversationType = Conversation.ConversationType.valueOf(getIntent().getStringExtra(RouteUtils.CONVERSATION_TYPE).toUpperCase(Locale.US));
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            title = bundle.getString(RouteUtils.TITLE);
+        }
         userConfigCache = new UserConfigCache(this);
         mHandler = new DelayDismissHandler(this);
         setListenerToRootView();
         initView();
         initViewModel();
-        EventBus.getDefault().register(this);
 //        initScreenShotListener();
     }
 
     @Override
+    public void onAttachFragment(@NonNull Fragment fragment) {
+        super.onAttachFragment(fragment);
+        MessageViewModel messageViewModel = ViewModelProviders.of(fragment).get(MessageViewModel.class);
+        messageViewModel.IsEditStatusLiveData().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean) {
+                    mTitleBar.setRightVisible(false);
+                } else {
+                    if (mConversationType.equals(Conversation.ConversationType.CUSTOMER_SERVICE)
+                            || mConversationType.equals(Conversation.ConversationType.CHATROOM)) {
+                        mTitleBar.setRightVisible(false);
+                    } else {
+                        mTitleBar.setRightVisible(true);
+                    }
+                }
+            }
+        });
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (KeyEvent.KEYCODE_BACK == event.getKeyCode()) {
+            if (fragment != null && !fragment.onBackPressed()) {
+                finish();
+            }
+        }
+        return false;
+    }
+
+    private boolean isFirstResume = true;
+
+    @Override
     protected void onResume() {
         super.onResume();
-        getTitleStr(targetId, conversationType, title);
+        getTitleStr(mTargetId, mConversationType, title);
         refreshScreenCaptureStatus();
-
+        //设置聊天背景
+        if (isFirstResume) {
+            UserConfigCache configCache = new UserConfigCache(this);
+            if (!TextUtils.isEmpty(configCache.getChatbgUri())) {
+                try {
+                    fragment.getView().findViewById(R.id.rc_refresh).setBackground(Drawable.createFromStream(getContentResolver().openInputStream(Uri.parse(configCache.getChatbgUri())), null));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            isFirstResume = false;
+        }
         // 记录当前的会话类型和 id
-        IMManager.getInstance().setLastConversationRecord(targetId, conversationType);
+        IMManager.getInstance().setLastConversationRecord(mTargetId, mConversationType);
+        setOnLayoutListener();
     }
 
     @Override
@@ -160,9 +205,9 @@ public class ConversationActivity extends TitleBaseActivity {
             screenCaptureUtil.unRegister();
         }
         // 清除会话记录
-        IMManager.getInstance().clearConversationRecord(targetId);
+        IMManager.getInstance().clearConversationRecord(mTargetId);
         mHandler.removeCallbacksAndMessages(null);
-        EventBus.getDefault().unregister(this);
+        UnReadMessageManager.getInstance().removeObserver(this);
     }
 
     @Override
@@ -170,7 +215,7 @@ public class ConversationActivity extends TitleBaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RencentPicturePopWindow.REQUEST_PICTURE && resultCode == RESULT_OK) {
             SLog.i("onActivityResult", "send" + "***" + data.getStringExtra(IntentExtra.URL) + "***" + data.getBooleanExtra(IntentExtra.ORGIN, false));
-            IMManager.getInstance().sendImageMessage(conversationType, targetId,
+            IMManager.getInstance().sendImageMessage(mConversationType, mTargetId,
                     Collections.singletonList(Uri.parse(data.getStringExtra(IntentExtra.URL))),
                     data.getBooleanExtra(IntentExtra.ORGIN, false));
         }
@@ -178,7 +223,7 @@ public class ConversationActivity extends TitleBaseActivity {
 
     private void refreshScreenCaptureStatus() {
         //私聊或者群聊才开启功能
-        if (conversationType.equals(Conversation.ConversationType.PRIVATE) || conversationType.equals(Conversation.ConversationType.GROUP)) {
+        if (mConversationType.equals(Conversation.ConversationType.PRIVATE) || mConversationType.equals(Conversation.ConversationType.GROUP)) {
             int cacheType = userConfigCache.getScreenCaptureStatus();
             //1为开启，0为关闭
             if (cacheType == 1) {
@@ -206,7 +251,7 @@ public class ConversationActivity extends TitleBaseActivity {
 //                if (!isExtensionExpanded) {
 //                    showRencentPicturePop(extensionCollapsedHeight);
 //                }
-                if (conversationType.equals(Conversation.ConversationType.PRIVATE) || conversationType.equals(Conversation.ConversationType.GROUP)) {
+                if (mConversationType.equals(Conversation.ConversationType.PRIVATE) || mConversationType.equals(Conversation.ConversationType.GROUP)) {
                     int cacheType = userConfigCache.getScreenCaptureStatus();
                     //1为开启，0为关闭
                     if (cacheType == 0) {
@@ -217,7 +262,7 @@ public class ConversationActivity extends TitleBaseActivity {
                     @Override
                     public void run() {
                         //在主线程注册 observeForever 因为截屏时候可能使得 activity 处于 pause 状态，无法发送消息
-                        LiveData<Resource<Void>> result = conversationViewModel.sendScreenShotMsg(conversationType.getValue(), targetId);
+                        LiveData<Resource<Void>> result = conversationViewModel.sendScreenShotMsg(mConversationType.getValue(), mTargetId);
                         result.observeForever(new Observer<Resource<Void>>() {
                             @Override
                             public void onChanged(Resource<Void> voidResource) {
@@ -246,29 +291,29 @@ public class ConversationActivity extends TitleBaseActivity {
     }
 
     private void initViewModel() {
-        conversationViewModel = ViewModelProviders.of(this, new ConversationViewModel.Factory(targetId, conversationType, title, this.getApplication())).get(ConversationViewModel.class);
+        conversationViewModel = ViewModelProviders.of(this, new ConversationViewModel.Factory(mTargetId, mConversationType, title, this.getApplication())).get(ConversationViewModel.class);
 
         conversationViewModel.getTitleStr().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String title) {
                 if (TextUtils.isEmpty(title)) {
-                    if (conversationType == null) {
+                    if (mConversationType == null) {
                         return;
                     }
                     int titleResId;
-                    if (conversationType.equals(Conversation.ConversationType.DISCUSSION)) {
+                    if (mConversationType.equals(Conversation.ConversationType.DISCUSSION)) {
                         titleResId = R.string.seal_conversation_title_discussion_group;
-                    } else if (conversationType.equals(Conversation.ConversationType.SYSTEM)) {
+                    } else if (mConversationType.equals(Conversation.ConversationType.SYSTEM)) {
                         titleResId = R.string.seal_conversation_title_system;
-                    } else if (conversationType.equals(Conversation.ConversationType.CUSTOMER_SERVICE)) {
+                    } else if (mConversationType.equals(Conversation.ConversationType.CUSTOMER_SERVICE)) {
                         titleResId = R.string.seal_conversation_title_feedback;
                     } else {
                         titleResId = R.string.seal_conversation_title_defult;
                     }
-                    getTitleBar().setTitle(titleResId);
+                    mTitleBar.setTitle(titleResId);
 
                 } else {
-                    getTitleBar().setTitle(title);
+                    mTitleBar.setTitle(title);
                 }
             }
         });
@@ -280,19 +325,21 @@ public class ConversationActivity extends TitleBaseActivity {
                 if (typingInfo == null) {
                     return;
                 }
-
-                if (typingInfo.conversationType == conversationType && typingInfo.targetId.equals(targetId)) {
+                if (typingInfo.conversationType.equals(mConversationType) && typingInfo.targetId.equals(mTargetId)) {
                     if (typingInfo.typingList == null) {
-                        getTitleBar().setType(SealTitleBar.Type.NORMAL);
+                        mTitleBar.getMiddleView().setVisibility(View.VISIBLE);
+                        mTitleBar.getTypingView().setVisibility(View.GONE);
                     } else {
+                        mTitleBar.getMiddleView().setVisibility(View.GONE);
+                        mTitleBar.getTypingView().setVisibility(View.VISIBLE);
                         TypingInfo.Typing typing = typingInfo.typingList.get(typingInfo.typingList.size() - 1);
-                        getTitleBar().setType(SealTitleBar.Type.TYPING);
                         if (typing.type == TypingInfo.Typing.Type.text) {
-                            getTitleBar().setTyping(R.string.seal_conversation_remote_side_is_typing);
+                            mTitleBar.setTyping(R.string.seal_conversation_remote_side_is_typing);
                         } else if (typing.type == TypingInfo.Typing.Type.voice) {
-                            getTitleBar().setTyping(R.string.seal_conversation_remote_side_speaking);
+                            mTitleBar.setTyping(R.string.seal_conversation_remote_side_speaking);
                         }
                     }
+
                 }
             }
         });
@@ -302,15 +349,15 @@ public class ConversationActivity extends TitleBaseActivity {
             @Override
             public void onChanged(String s) {
                 // 跳转选择界面
-                Intent intent = new Intent(ConversationActivity.this, MemberMentionedExActivity.class);
-                intent.putExtra("conversationType", conversationType.getValue());
-                intent.putExtra("targetId", targetId);
+                Intent intent = new Intent(getApplicationContext(), MemberMentionedExActivity.class);
+                intent.putExtra(RouteUtils.CONVERSATION_TYPE, mConversationType.getValue());
+                intent.putExtra(RouteUtils.TARGET_ID, mTargetId);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });
 
-        conversationViewModel.getScreenCaptureStatus(conversationType.getValue(), targetId).observe(this, new Observer<Resource<ScreenCaptureResult>>() {
+        conversationViewModel.getScreenCaptureStatus(mConversationType.getValue(), mTargetId).observe(this, new Observer<Resource<ScreenCaptureResult>>() {
             @Override
             public void onChanged(Resource<ScreenCaptureResult> screenCaptureResultResource) {
                 if (screenCaptureResultResource.status == Status.SUCCESS) {
@@ -321,8 +368,8 @@ public class ConversationActivity extends TitleBaseActivity {
         });
 
         // 判读是否为群组聊天
-        if (conversationType == Conversation.ConversationType.GROUP) {
-            groupManagementViewModel = ViewModelProviders.of(this, new GroupManagementViewModel.Factory(targetId, getApplication())).get(GroupManagementViewModel.class);
+        if (mConversationType == Conversation.ConversationType.GROUP) {
+            groupManagementViewModel = ViewModelProviders.of(this, new GroupManagementViewModel.Factory(mTargetId, getApplication())).get(GroupManagementViewModel.class);
             // 群主
             groupManagementViewModel.getGroupOwner().observe(this, new Observer<GroupMember>() {
                 @Override
@@ -354,8 +401,8 @@ public class ConversationActivity extends TitleBaseActivity {
         }
 
         //判断截屏通知状态
-        if (conversationType == Conversation.ConversationType.GROUP || conversationType == Conversation.ConversationType.PRIVATE) {
-            privateChatSettingViewModel = ViewModelProviders.of(this, new PrivateChatSettingViewModel.Factory(getApplication(), targetId, conversationType)).get(PrivateChatSettingViewModel.class);
+        if (mConversationType == Conversation.ConversationType.GROUP || mConversationType == Conversation.ConversationType.PRIVATE) {
+            privateChatSettingViewModel = ViewModelProviders.of(this, new PrivateChatSettingViewModel.Factory(getApplication(), mTargetId, mConversationType)).get(PrivateChatSettingViewModel.class);
             privateChatSettingViewModel.getScreenCaptureStatusResult().observe(this, new Observer<Resource<ScreenCaptureResult>>() {
                 @Override
                 public void onChanged(Resource<ScreenCaptureResult> screenCaptureResultResource) {
@@ -371,105 +418,94 @@ public class ConversationActivity extends TitleBaseActivity {
                 }
             });
         }
+
     }
 
     /**
      * 获取 title
      *
-     * @param targetId
+     * @param mTargetId
      * @param conversationType
      * @param title
      */
-    private void getTitleStr(String targetId, Conversation.ConversationType conversationType, String title) {
+    private void getTitleStr(String mTargetId, Conversation.ConversationType conversationType, String title) {
         if (conversationViewModel != null) {
-            conversationViewModel.getTitleByConversation(targetId, conversationType, title);
+            conversationViewModel.getTitleByConversation(mTargetId, conversationType, title);
         }
     }
 
 
     private void initView() {
-        initTitleBar(conversationType, targetId);
+        initTitleBar(mConversationType, mTargetId);
         initAnnouceView();
         initConversationFragment();
     }
+
+    boolean collapsed = true;
+    int originalTop = 0;
+    int originalBottom = 0;
+    int extensionHeight = 0;
 
     private void initConversationFragment() {
         /**
          * 加载会话界面 。 ConversationFragmentEx 继承自 ConversationFragment
          */
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment existFragment = fragmentManager.findFragmentByTag(ConversationFragmentEx.class.getCanonicalName());
+        Fragment existFragment = fragmentManager.findFragmentByTag(ConversationFragment.class.getCanonicalName());
         if (existFragment != null) {
-            fragment = (ConversationFragmentEx) existFragment;
+            fragment = (ConversationFragment) existFragment;
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.show(fragment);
             transaction.commitAllowingStateLoss();
         } else {
-            fragment = new ConversationFragmentEx();
-            // 自定义的服务才会有通知监听
-            if (conversationType.equals(Conversation.ConversationType.CUSTOMER_SERVICE)) {
-                // 设置通知监听
-                fragment.setOnShowAnnounceBarListener(new ConversationFragmentEx.OnShowAnnounceListener() {
-                    @Override
-                    public void onShowAnnounceView(String announceMsg, final String announceUrl) {
-                        annouceView.setVisibility(View.VISIBLE);
-                        annouceView.setAnnounce(announceMsg, announceUrl);
-                    }
-                });
-            }
+            fragment = new ConversationFragment();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.add(R.id.rong_content, fragment, ConversationFragment.class.getCanonicalName());
+            transaction.commitAllowingStateLoss();
+        }
+    }
 
-            if (conversationType.equals(Conversation.ConversationType.PRIVATE)
-                    || conversationType.equals(Conversation.ConversationType.GROUP)) {
-                fragment.setOnExtensionChangeListener(new ConversationFragmentEx.OnExtensionChangeListener() {
-                    @Override
-                    public void onExtensionHeightChange(int h) {
-                        if (!isExtensionHeightInit) {
-                            isExtensionHeightInit = true;
-                            extensionCollapsedHeight = h;
-//                            if (screenCaptureUtil!=null){
-//                                rencentScreenCaptureData = null;
-//                                rencentScreenCaptureData = new ScreenCaptureData(screenCaptureUtil.getLastPictureItems(ConversationActivity.this).uri
-//                                        , screenCaptureUtil.getLastPictureItems(ConversationActivity.this).addTime*1000);
-//                            }
-//                            showRencentPicturePop(extensionCollapsedHeight);
+    private void setOnLayoutListener() {
+        if (fragment != null && fragment.getRongExtension() != null) {
+            fragment.getRongExtension().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+                @Override
+                public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                    if (originalTop != 0) {
+                        if (originalTop > top) {
+                            if (originalBottom > bottom && collapsed) {
+                                collapsed = false;
+                                extensionHeight = originalBottom - top;
+                            } else if (collapsed) {
+                                collapsed = false;
+                                extensionHeight = bottom - top;
+                            }
+                        } else {
+                            if (!collapsed) {
+                                collapsed = true;
+                                extensionHeight = 0;
+                            }
                         }
                     }
-
-                    @Override
-                    public void onExtensionExpanded(int h) {
+                    if (originalTop == 0) {
+                        originalTop = top;
+                        originalBottom = bottom;
+                    }
+                    if (extensionHeight > 0) {
                         isExtensionExpanded = true;
                         //点击+号如果开启高度不等于0直接显示快捷图片框
                         if (extensionExpandedHeight == 0) {
-                            extensionExpandedHeight = h;
+                            extensionExpandedHeight = extensionHeight;
                             showRencentPicturePop(extensionExpandedHeight);
                         }
-                    }
-
-                    @Override
-                    public void onExtensionCollapsed() {
-                        //如果是点击 + 号进来的逻辑不设置为false ，因点击 + 号会调用一次此回调，可是点击+号一定最终一定是打开状态
+                    } else {
                         if (!isClickToggle) {
                             isExtensionExpanded = false;
                         }
                         isClickToggle = false;
                     }
-
-                    @Override
-                    public void onPluginToggleClick(View v, ViewGroup extensionBoard) {
-                        //展开高度未获得的时候让 onExtensionExpanded 回调中展示
-                        isClickToggle = true;
-                        if (extensionExpandedHeight != 0) {
-                            showRencentPicturePop(extensionExpandedHeight);
-                        }
-                    }
-                });
-            }
-
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.add(R.id.rong_content, fragment, ConversationFragmentEx.class.getCanonicalName());
-            transaction.commitAllowingStateLoss();
+                }
+            });
         }
-
     }
 
     /**
@@ -520,6 +556,19 @@ public class ConversationActivity extends TitleBaseActivity {
         }
     }
 
+    @Override
+    public void onCountChanged(int count) {
+        if (count > 0) {
+            if (count < 100) {
+                mTitleBar.setLeftText("(" + count + ")");
+            } else {
+                mTitleBar.setLeftText("(" + 99 + "+)");
+            }
+        } else {
+            mTitleBar.setLeftText("");
+        }
+    }
+
     private static class DelayDismissHandler extends Handler {
         //持有弱引用MainActivity,GC回收时会被回收掉.
         private WeakReference<ConversationActivity> mActivity;
@@ -549,75 +598,66 @@ public class ConversationActivity extends TitleBaseActivity {
                     if (!str.startsWith("http") && !str.startsWith("https")) {
                         str = "http://" + str;
                     }
-                    Intent intent = new Intent(RongKitIntent.RONG_INTENT_ACTION_WEBVIEW);
-                    intent.setPackage(v.getContext().getPackageName());
-                    intent.putExtra("url", str);
-                    v.getContext().startActivity(intent);
+                    //todo
+//                    Intent intent = new Intent(RongKitIntent.RONG_INTENT_ACTION_WEBVIEW);
+//                    intent.setPackage(v.getContext().getPackageName());
+//                    intent.putExtra("url", str);
+//                    v.getContext().startActivity(intent);
                 }
             }
         });
     }
 
-    /**
-     * 初始化 title
-     *
-     * @param conversationType
-     * @param targetId
-     */
-    private void initTitleBar(Conversation.ConversationType conversationType, String targetId) {
+    private void initTitleBar(Conversation.ConversationType conversationType, String mTargetId) {
         // title 布局设置
-        // 左边返回按钮
-        getTitleBar().setOnBtnLeftClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (fragment != null && !fragment.onBackPressed()) {
-                    if (fragment.isLocationSharing()) {
-                        fragment.showQuitLocationSharingDialog(ConversationActivity.this);
-                        return;
-                    }
-                    hintKbTwo();
-                }
-                finish();
-            }
-        });
-
-
-        getTitleBar().getBtnRight().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toDetailActivity(conversationType, targetId);
-            }
-        });
-
-        if (conversationType.equals(Conversation.ConversationType.GROUP)) {
-            getTitleBar().getBtnRight().setImageDrawable(getResources().getDrawable(R.drawable.seal_detail_group));
-        } else if (conversationType.equals(Conversation.ConversationType.PRIVATE)
-                || conversationType.equals(Conversation.ConversationType.PUBLIC_SERVICE)
-                || conversationType.equals(Conversation.ConversationType.APP_PUBLIC_SERVICE)
-                || conversationType.equals(Conversation.ConversationType.DISCUSSION)) {
-            getTitleBar().getBtnRight().setImageDrawable(getResources().getDrawable(R.drawable.seal_detail_single));
-        } else {
-            getTitleBar().getBtnRight().setVisibility(View.GONE);
+        if (!conversationType.equals(Conversation.ConversationType.CHATROOM)) {
+            UnReadMessageManager.getInstance().addObserver(null, this);
         }
+
+
+        mTitleBar.setBackgroundResource(R.color.rc_background_main_color);
+
+        if (mConversationType.equals(Conversation.ConversationType.CUSTOMER_SERVICE)
+                || mConversationType.equals(Conversation.ConversationType.CHATROOM)) {
+            mTitleBar.setRightVisible(false);
+        }
+        mTitleBar.setOnRightIconClickListener(new TitleBar.OnRightIconClickListener() {
+            @Override
+            public void onRightIconClick(View v) {
+                toDetailActivity(conversationType, mTargetId);
+            }
+        });
+        mTitleBar.setOnBackClickListener(new TitleBar.OnBackClickListener() {
+            @Override
+            public void onBackClick() {
+                if (fragment != null && !fragment.onBackPressed()) {
+                    finish();
+                }
+            }
+        });
     }
 
     /**
-     * 根据 targetid 和 ConversationType 进入到设置页面
+     * 根据 mTargetid 和 ConversationType 进入到设置页面
      */
-    private void toDetailActivity(Conversation.ConversationType conversationType, String targetId) {
+    private void toDetailActivity(Conversation.ConversationType conversationType, String mTargetId) {
 
         if (conversationType == Conversation.ConversationType.PUBLIC_SERVICE
                 || conversationType == Conversation.ConversationType.APP_PUBLIC_SERVICE) {
-
-            RongIM.getInstance().startPublicServiceProfile(this, conversationType, targetId);
+            Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon()
+                    .appendPath("publicServiceProfile")
+                    .appendPath(conversationType.getName().toLowerCase())
+                    .appendQueryParameter("targetId", mTargetId).build();
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
         } else if (conversationType == Conversation.ConversationType.PRIVATE) {
             Intent intent = new Intent(this, PrivateChatSettingActivity.class);
-            intent.putExtra(IntentExtra.STR_TARGET_ID, targetId);
+            intent.putExtra(IntentExtra.STR_TARGET_ID, mTargetId);
             intent.putExtra(IntentExtra.SERIA_CONVERSATION_TYPE, Conversation.ConversationType.PRIVATE);
             startActivity(intent);
         } else if (conversationType == Conversation.ConversationType.GROUP) {
             Intent intent = new Intent(this, GroupDetailActivity.class);
-            intent.putExtra(IntentExtra.STR_TARGET_ID, targetId);
+            intent.putExtra(IntentExtra.STR_TARGET_ID, mTargetId);
             intent.putExtra(IntentExtra.SERIA_CONVERSATION_TYPE, Conversation.ConversationType.GROUP);
             startActivity(intent);
         } else if (conversationType == Conversation.ConversationType.DISCUSSION) {
@@ -649,20 +689,6 @@ public class ConversationActivity extends TitleBaseActivity {
         });
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (KeyEvent.KEYCODE_BACK == event.getKeyCode()) {
-            if (fragment != null && !fragment.onBackPressed()) {
-                if (fragment.isLocationSharing()) {
-                    fragment.showQuitLocationSharingDialog(this);
-                    return true;
-                }
-                finish();
-            }
-        }
-        return false;
-    }
-
     private void hintKbTwo() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm.isActive() && getCurrentFocus() != null) {
@@ -672,10 +698,8 @@ public class ConversationActivity extends TitleBaseActivity {
         }
     }
 
-    @Override
-    public void clearAllFragmentExistBeforeCreate() {
-    }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -714,7 +738,7 @@ public class ConversationActivity extends TitleBaseActivity {
      */
     public void showSoftInput() {
         if (fragment != null && fragment.getRongExtension() != null) {
-            fragment.getRongExtension().showSoftInput();
+//            fragment.getRongExtension().showSoftInput();
         }
     }
 
@@ -742,7 +766,7 @@ public class ConversationActivity extends TitleBaseActivity {
      * @param event 删除结果事件
      */
     public void onEventMainThread(DeleteFriendEvent event) {
-        if (event.result && event.userId.equals(targetId)) {
+        if (event.result && event.userId.equals(mTargetId)) {
             SLog.i(TAG, "DeleteFriend Success");
             finish();
         }

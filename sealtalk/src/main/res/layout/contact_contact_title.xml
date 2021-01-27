@@ -7,10 +7,11 @@
 
     <TextView
         android:id="@+id/catalog"
+        style="@style/TextStyle.Alignment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ebebeb"
-        android:paddingLeft="12dip"
+        android:background="#fff5f6f9"
+        android:paddingStart="12dip"
         android:paddingTop="5dip"
         android:paddingBottom="5dip"
         android:text="A"

@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/de_fr_public_service"
-        android:name="io.rong.imkit.fragment.PublicServiceProfileFragment"
+        android:name="io.rong.imkit.feature.publicservice.PublicServiceProfileFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </LinearLayout>

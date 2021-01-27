@@ -39,8 +39,7 @@ public class NewFriendViewModel extends AndroidViewModel {
                 if (input == null || input.data == null) {
                     return null;
                 }
-                List<FriendShipInfo> tmpList = new ArrayList<>();
-                tmpList.addAll(input.data);
+                List<FriendShipInfo> tmpList = new ArrayList<>(input.data);
                 if (tmpList.size() > 1) {
                     Collections.sort(tmpList, new Comparator<FriendShipInfo>() {
 
@@ -48,7 +47,7 @@ public class NewFriendViewModel extends AndroidViewModel {
                         public int compare(FriendShipInfo lhs, FriendShipInfo rhs) {
                             Date date1 = lhs.getUpdatedAt();
                             Date date2 = rhs.getUpdatedAt();
-                            if (date1 == null || date1 == date2) {
+                            if (date1 == null || date2 == null || date1 == date2) {
                                 return -1;
                             }
                             if (date1.before(date2)) {

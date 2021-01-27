@@ -8,17 +8,18 @@ import androidx.annotation.Nullable;
 
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.fragment.PublicServiceFragment;
-import cn.rongcloud.im.ui.interfaces.OnPublicServiceClickListener;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.model.PublicServiceProfile;
+import cn.rongcloud.im.ui.interfaces.PublicServiceClickListener;
+import io.rong.imkit.utils.RouteUtils;
+import io.rong.imlib.publicservice.model.PublicServiceProfile;
 
 import static cn.rongcloud.im.ui.view.SealTitleBar.Type.NORMAL;
 
-public class PublicServiceActivity extends TitleBaseActivity implements OnPublicServiceClickListener, View.OnClickListener {
+public class PublicServiceActivity extends TitleBaseActivity implements PublicServiceClickListener, View.OnClickListener {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getTitleBar().setType(NORMAL);
+        getTitleBar().getTvRight().setVisibility(View.GONE);
         getTitleBar().setTitle(R.string.public_service);
         getTitleBar().getBtnRight().setImageDrawable(getResources().getDrawable(R.drawable.seal_ic_main_more));
         getTitleBar().getBtnRight().setOnClickListener(this);
@@ -31,8 +32,8 @@ public class PublicServiceActivity extends TitleBaseActivity implements OnPublic
     }
 
     @Override
-    public void OnPublicServiceClicked(PublicServiceProfile publicServiceProfile) {
-        RongIM.getInstance().startConversation(this, publicServiceProfile.getConversationType(), publicServiceProfile.getTargetId(), publicServiceProfile.getName());
+    public void onPublicServiceClicked(PublicServiceProfile publicServiceProfile) {
+        RouteUtils.routeToConversationActivity(this, publicServiceProfile.getConversationType(), publicServiceProfile.getTargetId());
     }
 
     @Override

@@ -3,11 +3,13 @@ package cn.rongcloud.im.utils;
 import android.graphics.Bitmap;
 import android.widget.ImageView;
 
-import cn.rongcloud.im.R;
-import io.rong.imageloader.core.DisplayImageOptions;
-import io.rong.imageloader.core.ImageLoader;
+import com.bumptech.glide.Glide;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
-import static io.rong.imageloader.core.assist.ImageScaleType.IN_SAMPLE_POWER_OF_2;
+import cn.rongcloud.im.R;
+
+import static com.nostra13.universalimageloader.core.assist.ImageScaleType.IN_SAMPLE_POWER_OF_2;
 
 public class ImageLoaderUtils {
 
@@ -18,12 +20,12 @@ public class ImageLoaderUtils {
 
      static {
          privateOptions = createDefaultDisplayOptions(R.drawable.rc_default_portrait);
-         groupOptions = createDefaultDisplayOptions(R.drawable.rc_default_group_portrait);
+         groupOptions = createDefaultDisplayOptions(R.drawable.seal_default_group_portrait);
          descriptionOptions = createDefaultDisplayOptions(android.R.color.transparent);
      }
 
     public static void displayUserPortraitImage(String uri, ImageView imageView) {
-        ImageLoader.getInstance().displayImage(uri, imageView, privateOptions);
+         ImageLoader.getInstance().displayImage(uri, imageView, privateOptions);
 //        ImageLoader.getInstance().displayImage(uri, imageView, privateOptions, null);
     }
 

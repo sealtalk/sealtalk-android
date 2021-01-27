@@ -13,6 +13,7 @@ import java.util.List;
 
 import cn.rongcloud.im.ui.adapter.models.ListItemModel;
 import cn.rongcloud.im.ui.adapter.viewholders.BaseItemViewHolder;
+import cn.rongcloud.im.ui.adapter.viewholders.CommonFriendItemViewHolder;
 import cn.rongcloud.im.ui.adapter.viewholders.ViewHolderFactory;
 import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.viewmodel.CommonListBaseViewModel;
@@ -107,7 +108,18 @@ public class CommonListAdapter extends ListWithSideBarBaseAdapter<ListItemModel,
                 return false;
             }
         });
-
+        if (holder instanceof CommonFriendItemViewHolder) {
+            if (data.size() - 1 != position) {
+                ListItemModel itemModel = data.get(position + 1);
+                if (itemModel.getItemView().getItemResId() != (listItemModel.getItemView().getItemResId())) {
+                    ((CommonFriendItemViewHolder) holder).setDividerVisibility(false);
+                } else {
+                    ((CommonFriendItemViewHolder) holder).setDividerVisibility(true);
+                }
+            } else {
+                ((CommonFriendItemViewHolder) holder).setDividerVisibility(false);
+            }
+        }
         int type = listItemModel.getItemView().getTypeValue();
         updateSelectedStatus(holder, listItemModel, type);
     }

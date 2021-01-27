@@ -8,45 +8,44 @@
     android:orientation="vertical">
 
     <TextView
+        style="@style/TextStyle.Alignment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
         android:text="@string/rc_send_to"
-        android:textColor="#262626"
-        android:textSize="18sp" />
+        android:textColor="@color/rc_text_main_color"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
         android:orientation="horizontal">
 
-        <io.rong.imkit.widget.AsyncImageView
+        <ImageView
             android:id="@+id/target_portrait"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:background="@android:color/transparent"
-            android:scaleType="centerCrop"
-            app:RCCornerRadius="@dimen/contactcard_dimen_size_3"
-            app:RCDefDrawable="@drawable/rc_default_portrait" />
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/target_name"
+            style="@style/TextStyle.Alignment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="6dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
             android:layout_marginStart="6dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginRight="6dp"
             android:layout_weight="5"
             android:gravity="start"
             android:maxLines="1"
@@ -73,6 +72,14 @@
         </LinearLayout>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginStart="@dimen/rc_margin_size_20"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="@dimen/rc_margin_size_20"
+        android:background="@color/rc_divider_color" />
+
     <ViewAnimator
         android:id="@+id/va_detail"
         android:layout_width="match_parent"
@@ -82,31 +89,29 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
             android:descendantFocusability="beforeDescendants"
             android:focusableInTouchMode="true"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/contact_name"
+                style="@style/TextStyle.Alignment"
                 android:layout_width="match_parent"
-                android:layout_height="36dp"
+                android:layout_height="wrap_content"
                 android:autoLink="none"
-                android:background="#F2F2F3"
                 android:bottomLeftRadius="4dp"
                 android:bottomRightRadius="4dp"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:paddingEnd="7dp"
-                android:paddingLeft="7dp"
-                android:paddingRight="7dp"
                 android:paddingStart="7dp"
+                android:paddingEnd="7dp"
                 android:textColor="#939393"
-                android:textSize="14sp"
+                android:textSize="13sp"
                 android:topLeftRadius="4dp"
                 android:topRightRadius="4dp"
                 tools:text="[个人名片]Tom" />
@@ -114,16 +119,15 @@
             <EditText
                 android:id="@+id/message"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:layout_marginTop="18dp"
-                android:background="@drawable/rc_edit_text_background_hover"
+                android:layout_height="36dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="@dimen/rc_margin_size_30"
+                android:background="#F2F2F3"
+                android:gravity="center_vertical"
                 android:hint="@string/rc_message_to_friend"
                 android:maxLines="2"
-                android:paddingEnd="7dp"
-                android:paddingLeft="7dp"
-                android:paddingRight="7dp"
                 android:paddingStart="7dp"
+                android:paddingEnd="7dp"
                 android:textColorHint="#B2B2B2"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -145,10 +149,10 @@
                 android:layout_height="0dp"
                 android:listSelector="@android:color/transparent"
                 android:numColumns="4"
-                android:paddingEnd="12dp"
+                android:paddingStart="12dp"
                 android:paddingLeft="12dp"
-                android:paddingRight="12dp"
-                android:paddingStart="12dp" />
+                android:paddingEnd="12dp"
+                android:paddingRight="12dp" />
 
             <View
                 android:layout_width="match_parent"
@@ -160,7 +164,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#E5E5E5" />
+        android:background="#E5E6E7" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -169,6 +173,7 @@
 
         <TextView
             android:id="@+id/cancel"
+            style="@style/TextStyle.Alignment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -178,12 +183,13 @@
             android:textSize="16sp" />
 
         <View
-            android:layout_width="1.5dp"
+            android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="#E5E5E5" />
+            android:background="#E7E8E9" />
 
         <TextView
             android:id="@+id/send"
+            style="@style/TextStyle.Alignment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

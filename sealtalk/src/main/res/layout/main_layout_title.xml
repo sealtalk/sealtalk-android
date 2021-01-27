@@ -1,37 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/seal_main_title_height"
-    android:background="@color/seal_main_title_bg"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
     android:gravity="center_vertical"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/seal_main_title_logo_margin_left"
-        android:background="@drawable/seal_ic_main_title_logo" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_main_title_height">
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="会话"
+            android:textColor="#111F2C"
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
-    <ImageButton
+        <ImageButton
+            android:id="@+id/btn_more"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="12dp"
+            android:background="@null"
+            android:src="@drawable/seal_ic_main_more" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/btn_search"
-        android:layout_width="@dimen/seal_main_title_search_width"
-        android:layout_height="match_parent"
-        android:background="@null"
-        android:src="@drawable/seal_ic_et_search" />
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="6dp"
+        android:background="@drawable/main_find_bg">
 
-    <ImageButton
-        android:id="@+id/btn_more"
-        android:layout_width="@dimen/seal_main_title_more_width"
-        android:layout_height="match_parent"
-        android:background="@null"
-        android:src="@drawable/seal_ic_main_more"
-        android:layout_marginRight="@dimen/seal_main_title_more_margin_right"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:drawableStart="@drawable/seal_main_find"
+            android:drawablePadding="2dp"
+            android:gravity="center"
+            android:text="@string/seal_search"
+            android:textColor="#999999"
+            android:textSize="14dp" />
+    </RelativeLayout>
+
 
 </LinearLayout>
 

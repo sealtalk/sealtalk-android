@@ -147,7 +147,7 @@ public class UserInfoViewModel extends AndroidViewModel {
      *
      * @param userId
      */
-    private void requestUserInfo(String userId) {
+    public void requestUserInfo(String userId) {
         SLog.d("ss_usertask", "userId == " + userId);
         userInfo.setSource(userTask.getUserInfo(userId));
     }

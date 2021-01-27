@@ -1,7 +1,6 @@
 package cn.rongcloud.im.viewmodel;
 
 import android.app.Application;
-import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
@@ -31,13 +30,15 @@ import cn.rongcloud.im.model.TypingInfo;
 import cn.rongcloud.im.task.FriendTask;
 import cn.rongcloud.im.task.GroupTask;
 import cn.rongcloud.im.task.PrivacyTask;
-import cn.rongcloud.im.utils.SingleSourceLiveData;
-import io.rong.imlib.CustomServiceConfig;
+import cn.rongcloud.im.task.UserTask;
+import io.rong.imkit.userinfo.RongUserInfoManager;
 import io.rong.imlib.MessageTag;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.cs.CustomServiceConfig;
 import io.rong.imlib.cs.CustomServiceManager;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.PublicServiceProfile;
+import io.rong.imlib.model.UserInfo;
+import io.rong.imlib.publicservice.model.PublicServiceProfile;
 import io.rong.imlib.typingmessage.TypingStatus;
 import io.rong.message.TextMessage;
 import io.rong.message.VoiceMessage;
@@ -154,7 +155,16 @@ public class ConversationViewModel extends AndroidViewModel {
                         } else if (!TextUtils.isEmpty(title)) {
                             titleStr.postValue(title);
                         } else {
-                            titleStr.postValue(targetId);
+                            if (targetId.equals(RongIMClient.getInstance().getCurrentUserId())) {
+                                UserInfo userInfo = RongUserInfoManager.getInstance().getUserInfo(targetId);
+                                if (userInfo != null && !TextUtils.isEmpty(userInfo.getName())) {
+                                    titleStr.postValue(userInfo.getName());
+                                } else {
+                                    titleStr.postValue(targetId);
+                                }
+                            } else {
+                                titleStr.postValue(targetId);
+                            }
                         }
                     }
                 });
@@ -176,7 +186,7 @@ public class ConversationViewModel extends AndroidViewModel {
 
                     String name = "";
                     if (groupEntityResource != null && groupEntityResource.data != null) {
-                        name = groupEntityResource.data.getName();
+                        name = groupEntityResource.data.getName() + "(" + groupEntityResource.data.getMemberCount() + ")";
                     }
                     if (!TextUtils.isEmpty(name)) {
                         titleStr.postValue(name);

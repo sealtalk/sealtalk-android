@@ -10,12 +10,17 @@
         android:gravity="center"
         android:visibility="gone" />
 
-    <GridView
-        android:id="@+id/conversation_gv_read_member"
+<!--    <GridView-->
+<!--        android:id="@+id/conversation_gv_read_member"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:gravity="start"-->
+<!--        android:numColumns="4"-->
+<!--        android:paddingLeft="1dp"-->
+<!--        android:paddingRight="1dp" />-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/conversation_rl_read_member"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="start"
-        android:numColumns="4"
-        android:paddingLeft="1dp"
-        android:paddingRight="1dp" />
+        android:layout_height="match_parent"/>
 </FrameLayout>

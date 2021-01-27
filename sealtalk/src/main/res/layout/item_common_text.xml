@@ -9,7 +9,7 @@
         android:id="@+id/catalog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="12dip"
+        android:paddingStart="12dip"
         android:paddingTop="5dip"
         android:paddingBottom="5dip"
         android:text="A"

@@ -2,32 +2,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ll_more_groups"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/seal_search_show_more_height"
+    android:layout_height="wrap_content"
     android:background="@android:color/white"
     android:gravity="center_vertical"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/seal_search_show_more_padding_left"
+        android:layout_height="@dimen/seal_search_show_more_height"
+        android:layout_marginStart="@dimen/seal_search_show_more_padding_left"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/seal_search_show_more_image_margin_right"
+            android:layout_marginEnd="@dimen/seal_search_show_more_image_margin_right"
             android:scaleType="fitCenter"
-            android:src="@drawable/seal_search_blue_icon" />
+            android:src="@drawable/seal_main_find" />
 
         <TextView
             android:id="@+id/search_show_more"
-            android:layout_width="match_parent"
+            style="@style/TextStyle.Alignment"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="@string/seal_search_more_group"
-            android:textColor="@color/seal_search_show_more_text_color"
+            android:textColor="#ACACAC"
             android:textSize="@dimen/seal_search_show_more_text_size" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:src="@drawable/seal_ic_mine_go" />
     </LinearLayout>
 
     <View

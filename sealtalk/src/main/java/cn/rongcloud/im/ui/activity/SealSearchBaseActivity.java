@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.interfaces.SearchableInterface;
+import cn.rongcloud.im.ui.view.SealTitleBar;
 import cn.rongcloud.im.utils.log.SLog;
 
 import static cn.rongcloud.im.ui.view.SealTitleBar.Type.SEARCH;
@@ -25,9 +26,9 @@ public class SealSearchBaseActivity extends TitleBaseActivity implements TextWat
         getTitleBar().setType(SEARCH);
         getTitleBar().addSeachTextChangedListener(this);
         setContentView(R.layout.activity_select_content);
-        getTitleBar().setOnBtnLeftClickListener(new View.OnClickListener() {
+        getTitleBar().setOnSearchClearTextClickedListener(new SealTitleBar.OnSearchClearTextClickedListener() {
             @Override
-            public void onClick(View v) {
+            public void onSearchClearTextClicked() {
                 onBackPressed();
             }
         });
@@ -67,6 +68,7 @@ public class SealSearchBaseActivity extends TitleBaseActivity implements TextWat
     @Override
     public void clear() {
         //子类实现清空搜索
+
     }
 
 }

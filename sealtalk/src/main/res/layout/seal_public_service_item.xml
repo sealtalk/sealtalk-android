@@ -14,14 +14,13 @@
         android:orientation="horizontal"
         android:padding="@dimen/seal_public_service_item_padding">
 
-        <io.rong.imkit.widget.AsyncImageView
-            android:id="@+id/portrait"
+        <ImageView
+            android:id="@+id/pub_portrait"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_gravity="center_vertical"
             android:scaleType="fitXY"
-            app:RCCornerRadius="@dimen/seal_public_service_item_rc_corner"
-            app:RCDefDrawable="@drawable/rc_ic_def_msg_portrait" />
+            android:src="@drawable/seal_ic_def_msg_portrait" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,18 +28,18 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/name"
+                android:id="@+id/pub_name"
                 style="@style/RCTheme.Message.TextView"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/seal_public_service_item_name_margin_left" />
+                android:layout_marginStart="@dimen/seal_public_service_item_name_margin_left" />
 
             <TextView
-                android:id="@+id/introduction"
+                android:id="@+id/pub_introduction"
                 style="@style/RCTheme.Message.RichContent.TextView"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/seal_public_service_item_name_margin_left"
+                android:layout_marginStart="@dimen/seal_public_service_item_name_margin_left"
                 android:layout_marginTop="@dimen/seal_public_service_item_introduction_margin_top" />
         </LinearLayout>
     </LinearLayout>

@@ -13,6 +13,7 @@ import cn.rongcloud.im.ui.fragment.SelectGroupMemberMultiFragment;
 import cn.rongcloud.im.ui.fragment.SelectMultiFriendFragment;
 
 import static cn.rongcloud.im.common.IntentExtra.STR_TARGET_ID;
+import static cn.rongcloud.im.common.IntentExtra.TITLE;
 
 /**
  * 选择当前群组 groupId 内的人
@@ -23,8 +24,11 @@ public class SelectGroupMemberActivity extends SelectMultiFriendsActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         groupId = getIntent().getStringExtra(STR_TARGET_ID);
-
+        String title = getIntent().getStringExtra(TITLE);
         super.onCreate(savedInstanceState);
+        if (title != null) {
+            getTitleBar().setTitle(title);
+        }
     }
 
     @Override
@@ -41,4 +45,5 @@ public class SelectGroupMemberActivity extends SelectMultiFriendsActivity {
         setResult(RESULT_OK, intent);
         finish();
     }
+
 }

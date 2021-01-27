@@ -4,26 +4,33 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <cn.rongcloud.im.ui.widget.ClearWriteEditText
+    <cn.rongcloud.im.ui.widget.ClearWriteEditText xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/cet_update_name"
+        style="@style/EditTextStyle.Alignment"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_update_name_edit_height"
-        android:layout_marginLeft="@dimen/seal_update_name_edit_margin"
-        android:layout_marginRight="@dimen/seal_update_name_edit_margin"
+        android:layout_marginStart="@dimen/seal_update_name_edit_margin"
         android:layout_marginTop="@dimen/seal_update_name_edit_margin"
+        android:layout_marginEnd="@dimen/seal_update_name_edit_margin"
+        android:paddingStart="@dimen/seal_search_title_bar_et_margin"
+        android:paddingEnd="@dimen/seal_search_title_bar_et_margin"
+        android:background="@drawable/seal_update_name_edit_bg"
+        android:gravity="center_vertical"
+        android:inputType="text"
         android:maxLength="32"
         android:maxLines="1"
-        android:inputType="text"
         android:textColor="@color/seal_update_name_edit"
-        android:textSize="@dimen/seal_update_name_edit_text_size" />
+        android:textSize="@dimen/seal_update_name_edit_text_size"
+        app:et_right_image="@drawable/seal_search_close" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/seal_update_name_margin_left"
+        android:layout_marginStart="@dimen/seal_update_name_margin_left"
         android:layout_marginTop="@dimen/seal_update_name_margin_top"
         android:text="@string/seal_update_name_text"
         android:textColor="@color/seal_update_name_text_color"
-        android:textSize="@dimen/seal_update_name_text_size" />
+        android:textSize="@dimen/seal_update_name_text_size"
+        android:visibility="gone" />
 
 </LinearLayout>

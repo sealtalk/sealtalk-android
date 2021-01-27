@@ -2,12 +2,14 @@ package cn.rongcloud.im.ui.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.TranslateAnimation;
@@ -30,6 +32,7 @@ public class ClearWriteEditText extends EditText implements View.OnFocusChangeLi
 
     private boolean neverShowClearDrawable;
     private boolean showClearDrawableNoFocus;
+    private TextWatcher watcher;
 
     public ClearWriteEditText(Context context) {
         this(context, null);
@@ -42,15 +45,41 @@ public class ClearWriteEditText extends EditText implements View.OnFocusChangeLi
 
     public ClearWriteEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        init(attrs);
     }
 
-    private void init() {
-        mClearDrawable = getResources().getDrawable(R.drawable.seal_ic_search_clear_pressed_write);
-        mClearDrawable.setBounds(0, 0, mClearDrawable.getIntrinsicWidth(), mClearDrawable.getIntrinsicHeight());
-        setClearIconVisible(false);
+    private void init(AttributeSet attrs) {
+
         this.setOnFocusChangeListener(this);
         this.addTextChangedListener(this);
+
+
+        TypedArray ta = attrs == null ? null : getContext().obtainStyledAttributes(attrs, R.styleable.ClearWriteEditText);
+        if (ta != null) {
+            Drawable drawable = null;
+            final int N = ta.getIndexCount();
+            for (int i = 0; i < N; i++) {
+                int attr = ta.getIndex(i);
+                switch (attr) {
+                    case R.styleable.ClearWriteEditText_et_right_image:
+                        drawable = ta.getDrawable(R.styleable.ClearWriteEditText_et_right_image);
+                        mClearDrawable = drawable;
+//                        mClearDrawable = getResources().getDrawable(R.drawable.seal_ic_search_clear_pressed_write);
+                        mClearDrawable.setBounds(0, 0, mClearDrawable.getIntrinsicWidth(), mClearDrawable.getIntrinsicHeight());
+                        setClearIconVisible(false);
+                        break;
+                    case R.styleable.ClearWriteEditText_et_left_image:
+                        drawable = ta.getDrawable(R.styleable.ClearWriteEditText_et_left_image);
+                        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+                        setCompoundDrawables(drawable, getCompoundDrawables()[1],
+                                getCompoundDrawables()[2], getCompoundDrawables()[3]);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
     }
 
     /**
@@ -61,6 +90,12 @@ public class ClearWriteEditText extends EditText implements View.OnFocusChangeLi
         if (!neverShowClearDrawable) {
             setClearIconVisible(s.length() > 0);
         }
+
+
+        if (watcher == null) {
+            return;
+        }
+        watcher.onTextChanged(s, start, count, after);
     }
 
 
@@ -104,7 +139,7 @@ public class ClearWriteEditText extends EditText implements View.OnFocusChangeLi
         if (hasFocus && !neverShowClearDrawable) {
             setClearIconVisible(getText().length() > 0);
         } else {
-            if (!showClearDrawableNoFocus){
+            if (!showClearDrawableNoFocus) {
                 setClearIconVisible(false);
             }
         }
@@ -112,11 +147,21 @@ public class ClearWriteEditText extends EditText implements View.OnFocusChangeLi
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        if (watcher == null) {
+            return;
+        }
+
+        watcher.beforeTextChanged(s, start, count, after);
 
     }
 
     @Override
     public void afterTextChanged(Editable s) {
+        if (watcher == null) {
+            return;
+        }
+
+        watcher.afterTextChanged(s);
 
     }
 
@@ -125,6 +170,8 @@ public class ClearWriteEditText extends EditText implements View.OnFocusChangeLi
      */
     public void setShakeAnimation() {
         this.startAnimation(shakeAnimation(3));
+
+
     }
 
 
@@ -157,5 +204,9 @@ public class ClearWriteEditText extends EditText implements View.OnFocusChangeLi
 
     public void setShowClearDrawableNoFocus(boolean needShow) {
         showClearDrawableNoFocus = needShow;
+    }
+
+    public void addCommonTextChangedListener(TextWatcher watcher) {
+        this.watcher = watcher;
     }
 }

@@ -14,30 +14,23 @@ import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.adapter.models.ContactModel;
 import cn.rongcloud.im.ui.adapter.viewholders.BaseViewHolder;
 import cn.rongcloud.im.ui.adapter.viewholders.PublicServiceViewHolder;
-import cn.rongcloud.im.ui.interfaces.OnPublicServiceClickListener;
+import cn.rongcloud.im.ui.interfaces.PublicServiceClickListener;
 
 public class PublicServiceAdapter extends RecyclerView.Adapter<BaseViewHolder> {
-    private OnPublicServiceClickListener onPublicServiceClickListener;
+    private PublicServiceClickListener publicServiceClickListener;
     private List<ContactModel> data;
 
-    public PublicServiceAdapter(OnPublicServiceClickListener listener) {
+    public PublicServiceAdapter(PublicServiceClickListener listener) {
         this.data = new ArrayList<>();
-        this.onPublicServiceClickListener = listener;
+        this.publicServiceClickListener = listener;
     }
 
     @NonNull
     @Override
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         BaseViewHolder viewHolder = null;
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View itemView = inflater.inflate(viewType, null, false);
-        switch (viewType) {
-            case R.layout.seal_public_service_item:
-                viewHolder = new PublicServiceViewHolder(itemView,onPublicServiceClickListener);
-                break;
-            default:
-                break;
-        }
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.seal_public_service_item, parent, false);
+        viewHolder = new PublicServiceViewHolder(itemView, publicServiceClickListener);
         return viewHolder;
     }
 

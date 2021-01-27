@@ -81,7 +81,11 @@ public class CheckPermissionUtils {
 
     private static boolean lacksPermissions(Activity activity, String... permissions) {
         for (String permission : permissions) {
-            if (ContextCompat.checkSelfPermission(activity, permission) == PackageManager.PERMISSION_DENIED) {
+            try {
+                if (ContextCompat.checkSelfPermission(activity, permission) == PackageManager.PERMISSION_DENIED) {
+                    return true;
+                }
+            } catch (Exception e) {
                 return true;
             }
         }

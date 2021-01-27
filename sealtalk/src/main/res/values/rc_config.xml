@@ -24,7 +24,7 @@
     <bool name="rc_set_java_script_enabled">true</bool>
 
     <!--是否启用阅后即焚插件-->
-    <bool name="rc_open_destruct_plugin">true</bool>
+    <bool name="rc_open_destruct_plugin">false</bool>
 
     <!--是否开启合并转发功能-->
     <bool name="rc_enable_send_combine_message">true</bool>

@@ -7,6 +7,7 @@
 
     <cn.rongcloud.im.ui.view.UserInfoItemView
         android:id="@+id/uiv_userinfo"
+        app:item_userinfo_divider="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -14,18 +15,19 @@
 
     <TextView
         android:id="@+id/tv_role"
+        style="@style/TextStyle.Alignment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/seal_group_manager_item_margin_right"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/seal_group_manager_item_margin_right"
         android:textColor="@color/seal_group_manager_item_role"
         />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:src="@drawable/common_ic_arrow"/>
 

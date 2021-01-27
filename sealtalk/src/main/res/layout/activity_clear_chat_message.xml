@@ -27,8 +27,8 @@
             android:layout_centerVertical="true"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/seal_search_item_checkbox_margin_left"
-            android:paddingRight="12dp">
+            android:paddingStart="@dimen/seal_search_item_checkbox_margin_left"
+            android:paddingEnd="12dp">
 
             <CheckBox
                 android:id="@+id/cb_select_all"
@@ -45,8 +45,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="3dp"
-                android:layout_toRightOf="@id/cb_select_all"
+                android:layout_marginStart="3dp"
+                android:layout_toEndOf="@id/cb_select_all"
                 android:text="@string/seal_clear_chat_message_select_all"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/seal_update_staccount_dialog_title" />
@@ -57,11 +57,11 @@
             android:id="@+id/tv_remove"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
             android:text="@string/seal_clear_chat_message_select_delete"
             android:textColor="@color/read_ff"
             android:textSize="@dimen/seal_update_staccount_dialog_title" />

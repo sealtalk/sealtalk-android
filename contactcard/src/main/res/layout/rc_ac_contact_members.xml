@@ -2,63 +2,73 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="@color/rc_background_main_color"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="#0195ff" >
+        android:background="@color/rc_white_color">
 
         <TextView
             android:id="@id/rc_btn_cancel"
+            style="@style/TextStyle.Alignment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/rc_cancel"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="14dp"
+            android:layout_marginStart="14dp"
             android:clickable="true"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"/>
+            android:text="@string/rc_cancel"
+            android:textColor="#111F2C"
+            android:textSize="14sp" />
 
         <TextView
+            style="@style/TextStyle.Alignment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/rc_choose_members"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"/>
+            android:text="@string/rc_choose_members"
+            android:textStyle="bold"
+            android:textColor="#111F2C"
+            android:textSize="18sp" />
 
     </RelativeLayout>
 
     <LinearLayout
-        android:focusable="true" android:focusableInTouchMode="true"
-        android:layout_width="0px" android:layout_height="0px"/>
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
 
-    <EditText
-        android:id="@id/rc_edit_text"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="12dp"
-        android:drawableLeft="@drawable/rc_search"
-        android:drawableStart="@drawable/rc_search"
-        android:drawablePadding="10dp"
-        android:hint="@string/rc_search"
-        android:maxLines="1"
-        android:textSize="16sp"
-        android:imeOptions="actionSearch"
-        android:visibility="visible"/>
+        android:layout_height="44dp"
+        android:background="@color/rc_white_color"
+        android:paddingStart="@dimen/rc_margin_size_12"
+        android:paddingEnd="@dimen/rc_margin_size_12">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.25dp"
-        android:background="#dfdfdd"
-        android:visibility="visible"/>
+        <EditText
+            android:id="@id/rc_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:paddingStart="8dp"
+            android:background="@drawable/rc_ac_contact_members_search_bg"
+            android:drawableStart="@drawable/rc_search"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:hint="@string/rc_search"
+            android:imeOptions="actionSearch"
+            android:maxLines="1"
+            android:textColor="#999999"
+            android:textSize="14sp"
+            android:visibility="visible" />
+    </RelativeLayout>
+
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -69,24 +79,24 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:divider="@null">
-        </ListView>
+            android:divider="@null"></ListView>
 
         <TextView
             android:id="@+id/rc_popup_bg"
+            style="@style/TextStyle.Alignment"
             android:layout_width="80.0dip"
             android:layout_height="80.0dip"
             android:layout_gravity="center"
-            android:gravity="center"
             android:background="@drawable/rc_bg_toast"
+            android:gravity="center"
             android:textColor="#ffffffff"
             android:textSize="30.0dip"
             android:visibility="invisible" />
 
-        <io.rong.imkit.mention.SideBar
+        <io.rong.imkit.widget.SideBar
             android:id="@+id/rc_sidebar"
             android:layout_width="20.0dip"
             android:layout_height="fill_parent"
-            android:layout_gravity="right|center" />
+            android:layout_gravity="end|center" />
     </FrameLayout>
 </LinearLayout>

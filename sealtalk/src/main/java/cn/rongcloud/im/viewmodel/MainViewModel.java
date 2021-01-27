@@ -13,7 +13,7 @@ import androidx.lifecycle.Observer;
 import cn.rongcloud.im.db.model.FriendShipInfo;
 import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.task.FriendTask;
-import io.rong.imkit.manager.IUnReadMessageObserver;
+import io.rong.imkit.manager.UnReadMessageManager;
 import io.rong.imlib.model.Conversation;
 
 public class MainViewModel extends AndroidViewModel {
@@ -93,7 +93,7 @@ public class MainViewModel extends AndroidViewModel {
         imManager.removeUnReadMessageCountChangedObserver(observer);
     }
 
-    IUnReadMessageObserver observer = new IUnReadMessageObserver() {
+    UnReadMessageManager.IUnReadMessageObserver observer = new UnReadMessageManager.IUnReadMessageObserver() {
         @Override
         public void onCountChanged(int i) {
             unreadMessageNum = i;

@@ -44,6 +44,7 @@ public class SelectBaseViewModel extends AndroidViewModel {
     protected SingleSourceMapLiveData<List<GroupMember>, List<ContactModel>> allGroupMemberLiveData;
     private MutableLiveData<Integer> selectedCount = new MutableLiveData<>();
     private MutableLiveData<List<ContactModel>> currentLiveData;
+    private MutableLiveData<CheckableContactModel> checkedChangeData = new MutableLiveData<>();
     private ArrayList<String> uncheckableContactIdList;
     private ArrayList<String> excludeContactIdList;
     private ArrayList<String> checkedContactIdList;
@@ -383,6 +384,7 @@ public class SelectBaseViewModel extends AndroidViewModel {
         if (checkedContactIdList == null) {
             checkedContactIdList = new ArrayList<>();
         }
+        checkedChangeData.setValue(contactModel);
         Object bean = contactModel.getBean();
         if (bean instanceof FriendShipInfo) {
             FriendShipInfo friendShipInfo = (FriendShipInfo) bean;
@@ -406,7 +408,7 @@ public class SelectBaseViewModel extends AndroidViewModel {
      */
     public void removeFromCheckedList(CheckableContactModel contactModel) {
         if (checkedContactIdList == null) return;
-
+        checkedChangeData.setValue(contactModel);
         Object bean = contactModel.getBean();
         if (bean instanceof FriendShipInfo) {
             FriendShipInfo friendShipInfo = (FriendShipInfo) bean;
@@ -423,6 +425,10 @@ public class SelectBaseViewModel extends AndroidViewModel {
                 selectedCount.setValue(checkedContactIdList.size());
             }
         }
+    }
+
+    public LiveData<CheckableContactModel> getCheckedChangeData(){
+        return checkedChangeData;
     }
 
     /**

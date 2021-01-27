@@ -20,11 +20,12 @@
 
     <TextView
         android:id="@+id/tv_unread"
+        style="@style/TextStyle.Alignment"
         android:layout_width="@dimen/seal_unread_red_dot_width"
         android:layout_height="@dimen/seal_unread_red_dot_width"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/seal_unread_red_dot_margin_right"
+        android:layout_marginEnd="@dimen/seal_unread_red_dot_margin_right"
         android:background="@drawable/rc_unread_count_bg"
         android:textColor="@color/white"
         android:gravity="center"
@@ -37,7 +38,7 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:src="@drawable/seal_ic_rp_arrow"
-        android:layout_marginRight="@dimen/seal_unread_arrow_margin_right"
+        android:layout_marginEnd="@dimen/seal_unread_arrow_margin_right"
         android:visibility="visible"
         />
 </RelativeLayout>

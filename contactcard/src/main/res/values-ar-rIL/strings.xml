@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rc_plugins_contact">"بطاقة معلومات الإتصال"</string>
+    <string name="rc_send"> إرسال </string>
+    <string name="rc_send_to"> إرسال إلى:</string>
+    <string name="rc_message_to_friend"> اترك رسالة </string>
+    <string name="rc_contact_group_member_count">%1$s(%2$d)</string>
+    <string name="rc_recommend_clause_to_others"> تم مشاركة بطاقة الاتصال</string>
+    <string name="rc_recommend_clause_to_me"> موصى إليك </string>
+</resources>

@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData;
 
 import java.util.HashMap;
 
-import cn.rongcloud.im.db.DbManager;
+import cn.rongcloud.im.db.DBManager;
 import cn.rongcloud.im.model.PrivacyResult;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Result;
@@ -20,7 +20,7 @@ import cn.rongcloud.im.utils.NetworkOnlyResource;
 
 public class PrivacyTask {
 
-    private DbManager dbManager;
+    private DBManager dbManager;
     private PrivacyService privacyService;
     private Context context;
     private UserConfigCache userConfigCache;
@@ -28,7 +28,7 @@ public class PrivacyTask {
     public PrivacyTask(Context context) {
         this.context = context.getApplicationContext();
         userConfigCache = new UserConfigCache(context);
-        dbManager = DbManager.getInstance(context);
+        dbManager = DBManager.getInstance(context);
         privacyService = HttpClientManager.getInstance(context).getClient().createService(PrivacyService.class);
     }
 

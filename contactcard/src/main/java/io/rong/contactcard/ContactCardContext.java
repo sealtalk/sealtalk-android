@@ -7,21 +7,17 @@ package io.rong.contactcard;
 public class ContactCardContext {
     private IContactCardSelectListProvider iContactCardSelectListProvider;
     private IContactCardInfoProvider iContactCardInfoProvider;
-    private static volatile ContactCardContext contactCardContext = null;
 
     private ContactCardContext() {
 
     }
 
+    private static class SingletonHolder {
+        static ContactCardContext sInstance = new ContactCardContext();
+    }
+
     public static ContactCardContext getInstance() {
-        if (contactCardContext == null) {
-            synchronized (ContactCardContext.class) {
-                if (contactCardContext == null) {
-                    contactCardContext = new ContactCardContext();
-                }
-            }
-        }
-        return contactCardContext;
+        return SingletonHolder.sInstance;
     }
 
     public void setContactCardSelectListProvider(IContactCardSelectListProvider iContactCardSelectListProvider) {

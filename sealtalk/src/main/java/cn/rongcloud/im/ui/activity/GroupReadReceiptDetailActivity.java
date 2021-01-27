@@ -8,11 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -28,14 +31,14 @@ import cn.rongcloud.im.db.model.UserInfo;
 import cn.rongcloud.im.model.GroupMember;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.ui.adapter.GridGroupMemberAdapter;
+import cn.rongcloud.im.ui.adapter.RlGroupMemberAdapter;
 import cn.rongcloud.im.ui.view.SealTitleBar;
-import cn.rongcloud.im.ui.widget.ReadReceiptViewPager;
 import cn.rongcloud.im.viewmodel.GroupReadReceiptViewModel;
 import cn.rongcloud.im.utils.log.SLog;
-import io.rong.imkit.RongIM;
-import io.rong.imkit.emoticon.AndroidEmoji;
-import io.rong.imkit.userInfoCache.RongUserInfoManager;
+import io.rong.imkit.conversation.extension.component.emoticon.AndroidEmoji;
+import io.rong.imkit.userinfo.RongUserInfoManager;
 import io.rong.imkit.utils.RongDateUtils;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.Message;
 import io.rong.message.TextMessage;
@@ -57,14 +60,14 @@ public class GroupReadReceiptDetailActivity extends TitleBaseActivity {
     private TextView sendTimeTv;
 
     private TextView readPromptTv;
-    private GridView readMemberGv;
-    private GridGroupMemberAdapter readMemberAdapter;
+    private RecyclerView readMemberRl;
+    private RlGroupMemberAdapter readMemberAdapter;
     TextView readTabTextTv;
     TextView readUnderLineTv;
 
     private TextView unReadPromptTv;
-    private GridView unReadMemberGv;
-    private GridGroupMemberAdapter unReadMemberAdapter;
+    private RecyclerView unReadMemberRl;
+    private RlGroupMemberAdapter unReadMemberAdapter;
     TextView unReadTabTextTv;
     TextView unReadUnderLineTv;
 
@@ -98,7 +101,6 @@ public class GroupReadReceiptDetailActivity extends TitleBaseActivity {
         }
 
         setContentView(R.layout.conversation_activity_group_read_receipt_detail);
-
         initView();
         initViewModel();
     }
@@ -113,7 +115,7 @@ public class GroupReadReceiptDetailActivity extends TitleBaseActivity {
 
         // 发送消息内容
         sendMsgTv = findViewById(R.id.conversation_tv_read_send_message);
-        TextMessage textMessage = (TextMessage)targetMessage.getContent();
+        TextMessage textMessage = (TextMessage) targetMessage.getContent();
         SpannableStringBuilder spannable = new SpannableStringBuilder(textMessage.getContent());
         AndroidEmoji.ensure(spannable);
         sendMsgTv.setText(spannable);
@@ -150,39 +152,37 @@ public class GroupReadReceiptDetailActivity extends TitleBaseActivity {
         // 已读标签
         readUnderLineTv = findViewById(R.id.conversation_tv_read_tab_underline_read);
         readTabTextTv = findViewById(R.id.conversation_tv_read_tab_read);
-        readTabTextTv.setText(getString(R.string.seal_conversation_read_receipt_read_persons_format, 0));
-        readTabTextTv.setOnClickListener(v -> memberViewPager.setCurrentItem(0, false));
-        setTabSelectedBg(readUnderLineTv,readTabTextTv, true);
+        readTabTextTv.setText("已读");//getString(R.string.seal_conversation_read_receipt_read_persons_format, 0)
+        readTabTextTv.setOnClickListener(v -> memberViewPager.setCurrentItem(1, false));
+        setTabSelectedBg(readUnderLineTv, readTabTextTv, false);
 
         // 未读标签
         unReadUnderLineTv = findViewById(R.id.conversation_tv_read_tab_underline_unread);
         unReadTabTextTv = findViewById(R.id.conversation_tv_read_tab_unread);
-        unReadTabTextTv.setText(getString(R.string.seal_conversation_read_receipt_unread_persons_format, 0));
-        unReadTabTextTv.setOnClickListener(v -> memberViewPager.setCurrentItem(1, false));
-        setTabSelectedBg(unReadUnderLineTv, unReadTabTextTv, false);
+        unReadTabTextTv.setText("未读");//
+        unReadTabTextTv.setOnClickListener(v -> memberViewPager.setCurrentItem(0, false));
+        setTabSelectedBg(unReadUnderLineTv, unReadTabTextTv, true);
 
         // 未读页面
         View unreadView = LayoutInflater.from(this).inflate(R.layout.conversation_layout_read_receipt_member, null);
         unReadPromptTv = unreadView.findViewById(R.id.conversation_tv_read_member_prompt_text);
         unReadPromptTv.setText(R.string.seal_conversation_read_receipt_no_person_unread);
-        unReadMemberGv = unreadView.findViewById(R.id.conversation_gv_read_member);
-        unReadMemberAdapter = new GridGroupMemberAdapter(this, 0);
-        unReadMemberGv.setAdapter(unReadMemberAdapter);
+        unReadMemberRl = unreadView.findViewById(R.id.conversation_rl_read_member);
+        unReadMemberRl.setLayoutManager(new LinearLayoutManager(this));
+        unReadMemberAdapter = new RlGroupMemberAdapter();
+        unReadMemberRl.setAdapter(unReadMemberAdapter);
 
         // 已读页面
         View readView = LayoutInflater.from(this).inflate(R.layout.conversation_layout_read_receipt_member, null);
         readPromptTv = readView.findViewById(R.id.conversation_tv_read_member_prompt_text);
         readPromptTv.setText(R.string.seal_conversation_read_receipt_no_person_read);
-        readMemberGv = readView.findViewById(R.id.conversation_gv_read_member);
-        readMemberAdapter = new GridGroupMemberAdapter(this, 0);
-        readMemberGv.setAdapter(readMemberAdapter);
+        readMemberRl = readView.findViewById(R.id.conversation_rl_read_member);
+        readMemberRl.setLayoutManager(new LinearLayoutManager(this));
+        readMemberAdapter = new RlGroupMemberAdapter();
+        readMemberRl.setAdapter(readMemberAdapter);
 
         // 成员点击事件
-        GridGroupMemberAdapter.OnItemClickedListener memberClickedListener = new GridGroupMemberAdapter.OnItemClickedListener() {
-            @Override
-            public void onAddOrDeleteMemberClicked(boolean isAdd) {
-            }
-
+        RlGroupMemberAdapter.OnItemClickedListener memberClickedListener = new RlGroupMemberAdapter.OnItemClickedListener() {
             @Override
             public void onMemberClicked(GroupMember groupMember) {
                 showMemberInfo(groupMember);
@@ -192,8 +192,8 @@ public class GroupReadReceiptDetailActivity extends TitleBaseActivity {
         unReadMemberAdapter.setOnItemClickedListener(memberClickedListener);
 
         // 添加已读和未读页面
-        pageContainer.add(readView);
         pageContainer.add(unreadView);
+        pageContainer.add(readView);
 
         // 设置页面适配
         memberViewPager.setAdapter(new PagerAdapter() {
@@ -234,11 +234,13 @@ public class GroupReadReceiptDetailActivity extends TitleBaseActivity {
             @Override
             public void onPageSelected(int position) {
                 if (position == 0) {
-                    setTabSelectedBg(unReadUnderLineTv, unReadTabTextTv,false);
-                    setTabSelectedBg(readUnderLineTv, readTabTextTv,true);
+                    setTabSelectedBg(unReadUnderLineTv, unReadTabTextTv, true);
+                    setTabSelectedBg(readUnderLineTv, readTabTextTv, false);
+                    updateTabText(position);
                 } else if (position == 1) {
-                    setTabSelectedBg(unReadUnderLineTv, unReadTabTextTv,true);
-                    setTabSelectedBg(readUnderLineTv, readTabTextTv,false);
+                    setTabSelectedBg(unReadUnderLineTv, unReadTabTextTv, false);
+                    setTabSelectedBg(readUnderLineTv, readTabTextTv, true);
+                    updateTabText(position);
                 }
             }
 
@@ -246,6 +248,24 @@ public class GroupReadReceiptDetailActivity extends TitleBaseActivity {
             public void onPageScrollStateChanged(int state) {
             }
         });
+    }
+
+    private void updateTabText(int position) {
+        if (position == 0) {
+            if (unReadMemberList != null) {
+                unReadTabTextTv.setText(getString(R.string.seal_conversation_read_receipt_unread_persons_format, unReadMemberList.size()));
+            } else {
+                unReadTabTextTv.setText("未读");
+            }
+            readTabTextTv.setText("已读");
+        } else if (position == 1) {
+            if (readMemberList != null) {
+                readTabTextTv.setText(getString(R.string.seal_conversation_read_receipt_read_persons_format, readMemberList.size()));
+            } else {
+                readTabTextTv.setText("已读");
+            }
+            unReadTabTextTv.setText("未读");
+        }
     }
 
     /**
@@ -256,14 +276,14 @@ public class GroupReadReceiptDetailActivity extends TitleBaseActivity {
      * @param isSelected
      */
     private void setTabSelectedBg(TextView line, TextView text, boolean isSelected) {
-        if(isSelected){
+        if (isSelected) {
             line.setBackgroundColor(getResources().getColor(R.color.text_blue));
             line.setHeight(6);
-            text.setTextColor(getResources().getColor(R.color.text_blue));
-        }else {
-            line.setBackgroundColor(getResources().getColor(R.color.common_divider));
+            text.setTextColor(getResources().getColor(R.color.color_read_receip_detail_tab_selected));
+        } else {
+            line.setBackgroundColor(getResources().getColor(R.color.color_transparent));
             line.setHeight(1);
-            text.setTextColor(getResources().getColor(R.color.text_black));
+            text.setTextColor(getResources().getColor(R.color.color_read_receip_detail_tab_unselected));
         }
     }
 
@@ -298,11 +318,16 @@ public class GroupReadReceiptDetailActivity extends TitleBaseActivity {
     /**
      * 更新群组已读和未读成员
      */
+    // 未读成员列表
+    List<GroupMember> unReadMemberList;
+    // 已读成员列表
+    List<GroupMember> readMemberList;
+
     private void updateReadGroupMemberList(List<GroupMember> groupMemberList) {
         // 未读成员列表
-        List<GroupMember> unReadMemberList = new ArrayList<>();
+        unReadMemberList = new ArrayList<>();
         // 已读成员列表
-        List<GroupMember> readMemberList = new ArrayList<>();
+        readMemberList = new ArrayList<>();
         // 获取消息中已读成员列表
         HashMap<String, Long> respondUserIdMap = targetMessage.getReadReceiptInfo().getRespondUserIdList();
         List<Map.Entry<String, Long>> respondUserIdList = new ArrayList<>(respondUserIdMap.entrySet());
@@ -312,11 +337,11 @@ public class GroupReadReceiptDetailActivity extends TitleBaseActivity {
 
         List<String> readMemberIdList = new ArrayList<>(respondUserIdMap.keySet());
         // 自己的id
-        String currentUserId = RongIM.getInstance().getCurrentUserId();
+        String currentUserId = RongIMClient.getInstance().getCurrentUserId();
 
         List<GroupMember> tempMemberList = new ArrayList<>(groupMemberList);
 
-        for(String readMemberId : readMemberIdList) {
+        for (String readMemberId : readMemberIdList) {
             for (GroupMember groupMember : tempMemberList) {
                 // 已读成员
                 if (readMemberId.equals(groupMember.getUserId())) {
@@ -341,28 +366,29 @@ public class GroupReadReceiptDetailActivity extends TitleBaseActivity {
         unReadMemberList.addAll(tempMemberList);
 
         // 更新未读列表
-        if(unReadMemberList.size() == 0){
+        if (unReadMemberList.size() == 0) {
             unReadPromptTv.setVisibility(View.VISIBLE);
-            unReadMemberGv.setVisibility(View.GONE);
-        }else {
+            unReadMemberRl.setVisibility(View.GONE);
+        } else {
             unReadPromptTv.setVisibility(View.GONE);
             unReadMemberAdapter.updateListView(unReadMemberList);
-            unReadMemberGv.setVisibility(View.VISIBLE);
+            unReadMemberRl.setVisibility(View.VISIBLE);
         }
 
         // 更新已读列表
-        if(readMemberList.size() == 0){
+        if (readMemberList.size() == 0) {
             readPromptTv.setVisibility(View.VISIBLE);
-            readMemberGv.setVisibility(View.GONE);
-        }else {
+            readMemberRl.setVisibility(View.GONE);
+        } else {
             readPromptTv.setVisibility(View.GONE);
             readMemberAdapter.updateListView(readMemberList);
-            readMemberGv.setVisibility(View.VISIBLE);
+            readMemberRl.setVisibility(View.VISIBLE);
         }
 
         // 更新标签人数
-        unReadTabTextTv.setText(getString(R.string.seal_conversation_read_receipt_unread_persons_format, unReadMemberList.size()));
-        readTabTextTv.setText(getString(R.string.seal_conversation_read_receipt_read_persons_format, readMemberList.size()));
+        updateTabText(memberViewPager.getCurrentItem());
+//        unReadTabTextTv.setText(getString(R.string.seal_conversation_read_receipt_unread_persons_format, unReadMemberList.size()));
+//        readTabTextTv.setText(getString(R.string.seal_conversation_read_receipt_read_persons_format, readMemberList.size()));
     }
 
     /**
@@ -381,7 +407,7 @@ public class GroupReadReceiptDetailActivity extends TitleBaseActivity {
      */
     private void showMemberInfo(GroupMember groupMember) {
         Intent intent = new Intent(this, UserDetailActivity.class);
-        intent.putExtra(IntentExtra.STR_TARGET_ID, groupMember.getGroupId());
+        intent.putExtra(IntentExtra.STR_TARGET_ID, groupMember.getUserId());
         Group groupInfo = RongUserInfoManager.getInstance().getGroupInfo(targetMessage.getTargetId());
         if (groupInfo != null) {
             intent.putExtra(IntentExtra.STR_GROUP_NAME, groupInfo.getName());

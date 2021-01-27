@@ -50,6 +50,7 @@
     <string name="china">中国</string>
     <string name="lang_en">EN</string>
     <string name="lang_english">English</string>
+    <string name="lang_arab">阿拉伯</string>
     <string name="lang_chs">简体中文</string>
     <string name="seal_search">搜索</string>
     <string name="beijing">北京</string>
@@ -74,9 +75,9 @@
 
     <!--Main-->
     <string-array name="tab_names">
-        <item>会话</item>
+        <item>消息</item>
         <item>通讯录</item>
-        <item>发现</item>
+        <item>聊天室</item>
         <item>我</item>
     </string-array>
 
@@ -97,7 +98,7 @@
     <string name="seal_conversation_remote_side_is_typing">对方正在输入&#046;&#046;&#046;</string>
     <string name="seal_conversation_remote_side_speaking">对方正在讲话&#046;&#046;&#046;</string>
     <string name="seal_conversation_title_discussion_group">讨论组</string>
-    <string name="seal_conversation_title_system">系统消息</string>
+    <string name="seal_conversation_title_system">系统消息助手</string>
     <string name="seal_conversation_title_feedback">意见反馈</string>
     <string name="seal_conversation_title_defult">聊天</string>
 
@@ -107,8 +108,8 @@
     <string name="seal_conversation_sub_system">"系统消息"</string>
     <string name="seal_conversation_sub_defult">"聊天"</string>
     <string name="seal_conversation_read_receipt_detail">回执详情</string>
-    <string name="seal_conversation_read_receipt_unread_persons_format">%1$d 人未读</string>
-    <string name="seal_conversation_read_receipt_read_persons_format">%1$d 人已读</string>
+    <string name="seal_conversation_read_receipt_unread_persons_format">未读(%1$d)</string>
+    <string name="seal_conversation_read_receipt_read_persons_format">已读(%1$d)</string>
     <string name="seal_conversation_read_receipt_no_person_read">全部未读</string>
     <string name="seal_conversation_read_receipt_no_person_unread">全部已读</string>
 
@@ -149,7 +150,9 @@
     <string name="seal_mine_about_rongcloud_web">官方网站</string>
     <string name="seal_mine_about_seal_talk_version">SealTalk 版本</string>
     <string name="seal_mine_about_sdk_version">SDK 版本</string>
+    <string name="debug_mode_is_open">debug 模式已开启</string>
     <string name="seal_mine_about_close_debug_mode">关闭 debug 模式</string>
+    <string name="seal_mine_about_debug_setting">设置</string>
     <string name="seal_mine_about_user_online_status">设置用户在线状态</string>
 
     <string name="seal_title_private_chat">发起聊天</string>
@@ -166,6 +169,7 @@
     <string name="profile_clean_timing">定时清理群消息</string>
     <string name="profile_clean_timing_tips">设置定时清理后，系统会定时清理规定时间前的群消息，清理后的消息无法恢复，请谨慎设置</string>
     <string name="profile_user_details">用户详情</string>
+    <string name="profile_chat_details">聊天详情</string>
     <string name="profile_clean_private_chat_history">确定删除聊天记录吗</string>
     <string name="profile_clean_group_chat_history">确定删除群聊天记录吗</string>
     <string name="profile_clean_discussion_chat_history">确定删除讨论组聊天记录吗</string>
@@ -173,18 +177,18 @@
     <!-- 群组详细 -->
     <string name="profile_all_group_member">全部群成员</string>
     <string name="profile_group_member_online_status">群成员在线状态</string>
-    <string name="profile_group_portrait">群头像</string>
-    <string name="profile_group_name">群名称</string>
+    <string name="profile_group_portrait">群组头像</string>
+    <string name="profile_group_name">群组名称</string>
     <string name="profile_group_notice">群公告</string>
     <string name="profile_group_code">群二维码</string>
     <string name="profile_quit_group">删除并退出</string>
-    <string name="profile_dismiss_group">解散并退出</string>
+    <string name="profile_dismiss_group">解散并删除</string>
     <string name="profile_group_info">群组信息</string>
     <string name="profile_group_total_member">群成员</string>
     <string name="profile_update_portrait_success">头像更新成功</string>
     <string name="profile_upload_portrait_failed">上传头像失败</string>
     <string name="profile_hint_new_group_name">新的群名称</string>
-    <string name="profile_group_name_word_limit_format" formatted="true">群名称应为 %d-%d 字</string>
+    <string name="profile_group_name_word_limit_format" formatted="true">填写群名称(%d-%d字符)</string>
     <string name="profile_group_name_emoji_too_short">群名称表情过短</string>
     <string name="profile_input_hint_group_notice">请编辑群公告</string>
     <string name="profile_group_notice_post_confirm">该公告会通知全部群成员，是否发布？</string>
@@ -253,7 +257,7 @@
     <string name="seal_mine_my_account_st_account">SealTalk 号：</string>
     <string name="seal_mine_my_account_group_nick_name">群昵称：</string>
     <string name="seal_mine_my_account_phone_number">手机号</string>
-    <string name="seal_mine_my_account">"个人账号"</string>
+    <string name="seal_mine_my_account">"个人信息"</string>
     <string name="seal_select_group_member">选择群组成员</string>
     <string name="seal_select_friend">选择联系人</string>
     <string name="seal_select_confirm">确认</string>
@@ -311,7 +315,7 @@
     <string name="seal_new_message_donot_disturb_end">结束时间</string>
     <string name="seal_new_message_donot_disturb">消息免打扰</string>
     <string name="seal_search_empty">没有搜到%s相关的信息</string>
-    <string name="seal_main_chat_tab_more_read_message">···</string>
+    <string name="seal_main_chat_tab_more_read_message">99+</string>
     <string name="seal_main_toast_unread_clear_success">清除成功</string>
     <string name="seal_public_account_information">公众号信息</string>
     <string name="seal_member_mention_all_member">所有人</string>
@@ -375,6 +379,7 @@
     <string name="seal_group_management_group_managements">群管理员</string>
     <string name="seal_group_management_add_group_managements">添加群管理员</string>
     <string name="seal_group_management_dialog_delete_content"><![CDATA[是否将 <font color="#0195ff">%1$s</font> 从管理员列表中删除]]> </string>
+    <string name="seal_select_forward_title">选择一个聊天</string>
     <string name="seal_select_forward_create_new_chat">创建一个新聊天</string>
     <string name="seal_select_forward_select_group">选择一个群</string>
     <string name="seal_select_forward_message_recent_chat">最近聊天</string>
@@ -467,7 +472,7 @@
     <string name="seal_goup_member_protect_tips">开启后，群成员无法通过该群添加好友</string>
     <string name="seal_add_certification">是否开启群认证</string>
     <string name="seal_add_certification_tips">开启后，需要群管理同意后才能加入群聊，同时停用扫描二维码进群方式</string>
-    <string name="seal_add_certification_close">关闭群认证后，所有的进群申请将过期，是否确认～</string>
+    <string name="seal_add_certification_close">关闭群认证后，所有的进群申请将过期，是否确认？</string>
     <string name="seal_add_friend_protect">关闭此开关后，允许群组内成员相互加好友，是否确认？</string>
     <string name="seal_add_certification_need_certifi">该群已开启群认证，请等待管理员审核～</string>
     <string name="seal_add_need_member_agree">已邀请，等待确认</string>
@@ -507,7 +512,7 @@
     <string name="seal_group_manager_copy_fail">复制失败</string>
 
     <!--group_exited-->
-    <string name="seal_group_manager_exited_null_tips">当前没有成员退出</string>
+    <string name="seal_group_manager_exited_null_tips">当前没有群成员退出</string>
     <string name="seal_group_manager_exited_title">退群成员列表</string>
     <string name="seal_group_manager_exited_content_owner">被群主%1$s移除群聊</string>
     <string name="seal_group_manager_exited_content_manager">被管理员%1$s移除群聊</string>
@@ -588,10 +593,20 @@
     <string name="seal_dialog_operate_phone_num_copy">复制号码</string>
     <string name="seal_dialog_operate_phone_num_copy_success">复制成功</string>
 
+    <string name="seal_choose_members">选择联系人</string>
     <string name="contact_multi_delete_friend">批量删除好友</string>
     <string name="contact_multi_delete_friend_conf" formatted="true"><Data><![CDATA[确认后将删除所选好友， <br> 是否确认删除]]></Data></string>
 
     <string name="seal_dialog_wait_tips">请稍后...</string>
 
     <string name="seal_login_private_service_error">登录失败 Status :34005</string>
+    <string name="seal_group_exit_list_left_title">群管理</string>
+
+    <string name="seal_friend_message">好友消息</string>
+
+    <!--debug mode-->
+    <string name="setting_open_debug_prompt">是否开启 App Debug 模式(需要重新登录应用)?</string>
+    <string name="setting_close_debug_promt">是否关闭 App Debug 模式(需要重新登录应用)?</string>
+    <string name="seal_mine_about_push_config">设置推送配置</string>
+    <string name="seal_mine_about_debug_setting_push_language">设置推送语言</string>
 </resources>

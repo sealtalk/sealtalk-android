@@ -25,9 +25,8 @@ import io.rong.imlib.model.Conversation;
 
 import static cn.rongcloud.im.ui.view.SealTitleBar.Type.NORMAL;
 
-public class GroupListActivity extends TitleBaseActivity implements OnGroupItemClickListener, TextWatcher {
+public class GroupListActivity extends TitleAndSearchBaseActivity implements OnGroupItemClickListener {
     private static final String TAG = "GroupListActivity";
-    private EditText editText;
     private SearchGroupByNameFragment searchGroupByNameFragment;
     private FrameLayout groupListContainerFl;
     private TextView emptyTv;
@@ -38,15 +37,13 @@ public class GroupListActivity extends TitleBaseActivity implements OnGroupItemC
         getTitleBar().setType(NORMAL);
         getTitleBar().setTitle(R.string.seal_ac_search_group);
         setContentView(R.layout.activity_group_list);
-        editText = findViewById(R.id.group_search);
         groupListContainerFl = findViewById(R.id.fl_content_fragment);
         emptyTv = findViewById(R.id.tv_empty_group_notice);
-        editText.addTextChangedListener(this);
         searchGroupByNameFragment = new SearchGroupByNameFragment();
         searchGroupByNameFragment.setOnSearchResultListener(new SearchGroupByNameFragment.SearchResultListener() {
             @Override
             public void onSearchResult(String lastKeyWord, List<SearchModel> searchModels) {
-                if(TextUtils.isEmpty(lastKeyWord) && (searchModels == null || searchModels.size() == 0)){
+                if (TextUtils.isEmpty(lastKeyWord) && (searchModels == null || searchModels.size() == 0)) {
                     emptyTv.setVisibility(View.VISIBLE);
                     groupListContainerFl.setVisibility(View.GONE);
                 } else {
@@ -62,27 +59,32 @@ public class GroupListActivity extends TitleBaseActivity implements OnGroupItemC
     }
 
     @Override
+    public void onSearch(String keyword) {
+        searchGroupByNameFragment.search(keyword);
+    }
+
+    @Override
     public void onGroupClicked(GroupEntity groupEntity) {
         RongIM.getInstance().startConversation(this, Conversation.ConversationType.GROUP, groupEntity.getId(), groupEntity.getName());
     }
 
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                searchGroupByNameFragment.search(s.toString());
-            }
-        }, 300);
-    }
+//    @Override
+//    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//    }
+//
+//    @Override
+//    public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//    }
+//
+//    @Override
+//    public void afterTextChanged(Editable s) {
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                searchGroupByNameFragment.search(s.toString());
+//            }
+//        }, 300);
+//    }
 }

@@ -5,26 +5,31 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical"
-    android:paddingLeft="18dp"
+    android:paddingStart="18dp"
     android:paddingTop="12dp"
-    android:paddingRight="27dp">
+    android:paddingEnd="27dp">
 
     <TextView
+        style="@style/TextStyle.Alignment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/profile_group_notice_tips"
-        android:textColor="@color/default_sub_text" />
+        android:textSize="13dp"
+        android:textColor="#A0A5AB" />
 
     <TextView
         android:id="@+id/profile_tv_update_group_notice_time"
+        style="@style/TextStyle.Alignment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:textColor="@color/default_sub_text"
+        android:textSize="13dp"
+        android:textColor="#A0A5AB"
         tools:text="发布时间：2019-05-30 18:34:21" />
 
     <EditText
         android:id="@+id/profile_et_group_notice"
+        style="@style/EditTextStyle.Alignment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -35,7 +40,7 @@
         android:inputType="text|textMultiLine"
         android:minLines="8"
         android:scrollbars="vertical"
-        android:textColor="@color/default_main_text"
+        android:textColor="#111F2C"
         android:textColorHint="@color/default_text_hint_color"
         android:textSize="16sp" />
 

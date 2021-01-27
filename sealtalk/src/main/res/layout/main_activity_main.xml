@@ -12,18 +12,18 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/common_divider"
         />
+
     <cn.rongcloud.im.ui.view.MainBottomTabGroupView
         android:id="@+id/tg_bottom_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@color/color_main_tab"
-        ></cn.rongcloud.im.ui.view.MainBottomTabGroupView>
+        />
 
 </LinearLayout>

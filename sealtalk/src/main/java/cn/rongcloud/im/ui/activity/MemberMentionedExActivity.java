@@ -19,6 +19,7 @@ import cn.rongcloud.im.model.GroupMember;
 import cn.rongcloud.im.ui.adapter.MemberMentionedAdapter;
 import cn.rongcloud.im.ui.widget.SideBar;
 import cn.rongcloud.im.viewmodel.MemberMentionedViewModel;
+import io.rong.imkit.utils.RouteUtils;
 import io.rong.imlib.model.Conversation;
 
 
@@ -99,8 +100,8 @@ public class MemberMentionedExActivity extends TitleBaseActivity {
      */
     private void initViewModel() {
 
-        String targetId = getIntent().getStringExtra("targetId");
-        Conversation.ConversationType conversationType = Conversation.ConversationType.setValue(getIntent().getIntExtra("conversationType", 0));
+        String targetId = getIntent().getStringExtra(RouteUtils.TARGET_ID);
+        Conversation.ConversationType conversationType = Conversation.ConversationType.setValue(getIntent().getIntExtra(RouteUtils.CONVERSATION_TYPE, 0));
         memberMentionedViewModel = ViewModelProviders.of(this,
                 new MemberMentionedViewModel.Factory(targetId, conversationType, getApplication())).get(MemberMentionedViewModel.class);
 

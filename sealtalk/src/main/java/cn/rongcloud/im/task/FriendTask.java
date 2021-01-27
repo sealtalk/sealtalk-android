@@ -18,7 +18,7 @@ import java.util.List;
 
 import cn.rongcloud.im.common.ThreadManager;
 import cn.rongcloud.im.contact.PhoneContactManager;
-import cn.rongcloud.im.db.DbManager;
+import cn.rongcloud.im.db.DBManager;
 import cn.rongcloud.im.db.dao.FriendDao;
 import cn.rongcloud.im.db.dao.GroupMemberDao;
 import cn.rongcloud.im.db.dao.UserDao;
@@ -54,13 +54,13 @@ public class FriendTask {
     private static final String TAG = "FriendTask";
     private Context context;
     private FriendService friendService;
-    private DbManager dbManager;
+    private DBManager dbManager;
     private FileManager fileManager;
 
     public FriendTask(Context context) {
         this.context = context.getApplicationContext();
         friendService = HttpClientManager.getInstance(this.context).getClient().createService(FriendService.class);
-        dbManager = DbManager.getInstance(this.context);
+        dbManager = DBManager.getInstance(this.context);
         fileManager = new FileManager(context);
     }
 
@@ -238,7 +238,10 @@ public class FriendTask {
     }
 
     public FriendShipInfo getFriendShipInfoFromDBSync(String userId) {
-        return dbManager.getFriendDao().getFriendInfoSync(userId);
+        if (dbManager.getFriendDao() != null) {
+            return dbManager.getFriendDao().getFriendInfoSync(userId);
+        }
+        return null;
     }
 
     public List<FriendShipInfo> getFriendShipInfoListFromDBSync(String[] userIds) {
@@ -290,6 +293,9 @@ public class FriendTask {
     }
 
     public LiveData<List<FriendShipInfo>> searchFriendsFromDB(String match) {
+        if(dbManager == null || dbManager.getFriendDao() == null) {
+            return new MediatorLiveData<>();
+        }
         return dbManager.getFriendDao().searchFriendShip(match);
     }
 

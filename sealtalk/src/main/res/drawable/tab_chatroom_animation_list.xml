@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="true">
+    <item
+        android:drawable="@drawable/tab_chatroom_0"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_1"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_2"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_3"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_4"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_5"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_6"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_7"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_8"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_9"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_10"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_11"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_12"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_13"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_14"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_15"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_16"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_17"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_18"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_19"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_20"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_21"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_22"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_23"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_24"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_25"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_26"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_27"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_28"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_chatroom_29"
+        android:duration="40" />
+</animation-list>

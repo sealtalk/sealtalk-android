@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 //apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
     defaultConfig {
         applicationId "cn.rongcloud.im"
         minSdkVersion 19
-        targetSdkVersion 28
-        versionCode 20201225
-        versionName "4.1.0"
+        targetSdkVersion 30
+        versionCode 20210127
+        versionName "5.0.0"
         ndk {
             abiFilters "armeabi-v7a", 'x86'
         }
@@ -41,6 +41,9 @@ android {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
+    packagingOptions {
+        exclude 'assets/ap1.data'
+    }
     buildToolsVersion = '28.0.3'
 
     sourceSets {
@@ -48,13 +51,15 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
-    implementation 'com.huawei.hms:push:4.0.2.300'
-    implementation 'androidx.appcompat:appcompat:1.1.0-beta01'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta1'
+//    implementation 'com.huawei.hms:push:4.0.2.300'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.google.android.material:material:1.1.0-alpha07'
     implementation 'androidx.lifecycle:lifecycle-livedata:2.2.0-alpha01'
@@ -62,15 +67,14 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0-alpha01'
     implementation 'androidx.room:room-runtime:2.1.0-rc01'
     implementation 'androidx.exifinterface:exifinterface:1.1.0-beta01'
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     annotationProcessor 'androidx.room:room-compiler:2.1.0-rc01'
-    //debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-2'
     implementation 'androidx.exifinterface:exifinterface:1.1.0-beta01'
     api "com.google.zxing:core:3.3.2"
     api 'com.squareup.retrofit2:retrofit:2.5.0'
     api 'com.squareup.retrofit2:converter-gson:2.5.0'
     implementation 'androidx.annotation:annotation:1.1.0'
-    //api 'com.google.firebase:firebase-messaging:17.6.0'
-
+    implementation 'com.huawei.hms:push:4.0.2.300'
     api 'com.meizu.flyme.internet:push-internal:3.6.+@aar'
     api 'com.google.code.gson:gson:2.8.1'
     api 'com.googlecode.mp4parser:isoparser:1.0.6'
@@ -78,19 +82,16 @@ dependencies {
     implementation 'com.tencent.bugly:crashreport:3.0.1'
     implementation 'com.tencent.bugly:nativecrashreport:3.7.1'
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
-
-    api 'cn.rongcloud.sdk:im_kit:4.1.0'
+    api 'cn.rongcloud.sdk:im_kit:5.0.0'
     //im_kit必须依赖im_lib，所以需要加入对应依赖
-    api 'cn.rongcloud.sdk:im_lib:4.1.0'
-
-    api 'cn.rongcloud.sdk:rcsticker:4.1.0'
-    api 'cn.rongcloud.sdk:sight:4.1.0'
-
-    api 'cn.rongcloud.sdk:call_lib:4.1.0'
-    api 'cn.rongcloud.sdk:call_kit:4.1.0'
+    api 'cn.rongcloud.sdk:im_lib:5.0.0'
+    api 'cn.rongcloud.sdk:rcsticker:5.0.0'
+    api 'cn.rongcloud.sdk:sight:5.0.0'
+    api 'cn.rongcloud.sdk:call_lib:5.0.0'
+    api 'cn.rongcloud.sdk:rtc_lib:5.0.0'
+    api 'cn.rongcloud.sdk:call_kit:5.0.0'
 
     api project(path: ':contactcard')
     api project(path: ':recognizer')
     api project(path: ':pushpermission')
 }
-// apply plugin: 'com.huawei.agconnect'

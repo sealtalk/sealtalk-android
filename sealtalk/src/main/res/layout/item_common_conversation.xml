@@ -10,13 +10,13 @@
         android:id="@+id/cb_select"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/seal_search_item_checkbox_margin_left"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         android:layout_gravity="center_vertical"
-        android:clickable="false"
+        android:layout_marginStart="@dimen/seal_search_item_checkbox_margin_left"
         android:background="@null"
         android:button="@drawable/seal_checkbox_selector"
+        android:clickable="false"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:visibility="gone" />
 
 
@@ -24,14 +24,14 @@
         android:id="@+id/uiv_userinfo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:item_userinfo_divider="true"
+        android:layout_toEndOf="@id/cb_select"
         app:item_userifo_null_background="false"
-        android:layout_toRightOf="@id/cb_select"
-        >
+        app:item_userinfo_divider="false" />
 
-    </cn.rongcloud.im.ui.view.UserInfoItemView>
-    <View style="@style/ac_search_list_view_divider"
+    <View
+        android:id="@+id/view_divider"
+        style="@style/ac_search_list_view_divider"
         android:layout_alignParentBottom="true"
-        />
+        android:visibility="gone" />
 
 </RelativeLayout>

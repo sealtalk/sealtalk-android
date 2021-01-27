@@ -23,7 +23,11 @@ public class MainBottomTabGroupView extends TabGroupView {
     @Override
     protected View createView(TabItem item) {
         MainBottomTabItem mainBottomTabItem = new MainBottomTabItem(getContext());
-        mainBottomTabItem.setDrawable(item.drawable);
+        if (item.animationDrawable != null) {
+            mainBottomTabItem.setAnimationDrawable(item.animationDrawable);
+        } else {
+            mainBottomTabItem.setDrawable(item.drawable);
+        }
         mainBottomTabItem.setName(item.text);
         return mainBottomTabItem;
     }
@@ -36,7 +40,7 @@ public class MainBottomTabGroupView extends TabGroupView {
         if (getSelectedItemId() == item.id) {
             if (firstClick == 0) {
                 firstClick = System.currentTimeMillis();
-            }  else {
+            } else {
                 long secondClick = System.currentTimeMillis();
                 if (secondClick - firstClick > 0 && secondClick - firstClick <= 800) {
                     if (doubleListener != null) {
@@ -55,9 +59,10 @@ public class MainBottomTabGroupView extends TabGroupView {
 
     /**
      * 设置双击监听
+     *
      * @param listener
      */
-    public void setOnTabDoubleClickListener (OnTabDoubleClickListener listener) {
+    public void setOnTabDoubleClickListener(OnTabDoubleClickListener listener) {
         this.doubleListener = listener;
     }
 

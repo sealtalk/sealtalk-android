@@ -4,20 +4,35 @@
     android:layout_height="match_parent"
     android:background="@color/default_main_area_background"
     >
-    <TextView
+
+    <RelativeLayout
         android:id="@+id/add_friend_tv_search_friend"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@drawable/common_bg_edit_text_gray_edge"
-        android:drawableLeft="@drawable/seal_search_group_icon"
-        android:drawablePadding="12dp"
-        android:paddingLeft="12dp"
-        android:gravity="left|center_vertical"
-        android:text="@string/seal_search_phone_numeber_and_account"
-        />
+        android:layout_height="32dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/seal_bg_search"
+        android:minWidth="60dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp">
+
+        <TextView
+            android:id="@+id/add_friend_tv_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:text="@string/seal_search_phone_numeber_and_account"
+            android:textColor="#999999"
+            android:textSize="14dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="2dp"
+            android:src="@drawable/seal_main_find"
+            android:layout_toStartOf="@id/add_friend_tv_search" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/add_friend_tv_my_qrcode"
@@ -29,7 +44,7 @@
         android:padding="8dp"
         android:textSize="14dp"
         android:textColor="@color/default_main_text"
-        android:drawableRight="@drawable/seal_ic_mine_qrcode_blue"
+        android:drawableEnd="@drawable/seal_ic_mine_qrcode_blue"
         android:drawablePadding="5dp"
         />
 
@@ -47,8 +62,8 @@
             android:layout_height="50dp"
             android:background="@drawable/seal_bg_list_item"
             android:orientation="horizontal"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:paddingTop="6dp"
             android:paddingBottom="6dp"
             >
@@ -62,7 +77,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -85,9 +100,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/color_divider_line"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:background="@color/seal_setting_item_divider"
+            android:layout_marginStart="56dp"
             />
 
         <!-- 扫一扫 -->
@@ -97,8 +111,8 @@
             android:layout_height="50dp"
             android:background="@drawable/seal_bg_list_item"
             android:orientation="horizontal"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:paddingTop="6dp"
             android:paddingBottom="6dp"
             >
@@ -112,7 +126,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -135,9 +149,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/color_divider_line"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:background="@color/seal_setting_item_divider"
+            android:layout_marginStart="56dp"
             />
 
         <!-- 邀请微信好友 -->
@@ -147,8 +160,8 @@
             android:layout_height="50dp"
             android:background="@drawable/seal_bg_list_item"
             android:orientation="horizontal"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:paddingTop="6dp"
             android:paddingBottom="6dp"
             >
@@ -162,7 +175,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -185,9 +198,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/color_divider_line"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:background="@color/seal_setting_item_divider"
+            android:layout_marginStart="56dp"
             />
 
         <!-- 邀请手机联系人 -->
@@ -197,8 +209,8 @@
             android:layout_height="50dp"
             android:background="@drawable/seal_bg_list_item"
             android:orientation="horizontal"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:paddingTop="6dp"
             android:paddingBottom="6dp"
             >
@@ -212,7 +224,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -235,9 +247,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/color_divider_line"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:background="@color/seal_setting_item_divider"
+            android:layout_marginStart="56dp"
             />
 
 

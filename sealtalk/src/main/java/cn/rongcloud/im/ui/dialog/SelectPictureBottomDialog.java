@@ -16,7 +16,8 @@ import androidx.annotation.Nullable;
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.utils.PhotoUtils;
 
-import static io.rong.imkit.plugin.image.PictureSelectorActivity.REQUEST_CODE_ASK_PERMISSIONS;
+import static cn.rongcloud.im.ui.activity.QrCodeDisplayActivity.REQUEST_CODE_ASK_PERMISSIONS;
+
 
 public class SelectPictureBottomDialog extends BaseBottomDialog {
 

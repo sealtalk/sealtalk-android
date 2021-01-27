@@ -60,6 +60,7 @@ public class GroupNoticeListActivity extends TitleBaseActivity {
             }
         });
         getTitleBar().getBtnRight().setImageDrawable(getResources().getDrawable(R.drawable.notice_clear));
+        getTitleBar().getTvRight().setVisibility(View.GONE);
         getTitleBar().setOnBtnRightClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -11,6 +11,7 @@
         android:layout_height="@dimen/seal_group_manager_item_height"
         android:layout_marginTop="@dimen/seal_group_manager_item_margin"
         app:item_content="@string/seal_group_manager_set_manager"
+        app:item_right_image="@drawable/seal_ic_mine_go"
         app:item_divider="true">
 
     </cn.rongcloud.im.ui.view.SettingItemView>
@@ -20,7 +21,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_group_manager_item_height"
         app:item_content="@string/seal_group_manager_transfer"
-        app:item_divider="true">
+        app:item_divider="true"
+        app:item_right_image="@drawable/seal_ic_mine_go">
 
     </cn.rongcloud.im.ui.view.SettingItemView>
 
@@ -29,14 +31,16 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_group_manager_item_height"
         app:item_content="@string/seal_group_manager_copy"
-        app:item_divider="true"/>
+        app:item_divider="true"
+        app:item_right_image="@drawable/seal_ic_mine_go"/>
 
     <cn.rongcloud.im.ui.view.SettingItemView
         android:id="@+id/siv_group_exited"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_group_manager_item_height"
         app:item_content="@string/seal_group_manager_exited"
-        app:item_divider="false"/>
+        app:item_divider="false"
+        app:item_right_image="@drawable/seal_ic_mine_go"/>
 
     <cn.rongcloud.im.ui.view.SettingItemView
         android:id="@+id/siv_group_member_protect"
@@ -48,11 +52,12 @@
         app:item_switch="true" />
 
     <TextView
+        style="@style/TextStyle.Alignment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/seal_group_detail_clean_tips_margin_left"
+        android:layout_marginStart="@dimen/seal_group_detail_clean_tips_margin_left"
         android:layout_marginTop="@dimen/seal_main_item_margin_bottom"
-        android:layout_marginRight="@dimen/seal_group_detail_clean_tips_margin_right"
+        android:layout_marginEnd="@dimen/seal_group_detail_clean_tips_margin_right"
         android:layout_marginBottom="@dimen/seal_group_detail_clean_tips_margin_bottom"
         android:text="@string/seal_goup_member_protect_tips"
         android:textSize="@dimen/seal_group_detail_clean_tips_size" />
@@ -66,11 +71,12 @@
         app:item_switch="true" />
 
     <TextView
+        style="@style/TextStyle.Alignment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/seal_group_detail_clean_tips_margin_left"
+        android:layout_marginStart="@dimen/seal_group_detail_clean_tips_margin_left"
         android:layout_marginTop="@dimen/seal_main_item_margin_bottom"
-        android:layout_marginRight="@dimen/seal_group_detail_clean_tips_margin_right"
+        android:layout_marginEnd="@dimen/seal_group_detail_clean_tips_margin_right"
         android:layout_marginBottom="@dimen/seal_group_detail_clean_tips_margin_bottom"
         android:text="@string/seal_mute_all_tips"
         android:textSize="@dimen/seal_group_detail_clean_tips_size" />
@@ -85,11 +91,12 @@
         app:item_switch="true" />
 
     <TextView
+        style="@style/TextStyle.Alignment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/seal_group_detail_clean_tips_margin_left"
+        android:layout_marginStart="@dimen/seal_group_detail_clean_tips_margin_left"
         android:layout_marginTop="@dimen/seal_main_item_margin_bottom"
-        android:layout_marginRight="@dimen/seal_group_detail_clean_tips_margin_right"
+        android:layout_marginEnd="@dimen/seal_group_detail_clean_tips_margin_right"
         android:layout_marginBottom="@dimen/seal_group_detail_clean_tips_margin_bottom"
         android:text="@string/seal_add_certification_tips"
         android:textSize="@dimen/seal_group_detail_clean_tips_size" />

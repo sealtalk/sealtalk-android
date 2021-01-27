@@ -221,7 +221,7 @@ public class DecoratedBarcodeView extends FrameLayout {
     }
 
     /**
-     * The Listener to torch/fflashlight events (turn on, turn off).
+     * The interceptor to torch/fflashlight events (turn on, turn off).
      */
     public interface TorchListener {
 

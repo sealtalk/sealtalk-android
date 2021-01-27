@@ -19,6 +19,8 @@ import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.viewmodel.AppViewModel;
 import cn.rongcloud.im.utils.log.SLog;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongCoreClient;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 
 /**
@@ -49,7 +51,7 @@ public class MainDiscoveryFragment extends BaseFragment {
         appViewModel = ViewModelProviders.of(getActivity()).get(AppViewModel.class);
 
         // 获取聊天室列表
-        appViewModel.getChatRoonList().observe(this, listResource -> {
+        appViewModel.getChatRoomList().observe(this, listResource -> {
             List<ChatRoomResult> chatRoomResultList = listResource.data;
             if (chatRoomResultList != null) {
                 latestChatRoomList = new ArrayList<>();
@@ -102,6 +104,11 @@ public class MainDiscoveryFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
     /**
      * 进入聊天室
      *
@@ -118,6 +125,16 @@ public class MainDiscoveryFragment extends BaseFragment {
         ChatRoomResult chatRoomResult = latestChatRoomList.get(roomIndex);
         String roomId = chatRoomResult.getId();
 
-        RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.CHATROOM, roomId, roomTitle);
+        RongIMClient.getInstance().joinChatRoom(roomId, 10, new RongIMClient.OperationCallback() {
+            @Override
+            public void onSuccess() {
+                RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.CHATROOM, roomId, roomTitle);
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+
+            }
+        });
     }
 }

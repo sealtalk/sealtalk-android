@@ -3,8 +3,6 @@ package cn.rongcloud.im.task;
 import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
-import android.util.Log;
-import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,20 +10,14 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import cn.rongcloud.im.common.ErrorCode;
-import cn.rongcloud.im.db.DbManager;
-import cn.rongcloud.im.db.dao.FriendDao;
+import cn.rongcloud.im.db.DBManager;
 import cn.rongcloud.im.db.dao.GroupDao;
 import cn.rongcloud.im.db.dao.GroupMemberDao;
 import cn.rongcloud.im.db.dao.UserDao;
-import cn.rongcloud.im.db.model.FriendShipInfo;
 import cn.rongcloud.im.db.model.GroupEntity;
 import cn.rongcloud.im.db.model.GroupExitedMemberInfo;
 import cn.rongcloud.im.db.model.GroupMemberInfoDes;
@@ -55,20 +47,20 @@ import cn.rongcloud.im.utils.NetworkOnlyResource;
 import cn.rongcloud.im.utils.RongGenerate;
 import cn.rongcloud.im.utils.SearchUtils;
 import cn.rongcloud.im.utils.SingleSourceLiveData;
-import io.rong.imkit.tools.CharacterParser;
+import io.rong.imkit.utils.CharacterParser;
 import io.rong.imlib.model.Conversation;
 import okhttp3.RequestBody;
 
 public class GroupTask {
     private GroupService groupService;
     private Context context;
-    private DbManager dbManager;
+    private DBManager dbManager;
     private FileManager fileManager;
 
     public GroupTask(Context context) {
         this.context = context.getApplicationContext();
         groupService = HttpClientManager.getInstance(context).getClient().createService(GroupService.class);
-        dbManager = DbManager.getInstance(context);
+        dbManager = DBManager.getInstance(context);
         fileManager = new FileManager(context);
     }
 
@@ -662,7 +654,7 @@ public class GroupTask {
                             portraitUri = RongGenerate.generateDefaultAvatar(context, user.getId(), user.getName());
                             user.setPortraitUri(portraitUri);
                         }
-                        int updateResult = userDao.updateNameAndPortrait(user.getId(), user.getName(), CharacterParser.getInstance().getSelling(user.getName()), user.getPortraitUri());
+                        int updateResult = userDao.updateNameAndPortrait(user.getId(), user.getName(), io.rong.imkit.utils.CharacterParser.getInstance().getSelling(user.getName()), user.getPortraitUri());
 
                         // 当没有更新成功时，添加到新用户列表中
                         if (updateResult == 0) {
@@ -1005,7 +997,6 @@ public class GroupTask {
                 }
 
             }
-
 
             @NonNull
             @Override

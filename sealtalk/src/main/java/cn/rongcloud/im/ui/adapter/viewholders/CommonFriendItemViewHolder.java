@@ -101,4 +101,13 @@ public class CommonFriendItemViewHolder extends BaseItemViewHolder<ListItemModel
             checkBox.setChecked(false);
         }
     }
+
+    public void setDividerVisibility(boolean visibility) {
+        if (visibility) {
+            infoUiv.setDividerVisibility(View.VISIBLE);
+        } else {
+            infoUiv.setDividerVisibility(View.GONE);
+        }
+    }
+
 }

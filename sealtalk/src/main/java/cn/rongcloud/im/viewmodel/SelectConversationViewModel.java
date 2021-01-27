@@ -51,7 +51,7 @@ public class SelectConversationViewModel extends AndroidViewModel {
     }
 
     public void loadConversation() {
-        RongIM.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
+        RongIMClient.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
             @Override
             public void onSuccess(List<Conversation> conversations) {
                 convert(conversations);
@@ -161,9 +161,11 @@ public class SelectConversationViewModel extends AndroidViewModel {
 
     public void selectAllCheck() {
         List<CheckableContactModel> conversationModels = coversationLiveData.getValue();
-        for (ContactModel model : conversationModels) {
-            CheckableContactModel checkableContactModel = (CheckableContactModel) model;
-            checkableContactModel.setCheckType(CheckType.CHECKED);
+        if (conversationModels != null) {
+            for (ContactModel model : conversationModels) {
+                CheckableContactModel checkableContactModel = (CheckableContactModel) model;
+                checkableContactModel.setCheckType(CheckType.CHECKED);
+            }
         }
         coversationLiveData.setValue(conversationModels);
         selectedCount.setValue(conversationModels.size());

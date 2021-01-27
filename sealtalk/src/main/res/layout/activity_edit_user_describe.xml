@@ -11,9 +11,10 @@
         android:orientation="vertical">
 
         <TextView
+            style="@style/TextStyle.Alignment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:text="@string/seal_describe_alias"
@@ -25,14 +26,16 @@
             style="@style/EditUserDesEditText"
             android:layout_width="match_parent"
             android:layout_height="44dp"
+            android:gravity="center_vertical"
             android:hint="@string/seal_describe_alias_hint"
             android:maxLength="16"
-            android:paddingLeft="10dp" />
+            android:paddingStart="10dp" />
 
         <TextView
+            style="@style/TextStyle.Alignment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:text="@string/seal_describe_phone"
@@ -47,11 +50,12 @@
 
             <TextView
                 android:id="@+id/tv_region"
+                style="@style/TextStyle.Alignment"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:text="+86"
                 android:textColor="@color/color_black_text"
                 android:textSize="15sp" />
@@ -68,11 +72,11 @@
                 style="@style/EditUserDesEditText"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
-                android:layout_toRightOf="@id/tv_region"
+                android:layout_toEndOf="@id/tv_region"
                 android:hint="@string/seal_describe_phone_hint"
                 android:inputType="phone"
                 android:maxLength="11"
-                android:paddingLeft="10dp" />
+                android:paddingStart="10dp" />
         </LinearLayout>
 
         <RelativeLayout
@@ -80,9 +84,10 @@
             android:layout_height="wrap_content">
 
             <TextView
+                style="@style/TextStyle.Alignment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:text="@string/seal_describe_more"
@@ -91,11 +96,12 @@
 
             <TextView
                 android:id="@+id/tv_more_num"
+                style="@style/TextStyle.Alignment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:paddingTop="5dp"
-                android:paddingRight="10dp"
+                android:paddingEnd="10dp"
                 android:paddingBottom="5dp"
                 android:text="@string/seal_describe_more_num"
                 android:textColor="@color/seal_login_text_button_color"
@@ -111,13 +117,15 @@
             android:hint="@string/seal_describe_more_hint"
             android:maxLength="400"
             android:minHeight="44dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp" />
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp" />
 
         <TextView
+            style="@style/TextStyle.Alignment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:text="@string/seal_describe_more_photo"
@@ -128,10 +136,11 @@
             android:id="@+id/fl_more"
             android:layout_width="match_parent"
             android:layout_height="147dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
 
             <TextView
+                style="@style/TextStyle.Alignment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/common_dash_bg"
@@ -140,7 +149,7 @@
                 android:textColor="@color/seal_login_text_button_color"
                 android:textSize="16sp" />
 
-            <io.rong.imkit.widget.AsyncImageView
+            <cn.rongcloud.im.utils.AsyncImageView
                 android:id="@+id/iv_photo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

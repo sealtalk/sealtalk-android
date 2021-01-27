@@ -17,6 +17,7 @@
         android:id="@+id/siv_search_st_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:item_divider="true"
         app:item_content="@string/seal_privacy_search_st_account"
         app:item_switch="true" />
 
@@ -24,6 +25,7 @@
         android:id="@+id/siv_friend_verify"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:item_divider="true"
         app:item_content="@string/seal_privacy_friend_verify"
         app:item_switch="true" />
 

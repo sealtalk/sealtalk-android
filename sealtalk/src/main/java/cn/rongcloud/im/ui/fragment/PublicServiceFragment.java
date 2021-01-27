@@ -18,7 +18,7 @@ import java.util.List;
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.adapter.PublicServiceAdapter;
 import cn.rongcloud.im.ui.adapter.models.ContactModel;
-import cn.rongcloud.im.ui.interfaces.OnPublicServiceClickListener;
+import cn.rongcloud.im.ui.interfaces.PublicServiceClickListener;
 import cn.rongcloud.im.viewmodel.PublicServiceViewModel;
 
 public class PublicServiceFragment extends Fragment {
@@ -26,7 +26,7 @@ public class PublicServiceFragment extends Fragment {
     protected PublicServiceViewModel viewModel;
     private PublicServiceAdapter adapter;
 
-    public void setOnPublicServiceClickListener(OnPublicServiceClickListener listener){
+    public void setOnPublicServiceClickListener(PublicServiceClickListener listener){
         adapter = new PublicServiceAdapter(listener);
     }
 
@@ -38,7 +38,7 @@ public class PublicServiceFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
         viewModel = ViewModelProviders.of(this).get(PublicServiceViewModel.class);
-        viewModel.getPublicService().observe(this, new Observer<List<ContactModel>>() {
+        viewModel.getPublicService().observe(getViewLifecycleOwner(), new Observer<List<ContactModel>>() {
             @Override
             public void onChanged(List<ContactModel> models) {
                 adapter.updateData(models);

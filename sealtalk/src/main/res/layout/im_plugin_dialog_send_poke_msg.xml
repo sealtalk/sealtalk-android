@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
+    android:background="@drawable/send_poke_dialog_bg"
     android:orientation="vertical">
 
     <ImageView
@@ -17,11 +18,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:textColor="@color/default_main_text"
-        android:textSize="17dp"
+        android:textColor="@color/color_black_111F2C"
+        android:textSize="15dp"
         android:gravity="center"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
         tools:text="向M发起通知" />
 
     <LinearLayout
@@ -29,9 +30,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="10.5dp"
+        android:layout_marginStart="10.5dp"
         android:layout_marginTop="15dp"
-        android:layout_marginRight="10.5dp"
+        android:layout_marginEnd="10.5dp"
         android:gravity="center_vertical"
         >
         <TextView
@@ -39,40 +40,41 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/im_plugin_poke_multi_send_to"
-            android:textSize="17dp"
-            android:textColor="@color/default_main_text"
+            android:textSize="15dp"
+            android:textColor="@color/color_black_111F2C"
             />
         <TextView
             android:id="@+id/poke_tv_select_send_to_name"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:layout_height="wrap_content"
             android:text="@string/im_plugin_poke_multi_all_in_group"
             android:textColor="@color/default_sub_text"
-            android:gravity="right|center_vertical"
-            android:textSize="17dp"
-            android:drawableRight="@drawable/seal_arrow"
+            android:gravity="end|center_vertical"
+            android:textSize="15dp"
+            android:drawableEnd="@drawable/seal_arrow"
             android:drawablePadding="5dp"
             />
     </LinearLayout>
 
     <EditText
         android:id="@+id/send_poke_et_send_msg"
+        style="@style/EditTextStyle.Alignment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10.5dp"
+        android:layout_marginStart="10.5dp"
         android:layout_marginTop="15dp"
-        android:layout_marginRight="10.5dp"
+        android:layout_marginEnd="10.5dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/common_bg_edit_text_gray_edge_no_corner"
         android:hint="@string/im_plugin_poke_message_default"
         android:maxLines="1"
-        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
         android:paddingTop="7dp"
-        android:paddingRight="10dp"
+        android:paddingEnd="10dp"
         android:paddingBottom="7dp"
-        android:textSize="15dp" />
+        android:textSize="13dp" />
 </LinearLayout>

@@ -8,16 +8,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import cn.rongcloud.im.R;
+import cn.rongcloud.im.ui.widget.ClearWriteEditText;
 
 public class SealTitleBar extends RelativeLayout {
-    private Button btnLeft;
+    private TextView btnLeft;
     private ImageButton btnRight;
     private TextView tvTitle;
-    private EditText etSearch;
+    private ClearWriteEditText etSearch;
+    private TextView tvClear;
+    private LinearLayout llSearch;
     private TextView tvRight;
     private TextView tvTyping;
     private View flContent;
@@ -47,31 +51,42 @@ public class SealTitleBar extends RelativeLayout {
         tvTitle = view.findViewById(R.id.tv_title);
         tvTyping = view.findViewById(R.id.tv_typing);
         etSearch = view.findViewById(R.id.et_search);
+        llSearch = view.findViewById(R.id.ll_search);
         tvRight = view.findViewById(R.id.tv_right);
         flContent = view.findViewById(R.id.fl_content);
-
-        etSearch.setOnTouchListener(new View.OnTouchListener() {
+        tvClear = view.findViewById(R.id.tv_clear);
+        tvClear.setOnClickListener(new OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final int DRAWABLE_RIGHT = 2;
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (etSearch.getRight() - 2 * etSearch.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        etSearch.setText("");
-                        etSearch.clearFocus();
-                        if(searchClearTextClickedListener != null){
-                            searchClearTextClickedListener.onSearchClearTextClicked();
-                        }
-                        return true;
-                    }
+            public void onClick(View v) {
+                etSearch.setText("");
+                etSearch.clearFocus();
+                if (searchClearTextClickedListener != null) {
+                    searchClearTextClickedListener.onSearchClearTextClicked();
                 }
-                return false;
             }
         });
+//        etSearch.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                final int DRAWABLE_RIGHT = 2;
+//                if (event.getAction() == MotionEvent.ACTION_UP) {
+////                    if (event.getRawX() >= (etSearch.getRight() - 2 * etSearch.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+////                        etSearch.setText("");
+////                        etSearch.clearFocus();
+////                        if(searchClearTextClickedListener != null){
+////                            searchClearTextClickedListener.onSearchClearTextClicked();
+////                        }
+////                        return true;
+////                    }
+//                }
+//                return false;
+//            }
+//        });
 
         setType(Type.NORMAL);
     }
 
-    public Button getBtnLeft() {
+    public TextView getBtnLeft() {
         return btnLeft;
     }
 
@@ -113,16 +128,16 @@ public class SealTitleBar extends RelativeLayout {
                 btnRight.setVisibility(View.VISIBLE);
                 tvTitle.setVisibility(View.VISIBLE);
                 tvRight.setVisibility(View.VISIBLE);
-                etSearch.setVisibility(View.GONE);
+                llSearch.setVisibility(View.GONE);
                 tvTyping.setVisibility(View.GONE);
                 flContent.setVisibility(View.VISIBLE);
                 break;
             case SEARCH:
-                btnLeft.setVisibility(View.VISIBLE);
+                btnLeft.setVisibility(View.GONE);
                 btnRight.setVisibility(View.GONE);
                 tvTitle.setVisibility(View.GONE);
                 tvRight.setVisibility(View.GONE);
-                etSearch.setVisibility(View.VISIBLE);
+                llSearch.setVisibility(View.VISIBLE);
                 tvTyping.setVisibility(View.GONE);
                 flContent.setVisibility(View.GONE);
                 break;
@@ -131,7 +146,7 @@ public class SealTitleBar extends RelativeLayout {
                 btnRight.setVisibility(View.VISIBLE);
                 tvTitle.setVisibility(View.GONE);
                 tvRight.setVisibility(View.VISIBLE);
-                etSearch.setVisibility(View.GONE);
+                llSearch.setVisibility(View.GONE);
                 tvTyping.setVisibility(View.VISIBLE);
                 flContent.setVisibility(View.VISIBLE);
 
@@ -148,7 +163,7 @@ public class SealTitleBar extends RelativeLayout {
      *
      * @return
      */
-    public Type getType(){
+    public Type getType() {
         return type;
     }
 
@@ -243,7 +258,7 @@ public class SealTitleBar extends RelativeLayout {
      * @param watcher
      */
     public void addSeachTextChangedListener(TextWatcher watcher) {
-        etSearch.addTextChangedListener(watcher);
+        etSearch.addCommonTextChangedListener(watcher);
     }
 
     /**

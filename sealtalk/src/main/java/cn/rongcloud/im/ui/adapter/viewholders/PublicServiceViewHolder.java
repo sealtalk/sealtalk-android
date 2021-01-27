@@ -1,35 +1,36 @@
 package cn.rongcloud.im.ui.adapter.viewholders;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.adapter.models.PublicServiceModel;
-import cn.rongcloud.im.ui.interfaces.OnPublicServiceClickListener;
+import cn.rongcloud.im.ui.interfaces.PublicServiceClickListener;
 import cn.rongcloud.im.utils.ImageLoaderUtils;
-import io.rong.imkit.widget.AsyncImageView;
-import io.rong.imlib.model.PublicServiceProfile;
+import io.rong.imlib.publicservice.model.PublicServiceProfile;
+;
 
 public class PublicServiceViewHolder extends BaseViewHolder<PublicServiceModel> {
-    private AsyncImageView portrait;
+    private ImageView portrait;
     private TextView name;
     private TextView introduction;
-    private OnPublicServiceClickListener listener;
+    private PublicServiceClickListener listener;
     private PublicServiceProfile profile;
 
-    public PublicServiceViewHolder(@NonNull View itemView, OnPublicServiceClickListener listener) {
+    public PublicServiceViewHolder(@NonNull View itemView, PublicServiceClickListener listener) {
         super(itemView);
-        portrait = itemView.findViewById(io.rong.imkit.R.id.portrait);
-        name = itemView.findViewById(io.rong.imkit.R.id.name);
-        introduction = itemView.findViewById(io.rong.imkit.R.id.introduction);
+        portrait = itemView.findViewById(R.id.pub_portrait);
+        name = itemView.findViewById(R.id.pub_name);
+        introduction = itemView.findViewById(R.id.pub_introduction);
         this.listener = listener;
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null) ;
-                {
-                    listener.OnPublicServiceClicked(profile);
+                if (listener != null) {
+                    listener.onPublicServiceClicked(profile);
                 }
             }
         });

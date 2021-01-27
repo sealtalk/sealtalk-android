@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -33,19 +32,14 @@ public class PrivateChatSettingViewModel extends AndroidViewModel {
 
     private String targetId;
     private Conversation.ConversationType conversationType;
-    private SingleSourceLiveData<Resource<Boolean>> isNotifyLiveData = new SingleSourceLiveData<>();
-    private SingleSourceLiveData<Resource<Boolean>> isTopLiveData = new SingleSourceLiveData<>();
-    private SingleSourceLiveData<Resource<Boolean>> cleanMessageResult = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<ScreenCaptureResult>> screenCaptureResult = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<Void>> setScreenCaptureResult = new SingleSourceLiveData<>();
     private FriendTask friendTask;
     private PrivacyTask privacyTask;
-    private IMManager imManager;
 
     public PrivateChatSettingViewModel(@NonNull Application application) {
         super(application);
         friendTask = new FriendTask(application);
-        imManager = IMManager.getInstance();
     }
 
     public PrivateChatSettingViewModel(@NonNull Application application, String targetId, Conversation.ConversationType conversationType) {
@@ -54,12 +48,8 @@ public class PrivateChatSettingViewModel extends AndroidViewModel {
         userTask = new UserTask(application);
         friendTask = new FriendTask(application);
         privacyTask = new PrivacyTask(application);
-        imManager = IMManager.getInstance();
         this.targetId = targetId;
         this.conversationType = conversationType;
-
-        isNotifyLiveData.setSource(imManager.getConversationNotificationStatus(conversationType, targetId));
-        isTopLiveData.setSource(imManager.getConversationIsOnTop(conversationType, targetId));
         getScreenCaptureStatus();
     }
 
@@ -83,10 +73,9 @@ public class PrivateChatSettingViewModel extends AndroidViewModel {
         setScreenCaptureResult.setSource(privacyTask.setScreenCapture(conversationType.getValue(), targetId, status));
     }
 
-    public LiveData<Resource<Void>> getSetScreenCaptureResult(){
-        return  setScreenCaptureResult;
+    public LiveData<Resource<Void>> getSetScreenCaptureResult() {
+        return setScreenCaptureResult;
     }
-
 
     /**
      * 请求好友信息.
@@ -135,63 +124,6 @@ public class PrivateChatSettingViewModel extends AndroidViewModel {
         return friendShipInfoLiveData;
     }
 
-    /**
-     * 设置是否消息免打扰
-     *
-     * @param isNotify
-     */
-    public void setIsNotifyConversation(final boolean isNotify) {
-        Resource<Boolean> value = isNotifyLiveData.getValue();
-        if (value != null && value.data != null && value.data == isNotify) return;
-
-        isNotifyLiveData.setSource(imManager.setConversationNotificationStatus(conversationType, targetId, isNotify));
-    }
-
-    /**
-     * 设置会话置顶
-     *
-     * @param isTop
-     */
-    public void setConversationOnTop(boolean isTop) {
-        Resource<Boolean> value = isTopLiveData.getValue();
-        if (value != null && value.data != null && value.data == isTop) return;
-
-        isTopLiveData.setSource(imManager.setConversationToTop(conversationType, targetId, isTop));
-    }
-
-    /**
-     * 获取会话是否接受消息通知
-     *
-     * @return
-     */
-    public MutableLiveData<Resource<Boolean>> getIsNotify() {
-        return isNotifyLiveData;
-    }
-
-    /**
-     * 获取会话是否置顶
-     *
-     * @return
-     */
-    public MutableLiveData<Resource<Boolean>> getIsTop() {
-        return isTopLiveData;
-    }
-
-    /**
-     * 清除历史消息
-     */
-    public void cleanHistoryMessage() {
-        cleanMessageResult.setSource(imManager.cleanHistoryMessage(conversationType, targetId));
-    }
-
-    /**
-     * 获取清除历史消息结果
-     *
-     * @return
-     */
-    public LiveData<Resource<Boolean>> getCleanHistoryMessageResult() {
-        return cleanMessageResult;
-    }
 
     public static class Factory implements ViewModelProvider.Factory {
         private String targetId;

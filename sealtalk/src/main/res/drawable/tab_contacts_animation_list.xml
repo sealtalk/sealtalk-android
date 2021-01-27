@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="true">
+    <item
+        android:drawable="@drawable/tab_contacts_0"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_1"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_2"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_3"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_4"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_5"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_6"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_7"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_8"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_9"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_10"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_11"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_12"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_13"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_14"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_15"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_16"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_17"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_18"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_19"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_20"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_21"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_22"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_23"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_24"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_25"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_26"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_27"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_28"
+        android:duration="40" />
+    <item
+        android:drawable="@drawable/tab_contacts_29"
+        android:duration="40" />
+</animation-list>

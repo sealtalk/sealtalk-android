@@ -9,9 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.view.SealTitleBar;
@@ -26,9 +31,11 @@ public abstract class TitleAndSearchBaseActivity extends TitleBaseActivity {
      */
     public static final int SEARCH_TEXT_INPUT_DELAY_MILLIS = 500;
     private FrameLayout containerLayout;
-    private TextView searchTv;
+    private RelativeLayout searchTv;
+    private TextView tvSearch;
     private SealTitleBar titleBar;
     private Handler delayHandler;
+    private LinearLayout llSelectContent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,6 +46,8 @@ public abstract class TitleAndSearchBaseActivity extends TitleBaseActivity {
 
         containerLayout = findViewById(R.id.title_and_search_container);
         searchTv = findViewById(R.id.title_and_search_tv_search);
+        tvSearch = findViewById(R.id.tv_search);
+        llSelectContent = findViewById(R.id.ll_select_content);
         titleBar = getTitleBar();
 
         delayHandler = new Handler();
@@ -123,7 +132,7 @@ public abstract class TitleAndSearchBaseActivity extends TitleBaseActivity {
         TextView titleConfirmTv = titleBar.getTvRight();
         if (enable) {
             titleConfirmTv.setClickable(true);
-            titleConfirmTv.setTextColor(getResources().getColor(android.R.color.white));
+            titleConfirmTv.setTextColor(getResources().getColor(android.R.color.black));
         } else {
             titleConfirmTv.setClickable(false);
             titleConfirmTv.setTextColor(getResources().getColor(android.R.color.darker_gray));
@@ -135,7 +144,7 @@ public abstract class TitleAndSearchBaseActivity extends TitleBaseActivity {
      * @return
      */
     public TextView getSearchTextView(){
-        return  searchTv;
+        return  tvSearch;
     }
 
     @Override

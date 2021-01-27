@@ -31,7 +31,8 @@ import cn.rongcloud.im.ui.adapter.models.ListItemModel;
 import cn.rongcloud.im.viewmodel.CommonListBaseViewModel;
 import cn.rongcloud.im.viewmodel.MainContactsListViewModel;
 import io.rong.imkit.RongIM;
-import io.rong.imkit.utilities.OptionsPopupDialog;
+import io.rong.imkit.utils.RouteUtils;
+import io.rong.imkit.widget.dialog.OptionsPopupDialog;
 import io.rong.imlib.model.Conversation;
 
 import static cn.rongcloud.im.common.IntentExtra.STR_TARGET_ID;
@@ -177,7 +178,7 @@ public class MainContactsListFragment extends CommonListBaseFragment {
     private void handleFriendItemClick(FriendShipInfo friendShipInfo) {
         if (friendShipInfo.getUser().getId().equals(IMManager.getInstance().getCurrentId())) {
             String title = TextUtils.isEmpty(friendShipInfo.getDisplayName()) ? friendShipInfo.getUser().getNickname() : friendShipInfo.getDisplayName();
-            RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.PRIVATE, friendShipInfo.getUser().getId(), title);
+            RouteUtils.routeToConversationActivity(this.getContext(), Conversation.ConversationType.PRIVATE , friendShipInfo.getUser().getId());
         } else {
             Intent intent = new Intent(getContext(), UserDetailActivity.class);
             intent.putExtra(STR_TARGET_ID, friendShipInfo.getUser().getId());

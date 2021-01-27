@@ -5,7 +5,7 @@
     <dimen name="seal_login_buttom_padding">15dp</dimen>
     <dimen name="seal_login_text_button_text_size">14dp</dimen>
     <dimen name="seal_login_text_change_lang_text_size">16dp</dimen>
-    <dimen name="seal_login_text_change_lang_padding">15dp</dimen>
+    <dimen name="seal_login_text_change_lang_padding">20dp</dimen>
     <dimen name="seal_login_rongcloud_text_size">12sp</dimen>
     <dimen name="seal_login_bg_margin_right">-300dp</dimen>
     <dimen name="seal_login_fragment_login_margin_top">72dp</dimen>
@@ -61,11 +61,11 @@
     <dimen name="seal_login_find_password_btn_margin_left">36dp</dimen>
     <dimen name="seal_login_find_password_btn_margin_right">36dp</dimen>
     <dimen name="seal_login_find_password_btn_margin_top">20dp</dimen>
-    <dimen name="seal_title_bar_height">48dp</dimen>
+    <dimen name="seal_title_bar_height">44dp</dimen>
     <dimen name="seal_title_bar_left_btn_width">48dp</dimen>
     <dimen name="seal_title_bar_line_margin">12dp</dimen>
     <dimen name="seal_title_bar_text_size">18dp</dimen>
-    <dimen name="seal_title_bar_btn_right_margin">15dp</dimen>
+    <dimen name="seal_title_bar_btn_right_margin">12dp</dimen>
     <dimen name="seal_title_bar_btn_right_width">24dp</dimen>
 
     <dimen name="seal_dialog_evaluate_title_height">50dp</dimen>
@@ -105,7 +105,7 @@
     <dimen name="seal_new_friend_header_width">36dp</dimen>
     <dimen name="seal_new_friend_header_height">36dp</dimen>
     <dimen name="seal_new_friend_header_margin_bottom">8dp</dimen>
-    <dimen name="seal_new_friend_header_margin_left">14dp</dimen>
+    <dimen name="seal_new_friend_header_margin_left">12dp</dimen>
     <dimen name="seal_new_friend_header_margin_top">8dp</dimen>
     <dimen name="seal_new_friend_header_radius">3dp</dimen>
     <dimen name="seal_new_friend_content_margin_left">8dp</dimen>
@@ -136,11 +136,12 @@
     <dimen name="seal_contact_devi_margin_left">13dp</dimen>
     <dimen name="seal_contact_devi_margin_right">16dp</dimen>
 
-    <dimen name="seal_main_title_height">48dp</dimen>
+    <dimen name="seal_main_title_height">44dp</dimen>
     <dimen name="seal_main_title_logo_margin_left">14dp</dimen>
     <dimen name="seal_main_title_search_width">48dp</dimen>
     <dimen name="seal_main_title_more_width">56dp</dimen>
     <dimen name="seal_main_title_popup_item_height">49dp</dimen>
+    <dimen name="seal_main_title_popup_item_height_v2">56dp</dimen>
     <dimen name="seal_main_title_more_margin_right">5dp</dimen>
     <dimen name="seal_main_title_popup_item_drawable_padding">10dp</dimen>
     <dimen name="seal_main_title_popup_item_drawable_padding_2">16dp</dimen>
@@ -153,17 +154,17 @@
     <dimen name="seal_setting_item_text_size">16dp</dimen>
     <dimen name="seal_setting_item_divider">0.5dp</dimen>
 
-    <dimen name="seal_mine_setting_item_height">46dp</dimen>
+    <dimen name="seal_mine_setting_item_height">44dp</dimen>
     <dimen name="seal_mine_setting_item_margin_top">20dp</dimen>
-    <dimen name="seal_userinfo_item_header_width">38dp</dimen>
-    <dimen name="seal_userinfo_item_header_height">38dp</dimen>
-    <dimen name="seal_userinfo_item_header_margin">14dp</dimen>
+    <dimen name="seal_userinfo_item_header_width">40dp</dimen>
+    <dimen name="seal_userinfo_item_header_height">40dp</dimen>
+    <dimen name="seal_userinfo_item_header_margin">12dp</dimen>
     <dimen name="seal_userinfo_item_header_radius">3dp</dimen>
-    <dimen name="seal_userinfo_item_name_margin_left">14dp</dimen>
+    <dimen name="seal_userinfo_item_name_margin_left">12dp</dimen>
     <dimen name="seal_userinfo_item_name_text_size">16dp</dimen>
     <dimen name="seal_mine_user_height">48dp</dimen>
     <dimen name="seal_mine_user_margin_top">20dp</dimen>
-    <dimen name="seal_mine_account_setting_item_height">46dp</dimen>
+    <dimen name="seal_mine_account_setting_item_height">44dp</dimen>
     <dimen name="seal_mine_account_setting_item_margin_top">20dp</dimen>
     <dimen name="seal_mine_change_language_item_height">48dp</dimen>
     <dimen name="seal_mine_about_height">46dp</dimen>
@@ -174,8 +175,8 @@
 
     <dimen name="seal_search_item_height">55dp</dimen>
     <dimen name="seal_search_item_content_height">64dp</dimen>
-    <dimen name="seal_search_item_portrait_height">48dp</dimen>
-    <dimen name="seal_search_item_portrait_width">48dp</dimen>
+    <dimen name="seal_search_item_portrait_height">40dp</dimen>
+    <dimen name="seal_search_item_portrait_width">40dp</dimen>
     <dimen name="seal_search_item_portrait_margin_left">12dp</dimen>
     <dimen name="seal_search_item_portrait_margin_right">12dp</dimen>
     <dimen name="seal_search_item_checkbox_margin_left">12dp</dimen>
@@ -191,8 +192,8 @@
     <dimen name="seal_search_devi_color_margin_right">14dp</dimen>
     <dimen name="seal_search_show_more_height">40dp</dimen>
     <dimen name="seal_search_show_more_padding_left">14dp</dimen>
-    <dimen name="seal_search_show_more_image_margin_right">8dp</dimen>
-    <dimen name="seal_private_detail_item_height">48dp</dimen>
+    <dimen name="seal_search_show_more_image_margin_right">2dp</dimen>
+    <dimen name="seal_private_detail_item_height">44dp</dimen>
     <dimen name="seal_private_detail_item_margin_top">20dp</dimen>
     <dimen name="seal_userInfo_item_divider">0.5dp</dimen>
     <dimen name="seal_mine_my_account_item_height">46dp</dimen>
@@ -200,7 +201,7 @@
     <dimen name="seal_update_name_margin_top">7dp</dimen>
     <dimen name="seal_update_name_margin_left">14dp</dimen>
     <dimen name="seal_update_name_edit_margin">10dp</dimen>
-    <dimen name="seal_update_staccount_dialog_title">17sp</dimen>
+    <dimen name="seal_update_staccount_dialog_title">17dp</dimen>
     <dimen name="seal_update_staccount_edit_margin">13.5dp</dimen>
     <dimen name="seal_update_staccount_name_margin">8dp</dimen>
     <dimen name="seal_update_staccount_name_size">15sp</dimen>
@@ -211,9 +212,9 @@
     <dimen name="seal_dialog_select_picture_btn_text_size">18sp</dimen>
     <dimen name="seal_search_item_title_height">40dp</dimen>
     <dimen name="seal_search_item_title_padding_left">14dp</dimen>
-    <dimen name="seal_search_item_div_height">14dp</dimen>
+    <dimen name="seal_search_item_div_height">8dp</dimen>
     <dimen name="seal_search_item_title_text_size">14sp</dimen>
-    <dimen name="seal_search_show_more_text_size">16sp</dimen>
+    <dimen name="seal_search_show_more_text_size">14dp</dimen>
     <dimen name="common_dialog_width">300dp</dimen>
     <dimen name="common_dialog_line_width">1dp</dimen>
     <dimen name="common_dialog_min_height">134dp</dimen>
@@ -230,7 +231,7 @@
     <dimen name="seal_mine_setting_item_tag_width">60dp</dimen>
     <dimen name="siv_sealtalk_version_tag_height">20dp</dimen>
     <dimen name="siv_sealtalk_version_tag_width">60dp</dimen>
-    <dimen name="seal_set_account_update_password_height">40dp</dimen>
+    <dimen name="seal_set_account_update_password_height">44dp</dimen>
     <dimen name="seal_set_account_update_password_tag_text_size">16dp</dimen>
     <dimen name="seal_set_account_update_password_value_text_size">14dp</dimen>
     <dimen name="seal_set_account_update_password_margin">14dp</dimen>
@@ -265,7 +266,7 @@
     <dimen name="seal_group_manager_item_height">48dp</dimen>
     <dimen name="seal_group_manager_item_margin">20dp</dimen>
     <dimen name="seal_mine_userfino_item_height">80dp</dimen>
-    <dimen name="seal_mine_userfino_item_protrait">64dp</dimen>
+    <dimen name="seal_mine_userfino_item_protrait">47dp</dimen>
     <dimen name="seal_group_management_text_margin">7dp</dimen>
     <dimen name="seal_group_management_text_padding">5dp</dimen>
     <dimen name="seal_main_item_margin_top">10dp</dimen>
@@ -276,6 +277,7 @@
     <dimen name="seal_main_item_tab_read_proit_value">10dp</dimen>
     <dimen name="seal_main_item_tab_read_proit_margin_top">6dp</dimen>
     <dimen name="seal_main_item_tab_read_proit_margin_right">7dp</dimen>
+    <dimen name="seal_main_item_tab_drag_point_margin_right">11dp</dimen>
     <dimen name="seal_main_item_tab_unread_margin_top">2dp</dimen>
     <dimen name="seal_main_item_tab_unread_text_size">12dp</dimen>
     <dimen name="seal_dialog_forward_item_title_height">32dp</dimen>
@@ -307,7 +309,7 @@
     <dimen name="seal_group_manager_item_margin_right">25dp</dimen>
     <dimen name="seal_user_detail_item_margin">20dp</dimen>
     <dimen name="seal_user_detail_userinfo_height">80dp</dimen>
-    <dimen name="seal_user_detail_userinfo_portrait_value">64dp</dimen>
+    <dimen name="seal_user_detail_userinfo_portrait_value">47dp</dimen>
     <dimen name="seal_user_detail_userinfo_portrait_margin_left">14dp</dimen>
     <dimen name="seal_user_detail_userinfo_portrait_margin">10dp</dimen>
     <dimen name="seal_user_detail_userinfo_portrait_radius">3dp</dimen>
@@ -324,6 +326,7 @@
     <dimen name="seal_group_detail_clean_tips_margin_left">12dp</dimen>
     <dimen name="seal_group_detail_clean_tips_margin_right">19.5dp</dimen>
     <dimen name="seal_group_detail_clean_tips_margin_bottom">8dp</dimen>
+    <dimen name="seal_group_detail_item_height">44dp</dimen>
 
     <!-- 界面改版使用 -->
 
@@ -336,5 +339,9 @@
     <dimen name="seal_group_notice_item_margin_2">2dp</dimen>
     <dimen name="seal_group_notice_item_margin_3">3dp</dimen>
     <dimen name="seal_group_notice_item_margin_7">7dp</dimen>
+    <!--二维码-->
+    <dimen name="seal_qrcode_text_14">14sp</dimen>
+    <dimen name="seal_main_title_popup_width">160dp</dimen>
+
 
 </resources>

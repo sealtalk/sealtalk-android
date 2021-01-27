@@ -38,13 +38,12 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.message.ImageMessage;
 
-import static io.rong.imkit.plugin.image.PictureSelectorActivity.REQUEST_CODE_ASK_PERMISSIONS;
-
 /**
  * 显示二维码界面
  */
 public class QrCodeDisplayActivity extends TitleBaseActivity implements View.OnClickListener {
     private final String TAG = "QrCodeDisplayActivity";
+    static public final int REQUEST_CODE_ASK_PERMISSIONS = 100;
     private final int REQUEST_CODE_FORWARD_TO_SEALTALK = 1000;
     /**
      * 分享类型定义：SealTalk

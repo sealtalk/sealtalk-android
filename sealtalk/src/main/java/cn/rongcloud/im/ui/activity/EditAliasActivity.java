@@ -17,7 +17,7 @@ import cn.rongcloud.im.ui.view.SealTitleBar;
 import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.viewmodel.EditAliasViewModel;
 import cn.rongcloud.im.utils.log.SLog;
-import io.rong.imkit.emoticon.AndroidEmoji;
+import io.rong.imkit.conversation.extension.component.emoticon.AndroidEmoji;
 
 /**
  * 设置备注名界面

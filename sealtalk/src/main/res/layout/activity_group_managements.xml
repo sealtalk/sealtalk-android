@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_marginLeft="@dimen/seal_group_management_text_margin"
+        android:layout_marginStart="@dimen/seal_group_management_text_margin"
         android:padding="@dimen/seal_group_management_text_padding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
 
     <TextView
         android:id="@+id/tv_managements"
-        android:layout_marginLeft="@dimen/seal_group_management_text_margin"
+        android:layout_marginStart="@dimen/seal_group_management_text_margin"
         android:padding="@dimen/seal_group_management_text_padding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -16,11 +16,12 @@
             android:orientation="horizontal">
 
             <TextView
+                style="@style/TextStyle.Alignment"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:paddingLeft="19dp"
-                android:paddingRight="19dp"
+                android:paddingStart="19dp"
+                android:paddingEnd="19dp"
                 android:text="@string/seal_group_user_info_description"
                 android:textColor="@color/text_black"
                 android:textSize="15sp" />
@@ -32,15 +33,16 @@
 
             <cn.rongcloud.im.ui.widget.ClearWriteEditText
                 android:id="@+id/cet_description"
+                style="@style/EditTextStyle.Alignment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="44dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="12dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="12dp"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
                 android:background="@null"
-                android:gravity="left|center_vertical"
+                android:gravity="start|center_vertical"
                 android:hint="@string/seal_group_user_info_des_hint"
                 android:textColor="@color/color_black_text"
                 android:textColorHint="@color/seal_account_staccount_edit_hint"
@@ -50,12 +52,13 @@
 
         <TextView
             android:id="@+id/tv_delete"
+            style="@style/TextStyle.Alignment"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@color/red_dark"
             android:gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:text="@string/seal_group_user_info_des_del"
             android:textColor="@color/white" />
     </cn.rongcloud.im.ui.view.SwipeMenuLayout>
@@ -63,7 +66,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:background="@color/dark_white" />
 
 </LinearLayout>

@@ -7,9 +7,10 @@
 
     <TextView
         android:id="@+id/tv_title"
+        style="@style/TextStyle.Alignment"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_dialog_forward_item_title_height"
-        android:layout_marginLeft="@dimen/seal_dialog_forward_item_margin_left"
+        android:layout_marginStart="@dimen/seal_dialog_forward_item_margin_left"
         android:layout_marginTop="@dimen/seal_dialog_forward_item_margin_top"
         android:gravity="center_vertical"
         android:text="@string/seal_selected_contact_title"
@@ -34,7 +35,7 @@
                 android:layout_height="@dimen/seal_dialog_forward_item_scroll_height"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingRight="@dimen/seal_dialog_forward_item_scroll_padding" />
+                android:paddingEnd="@dimen/seal_dialog_forward_item_scroll_padding" />
         </HorizontalScrollView>
 
         <cn.rongcloud.im.ui.view.UserInfoItemView
@@ -54,11 +55,12 @@
 
     <TextView
         android:id="@+id/tv_message"
+        style="@style/TextStyle.Alignment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/seal_dialog_forward_item_margin_left"
+        android:layout_marginStart="@dimen/seal_dialog_forward_item_margin_left"
         android:lines="1"
-        android:layout_marginRight="@dimen/seal_dialog_forward_item_margin_left"
+        android:layout_marginEnd="@dimen/seal_dialog_forward_item_margin_left"
         android:layout_marginBottom="@dimen/seal_dialog_forward_item_container_margin"
         android:layout_marginTop="@dimen/seal_dialog_forward_item_container_margin"
         />

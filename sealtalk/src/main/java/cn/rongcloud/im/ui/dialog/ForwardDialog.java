@@ -16,17 +16,10 @@ import cn.rongcloud.im.db.model.FriendShipInfo;
 import cn.rongcloud.im.db.model.GroupEntity;
 import cn.rongcloud.im.ui.view.UserInfoItemView;
 import cn.rongcloud.im.utils.ImageLoaderUtils;
-import io.rong.imkit.widget.AsyncImageView;
+import cn.rongcloud.im.utils.AsyncImageView;;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
-import io.rong.message.FileMessage;
-import io.rong.message.HQVoiceMessage;
-import io.rong.message.ImageMessage;
-import io.rong.message.LocationMessage;
-import io.rong.message.SightMessage;
-import io.rong.message.TextMessage;
-import io.rong.message.VoiceMessage;
 
 public class ForwardDialog extends CommonDialog {
 
@@ -128,19 +121,20 @@ public class ForwardDialog extends CommonDialog {
         String content = "";
         if (message != null) {
             final MessageContent messageContent = message.getContent();
-            if (messageContent instanceof TextMessage) {
-                content = ((TextMessage) message.getContent()).getContent();
-            } else if (messageContent instanceof VoiceMessage || messageContent instanceof HQVoiceMessage) {
-                content = getString(R.string.rc_message_content_voice);
-            } else if (messageContent instanceof FileMessage) {
-                content = getString(R.string.rc_message_content_file);
-            } else if (messageContent instanceof ImageMessage) {
-                content = getString(R.string.rc_message_content_image);
-            } else if (messageContent instanceof LocationMessage) {
-                content = getString(R.string.rc_message_content_location);
-            } else if (messageContent instanceof SightMessage) {
-                content = getString(R.string.rc_message_content_sight);
-            }
+            //todo
+//            if (messageContent instanceof TextMessage) {
+//                content = ((TextMessage) message.getContent()).getContent();
+//            } else if (messageContent instanceof VoiceMessage || messageContent instanceof HQVoiceMessage) {
+//                content = getString(R.string.rc_message_content_voice);
+//            } else if (messageContent instanceof FileMessage) {
+//                content = getString(R.string.rc_message_content_file);
+//            } else if (messageContent instanceof ImageMessage) {
+//                content = getString(R.string.rc_message_content_image);
+//            } else if (messageContent instanceof LocationMessage) {
+//                content = getString(R.string.rc_message_content_location);
+//            } else if (messageContent instanceof SightMessage) {
+//                content = getString(R.string.rc_message_content_sight);
+//            }
         }
         return content;
     }

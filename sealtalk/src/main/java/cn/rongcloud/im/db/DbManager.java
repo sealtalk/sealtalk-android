@@ -15,22 +15,22 @@ import io.rong.imlib.MD5;
 /**
  * 数据库管理类
  */
-public class DbManager {
+public class DBManager {
     private final String DB_NAME_FORMAT = "user_%s";
-    private volatile static DbManager instance;
+    private volatile static DBManager instance;
     private Context context;
     private SealTalkDatabase database;
     private String currentUserId;
 
-    private DbManager(Context context) {
+    private DBManager(Context context) {
         this.context = context.getApplicationContext();
     }
 
-    public static DbManager getInstance(Context context) {
+    public static DBManager getInstance(Context context) {
         if (instance == null) {
-            synchronized (DbManager.class) {
+            synchronized (DBManager.class) {
                 if (instance == null) {
-                    instance = new DbManager(context);
+                    instance = new DBManager(context);
                 }
             }
         }

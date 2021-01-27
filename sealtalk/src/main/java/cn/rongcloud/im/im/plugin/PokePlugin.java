@@ -16,9 +16,9 @@ import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.ui.activity.ConversationActivity;
 import cn.rongcloud.im.ui.dialog.SendPokeDialog;
 import cn.rongcloud.im.utils.ToastUtils;
-import io.rong.imkit.RongExtension;
-import io.rong.imkit.plugin.IPluginModule;
-import io.rong.imkit.userInfoCache.RongUserInfoManager;
+import io.rong.imkit.conversation.extension.RongExtension;
+import io.rong.imkit.conversation.extension.component.plugin.IPluginModule;
+import io.rong.imkit.userinfo.RongUserInfoManager;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -45,7 +45,7 @@ public class PokePlugin implements IPluginModule {
     }
 
     @Override
-    public void onClick(Fragment fragment, RongExtension rongExtension) {
+    public void onClick(Fragment fragment, RongExtension rongExtension, int index) {
         final String targetId = rongExtension.getTargetId();
         Long lastSendTime = sendPokeTimeMap.get(targetId);
         long currentTimeMillis = System.currentTimeMillis();
@@ -126,10 +126,9 @@ public class PokePlugin implements IPluginModule {
                 });
             }
         });
-
         // 显示对话框，收起扩展栏
-        if (fragment != null && fragment.getFragmentManager() != null) {
-            pokeDialog.show(fragment.getFragmentManager(), null);
+        if (fragment != null && fragment.getChildFragmentManager() != null) {
+            pokeDialog.show(fragment.getChildFragmentManager(), null);
             rongExtension.collapseExtension();
         }
     }

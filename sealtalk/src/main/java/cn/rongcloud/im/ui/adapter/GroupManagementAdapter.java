@@ -68,7 +68,7 @@ public class GroupManagementAdapter extends BaseAdapter {
         if (userId.equals("-1")) {
             viewHolder.userInfoUiv.setNameTextColor(R.color.color_gray_text);
             viewHolder.userInfoUiv.getHeaderImageView().setImageDrawable(null);
-            viewHolder.userInfoUiv.getHeaderImageView().setBackgroundResource(R.drawable.seal_ic_add_management);
+            viewHolder.userInfoUiv.getHeaderImageView().setBackgroundResource(R.drawable.seal_ic_add_management_plus);
             viewHolder.delIv.setVisibility(View.GONE);
         } else {
             viewHolder.delIv.setVisibility(View.VISIBLE);

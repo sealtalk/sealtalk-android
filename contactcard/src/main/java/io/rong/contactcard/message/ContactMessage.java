@@ -12,7 +12,6 @@ import java.util.regex.Pattern;
 
 import io.rong.common.ParcelUtils;
 import io.rong.common.RLog;
-import io.rong.imlib.DestructionTag;
 import io.rong.imlib.MessageTag;
 import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
@@ -22,7 +21,6 @@ import io.rong.imlib.model.UserInfo;
  */
 
 @MessageTag(value = "RC:CardMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
-@DestructionTag
 public class ContactMessage extends MessageContent {
     private static final String TAG = "ContactMessage";
 

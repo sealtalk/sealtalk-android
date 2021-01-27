@@ -38,18 +38,21 @@
                     app:sriv_left_top_corner_radius="@dimen/seal_new_friend_header_radius"
                     app:sriv_right_bottom_corner_radius="@dimen/seal_new_friend_header_radius"
                     app:sriv_right_top_corner_radius="@dimen/seal_new_friend_header_radius"
+                    android:scaleType="centerCrop"
+                    app:sriv_oval="true"
                     tools:src="@drawable/common_default_portrait" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    android:layout_toRightOf="@id/profile_iv_card_info_portrait"
+                    android:layout_marginStart="15dp"
+                    android:layout_toEndOf="@id/profile_iv_card_info_portrait"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/profile_tv_qr_info_main"
+                        style="@style/TextStyle.Alignment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -60,10 +63,11 @@
 
                     <TextView
                         android:id="@+id/profile_tv_qr_info_sub"
+                        style="@style/TextStyle.Alignment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:textColor="@color/default_main_text"
+                        android:textColor="@color/seal_group_detail_clean_tips"
                         android:textSize="14dp"
                         tools:text="子信息" />
                 </LinearLayout>
@@ -71,10 +75,6 @@
 
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/color_divider_line" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -91,6 +91,7 @@
 
                 <TextView
                     android:id="@+id/profile_tv_qr_card_info_no_code_describe"
+                    style="@style/TextStyle.Alignment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -103,10 +104,13 @@
 
             <TextView
                 android:id="@+id/profile_tv_qr_card_info_describe"
+                style="@style/TextStyle.Alignment"
+                android:textSize="@dimen/seal_qrcode_text_14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="20dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="25dp"
                 android:textColor="@color/color_gray_text"
                 tools:text="@string/profile_qrcode_group_tips" />
 
@@ -128,6 +132,7 @@
 
             <TextView
                 android:id="@+id/profile_tv_qr_save_phone"
+                style="@style/TextStyle.Alignment"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -143,6 +148,7 @@
 
             <TextView
                 android:id="@+id/profile_tv_qr_share_to_sealtalk"
+                style="@style/TextStyle.Alignment"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -158,6 +164,7 @@
 
             <TextView
                 android:id="@+id/profile_tv_qr_share_to_wechat"
+                style="@style/TextStyle.Alignment"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

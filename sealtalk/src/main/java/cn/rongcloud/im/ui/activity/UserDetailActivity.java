@@ -27,7 +27,6 @@ import cn.rongcloud.im.db.model.FriendStatus;
 import cn.rongcloud.im.db.model.GroupEntity;
 import cn.rongcloud.im.db.model.GroupMemberInfoDes;
 import cn.rongcloud.im.db.model.UserInfo;
-import cn.rongcloud.im.event.DeleteFriendEvent;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.ui.dialog.CommonDialog;
@@ -38,16 +37,16 @@ import cn.rongcloud.im.ui.view.SettingItemView;
 import cn.rongcloud.im.ui.widget.SelectableRoundedImageView;
 import cn.rongcloud.im.utils.ImageLoaderUtils;
 import cn.rongcloud.im.utils.ToastUtils;
+import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.viewmodel.UserDetailViewModel;
 import cn.rongcloud.im.viewmodel.UserInfoViewModel;
-import cn.rongcloud.im.utils.log.SLog;
 import io.rong.callkit.RongCallAction;
 import io.rong.callkit.RongVoIPIntent;
 import io.rong.calllib.RongCallClient;
 import io.rong.calllib.RongCallCommon;
 import io.rong.calllib.RongCallSession;
-import io.rong.eventbus.EventBus;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 
 /**
@@ -197,7 +196,7 @@ public class UserDetailActivity extends TitleBaseActivity implements View.OnClic
         userDetailViewModel.getAddBlackListResult().observe(this, new Observer<Resource<Void>>() {
             @Override
             public void onChanged(Resource<Void> resource) {
-                if (!isInDeleteAction){
+                if (!isInDeleteAction) {
                     if (resource.status == Status.SUCCESS) {
                         ToastUtils.showToast(R.string.common_add_successful);
                     } else if (resource.status == Status.ERROR) {
@@ -225,7 +224,6 @@ public class UserDetailActivity extends TitleBaseActivity implements View.OnClic
             public void onChanged(Resource<Void> resource) {
                 if (resource.status == Status.SUCCESS) {
                     ToastUtils.showToast(R.string.common_delete_successful);
-                    EventBus.getDefault().post(new DeleteFriendEvent(userId,true));
                     // 删除成功后关闭界面
                     finish();
                 } else if (resource.status == Status.ERROR) {
@@ -294,9 +292,9 @@ public class UserDetailActivity extends TitleBaseActivity implements View.OnClic
                     //不显示 SealTalk 号
                     phoneTv.setVisibility(View.GONE);
                     //提示群保护(自己不显示),自己不显示个人信息
-                    if (!latestUserInfo.getId().equals(RongIM.getInstance().getCurrentUserId())) {
+                    if (!latestUserInfo.getId().equals(RongIMClient.getInstance().getCurrentUserId())) {
                         groupProtectionTv.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         sivGroupInfo.setVisibility(View.GONE);
                     }
                 }
@@ -308,7 +306,7 @@ public class UserDetailActivity extends TitleBaseActivity implements View.OnClic
                 blacklistSiv.setVisibility(View.GONE);
                 deleteContactSiv.setVisibility(View.GONE);
                 //是自己的时候不显示添加好友按钮
-                if (latestUserInfo.getId().equals(RongIM.getInstance().getCurrentUserId())) {
+                if (latestUserInfo.getId().equals(RongIMClient.getInstance().getCurrentUserId())) {
                     addFriendBtn.setVisibility(View.GONE);
                 } else {
                     addFriendBtn.setVisibility(View.VISIBLE);
@@ -584,6 +582,7 @@ public class UserDetailActivity extends TitleBaseActivity implements View.OnClic
     public void startVoice() {
         if (latestUserInfo == null) return;
 
+        //todo
         RongCallSession profile = RongCallClient.getInstance().getCallSession();
         if (profile != null && profile.getStartTime() > 0) {
             ToastUtils.showToast(profile.getMediaType() == RongCallCommon.CallMediaType.AUDIO ?
@@ -613,7 +612,6 @@ public class UserDetailActivity extends TitleBaseActivity implements View.OnClic
      */
     public void startVideo() {
         if (latestUserInfo == null) return;
-
         RongCallSession profile = RongCallClient.getInstance().getCallSession();
         if (profile != null && profile.getStartTime() > 0) {
             ToastUtils.showToast(

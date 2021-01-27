@@ -13,7 +13,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
-import cn.rongcloud.im.common.LogTag;
 import cn.rongcloud.im.model.ChatRoomResult;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.VersionInfo;
@@ -21,7 +20,8 @@ import cn.rongcloud.im.task.AppTask;
 import cn.rongcloud.im.utils.SingleSourceLiveData;
 import cn.rongcloud.im.utils.SingleSourceMapLiveData;
 import cn.rongcloud.im.utils.log.SLog;
-import io.rong.imkit.utilities.LangUtils;
+import io.rong.imkit.utils.language.LangUtils;
+
 
 public class AppViewModel extends AndroidViewModel {
     private final AppTask appTask;
@@ -43,36 +43,12 @@ public class AppViewModel extends AndroidViewModel {
             public Resource<VersionInfo.AndroidVersion> apply(Resource<VersionInfo> input) {
                 if (input.data != null) {
                     SLog.d("ss_version", "input == " + input);
+                    boolean hasNew = false;
                     String newVersion = input.data.getAndroidVersion().getVersion();
                     if (sealTalkVersionName != null) {
-                        boolean needUpdate = true;
-                        try {
-                            String[] newVersionCodeArray = newVersion.split("\\.");
-                            String[] curVersionCodeArray = sealTalkVersionName.split("\\.");
-                            int curVerLen = curVersionCodeArray.length;
-                            int newVerLen = newVersionCodeArray.length;
-                            String curVer = sealTalkVersionName.replace(".", "");
-                            String newVer = newVersion.replace(".", "");
-                            if (curVerLen > newVerLen) {
-                                //补齐位数
-                                StringBuilder sBuilder = new StringBuilder(newVer);
-                                for (int i = 0; i < curVerLen - newVerLen; i++) {
-                                    sBuilder.append("0");
-                                }
-                                newVer = sBuilder.toString();
-                            } else if (curVerLen < newVerLen) {
-                                //补齐位数
-                                StringBuilder sBuilder = new StringBuilder(curVer);
-                                for (int i = 0; i < newVerLen - curVerLen; i++) {
-                                    sBuilder.append("0");
-                                }
-                                curVer = sBuilder.toString();
-                            }
-                            needUpdate = Integer.parseInt(newVer) > Integer.parseInt(curVer);
-                        } catch (Exception e) {
-                            SLog.w(LogTag.API, "compare version error, force to use new version.", e);
-                        }
-                        if (needUpdate) {
+                        sealTalkVersionName = sealTalkVersionName.replace(".", "");
+                        newVersion = newVersion.replace(".", "");
+                        if (Integer.parseInt(newVersion.toString()) > Integer.parseInt(sealTalkVersionName.toString())) {
                             return new Resource<VersionInfo.AndroidVersion>(input.status, input.data.getAndroidVersion(), input.code);
                         }
                     }
@@ -103,7 +79,6 @@ public class AppViewModel extends AndroidViewModel {
 
     /**
      * 获取sdk 版本
-     *
      * @return
      */
     public LiveData<String> getSDKVersion() {
@@ -112,7 +87,6 @@ public class AppViewModel extends AndroidViewModel {
 
     /**
      * sealtalk 版本
-     *
      * @return
      */
     public LiveData<String> getSealTalkVersion() {
@@ -138,7 +112,7 @@ public class AppViewModel extends AndroidViewModel {
      *
      * @return
      */
-    public LiveData<Resource<List<ChatRoomResult>>> getChatRoonList() {
+    public LiveData<Resource<List<ChatRoomResult>>> getChatRoomList() {
         return chatRoomResultList;
     }
 
@@ -151,7 +125,6 @@ public class AppViewModel extends AndroidViewModel {
 
     /**
      * 当前本地语音
-     *
      * @return
      */
     public LiveData<LangUtils.RCLocale> getLanguageLocal() {
@@ -195,7 +168,6 @@ public class AppViewModel extends AndroidViewModel {
 
     /**
      * 切换语音
-     *
      * @param selectedLocale
      */
     public void changeLanguage(LangUtils.RCLocale selectedLocale) {

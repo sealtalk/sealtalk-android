@@ -15,6 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
@@ -31,13 +32,15 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.ui.activity.LoginActivity;
 import cn.rongcloud.im.ui.dialog.LoadingDialog;
+import cn.rongcloud.im.utils.StatusBarUtil;
 import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.utils.log.SLog;
-import io.rong.imkit.RongConfigurationManager;
+import io.rong.imkit.utils.language.RongConfigurationManager;
 
 public class BaseActivity extends AppCompatActivity {
     private boolean mEnableListenKeyboardState = false;
@@ -78,28 +81,11 @@ public class BaseActivity extends AppCompatActivity {
                      * 只有当前显示的 Activity 会走此段逻辑
                      */
                     if (isLogout) {
-                        SLog.d(BaseActivity.class.getCanonicalName(), "Log out By Kicked by other user.");
+                        SLog.d(BaseActivity.class.getCanonicalName(), "Log out.");
                         sendLogoutNotify();
                         IMManager.getInstance().resetKickedOfflineState();
                         Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
                         intent.putExtra(IntentExtra.BOOLEAN_KICKED_BY_OTHER_USER, true);
-                        startActivity(intent);
-                        finish();
-                    }
-                }
-            });
-            IMManager.getInstance().getConnectTimeout().observe(this, new Observer<Boolean>() {
-                @Override
-                public void onChanged(Boolean isLogout) {
-                    /*
-                     * 只有当前显示的 Activity 会走此段逻辑
-                     */
-                    if (isLogout) {
-                        SLog.d(BaseActivity.class.getCanonicalName(), "Log out By Connect Timeout");
-                        sendLogoutNotify();
-                        IMManager.getInstance().resetConnectTimeOutState();
-                        Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
-                        intent.putExtra(IntentExtra.BOOLEAN_CONNECT_TIME_OUT, true);
                         startActivity(intent);
                         finish();
                     }
@@ -111,6 +97,28 @@ public class BaseActivity extends AppCompatActivity {
         clearAllFragmentExistBeforeCreate();
     }
 
+    @Override
+    public void setContentView(View view) {
+        super.setContentView(view);
+        initStatusBar();
+    }
+
+    private void initStatusBar() {
+        StatusBarUtil.setRootViewFitsSystemWindows(this, true);
+        StatusBarUtil.setStatusBarColor(this, getResources().getColor(R.color.rc_background_main_color)); //Color.parseColor("#F5F6F9")
+    }
+
+    @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
+        initStatusBar();
+    }
+
+    @Override
+    public void setContentView(View view, ViewGroup.LayoutParams params) {
+        super.setContentView(view, params);
+        initStatusBar();
+    }
 
     /**
      * 清除所有已存在的 Fragment 防止因重建 Activity 时，前 Fragment 没有销毁和重新复用导致界面重复显示

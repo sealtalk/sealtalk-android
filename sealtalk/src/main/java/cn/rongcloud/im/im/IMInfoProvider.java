@@ -8,14 +8,14 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.Observer;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.ThreadManager;
-import cn.rongcloud.im.db.DbManager;
+import cn.rongcloud.im.db.DBManager;
 import cn.rongcloud.im.db.dao.GroupDao;
 import cn.rongcloud.im.db.dao.GroupMemberDao;
 import cn.rongcloud.im.db.model.FriendDetailInfo;
@@ -32,10 +32,12 @@ import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.task.FriendTask;
 import cn.rongcloud.im.task.GroupTask;
 import cn.rongcloud.im.task.UserTask;
-import io.rong.callkit.RongCallKit;
 import io.rong.contactcard.IContactCardInfoProvider;
 import io.rong.imkit.RongIM;
-import io.rong.imkit.tools.CharacterParser;
+import io.rong.imkit.feature.mention.RongMentionManager;
+import io.rong.imkit.userinfo.RongUserInfoManager;
+import io.rong.imkit.utils.CharacterParser;
+import io.rong.imkit.utils.RongUtils;
 
 public class IMInfoProvider {
     private final MediatorLiveData<Resource> triggerLiveData = new MediatorLiveData<>(); // 同步信息时用于触发事件使用的变量
@@ -44,7 +46,7 @@ public class IMInfoProvider {
     private GroupTask groupTask;
     private UserTask userTask;
     private FriendTask friendTask;
-    private DbManager dbManager;
+    private DBManager dbManager;
 
     public IMInfoProvider() {
     }
@@ -53,7 +55,7 @@ public class IMInfoProvider {
         initTask(context);
         initInfoProvider(context);
         initData();
-        dbManager = DbManager.getInstance(context);
+        dbManager = DBManager.getInstance(context);
     }
 
     /**
@@ -77,20 +79,25 @@ public class IMInfoProvider {
      */
     private void initInfoProvider(Context context) {
         // 获取用户信息
-        RongIM.setUserInfoProvider(id -> {
-            updateUserInfo(id);
+        RongUserInfoManager.getInstance().setUserInfoProvider(id -> {
+            if(id.equals("__group_apply__")) {
+                return new io.rong.imlib.model.UserInfo("__group_apply__", context.getResources().getString(R.string.seal_conversation_notification_group),
+                        RongUtils.getUriFromDrawableRes(context, R.drawable.seal_group_notice_portrait));
+            } else {
+                updateUserInfo(id);
+            }
             return null;
         }, true);
 
         // 获取群组信息
-        RongIM.setGroupInfoProvider(id -> {
+        RongUserInfoManager.getInstance().setGroupInfoProvider(id -> {
             updateGroupInfo(id);
             updateGroupMember(id);
             return null;
         }, true);
 
         // 获取群组单一成员信息
-        RongIM.setGroupUserInfoProvider((gid, uid) -> {
+        RongUserInfoManager.getInstance().setGroupUserInfoProvider((gid, uid) -> {
             // 直接进行全部组内成员获取
             updateGroupMember(gid);
             return null;
@@ -104,10 +111,11 @@ public class IMInfoProvider {
 
 
         // RongCallkit 设置 成员信息
-        RongCallKit.setGroupMemberProvider((groupId, result) -> {
-            updateCallGroupMember(groupId, result);
-            return null;
-        });
+        //TOdo
+//        RongCallKit.setGroupMemberProvider((groupId, result) -> {
+//            updateCallGroupMember(groupId, result);
+//            return null;
+//        });
 
     }
 
@@ -180,7 +188,7 @@ public class IMInfoProvider {
      * @param groupId
      * @param callback
      */
-    private void updateIMGroupMember(String groupId, RongIM.IGroupMemberCallback callback) {
+    private void updateIMGroupMember(String groupId, RongMentionManager.IGroupMemberCallback callback) {
         ThreadManager.getInstance().runOnUIThread(() -> {
             // 考虑到在群内频繁调用此方法,当有请求时进行请求
             if (groupMemberIsRequest) return;
@@ -220,33 +228,34 @@ public class IMInfoProvider {
      * @param groupId
      * @param result
      */
-    private void updateCallGroupMember(String groupId, RongCallKit.OnGroupMembersResult result) {
-        ThreadManager.getInstance().runOnUIThread(() -> {
-            // 考虑到在群内频繁调用此方法,当有请求时进行请求
-            if (groupMemberIsRequest) return;
-
-            groupMemberIsRequest = true;
-            LiveData<Resource<List<GroupMember>>> groupMemberSource = groupTask.getGroupMemberInfoList(groupId);
-            triggerLiveData.addSource(groupMemberSource, resource -> {
-                if (resource.status == Status.SUCCESS || resource.status == Status.ERROR) {
-                    // 确认成功或失败后，移除数据源
-                    // 在请求成功后，会在插入数据时同步更新缓存
-                    triggerLiveData.removeSource(groupMemberSource);
-                    groupMemberIsRequest = false;
-
-                }
-
-                if (resource.status == Status.SUCCESS && resource.data != null && result != null) {
-                    List<GroupMember> data = resource.data;
-                    ArrayList<String> userInfoIdList = new ArrayList<>();
-                    for (GroupMember member : data) {
-                        userInfoIdList.add(member.getUserId());
-                    }
-                    result.onGotMemberList(userInfoIdList);
-                }
-            });
-        });
-    }
+    //todo
+//    private void updateCallGroupMember(String groupId, RongCallKit.OnGroupMembersResult result) {
+//        ThreadManager.getInstance().runOnUIThread(() -> {
+//            // 考虑到在群内频繁调用此方法,当有请求时进行请求
+//            if (groupMemberIsRequest) return;
+//
+//            groupMemberIsRequest = true;
+//            LiveData<Resource<List<GroupMember>>> groupMemberSource = groupTask.getGroupMemberInfoList(groupId);
+//            triggerLiveData.addSource(groupMemberSource, resource -> {
+//                if (resource.status == Status.SUCCESS || resource.status == Status.ERROR) {
+//                    // 确认成功或失败后，移除数据源
+//                    // 在请求成功后，会在插入数据时同步更新缓存
+//                    triggerLiveData.removeSource(groupMemberSource);
+//                    groupMemberIsRequest = false;
+//
+//                }
+//
+//                if (resource.status == Status.SUCCESS && resource.data != null && result != null) {
+//                    List<GroupMember> data = resource.data;
+//                    ArrayList<String> userInfoIdList = new ArrayList<>();
+//                    for (GroupMember member : data) {
+//                        userInfoIdList.add(member.getUserId());
+//                    }
+//                    result.onGotMemberList(userInfoIdList);
+//                }
+//            });
+//        });
+//    }
 
     /**
      * 请求更新好友信息

@@ -13,6 +13,7 @@
         app:item_userinfo_portrait_width="@dimen/seal_mine_userfino_item_protrait"
         app:item_userinfo_portrait_height="@dimen/seal_mine_userfino_item_protrait"
         app:item_right_show="true"
+        android:paddingStart="14dp"
         app:item_userinfo_portrait="@drawable/rc_default_portrait"
         app:item_userinfo_name="@string/seal_mine_my_account_portrait"
         app:item_userinfo_divider="true"
@@ -36,6 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_mine_my_account_item_height"
         app:item_content="@string/seal_mine_my_account_sknumber"
+        app:item_right_image="@drawable/seal_ic_mine_go"
         app:item_divider="true"
         >
 

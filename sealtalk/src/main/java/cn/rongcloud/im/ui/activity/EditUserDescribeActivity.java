@@ -7,8 +7,6 @@ import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputFilter;
-import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -21,9 +19,6 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.db.model.FriendDescription;
@@ -33,12 +28,13 @@ import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.ui.dialog.CommonDialog;
 import cn.rongcloud.im.ui.dialog.SelectPictureBottomDialog;
+import cn.rongcloud.im.utils.AsyncImageView;
 import cn.rongcloud.im.utils.ImageLoaderUtils;
 import cn.rongcloud.im.utils.PhotoUtils;
 import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.viewmodel.EditUserDescribeViewModel;
-import io.rong.imkit.widget.AsyncImageView;
+
 
 public class EditUserDescribeActivity extends TitleBaseActivity implements View.OnClickListener {
 
@@ -70,6 +66,7 @@ public class EditUserDescribeActivity extends TitleBaseActivity implements View.
 
     private void initView() {
         getTitleBar().setTitle(getString(R.string.profile_set_display_name));
+        getTitleBar().getBtnRight().setVisibility(View.GONE);
         getTitleBar().setOnBtnRightClickListener(getString(R.string.seal_describe_more_btn_complete), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,12 +74,10 @@ public class EditUserDescribeActivity extends TitleBaseActivity implements View.
             }
         });
         etDisplayName = findViewById(R.id.et_display_name);
-        etDisplayName.setFilters(new InputFilter[]{emojiFilter, new InputFilter.LengthFilter(10)});
         etPhone = findViewById(R.id.et_phone);
         tvMoreNum = findViewById(R.id.tv_more_num);
         tvMoreNum.setText(getString(R.string.seal_describe_more_num, 0));
         etMore = findViewById(R.id.et_more);
-        etMore.setFilters(new InputFilter[]{emojiFilter, new InputFilter.LengthFilter(10)});
         etMore.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -256,24 +251,5 @@ public class EditUserDescribeActivity extends TitleBaseActivity implements View.
         intent.putExtra(IntentExtra.IMAGE_PREVIEW_TYPE, ImagePreviewActivity.FROM_EDIT_USER_DESCRIBE);
         startActivityForResult(intent, REQUEST_OPERATION_PICTURE);
     }
-
-    /**
-     * 表情输入的过滤
-     */
-    InputFilter emojiFilter = new InputFilter() {
-        Pattern emoji = Pattern.compile("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",
-                Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
-
-        @Override
-        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-            Matcher emojiMatcher = emoji.matcher(source);
-            if (emojiMatcher.find()) {
-                ToastUtils.showToast("不支持输入表情");
-                return "";
-            }
-            return null;
-        }
-    };
-
 
 }

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -138,6 +139,19 @@ public class CommonDialog extends DialogFragment {
 
         return view;
 
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Window window = getDialog().getWindow();
+        if (window != null) {
+            //去除系统自带的margin
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            //设置dialog在界面中的属性
+            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        }
     }
 
     /**

@@ -3,8 +3,8 @@
 
     <item>
         <shape android:shape="rectangle">
-            <stroke android:width="0.5dp" android:color="@color/deep_gray" />
-            <solid android:color="@color/white"/>
+<!--            <stroke android:width="0.5dp" android:color="@color/deep_gray" />-->
+            <solid android:color="#F3F3F3"/>
         </shape>
     </item>
 </selector>

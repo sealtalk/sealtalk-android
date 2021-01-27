@@ -11,32 +11,35 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_user_detail_userinfo_height"
         android:background="@color/white"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <cn.rongcloud.im.ui.widget.SelectableRoundedImageView
             android:id="@+id/profile_iv_detail_user_portrait"
             android:layout_width="@dimen/seal_user_detail_userinfo_portrait_value"
             android:layout_height="@dimen/seal_user_detail_userinfo_portrait_value"
-            android:layout_marginLeft="@dimen/seal_user_detail_userinfo_portrait_margin_left"
+            android:layout_marginStart="@dimen/seal_user_detail_userinfo_portrait_margin_left"
             android:layout_marginTop="@dimen/seal_user_detail_userinfo_portrait_margin"
             android:layout_marginBottom="@dimen/seal_user_detail_userinfo_portrait_margin"
             android:scaleType="centerCrop"
             app:sriv_left_bottom_corner_radius="@dimen/seal_user_detail_userinfo_portrait_radius"
             app:sriv_left_top_corner_radius="@dimen/seal_user_detail_userinfo_portrait_radius"
             app:sriv_right_bottom_corner_radius="@dimen/seal_user_detail_userinfo_portrait_radius"
-            app:sriv_right_top_corner_radius="@dimen/seal_user_detail_userinfo_portrait_radius" />
+            app:sriv_right_top_corner_radius="@dimen/seal_user_detail_userinfo_portrait_radius"
+            app:sriv_oval="true"/>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/seal_user_detail_userinfo_margin_left"
-            android:layout_marginRight="@dimen/seal_user_detail_userinfo_margin_right"
+            android:layout_marginStart="@dimen/seal_user_detail_userinfo_margin_left"
+            android:layout_marginEnd="@dimen/seal_user_detail_userinfo_margin_right"
             android:layout_weight="2"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/profile_tv_detail_display_name"
+                style="@style/TextStyle.Alignment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -49,6 +52,7 @@
             <!--android:layout_marginTop="@dimen/seal_user_detail_userinfo_text_margin"-->
             <TextView
                 android:id="@+id/profile_tv_detail_phone"
+                style="@style/TextStyle.Alignment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
@@ -58,6 +62,7 @@
 
             <TextView
                 android:id="@+id/profile_tv_detail_name"
+                style="@style/TextStyle.Alignment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -69,6 +74,7 @@
 
             <TextView
                 android:id="@+id/profile_tv_group_nick_name"
+                style="@style/TextStyle.Alignment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/seal_user_detail_userinfo_text_margin"
@@ -103,7 +109,7 @@
             android:id="@+id/profile_siv_detail_alias"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:item_divider="true"
+            app:item_divider="false"
             app:item_content="@string/profile_set_display_name"/>
 
         <cn.rongcloud.im.ui.view.SettingItemView
@@ -131,13 +137,14 @@
 
     <TextView
         android:id="@+id/tv_group_protection_tips"
+        style="@style/TextStyle.Alignment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:paddingLeft="36dp"
-        android:paddingRight="36dp"
+        android:paddingStart="36dp"
+        android:paddingEnd="36dp"
         android:textColor="@color/default_sub_text"
-        android:gravity="left"
+        android:gravity="start"
         android:visibility="gone"
         android:text="@string/profile_group_protection_tips"/>
 

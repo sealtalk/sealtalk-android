@@ -25,7 +25,6 @@ import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.db.model.FriendDetailInfo;
 import cn.rongcloud.im.db.model.FriendShipInfo;
-import cn.rongcloud.im.event.DeleteFriendEvent;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.ScreenCaptureResult;
 import cn.rongcloud.im.model.Status;
@@ -35,10 +34,11 @@ import cn.rongcloud.im.ui.widget.SelectableRoundedImageView;
 import cn.rongcloud.im.utils.CheckPermissionUtils;
 import cn.rongcloud.im.utils.ImageLoaderUtils;
 import cn.rongcloud.im.utils.ToastUtils;
-import cn.rongcloud.im.viewmodel.PrivateChatSettingViewModel;
 import cn.rongcloud.im.utils.log.SLog;
-import io.rong.eventbus.EventBus;
-import io.rong.imkit.utilities.PromptPopupDialog;
+import cn.rongcloud.im.viewmodel.PrivateChatSettingViewModel;
+import io.rong.imkit.conversation.ConversationSettingViewModel;
+import io.rong.imkit.model.OperationResult;
+import io.rong.imkit.widget.dialog.PromptPopupDialog;
 import io.rong.imlib.model.Conversation;
 
 public class PrivateChatSettingActivity extends TitleBaseActivity implements View.OnClickListener {
@@ -49,6 +49,7 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
     private final int REQUEST_START_GROUP = 1000;
 
     private PrivateChatSettingViewModel privateChatSettingViewModel;
+    private ConversationSettingViewModel conversationSettingViewModel;
 
     private SettingItemView isNotifySb;
     private SettingItemView isTopSb;
@@ -69,7 +70,7 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SealTitleBar titleBar = getTitleBar();
-        titleBar.setTitle(R.string.profile_user_details);
+        titleBar.setTitle(R.string.profile_chat_details);
 
         setContentView(R.layout.profile_activity_private_chat_setting);
 
@@ -84,7 +85,6 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
         initView();
         initViewModel();
         initData();
-        EventBus.getDefault().register(this);
     }
 
     private void initView() {
@@ -111,10 +111,10 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
 
         isNotifySb = findViewById(R.id.siv_user_notification);
         isNotifySb.setSwitchCheckListener((buttonView, isChecked) ->
-                privateChatSettingViewModel.setIsNotifyConversation(!isChecked));
+                conversationSettingViewModel.setNotificationStatus(isChecked ? Conversation.ConversationNotificationStatus.DO_NOT_DISTURB : Conversation.ConversationNotificationStatus.NOTIFY));
         isTopSb = findViewById(R.id.siv_conversation_top);
         isTopSb.setSwitchCheckListener((buttonView, isChecked) ->
-                privateChatSettingViewModel.setConversationOnTop(isChecked));
+                conversationSettingViewModel.setConversationTop(isChecked, false));
 
         isScreenShotSiv = findViewById(R.id.profile_siv_group_screen_shot_notification);
         isScreenShotSiv.setSwitchTouchListener(new View.OnTouchListener() {
@@ -175,50 +175,29 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
             }
         });
 
-        // 获取是否通知消息状态
-        privateChatSettingViewModel.getIsNotify().observe(this, resource -> {
-            if (resource.data != null) {
-                if (resource.status == Status.SUCCESS) {
-                    isNotifySb.setChecked(!resource.data);
-                } else {
-                    isNotifySb.setCheckedImmediately(!resource.data);
-                }
-            }
+        conversationSettingViewModel = ViewModelProviders.of(this, new ConversationSettingViewModel.Factory(getApplication(), conversationType, targetId)).get(ConversationSettingViewModel.class);
 
-            if (resource.status == Status.ERROR) {
-                if (resource.data != null) {
-                    ToastUtils.showToast(R.string.common_set_failed);
-                } else {
-                    // do nothing
-                }
-            }
+        conversationSettingViewModel.getNotificationStatus().observe(this, conversationNotificationStatus -> {
+            isNotifySb.setCheckedImmediatelyWithOutEvent(conversationNotificationStatus.equals(Conversation.ConversationNotificationStatus.DO_NOT_DISTURB));
         });
 
-        // 获取是否消息置顶状态
-        privateChatSettingViewModel.getIsTop().observe(this, resource -> {
-            if (resource.data != null) {
-                if (resource.status == Status.SUCCESS) {
-                    isTopSb.setChecked(resource.data);
-                } else {
-                    isTopSb.setCheckedImmediately(resource.data);
-                }
-            }
-
-            if (resource.status == Status.ERROR) {
-                if (resource.data != null) {
-                    ToastUtils.showToast(R.string.common_set_failed);
-                } else {
-                    // do nothing
-                }
-            }
+        conversationSettingViewModel.getTopStatus().observe(this, isTop -> {
+            isTopSb.setCheckedImmediatelyWithOutEvent(isTop);
         });
 
-        // 获取清除历史消息结果
-        privateChatSettingViewModel.getCleanHistoryMessageResult().observe(this, resource -> {
-            if (resource.status == Status.SUCCESS) {
-                ToastUtils.showToast(R.string.common_clear_success);
-            } else if (resource.status == Status.ERROR) {
-                ToastUtils.showToast(R.string.common_clear_failure);
+        conversationSettingViewModel.getOperationResult().observe(this, operationResult -> {
+            if (operationResult.mResultCode == OperationResult.SUCCESS) {
+                if (operationResult.mAction.equals(OperationResult.Action.CLEAR_CONVERSATION_MESSAGES)) {
+                    ToastUtils.showToast(R.string.common_clear_success);
+                } else {
+                    ToastUtils.showToast(getString(R.string.seal_set_clean_time_success));
+                }
+            } else {
+                if (operationResult.mAction.equals(OperationResult.Action.CLEAR_CONVERSATION_MESSAGES)) {
+                    ToastUtils.showToast(R.string.common_clear_failure);
+                } else {
+                    ToastUtils.showToast(getString(R.string.seal_set_clean_time_fail));
+                }
             }
         });
 
@@ -239,9 +218,8 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
             @Override
             public void onChanged(Resource<Void> voidResource) {
                 if (voidResource.status == Status.SUCCESS) {
-                    ToastUtils.showToast(getString(R.string.seal_set_clean_time_success));
                 } else if (voidResource.status == Status.ERROR) {
-                    ToastUtils.showToast(getString(R.string.seal_set_clean_time_fail));
+
                 }
             }
         });
@@ -274,7 +252,7 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
         PromptPopupDialog.newInstance(this,
                 getString(R.string.profile_clean_private_chat_history)).setLayoutRes(io.rong.imkit.R.layout.rc_dialog_popup_prompt_warning)
                 .setPromptButtonClickedListener(() -> {
-                    privateChatSettingViewModel.cleanHistoryMessage();
+                    conversationSettingViewModel.clearMessages(0, false);
                 }).show();
     }
 
@@ -356,18 +334,5 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
-
-    /**
-     * 删除联系人成功的事件
-     *
-     * @param event 删除结果事件
-     */
-    public void onEventMainThread(DeleteFriendEvent event) {
-        if (event.result && event.userId.equals(targetId)) {
-            SLog.i(TAG, "DeleteFriend Success");
-            finish();
-        }
     }
 }

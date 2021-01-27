@@ -26,5 +26,5 @@
         android:id="@+id/sv_sidebar"
         android:layout_width="@dimen/seal_contact_fragment_bar_width"
         android:layout_height="match_parent"
-        android:layout_gravity="right|center" />
+        android:layout_gravity="end|center" />
 </FrameLayout>

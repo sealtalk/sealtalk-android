@@ -2,7 +2,6 @@ package cn.rongcloud.im.viewmodel;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
@@ -19,17 +18,15 @@ import cn.rongcloud.im.db.model.FriendShipInfo;
 import cn.rongcloud.im.db.model.GroupEntity;
 import cn.rongcloud.im.model.Resource;
 import io.rong.contactcard.message.ContactMessage;
-import io.rong.imkit.RongIM;
-import io.rong.imkit.activity.SelectConversationActivity;
-import io.rong.imkit.userInfoCache.RongUserInfoManager;
-import io.rong.imkit.utils.ForwardManager;
+import io.rong.imkit.feature.forward.ForwardManager;
+import io.rong.imkit.userinfo.RongUserInfoManager;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
-import io.rong.message.LocationMessage;
+import io.rong.imlib.location.message.LocationMessage;
 
 public class ForwardActivityViewModel extends AndroidViewModel {
     private MutableLiveData<Boolean> isSingleLiveData;
@@ -79,7 +76,7 @@ public class ForwardActivityViewModel extends AndroidViewModel {
             }
         }
         if (conversationList.size() > 0) {
-            ForwardManager.forwardMessage(activity, conversationList);
+            ForwardManager.setForwardMessageResult(activity, conversationList);
         }
     }
 
@@ -101,13 +98,13 @@ public class ForwardActivityViewModel extends AndroidViewModel {
                     portraitUrl = null;
                 }
                 String sendContactMsgUserName = "";
-                UserInfo userInfo = RongUserInfoManager.getInstance().getUserInfo(RongIM.getInstance().getCurrentUserId());
+                UserInfo userInfo = RongUserInfoManager.getInstance().getUserInfo(RongIMClient.getInstance().getCurrentUserId());
                 if (userInfo != null) {
                     sendContactMsgUserName = userInfo.getName();
                 }
                 ContactMessage contactMessage = ContactMessage.obtain(((ContactMessage) messageContent).getId(),
                         ((ContactMessage) messageContent).getName(), portraitUrl,
-                        RongIM.getInstance().getCurrentUserId(), sendContactMsgUserName, null);
+                        RongIMClient.getInstance().getCurrentUserId(), sendContactMsgUserName, null);
                 Message message = Message.obtain(targetId, conversationType, contactMessage);
                 sendMessage(message);
 

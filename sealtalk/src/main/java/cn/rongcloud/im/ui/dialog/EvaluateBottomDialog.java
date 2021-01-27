@@ -25,7 +25,7 @@ import cn.rongcloud.im.ui.adapter.LablesAdapter;
 import cn.rongcloud.im.ui.view.StarsView;
 import cn.rongcloud.im.ui.widget.AntGridView;
 import cn.rongcloud.im.viewmodel.ConversationViewModel;
-import io.rong.imlib.CustomServiceConfig;
+import io.rong.imlib.cs.CustomServiceConfig;
 
 public class EvaluateBottomDialog extends BaseBottomDialog implements View.OnClickListener {
 

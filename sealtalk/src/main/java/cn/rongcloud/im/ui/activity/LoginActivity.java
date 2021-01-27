@@ -2,6 +2,7 @@ package cn.rongcloud.im.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Process;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -21,8 +22,9 @@ import cn.rongcloud.im.ui.dialog.CommonDialog;
 import cn.rongcloud.im.ui.fragment.LoginFindPasswordFragment;
 import cn.rongcloud.im.ui.fragment.LoginFragment;
 import cn.rongcloud.im.ui.fragment.LoginRegisterFragment;
+import cn.rongcloud.im.utils.StatusBarUtil;
 import cn.rongcloud.im.viewmodel.AppViewModel;
-import io.rong.imkit.utilities.LangUtils;
+import io.rong.imkit.utils.language.LangUtils;
 
 /**
  * 登录界面
@@ -49,15 +51,30 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initStatusBar();
         setContentView(R.layout.login_activity_login);
-
         // 复原上次选的 Fragment
         if (savedInstanceState != null) {
             currentFragmentIndex = savedInstanceState.getInt(BUNDLE_LAST_SELECTED_FRAGMENT, FRAGMENT_LOGIN);
         }
-
         initView();
         initViewModel();
+    }
+
+    private void initStatusBar() {
+        //这里注意下 因为在评论区发现有网友调用setRootViewFitsSystemWindows 里面 winContent.getChildCount()=0 导致代码无法继续
+        //是因为你需要在setContentView之后才可以调用 setRootViewFitsSystemWindows
+        //当FitsSystemWindows设置 true 时，会在屏幕最上方预留出状态栏高度的 padding
+        StatusBarUtil.setRootViewFitsSystemWindows(this, true);
+        //设置状态栏透明
+        StatusBarUtil.setTranslucentStatus(this);
+        //一般的手机的状态栏文字和图标都是白色的, 可如果你的应用也是纯白色的, 或导致状态栏文字看不清
+        //所以如果你是这种情况,请使用以下代码, 设置状态使用深色文字图标风格, 否则你可以选择性注释掉这个if内容
+        if (!StatusBarUtil.setStatusBarDarkTheme(this, false)) {
+            //如果不支持设置深色风格 为了兼容总不能让状态栏白白的看不清, 于是设置一个状态栏颜色为半透明,
+            //这样半透明+白=灰, 状态栏的文字能看得清
+            StatusBarUtil.setStatusBarColor(this, 0x000000);
+        }
     }
 
     /**
@@ -86,13 +103,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         // 判断是否被其他用户踢出到此界面
         Intent intent = getIntent();
         boolean isKicked = intent.getBooleanExtra(IntentExtra.BOOLEAN_KICKED_BY_OTHER_USER, false);
-        boolean isTimeout = intent.getBooleanExtra(IntentExtra.BOOLEAN_CONNECT_TIME_OUT, false);
         if (isKicked) {
             showKickedByOtherDialog();
-        } else if (isTimeout) {
-            showConnectTimeOutDialog();
         }
-
     }
 
 
@@ -236,20 +249,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
         }
     }
-
-    /**
-     * 显示他人登录对话框
-     */
-    private void showConnectTimeOutDialog() {
-        CommonDialog.Builder builder = new CommonDialog.Builder();
-        builder.setContentMessage(getString(R.string.seal_login_connect_time_out));
-        builder.setIsOnlyConfirm(true);
-        builder.isCancelable(false);
-        CommonDialog dialog = builder.build();
-        dialog.show(getSupportFragmentManager(), null);
-    }
-
-
 
     /**
      * 设置切换语言后， 重启activity

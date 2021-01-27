@@ -13,6 +13,8 @@ public class IntentExtra {
 
     public final static String LIST_EXCLUDE_ID_LIST = "exculde_id_list";
 
+    public final static String TITLE = "title";
+
     public final static String LIST_ALREADY_CHECKED_USER_ID_LIST = "list_already_check_user_id_list";
 
     public final static String LIST_ALREADY_CHECKED_GROUP_ID_LIST = "list_already_check_group_id_list";

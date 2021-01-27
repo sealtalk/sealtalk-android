@@ -15,7 +15,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_margin="10dp"
-        android:layout_marginLeft="6dp"
+        android:layout_marginStart="6dp"
         android:scaleType="centerCrop"
         app:sriv_left_bottom_corner_radius="3dip"
         app:sriv_left_top_corner_radius="3dip"

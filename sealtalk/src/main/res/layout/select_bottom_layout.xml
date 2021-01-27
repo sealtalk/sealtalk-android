@@ -16,11 +16,12 @@
         android:background="@color/color_tab_indicator_bg"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/seal_select_bottom_padding_left"
-        android:paddingRight="@dimen/seal_select_bottom_padding_left">
+        android:paddingStart="@dimen/seal_select_bottom_padding_left"
+        android:paddingEnd="@dimen/seal_select_bottom_padding_left">
 
         <TextView
             android:id="@+id/tv_search_count"
+            style="@style/TextStyle.Alignment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -30,6 +31,7 @@
 
         <TextView
             android:id="@+id/tv_search_confirm"
+            style="@style/TextStyle.Alignment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"

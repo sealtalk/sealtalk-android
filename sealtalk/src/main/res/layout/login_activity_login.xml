@@ -11,7 +11,7 @@
         android:id="@+id/iv_login_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginRight="@dimen/seal_login_bg_margin_right"
+        android:layout_marginEnd="@dimen/seal_login_bg_margin_right"
         android:scaleType="centerCrop"
         android:src="@drawable/seal_ic_login_bg"
     />
@@ -77,7 +77,7 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/seal_login_buttom_padding"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:text="@string/seal_login_text_new_user" />
 
     <TextView
@@ -88,7 +88,7 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/seal_login_buttom_padding"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:text="@string/seal_login_text_login" />
 
 
@@ -97,10 +97,11 @@
         android:id="@+id/tv_change_lang"
         android:text="@string/lang_en"
         android:textColor="@color/white"
+        android:layout_marginTop="20dp"
         android:textSize="@dimen/seal_login_text_change_lang_text_size"
         android:padding="@dimen/seal_login_text_change_lang_padding"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

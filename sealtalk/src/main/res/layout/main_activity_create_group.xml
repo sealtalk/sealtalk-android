@@ -1,43 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
     android:orientation="vertical">
 
-
-    <io.rong.imkit.widget.AsyncImageView
-        android:id="@+id/main_iv_create_group_portrait"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="80dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/main_bg_add_group_portrait" />
-
-    <EditText
-        android:id="@+id/main_et_create_group_name"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_marginBottom="40dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:background="@drawable/seal_bg_edit_bottom_blue_line"
+    <RelativeLayout
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_gravity="center"
-        android:layout_marginTop="80dp"
-        android:textColorHint="@color/default_sub_text"
-        android:gravity="center"
-        tools:hint="@string/profile_group_name_word_limit_format"
-        android:maxLength="10" />
+        android:layout_marginTop="6.5dp"
+        android:layout_marginBottom="26dp">
 
-    <Button
-        android:id="@+id/main_btn_confirm_create"
+        <cn.rongcloud.im.ui.widget.SelectableRoundedImageView
+            android:id="@+id/main_iv_create_group_portrait"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/common_portrait_default_group_create"
+            app:sriv_left_bottom_corner_radius="3dp"
+            app:sriv_left_top_corner_radius="3dp"
+            app:sriv_oval="true"
+            app:sriv_right_bottom_corner_radius="3dp"
+            app:sriv_right_top_corner_radius="3dp" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/seal_group_create_edit" />
+    </RelativeLayout>
+
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:background="@drawable/common_btn_blue_selector"
-        android:text="@string/common_confirm"
-        android:textColor="#FFF" />
+        android:layout_height="16dp"
+        android:background="#fff5f6f9" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="群名称"
+            android:textColor="#FF000000"
+            android:textSize="17dp" />
+
+        <EditText
+            android:id="@+id/main_et_create_group_name"
+            style="@style/EditTextStyle.Alignment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="14dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="start|center_vertical"
+            android:maxLength="10"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:singleLine="true"
+            android:textColorHint="#A0A5AB"
+            android:textSize="17dp"
+            android:hint="@string/profile_group_name_word_limit_format" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#fff5f6f9">
+
+        <Button
+            android:id="@+id/main_btn_confirm_create"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/common_btn_blue_selector"
+            android:stateListAnimator="@null"
+            android:text="完成创建"
+            android:textColor="#FFF" />
+    </RelativeLayout>
 
 </LinearLayout>

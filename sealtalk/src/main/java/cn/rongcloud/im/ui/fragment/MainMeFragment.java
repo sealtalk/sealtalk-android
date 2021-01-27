@@ -2,9 +2,11 @@ package cn.rongcloud.im.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -13,7 +15,9 @@ import com.bumptech.glide.Glide;
 
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
+import cn.rongcloud.im.common.ThreadManager;
 import cn.rongcloud.im.db.model.UserInfo;
+import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.model.VersionInfo;
@@ -28,15 +32,19 @@ import cn.rongcloud.im.ui.view.UserInfoItemView;
 import cn.rongcloud.im.utils.ImageLoaderUtils;
 import cn.rongcloud.im.viewmodel.AppViewModel;
 import cn.rongcloud.im.viewmodel.UserInfoViewModel;
+import io.rong.calllib.ReportUtil;
 import io.rong.common.RLog;
-import io.rong.eventbus.EventBus;
+import io.rong.imkit.IMCenter;
 import io.rong.imkit.RongIM;
-import io.rong.imkit.model.UIMessage;
-import io.rong.imkit.userInfoCache.RongUserInfoManager;
-import io.rong.imkit.utilities.LangUtils;
+import io.rong.imkit.userinfo.RongUserInfoManager;
+
+import io.rong.imkit.userinfo.model.GroupUserInfo;
+import io.rong.imkit.utils.RouteUtils;
+import io.rong.imkit.utils.language.LangUtils;
 import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.CSCustomServiceInfo;
+import io.rong.imlib.cs.model.CSCustomServiceInfo;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Group;
 
 public class MainMeFragment extends BaseFragment {
 
@@ -44,6 +52,7 @@ public class MainMeFragment extends BaseFragment {
     private UserInfoItemView uivUserInfo;
     private AppViewModel appViewModel;
     private SettingItemView sivLanguage;
+    private UserInfoViewModel userInfoViewModel;
 
     @Override
     protected int getLayoutResId() {
@@ -62,21 +71,33 @@ public class MainMeFragment extends BaseFragment {
     }
 
     @Override
-    protected void onInitViewModel() {
-        UserInfoViewModel userInfoViewModel = ViewModelProviders.of(this).get(UserInfoViewModel.class);
-        appViewModel = ViewModelProviders.of(getActivity()).get(AppViewModel.class);
+    public void onResume() {
+        super.onResume();
+        if (!TextUtils.isEmpty(IMManager.getInstance().getCurrentId())) {
+            io.rong.imlib.model.UserInfo userInfo = RongUserInfoManager.getInstance().getUserInfo(IMManager.getInstance().getCurrentId());
+            if (userInfo == null) {
+                userInfoViewModel.requestUserInfo(IMManager.getInstance().getCurrentId());
+            }
+        }
+    }
 
-        userInfoViewModel.getUserInfo().observe(this, new Observer<Resource<UserInfo>>() {
+    @Override
+    protected void onInitViewModel() {
+        appViewModel = ViewModelProviders.of(getActivity()).get(AppViewModel.class);
+        RongUserInfoManager.getInstance().addUserDataObserver(mUserDataObserver);
+
+        userInfoViewModel = ViewModelProviders.of(this).get(UserInfoViewModel.class);
+        userInfoViewModel.getUserInfo().observe(getActivity(), new Observer<Resource<UserInfo>>() {
             @Override
             public void onChanged(Resource<UserInfo> resource) {
                 if (resource.data != null) {
                     UserInfo info = resource.data;
+                    uivUserInfo.setName(info.getName());
                     if (resource.status == Status.SUCCESS || resource.status == Status.ERROR) {
                         if (!TextUtils.isEmpty(info.getPortraitUri()) && getActivity() != null) {
                             Glide.with(getActivity()).load(info.getPortraitUri()).placeholder(R.drawable.rc_default_portrait).into(uivUserInfo.getHeaderImageView());
                         }
                     }
-                    uivUserInfo.setName(info.getName());
                 }
             }
         });
@@ -95,8 +116,10 @@ public class MainMeFragment extends BaseFragment {
             public void onChanged(LangUtils.RCLocale rcLocale) {
                 if (rcLocale == LangUtils.RCLocale.LOCALE_US) {
                     sivLanguage.setValue(R.string.lang_english);
-                } else {
+                } else if (rcLocale == LangUtils.RCLocale.LOCALE_CHINA) {
                     sivLanguage.setValue(R.string.lang_chs);
+                } else if (rcLocale == LangUtils.RCLocale.LOCALE_ARAB) {
+                    sivLanguage.setValue(R.string.lang_arab);
                 }
             }
         });
@@ -133,7 +156,11 @@ public class MainMeFragment extends BaseFragment {
                 }
                 //佳信客服配置
                 builder.referrer("10001");
-                RongIM.getInstance().startCustomerServiceChat(getActivity(), "service", getString(R.string.seal_main_mine_online_custom_service), builder.build());
+                Bundle bundle = new Bundle();
+                bundle.putString(RouteUtils.TITLE, getString(R.string.seal_main_mine_online_custom_service));
+                bundle.putParcelable(RouteUtils.CUSTOM_SERVICE_INFO, builder.build());
+                RouteUtils.routeToConversationActivity(getContext(), Conversation.ConversationType.CUSTOMER_SERVICE, "service"
+                        , bundle);
                 break;
             case R.id.siv_about:
                 Intent intent = new Intent(getActivity(), AboutSealTalkActivity.class);
@@ -149,21 +176,33 @@ public class MainMeFragment extends BaseFragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+        RongUserInfoManager.getInstance().removeUserDataObserver(mUserDataObserver);
     }
 
-    public void onEventMainThread(io.rong.imlib.model.UserInfo userInfo) {
-        if (userInfo != null && getActivity() != null && userInfo.getUserId().equals(RongIMClient.getInstance().getCurrentUserId())) {
-            Glide.with(getActivity()).load(userInfo.getPortraitUri()).placeholder(R.drawable.rc_default_portrait).into(uivUserInfo.getHeaderImageView());
-            uivUserInfo.setName(userInfo.getName());
+    private RongUserInfoManager.UserDataObserver mUserDataObserver = new RongUserInfoManager.UserDataObserver() {
+        @Override
+        public void onUserUpdate(io.rong.imlib.model.UserInfo userInfo) {
+            if (userInfo != null && getActivity() != null && userInfo.getUserId().equals(RongIMClient.getInstance().getCurrentUserId())) {
+                ThreadManager.getInstance().runOnUIThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Glide.with(getActivity()).load(userInfo.getPortraitUri()).placeholder(R.drawable.rc_default_portrait).into(uivUserInfo.getHeaderImageView());
+                        uivUserInfo.setName(userInfo.getName());
+                    }
+                });
+            }
         }
-    }
+
+        @Override
+        public void onGroupUpdate(Group group) {
+
+        }
+
+        @Override
+        public void onGroupUserInfoUpdate(GroupUserInfo groupUserInfo) {
+
+        }
+    };
 }

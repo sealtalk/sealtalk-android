@@ -15,9 +15,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,9 +54,11 @@ import cn.rongcloud.im.utils.ImageLoaderUtils;
 import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.viewmodel.GroupDetailViewModel;
 import cn.rongcloud.im.utils.log.SLog;
-import io.rong.imkit.emoticon.AndroidEmoji;
-import io.rong.imkit.userInfoCache.RongUserInfoManager;
-import io.rong.imkit.utilities.PromptPopupDialog;
+import io.rong.imkit.conversation.ConversationSettingViewModel;
+import io.rong.imkit.conversation.extension.component.emoticon.AndroidEmoji;
+import io.rong.imkit.model.OperationResult;
+import io.rong.imkit.userinfo.RongUserInfoManager;
+import io.rong.imkit.widget.dialog.PromptPopupDialog;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 
@@ -85,10 +90,11 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
     private String groupId;
     private Conversation.ConversationType conversationType;
     private GroupDetailViewModel groupDetailViewModel;
+    private ConversationSettingViewModel conversationSettingViewModel;
     private GridGroupMemberAdapter memberAdapter;
     private String groupName;
     private String grouportraitUrl;
-    private UserInfoItemView groupPortraitUiv;
+    private SettingItemView groupPortraitUiv;
     private SettingItemView allGroupMemberSiv;
     private SettingItemView groupNameSiv;
     private SettingItemView notifyNoticeSiv;
@@ -99,6 +105,7 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
     private SettingItemView groupUserInfoSiv;
     private SettingItemView cleanTimingSiv;
     private SettingItemView screenShotSiv;
+    private SettingItemView groupQRCodeSiv;
     private TextView screenShotTip;
 
     private boolean isScreenShotSivClicked;
@@ -168,7 +175,9 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
         groupNameSiv = findViewById(R.id.profile_siv_group_name_container);
         groupNameSiv.setOnClickListener(this);
         // 群二维码
-        findViewById(R.id.profile_siv_group_qrcode).setOnClickListener(this);
+        groupQRCodeSiv = findViewById(R.id.profile_siv_group_qrcode);
+        groupQRCodeSiv.setSelected(true);
+        groupQRCodeSiv.setOnClickListener(this);
         // 群公告
         groupNoticeSiv = findViewById(R.id.profile_siv_group_notice);
         groupNoticeSiv.setOnClickListener(this);
@@ -182,12 +191,12 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
         // 消息免打扰
         notifyNoticeSiv = findViewById(R.id.profile_siv_message_notice);
         notifyNoticeSiv.setSwitchCheckListener((buttonView, isChecked) ->
-                groupDetailViewModel.setIsNotifyConversation(!isChecked));
+                conversationSettingViewModel.setNotificationStatus(isChecked ? Conversation.ConversationNotificationStatus.DO_NOT_DISTURB : Conversation.ConversationNotificationStatus.NOTIFY));
 
         // 会话置顶
         onTopSiv = findViewById(R.id.profile_siv_group_on_top);
         onTopSiv.setSwitchCheckListener((buttonView, isChecked) ->
-                groupDetailViewModel.setConversationOnTop(isChecked));
+                conversationSettingViewModel.setConversationTop(isChecked, false));
 
         // 保存到通讯录
         isToContactSiv = findViewById(R.id.profile_siv_group_save_to_contact);
@@ -320,50 +329,40 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
             }
         });
 
-        // 获取是否通知消息状态
-        groupDetailViewModel.getIsNotify().observe(this, resource -> {
-            if (resource.data != null) {
-                if (resource.status == Status.SUCCESS) {
-                    notifyNoticeSiv.setChecked(!resource.data);
-                } else {
-                    notifyNoticeSiv.setCheckedImmediately(!resource.data);
-                }
-            }
+        conversationSettingViewModel = ViewModelProviders.of(this,
+                new ConversationSettingViewModel.Factory(this.getApplication(), conversationType, groupId))
+                .get(ConversationSettingViewModel.class);
 
-            if (resource.status == Status.ERROR) {
-                if (resource.data != null) {
-                    ToastUtils.showToast(R.string.common_set_failed);
+        conversationSettingViewModel.getNotificationStatus().observe(this, new Observer<Conversation.ConversationNotificationStatus>() {
+            @Override
+            public void onChanged(Conversation.ConversationNotificationStatus conversationNotificationStatus) {
+                if (conversationNotificationStatus.equals(Conversation.ConversationNotificationStatus.DO_NOT_DISTURB)) {
+                    notifyNoticeSiv.setChecked(true);
                 } else {
-                    // do nothing
+                    notifyNoticeSiv.setChecked(false);
                 }
             }
         });
 
-        // 获取是否消息置顶状态
-        groupDetailViewModel.getIsTop().observe(this, resource -> {
-            if (resource.data != null) {
-                if (resource.status == Status.SUCCESS) {
-                    onTopSiv.setChecked(resource.data);
-                } else {
-                    onTopSiv.setCheckedImmediately(resource.data);
-                }
-            }
-
-            if (resource.status == Status.ERROR) {
-                if (resource.data != null) {
-                    ToastUtils.showToast(R.string.common_set_failed);
-                } else {
-                    // do nothing
-                }
+        conversationSettingViewModel.getTopStatus().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isTop) {
+                onTopSiv.setChecked(isTop);
             }
         });
 
-        // 获取清除历史消息结果
-        groupDetailViewModel.getCleanHistoryMessageResult().observe(this, resource -> {
-            if (resource.status == Status.SUCCESS) {
-                ToastUtils.showToast(R.string.common_clear_success);
-            } else if (resource.status == Status.ERROR) {
-                ToastUtils.showToast(R.string.common_clear_failure);
+        conversationSettingViewModel.getOperationResult().observe(this, new Observer<OperationResult>() {
+            @Override
+            public void onChanged(OperationResult operationResult) {
+                if (operationResult.mResultCode != 0) {
+                    if (operationResult.mAction.equals(OperationResult.Action.CLEAR_CONVERSATION_MESSAGES)) {
+                        ToastUtils.showToast(R.string.common_clear_failure);
+                    } else {
+                        ToastUtils.showToast(R.string.common_set_failed);
+                    }
+                } else if (operationResult.mAction.equals(OperationResult.Action.CLEAR_CONVERSATION_MESSAGES)) {
+                    ToastUtils.showToast(R.string.common_clear_success);
+                }
             }
         });
 
@@ -594,7 +593,12 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
         allGroupMemberSiv.setContent(allMemberTxt);
         // 显示群组头像
         grouportraitUrl = groupInfo.getPortraitUri();
-        ImageLoaderUtils.displayGroupPortraitImage(groupInfo.getPortraitUri(), groupPortraitUiv.getHeaderImageView());
+        if (groupPortraitUiv.getRightImageView() != null) {
+            Glide.with(GroupDetailActivity.this)
+                    .load(groupInfo.getPortraitUri())
+                    .circleCrop()
+                    .into(groupPortraitUiv.getRightImageView());
+        }
         // 群名称
         groupName = groupInfo.getName();
         groupNameSiv.setValue(groupInfo.getName());
@@ -704,6 +708,7 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
             }
 
             intent.putExtra(IntentExtra.LIST_EXCLUDE_ID_LIST, excludeList);
+            intent.putExtra(IntentExtra.TITLE, "移除成员");
             startActivityForResult(intent, REQUEST_REMOVE_GROUP_MEMBER);
         }
     }
@@ -838,11 +843,15 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
      * 显示清除聊天消息对话框
      */
     private void showCleanMessageDialog() {
-        PromptPopupDialog.newInstance(this,
-                getString(R.string.profile_clean_group_chat_history)).setLayoutRes(io.rong.imkit.R.layout.rc_dialog_popup_prompt_warning)
-                .setPromptButtonClickedListener(() -> {
-                    groupDetailViewModel.cleanHistoryMessage();
-                }).show();
+        new AlertDialog.Builder(this)
+                .setMessage(getString(R.string.profile_clean_group_chat_history))
+                .setPositiveButton(getString(R.string.rc_clear), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        conversationSettingViewModel.clearMessages(0, false);
+
+                    }
+                }).setNegativeButton(R.string.rc_cancel, null).show();
     }
 
     /**

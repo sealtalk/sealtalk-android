@@ -13,10 +13,11 @@
 
         <TextView
             android:id="@+id/tv_char"
+            style="@style/TextStyle.Alignment"
             tools:text="A"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/seal_group_manager_item_padding_left"
+            android:paddingStart="@dimen/seal_group_manager_item_padding_left"
             android:paddingTop="@dimen/seal_group_manager_item_padding_top"
             android:paddingBottom="@dimen/seal_group_manager_item_padding_bottom"
             android:textColor="@color/color_gray_text"
@@ -28,12 +29,16 @@
             android:background="@color/color_divider_line" />
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/seal_bg_list_item">
         <cn.rongcloud.im.ui.view.UserInfoItemView
             android:id="@+id/uiv_member"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content">
 
         </cn.rongcloud.im.ui.view.UserInfoItemView>
@@ -43,9 +48,10 @@
             android:layout_height="wrap_content"
             android:clickable="false"
             android:button="@drawable/seal_checkbox_selector"
-            android:layout_marginRight="@dimen/seal_group_manager_item_margin_right"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="@dimen/seal_group_manager_item_margin_right"
             android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             />
-    </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>

@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 
 import cn.rongcloud.im.model.CountryInfo;
 import cn.rongcloud.im.model.RegionResult;
@@ -24,8 +23,7 @@ import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.task.UserTask;
 import cn.rongcloud.im.utils.CharacterParser;
 import cn.rongcloud.im.utils.SingleSourceMapLiveData;
-import io.rong.imkit.RongConfigurationManager;
-import io.rong.imkit.utilities.LangUtils;
+import io.rong.imkit.utils.language.LangUtils;
 
 public class CountryViewModel extends AndroidViewModel {
 
@@ -111,14 +109,16 @@ public class CountryViewModel extends AndroidViewModel {
                 || LangUtils.RCLocale.LOCALE_US == appLocale) {
             return appLocale;
         } else {
-            Locale systemLocale = RongConfigurationManager.getInstance().getSystemLocale();
-            if (systemLocale.getLanguage().equals(Locale.CHINESE.getLanguage())) {
-                RongConfigurationManager.getInstance().switchLocale(LangUtils.RCLocale.LOCALE_CHINA, context);
-                return LangUtils.RCLocale.LOCALE_CHINA;
-            } else {
-                RongConfigurationManager.getInstance().switchLocale(LangUtils.RCLocale.LOCALE_US, context);
-                return LangUtils.RCLocale.LOCALE_US;
-            }
+            //todo
+            return LangUtils.RCLocale.LOCALE_CHINA;
+//            Locale systemLocale = RongConfigurationManager.getInstance().getSystemLocale();
+//            if (systemLocale.getLanguage().equals(Locale.CHINESE.getLanguage())) {
+//                RongConfigurationManager.getInstance().switchLocale(LangUtils.RCLocale.LOCALE_CHINA, context);
+//                return LangUtils.RCLocale.LOCALE_CHINA;
+//            } else {
+//                RongConfigurationManager.getInstance().switchLocale(LangUtils.RCLocale.LOCALE_US, context);
+//                return LangUtils.RCLocale.LOCALE_US;
+//            }
         }
     }
 

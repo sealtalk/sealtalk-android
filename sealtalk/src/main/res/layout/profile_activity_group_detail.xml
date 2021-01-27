@@ -22,9 +22,9 @@
                 android:background="#ffffff"
                 android:gravity="start"
                 android:listSelector="@android:color/transparent"
-                android:numColumns="4"
-                android:paddingLeft="1dp"
-                android:paddingRight="1dp" />
+                android:numColumns="5"
+                android:paddingStart="1dp"
+                android:paddingEnd="1dp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -34,9 +34,9 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.25dp"
-                    android:layout_marginLeft="14dp"
+                    android:layout_marginStart="14dp"
                     android:layout_marginTop="14dp"
-                    android:layout_marginRight="14dp"
+                    android:layout_marginEnd="14dp"
                     android:background="#dfdfdd" />
             </LinearLayout>
 
@@ -44,82 +44,92 @@
                 android:id="@+id/profile_siv_all_group_member"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:item_content="@string/profile_all_group_member">
+                app:item_content="@string/profile_all_group_member"
+                app:item_right_image="@drawable/seal_ic_mine_go">
 
             </cn.rongcloud.im.ui.view.SettingItemView>
+
 
             <cn.rongcloud.im.ui.view.SettingItemView
-                android:id="@+id/profile_siv_group_search_history_message"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/seal_profile_group_item_margin"
-                app:item_content="@string/profile_search_message">
-
-            </cn.rongcloud.im.ui.view.SettingItemView>
-
-            <cn.rongcloud.im.ui.view.UserInfoItemView
                 android:id="@+id/profile_uiv_group_portrait_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/seal_group_detail_item_height"
                 android:layout_marginTop="@dimen/seal_profile_group_item_margin"
-                app:item_right_show="true"
-                app:item_userinfo_divider="true"
-                app:item_userinfo_name="@string/profile_group_portrait"
-                app:item_userinfo_portrait_height="@dimen/seal_profile_group_item_protrait_value"
-                app:item_userinfo_portrait_width="@dimen/seal_profile_group_item_protrait_value">
+                app:item_content="@string/profile_group_portrait"
+                app:item_divider="true"
+                app:item_image_width="@dimen/rc_margin_size_20"
+                app:item_right_image="@drawable/seal_ic_mine_go"
+                app:item_right_image_height="@dimen/rc_margin_size_30"
+                app:item_right_image_width="@dimen/rc_margin_size_30">
 
-            </cn.rongcloud.im.ui.view.UserInfoItemView>
+            </cn.rongcloud.im.ui.view.SettingItemView>
 
             <cn.rongcloud.im.ui.view.SettingItemView
                 android:id="@+id/profile_siv_group_name_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/seal_group_detail_item_height"
                 app:item_content="@string/profile_group_name"
-                app:item_divider="true">
+                app:item_value_text_size="15sp"
+                app:item_divider="true"
+                app:item_right_image="@drawable/seal_ic_mine_go">
 
             </cn.rongcloud.im.ui.view.SettingItemView>
+
 
             <cn.rongcloud.im.ui.view.SettingItemView
                 android:id="@+id/profile_siv_group_qrcode"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/seal_group_detail_item_height"
                 app:item_content="@string/profile_group_qrcode"
                 app:item_divider="true"
-                app:item_right_image="@drawable/profile_ic_qrcode">
+                app:item_right_image="@drawable/seal_ic_mine_go"
+                app:item_selected_image="@drawable/profile_ic_qrcode"
+                app:item_show_selected="true" />
 
-            </cn.rongcloud.im.ui.view.SettingItemView>
 
             <cn.rongcloud.im.ui.view.SettingItemView
                 android:id="@+id/profile_siv_group_notice"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 app:item_content="@string/profile_group_notice"
-                app:item_divider="true">
+                android:layout_height="@dimen/seal_group_detail_item_height"
+                app:item_divider="true"
+                app:item_right_image="@drawable/seal_ic_mine_go">
 
             </cn.rongcloud.im.ui.view.SettingItemView>
 
             <cn.rongcloud.im.ui.view.SettingItemView
                 android:id="@+id/profile_siv_group_user_info"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/seal_group_detail_item_height"
                 app:item_content="@string/profile_group_user_info"
-                app:item_divider="true">
+                app:item_divider="true"
+                app:item_right_image="@drawable/seal_ic_mine_go">
 
             </cn.rongcloud.im.ui.view.SettingItemView>
 
             <cn.rongcloud.im.ui.view.SettingItemView
                 android:id="@+id/profile_siv_group_manager"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:item_content="@string/profile_group_manager">
+                android:layout_height="@dimen/seal_group_detail_item_height"
+                app:item_content="@string/profile_group_manager"
+                app:item_right_image="@drawable/seal_ic_mine_go">
 
             </cn.rongcloud.im.ui.view.SettingItemView>
 
 
             <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/profile_siv_group_search_history_message"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/seal_group_detail_item_height"
+                android:layout_marginTop="@dimen/seal_profile_group_item_margin"
+                app:item_content="@string/profile_search_message"
+                app:item_right_image="@drawable/seal_ic_mine_go" />
+
+
+            <cn.rongcloud.im.ui.view.SettingItemView
                 android:id="@+id/profile_siv_message_notice"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/seal_group_detail_item_height"
                 android:layout_marginTop="@dimen/seal_profile_group_item_margin"
                 app:item_content="@string/profile_message_notice"
                 app:item_divider="true"
@@ -130,7 +140,7 @@
             <cn.rongcloud.im.ui.view.SettingItemView
                 android:id="@+id/profile_siv_group_on_top"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/seal_group_detail_item_height"
                 app:item_content="@string/profile_set_top"
                 app:item_divider="true"
                 app:item_switch="true">
@@ -140,7 +150,7 @@
             <cn.rongcloud.im.ui.view.SettingItemView
                 android:id="@+id/profile_siv_group_save_to_contact"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/seal_group_detail_item_height"
                 app:item_content="@string/profile_group_save_to_contact"
                 app:item_divider="true"
                 app:item_switch="true">
@@ -150,49 +160,52 @@
             <cn.rongcloud.im.ui.view.SettingItemView
                 android:id="@+id/profile_siv_group_screen_shot_notification"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/seal_group_detail_item_height"
                 android:visibility="gone"
                 app:item_content="@string/profile_screen_shot_notification"
                 app:item_switch="true" />
 
             <TextView
                 android:id="@+id/tv_screen_shot_tip"
+                style="@style/TextStyle.Alignment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_marginLeft="@dimen/seal_group_detail_clean_tips_margin_left"
+                android:layout_marginStart="@dimen/seal_group_detail_clean_tips_margin_left"
                 android:layout_marginTop="@dimen/seal_main_item_margin_bottom"
-                android:layout_marginRight="@dimen/seal_group_detail_clean_tips_margin_right"
+                android:layout_marginEnd="@dimen/seal_group_detail_clean_tips_margin_right"
                 android:layout_marginBottom="@dimen/seal_group_detail_clean_tips_margin_bottom"
                 android:text="@string/profile_screen_shot_notification_tips"
                 android:textColor="@color/seal_group_detail_clean_tips"
-                android:textSize="@dimen/seal_group_detail_clean_tips_size" />
+                android:textSize="@dimen/seal_group_detail_clean_tips_size"
+                android:visibility="gone" />
 
 
             <cn.rongcloud.im.ui.view.SettingItemView
                 android:id="@+id/profile_siv_group_clean_timming"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:item_value_text_color="@color/seal_login_text_button_color"
-                app:item_content="@string/profile_clean_timing" />
+                android:layout_height="@dimen/seal_group_detail_item_height"
+                app:item_content="@string/profile_clean_timing"
+                app:item_right_image="@drawable/seal_ic_mine_go"
+                app:item_value_text_color="@color/seal_login_text_button_color" />
 
             <TextView
+                style="@style/TextStyle.Alignment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/seal_group_detail_clean_tips_margin_left"
+                android:layout_marginStart="@dimen/seal_group_detail_clean_tips_margin_left"
                 android:layout_marginTop="@dimen/seal_main_item_margin_bottom"
-                android:layout_marginRight="@dimen/seal_group_detail_clean_tips_margin_right"
+                android:layout_marginEnd="@dimen/seal_group_detail_clean_tips_margin_right"
                 android:layout_marginBottom="@dimen/seal_group_detail_clean_tips_margin_bottom"
-                android:textColor="@color/seal_group_detail_clean_tips"
                 android:text="@string/profile_clean_timing_tips"
+                android:textColor="@color/seal_group_detail_clean_tips"
                 android:textSize="@dimen/seal_group_detail_clean_tips_size" />
 
             <cn.rongcloud.im.ui.view.SettingItemView
                 android:id="@+id/profile_siv_group_clean_message"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/seal_group_detail_item_height"
                 app:item_content="@string/profile_clean_message"
-                app:item_divider="true">
+                app:item_right_image="@drawable/seal_ic_mine_go">
 
             </cn.rongcloud.im.ui.view.SettingItemView>
 
@@ -200,9 +213,9 @@
                 android:id="@+id/profile_btn_group_quit"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginLeft="14dp"
+                android:layout_marginStart="14dp"
                 android:layout_marginTop="30dp"
-                android:layout_marginRight="14dp"
+                android:layout_marginEnd="14dp"
                 android:background="@drawable/seal_btn_red_selector"
                 android:text="@string/profile_quit_group"
                 android:textColor="#FFF"

@@ -13,7 +13,7 @@
         android:layout_marginStart="@dimen/seal_search_item_checkbox_margin_left"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
         android:background="@null"
@@ -24,9 +24,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_toRightOf="@id/item_cb_select"
+        android:layout_toEndOf="@id/item_cb_select"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="10.5dp"
+        android:layout_marginStart="10.5dp"
         android:gravity="center_vertical"
         >
         <TextView

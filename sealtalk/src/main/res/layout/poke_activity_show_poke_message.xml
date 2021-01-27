@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/transparent"
     android:orientation="vertical"
     tools:background="@color/deep_black_transparent">
@@ -11,9 +12,9 @@
         android:id="@+id/poke_ll_poke_ignore_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="60dp"
+        android:layout_marginStart="60dp"
         android:layout_marginBottom="32dp"
         android:gravity="center_horizontal"
         android:orientation="vertical">
@@ -24,6 +25,7 @@
             android:src="@drawable/poke_img_ignore_poke_message" />
 
         <TextView
+            style="@style/TextStyle.Alignment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -37,9 +39,9 @@
         android:id="@+id/poke_ll_poke_start_chat_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginRight="60dp"
+        android:layout_marginEnd="60dp"
         android:layout_marginBottom="32dp"
         android:gravity="center_horizontal"
         android:orientation="vertical">
@@ -51,6 +53,7 @@
             android:src="@drawable/poke_img_start_chat" />
 
         <TextView
+            style="@style/TextStyle.Alignment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -61,6 +64,7 @@
 
     <TextView
         android:id="@+id/poke_tv_invite_name"
+        style="@style/TextStyle.Alignment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/poke_siv_user_avatar"
@@ -72,6 +76,7 @@
 
     <TextView
         android:id="@+id/poke_tv_invite_group_name"
+        style="@style/TextStyle.Alignment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/poke_tv_invite_name"
@@ -85,6 +90,7 @@
 
     <TextView
         android:id="@+id/poke_tv_poke_message"
+        style="@style/TextStyle.Alignment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/poke_tv_invite_name"
@@ -102,6 +108,7 @@
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_centerHorizontal="true"
+        app:sriv_oval="true"
         android:scaleType="centerCrop"
         android:layout_marginTop="83.5dp"
         tools:background="@drawable/common_default_portrait" />

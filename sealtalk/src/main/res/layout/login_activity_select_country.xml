@@ -18,7 +18,7 @@
             android:id="@+id/sidrbar"
             android:layout_width="@dimen/seal_login_select_country_sidebar_width"
             android:layout_height="@dimen/seal_login_select_country_sidebar_height"
-            android:layout_gravity="right|center"
+            android:layout_gravity="end|center"
             />
 
     </FrameLayout>

@@ -29,7 +29,7 @@ import cn.rongcloud.im.ui.view.SealTitleBar;
 import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.viewmodel.GroupNoticeViewModel;
 import cn.rongcloud.im.utils.log.SLog;
-import io.rong.imkit.emoticon.AndroidEmoji;
+import io.rong.imkit.conversation.extension.component.emoticon.AndroidEmoji;
 
 /**
  * 群公告发布界面
@@ -202,7 +202,7 @@ public class GroupNoticeActivity extends TitleBaseActivity {
     private void setSendEnable(boolean isEnable) {
         if (isEnable) {
             titleConfirmTv.setClickable(true);
-            titleConfirmTv.setTextColor(getResources().getColor(android.R.color.white));
+            titleConfirmTv.setTextColor(getResources().getColor(R.color.color_black_111F2C));
         } else {
             titleConfirmTv.setClickable(false);
             titleConfirmTv.setTextColor(getResources().getColor(android.R.color.darker_gray));

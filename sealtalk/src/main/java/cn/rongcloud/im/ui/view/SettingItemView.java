@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
@@ -100,7 +101,7 @@ public class SettingItemView extends LinearLayout {
                     case R.styleable.SettingItemView_item_content_text_size:
                         float contentSize = ta.getDimension(attr, 0);
                         if (contentSize > 0) {
-                            tvContent.setText(Math.round(contentSize));
+                            tvContent.setTextSize(TypedValue.COMPLEX_UNIT_PX, Math.round(contentSize));
                         }
                         break;
                     case R.styleable.SettingItemView_item_content_text_color:
@@ -117,7 +118,7 @@ public class SettingItemView extends LinearLayout {
                     case R.styleable.SettingItemView_item_value_text_size:
                         float valueSize = ta.getDimension(attr, 0);
                         if (valueSize > 0) {
-                            tvValue.setText(Math.round(valueSize));
+                            tvValue.setTextSize(TypedValue.COMPLEX_UNIT_PX, Math.round(valueSize));
                         }
                         break;
                     case R.styleable.SettingItemView_item_value_text_color:
@@ -182,6 +183,22 @@ public class SettingItemView extends LinearLayout {
                         Drawable rightImage = ta.getDrawable(attr);
                         ivRightImage.setImageDrawable(rightImage);
                         ivRightImage.setVisibility(VISIBLE);
+                        break;
+                    case R.styleable.SettingItemView_item_right_image_height:
+                        float rightImageHeight = ta.getDimension(attr, 0);
+                        if (rightImageHeight > 0) {
+                            ViewGroup.LayoutParams layoutParamsHeight = ivRightImage.getLayoutParams();
+                            layoutParamsHeight.height = Math.round(rightImageHeight);
+                            ivRightImage.setLayoutParams(layoutParamsHeight);
+                        }
+                        break;
+                    case R.styleable.SettingItemView_item_right_image_width:
+                        float rightImageWidth = ta.getDimension(attr, 0);
+                        if (rightImageWidth > 0) {
+                            ViewGroup.LayoutParams layoutParamsWidth = ivRightImage.getLayoutParams();
+                            layoutParamsWidth.width = Math.round(rightImageWidth);
+                            ivRightImage.setLayoutParams(layoutParamsWidth);
+                        }
                         break;
                 }
             }
@@ -396,5 +413,9 @@ public class SettingItemView extends LinearLayout {
         } else {
             ivSelectImage.setVisibility(View.GONE);
         }
+    }
+
+    public ImageView getRightImageView() {
+        return ivRightImage;
     }
 }

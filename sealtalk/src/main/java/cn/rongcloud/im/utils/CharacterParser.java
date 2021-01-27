@@ -10,7 +10,6 @@ import android.text.style.ForegroundColorSpan;
 import cn.rongcloud.im.R;
 import io.rong.imlib.model.MessageContent;
 import io.rong.message.FileMessage;
-import io.rong.message.ReferenceMessage;
 import io.rong.message.RichContentMessage;
 import io.rong.message.TextMessage;
 
@@ -213,7 +212,8 @@ public class CharacterParser {
             TextMessage textMessage = (TextMessage) messageContent;
             String textMessageContent = textMessage.getContent();
             messageText = getOmitColored(filterStr, textMessageContent, 0, context);
-        } else if (messageContent instanceof RichContentMessage) {
+        }
+        if (messageContent instanceof RichContentMessage) {
             RichContentMessage richContentMessage = (RichContentMessage) messageContent;
             String messageTitle = richContentMessage.getTitle();
             messageText = getOmitColored(filterStr, messageTitle, 1, context);
@@ -222,14 +222,11 @@ public class CharacterParser {
                 spannableStringBuilder.append(messageTitle);
                 messageText = spannableStringBuilder;
             }
-        } else if (messageContent instanceof FileMessage) {
+        }
+        if (messageContent instanceof FileMessage) {
             FileMessage fileMessage = (FileMessage) messageContent;
             String fileName = fileMessage.getName();
             messageText = getOmitColored(filterStr, fileName, 2, context);
-        } else if (messageContent instanceof ReferenceMessage) {
-            ReferenceMessage referenceMessage = (ReferenceMessage) messageContent;
-            String textMessageContent = referenceMessage.getEditSendText();
-            messageText = getOmitColored(filterStr, textMessageContent, 0, context);
         }
         return messageText;
     }
@@ -286,8 +283,8 @@ public class CharacterParser {
                         smallerString = content.substring(firstIndex - 5, firstIndex + 7);
                         smallerStringLowerCase = lowerCaseText.substring(firstIndex - 5, firstIndex + 7);
                         String smallerFilter = lowerCaseFilterStr;
-                        if (smallerFilter.length() > 7) {
-                            smallerFilter = lowerCaseFilterStr.substring(0, 7);
+                        if(smallerFilter.length() > 7){
+                            smallerFilter = lowerCaseFilterStr.substring(0,7);
                         }
                         index = smallerStringLowerCase.indexOf(smallerFilter);
                     } else {

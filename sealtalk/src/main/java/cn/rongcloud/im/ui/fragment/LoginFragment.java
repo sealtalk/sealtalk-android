@@ -200,4 +200,10 @@ public class LoginFragment extends BaseFragment {
         countryNameTv.setText(countryName);
         countryCodeTv.setText(region);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        passwordEdit = null;
+    }
 }

@@ -4,15 +4,21 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.text.Editable;
 
-import io.rong.imkit.RongExtension;
-import io.rong.imkit.plugin.IPluginModule;
-import io.rong.imkit.plugin.IPluginRequestPermissionResultCallback;
-import io.rong.imkit.utilities.PermissionCheckUtil;
+import io.rong.imkit.conversation.extension.InputMode;
+import io.rong.imkit.conversation.extension.RongExtension;
+import io.rong.imkit.conversation.extension.RongExtensionViewModel;
+import io.rong.imkit.conversation.extension.component.plugin.IPluginModule;
+import io.rong.imkit.conversation.extension.component.plugin.IPluginRequestPermissionResultCallback;
+import io.rong.imkit.manager.AudioPlayManager;
+import io.rong.imkit.utils.PermissionCheckUtil;
+
 
 public class RecognizePlugin implements IPluginModule, IPluginRequestPermissionResultCallback {
 
@@ -27,7 +33,7 @@ public class RecognizePlugin implements IPluginModule, IPluginRequestPermissionR
     }
 
     @Override
-    public void onClick(Fragment currentFragment, final RongExtension extension) {
+    public void onClick(Fragment currentFragment, final RongExtension extension, int index) {
         String[] permissions = {Manifest.permission.RECORD_AUDIO};
         if (PermissionCheckUtil.checkPermissions(currentFragment.getActivity(), permissions)) {
             startRecognize(currentFragment, extension);
@@ -43,6 +49,12 @@ public class RecognizePlugin implements IPluginModule, IPluginRequestPermissionR
     }
 
     private void startRecognize(Fragment fragment, final RongExtension extension) {
+        if (AudioPlayManager.getInstance().isPlaying()) {
+            AudioPlayManager.getInstance().stopPlay();
+        }
+        RongExtensionViewModel mExtensionViewModel = new ViewModelProvider(fragment).get(RongExtensionViewModel.class);
+        mExtensionViewModel.getInputModeLiveData().postValue(InputMode.RecognizeMode);
+
         Recognizer recognizerView = new Recognizer(extension.getContext());
         recognizerView.setResultCallBack(new IRecognizedResult() {
             @Override
@@ -67,7 +79,7 @@ public class RecognizePlugin implements IPluginModule, IPluginRequestPermissionR
         if (PermissionCheckUtil.checkPermissions(fragment.getActivity(), permissions)) {
             startRecognize(fragment, extension);
         } else {
-            extension.showRequestPermissionFailedAlter(PermissionCheckUtil.getNotGrantedPermissionMsg(fragment.getActivity(), permissions, grantResults));
+            PermissionCheckUtil.showRequestPermissionFailedAlter(fragment.getContext(), permissions, grantResults);
         }
         return true;
     }

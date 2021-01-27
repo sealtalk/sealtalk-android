@@ -14,5 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_search_item_devi_height"
         android:layout_gravity="bottom"
-        android:background="@color/seal_search_devi_color" />
+        android:background="@color/seal_search_devi_color"
+        android:visibility="invisible" />
 </FrameLayout>

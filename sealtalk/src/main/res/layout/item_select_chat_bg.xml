@@ -14,7 +14,7 @@
         android:id="@+id/iv_select"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:padding="6dp"
         android:src="@drawable/seal_ic_checkbox_full_green"

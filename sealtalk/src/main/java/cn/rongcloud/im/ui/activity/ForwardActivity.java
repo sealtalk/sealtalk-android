@@ -40,7 +40,7 @@ import static cn.rongcloud.im.ui.view.SealTitleBar.Type.SEARCH;
  * 还有单选界面
  * 多选界面
  */
-public class ForwardActivity extends TitleBaseActivity {
+public class ForwardActivity extends SelectBaseActivity {
 
     private static final String TAG = "ForwardActivity";
     private ForwardActivityViewModel forwardActivityViewModel;
@@ -97,6 +97,7 @@ public class ForwardActivity extends TitleBaseActivity {
      * 初始化布局
      */
     private void initView() {
+        getTitleBar().setTitle(R.string.seal_select_forward_title);
         getTitleBar().addSeachTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -112,7 +113,7 @@ public class ForwardActivity extends TitleBaseActivity {
                 search(s.toString());
             }
         });
-        getTitleBar().setType(SEARCH);
+
         getTitleBar().setOnBtnRightClickListener(getString(R.string.seal_select_forward_contact_multi), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,6 +137,11 @@ public class ForwardActivity extends TitleBaseActivity {
 
         //默认页面是多选
         showFragment(selectPageIndex);
+    }
+
+    @Override
+    protected boolean isSearchable() {
+        return true;
     }
 
     /**

@@ -24,6 +24,18 @@
         android:layout_height="@dimen/seal_mine_change_language_item_height"
         app:item_content="@string/lang_english"
         app:item_show_selected="true"
+        app:item_divider="true"
+        app:item_selected_image="@drawable/seal_ic_selected"
+        >
+
+    </cn.rongcloud.im.ui.view.SettingItemView>
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_arab"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_mine_change_language_item_height"
+        app:item_content="@string/lang_arab"
+        app:item_show_selected="true"
         app:item_selected_image="@drawable/seal_ic_selected"
         >
 

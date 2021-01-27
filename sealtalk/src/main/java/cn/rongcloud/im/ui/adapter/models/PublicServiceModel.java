@@ -1,6 +1,6 @@
 package cn.rongcloud.im.ui.adapter.models;
 
-import io.rong.imlib.model.PublicServiceProfile;
+import io.rong.imlib.publicservice.model.PublicServiceProfile;
 
 public class PublicServiceModel extends ContactModel<PublicServiceProfile> {
 

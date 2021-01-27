@@ -12,24 +12,26 @@
         app:sriv_left_top_corner_radius="@dimen/seal_userinfo_item_header_radius"
         app:sriv_right_bottom_corner_radius="@dimen/seal_userinfo_item_header_radius"
         app:sriv_right_top_corner_radius="@dimen/seal_userinfo_item_header_radius"
+        app:sriv_oval="true"
         android:layout_width="@dimen/seal_userinfo_item_header_width"
         android:layout_height="@dimen/seal_userinfo_item_header_height"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/seal_userinfo_item_header_margin"
+        android:layout_marginStart="@dimen/seal_userinfo_item_header_margin"
+        android:layout_marginEnd="@dimen/seal_userinfo_item_header_margin"
         android:layout_centerVertical="true"
         android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/tv_name"
+        style="@style/TextStyle.Alignment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/seal_userinfo_item_name_margin_left"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="@string/seal_userinfo_item_user_portrait"
         android:textColor="@color/seal_userinfo_item_name_text"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/iv_left_header"
+        android:layout_toEndOf="@+id/iv_left_header"
         android:textSize="@dimen/seal_userinfo_item_name_text_size" />
 
     <cn.rongcloud.im.ui.widget.SelectableRoundedImageView
@@ -38,12 +40,13 @@
         app:sriv_left_top_corner_radius="@dimen/seal_userinfo_item_header_radius"
         app:sriv_right_bottom_corner_radius="@dimen/seal_userinfo_item_header_radius"
         app:sriv_right_top_corner_radius="@dimen/seal_userinfo_item_header_radius"
+        app:sriv_oval="true"
         android:layout_width="@dimen/seal_userinfo_item_header_width"
         android:layout_height="@dimen/seal_userinfo_item_header_height"
         android:layout_gravity="center_vertical"
-        android:layout_marginRight="@dimen/seal_userinfo_item_header_margin"
+        android:layout_marginEnd="@dimen/seal_userinfo_item_header_margin"
         android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:scaleType="centerCrop"
         android:visibility="visible"
         />
@@ -51,10 +54,9 @@
     <View
         android:id="@+id/v_divider"
         android:layout_width="match_parent"
+        android:layout_toEndOf="@+id/iv_left_header"
         android:layout_height="@dimen/seal_userInfo_item_divider"
-        android:layout_marginLeft="@dimen/seal_userinfo_item_header_margin"
-        android:layout_marginRight="@dimen/seal_userinfo_item_header_margin"
-        android:background="@color/seal_userinfo_item_divider"
+        android:background="@color/seal_setting_item_divider"
         android:layout_alignParentBottom="true"
         />
 </RelativeLayout>

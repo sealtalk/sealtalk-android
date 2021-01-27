@@ -1,13 +1,18 @@
 package cn.rongcloud.im.ui.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -28,7 +33,6 @@ import cn.rongcloud.im.model.VersionInfo;
 import cn.rongcloud.im.ui.BaseActivity;
 import cn.rongcloud.im.ui.dialog.MorePopWindow;
 import cn.rongcloud.im.ui.fragment.MainContactsListFragment;
-import cn.rongcloud.im.ui.fragment.MainConversationListFragment;
 import cn.rongcloud.im.ui.fragment.MainDiscoveryFragment;
 import cn.rongcloud.im.ui.fragment.MainMeFragment;
 import cn.rongcloud.im.ui.view.MainBottomTabGroupView;
@@ -40,6 +44,10 @@ import cn.rongcloud.im.viewmodel.AppViewModel;
 import cn.rongcloud.im.viewmodel.MainViewModel;
 import cn.rongcloud.im.utils.log.SLog;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.conversationlist.ConversationListFragment;
+import io.rong.imkit.picture.tools.ScreenUtils;
+import io.rong.imkit.utils.RouteUtils;
+import io.rong.imlib.model.Conversation;
 
 public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWindowItemClickListener {
     public static final String PARAMS_TAB_INDEX = "tab_index";
@@ -53,6 +61,9 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
     private ImageView ivMore;
     private AppViewModel appViewModel;
     public MainViewModel mainViewModel;
+    private TextView tvTitle;
+    private RelativeLayout btnSearch;
+    private ImageButton btnMore;
 
     /**
      * tab 项枚举
@@ -115,9 +126,23 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity_main);
+//        setWindowStatusBarColor(this,R.color.white);
         initView();
         initViewModel();
         clearBadgeStatu();
+    }
+
+    //设置Activity对应的顶部状态栏的颜色
+    public static void setWindowStatusBarColor(Activity activity, int colorResId) {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Window window = activity.getWindow();
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(activity.getResources().getColor(colorResId));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //清除华为的角标
@@ -146,10 +171,14 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
      * 初始化布局
      */
     private void initView() {
+        tvTitle = findViewById(R.id.tv_title);
+        btnSearch = findViewById(R.id.btn_search);
+        btnMore = findViewById(R.id.btn_more);
+
         int tabIndex = getIntent().getIntExtra(PARAMS_TAB_INDEX, Tab.CHAT.getValue());
 
         // title
-        findViewById(R.id.btn_search).setOnClickListener(new View.OnClickListener() {
+        btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SealSearchActivity.class);
@@ -157,11 +186,17 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
             }
         });
 
-        findViewById(R.id.btn_more).setOnClickListener(new View.OnClickListener() {
+        btnMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MorePopWindow morePopWindow = new MorePopWindow(MainActivity.this, MainActivity.this);
-                morePopWindow.showPopupWindow(v);
+                int currentItem = vpFragmentContainer.getCurrentItem();
+                if (currentItem == Tab.CHAT.getValue()) {
+                    MorePopWindow morePopWindow = new MorePopWindow(MainActivity.this, MainActivity.this);
+                    morePopWindow.showPopupWindow(btnMore, 0.8f, -getXOffset(), 0);
+                } else if (currentItem == Tab.CONTACTS.getValue()) {
+                    onAddFriendClick();
+                }
+
             }
         });
 
@@ -185,12 +220,17 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
         // 初始化 tab
         List<TabItem> items = new ArrayList<>();
         String[] stringArray = getResources().getStringArray(R.array.tab_names);
-
+        List<TabItem.AnimationDrawableBean> animationDrawableList = new ArrayList<>();
+        animationDrawableList.add(new TabItem.AnimationDrawableBean(R.drawable.tab_chat_0, R.drawable.tab_chat_animation_list));
+        animationDrawableList.add(new TabItem.AnimationDrawableBean(R.drawable.tab_contacts_0, R.drawable.tab_contacts_animation_list));
+        animationDrawableList.add(new TabItem.AnimationDrawableBean(R.drawable.tab_chatroom_0, R.drawable.tab_chatroom_animation_list));
+        animationDrawableList.add(new TabItem.AnimationDrawableBean(R.drawable.tab_me_0, R.drawable.tab_me_animation_list));
         for (Tab tab : Tab.values()) {
             TabItem tabItem = new TabItem();
             tabItem.id = tab.getValue();
             tabItem.text = stringArray[tab.getValue()];
-            tabItem.drawable = tabImageRes[tab.getValue()];
+            tabItem.animationDrawable = animationDrawableList.get(tab.getValue());
+//            tabItem.drawable = tabImageRes[tab.getValue()];
             items.add(tabItem);
         }
 
@@ -202,10 +242,27 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
                 if (currentItem != item.id) {
                     // 切换布局
                     vpFragmentContainer.setCurrentItem(item.id);
-                    // 如果是我的页面， 则隐藏红点
                     if (item.id == Tab.ME.getValue()) {
+                        // 如果是我的页面， 则隐藏红点
                         ((MainBottomTabItem) tabGroupView.getView(Tab.ME.getValue())).setRedVisibility(View.GONE);
+                        tvTitle.setText(getResources().getStringArray(R.array.tab_names)[3]);
+                        btnMore.setVisibility(View.GONE);
+                        btnSearch.setVisibility(View.GONE);
                     }
+                } else if (item.id == Tab.CHAT.getValue()) {
+                    btnMore.setVisibility(View.VISIBLE);
+                    btnSearch.setVisibility(View.VISIBLE);
+                    btnMore.setImageDrawable(getResources().getDrawable(R.drawable.seal_ic_main_more));
+                    tvTitle.setText(getResources().getStringArray(R.array.tab_names)[0]);
+                } else if (item.id == Tab.CONTACTS.getValue()) {
+                    btnMore.setVisibility(View.VISIBLE);
+                    btnSearch.setVisibility(View.VISIBLE);
+                    btnMore.setImageDrawable(getResources().getDrawable(R.drawable.seal_ic_main_add_friend));
+                    tvTitle.setText(getResources().getStringArray(R.array.tab_names)[1]);
+                } else if (item.id == Tab.FIND.getValue()) {
+                    tvTitle.setText(getResources().getStringArray(R.array.tab_names)[2]);
+                    btnMore.setVisibility(View.GONE);
+                    btnSearch.setVisibility(View.GONE);
                 }
             }
         });
@@ -215,8 +272,9 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
             public void onDoubleClick(TabItem item, View view) {
                 // 双击定位到某一个未读消息位置
                 if (item.id == Tab.CHAT.getValue()) {
-                    MainConversationListFragment fragment = (MainConversationListFragment) fragments.get(Tab.CHAT.getValue());
-                    fragment.focusUnreadItem();
+                    //todo
+//                    MainConversationListFragment fragment = (MainConversationListFragment) fragments.get(Tab.CHAT.getValue());
+//                    fragment.focusUnreadItem();
                 }
             }
         });
@@ -239,7 +297,7 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
      * 初始化 initFragmentViewPager
      */
     private void initFragmentViewPager() {
-        fragments.add(new MainConversationListFragment());
+        fragments.add(new ConversationListFragment());
         fragments.add(new MainContactsListFragment());
         fragments.add(new MainDiscoveryFragment());
         fragments.add(new MainMeFragment());
@@ -330,10 +388,10 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
         mainViewModel.getPrivateChatLiveData().observe(this, new Observer<FriendShipInfo>() {
             @Override
             public void onChanged(FriendShipInfo friendShipInfo) {
-                RongIM.getInstance().startPrivateChat(MainActivity.this,
-                        friendShipInfo.getUser().getId(),
-                        TextUtils.isEmpty(friendShipInfo.getDisplayName()) ?
-                                friendShipInfo.getUser().getNickname() : friendShipInfo.getDisplayName());
+                Bundle bundle = new Bundle();
+                bundle.putString("title", TextUtils.isEmpty(friendShipInfo.getDisplayName()) ? friendShipInfo.getUser().getNickname() : friendShipInfo.getDisplayName());
+                RouteUtils.routeToConversationActivity(MainActivity.this, Conversation.ConversationType.PRIVATE,
+                        friendShipInfo.getUser().getId(), bundle);
             }
         });
 
@@ -408,5 +466,13 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
         Intent intent = new Intent(this, ScanActivity.class);
         startActivity(intent);
     }
+
+    private int getXOffset() {
+        int marginEnd = ScreenUtils.dip2px(MainActivity.this, 12);
+        float popSelfXOffset = getResources().getDimension(R.dimen.seal_main_title_popup_width) - btnMore.getWidth();
+        return (int) (popSelfXOffset);
+
+    }
+
 
 }

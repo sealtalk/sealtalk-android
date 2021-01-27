@@ -18,7 +18,7 @@ import cn.rongcloud.im.model.UserSimpleInfo;
 import cn.rongcloud.im.ui.adapter.BlackListAdapter;
 import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.viewmodel.BlackListViewModel;
-import io.rong.imkit.utilities.OptionsPopupDialog;
+import io.rong.imkit.widget.dialog.OptionsPopupDialog;
 
 public class BlackListActivity extends TitleBaseActivity {
     private BlackListAdapter adapter;

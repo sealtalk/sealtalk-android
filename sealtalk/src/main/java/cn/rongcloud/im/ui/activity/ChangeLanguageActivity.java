@@ -12,12 +12,13 @@ import androidx.lifecycle.ViewModelProviders;
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.view.SettingItemView;
 import cn.rongcloud.im.viewmodel.AppViewModel;
-import io.rong.imkit.utilities.LangUtils;
+import io.rong.imkit.utils.language.LangUtils;
 
 public class ChangeLanguageActivity extends TitleBaseActivity {
 
     private SettingItemView chineseSiv;
     private SettingItemView englishSiv;
+    private SettingItemView arabSiv;
     private AppViewModel appViewModel;
 
     @Override
@@ -35,24 +36,38 @@ public class ChangeLanguageActivity extends TitleBaseActivity {
         getTitleBar().setTitle(R.string.seal_mine_change_language);
 
         chineseSiv = findViewById(R.id.siv_chinese);
+        englishSiv =  findViewById(R.id.siv_english);
+        arabSiv = findViewById(R.id.siv_arab);
+
         chineseSiv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //中文
                 chineseSiv.setSelected(true);
                 englishSiv.setSelected(false);
+                arabSiv.setSelected(false);
                 changeLanguage(LangUtils.RCLocale.LOCALE_CHINA);
                 backToSettingActivity();
             }
         });
-        englishSiv =  findViewById(R.id.siv_english);
         englishSiv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //英文
                 chineseSiv.setSelected(false);
                 englishSiv.setSelected(true);
+                arabSiv.setSelected(false);
                 changeLanguage(LangUtils.RCLocale.LOCALE_US);
+                backToSettingActivity();
+            }
+        });
+        arabSiv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chineseSiv.setSelected(false);
+                englishSiv.setSelected(false);
+                arabSiv.setSelected(true);
+                changeLanguage(LangUtils.RCLocale.LOCALE_ARAB);
                 backToSettingActivity();
             }
         });
@@ -70,9 +85,15 @@ public class ChangeLanguageActivity extends TitleBaseActivity {
                 if (rcLocale == LangUtils.RCLocale.LOCALE_US) {
                     chineseSiv.setSelected(false);
                     englishSiv.setSelected(true);
-                } else  {
+                    arabSiv.setSelected(false);
+                } else if (rcLocale == LangUtils.RCLocale.LOCALE_CHINA){
                     chineseSiv.setSelected(true);
                     englishSiv.setSelected(false);
+                    arabSiv.setSelected(false);
+                } else if (rcLocale == LangUtils.RCLocale.LOCALE_ARAB){
+                    chineseSiv.setSelected(false);
+                    englishSiv.setSelected(false);
+                    arabSiv.setSelected(true);
                 }
             }
         });

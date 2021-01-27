@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <io.rong.imkit.widget.AsyncImageView
+    <cn.rongcloud.im.utils.AsyncImageView
         android:id="@+id/iv_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -19,6 +19,7 @@
 
         <TextView
             android:id="@+id/tv_cancel"
+            style="@style/TextStyle.Alignment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -29,6 +30,7 @@
 
         <TextView
             android:id="@+id/tv_set"
+            style="@style/TextStyle.Alignment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -51,8 +53,8 @@
             android:layout_centerVertical="true"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/seal_search_item_checkbox_margin_left"
-            android:paddingRight="12dp">
+            android:paddingStart="@dimen/seal_search_item_checkbox_margin_left"
+            android:paddingEnd="12dp">
 
             <CheckBox
                 android:id="@+id/cb_select_orgin"
@@ -66,11 +68,12 @@
                 android:paddingBottom="10dp" />
 
             <TextView
+                style="@style/TextStyle.Alignment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="3dp"
-                android:layout_toRightOf="@id/cb_select_all"
+                android:layout_marginStart="3dp"
+                android:layout_toEndOf="@id/cb_select_all"
                 android:text="@string/seal_select_chat_bg_origin"
                 android:textColor="@color/white"
                 android:textSize="@dimen/seal_update_staccount_dialog_title" />
@@ -79,13 +82,14 @@
 
         <TextView
             android:id="@+id/tv_send"
+            style="@style/TextStyle.Alignment"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
             android:text="@string/seal_select_chat_bg_send"
             android:textColor="@color/color_blue_9F"
             android:textSize="@dimen/seal_update_staccount_dialog_title" />

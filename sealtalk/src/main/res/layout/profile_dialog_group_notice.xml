@@ -15,6 +15,7 @@
         android:orientation="vertical">
 
         <TextView
+            style="@style/TextStyle.Alignment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/profile_group_notice"
@@ -24,12 +25,13 @@
 
         <TextView
             android:id="@+id/profile_tv_dialog_group_notice_content"
+            style="@style/TextStyle.Alignment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginTop="16dp"
-            android:paddingLeft="@dimen/common_dialog_text_margin_left"
-            android:paddingRight="@dimen/common_dialog_text_margin_right"
+            android:paddingStart="@dimen/common_dialog_text_margin_left"
+            android:paddingEnd="@dimen/common_dialog_text_margin_right"
             android:textColor="@color/default_main_text"
             android:textSize="@dimen/common_dialog_text_size"
             tools:text="暂时没有公告"
@@ -37,6 +39,7 @@
 
         <TextView
             android:id="@+id/profile_tv_dialog_group_notice_time"
+            style="@style/TextStyle.Alignment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="发布时间:2019-12-12 10:45:12"

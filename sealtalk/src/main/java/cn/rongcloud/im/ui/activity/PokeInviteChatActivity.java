@@ -29,7 +29,7 @@ import cn.rongcloud.im.utils.VibratorUtils;
 import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.viewmodel.UserDetailViewModel;
 import io.rong.imkit.RongIM;
-import io.rong.imkit.userInfoCache.RongUserInfoManager;
+import io.rong.imkit.userinfo.RongUserInfoManager;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 

@@ -15,12 +15,23 @@ public class TabItem {
     public int left;
     public int bottom;
     public int right;
+    public AnimationDrawableBean animationDrawable;
 
     public Type type;
 
-    public enum Type{
+    public enum Type {
         BUTTON,
         CHECKBOX,
         RADIOBUTTON
+    }
+
+    public static class AnimationDrawableBean {
+        public int drawableNormal;
+        public int drawableAnimation;
+
+        public AnimationDrawableBean(int drawableNormal, int drawableAnimation) {
+            this.drawableNormal = drawableNormal;
+            this.drawableAnimation = drawableAnimation;
+        }
     }
 }

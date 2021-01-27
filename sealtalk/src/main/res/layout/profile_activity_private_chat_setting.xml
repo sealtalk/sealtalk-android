@@ -11,25 +11,25 @@
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
         android:background="@color/white"
         android:orientation="horizontal">
 
         <cn.rongcloud.im.ui.widget.SelectableRoundedImageView
             android:id="@+id/profile_siv_user_header"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginBottom="5dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:scaleType="centerCrop"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             app:sriv_left_bottom_corner_radius="3dip"
             app:sriv_left_top_corner_radius="3dip"
             app:sriv_right_bottom_corner_radius="3dip"
             app:sriv_right_top_corner_radius="3dip"
-            tools:background="@color/gray"
+            app:sriv_oval="true"
             />
 
         <TextView
@@ -40,22 +40,22 @@
             android:layout_below="@id/profile_siv_user_header"
             android:maxLines="1"
             android:ellipsize="end"
-            android:textColor="@color/color_black_text"
-            android:layout_marginLeft="-5dp"
-            android:layout_marginRight="-5dp"
-            android:layout_alignLeft="@id/profile_siv_user_header"
-            android:layout_alignRight="@id/profile_siv_user_header"
-            android:textSize="14sp"
+            android:textColor="#111F2C"
+            android:layout_marginStart="-5dp"
+            android:layout_marginEnd="-5dp"
+            android:layout_alignStart="@id/profile_siv_user_header"
+            android:layout_alignEnd="@id/profile_siv_user_header"
+            android:textSize="12dp"
             tools:text="用户名"
             />
 
         <ImageView
             android:id="@+id/profile_iv_add_member"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_toRightOf="@id/profile_siv_user_header"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_toEndOf="@id/profile_siv_user_header"
             android:layout_alignTop="@id/profile_siv_user_header"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:src="@drawable/profile_ic_grid_member_add"
             />
 
@@ -67,7 +67,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_private_detail_item_height"
         android:layout_marginTop="@dimen/seal_private_detail_item_margin_top"
-        app:item_content="@string/profile_search_message"/>
+        app:item_content="@string/profile_search_message"
+        app:item_right_image="@drawable/seal_ic_mine_go"/>
 
     <cn.rongcloud.im.ui.view.SettingItemView
         android:id="@+id/siv_user_notification"
@@ -100,9 +101,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/seal_group_detail_clean_tips_margin_left"
+        android:layout_marginStart="@dimen/seal_group_detail_clean_tips_margin_left"
         android:layout_marginTop="@dimen/seal_main_item_margin_bottom"
-        android:layout_marginRight="@dimen/seal_group_detail_clean_tips_margin_right"
+        android:layout_marginEnd="@dimen/seal_group_detail_clean_tips_margin_right"
         android:layout_marginBottom="@dimen/seal_group_detail_clean_tips_margin_bottom"
         android:textColor="@color/seal_group_detail_clean_tips"
         android:text="@string/profile_screen_shot_notification_tips"
@@ -113,6 +114,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_private_detail_item_height"
         app:item_content="@string/profile_clean_message"
+        app:item_right_image="@drawable/seal_ic_mine_go"
         >
     </cn.rongcloud.im.ui.view.SettingItemView>
 

@@ -6,15 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.model.GroupMember;
-import io.rong.imkit.widget.AsyncImageView;
 
 public class MemberMentionedAdapter extends BaseAdapter  implements SectionIndexer {
     private List<GroupMember> memberList = new ArrayList<>();
@@ -54,7 +56,7 @@ public class MemberMentionedAdapter extends BaseAdapter  implements SectionIndex
             viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(parent.getContext()).inflate(io.rong.imkit.R.layout.rc_mention_list_item, null);
             viewHolder.name = (TextView) convertView.findViewById(io.rong.imkit.R.id.rc_user_name);
-            viewHolder.portrait = (AsyncImageView) convertView.findViewById(io.rong.imkit.R.id.rc_user_portrait);
+            viewHolder.portrait = (ImageView) convertView.findViewById(io.rong.imkit.R.id.rc_user_portrait);
             viewHolder.letter = (TextView) convertView.findViewById(io.rong.imkit.R.id.letter);
             convertView.setTag(viewHolder);
         } else {
@@ -68,12 +70,12 @@ public class MemberMentionedAdapter extends BaseAdapter  implements SectionIndex
             }
             viewHolder.name.setText(name);
             if (!TextUtils.isEmpty(member.getPortraitUri())) {
-                viewHolder.portrait.setAvatar(Uri.parse(member.getPortraitUri()));
+                Glide.with(convertView).load(Uri.parse(member.getPortraitUri())).into(viewHolder.portrait);
             } else {
                 if (member.getUserId().equals("-1")) {
-                    viewHolder.portrait.setImageResource(R.drawable.seal_ic_mention_at);
+                    Glide.with(convertView).load(R.drawable.seal_ic_mention_at).into(viewHolder.portrait);
                 } else {
-                    viewHolder.portrait.setImageResource(R.drawable.rc_default_portrait);
+                    Glide.with(convertView).load(R.drawable.rc_default_portrait).into(viewHolder.portrait);
                 }
             }
         }
@@ -116,7 +118,7 @@ public class MemberMentionedAdapter extends BaseAdapter  implements SectionIndex
 
 
     class ViewHolder {
-        AsyncImageView portrait;
+        ImageView portrait;
         TextView name;
         TextView letter;
     }

@@ -24,7 +24,9 @@ public interface FriendDao {
             "left join user " +
             "on friend.id = user.id " +
             "order by user.order_spelling")
-    LiveData<List<FriendShipInfo>> getAllFriendListDB();
+    LiveData<List<FriendShipInfo>>
+
+    getAllFriendListDB();
 
     @Query("SELECT friend.id,alias,portrait_uri,name,region,phone_number,friend_status,message,updateAt,alias_spelling, name_spelling,order_spelling " +
             "FROM friend INNER JOIN user on friend.id = user.id WHERE friend.id = :id")

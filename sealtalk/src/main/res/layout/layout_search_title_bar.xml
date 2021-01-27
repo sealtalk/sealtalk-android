@@ -18,13 +18,14 @@
         />
     <EditText
         android:id="@+id/et_search"
+        style="@style/EditTextStyle.Alignment"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/seal_search_title_bar_et_margin"
-        android:layout_marginRight="@dimen/seal_search_title_bar_et_margin"
-        android:drawableLeft="@drawable/seal_ic_et_search"
-        android:drawableRight="@drawable/seal_ic_search_cancel"
+        android:layout_marginStart="@dimen/seal_search_title_bar_et_margin"
+        android:layout_marginEnd="@dimen/seal_search_title_bar_et_margin"
+        android:drawableStart="@drawable/seal_ic_et_search"
+        android:drawableEnd="@drawable/seal_ic_search_cancel"
         android:drawablePadding="@dimen/seal_search_title_bar_et_padding"
         android:hint="@string/seal_search"
         android:textColorHint="@color/seal_search_title_bar_et_hite"

@@ -16,7 +16,6 @@
         android:id="@+id/lv_new_friends_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@color/seal_new_friends_divider"
-        android:dividerHeight="@dimen/seal_new_friends_divider_height" />
+        android:divider="@null" />
 
 </FrameLayout>

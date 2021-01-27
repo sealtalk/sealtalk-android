@@ -12,11 +12,10 @@ import java.util.List;
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.adapter.models.ContactModel;
 import cn.rongcloud.im.ui.adapter.models.PublicServiceModel;
-import io.rong.imkit.RongIM;
-import io.rong.imkit.userInfoCache.RongUserInfoManager;
+import io.rong.imlib.RongCoreClient;
 import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.PublicServiceProfile;
-import io.rong.imlib.model.PublicServiceProfileList;
+import io.rong.imlib.publicservice.model.PublicServiceProfile;
+import io.rong.imlib.publicservice.model.PublicServiceProfileList;
 
 public class PublicServiceViewModel extends AndroidViewModel {
 
@@ -28,12 +27,9 @@ public class PublicServiceViewModel extends AndroidViewModel {
     }
 
     public void loadPublicServices() {
-        RongIM.getInstance().getPublicServiceList(new RongIMClient.ResultCallback<PublicServiceProfileList>() {
+        RongIMClient.getInstance().getPublicServiceList(new RongIMClient.ResultCallback<PublicServiceProfileList>() {
             @Override
             public void onSuccess(PublicServiceProfileList infoList) {
-                for (PublicServiceProfile info : infoList.getPublicServiceData()) {
-                    RongUserInfoManager.getInstance().setPublicServiceProfile(info);
-                }
                 List<PublicServiceProfile> publicServiceProfiles = infoList.getPublicServiceData();
                 publicService.postValue(convert(publicServiceProfiles));
             }
@@ -46,7 +42,7 @@ public class PublicServiceViewModel extends AndroidViewModel {
     }
 
     public void searchPublicServices(String match) {
-        RongIM.getInstance().searchPublicService(RongIMClient.SearchType.FUZZY, match, new RongIMClient.ResultCallback<PublicServiceProfileList>() {
+        RongIMClient.getInstance().searchPublicService(RongIMClient.SearchType.FUZZY, match, new RongIMClient.ResultCallback<PublicServiceProfileList>() {
 
             @Override
             public void onError(RongIMClient.ErrorCode e) {

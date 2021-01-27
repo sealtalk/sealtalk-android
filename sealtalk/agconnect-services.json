@@ -1,10 +1,10 @@
 {
   "client": {
-    "cp_id": "请自行申请",
-    "product_id": "请自行申请",
-    "client_id": "请自行申请",
-    "client_secret": "请自行申请",
-    "app_id": "请自行申请",
+    "cp_id": "890086000001006812",
+    "product_id": "9105163812218391168",
+    "client_id": "259804143240086720",
+    "client_secret": "BDA7807ECD9C660D92C876C6D185D356E6786EB22A40EFF768E1F75635880BBB",
+    "app_id": "10535759",
     "package_name": "cn.rongcloud.im"
   },
   "configuration_version": "1.0"

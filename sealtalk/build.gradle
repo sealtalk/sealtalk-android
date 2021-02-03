@@ -68,6 +68,7 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.1.0-rc01'
     implementation 'androidx.exifinterface:exifinterface:1.1.0-beta01'
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    implementation files('libs/MiPush_SDK_Client_3_8_2.jar')
     annotationProcessor 'androidx.room:room-compiler:2.1.0-rc01'
     implementation 'androidx.exifinterface:exifinterface:1.1.0-beta01'
     api "com.google.zxing:core:3.3.2"

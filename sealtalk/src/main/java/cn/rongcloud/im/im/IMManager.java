@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Looper;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -55,11 +56,13 @@ import cn.rongcloud.im.ui.activity.ConversationActivity;
 import cn.rongcloud.im.ui.activity.ForwardActivity;
 import cn.rongcloud.im.ui.activity.GroupNoticeListActivity;
 import cn.rongcloud.im.ui.activity.GroupReadReceiptDetailActivity;
+import cn.rongcloud.im.ui.activity.MainActivity;
 import cn.rongcloud.im.ui.activity.NewFriendListActivity;
 import cn.rongcloud.im.ui.activity.PokeInviteChatActivity;
 import cn.rongcloud.im.ui.activity.SubConversationListActivity;
 import cn.rongcloud.im.ui.activity.UserDetailActivity;
 import cn.rongcloud.im.utils.log.SLog;
+import io.rong.common.RLog;
 import io.rong.contactcard.ContactCardExtensionModule;
 import io.rong.contactcard.IContactCardInfoProvider;
 import io.rong.imkit.IMCenter;
@@ -71,6 +74,7 @@ import io.rong.imkit.config.RongConfigCenter;
 import io.rong.imkit.conversation.extension.RongExtensionManager;
 import io.rong.imkit.conversation.messgelist.provider.GroupNotificationMessageItemProvider;
 import io.rong.imkit.conversationlist.model.BaseUiConversation;
+import io.rong.imkit.feature.mention.IExtensionEventWatcher;
 import io.rong.imkit.feature.mention.IMentionedInputListener;
 import io.rong.imkit.feature.mention.RongMentionManager;
 import io.rong.imkit.feature.quickreply.IQuickReplyProvider;
@@ -81,7 +85,9 @@ import io.rong.imkit.userinfo.RongUserInfoManager;
 import io.rong.imkit.userinfo.model.GroupUserInfo;
 import io.rong.imkit.utils.RouteUtils;
 import io.rong.imlib.IRongCallback;
+import io.rong.imlib.IRongCoreEnum;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.chatroom.base.RongChatRoomClient;
 import io.rong.imlib.common.DeviceUtils;
 import io.rong.imlib.cs.CustomServiceConfig;
 import io.rong.imlib.cs.CustomServiceManager;
@@ -89,6 +95,7 @@ import io.rong.imlib.model.AndroidConfig;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.IOSConfig;
+import io.rong.imlib.model.MentionedInfo;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageConfig;
 import io.rong.imlib.model.MessageContent;
@@ -97,7 +104,10 @@ import io.rong.imlib.model.UserInfo;
 import io.rong.imlib.publicservice.model.PublicServiceProfile;
 import io.rong.message.ContactNotificationMessage;
 import io.rong.message.GroupNotificationMessage;
+import io.rong.push.PushEventListener;
+import io.rong.push.PushType;
 import io.rong.push.RongPushClient;
+import io.rong.push.notification.PushNotificationMessage;
 import io.rong.push.pushconfig.PushConfig;
 import io.rong.recognizer.RecognizeExtensionModule;
 import io.rong.sight.SightExtensionModule;
@@ -105,6 +115,7 @@ import io.rong.sight.SightExtensionModule;
 import static android.content.Context.MODE_PRIVATE;
 
 public class IMManager {
+    private final String TAG = IMManager.class.getSimpleName();
     private static volatile IMManager instance;
 
     private MutableLiveData<ChatRoomAction> chatRoomActionLiveData = new MutableLiveData<>();
@@ -186,6 +197,34 @@ public class IMManager {
         // 缓存连接
         cacheConnectIM();
 
+        RongExtensionManager.getInstance().addExtensionEventWatcher(new IExtensionEventWatcher() {
+            @Override
+            public void onTextChanged(Context context, Conversation.ConversationType type, String targetId, int cursorPos, int count, String text) {
+
+            }
+
+            @Override
+            public void onSendToggleClick(Message message) {
+                if (message != null &&
+                        message.getContent() != null &&
+                        message.getContent().getMentionedInfo() != null &&
+                        message.getContent().getMentionedInfo().getMentionedUserIdList() != null &&
+                        message.getContent().getMentionedInfo().getMentionedUserIdList().size() > 0 &&
+                        message.getContent().getMentionedInfo().getMentionedUserIdList().get(0).equals(String.valueOf(-1))) {
+                    message.getContent().getMentionedInfo().setType(MentionedInfo.MentionedType.ALL);
+                }
+            }
+
+            @Override
+            public void onDeleteClick(Conversation.ConversationType type, String targetId, EditText editText, int cursorPos) {
+
+            }
+
+            @Override
+            public void onDestroy(Conversation.ConversationType type, String targetId) {
+
+            }
+        });
     }
 
     /**
@@ -567,6 +606,48 @@ public class IMManager {
                 .enableFCM(true)          // 在 google-services.json 文件中进行配置
                 .build();
         RongPushClient.setPushConfig(config);
+        RongPushClient.setPushEventListener(new PushEventListener() {
+            @Override
+            public boolean preNotificationMessageArrived(Context context, PushType pushType, PushNotificationMessage notificationMessage) {
+                RLog.d(TAG, "preNotificationMessageArrived");
+                return false;
+            }
+
+            @Override
+            public void afterNotificationMessageArrived(Context context, PushType pushType, PushNotificationMessage notificationMessage) {
+                RLog.d(TAG, "afterNotificationMessageArrived");
+            }
+
+            @Override
+            public boolean onNotificationMessageClicked(Context context, PushType pushType, PushNotificationMessage notificationMessage) {
+                RLog.d(TAG, "onNotificationMessageClicked");
+                if (!notificationMessage.getSourceType().equals(PushNotificationMessage.PushSourceType.FROM_ADMIN)) {
+                    String targetId = notificationMessage.getTargetId();
+                    //10000 为 Demo Server 加好友的 id，若 targetId 为 10000，则为加好友消息，默认跳转到 NewFriendListActivity
+                    if (targetId != null && targetId.equals("10000")) {
+                        Intent intentMain = new Intent(context, NewFriendListActivity.class);
+                        intentMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        Intent intentNewFriend = new Intent(context, MainActivity.class);
+                        intentNewFriend.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        Intent[] intents = new Intent[]{};
+                        intents[0] = intentMain;
+                        intents[1] = intentNewFriend;
+                        context.startActivities(intents);
+                        return true;
+                    } else {
+                        Intent intentMain = new Intent(context, MainActivity.class);
+                        intentMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intentMain);
+                    }
+                }
+                return false;
+            }
+
+            @Override
+            public void onThirdPartyPushState(PushType pushType, String action, long resultCode) {
+
+            }
+        });
     }
 
     /**
@@ -1067,7 +1148,7 @@ public class IMManager {
      * 初始化聊天室监听
      */
     private void initChatRoomActionListener() {
-        RongIMClient.setChatRoomActionListener(new RongIMClient.ChatRoomActionListener() {
+        RongChatRoomClient.setChatRoomAdvancedActionListener(new RongChatRoomClient.ChatRoomAdvancedActionListener() {
             @Override
             public void onJoining(String roomId) {
                 chatRoomActionLiveData.postValue(ChatRoomAction.joining(roomId));
@@ -1079,12 +1160,22 @@ public class IMManager {
             }
 
             @Override
+            public void onReset(String roomId) {
+                chatRoomActionLiveData.postValue(ChatRoomAction.reset(roomId));
+            }
+
+            @Override
             public void onQuited(String roomId) {
                 chatRoomActionLiveData.postValue(ChatRoomAction.quited(roomId));
             }
 
             @Override
-            public void onError(String roomId, RongIMClient.ErrorCode errorCode) {
+            public void onDestroyed(String roomId, IRongCoreEnum.ChatRoomDestroyType chatRoomDestroyType) {
+                chatRoomActionLiveData.postValue(ChatRoomAction.destroyed(roomId));
+            }
+
+            @Override
+            public void onError(String roomId, IRongCoreEnum.CoreErrorCode coreErrorCode) {
                 chatRoomActionLiveData.postValue(ChatRoomAction.error(roomId));
             }
         });
@@ -1199,7 +1290,7 @@ public class IMManager {
      * 退出
      */
     public void logout() {
-        IMCenter.getInstance().logout();
+        IMCenter.getInstance().disconnect();
     }
 
     /**

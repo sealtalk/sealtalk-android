@@ -62,7 +62,8 @@
             android:paddingStart="@dimen/seal_login_fragment_login_text_padding"
             android:paddingEnd="@dimen/seal_login_fragment_login_text_padding"
             android:text="+86"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium.Inverse" />
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium.Inverse"
+            android:textColor="@color/white" />
 
 
         <cn.rongcloud.im.ui.widget.ClearWriteEditText
@@ -82,22 +83,50 @@
 
     </LinearLayout>
 
-    <cn.rongcloud.im.ui.widget.ClearWriteEditText
-        android:id="@+id/cet_login_password"
-        style="@style/EditTextStyle.Alignment"
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/seal_login_fragment_login_password_margin_left"
+        android:layout_gravity="center_horizontal"
+        android:paddingStart="@dimen/seal_login_fragment_login_password_margin_left"
+        android:paddingEnd="@dimen/seal_login_fragment_login_password_margin_right"
         android:layout_marginTop="@dimen/seal_login_fragment_login_password_margin_top"
-        android:layout_marginEnd="@dimen/seal_login_fragment_login_password_margin_right"
-        android:background="@drawable/rc_ed_public_service_search_selector"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:hint="@string/seal_login_password"
-        android:inputType="textPassword"
-        android:maxLines="1"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white" />
+        android:orientation="horizontal">
+
+
+        <cn.rongcloud.im.ui.widget.ClearWriteEditText
+            android:id="@+id/cet_login_verify_code"
+            style="@style/EditTextStyle.Alignment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rc_ed_public_service_search_selector"
+            android:layout_weight="7"
+            android:drawablePadding="@dimen/seal_login_register_drawable_padding"
+            android:hint="@string/seal_talk_login_verify_code"
+            android:inputType="number"
+            android:paddingStart="@dimen/seal_login_find_password_padding"
+            android:paddingEnd="@dimen/seal_login_find_password_padding"
+            android:maxLength="6"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+
+        <Button
+            android:id="@+id/cet_login_send_verify_code"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/seal_login_register_btn_margin_left"
+            android:layout_weight="4"
+            android:background="@drawable/seal_login_btn_selector"
+            android:clickable="false"
+            android:paddingStart="@dimen/seal_login_register_padding"
+            android:paddingEnd="@dimen/seal_login_register_padding"
+            android:text="@string/seal_login_send_code"
+            android:textColor="@color/white"
+            android:textSize="@dimen/seal_login_register_btn_code_text_size" />
+
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/btn_login"

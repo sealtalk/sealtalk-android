@@ -20,8 +20,16 @@ public class ChatRoomAction {
         return new ChatRoomAction(roomId, Status.JOINED);
     }
 
+    public static ChatRoomAction reset(String roomId){
+        return new ChatRoomAction(roomId, Status.RESET);
+    }
+
     public static ChatRoomAction quited(String roomId){
         return new ChatRoomAction(roomId, Status.QUITED);
+    }
+
+    public static ChatRoomAction destroyed(String roomId){
+        return new ChatRoomAction(roomId, Status.DESTROY);
     }
 
     public static ChatRoomAction error(String roomId){
@@ -32,6 +40,8 @@ public class ChatRoomAction {
     public enum Status {
         JOINING,
         JOINED,
+        RESET,
+        DESTROY,
         QUITED,
         ERROR
     }

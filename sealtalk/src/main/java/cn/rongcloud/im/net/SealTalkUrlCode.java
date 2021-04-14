@@ -107,4 +107,6 @@ public class SealTalkUrlCode {
     public static final int SEND_SC_MSG = 50 * API_CODE_PREFIX;
 
     public static final int GROUP_COPY = 51 * API_CODE_PREFIX;
+
+    public static final int REGISTER_AND_LOGIN = 52 * API_CODE_PREFIX;
 }

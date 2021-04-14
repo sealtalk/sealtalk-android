@@ -13,25 +13,42 @@
         android:layout_height="match_parent"
         android:layout_marginEnd="@dimen/seal_login_bg_margin_right"
         android:scaleType="centerCrop"
-        android:src="@drawable/seal_ic_login_bg"
-    />
+        android:src="@drawable/seal_ic_login_bg" />
 
-    <ImageView
-        android:id="@+id/de_login_logo"
+
+    <LinearLayout
+        android:id="@+id/de_login_logo_contain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/seal_login_logo_margin_top"
-        android:src="@drawable/seal_ic_logo"
         android:layout_centerHorizontal="true"
-        />
+        android:layout_marginTop="@dimen/seal_login_logo_margin_top"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/de_login_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/seal_ic_logo" />
+
+        <TextView
+            android:id="@+id/del_login_logo_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:includeFontPadding="false"
+            android:text="@string/seal_login_text_title"
+            android:visibility="gone"
+            android:textColor="@color/color_black_text"
+            android:textSize="19sp" />
+    </LinearLayout>
+
 
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/de_login_logo"
-        >
+        android:layout_below="@id/de_login_logo_contain">
 
     </FrameLayout>
 
@@ -39,70 +56,92 @@
 
     <TextView
         android:id="@+id/tv_find_passsword"
-        android:textSize="@dimen/seal_login_text_button_text_size"
-        android:textColor="@color/seal_login_text_button_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/seal_login_buttom_padding"
         android:layout_alignParentBottom="true"
-        android:text="@string/seal_login_text_forget_password"/>
+        android:padding="@dimen/seal_login_buttom_padding"
+        android:text="@string/seal_login_text_forget_password"
+        android:textColor="@color/seal_login_text_button_color"
+        android:textSize="@dimen/seal_login_text_button_text_size"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tv_register_left"
-        android:textSize="@dimen/seal_login_text_button_text_size"
-        android:textColor="@color/seal_login_text_button_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/seal_login_buttom_padding"
         android:layout_alignParentBottom="true"
-        android:text="@string/seal_login_text_new_user" />
+        android:padding="@dimen/seal_login_buttom_padding"
+        android:text="@string/seal_login_text_new_user"
+        android:textColor="@color/seal_login_text_button_color"
+        android:textSize="@dimen/seal_login_text_button_text_size"
+        android:visibility="gone" />
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Powered by RongCloud"
-        android:textSize="@dimen/seal_login_rongcloud_text_size"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:padding="@dimen/seal_login_buttom_padding"
-        android:textColor="#484848"
-        />
+        android:layout_marginBottom="16dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/tv_registration_terms"
+            android:layout_width="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:textColor="#484848"
+            android:textSize="@dimen/seal_login_rongcloud_text_size" />
+
+        <TextView
+            android:id="@+id/tv_seal_talk_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/seal_talk_version_text"
+            android:textColor="@color/deep_gray"
+            android:textSize="@dimen/seal_login_rongcloud_text_size" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_register_right"
-        android:textSize="@dimen/seal_login_text_button_text_size"
-        android:textColor="@color/seal_login_text_button_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/seal_login_buttom_padding"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:text="@string/seal_login_text_new_user" />
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/seal_login_buttom_padding"
+        android:text="@string/seal_login_text_new_user"
+        android:textColor="@color/seal_login_text_button_color"
+        android:textSize="@dimen/seal_login_text_button_text_size"
+        android:visibility="gone" />
+
+    <!--    SealTalk V5.1.1-->
 
     <TextView
         android:id="@+id/tv_login"
-        android:textSize="@dimen/seal_login_text_button_text_size"
-        android:textColor="@color/seal_login_text_button_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/seal_login_buttom_padding"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:text="@string/seal_login_text_login" />
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/seal_login_buttom_padding"
+        android:text="@string/seal_login_text_login"
+        android:textColor="@color/seal_login_text_button_color"
+        android:textSize="@dimen/seal_login_text_button_text_size"
+        android:visibility="gone" />
 
 
     <!--语言切换-->
     <TextView
         android:id="@+id/tv_change_lang"
-        android:text="@string/lang_en"
-        android:textColor="@color/white"
-        android:layout_marginTop="20dp"
-        android:textSize="@dimen/seal_login_text_change_lang_text_size"
-        android:padding="@dimen/seal_login_text_change_lang_padding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_marginTop="20dp"
+        android:padding="@dimen/seal_login_text_change_lang_padding"
+        android:text="@string/lang_en"
+        android:textColor="@color/white"
+        android:textSize="@dimen/seal_login_text_change_lang_text_size" />
 
 </RelativeLayout>

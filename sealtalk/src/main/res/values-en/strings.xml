@@ -609,4 +609,13 @@
     <string name="setting_close_debug_promt">Is the App Debug mode disabled (requires re-login to the app)?</string>
     <string name="seal_mine_about_push_config">Set Push Config</string>
     <string name="seal_mine_about_debug_setting_push_language">Set push language</string>
+
+    <string name="seal_login_text_title">Welcome to SealTalk</string>
+    <string name="seal_talk_login_verify_code">Please enter the verification code</string>
+    <string name="seal_talk_login_send_verify_code">Send verification code</string>
+    <string name="seal_talk_version_text">SealTalk V%s</string>
+    <string name="seal_talk_login_bottom_registration_text_front">The new login user will register and open the rongyun developer account</string>
+    <string name="seal_talk_login_bottom_registration_text_behand">and agree to the registration terms</string>
+    <string name="seal_talk_registration_title">Registration terms</string>
+
 </resources>

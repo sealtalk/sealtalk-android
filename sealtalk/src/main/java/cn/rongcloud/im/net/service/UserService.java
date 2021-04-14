@@ -119,4 +119,7 @@ public interface UserService {
      */
     @GET(SealTalkUrl.GET_RECEIVE_POKE_MESSAGE_STATUS)
     LiveData<Result<GetPokeResult>> getReceivePokeMessageStatus();
+
+    @POST(SealTalkUrl.REGISTER_AND_LOGIN)
+    LiveData<Result<LoginResult>> registerAndLogin(@Body RequestBody body);
 }

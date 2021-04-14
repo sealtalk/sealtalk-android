@@ -116,6 +116,10 @@ public class LoginViewModel extends AndroidViewModel {
         //loginResultNoResource.setSource(userTask.login(region, phone, pwd));
     }
 
+    public void registerAndLogin(String region, String phone, String code){
+        loginResult.setSource(userTask.registerAndLogin(region, phone, code));
+    }
+
     public LiveData<Resource<String>> getLoginResult(){
         return loginResult;
     }
@@ -275,7 +279,7 @@ public class LoginViewModel extends AndroidViewModel {
         countDownTimer.start();
     }
 
-    private void stopCodeCountDown() {
+    public void stopCodeCountDown() {
         countDownTimer.cancel();
     }
 

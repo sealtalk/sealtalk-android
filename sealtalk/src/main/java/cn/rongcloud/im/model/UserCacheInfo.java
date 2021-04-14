@@ -24,6 +24,14 @@ public class UserCacheInfo extends UserInfo {
             setPassword(password);
     }
 
+    public UserCacheInfo(String id, String token, String phone, String region, CountryInfo info) {
+        setId(id);
+        setPhoneNumber(phone);
+        setLoginToken(token);
+        setCountryInfo(info);
+        setRegion(region);
+    }
+
     public void setUserInfo(UserInfo info) {
         if (getId() != null && info != null && !getId().equals(info.getId())) {
             return;

@@ -609,4 +609,13 @@
     <string name="setting_close_debug_promt">是否关闭 App Debug 模式(需要重新登录应用)?</string>
     <string name="seal_mine_about_push_config">设置推送配置</string>
     <string name="seal_mine_about_debug_setting_push_language">设置推送语言</string>
+    <string name="seal_login_text_title">欢迎使用SealTalk</string>
+    <string name="seal_talk_login_verify_code">请输入验证码</string>
+    <string name="seal_talk_login_send_verify_code">发送验证码</string>
+    <string name="seal_talk_registration_terms_text">新登录用户即注册开通融云开发者账号\n且表示同意⟪注册条款⟫</string>
+    <string name="seal_talk_version_text">SealTalk V%s</string>
+    <string name="seal_talk_login_bottom_registration_text_front">新登录用户即注册开通融云开发者账号</string>
+    <string name="seal_talk_login_bottom_registration_text_behand">且表示同意⟪注册条款⟫</string>
+    <string name="seal_talk_registration_title">注册条款</string>
+
 </resources>

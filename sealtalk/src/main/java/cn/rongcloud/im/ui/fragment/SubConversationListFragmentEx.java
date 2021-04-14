@@ -92,7 +92,7 @@ public class SubConversationListFragmentEx extends SubConversationListFragment {
     }
 
     @Override
-    protected ConversationListAdapter onResolveAdapter(Context context) {
+    protected ConversationListAdapter onResolveAdapter() {
         return new ConversationListAdapterEx();
     }
 

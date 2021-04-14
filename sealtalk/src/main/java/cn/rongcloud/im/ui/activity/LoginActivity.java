@@ -1,8 +1,16 @@
 package cn.rongcloud.im.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Process;
+import android.text.Html;
+import android.text.NoCopySpan;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -36,7 +44,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private static final int FRAGMENT_REGISTER = 1;
     private static final int FRAGMENT_FIND_PASSWORD = 2;
     private static final String BUNDLE_LAST_SELECTED_FRAGMENT = "last_select_fragment";
-    private Fragment[] fragments = new Fragment[3];
+    private Fragment[] fragments = new Fragment[1];
 
     private View loginBg;
     private TextView changLang;
@@ -44,6 +52,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private TextView registerLeft;
     private TextView findPassword;
     private TextView toLogin;
+    private TextView registrationTerms;
+    private TextView mSealTalkVersion;
     private AppViewModel appViewModel;
     private int currentFragmentIndex = FRAGMENT_LOGIN;// 当前选择 Fragment 下标
 
@@ -88,6 +98,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         registerRight = findViewById(R.id.tv_register_right);
         findPassword = findViewById(R.id.tv_find_passsword);
         toLogin = findViewById(R.id.tv_login);
+        mSealTalkVersion = findViewById(R.id.tv_seal_talk_version);
 
         changLang.setOnClickListener(this);
         registerLeft.setOnClickListener(this);
@@ -98,6 +109,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         //默认是登录界面
         controlBottomView(currentFragmentIndex);
 
+        initRegistrationTerms();
         startBgAnimation();
 
         // 判断是否被其他用户踢出到此界面
@@ -108,28 +120,55 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
+    private void initRegistrationTerms() {
+        registrationTerms = findViewById(R.id.tv_registration_terms);
+        registrationTerms.setText(Html.fromHtml("<font color='#5C6970'>" + getString(R.string.seal_talk_login_bottom_registration_text_front) + "</font>" + "<br>" + "<font color='#5C6970'>" + getString(R.string.seal_talk_login_bottom_registration_text_behand) + "</font>"));
+
+        SpannableString str = new SpannableString(registrationTerms.getText());
+        str.setSpan(new NoRefCopySpan() {
+            @Override
+            public void onClick(@NonNull View widget) {
+                Intent intent = new Intent(LoginActivity.this, WebViewActivity.class);
+                intent.putExtra(WebViewActivity.PARAMS_TITLE, getString(R.string.seal_talk_registration_title));
+                intent.putExtra(WebViewActivity.PARAMS_URL, "file:///android_asset/agreement_zh.html");
+                startActivity(intent);
+            }
+
+            @Override
+            public void updateDrawState(@NonNull TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+
+            }
+        }, 23, str.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        registrationTerms.setText(str);
+        registrationTerms.setMovementMethod(LinkMovementMethod.getInstance());//不设置 没有点击事件
+        registrationTerms.setHighlightColor(Color.TRANSPARENT); //设置点击后的颜色为透明
+    }
+
+
 
     private void controlBottomView(int index) {
-        switch (index) {
-            case FRAGMENT_REGISTER:
-                registerLeft.setVisibility(View.GONE);
-                registerRight.setVisibility(View.GONE);
-                findPassword.setVisibility(View.VISIBLE);
-                toLogin.setVisibility(View.VISIBLE);
-                break;
-            case FRAGMENT_FIND_PASSWORD:
-                registerLeft.setVisibility(View.VISIBLE);
-                registerRight.setVisibility(View.GONE);
-                findPassword.setVisibility(View.GONE);
-                toLogin.setVisibility(View.VISIBLE);
-                break;
-            case FRAGMENT_LOGIN:
-                registerLeft.setVisibility(View.GONE);
-                registerRight.setVisibility(View.VISIBLE);
-                findPassword.setVisibility(View.VISIBLE);
-                toLogin.setVisibility(View.GONE);
-                break;
-        }
+//        switch (index) {
+//            case FRAGMENT_REGISTER:
+//                registerLeft.setVisibility(View.GONE);
+//                registerRight.setVisibility(View.GONE);
+//                findPassword.setVisibility(View.VISIBLE);
+//                toLogin.setVisibility(View.VISIBLE);
+//                break;
+//            case FRAGMENT_FIND_PASSWORD:
+//                registerLeft.setVisibility(View.VISIBLE);
+//                registerRight.setVisibility(View.GONE);
+//                findPassword.setVisibility(View.GONE);
+//                toLogin.setVisibility(View.VISIBLE);
+//                break;
+//            case FRAGMENT_LOGIN:
+//                registerLeft.setVisibility(View.GONE);
+//                registerRight.setVisibility(View.VISIBLE);
+//                findPassword.setVisibility(View.VISIBLE);
+//                toLogin.setVisibility(View.GONE);
+//                break;
+//        }
 
         showFragment(index);
         currentFragmentIndex = index;
@@ -210,6 +249,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 }
             }
         });
+
+        AppViewModel appViewModel = ViewModelProviders.of(this).get(AppViewModel.class);
+
+        // sealtalk 版本
+        appViewModel.getSealTalkVersion().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String version) {
+                mSealTalkVersion.setText(getString(R.string.seal_talk_version_text,version));
+            }
+        });
+
     }
 
 
@@ -301,5 +351,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     public boolean isObserveLogout() {
         return false;
+    }
+
+    public static class NoRefCopySpan extends ClickableSpan implements NoCopySpan {
+
+        @Override
+        public void onClick(@NonNull View widget) {
+        }
+
+        @Override
+        public void updateDrawState(TextPaint ds) {
+            super.updateDrawState(ds);
+        }
+
     }
 }

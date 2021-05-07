@@ -25,10 +25,15 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import cn.rongcloud.im.R;
+import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.ui.activity.TitleBaseActivity;
 import cn.rongcloud.im.ui.test.viewmodel.ChatRoomEvent;
 import cn.rongcloud.im.ui.test.viewmodel.ChatRoomViewModel;
+import cn.rongcloud.im.utils.ToastUtils;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.IRongCoreEnum;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.chatroom.base.RongChatRoomClient;
 import io.rong.imlib.chatroom.message.ChatRoomKVNotiMessage;
 import io.rong.imlib.model.Message;
 
@@ -46,6 +51,7 @@ public class ChatRoomStatusDeatilActivity extends TitleBaseActivity implements V
     private Handler handler = new Handler();
     private MyOperationCallback operationCallback;
     private ChatRoomViewModel chatRoomViewModel;
+    private boolean isReset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +60,20 @@ public class ChatRoomStatusDeatilActivity extends TitleBaseActivity implements V
         setTitle("聊天室存储");
 //        EventBus.getDefault().register(this);
         operationCallback = new MyOperationCallback(this);
-        initViewModel();
-        initData();
+        roomId = getIntent().getStringExtra("room_id");
         initView();
+        initListener();
+        initViewModel();
+        RongIM.getInstance().joinChatRoom(roomId, 20, new RongIMClient.OperationCallback() {
+            @Override
+            public void onSuccess() {
+                initData();
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+            }
+        });
 //        initReceiveMessageListener();
     }
 
@@ -67,7 +84,7 @@ public class ChatRoomStatusDeatilActivity extends TitleBaseActivity implements V
             public void onChanged(ChatRoomEvent chatRoomEvent) {
                 if (chatRoomEvent instanceof OnKVStatusEvent) {
                     onEventMainThread((OnKVStatusEvent) chatRoomEvent);
-                } else if (chatRoomEvent instanceof OnReceiveMessageEvent){
+                } else if (chatRoomEvent instanceof OnReceiveMessageEvent) {
                     onEventMainThread((OnReceiveMessageEvent) chatRoomEvent);
                 }
             }
@@ -76,7 +93,7 @@ public class ChatRoomStatusDeatilActivity extends TitleBaseActivity implements V
 
     private void initData() {
         String joinMessage = getIntent().getStringExtra("joinMessage");
-        roomId = getIntent().getStringExtra("room_id");
+
         contentList.add(joinMessage);
         removeOldMessage();
         Log.e("ChatDetailActivity", kvStatusEventList.size() + "***");
@@ -124,6 +141,69 @@ public class ChatRoomStatusDeatilActivity extends TitleBaseActivity implements V
         findViewById(R.id.btn_remove_private_key).setOnClickListener(this);
         findViewById(R.id.btn_get_all_key).setOnClickListener(this);
         findViewById(R.id.btn_get_sigle_key).setOnClickListener(this);
+    }
+
+    private void initListener() {
+        RongChatRoomClient.setChatRoomAdvancedActionListener(new RongChatRoomClient.ChatRoomAdvancedActionListener() {
+            @Override
+            public void onJoining(String chatRoomId) {
+            }
+
+            @Override
+            public void onJoined(String chatRoomId) {
+                if (isReset) {
+                    isReset = false;
+                    return;
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtils.showToast("加入聊天室成功,roomId=" + roomId);
+                    }
+                });
+            }
+
+            @Override
+            public void onReset(String chatRoomId) {
+                isReset = true;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtils.showToast("聊天室被重置,roomId=" + roomId);
+                    }
+                });
+            }
+
+            @Override
+            public void onQuited(String chatRoomId) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtils.showToast("退出聊天室,roomId=" + roomId);
+                    }
+                });
+            }
+
+            @Override
+            public void onDestroyed(String chatRoomId, IRongCoreEnum.ChatRoomDestroyType type) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtils.showToast("聊天室销毁,roomId=" + roomId);
+                    }
+                });
+            }
+
+            @Override
+            public void onError(String chatRoomId, IRongCoreEnum.CoreErrorCode code) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtils.showToast(R.string.discovery_chat_room_join_failure);
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -457,7 +537,7 @@ public class ChatRoomStatusDeatilActivity extends TitleBaseActivity implements V
         }
     }
 
-    public static class OnReceiveMessageEvent implements ChatRoomEvent{
+    public static class OnReceiveMessageEvent implements ChatRoomEvent {
         Message message;
 
         public OnReceiveMessageEvent(Message message) {
@@ -549,5 +629,11 @@ public class ChatRoomStatusDeatilActivity extends TitleBaseActivity implements V
             tvContent.setText(contentList.get(position));
             return convertView;
         }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        IMManager.getInstance().initChatRoomActionListener();
     }
 }

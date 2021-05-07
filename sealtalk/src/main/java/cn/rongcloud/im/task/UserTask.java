@@ -965,7 +965,7 @@ public class UserTask {
      *
      * @param region   国家区号
      * @param phone    手机号码
-     * @param code 验证码
+     * @param code 密码
      */
     public LiveData<Resource<String>> registerAndLogin(String region, String phone, String code) {
         MediatorLiveData<Resource<String>> result = new MediatorLiveData<>();
@@ -1018,4 +1018,5 @@ public class UserTask {
         });
         return result;
     }
+
 }

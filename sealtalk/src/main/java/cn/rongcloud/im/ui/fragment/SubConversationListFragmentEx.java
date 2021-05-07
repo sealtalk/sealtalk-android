@@ -7,8 +7,6 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.im.message.GroupApplyMessage;
 import cn.rongcloud.im.ui.activity.GroupNoticeListActivity;

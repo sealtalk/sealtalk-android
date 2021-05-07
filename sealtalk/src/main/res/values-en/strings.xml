@@ -218,7 +218,6 @@
     <string name="seal_mine_about_sdk_version">SDK Version</string>
     <string name="debug_mode_is_open">Debug mode is on</string>
     <string name="seal_mine_about_close_debug_mode">Turn Off Debug Mode</string>
-    <string name="seal_mine_about_debug_setting">Setting</string>
     <string name="seal_mine_about_user_online_status">Setting User Online Status</string>
     <string name="common_set_failed">Set failed</string>
     <string name="common_clear_success">Cleared</string>
@@ -311,7 +310,7 @@
 
 
     <string name="seal_search_empty">Not related to content of %s </string>
-    <string name="seal_main_chat_tab_more_read_message">99+</string>
+    <string name="seal_main_chat_tab_more_read_message">···</string>
     <string name="seal_main_toast_unread_clear_success">Cleared</string>
     <string name="seal_public_account_information">Public account Info</string>
     <string name="seal_member_mention_all_member">All</string>
@@ -601,14 +600,18 @@
     <string name="seal_login_private_service_error">Login Fail Status :34005</string>
     <string name="seal_system_conversation_title">System messages assistant</string>
 
-    <string name="seal_friend_message">Friends news</string>
-
-
     <!--debug mode-->
     <string name="setting_open_debug_prompt">Is the App Debug mode enabled (requires re-login to the app)?</string>
     <string name="setting_close_debug_promt">Is the App Debug mode disabled (requires re-login to the app)?</string>
     <string name="seal_mine_about_push_config">Set Push Config</string>
+    <string name="seal_mine_about_debug_setting">Setting</string>
     <string name="seal_mine_about_debug_setting_push_language">Set push language</string>
+    <string name="seal_mine_about_group_read_receipt_test">Group read receipt v2 test</string>
+    <string name="debug_group_read_receipt_count_display_tx">"The sender received a read receipt ：reader count%d      total count%d      "</string>
+    <string name="debug_group_read_receipt_count_get_display_tx">Get the total number of members in the group when reading users：%d</string>
+
+
+    <string name="seal_friend_message">Friends news</string>
 
     <string name="seal_login_text_title">Welcome to SealTalk</string>
     <string name="seal_talk_login_verify_code">Please enter the verification code</string>
@@ -617,5 +620,4 @@
     <string name="seal_talk_login_bottom_registration_text_front">The new login user will register and open the rongyun developer account</string>
     <string name="seal_talk_login_bottom_registration_text_behand">and agree to the registration terms</string>
     <string name="seal_talk_registration_title">Registration terms</string>
-
 </resources>

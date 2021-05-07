@@ -42,7 +42,6 @@ public enum ErrorCode {
     LOGIN_VERIFY_CODE_EXPIRED(SealTalkUrlCode.REGISTER_AND_LOGIN + 2000, R.string.login_error_captcha_overdue);
 
 
-
     private int code;
     private int messageResId;
     private static Application application;

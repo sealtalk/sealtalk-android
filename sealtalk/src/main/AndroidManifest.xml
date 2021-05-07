@@ -127,8 +127,7 @@
             android:name=".ui.activity.SubConversationListActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize">
-        </activity>
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
         <!--聚合会话列表-->
         <activity
             android:name=".ui.activity.NewFriendListActivity"
@@ -508,14 +507,12 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <!--推送配置项-->
-        <!--
         <meta-data
             android:name="com.vivo.push.api_key"
             android:value="您申请的 vivo 推送 ApiKey" />
         <meta-data
             android:name="com.vivo.push.app_id"
             android:value="您申请的 vivo 推送 AppId" />
-         -->
 
         <!-- push 应用定义消息 receiver 声明 -->
         <receiver android:name="io.rong.push.platform.vivo.VivoPushMessageReceiver">
@@ -578,6 +575,21 @@
         <activity
             android:name=".ui.test.MessageExpansionDetailActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.test.TagTestActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.test.GRRSenderTestActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.GRRConversationListTestActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.GRRReceiverTestActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.GRRDetailTestActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.ChatRoomListenerTestActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.ChatRoomTestActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import cn.rongcloud.im.R;
+import cn.rongcloud.im.common.ErrorCode;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.model.CountryInfo;
 import cn.rongcloud.im.model.Resource;
@@ -37,7 +38,6 @@ public class LoginFragment extends BaseFragment {
     private LoginViewModel loginViewModel;
     private Button sendCodeBtn;
     private boolean isRequestVerifyCode = false; // 是否请求成功验证码
-
 
 
     @Override
@@ -74,7 +74,6 @@ public class LoginFragment extends BaseFragment {
                 } else {
                     sendCodeBtn.setEnabled(false);
                 }
-
             }
 
             @Override
@@ -159,6 +158,7 @@ public class LoginFragment extends BaseFragment {
                     sendCodeBtn.setEnabled(true);
                     sendCodeBtn.setText(R.string.seal_login_send_code);
                     isRequestVerifyCode = false;
+
                 }
             }
         });
@@ -192,7 +192,7 @@ public class LoginFragment extends BaseFragment {
                 }
 
                 if (TextUtils.isEmpty(codeStr)) {
-                    showToast(R.string.seal_login_toast_password_is_null);
+                    showToast(R.string.seal_login_toast_code_is_null);
                     verifyCodeEdit.setShakeAnimation();
                     return;
                 }
@@ -203,6 +203,7 @@ public class LoginFragment extends BaseFragment {
                     countryCodeStr = countryCodeStr.substring(1);
                 }
 
+//                login(countryCodeStr, phoneStr, passwordStr);
                 registerAndLogin(countryCodeStr, phoneStr, codeStr);
                 break;
             case R.id.ll_country_select:
@@ -222,7 +223,6 @@ public class LoginFragment extends BaseFragment {
     private void sendCode(String phoneCode, String phoneNumber) {
         loginViewModel.sendCode(phoneCode, phoneNumber);
     }
-
 
     /**
      * 登录到 业务服务器，以获得登录 融云 IM 服务器所必须的 token

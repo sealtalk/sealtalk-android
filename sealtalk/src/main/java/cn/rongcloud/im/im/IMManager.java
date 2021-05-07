@@ -40,7 +40,6 @@ import cn.rongcloud.im.im.provider.PokeMessageItemProvider;
 import cn.rongcloud.im.im.provider.SealGroupConNtfMessageProvider;
 import cn.rongcloud.im.im.provider.SealGroupNotificationMessageItemProvider;
 import cn.rongcloud.im.model.ChatRoomAction;
-import cn.rongcloud.im.model.ContactNotificationMessageData;
 import cn.rongcloud.im.model.ConversationRecord;
 import cn.rongcloud.im.model.LoginResult;
 import cn.rongcloud.im.model.QuietHours;
@@ -168,11 +167,12 @@ public class IMManager {
         // 初始化推送
         initPush();
 
-        // debug 入口
-        initDebug();
+        initPhrase();
 
         // 调用 RongIM 初始化
         initRongIM(application);
+
+        initDebug();
 
         initIMConfig();
 
@@ -196,7 +196,6 @@ public class IMManager {
 
         // 缓存连接
         cacheConnectIM();
-
         RongExtensionManager.getInstance().addExtensionEventWatcher(new IExtensionEventWatcher() {
             @Override
             public void onTextChanged(Context context, Conversation.ConversationType type, String targetId, int cursorPos, int count, String text) {
@@ -599,11 +598,12 @@ public class IMManager {
          */
         PushConfig config = new PushConfig
                 .Builder()
+                .enableFCM(true)          // 在 google-services.json 文件中进行配置
                 .enableHWPush(true)        // 在 AndroidManifest.xml 中搜索 com.huawei.hms.client.appid 进行设置
                 .enableMiPush(BuildConfig.SEALTALK_MI_PUSH_APPID, BuildConfig.SEALTALK_MI_PUSH_APPKEY)
                 .enableMeiZuPush(BuildConfig.SEALTALK_MIZU_PUSH_APPID, BuildConfig.SEALTALK_MIZU_PUSH_APPKEY)
                 .enableVivoPush(true)     // 在 AndroidManifest.xml 中搜索 com.vivo.push.api_key 和 com.vivo.push.app_id 进行设置
-                .enableFCM(true)          // 在 google-services.json 文件中进行配置
+                .enableOppoPush(BuildConfig.SEALTALK_OPPO_PUSH_APPKEY, BuildConfig.SEALTALK_OPPO_PUSH_SECRET)
                 .build();
         RongPushClient.setPushConfig(config);
         RongPushClient.setPushEventListener(new PushEventListener() {
@@ -668,6 +668,9 @@ public class IMManager {
         initConversation();
 
         RongConfigCenter.featureConfig().enableDestruct(true);
+    }
+
+    private void initPhrase() {
         if (appTask.isDebugMode()) {
             List<String> phraseList = new ArrayList<>();
             phraseList.add("1为了研究编译器的实现原理，我们需要使用 clang 命令。clang 命令可以将 Objetive-C 的源码改写成 C / C++ 语言的，借此可以研究 block 中各个特性的源码实现方式。该命令是为了研究编译器的实现原理，我们需要使用 clang ");
@@ -1147,7 +1150,7 @@ public class IMManager {
     /**
      * 初始化聊天室监听
      */
-    private void initChatRoomActionListener() {
+    public void initChatRoomActionListener() {
         RongChatRoomClient.setChatRoomAdvancedActionListener(new RongChatRoomClient.ChatRoomAdvancedActionListener() {
             @Override
             public void onJoining(String roomId) {
@@ -1170,13 +1173,13 @@ public class IMManager {
             }
 
             @Override
-            public void onDestroyed(String roomId, IRongCoreEnum.ChatRoomDestroyType chatRoomDestroyType) {
-                chatRoomActionLiveData.postValue(ChatRoomAction.destroyed(roomId));
+            public void onDestroyed(String chatRoomId, IRongCoreEnum.ChatRoomDestroyType type) {
+                chatRoomActionLiveData.postValue(ChatRoomAction.destroyed(chatRoomId));
             }
 
             @Override
-            public void onError(String roomId, IRongCoreEnum.CoreErrorCode coreErrorCode) {
-                chatRoomActionLiveData.postValue(ChatRoomAction.error(roomId));
+            public void onError(String chatRoomId, IRongCoreEnum.CoreErrorCode code) {
+                chatRoomActionLiveData.postValue(ChatRoomAction.error(chatRoomId));
             }
         });
     }

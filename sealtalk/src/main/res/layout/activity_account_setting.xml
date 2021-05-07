@@ -7,12 +7,12 @@
     >
     <cn.rongcloud.im.ui.view.SettingItemView
         android:id="@+id/siv_reset_password"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_mine_account_setting_item_height"
         android:layout_marginTop="@dimen/seal_mine_account_setting_item_margin_top"
         app:item_content="@string/seal_mine_set_account_change_password"
         app:item_divider="true"
-        android:visibility="gone"
         >
 
     </cn.rongcloud.im.ui.view.SettingItemView>

@@ -1,5 +1,6 @@
 package cn.rongcloud.im.ui.test;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,11 +18,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cn.rongcloud.im.R;
+import cn.rongcloud.im.common.LogTag;
 import cn.rongcloud.im.im.IMManager;
+import cn.rongcloud.im.model.ChatRoomAction;
 import cn.rongcloud.im.ui.activity.TitleBaseActivity;
 import cn.rongcloud.im.ui.test.viewmodel.ChatRoomViewModel;
+import cn.rongcloud.im.utils.ToastUtils;
+import cn.rongcloud.im.utils.log.SLog;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.IRongCoreEnum;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.chatroom.base.RongChatRoomClient;
 import io.rong.imlib.chatroom.message.ChatRoomKVNotiMessage;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
@@ -113,6 +120,7 @@ public class ChatRoomStatusActivity extends TitleBaseActivity implements View.On
 //        });
 //    }
 
+
     private void initView() {
         Button btnChatRoom1 = findViewById(R.id.btn_chat_room1);
         Button btnChatRoom2 = findViewById(R.id.btn_chat_room2);
@@ -124,10 +132,10 @@ public class ChatRoomStatusActivity extends TitleBaseActivity implements View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_chat_room1:
-                joinRoom("kvchatroom1");
+                toDeatail("kvchatroom1");
                 break;
             case R.id.btn_chat_room2:
-                joinRoom("kvchatroom2");
+                toDeatail("kvchatroom2");
                 break;
         }
     }
@@ -136,13 +144,15 @@ public class ChatRoomStatusActivity extends TitleBaseActivity implements View.On
         RongIM.getInstance().joinChatRoom(roomId, 20, new RongIMClient.OperationCallback() {
             @Override
             public void onSuccess() {
+                ToastUtils.showToast("成功加入聊天室");
+                toDeatail(roomId);
             }
 
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
+                ToastUtils.showToast("加入聊天室失败,errorCode= " + errorCode.code);
             }
         });
-        toDeatail(roomId);
     }
 
     private void toDeatail(String roomId) {

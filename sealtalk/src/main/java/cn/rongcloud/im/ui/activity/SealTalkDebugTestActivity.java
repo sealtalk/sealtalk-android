@@ -2,31 +2,22 @@ package cn.rongcloud.im.ui.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.view.View;
 import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
 import cn.rongcloud.im.R;
-import cn.rongcloud.im.common.IntentExtra;
-import cn.rongcloud.im.model.Resource;
-import cn.rongcloud.im.model.VersionInfo;
-import cn.rongcloud.im.ui.dialog.DownloadAppDialog;
 import cn.rongcloud.im.ui.test.ChatRoomStatusActivity;
+import cn.rongcloud.im.ui.test.ChatRoomTestActivity;
+import cn.rongcloud.im.ui.test.GRRConversationListTestActivity;
 import cn.rongcloud.im.ui.test.DiscussionActivity;
 import cn.rongcloud.im.ui.test.MsgExpansionConversationListActivity;
 import cn.rongcloud.im.ui.test.PushConfigActivity;
+import cn.rongcloud.im.ui.test.TagTestActivity;
 import cn.rongcloud.im.ui.view.SettingItemView;
-import cn.rongcloud.im.utils.DialogWithYesOrNoUtils;
 import cn.rongcloud.im.utils.ToastUtils;
-import cn.rongcloud.im.viewmodel.AppViewModel;
-import cn.rongcloud.im.viewmodel.UserInfoViewModel;
 import io.rong.imlib.RongIMClient;
 
 public class SealTalkDebugTestActivity extends TitleBaseActivity implements View.OnClickListener {
@@ -35,6 +26,8 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
     private SettingItemView pushLanguageSiv;
     private SettingItemView chatRoomSiv;
     private SettingItemView messageExpansion;
+    private SettingItemView tag;
+    private SettingItemView groupReadReceiptV2Siv;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,6 +43,7 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
     private void initView() {
         getTitleBar().setTitle(R.string.seal_main_mine_about);
 
+        groupReadReceiptV2Siv = findViewById(R.id.siv_grr_v2_sender_test);
         pushLanguageSiv = findViewById(R.id.siv_push_language);
         pushConfigModeSiv = findViewById(R.id.siv_push_config);
         chatRoomSiv = findViewById(R.id.siv_chatroom);
@@ -62,6 +56,11 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
 
         messageExpansion = findViewById(R.id.siv_message_expansion);
         messageExpansion.setOnClickListener(this);
+
+        tag = findViewById(R.id.siv_tag);
+        tag.setOnClickListener(this);
+
+        groupReadReceiptV2Siv.setOnClickListener(this);
     }
 
 
@@ -83,10 +82,26 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
             case R.id.siv_message_expansion:
                 toMessageExpansion();
                 break;
+            case R.id.siv_tag:
+                toTagTest();
+                break;
+            case R.id.siv_grr_v2_sender_test:
+                toGroupReadReceiptTest(1);
+                break;
             default:
                 //Do nothing
                 break;
         }
+    }
+
+    private void toGroupReadReceiptTest(int type) {
+        Intent intent = new Intent(this, GRRConversationListTestActivity.class);
+        startActivity(intent);
+    }
+
+    private void toTagTest() {
+        Intent intent = new Intent(this, TagTestActivity.class);
+        startActivity(intent);
     }
 
     private void toMessageExpansion() {
@@ -95,7 +110,7 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
     }
 
     private void toChatRoom() {
-        Intent intent = new Intent(this, ChatRoomStatusActivity.class);
+        Intent intent = new Intent(this, ChatRoomTestActivity.class);
         startActivity(intent);
     }
 

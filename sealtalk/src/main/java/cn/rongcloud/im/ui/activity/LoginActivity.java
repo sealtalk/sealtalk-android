@@ -25,13 +25,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
+import cn.rongcloud.im.model.Resource;
+import cn.rongcloud.im.model.VersionInfo;
 import cn.rongcloud.im.ui.BaseActivity;
 import cn.rongcloud.im.ui.dialog.CommonDialog;
 import cn.rongcloud.im.ui.fragment.LoginFindPasswordFragment;
 import cn.rongcloud.im.ui.fragment.LoginFragment;
 import cn.rongcloud.im.ui.fragment.LoginRegisterFragment;
 import cn.rongcloud.im.utils.StatusBarUtil;
+import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.viewmodel.AppViewModel;
+import cn.rongcloud.im.viewmodel.UserInfoViewModel;
 import io.rong.imkit.utils.language.LangUtils;
 
 /**
@@ -52,10 +56,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private TextView registerLeft;
     private TextView findPassword;
     private TextView toLogin;
-    private TextView registrationTerms;
-    private TextView mSealTalkVersion;
     private AppViewModel appViewModel;
     private int currentFragmentIndex = FRAGMENT_LOGIN;// 当前选择 Fragment 下标
+    private TextView registrationTerms;
+    private TextView mSealTalkVersion;
 
 
     @Override
@@ -99,6 +103,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         findPassword = findViewById(R.id.tv_find_passsword);
         toLogin = findViewById(R.id.tv_login);
         mSealTalkVersion = findViewById(R.id.tv_seal_talk_version);
+        initRegistrationTerms();
 
         changLang.setOnClickListener(this);
         registerLeft.setOnClickListener(this);
@@ -109,7 +114,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         //默认是登录界面
         controlBottomView(currentFragmentIndex);
 
-        initRegistrationTerms();
         startBgAnimation();
 
         // 判断是否被其他用户踢出到此界面
@@ -146,29 +150,27 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         registrationTerms.setHighlightColor(Color.TRANSPARENT); //设置点击后的颜色为透明
     }
 
-
-
     private void controlBottomView(int index) {
-//        switch (index) {
-//            case FRAGMENT_REGISTER:
+        switch (index) {
+            case FRAGMENT_REGISTER:
 //                registerLeft.setVisibility(View.GONE);
 //                registerRight.setVisibility(View.GONE);
 //                findPassword.setVisibility(View.VISIBLE);
 //                toLogin.setVisibility(View.VISIBLE);
-//                break;
-//            case FRAGMENT_FIND_PASSWORD:
+                break;
+            case FRAGMENT_FIND_PASSWORD:
 //                registerLeft.setVisibility(View.VISIBLE);
 //                registerRight.setVisibility(View.GONE);
 //                findPassword.setVisibility(View.GONE);
 //                toLogin.setVisibility(View.VISIBLE);
-//                break;
-//            case FRAGMENT_LOGIN:
+                break;
+            case FRAGMENT_LOGIN:
 //                registerLeft.setVisibility(View.GONE);
 //                registerRight.setVisibility(View.VISIBLE);
 //                findPassword.setVisibility(View.VISIBLE);
 //                toLogin.setVisibility(View.GONE);
-//                break;
-//        }
+                break;
+        }
 
         showFragment(index);
         currentFragmentIndex = index;
@@ -256,10 +258,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         appViewModel.getSealTalkVersion().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String version) {
-                mSealTalkVersion.setText(getString(R.string.seal_talk_version_text,version));
+                mSealTalkVersion.setText(getString(R.string.seal_talk_version_text, version));
             }
         });
-
     }
 
 

@@ -152,7 +152,6 @@
     <string name="seal_mine_about_sdk_version">SDK 版本</string>
     <string name="debug_mode_is_open">debug 模式已开启</string>
     <string name="seal_mine_about_close_debug_mode">关闭 debug 模式</string>
-    <string name="seal_mine_about_debug_setting">设置</string>
     <string name="seal_mine_about_user_online_status">设置用户在线状态</string>
 
     <string name="seal_title_private_chat">发起聊天</string>
@@ -315,7 +314,7 @@
     <string name="seal_new_message_donot_disturb_end">结束时间</string>
     <string name="seal_new_message_donot_disturb">消息免打扰</string>
     <string name="seal_search_empty">没有搜到%s相关的信息</string>
-    <string name="seal_main_chat_tab_more_read_message">99+</string>
+    <string name="seal_main_chat_tab_more_read_message">···</string>
     <string name="seal_main_toast_unread_clear_success">清除成功</string>
     <string name="seal_public_account_information">公众号信息</string>
     <string name="seal_member_mention_all_member">所有人</string>
@@ -602,17 +601,23 @@
     <string name="seal_login_private_service_error">登录失败 Status :34005</string>
     <string name="seal_group_exit_list_left_title">群管理</string>
 
-    <string name="seal_friend_message">好友消息</string>
-
     <!--debug mode-->
     <string name="setting_open_debug_prompt">是否开启 App Debug 模式(需要重新登录应用)?</string>
     <string name="setting_close_debug_promt">是否关闭 App Debug 模式(需要重新登录应用)?</string>
     <string name="seal_mine_about_push_config">设置推送配置</string>
+    <string name="seal_mine_about_debug_setting">设置</string>
     <string name="seal_mine_about_debug_setting_push_language">设置推送语言</string>
+    <string name="seal_mine_about_group_read_receipt_test">群已读回执V2测试</string>
+    <string name="debug_group_read_receipt_count_display_tx">"发送方接收到已读回执：已读人数%d      群内总人数%d      "</string>
+    <string name="debug_group_read_receipt_count_get_display_tx">获取已读用户时得到的群内成员总数：%d</string>
+
+    <string name="seal_friend_message">好友消息</string>
+    <string name="seal_mine_about_chat_room_kv_test">聊天室存储</string>
+    <string name="seal_mine_about_chat_room_listener_test">聊天室监听</string>
+
     <string name="seal_login_text_title">欢迎使用SealTalk</string>
     <string name="seal_talk_login_verify_code">请输入验证码</string>
     <string name="seal_talk_login_send_verify_code">发送验证码</string>
-    <string name="seal_talk_registration_terms_text">新登录用户即注册开通融云开发者账号\n且表示同意⟪注册条款⟫</string>
     <string name="seal_talk_version_text">SealTalk V%s</string>
     <string name="seal_talk_login_bottom_registration_text_front">新登录用户即注册开通融云开发者账号</string>
     <string name="seal_talk_login_bottom_registration_text_behand">且表示同意⟪注册条款⟫</string>

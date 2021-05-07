@@ -32,20 +32,36 @@
                 android:id="@+id/siv_discussion"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/seal_mine_about_height"
-                app:item_content="讨论组" />
+                app:item_content="讨论组"
+                app:item_divider="true" />
 
             <cn.rongcloud.im.ui.view.SettingItemView
                 android:id="@+id/siv_chatroom"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/seal_mine_about_height"
-                app:item_content="聊天室" />
+                app:item_content="聊天室"
+                app:item_divider="true" />
 
             <cn.rongcloud.im.ui.view.SettingItemView
                 android:id="@+id/siv_message_expansion"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/seal_mine_about_height"
-                app:item_content="消息扩展" />
+                app:item_content="消息扩展"
+                app:item_divider="true" />
 
+            <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/siv_tag"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/seal_mine_about_height"
+                app:item_content="TAG 测试"
+                app:item_divider="true" />
+
+            <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/siv_grr_v2_sender_test"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/seal_mine_about_height"
+                app:item_content="@string/seal_mine_about_group_read_receipt_test"
+                app:item_divider="true" />
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

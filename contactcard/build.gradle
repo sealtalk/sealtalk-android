@@ -31,5 +31,5 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    api 'cn.rongcloud.sdk:im_kit:'
+    api 'cn.rongcloud.sdk:im_kit:5.1.1.1'
 }

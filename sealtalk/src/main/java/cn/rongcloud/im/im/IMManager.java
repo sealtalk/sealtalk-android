@@ -114,9 +114,8 @@ import io.rong.sight.SightExtensionModule;
 import static android.content.Context.MODE_PRIVATE;
 
 public class IMManager {
-    private final String TAG = IMManager.class.getSimpleName();
     private static volatile IMManager instance;
-
+    private final String TAG = IMManager.class.getSimpleName();
     private MutableLiveData<ChatRoomAction> chatRoomActionLiveData = new MutableLiveData<>();
     private Context context;
     private AppTask appTask;
@@ -354,12 +353,12 @@ public class IMManager {
             }
 
             @Override
-            public boolean onMessageLinkClick(Context context, String link, Message message) {
+            public boolean onMessageLongClick(Context context, View view, Message message) {
                 return false;
             }
 
             @Override
-            public boolean onMessageLongClick(Context context, View view, Message message) {
+            public boolean onMessageLinkClick(Context context, String link, Message message) {
                 return false;
             }
 
@@ -536,15 +535,6 @@ public class IMManager {
             GroupUserInfo groupMemberInfo = new GroupUserInfo(groupId, userId, nickName);
             RongUserInfoManager.getInstance().refreshGroupUserInfoCache(groupMemberInfo);
         }
-    }
-
-    /**
-     * 获取当前用户 id
-     *
-     * @return
-     */
-    public String getCurrentId() {
-        return RongIMClient.getInstance().getCurrentUserId();
     }
 
     /**
@@ -847,6 +837,10 @@ public class IMManager {
                     String oppo = sharedPreferences.getString("oppo", "");
                     String threadId = sharedPreferences.getString("threadId", "");
                     String apnsId = sharedPreferences.getString("apnsId", "");
+                    String category = sharedPreferences.getString("category", "");
+                    String richMediaUri = sharedPreferences.getString("richMediaUri", "");
+                    String fcm = sharedPreferences.getString("fcm", "");
+                    String imageUrl = sharedPreferences.getString("imageUrl", "");
                     boolean vivo = sharedPreferences.getBoolean("vivo", false);
                     boolean disableTitle = sharedPreferences.getBoolean("disableTitle", false);
                     String templateId = sharedPreferences.getString("templateId", "");
@@ -855,8 +849,8 @@ public class IMManager {
                             .setPushContent(content).setPushData(data).setForceShowDetailContent(forceDetail)
                             .setDisablePushTitle(disableTitle)
                             .setTemplateId(templateId)
-                            .setAndroidConfig(new AndroidConfig.Builder().setNotificationId(id).setChannelIdHW(hw).setChannelIdMi(mi).setChannelIdOPPO(oppo).setTypeVivo(vivo ? AndroidConfig.SYSTEM : AndroidConfig.OPERATE).build())
-                            .setIOSConfig(new IOSConfig(threadId, apnsId))
+                            .setAndroidConfig(new AndroidConfig.Builder().setNotificationId(id).setChannelIdHW(hw).setChannelIdMi(mi).setChannelIdOPPO(oppo).setTypeVivo(vivo ? AndroidConfig.SYSTEM : AndroidConfig.OPERATE).setFcmCollapseKey(fcm).setFcmImageUrl(imageUrl).build())
+                            .setIOSConfig(new IOSConfig(threadId, apnsId, category, richMediaUri))
                             .build();
                     message.setMessagePushConfig(messagePushConfig);
                     SharedPreferences sharedPreferencesPush = context.getSharedPreferences("MessageConfig", MODE_PRIVATE);
@@ -1064,27 +1058,12 @@ public class IMManager {
     }
 
     /**
-     * 清理通知免打扰
+     * 获取当前用户 id
      *
      * @return
      */
-    public MutableLiveData<Resource<Boolean>> removeNotificationQuietHours() {
-        MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
-        RongNotificationManager.getInstance().removeNotificationQuietHours(new RongIMClient.OperationCallback() {
-            @Override
-            public void onSuccess() {
-                // 设置用户消息免打扰缓存状态
-                configCache.setNotifiDonotDistrabStatus(getCurrentId(), false);
-                result.postValue(Resource.success(true));
-            }
-
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-                result.postValue(Resource.error(ErrorCode.IM_ERROR.getCode(), false));
-            }
-        });
-
-        return result;
+    public String getCurrentId() {
+        return RongIMClient.getInstance().getCurrentUserId();
     }
 
     /**
@@ -1112,6 +1091,15 @@ public class IMManager {
     }
 
     /**
+     * 获取消息通知设置
+     *
+     * @return
+     */
+    public boolean getRemindStatus() {
+        return configCache.getNewMessageRemind(getCurrentId());
+    }
+
+    /**
      * 新消息通知设置
      *
      * @param status
@@ -1128,14 +1116,28 @@ public class IMManager {
         configCache.setNewMessageRemind(getCurrentId(), status);
     }
 
-
     /**
-     * 获取消息通知设置
+     * 清理通知免打扰
      *
      * @return
      */
-    public boolean getRemindStatus() {
-        return configCache.getNewMessageRemind(getCurrentId());
+    public MutableLiveData<Resource<Boolean>> removeNotificationQuietHours() {
+        MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
+        RongNotificationManager.getInstance().removeNotificationQuietHours(new RongIMClient.OperationCallback() {
+            @Override
+            public void onSuccess() {
+                // 设置用户消息免打扰缓存状态
+                configCache.setNotifiDonotDistrabStatus(getCurrentId(), false);
+                result.postValue(Resource.success(true));
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                result.postValue(Resource.error(ErrorCode.IM_ERROR.getCode(), false));
+            }
+        });
+
+        return result;
     }
 
     /**
@@ -1324,13 +1326,6 @@ public class IMManager {
          */
         IMCenter.getInstance().connect(token, timeOut, new RongIMClient.ConnectCallback() {
             @Override
-            public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus databaseOpenStatus) {
-                if (callback != null) {
-                    callback.onSuccess(RongIMClient.getInstance().getCurrentUserId());
-                }
-            }
-
-            @Override
             public void onSuccess(String s) {
                 // 连接 IM 成功后，初始化数据库
                 DBManager.getInstance(context).openDb(s);
@@ -1357,6 +1352,13 @@ public class IMManager {
                     } else {
                         // do nothing
                     }
+                }
+            }
+
+            @Override
+            public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus databaseOpenStatus) {
+                if (callback != null) {
+                    callback.onSuccess(RongIMClient.getInstance().getCurrentUserId());
                 }
             }
         });
@@ -1561,5 +1563,4 @@ public class IMManager {
     }
 
 }
-
 

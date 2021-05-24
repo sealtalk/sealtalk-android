@@ -24,9 +24,13 @@ public class MsgExtraInputDialog extends Dialog {
     public static int TYPE_SET= 0x1456;
     public static int TYPE_DELETE = 0x1457;
     public static int TYPE_SEND_MESSAGE = 0x1458;
+    public static int TYPE_SHORTAGE = 0x1459;
 
     private TextView mTvSure;
     private TextView mTvCancel;
+    private TextView uidText;
+    private TextView keyText;
+    private TextView valText;
     private TextView mTVAdd;
     private EditText etKey;
     private EditText etValue;
@@ -127,6 +131,9 @@ public class MsgExtraInputDialog extends Dialog {
         mTvSure = dialogView.findViewById(R.id.tv_sure);
         mTvCancel = dialogView.findViewById(R.id.tv_cancle);
         mTVAdd = dialogView.findViewById(R.id.add_item);
+        uidText = dialogView.findViewById(R.id.uid_text);
+        keyText = dialogView.findViewById(R.id.key_text);
+        valText = dialogView.findViewById(R.id.val_text);
         etKey = dialogView.findViewById(R.id.et_key);
         etValue = dialogView.findViewById(R.id.et_value);
         etMsgContent = dialogView.findViewById(R.id.et_send_msg);
@@ -145,6 +152,12 @@ public class MsgExtraInputDialog extends Dialog {
         } else if(mType == TYPE_SEND_MESSAGE) {
             llUID.setVisibility(View.GONE);
             mTvSure.setText("发送");
+        } else if(mType == TYPE_SHORTAGE) {
+            uidText.setText("时间");
+            keyText.setText("数量");
+            valText.setText("顺序");
+            mTVAdd.setVisibility(View.GONE);
+            llSendMsg.setVisibility(View.GONE);
         }
         setContentView(dialogView);
     }

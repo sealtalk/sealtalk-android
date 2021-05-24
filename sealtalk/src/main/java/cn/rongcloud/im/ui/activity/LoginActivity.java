@@ -128,6 +128,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         registrationTerms = findViewById(R.id.tv_registration_terms);
         registrationTerms.setText(Html.fromHtml("<font color='#5C6970'>" + getString(R.string.seal_talk_login_bottom_registration_text_front) + "</font>" + "<br>" + "<font color='#5C6970'>" + getString(R.string.seal_talk_login_bottom_registration_text_behand) + "</font>"));
 
+        String text = registrationTerms.getText().toString();
+        int index = text.indexOf("\"");
+        if (index == -1) {
+            index = text.indexOf("⟪");
+        }
+
         SpannableString str = new SpannableString(registrationTerms.getText());
         str.setSpan(new NoRefCopySpan() {
             @Override
@@ -144,7 +150,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 ds.setUnderlineText(false);
 
             }
-        }, 23, str.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }, index, str.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         registrationTerms.setText(str);
         registrationTerms.setMovementMethod(LinkMovementMethod.getInstance());//不设置 没有点击事件
         registrationTerms.setHighlightColor(Color.TRANSPARENT); //设置点击后的颜色为透明

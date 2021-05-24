@@ -14,12 +14,13 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/uid_text"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="UID"
             android:textColor="#000000"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/et_uid"
@@ -43,12 +44,13 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/key_text"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="Key"
             android:textColor="#000000"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/et_key"
@@ -73,12 +75,13 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/val_text"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="Value"
             android:textColor="#000000"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/et_value"

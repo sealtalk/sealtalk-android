@@ -9,9 +9,9 @@ import androidx.annotation.Nullable;
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.activity.TitleBaseActivity;
 import io.rong.calllib.RongCallClient;
-import io.rong.imlib.model.MessagePushConfig;
-import io.rong.imlib.model.IOSConfig;
 import io.rong.imlib.model.AndroidConfig;
+import io.rong.imlib.model.IOSConfig;
+import io.rong.imlib.model.MessagePushConfig;
 
 public class PushConfigActivity extends TitleBaseActivity implements View.OnClickListener {
 
@@ -40,19 +40,23 @@ public class PushConfigActivity extends TitleBaseActivity implements View.OnClic
     private void showSetDialog() {
         final PushConfigDialog pushConfigDialog = new PushConfigDialog(this);
         SharedPreferences sharedPreferences = getSharedPreferences("push_config", MODE_PRIVATE);
-        String id = sharedPreferences.getString("id","");
-        String title = sharedPreferences.getString("title","");
-        String content = sharedPreferences.getString("content","");
-        String data = sharedPreferences.getString("data","");
-        String hw = sharedPreferences.getString("hw","");
-        String mi = sharedPreferences.getString("mi","");
-        String oppo = sharedPreferences.getString("oppo","");
-        String threadId = sharedPreferences.getString("threadId","");
-        String apnsId = sharedPreferences.getString("apnsId","");
-        String templateId = sharedPreferences.getString("templateId","");
-        boolean vivo = sharedPreferences.getBoolean("vivo",false);
-        boolean disableTitle = sharedPreferences.getBoolean("disableTitle",false);
-        boolean forceDetail = sharedPreferences.getBoolean("forceDetail",false);
+        String id = sharedPreferences.getString("id", "");
+        String title = sharedPreferences.getString("title", "");
+        String content = sharedPreferences.getString("content", "");
+        String data = sharedPreferences.getString("data", "");
+        String hw = sharedPreferences.getString("hw", "");
+        String mi = sharedPreferences.getString("mi", "");
+        String oppo = sharedPreferences.getString("oppo", "");
+        String threadId = sharedPreferences.getString("threadId", "");
+        String apnsId = sharedPreferences.getString("apnsId", "");
+        String category = sharedPreferences.getString("category", "");
+        String richMediaUri = sharedPreferences.getString("richMediaUri", "");
+        String templateId = sharedPreferences.getString("templateId", "");
+        String fcm = sharedPreferences.getString("fcm", "");
+        String imageUrl = sharedPreferences.getString("imageUrl", "");
+        boolean vivo = sharedPreferences.getBoolean("vivo", false);
+        boolean disableTitle = sharedPreferences.getBoolean("disableTitle", false);
+        boolean forceDetail = sharedPreferences.getBoolean("forceDetail", false);
         pushConfigDialog.getEtId().setText(id);
         pushConfigDialog.getEtTitle().setText(title);
         pushConfigDialog.getEtContent().setText(content);
@@ -61,7 +65,11 @@ public class PushConfigActivity extends TitleBaseActivity implements View.OnClic
         pushConfigDialog.getEtMi().setText(mi);
         pushConfigDialog.getEtOppo().setText(oppo);
         pushConfigDialog.getEtThreadId().setText(threadId);
+        pushConfigDialog.getEdFcm().setText(fcm);
+        pushConfigDialog.getEdImageUrl().setText(imageUrl);
         pushConfigDialog.getEtApnId().setText(apnsId);
+        pushConfigDialog.getEdCategory().setText(category);
+        pushConfigDialog.getEdRichMediaUri().setText(richMediaUri);
         pushConfigDialog.getEdTemplateId().setText(templateId);
         pushConfigDialog.getCbVivo().setChecked(vivo);
         pushConfigDialog.getCbDisableTitle().setChecked(disableTitle);
@@ -78,7 +86,11 @@ public class PushConfigActivity extends TitleBaseActivity implements View.OnClic
                 String oppo = pushConfigDialog.getEtOppo().getText().toString();
                 String threadId = pushConfigDialog.getEtThreadId().getText().toString();
                 String apnsId = pushConfigDialog.getEtApnId().getText().toString();
+                String category = pushConfigDialog.getEdCategory().getText().toString();
+                String richMediaUri = pushConfigDialog.getEdRichMediaUri().getText().toString();
                 String templateId = pushConfigDialog.getEdTemplateId().getText().toString().trim();
+                String imageUrl = pushConfigDialog.getEdImageUrl().getText().toString().trim();
+                String fcm = pushConfigDialog.getEdFcm().getText().toString().trim();
                 boolean vivo = pushConfigDialog.getCbVivo().isChecked();
                 boolean disableTitle = pushConfigDialog.getCbDisableTitle().isChecked();
                 boolean forceDetail = pushConfigDialog.getCbForceDetail().isChecked();
@@ -92,24 +104,30 @@ public class PushConfigActivity extends TitleBaseActivity implements View.OnClic
                 edit.putString("oppo", oppo);
                 edit.putString("threadId", threadId);
                 edit.putString("apnsId", apnsId);
-                edit.putBoolean("vivo",vivo);
-                edit.putBoolean("disableTitle",disableTitle);
-                edit.putBoolean("forceDetail",forceDetail);
-                edit.putString("templateId",templateId);
+                edit.putString("category", category);
+                edit.putString("richMediaUri", richMediaUri);
+                edit.putBoolean("vivo", vivo);
+                edit.putBoolean("disableTitle", disableTitle);
+                edit.putBoolean("forceDetail", forceDetail);
+                edit.putString("templateId", templateId);
+                edit.putString("fcm", fcm);
+                edit.putString("imageUrl", imageUrl);
                 MessagePushConfig startCallMessagePushConfig =
-                    new MessagePushConfig.Builder().setPushTitle(title)
-                        .setPushContent(content)
-                        .setPushData(data)
-                        .setForceShowDetailContent(forceDetail)
-                        .setAndroidConfig(new AndroidConfig.Builder()
-                            .setNotificationId(id)
-                            .setChannelIdHW(hw)
-                            .setChannelIdMi(mi)
-                            .setChannelIdOPPO(oppo)
-                            .setTypeVivo(vivo ? AndroidConfig.SYSTEM : AndroidConfig.OPERATE).build())
-                            .setTemplateId(templateId)
-                        .setIOSConfig(new IOSConfig(threadId, apnsId))
-                        .build();
+                        new MessagePushConfig.Builder().setPushTitle(title)
+                                .setPushContent(content)
+                                .setPushData(data)
+                                .setForceShowDetailContent(forceDetail)
+                                .setAndroidConfig(new AndroidConfig.Builder()
+                                        .setNotificationId(id)
+                                        .setChannelIdHW(hw)
+                                        .setChannelIdMi(mi)
+                                        .setChannelIdOPPO(oppo)
+                                        .setFcmCollapseKey(fcm)
+                                        .setFcmImageUrl(imageUrl)
+                                        .setTypeVivo(vivo ? AndroidConfig.SYSTEM : AndroidConfig.OPERATE).build())
+                                .setTemplateId(templateId)
+                                .setIOSConfig(new IOSConfig(threadId, apnsId, category, richMediaUri))
+                                .build();
                 //SealTalk 发起和挂断的 pushConfig 内容一致，开发者根据实际需求配置
                 MessagePushConfig hangupCallMessagePushConfig = startCallMessagePushConfig;
                 RongCallClient.setPushConfig(startCallMessagePushConfig, hangupCallMessagePushConfig);

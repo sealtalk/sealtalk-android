@@ -112,10 +112,18 @@
         <activity
             android:name=".ui.activity.SelectCountryActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:exported="true"
+            android:screenOrientation="portrait">
+        <intent-filter>
+            <action android:name="cn.rongcloud.im.ui.activity.MainActivity" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+        </activity>
+
         <activity
             android:name=".ui.activity.ConversationActivity"
             android:launchMode="singleTop"
@@ -577,6 +585,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.test.TagTestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.test.ShortageConversationListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.test.ShortageDetailActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.test.GRRSenderTestActivity"
             android:screenOrientation="portrait"/>

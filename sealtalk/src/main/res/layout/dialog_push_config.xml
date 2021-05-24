@@ -30,8 +30,8 @@
             android:hint="请输入..."
             android:inputType="textPersonName"
             android:padding="5dp"
-            android:text=""
             android:singleLine="true"
+            android:text=""
             android:textColor="@color/text_black" />
     </LinearLayout>
 
@@ -56,10 +56,10 @@
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
             android:background="@drawable/rc_edit_text_background"
-            android:singleLine="true"
             android:hint="请输入..."
             android:inputType="textPersonName"
             android:padding="5dp"
+            android:singleLine="true"
             android:text=""
             android:textColor="@color/text_black" />
     </LinearLayout>
@@ -85,10 +85,10 @@
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
             android:background="@drawable/rc_edit_text_background"
-            android:singleLine="true"
             android:hint="请输入..."
             android:inputType="textPersonName"
             android:padding="5dp"
+            android:singleLine="true"
             android:text=""
             android:textColor="@color/text_black" />
     </LinearLayout>
@@ -114,10 +114,10 @@
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
             android:background="@drawable/rc_edit_text_background"
-            android:singleLine="true"
             android:hint="请输入..."
             android:inputType="textPersonName"
             android:padding="5dp"
+            android:singleLine="true"
             android:text=""
             android:textColor="@color/text_black" />
     </LinearLayout>
@@ -143,10 +143,10 @@
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
             android:background="@drawable/rc_edit_text_background"
-            android:singleLine="true"
             android:hint="请输入..."
             android:inputType="textPersonName"
             android:padding="5dp"
+            android:singleLine="true"
             android:text=""
             android:textColor="@color/text_black" />
     </LinearLayout>
@@ -172,10 +172,10 @@
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
             android:background="@drawable/rc_edit_text_background"
-            android:singleLine="true"
             android:hint="请输入..."
             android:inputType="textPersonName"
             android:padding="5dp"
+            android:singleLine="true"
             android:text=""
             android:textColor="@color/text_black" />
     </LinearLayout>
@@ -201,10 +201,39 @@
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
             android:background="@drawable/rc_edit_text_background"
-            android:singleLine="true"
             android:hint="请输入..."
             android:inputType="textPersonName"
             android:padding="5dp"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="@color/text_black" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_channel_fcm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="fcm"
+            android:textColor="@color/text_black"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/et_fcm"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:background="@drawable/rc_edit_text_background"
+            android:hint="请输入..."
+            android:inputType="textPersonName"
+            android:padding="5dp"
+            android:singleLine="true"
             android:text=""
             android:textColor="@color/text_black" />
     </LinearLayout>
@@ -230,10 +259,10 @@
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
             android:background="@drawable/rc_edit_text_background"
-            android:singleLine="true"
             android:hint="请输入..."
             android:inputType="textPersonName"
             android:padding="5dp"
+            android:singleLine="true"
             android:text=""
             android:textColor="@color/text_black" />
     </LinearLayout>
@@ -259,41 +288,128 @@
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
             android:background="@drawable/rc_edit_text_background"
-            android:singleLine="true"
             android:hint="请输入..."
             android:inputType="textPersonName"
             android:padding="5dp"
+            android:singleLine="true"
             android:text=""
             android:textColor="@color/text_black" />
     </LinearLayout>
 
     <LinearLayout
-      android:id="@+id/ll_template_id"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal">
+        android:id="@+id/ll_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <TextView
-          android:layout_width="74dp"
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="10dp"
-          android:text="templateId"
-          android:textColor="@color/text_black"
-          android:textSize="18sp" />
+            android:layout_width="74dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="category"
+            android:textColor="@color/text_black"
+            android:textSize="18sp" />
 
         <EditText
-          android:id="@+id/et_template_id"
-          android:layout_width="match_parent"
-          android:layout_height="35dp"
-          android:layout_marginLeft="6dp"
-          android:layout_marginRight="6dp"
-          android:background="@drawable/rc_edit_text_background"
-          android:singleLine="true"
-          android:hint="请输入..."
-          android:inputType="textPersonName"
-          android:padding="5dp"
-          android:text=""
-          android:textColor="@color/text_black" />
+            android:id="@+id/et_category"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:background="@drawable/rc_edit_text_background"
+            android:hint="请输入..."
+            android:inputType="textPersonName"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="@color/text_black" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_richMediaUri"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="74dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="richMediaUri"
+            android:textColor="@color/text_black"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/et_richMediaUri"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:background="@drawable/rc_edit_text_background"
+            android:hint="请输入..."
+            android:inputType="textPersonName"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="@color/text_black" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_template_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="74dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="templateId"
+            android:textColor="@color/text_black"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/et_template_id"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:background="@drawable/rc_edit_text_background"
+            android:hint="请输入..."
+            android:inputType="textPersonName"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="@color/text_black" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_image_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="74dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="imageUrl"
+            android:textColor="@color/text_black"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/et_image_url"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:background="@drawable/rc_edit_text_background"
+            android:hint="请输入..."
+            android:inputType="textPersonName"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="@color/text_black" />
     </LinearLayout>
 
     <LinearLayout

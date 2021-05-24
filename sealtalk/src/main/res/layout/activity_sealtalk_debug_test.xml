@@ -57,6 +57,13 @@
                 app:item_divider="true" />
 
             <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/siv_shortage"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/seal_mine_about_height"
+                app:item_content="消息断档"
+                app:item_divider="true" />
+
+            <cn.rongcloud.im.ui.view.SettingItemView
                 android:id="@+id/siv_grr_v2_sender_test"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/seal_mine_about_height"

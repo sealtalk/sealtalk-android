@@ -15,6 +15,7 @@ import cn.rongcloud.im.ui.test.GRRConversationListTestActivity;
 import cn.rongcloud.im.ui.test.DiscussionActivity;
 import cn.rongcloud.im.ui.test.MsgExpansionConversationListActivity;
 import cn.rongcloud.im.ui.test.PushConfigActivity;
+import cn.rongcloud.im.ui.test.ShortageConversationListActivity;
 import cn.rongcloud.im.ui.test.TagTestActivity;
 import cn.rongcloud.im.ui.view.SettingItemView;
 import cn.rongcloud.im.utils.ToastUtils;
@@ -27,6 +28,7 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
     private SettingItemView chatRoomSiv;
     private SettingItemView messageExpansion;
     private SettingItemView tag;
+    private SettingItemView shortage;
     private SettingItemView groupReadReceiptV2Siv;
 
     @Override
@@ -57,6 +59,9 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
         messageExpansion = findViewById(R.id.siv_message_expansion);
         messageExpansion.setOnClickListener(this);
 
+        shortage = findViewById(R.id.siv_shortage);
+        shortage.setOnClickListener(this);
+
         tag = findViewById(R.id.siv_tag);
         tag.setOnClickListener(this);
 
@@ -85,6 +90,9 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
             case R.id.siv_tag:
                 toTagTest();
                 break;
+            case R.id.siv_shortage:
+                toShortage();
+                break;
             case R.id.siv_grr_v2_sender_test:
                 toGroupReadReceiptTest(1);
                 break;
@@ -92,6 +100,11 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
                 //Do nothing
                 break;
         }
+    }
+
+    private void toShortage() {
+        Intent intent = new Intent(this, ShortageConversationListActivity.class);
+        startActivity(intent);
     }
 
     private void toGroupReadReceiptTest(int type) {

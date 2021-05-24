@@ -28,7 +28,6 @@ import java.util.List;
 import io.rong.contactcard.R;
 import io.rong.contactcard.message.ContactMessage;
 import io.rong.imkit.IMCenter;
-import io.rong.imkit.RongIM;
 import io.rong.imkit.activity.RongBaseNoActionbarActivity;
 import io.rong.imkit.conversation.extension.component.emoticon.AndroidEmoji;
 import io.rong.imkit.feature.mention.RongMentionManager;
@@ -78,6 +77,8 @@ public class ContactDetailActivity extends RongBaseNoActionbarActivity implement
 
     @Override
     protected void onDestroy() {
+        RongUserInfoManager.getInstance().removeUserDataObserver(this);
+
         super.onDestroy();
     }
 

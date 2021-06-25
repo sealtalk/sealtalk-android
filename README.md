@@ -104,6 +104,11 @@ public class WXManager {
     private static final String TAG = "WXManager";
     private static final String APP_ID = "替换为您的微信开放平台 AppId";
 ```
+6. **重要** 由于JCenter已停止服务，在老版本中请替换项目主工程的 build.gradle中的maven仓库地址
+```
+//在项目主工程的 build.gradle 引入融云maven仓库
+maven {url  "http://maven.rongcloud.cn/repository/maven-releases/"}
+```
 备注：  
 SealTalk Server 源码可以参考[这里](https://github.com/sealtalk/sealtalk-server)
 

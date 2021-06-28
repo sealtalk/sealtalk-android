@@ -115,8 +115,8 @@
 
         <activity
             android:name=".ui.activity.MainActivity"
-            android:launchMode="singleTask"
             android:exported="true"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait">
         <intent-filter>
             <action android:name="cn.rongcloud.im.ui.activity.MainActivity" />
@@ -376,19 +376,6 @@
             android:name="com.amap.api.v2.apikey"
             android:value="e09af6a2b26c02086e9216bd07c960ae" />
 
-
-        <!--
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="替换您申请的 UMeng AppKey" />
-        -->
-
-        <!--
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="替换您申请的 UMeng Channel" />
-        -->
-
         <!-- push start-->
         <receiver
             android:name=".push.SealNotificationReceiver"
@@ -517,10 +504,10 @@
         <!--推送配置项-->
         <meta-data
             android:name="com.vivo.push.api_key"
-            android:value="您申请的 vivo 推送 ApiKey" />
+            android:value="9379dbec440afd82e6d8fd903204c9a7" />
         <meta-data
             android:name="com.vivo.push.app_id"
-            android:value="您申请的 vivo 推送 AppId" />
+            android:value="103912318" />
 
         <!-- push 应用定义消息 receiver 声明 -->
         <receiver android:name="io.rong.push.platform.vivo.VivoPushMessageReceiver">
@@ -603,6 +590,12 @@
         <activity android:name=".ui.test.ChatRoomListenerTestActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.test.ChatRoomTestActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.DeviceInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.CommonConversationTestActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.CommonConversationListTestActivity"
             android:screenOrientation="portrait"/>
     </application>
 

@@ -15,6 +15,13 @@
             android:orientation="vertical">
 
             <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/siv_umeng_info"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/seal_mine_about_height"
+                app:item_content="@string/seal_mine_about_debug_setting_umeng_info"
+                app:item_divider="true" />
+
+            <cn.rongcloud.im.ui.view.SettingItemView
                 android:id="@+id/siv_push_language"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/seal_mine_about_height"
@@ -68,6 +75,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/seal_mine_about_height"
                 app:item_content="@string/seal_mine_about_group_read_receipt_test"
+                app:item_divider="true" />
+
+            <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/siv_reference_msg_test"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/seal_mine_about_height"
+                app:item_content="@string/seal_mine_about_debug_setting_reference_msg_test"
                 app:item_divider="true" />
         </LinearLayout>
     </ScrollView>

@@ -622,5 +622,8 @@
     <string name="seal_talk_login_bottom_registration_text_front">新登录用户即注册开通融云开发者账号</string>
     <string name="seal_talk_login_bottom_registration_text_behand">且表示同意⟪注册条款⟫</string>
     <string name="seal_talk_registration_title">注册条款</string>
+    <string name="seal_mine_about_debug_setting_umeng_info">查看设备识别信息(友盟添加测试设备需要)</string>
+    <string name="seal_mine_about_debug_setting_reference_msg_test">引用消息属性测试</string>
+
 
 </resources>

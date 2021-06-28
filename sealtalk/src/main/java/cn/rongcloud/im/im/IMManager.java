@@ -588,7 +588,7 @@ public class IMManager {
          */
         PushConfig config = new PushConfig
                 .Builder()
-                .enableFCM(false)          // 在 google-services.json 文件中进行配置
+                .enableFCM(true)          // 在 google-services.json 文件中进行配置
                 .enableHWPush(true)        // 在 AndroidManifest.xml 中搜索 com.huawei.hms.client.appid 进行设置
                 .enableMiPush(BuildConfig.SEALTALK_MI_PUSH_APPID, BuildConfig.SEALTALK_MI_PUSH_APPKEY)
                 .enableMeiZuPush(BuildConfig.SEALTALK_MIZU_PUSH_APPID, BuildConfig.SEALTALK_MIZU_PUSH_APPKEY)
@@ -833,6 +833,7 @@ public class IMManager {
                     String content = sharedPreferences.getString("content", "");
                     String data = sharedPreferences.getString("data", "");
                     String hw = sharedPreferences.getString("hw", "");
+                    String hwImportance = sharedPreferences.getString("importance", "NORMAL");
                     String mi = sharedPreferences.getString("mi", "");
                     String oppo = sharedPreferences.getString("oppo", "");
                     String threadId = sharedPreferences.getString("threadId", "");
@@ -849,7 +850,7 @@ public class IMManager {
                             .setPushContent(content).setPushData(data).setForceShowDetailContent(forceDetail)
                             .setDisablePushTitle(disableTitle)
                             .setTemplateId(templateId)
-                            .setAndroidConfig(new AndroidConfig.Builder().setNotificationId(id).setChannelIdHW(hw).setChannelIdMi(mi).setChannelIdOPPO(oppo).setTypeVivo(vivo ? AndroidConfig.SYSTEM : AndroidConfig.OPERATE).setFcmCollapseKey(fcm).setFcmImageUrl(imageUrl).build())
+                            .setAndroidConfig(new AndroidConfig.Builder().setNotificationId(id).setChannelIdHW(hw).setChannelIdMi(mi).setChannelIdOPPO(oppo).setTypeVivo(vivo ? AndroidConfig.SYSTEM : AndroidConfig.OPERATE).setFcmCollapseKey(fcm).setFcmImageUrl(imageUrl).setImportanceHW(getImportance(hwImportance)).build())
                             .setIOSConfig(new IOSConfig(threadId, apnsId, category, richMediaUri))
                             .build();
                     message.setMessagePushConfig(messagePushConfig);
@@ -1295,7 +1296,7 @@ public class IMManager {
      * 退出
      */
     public void logout() {
-        IMCenter.getInstance().disconnect();
+        IMCenter.getInstance().logout();
     }
 
     /**
@@ -1560,6 +1561,13 @@ public class IMManager {
         });
 
         return result;
+    }
+
+    public AndroidConfig.ImportanceHW getImportance(String hwImportance) {
+        if (!TextUtils.isEmpty(hwImportance) && TextUtils.equals(hwImportance, "LOW")) {
+            return AndroidConfig.ImportanceHW.LOW;
+        }
+        return AndroidConfig.ImportanceHW.NORMAL;
     }
 
 }

@@ -46,6 +46,7 @@ public class PushConfigDialog extends Dialog {
     private LinearLayout llValue;
     private LinearLayout llCheck;
     private LinearLayout llExtra;
+    private EditText etHWImportance;
 
     public PushConfigDialog(Context context) {
         super(context);
@@ -73,6 +74,7 @@ public class PushConfigDialog extends Dialog {
         etContent = dialogView.findViewById(R.id.et_content);
         etData = dialogView.findViewById(R.id.et_data);
         etHW = dialogView.findViewById(R.id.et_hw);
+        etHWImportance = dialogView.findViewById(R.id.et_importance_hw);
         etMi = dialogView.findViewById(R.id.et_mi);
         etOppo = dialogView.findViewById(R.id.et_oppo);
         etThreadId = dialogView.findViewById(R.id.et_thread_id);
@@ -199,5 +201,13 @@ public class PushConfigDialog extends Dialog {
 
     public void setCancel(String strCancel) {
         this.mTvCancel.setText(strCancel);
+    }
+
+    public EditText getEtHWImportance() {
+        return etHWImportance;
+    }
+
+    public void setEtHWImportance(EditText etHWImportance) {
+        this.etHWImportance = etHWImportance;
     }
 }

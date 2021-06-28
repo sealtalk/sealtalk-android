@@ -2,11 +2,13 @@ package cn.rongcloud.im.ui.test;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 
 import cn.rongcloud.im.R;
+import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.ui.activity.TitleBaseActivity;
 import io.rong.calllib.RongCallClient;
 import io.rong.imlib.model.AndroidConfig;
@@ -30,7 +32,7 @@ public class PushConfigActivity extends TitleBaseActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_set:
                 showSetDialog();
                 break;
@@ -45,6 +47,7 @@ public class PushConfigActivity extends TitleBaseActivity implements View.OnClic
         String content = sharedPreferences.getString("content", "");
         String data = sharedPreferences.getString("data", "");
         String hw = sharedPreferences.getString("hw", "");
+        String hwImportance = sharedPreferences.getString("importance", "NORMAL").trim();
         String mi = sharedPreferences.getString("mi", "");
         String oppo = sharedPreferences.getString("oppo", "");
         String threadId = sharedPreferences.getString("threadId", "");
@@ -62,6 +65,7 @@ public class PushConfigActivity extends TitleBaseActivity implements View.OnClic
         pushConfigDialog.getEtContent().setText(content);
         pushConfigDialog.getEtData().setText(data);
         pushConfigDialog.getEtHW().setText(hw);
+        pushConfigDialog.getEtHWImportance().setText(hwImportance);
         pushConfigDialog.getEtMi().setText(mi);
         pushConfigDialog.getEtOppo().setText(oppo);
         pushConfigDialog.getEtThreadId().setText(threadId);
@@ -82,6 +86,7 @@ public class PushConfigActivity extends TitleBaseActivity implements View.OnClic
                 String content = pushConfigDialog.getEtContent().getText().toString();
                 String data = pushConfigDialog.getEtData().getText().toString();
                 String hw = pushConfigDialog.getEtHW().getText().toString();
+                String hwImportance = pushConfigDialog.getEtHWImportance().getText().toString();
                 String mi = pushConfigDialog.getEtMi().getText().toString();
                 String oppo = pushConfigDialog.getEtOppo().getText().toString();
                 String threadId = pushConfigDialog.getEtThreadId().getText().toString();
@@ -100,6 +105,7 @@ public class PushConfigActivity extends TitleBaseActivity implements View.OnClic
                 edit.putString("content", content);
                 edit.putString("data", data);
                 edit.putString("hw", hw);
+                edit.putString("importance", hwImportance);
                 edit.putString("mi", mi);
                 edit.putString("oppo", oppo);
                 edit.putString("threadId", threadId);
@@ -120,6 +126,7 @@ public class PushConfigActivity extends TitleBaseActivity implements View.OnClic
                                 .setAndroidConfig(new AndroidConfig.Builder()
                                         .setNotificationId(id)
                                         .setChannelIdHW(hw)
+                                        .setImportanceHW(IMManager.getInstance().getImportance(hwImportance.trim()))
                                         .setChannelIdMi(mi)
                                         .setChannelIdOPPO(oppo)
                                         .setFcmCollapseKey(fcm)

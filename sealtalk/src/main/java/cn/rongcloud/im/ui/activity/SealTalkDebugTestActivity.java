@@ -8,9 +8,11 @@ import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+
 import cn.rongcloud.im.R;
-import cn.rongcloud.im.ui.test.ChatRoomStatusActivity;
 import cn.rongcloud.im.ui.test.ChatRoomTestActivity;
+import cn.rongcloud.im.ui.test.CommonConversationListTestActivity;
+import cn.rongcloud.im.ui.test.DeviceInfoActivity;
 import cn.rongcloud.im.ui.test.GRRConversationListTestActivity;
 import cn.rongcloud.im.ui.test.DiscussionActivity;
 import cn.rongcloud.im.ui.test.MsgExpansionConversationListActivity;
@@ -30,6 +32,8 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
     private SettingItemView tag;
     private SettingItemView shortage;
     private SettingItemView groupReadReceiptV2Siv;
+    private SettingItemView deviceInfo;
+    private SettingItemView referMsgTest;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,6 +69,12 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
         tag = findViewById(R.id.siv_tag);
         tag.setOnClickListener(this);
 
+        deviceInfo = findViewById(R.id.siv_umeng_info);
+        deviceInfo.setOnClickListener(this);
+
+        referMsgTest = findViewById(R.id.siv_reference_msg_test);
+        referMsgTest.setOnClickListener(this);
+
         groupReadReceiptV2Siv.setOnClickListener(this);
     }
 
@@ -96,10 +106,26 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
             case R.id.siv_grr_v2_sender_test:
                 toGroupReadReceiptTest(1);
                 break;
+            case R.id.siv_umeng_info:
+                toDeviceInfo();
+                break;
+            case R.id.siv_reference_msg_test:
+                toReferMsgTest();
+                break;
             default:
                 //Do nothing
                 break;
         }
+    }
+
+    private void toReferMsgTest() {
+        Intent intent = new Intent(this, CommonConversationListTestActivity.class);
+        startActivity(intent);
+    }
+
+    private void toDeviceInfo() {
+        Intent intent = new Intent(this, DeviceInfoActivity.class);
+        startActivity(intent);
     }
 
     private void toShortage() {

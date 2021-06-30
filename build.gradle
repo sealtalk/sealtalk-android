@@ -28,7 +28,9 @@ allprojects {
         mavenCentral()
         maven {url 'http://developer.huawei.com/repo/'}
         maven {url  "http://maven.rongcloud.cn/repository/maven-releases/"}
-    }
+	//UMeng统计
+        maven { url 'https://repo1.maven.org/maven2/' }   
+ }
 }
 
 task clean(type: Delete) {

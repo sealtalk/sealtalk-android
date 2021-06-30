@@ -27,7 +27,9 @@ android {
         buildConfigField "String", "SEALTALK_OPPO_PUSH_APPKEY", "${SEALTALK_OPPO_PUSH_APPKEY}"
         buildConfigField "String", "SEALTALK_OPPO_PUSH_SECRET", "${SEALTALK_OPPO_PUSH_SECRET}"
         manifestPlaceholders = [SEALTALK_HW_PUSH_APPID: SEALTALK_HW_PUSH_APPID.replaceAll('"', '')]
-    }
+        buildConfigField "String", "SEALTALK_UMENG_APPKEY", "${SEALTALK_UMENG_APPKEY}"
+        buildConfigField "String", "SEALTALK_UMENG_CHANNEL", "${SEALTALK_UMENG_CHANNEL}"   
+ }
 
     buildTypes {
         debug {

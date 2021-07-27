@@ -96,4 +96,6 @@ dependencies {
     api project(path: ':contactcard')
     api project(path: ':recognizer')
     api project(path: ':pushpermission')
+    implementation 'com.umeng.umsdk:common:9.3.8'
+    implementation 'com.umeng.umsdk:asms:1.2.2'
 }

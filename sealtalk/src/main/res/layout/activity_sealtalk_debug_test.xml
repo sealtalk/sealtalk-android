@@ -83,6 +83,13 @@
                 android:layout_height="@dimen/seal_mine_about_height"
                 app:item_content="@string/seal_mine_about_debug_setting_reference_msg_test"
                 app:item_divider="true" />
+
+            <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/siv_block_msg_test"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/seal_mine_about_height"
+                app:item_content="发送消息敏感词监听"
+                app:item_divider="true" />
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

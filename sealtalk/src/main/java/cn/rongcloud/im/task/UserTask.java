@@ -183,9 +183,7 @@ public class UserTask {
                 if (userDao != null) {
                     alias = userDao.getUserByIdSync(userInfo.getId()).getAlias();
                 }
-                //有备注名的时，使用备注名
-                String name = TextUtils.isEmpty(alias) ? userInfo.getName() : alias;
-                IMManager.getInstance().updateUserInfoCache(userInfo.getId(), name, Uri.parse(userInfo.getPortraitUri()));
+                IMManager.getInstance().updateUserInfoCache(userInfo.getId(), userInfo.getName(), Uri.parse(userInfo.getPortraitUri()), alias);
             }
 
             @NonNull
@@ -610,10 +608,11 @@ public class UserTask {
             if (portraitUrl == null) {
                 portraitUrl = userInfo == null ? "" : userInfo.getPortraitUri();
             }
+
             int i = userDao.updateNameAndPortrait(userId, nickName, CharacterParser.getInstance().getSpelling(nickName), portraitUrl);
             SLog.d("ss_update", "i=" + i);
 
-            IMManager.getInstance().updateUserInfoCache(userId, nickName, Uri.parse(portraitUrl));
+            IMManager.getInstance().updateUserInfoCache(userId, nickName, Uri.parse(portraitUrl), userInfo == null ? "" : userInfo.getAlias());
         }
     }
 
@@ -963,9 +962,9 @@ public class UserTask {
     /**
      * 用户注册登录
      *
-     * @param region   国家区号
-     * @param phone    手机号码
-     * @param code 密码
+     * @param region 国家区号
+     * @param phone  手机号码
+     * @param code   密码
      */
     public LiveData<Resource<String>> registerAndLogin(String region, String phone, String code) {
         MediatorLiveData<Resource<String>> result = new MediatorLiveData<>();

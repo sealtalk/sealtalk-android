@@ -1,6 +1,8 @@
 package cn.rongcloud.im.ui.test;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,14 +20,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cn.rongcloud.im.R;
-import cn.rongcloud.im.common.LogTag;
 import cn.rongcloud.im.im.IMManager;
-import cn.rongcloud.im.model.ChatRoomAction;
 import cn.rongcloud.im.ui.activity.TitleBaseActivity;
 import cn.rongcloud.im.ui.test.viewmodel.ChatRoomViewModel;
 import cn.rongcloud.im.utils.ToastUtils;
-import cn.rongcloud.im.utils.log.SLog;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.IRongCoreCallback;
 import io.rong.imlib.IRongCoreEnum;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.chatroom.base.RongChatRoomClient;
@@ -35,6 +35,8 @@ import io.rong.imlib.model.MessageContent;
 
 public class ChatRoomStatusActivity extends TitleBaseActivity implements View.OnClickListener {
 
+    private static final String CHAT_ROOM_1 = "kvchatroom1";
+    private static final String CHAT_ROOM_2 = "kvchatroom2";
     private ChatRoomStatusDeatilActivity.OnKVStatusEvent kvStatusEvent;
     public static boolean isFirstKVStatusDidChange;
     private Handler handler;
@@ -124,20 +126,65 @@ public class ChatRoomStatusActivity extends TitleBaseActivity implements View.On
     private void initView() {
         Button btnChatRoom1 = findViewById(R.id.btn_chat_room1);
         Button btnChatRoom2 = findViewById(R.id.btn_chat_room2);
+        findViewById(R.id.btn_get_kvs_no_join_room1).setOnClickListener(this);
+        findViewById(R.id.btn_get_kvs_no_join_room2).setOnClickListener(this);
         btnChatRoom1.setOnClickListener(this);
         btnChatRoom2.setOnClickListener(this);
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_chat_room1:
-                toDeatail("kvchatroom1");
+                toDeatail(CHAT_ROOM_1);
                 break;
             case R.id.btn_chat_room2:
-                toDeatail("kvchatroom2");
+                toDeatail(CHAT_ROOM_2);
+                break;
+            case R.id.btn_get_kvs_no_join_room1:
+                getAllChatRoomEntries(CHAT_ROOM_1);
+                break;
+            case R.id.btn_get_kvs_no_join_room2:
+                getAllChatRoomEntries(CHAT_ROOM_2);
                 break;
         }
+    }
+
+    private void getAllChatRoomEntries(String roomId) {
+        RongChatRoomClient.getInstance().getAllChatRoomEntries(roomId, new IRongCoreCallback.ResultCallback<Map<String, String>>() {
+            @Override
+            public void onSuccess(Map<String, String> kvMap) {
+                StringBuilder messageBuilder = new StringBuilder();
+                for (Map.Entry<String, String> entry : kvMap.entrySet()) {
+                    String key = entry.getKey();
+                    String value = entry.getValue();
+                    messageBuilder.append("key=" + key + " , value=" + value);
+                    messageBuilder.append("\n");
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        new AlertDialog.Builder(ChatRoomStatusActivity.this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
+                                .setMessage(messageBuilder.toString())
+                                .setCancelable(true)
+                                .show();
+                    }
+                });
+            }
+
+            @Override
+            public void onError(IRongCoreEnum.CoreErrorCode e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtils.showToast("获取失败,errorCode= " + e.code);
+                    }
+                });
+
+            }
+        });
+
     }
 
     private void joinRoom(String roomId) {

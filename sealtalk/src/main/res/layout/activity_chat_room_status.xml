@@ -9,22 +9,47 @@
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:orientation="horizontal"
-        android:layout_marginBottom="60dp">
+        android:layout_marginBottom="60dp"
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_chat_room1"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="80dp"
-            android:text="加入聊天室1" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/btn_chat_room2"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="80dp"
-            android:text="加入聊天室2" />
+            <Button
+                android:id="@+id/btn_chat_room1"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:text="加入聊天室1" />
+
+            <Button
+                android:id="@+id/btn_chat_room2"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:text="加入聊天室2" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btn_get_kvs_no_join_room1"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:text="不加入获取聊天室1属性" />
+
+            <Button
+                android:id="@+id/btn_get_kvs_no_join_room2"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:text="不加入获取聊天室2属性" />
+        </LinearLayout>
 
     </LinearLayout>
 

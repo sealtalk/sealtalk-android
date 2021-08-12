@@ -15,10 +15,12 @@ import cn.rongcloud.im.common.LogTag;
 import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.model.ChatRoomAction;
 import cn.rongcloud.im.model.ChatRoomResult;
+import cn.rongcloud.im.ui.test.ChatRoomListenerTestActivity;
 import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.viewmodel.AppViewModel;
 import cn.rongcloud.im.utils.log.SLog;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.utils.RouteUtils;
 import io.rong.imlib.RongCoreClient;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -128,6 +130,9 @@ public class MainDiscoveryFragment extends BaseFragment {
         RongIMClient.getInstance().joinChatRoom(roomId, 10, new RongIMClient.OperationCallback() {
             @Override
             public void onSuccess() {
+                if (IMManager.getInstance().getAppTask().isDebugMode()) {
+                    RouteUtils.registerActivity(RouteUtils.RongActivityType.ConversationActivity, ChatRoomListenerTestActivity.class);
+                }
                 RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.CHATROOM, roomId, roomTitle);
             }
 

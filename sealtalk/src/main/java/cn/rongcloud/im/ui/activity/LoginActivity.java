@@ -3,9 +3,7 @@ package cn.rongcloud.im.ui.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Process;
 import android.text.Html;
-import android.text.NoCopySpan;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -133,7 +131,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         if (index == -1) {
             index = text.indexOf("⟪");
         }
-
+        if (index == -1) {
+            return;
+        }
         SpannableString str = new SpannableString(registrationTerms.getText());
         str.setSpan(new NoRefCopySpan() {
             @Override
@@ -151,6 +151,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
             }
         }, index, str.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
         registrationTerms.setText(str);
         registrationTerms.setMovementMethod(LinkMovementMethod.getInstance());//不设置 没有点击事件
         registrationTerms.setHighlightColor(Color.TRANSPARENT); //设置点击后的颜色为透明
@@ -360,10 +361,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         return false;
     }
 
-    public static class NoRefCopySpan extends ClickableSpan implements NoCopySpan {
+    public static class NoRefCopySpan extends ClickableSpan {
 
         @Override
         public void onClick(@NonNull View widget) {
+
         }
 
         @Override

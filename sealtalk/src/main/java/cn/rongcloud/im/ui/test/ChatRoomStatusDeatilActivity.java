@@ -1,7 +1,9 @@
 package cn.rongcloud.im.ui.test;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +18,12 @@ import androidx.lifecycle.ViewModelProvider;
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -31,10 +35,12 @@ import cn.rongcloud.im.ui.test.viewmodel.ChatRoomEvent;
 import cn.rongcloud.im.ui.test.viewmodel.ChatRoomViewModel;
 import cn.rongcloud.im.utils.ToastUtils;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.IRongCoreCallback;
 import io.rong.imlib.IRongCoreEnum;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.chatroom.base.RongChatRoomClient;
 import io.rong.imlib.chatroom.message.ChatRoomKVNotiMessage;
+import io.rong.imlib.model.ChatRoomMemberAction;
 import io.rong.imlib.model.Message;
 
 public class ChatRoomStatusDeatilActivity extends TitleBaseActivity implements View.OnClickListener {
@@ -141,6 +147,10 @@ public class ChatRoomStatusDeatilActivity extends TitleBaseActivity implements V
         findViewById(R.id.btn_remove_private_key).setOnClickListener(this);
         findViewById(R.id.btn_get_all_key).setOnClickListener(this);
         findViewById(R.id.btn_get_sigle_key).setOnClickListener(this);
+        findViewById(R.id.btn_set_batch_kv_btn).setOnClickListener(this);
+        findViewById(R.id.btn_set_batch_kv_btn_force).setOnClickListener(this);
+        findViewById(R.id.btn_remove_batch_kv_btn).setOnClickListener(this);
+        findViewById(R.id.btn_remove_batch_kv_btn_force).setOnClickListener(this);
     }
 
     private void initListener() {
@@ -204,6 +214,35 @@ public class ChatRoomStatusDeatilActivity extends TitleBaseActivity implements V
                 });
             }
         });
+
+        RongChatRoomClient.setChatRoomMemberListener(new RongChatRoomClient.ChatRoomMemberActionListener() {
+            @Override
+            public void onMemberChange(List<ChatRoomMemberAction> chatRoomMemberActions, String roomId) {
+                if (ChatRoomStatusDeatilActivity.this.isFinishing()) {
+                    return;
+                }
+                if (chatRoomMemberActions == null || chatRoomMemberActions.isEmpty()) {
+                    return;
+                }
+
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < chatRoomMemberActions.size(); i++) {
+                    ChatRoomMemberAction member = chatRoomMemberActions.get(i);
+                    if (member.getChatRoomMemberAction() == ChatRoomMemberAction.ChatRoomMemberActionType.CHAT_ROOM_MEMBER_JOIN) {
+                        builder.append("用户:" + chatRoomMemberActions.get(i).getUserId() + "加入聊天室:" + roomId);
+                    } else if (member.getChatRoomMemberAction() == ChatRoomMemberAction.ChatRoomMemberActionType.CHAT_ROOM_MEMBER_QUIT) {
+                        builder.append("用户:" + chatRoomMemberActions.get(i).getUserId() + "退出聊天室:" + roomId);
+                    } else {
+                        builder.append("用户:" + chatRoomMemberActions.get(i).getUserId() + "加入或退出聊天室:" + roomId + " 未知UNKOWN!");
+                    }
+                    builder.append("\n");
+                }
+                new AlertDialog.Builder(ChatRoomStatusDeatilActivity.this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
+                        .setMessage(builder.toString())
+                        .setCancelable(true)
+                        .show();
+            }
+        });
     }
 
     @Override
@@ -213,6 +252,17 @@ public class ChatRoomStatusDeatilActivity extends TitleBaseActivity implements V
         kvStatusEventList.clear();
         ChatRoomStatusActivity.isFirstKVStatusDidChange = true;
 //        EventBus.getDefault().unregister(this);
+        RongIM.getInstance().quitChatRoom(roomId, new RongIMClient.OperationCallback() {
+            @Override
+            public void onSuccess() {
+                ToastUtils.showToast("退出成功!");
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                ToastUtils.showToast("退出失败，errorCode=" + errorCode.code);
+            }
+        });
     }
 
     public static class MyOperationCallback extends RongIMClient.OperationCallback {
@@ -254,7 +304,145 @@ public class ChatRoomStatusDeatilActivity extends TitleBaseActivity implements V
             case R.id.btn_get_sigle_key:
                 getKeysByBatch();
                 break;
+            case R.id.btn_set_batch_kv_btn:
+                setKVByBatch(false);
+                break;
+            case R.id.btn_remove_batch_kv_btn:
+                removeKVByBatch(false);
+                break;
+            case R.id.btn_set_batch_kv_btn_force:
+                setKVByBatch(true);
+                break;
+            case R.id.btn_remove_batch_kv_btn_force:
+                removeKVByBatch(true);
+                break;
+
         }
+    }
+
+    private void removeKVByBatch(boolean force) {
+        final ChatRoomStatusInputDialog chatRoomStatusInputDialog = new ChatRoomStatusInputDialog(this, ChatRoomStatusInputDialog.TYPE_REMOVE_BATCH);
+        chatRoomStatusInputDialog.getSureView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String keyList = chatRoomStatusInputDialog.getEtKey().getText().toString();
+                if (TextUtils.isEmpty(keyList)) {
+                    return;
+                }
+
+                String[] keyArray = keyList.split(",");
+                List<String> keyListParams = Arrays.asList(keyArray);
+
+                try {
+                    RongChatRoomClient.getInstance().deleteChatRoomEntries(roomId, keyListParams, force, new IRongCoreCallback.SetChatRoomKVCallback() {
+                        @Override
+                        public void onSuccess() {
+                            Log.e("ChatRoomStatusDeatil", "setChatRoomEntries===onSuccess");
+                            for (String key : keyListParams) {
+                                addToList(getStringDate() + " 删除成功，" + "key=" + key);
+                            }
+                        }
+
+                        @Override
+                        public void onError(IRongCoreEnum.CoreErrorCode coreErrorCode, Map<String, IRongCoreEnum.CoreErrorCode> map) {
+                            Log.e("ChatRoomStatusDeatil", "setChatroomEntry===onError" + coreErrorCode);
+                            StringBuilder errorCodeBuilder = new StringBuilder();
+                            if (map == null) {
+                                addToList(getStringDate() + " 删除失败，" + coreErrorCode + "，错误码" + coreErrorCode.getValue() + " map==null");
+                                return;
+                            }
+                            for (Map.Entry<String, IRongCoreEnum.CoreErrorCode> entry : map.entrySet()) {
+                                String key = entry.getKey();
+                                int errorCode = entry.getValue().code;
+                                errorCodeBuilder.append("key=" + key);
+                                errorCodeBuilder.append("errorCode=" + errorCode);
+                                errorCodeBuilder.append("，");
+                            }
+                            addToList(getStringDate() + " 删除失败，" + coreErrorCode + "，错误码" + coreErrorCode.getValue() + "，具体Key操作错误码：" + errorCodeBuilder.toString());
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                chatRoomStatusInputDialog.cancel();
+            }
+        });
+        chatRoomStatusInputDialog.getCancelView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chatRoomStatusInputDialog.cancel();
+            }
+        });
+        chatRoomStatusInputDialog.show();
+
+    }
+
+    private void setKVByBatch(boolean force) {
+        final ChatRoomStatusInputDialog chatRoomStatusInputDialog = new ChatRoomStatusInputDialog(this, ChatRoomStatusInputDialog.TYPE_SET_BATCH);
+        chatRoomStatusInputDialog.getSureView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String keyList = chatRoomStatusInputDialog.getEtKey().getText().toString();
+                String valueList = chatRoomStatusInputDialog.getEtValue().getText().toString();
+                boolean isAutoDel = chatRoomStatusInputDialog.getCbAutoDel().isChecked();
+                if (TextUtils.isEmpty(keyList) || TextUtils.isEmpty(valueList) || keyList.length() != valueList.length()) {
+                    return;
+                }
+
+                String[] keyArray = keyList.split(",");
+                String[] valueArray = valueList.split(",");
+
+                Map<String, String> kvMap = new HashMap<>();
+                for (int i = 0; i < keyArray.length; i++) {
+                    kvMap.put(keyArray[i], valueArray[i]);
+                }
+
+                try {
+                    RongChatRoomClient.getInstance().setChatRoomEntries(roomId, kvMap, isAutoDel, force, new IRongCoreCallback.SetChatRoomKVCallback() {
+                        @Override
+                        public void onSuccess() {
+                            Log.e("ChatRoomStatusDeatil", "setChatRoomEntries===onSuccess");
+                            for (Map.Entry<String, String> entry : kvMap.entrySet()) {
+                                String key = entry.getKey();
+                                String value = entry.getValue();
+                                addToList(getStringDate() + " 设置成功，" + key + "=" + value);
+                            }
+                        }
+
+                        @Override
+                        public void onError(IRongCoreEnum.CoreErrorCode coreErrorCode, Map<String, IRongCoreEnum.CoreErrorCode> map) {
+                            Log.e("ChatRoomStatusDeatil", "setChatroomEntry===onError" + coreErrorCode);
+                            StringBuilder errorCodeBuilder = new StringBuilder();
+                            if (map == null) {
+                                addToList(getStringDate() + " 设置失败，" + coreErrorCode + "，错误码" + coreErrorCode.getValue() + "  map==null");
+                                return;
+                            }
+                            for (Map.Entry<String, IRongCoreEnum.CoreErrorCode> entry : map.entrySet()) {
+                                String key = entry.getKey();
+                                int errorCode = entry.getValue().code;
+                                errorCodeBuilder.append("key=" + key);
+                                errorCodeBuilder.append("errorCode=" + errorCode);
+                                errorCodeBuilder.append("，");
+                            }
+                            addToList(getStringDate() + " 设置失败，" + coreErrorCode + "，错误码" + coreErrorCode.getValue() + "，具体Key操作错误码：" + errorCodeBuilder.toString());
+                        }
+                    });
+
+                    chatRoomStatusInputDialog.cancel();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        chatRoomStatusInputDialog.getCancelView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chatRoomStatusInputDialog.cancel();
+            }
+        });
+        chatRoomStatusInputDialog.show();
+
     }
 
     private void setKey() {

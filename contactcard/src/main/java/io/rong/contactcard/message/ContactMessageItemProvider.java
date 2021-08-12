@@ -27,13 +27,12 @@ import io.rong.imkit.RongIM;
 import io.rong.imkit.conversation.extension.component.emoticon.AndroidEmoji;
 import io.rong.imkit.conversation.messgelist.provider.BaseMessageItemProvider;
 import io.rong.imkit.model.UiMessage;
+import io.rong.imkit.picture.tools.ScreenUtils;
 import io.rong.imkit.widget.adapter.IViewProviderListener;
 import io.rong.imkit.widget.adapter.ViewHolder;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
-
-import static io.rong.imkit.conversation.messgelist.provider.SightMessageItemProvider.dip2pix;
 
 /**
  * Created by Beyond on 2016/12/5.
@@ -60,7 +59,7 @@ public class ContactMessageItemProvider extends BaseMessageItemProvider<ContactM
     protected void bindMessageContentViewHolder(final ViewHolder holder, ViewHolder parentHolder, final ContactMessage contactMessage, final UiMessage uiMessage, int position, List<UiMessage> list, IViewProviderListener<UiMessage> listener) {
 
         final ImageView imageView = holder.getView(R.id.rc_img);
-        final RequestOptions options = RequestOptions.bitmapTransform(new RoundedCorners(dip2pix(IMCenter.getInstance().getContext(), 6))).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
+        final RequestOptions options = RequestOptions.bitmapTransform(new RoundedCorners(ScreenUtils.dip2px(IMCenter.getInstance().getContext(), 6))).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
         Glide.with(imageView).load(contactMessage.getImgUrl())
                 .apply(options)
                 .placeholder(R.drawable.rc_default_portrait)

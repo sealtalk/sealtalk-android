@@ -76,6 +76,7 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
         referMsgTest.setOnClickListener(this);
 
         groupReadReceiptV2Siv.setOnClickListener(this);
+        findViewById(R.id.siv_block_msg_test).setOnClickListener(this);
     }
 
 
@@ -110,6 +111,9 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
                 toDeviceInfo();
                 break;
             case R.id.siv_reference_msg_test:
+                toReferMsgTest();
+                break;
+            case R.id.siv_block_msg_test:
                 toReferMsgTest();
                 break;
             default:

@@ -13,15 +13,15 @@
 
     <!-- ⼩米 配置开始 < -->
     <permission
-        android:name="cn.rongcloud.im.permission.MIPUSH_RECEIVE"
+        android:name="${applicationId}.permission.MIPUSH_RECEIVE"
         android:protectionLevel="signature" />
-    <uses-permission android:name="cn.rongcloud.im.permission.MIPUSH_RECEIVE" />
+    <uses-permission android:name="${applicationId}.permission.MIPUSH_RECEIVE" />
     <!-- ⼩米 配置结束 < -->
     <!-- GCM 配置开始 < -->
     <permission
-        android:name="cn.rongcloud.im.permission.C2D_MESSAGE"
+        android:name="${applicationId}.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
-    <uses-permission android:name="cn.rongcloud.im.permission.C2D_MESSAGE" />
+    <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE" />
     <!-- GCM 配置结束 < -->
     <!-- 华为 配置开始 < -->
     <!--HMS-SDK引导升级HMS功能，访问OTA服务器需要网络权限-->
@@ -43,9 +43,9 @@
     <!-- 兼容 flyme5.0 以下版本，魅族内部集成 pushSDK 必填，不然无法收到 消息-->
     <uses-permission android:name="com.meizu.flyme.push.permission.RECEIVE" />
     <permission
-        android:name="cn.rongcloud.im.push.permission.MESSAGE"
+        android:name="${applicationId}.push.permission.MESSAGE"
         android:protectionLevel="signature" />
-    <uses-permission android:name="cn.rongcloud.im.push.permission.MESSAGE" />
+    <uses-permission android:name="${applicationId}.push.permission.MESSAGE" />
     <!-- 兼容 flyme3.0 配置权限-->
     <uses-permission android:name="com.meizu.c2dm.permission.RECEIVE" />
     <!-- MeiZu 配置结束 < -->
@@ -95,11 +95,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="cn.rongcloud.im"
+                    android:host="${applicationId}"
                     android:pathPrefix="/conversationlist"
                     android:scheme="rong" />
                 <data
-                    android:host="cn.rongcloud.im"
+                    android:host="${applicationId}"
                     android:pathPrefix="/conversation"
                     android:scheme="rong" />
             </intent-filter>
@@ -170,7 +170,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data
-                    android:host="cn.rongcloud.im"
+                    android:host="${applicationId}"
                     android:pathPrefix="/publicServiceProfile"
                     android:scheme="rong" />
             </intent-filter>
@@ -179,7 +179,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data
-                    android:host="cn.rongcloud.im"
+                    android:host="${applicationId}"
                     android:pathPrefix="/publicServiceInfo"
                     android:scheme="rong" />
             </intent-filter>
@@ -472,7 +472,7 @@
                 <action android:name="com.meizu.c2dm.intent.REGISTRATION" />
                 <action android:name="com.meizu.c2dm.intent.RECEIVE" />
 
-                <category android:name="cn.rongcloud.im" />
+                <category android:name="${applicationId}" />
             </intent-filter>
         </receiver>
         <!-- MeiZu 配置结束 < -->

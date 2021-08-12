@@ -16,6 +16,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import cn.rongcloud.im.BuildConfig;
@@ -91,6 +92,7 @@ import io.rong.imlib.common.DeviceUtils;
 import io.rong.imlib.cs.CustomServiceConfig;
 import io.rong.imlib.cs.CustomServiceManager;
 import io.rong.imlib.model.AndroidConfig;
+import io.rong.imlib.model.ConnectOption;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.IOSConfig;
@@ -484,16 +486,16 @@ public class IMManager {
      * @param userName
      * @param portraitUri
      */
-    public void updateUserInfoCache(String userId, String userName, Uri portraitUri) {
+    public void updateUserInfoCache(String userId, String userName, Uri portraitUri, String alias) {
 
         UserInfo oldUserInfo = RongUserInfoManager.getInstance().getUserInfo(userId);
         if (oldUserInfo == null
-                || (
-                !oldUserInfo.getName().equals(userName)
-                        || oldUserInfo.getPortraitUri() == null
-                        || !oldUserInfo.getPortraitUri().equals(portraitUri)
-        )) {
+                || (!oldUserInfo.getName().equals(userName)
+                || oldUserInfo.getPortraitUri() == null
+                || !oldUserInfo.getPortraitUri().equals(portraitUri))
+                || !TextUtils.equals(oldUserInfo.getAlias(), alias)) {
             UserInfo userInfo = new UserInfo(userId, userName, portraitUri);
+            userInfo.setAlias(alias);
             RongUserInfoManager.getInstance().refreshUserInfoCache(userInfo);
         }
     }
@@ -1568,6 +1570,10 @@ public class IMManager {
             return AndroidConfig.ImportanceHW.LOW;
         }
         return AndroidConfig.ImportanceHW.NORMAL;
+    }
+
+    public AppTask getAppTask() {
+        return appTask;
     }
 
 }

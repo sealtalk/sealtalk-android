@@ -24,6 +24,8 @@ public class ChatRoomStatusInputDialog extends Dialog {
     private int mType;
     public static int TYPE_REMOVE = 0x1456;
     public static int TYPE_GET = 0x1457;
+    public static int TYPE_SET_BATCH = 0x1458;
+    public static int TYPE_REMOVE_BATCH = 0x1459;
 
     private TextView mTvSure;
     private TextView mTvCancel;
@@ -119,6 +121,10 @@ public class ChatRoomStatusInputDialog extends Dialog {
             llValue.setVisibility(View.GONE);
             llCheck.setVisibility(View.GONE);
             llExtra.setVisibility(View.GONE);
+        } else if (mType == TYPE_REMOVE_BATCH) {
+            llCheck.setVisibility(View.GONE);
+            llExtra.setVisibility(View.GONE);
+            llValue.setVisibility(View.GONE);
         }
         setContentView(dialogView);
     }

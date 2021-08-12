@@ -2,106 +2,96 @@ package cn.rongcloud.im.ui.test;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
-import androidx.lifecycle.Observer;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import cn.rongcloud.im.R;
-import cn.rongcloud.im.common.LogTag;
 import cn.rongcloud.im.im.IMManager;
-import cn.rongcloud.im.model.ChatRoomAction;
-import cn.rongcloud.im.ui.activity.TitleBaseActivity;
-import cn.rongcloud.im.utils.ToastUtils;
-import cn.rongcloud.im.utils.log.SLog;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.IRongCoreEnum;
+import cn.rongcloud.im.task.AppTask;
+import io.rong.imkit.conversation.RongConversationActivity;
+import io.rong.imkit.utils.RouteUtils;
+import io.rong.imlib.IRongCoreListener;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.chatroom.base.RongChatRoomClient;
+import io.rong.imlib.model.BlockedMessageInfo;
+import io.rong.imlib.model.ChatRoomMemberAction;
+import io.rong.imlib.model.MessageBlockType;
 
-public class ChatRoomListenerTestActivity extends TitleBaseActivity implements View.OnClickListener {
-
-    public static final String CHATROOMLISTENER_1 = "chatroomlistener1";
-    public static final String CHATROOMLISTENER_2 = "chatroomlistener2";
-    private Button btnChatRoomTest1;
-    private Button btnChatRoomTest2;
+public class ChatRoomListenerTestActivity extends RongConversationActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat_room_listener_test);
-        initView();
-    }
 
-    private void initView() {
-        btnChatRoomTest1 = (Button) findViewById(R.id.btn_chat_room_test_1);
-        btnChatRoomTest2 = (Button) findViewById(R.id.btn_chat_room_test_2);
+        AppTask appTask = IMManager.getInstance().getAppTask();
+        //是否处于Debug 测试模式
+        if (appTask != null && appTask.isDebugMode()) {
+            Map<Integer, String> map = new HashMap<>();
+            map.put(MessageBlockType.UNKNOWN.value, "未知类型");
+            map.put(MessageBlockType.BLOCK_GLOBAL.value, " 全局敏感词");
+            map.put(MessageBlockType.BLOCK_CUSTOM.value, "自定义敏感词拦截");
+            map.put(MessageBlockType.BLOCK_THIRD_PATY.value, "第三方审核拦截");
+            RongIMClient.getInstance().setMessageBlockListener(new IRongCoreListener.MessageBlockListener() {
+                @Override
+                public void onMessageBlock(BlockedMessageInfo info) {
+                    if (ChatRoomListenerTestActivity.this.isFinishing()) {
+                        return;
+                    }
+                    StringBuilder builder = new StringBuilder();
+                    builder.append("会话类型=" + info.getConversationType().getName())
+                            .append("\n")
+                            .append("会话ID=" + info.getTargetId())
+                            .append("\n")
+                            .append("被拦截的消息ID=" + info.getBlockMsgUId())
+                            .append("\n")
+                            .append("被拦截原因的类型=" + info.getType().value + " (" + map.get(info.getType().value) + ")")
+                            .append("\n");
 
-        btnChatRoomTest1.setOnClickListener(this);
-        btnChatRoomTest2.setOnClickListener(this);
-
-        IMManager.getInstance().getChatRoomAction().observe(this, new Observer<ChatRoomAction>() {
-            @Override
-            public void onChanged(ChatRoomAction chatRoomAction) {
-                if (chatRoomAction.status == ChatRoomAction.Status.ERROR) {
-                    ToastUtils.showToast(R.string.discovery_chat_room_join_failure);
-                } else {
-                    SLog.d(LogTag.IM, "ChatRoom action, status: " + chatRoomAction.status.name() + " - ChatRoom id:" + chatRoomAction.roomId);
+                    new AlertDialog.Builder(ChatRoomListenerTestActivity.this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
+                            .setMessage(builder.toString())
+                            .setCancelable(true)
+                            .show();
                 }
-                switch (chatRoomAction.status) {
-                    case ERROR:
-                        ToastUtils.showToast("加入聊天室出错,roomId=" + chatRoomAction.roomId);
-                        break;
-                    case JOINING:
-                        break;
-                    case JOINED:
-                        ToastUtils.showToast("加入聊天室成功,roomId=" + chatRoomAction.roomId);
-                        break;
-                    case RESET:
-                        ToastUtils.showToast("聊天室被重置,roomId=" + chatRoomAction.roomId);
-                        break;
-                    case QUITED:
-                        ToastUtils.showToast("退出聊天室,roomId=" + chatRoomAction.roomId);
-                        break;
-                    case DESTROY:
-                        ToastUtils.showToast("聊天室销毁,roomId=" + chatRoomAction.roomId);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-    }
+            });
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_chat_room_test_1:
-                joinRoom(CHATROOMLISTENER_1);
-                break;
-            case R.id.btn_chat_room_test_2:
-                joinRoom(CHATROOMLISTENER_2);
-                break;
-            default:
-                break;
+            RongChatRoomClient.setChatRoomMemberListener(new RongChatRoomClient.ChatRoomMemberActionListener() {
+                @Override
+                public void onMemberChange(List<ChatRoomMemberAction> chatRoomMemberActions, String roomId) {
+                    if (ChatRoomListenerTestActivity.this.isFinishing()) {
+                        return;
+                    }
+                    if (chatRoomMemberActions == null || chatRoomMemberActions.isEmpty()) {
+                        return;
+                    }
+
+                    StringBuilder builder = new StringBuilder();
+                    for (int i = 0; i < chatRoomMemberActions.size(); i++) {
+                        ChatRoomMemberAction member = chatRoomMemberActions.get(i);
+                        if (member.getChatRoomMemberAction() == ChatRoomMemberAction.ChatRoomMemberActionType.CHAT_ROOM_MEMBER_JOIN) {
+                            builder.append("用户:" + chatRoomMemberActions.get(i).getUserId() + "加入聊天室:" + roomId);
+                        } else if (member.getChatRoomMemberAction() == ChatRoomMemberAction.ChatRoomMemberActionType.CHAT_ROOM_MEMBER_QUIT) {
+                            builder.append("用户:" + chatRoomMemberActions.get(i).getUserId() + "退出聊天室:" + roomId);
+                        } else {
+                            builder.append("用户:" + chatRoomMemberActions.get(i).getUserId() + "加入或退出聊天室:" + roomId + " 未知UNKOWN!");
+                        }
+                        builder.append("\n");
+                    }
+                    new AlertDialog.Builder(ChatRoomListenerTestActivity.this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
+                            .setMessage(builder.toString())
+                            .setCancelable(true)
+                            .show();
+                }
+            });
         }
-    }
 
-    private void joinRoom(String roomId) {
-        RongIM.getInstance().joinChatRoom(roomId, 20, new RongIMClient.OperationCallback() {
-            @Override
-            public void onSuccess() {
-
-            }
-
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-            }
-        });
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (IMManager.getInstance().getAppTask().isDebugMode()) {
+            RouteUtils.registerActivity(RouteUtils.RongActivityType.ConversationActivity, null);
+        }
     }
 }

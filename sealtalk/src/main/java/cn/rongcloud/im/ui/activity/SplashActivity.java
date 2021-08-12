@@ -2,7 +2,9 @@ package cn.rongcloud.im.ui.activity;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -17,6 +19,7 @@ import cn.rongcloud.im.utils.StatusBarUtil;
 import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.viewmodel.SplashViewModel;
 import cn.rongcloud.im.utils.log.SLog;
+import io.rong.push.RongPushClient;
 
 public class SplashActivity extends BaseActivity {
     private Uri intentUri;
@@ -39,8 +42,16 @@ public class SplashActivity extends BaseActivity {
         Intent intent = getIntent();
         if (intent != null) {
             intentUri = intent.getData();
+            recordHWNotificationEvent(intent);
         }
         initViewModel();
+    }
+
+    private void recordHWNotificationEvent(Intent intent) {
+        if (Build.MANUFACTURER.equalsIgnoreCase("HUAWEI")
+                && intent.getData() != null && "true".equals(intent.getData().getQueryParameter("isFromPush"))) {
+            RongPushClient.recordHWNotificationEvent(intent);
+        }
     }
 
     private void initStatusBar() {
@@ -58,6 +69,7 @@ public class SplashActivity extends BaseActivity {
             StatusBarUtil.setStatusBarColor(this, 0x000000);
         }
     }
+
     /**
      * 初始化ViewModel
      */

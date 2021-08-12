@@ -263,13 +263,13 @@ public class ContactDetailActivity extends RongBaseNoActionbarActivity implement
     @Override
     public void onUserUpdate(UserInfo info) {
         if (info != null) {
-            if (info.getPortraitUri() != null)
+            if (info.getPortraitUri() != null) {
                 Glide.with(this)
                         .load(info.getPortraitUri())
                         .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                         .into(mTargetPortrait);
-            if (info.getName() != null)
-                mTargetName.setText(info.getName());
+            }
+            RongUserInfoManager.getInstance().getUserDisplayName(info);
         }
     }
 

@@ -8,7 +8,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 30
         versionCode 20210127
-        versionName "5.1.4"
+        versionName "5.1.4.1"
         ndk {
             abiFilters "armeabi-v7a", 'x86'
         }
@@ -87,10 +87,10 @@ dependencies {
     implementation 'com.tencent.bugly:crashreport:3.0.1'
     implementation 'com.tencent.bugly:nativecrashreport:3.7.1'
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
-    api 'cn.rongcloud.sdk:im_kit:5.1.4'
+    api 'cn.rongcloud.sdk:im_kit:5.1.4.1'
     //im_kit必须依赖im_lib，所以需要加入对应依赖
-    api 'cn.rongcloud.sdk:im_lib:5.1.4'
-    api 'cn.rongcloud.sdk:rcsticker:5.1.4'
+    api 'cn.rongcloud.sdk:im_lib:5.1.4.1'
+    api 'cn.rongcloud.sdk:rcsticker:5.1.4.1'
     api 'cn.rongcloud.sdk:sight:5.1.1.1'
     api 'cn.rongcloud.sdk:call_lib:5.1.2'
     api 'cn.rongcloud.sdk:call_kit:5.1.2'

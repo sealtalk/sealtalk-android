@@ -1360,8 +1360,10 @@ public class IMManager {
 
             @Override
             public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus databaseOpenStatus) {
+                String currentUserId = RongIMClient.getInstance().getCurrentUserId();
+                DBManager.getInstance(context).openDb(currentUserId);
                 if (callback != null) {
-                    callback.onSuccess(RongIMClient.getInstance().getCurrentUserId());
+                    callback.onSuccess(currentUserId);
                 }
             }
         });

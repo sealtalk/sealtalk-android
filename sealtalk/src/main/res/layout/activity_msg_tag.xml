@@ -159,6 +159,27 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/btn_clear_messages_unreadstatus_for_tag"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:text="根据标签清除消息未读数"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_clear_conversation_for_tag"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:text="根据标签删除会话（消息）"
+                android:textSize="12sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
                 android:id="@+id/btn_set_con_top"
                 android:layout_width="0dp"
                 android:layout_height="60dp"

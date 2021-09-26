@@ -7,17 +7,13 @@ import androidx.fragment.app.Fragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.rong.common.RLog;
 import io.rong.contactcard.message.ContactMessage;
 import io.rong.contactcard.message.ContactMessageItemProvider;
-import io.rong.imkit.IMCenter;
-import io.rong.imkit.RongIM;
 import io.rong.imkit.config.RongConfigCenter;
 import io.rong.imkit.conversation.extension.IExtensionModule;
 import io.rong.imkit.conversation.extension.RongExtension;
 import io.rong.imkit.conversation.extension.component.emoticon.IEmoticonTab;
 import io.rong.imkit.conversation.extension.component.plugin.IPluginModule;
-import io.rong.imlib.AnnotationNotFoundException;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
@@ -30,9 +26,6 @@ public class ContactCardExtensionModule implements IExtensionModule {
     private final String TAG = this.getClass().getSimpleName();
 
     private IContactCardClickListener iContactCardClickListener;
-
-    public ContactCardExtensionModule() {
-    }
 
     public ContactCardExtensionModule(IContactCardSelectListProvider iContactCardSelectListProvider
             , IContactCardInfoProvider iContactCardInfoProvider

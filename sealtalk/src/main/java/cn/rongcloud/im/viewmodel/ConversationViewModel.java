@@ -30,7 +30,6 @@ import cn.rongcloud.im.model.TypingInfo;
 import cn.rongcloud.im.task.FriendTask;
 import cn.rongcloud.im.task.GroupTask;
 import cn.rongcloud.im.task.PrivacyTask;
-import cn.rongcloud.im.task.UserTask;
 import io.rong.imkit.userinfo.RongUserInfoManager;
 import io.rong.imlib.MessageTag;
 import io.rong.imlib.RongIMClient;
@@ -143,10 +142,23 @@ public class ConversationViewModel extends AndroidViewModel {
                             titleStr.removeSource(friendInfo);
                         }
                         String displayName = "";
-                        if (friendShipInfoResource != null && friendShipInfoResource.data != null) {
-                            displayName = friendShipInfoResource.data.getDisplayName();
-                            if (TextUtils.isEmpty(displayName) && friendShipInfoResource.data.getUser() != null) {
-                                displayName = friendShipInfoResource.data.getUser().getNickname();
+                        if (friendShipInfoResource != null) {
+                            if (friendShipInfoResource.data != null) {
+                                displayName = friendShipInfoResource.data.getDisplayName();
+                                if (TextUtils.isEmpty(displayName) && friendShipInfoResource.data.getUser() != null) {
+                                    displayName = friendShipInfoResource.data.getUser().getNickname();
+                                }
+                            } else {
+                                if (friendShipInfoResource.status == Status.ERROR) {
+                                    UserInfo userInfo = RongUserInfoManager.getInstance().getUserInfo(targetId);
+                                    if (userInfo != null) {
+                                        if (!TextUtils.isEmpty(userInfo.getAlias())) {
+                                            displayName = userInfo.getAlias();
+                                        } else if (!TextUtils.isEmpty(userInfo.getName())) {
+                                            displayName = userInfo.getName();
+                                        }
+                                    }
+                                }
                             }
                         }
 
@@ -185,9 +197,19 @@ public class ConversationViewModel extends AndroidViewModel {
                     }
 
                     String name = "";
-                    if (groupEntityResource != null && groupEntityResource.data != null) {
-                        name = groupEntityResource.data.getName() + "(" + groupEntityResource.data.getMemberCount() + ")";
+                    if (groupEntityResource != null) {
+                        if (groupEntityResource.data != null) {
+                            name = groupEntityResource.data.getName() + "(" + groupEntityResource.data.getMemberCount() + ")";
+                        } else {
+                            if (groupEntityResource.status == Status.ERROR) {
+                                io.rong.imlib.model.Group group = RongUserInfoManager.getInstance().getGroupInfo(targetId);
+                                if (group != null) {
+                                    name = group.getName();
+                                }
+                            }
+                        }
                     }
+
                     if (!TextUtils.isEmpty(name)) {
                         titleStr.postValue(name);
                     } else if (!TextUtils.isEmpty(title)) {

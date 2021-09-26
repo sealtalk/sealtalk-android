@@ -125,7 +125,30 @@
             android:text=""
             android:textColor="#000000" />
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_remove_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="horizontal">
 
+        <TextView
+            android:id="@+id/tv_delete_message"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="是否删除消息"
+            android:textColor="#000000"
+            android:textSize="12sp" />
+
+        <CheckBox
+            android:id="@+id/cb_delete"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            />
+    </LinearLayout>
     <TextView
         android:id="@+id/add_item"
         android:layout_width="wrap_content"

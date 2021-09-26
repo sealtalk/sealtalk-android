@@ -174,6 +174,15 @@ public class SealApp extends MultiDexApplication {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+                //解决：切后台关闭应用某项权限,进程被杀,重启应用因SDK还未绑定IPC进程,
+                // 导致当前恢复页面调用SDK API接口返回IPC_DISCONNECT,页面白屏或黑屏现象
+                if (savedInstanceState != null) {
+                    Intent intent = new Intent(activity, SplashActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    activity.startActivity(intent);
+                    return;
+                }
+
                 if (activity instanceof MainActivity) {
                     isMainActivityIsCreated = true;
                 }

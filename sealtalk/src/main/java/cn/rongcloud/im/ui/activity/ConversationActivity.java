@@ -1,6 +1,7 @@
 package cn.rongcloud.im.ui.activity;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -61,6 +62,7 @@ import io.rong.imkit.conversation.ConversationFragment;
 import io.rong.imkit.conversation.extension.RongExtensionViewModel;
 import io.rong.imkit.conversation.messgelist.viewmodel.MessageViewModel;
 import io.rong.imkit.manager.UnReadMessageManager;
+import io.rong.imkit.utils.PermissionCheckUtil;
 import io.rong.imkit.utils.RouteUtils;
 import io.rong.imkit.widget.TitleBar;
 import io.rong.imlib.model.Conversation;
@@ -110,6 +112,11 @@ public class ConversationActivity extends RongBaseActivity implements UnReadMess
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            Intent intent = new Intent(this, SplashActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        }
         setContentView(R.layout.conversation_activity_conversation);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             StatusBarUtil.setStatusBarColor(this, getResources().getColor(R.color.rc_background_main_color)); //Color.parseColor("#F5F6F9")
@@ -133,6 +140,31 @@ public class ConversationActivity extends RongBaseActivity implements UnReadMess
         initView();
         initViewModel();
 //        initScreenShotListener();
+
+        if (getSharedPreferences("config", MODE_PRIVATE).getBoolean("isDebug", false)
+                && getSharedPreferences(SealTalkDebugTestActivity.SP_PERMISSION_NAME, MODE_PRIVATE).getBoolean(SealTalkDebugTestActivity.SP_IS_SHOW, false)) {
+            PermissionCheckUtil.setRequestPermissionListListener(new PermissionCheckUtil.IRequestPermissionListListener() {
+                @Override
+                public void onRequestPermissionList(Context activity, List<String> permissionsNotGranted, PermissionCheckUtil.IPermissionEventCallback callback) {
+                    AlertDialog dialog = new AlertDialog.Builder(activity, android.R.style.Theme_DeviceDefault_Light_Dialog_Alert)
+                            .setMessage("向用户说明申请权限")
+                            .setPositiveButton("去申请", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    callback.confirmed();
+                                }
+                            }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    callback.cancelled();
+                                }
+                            }).show();
+                }
+            });
+
+        }
     }
 
     @Override

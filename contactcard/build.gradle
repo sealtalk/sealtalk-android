@@ -13,8 +13,8 @@ android {
     defaultConfig {
        minSdkVersion 19
         targetSdkVersion 19
-        versionCode 20210813
-        versionName "5.1.4.1"
+        versionCode 20210924
+        versionName "5.1.5"
     }
     buildTypes {
         release {
@@ -31,5 +31,5 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    api 'cn.rongcloud.sdk:im_kit:5.1.4.1'
+    api 'cn.rongcloud.sdk:im_kit:5.1.5'
 }

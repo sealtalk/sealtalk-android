@@ -21,7 +21,6 @@ import java.util.List;
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.BaseActivity;
 import cn.rongcloud.im.ui.dialog.TagTestInputDialog;
-import io.rong.common.RLog;
 import io.rong.imlib.IRongCoreCallback;
 import io.rong.imlib.IRongCoreEnum;
 import io.rong.imlib.RongCoreClient;
@@ -34,7 +33,7 @@ public class TagTestActivity extends BaseActivity implements View.OnClickListene
 
     private static final String TAG = "TagTestActivity";
     Button getConversation, addTag, delTag, updateTag, getTags, addConversationTag, removeConversationTag, removeTagsFromConversation,
-            getConversationTags, getConversationTop, getConversationsFromTagByPage, getUnreadCountByTag, btn_set_con_top;
+            getConversationTags, getConversationTop, getConversationsFromTagByPage, getUnreadCountByTag, btn_set_con_top, clearMessagesUnreadStatus, clearConversation;
     private ArrayList<String> contentList = new ArrayList<>();
     private TagTestActivity.MyAdapter mAdapter;
     private ListView lvContent;
@@ -89,6 +88,10 @@ public class TagTestActivity extends BaseActivity implements View.OnClickListene
         getUnreadCountByTag.setOnClickListener(this);
         btn_set_con_top = findViewById(R.id.btn_set_con_top);
         btn_set_con_top.setOnClickListener(this);
+        clearMessagesUnreadStatus = findViewById(R.id.btn_clear_messages_unreadstatus_for_tag);
+        clearMessagesUnreadStatus.setOnClickListener(this);
+        clearConversation = findViewById(R.id.btn_clear_conversation_for_tag);
+        clearConversation.setOnClickListener(this);
     }
 
     @Override
@@ -283,6 +286,30 @@ public class TagTestActivity extends BaseActivity implements View.OnClickListene
                 setTopDialog.getCancelView().setOnClickListener(v12 -> setTopDialog.cancel());
                 setTopDialog.show();
                 break;
+            case R.id.btn_clear_messages_unreadstatus_for_tag:
+                TagTestInputDialog clearUnreadDialog = new TagTestInputDialog(mContext, TagTestInputDialog.TYPE_DELETE);
+                clearUnreadDialog.getSureView().setOnClickListener(v1 -> {
+                    String tagId = clearUnreadDialog.getEtTagId().getText().toString();
+                    clearUnreadStatus(tagId);
+                    clearUnreadDialog.cancel();
+                });
+
+                clearUnreadDialog.getCancelView().setOnClickListener(v12 -> clearUnreadDialog.cancel());
+                clearUnreadDialog.show();
+                break;
+
+            case R.id.btn_clear_conversation_for_tag:
+                TagTestInputDialog clearConversationDialog = new TagTestInputDialog(mContext, TagTestInputDialog.TYPE_CLEAR_CONVERSATION);
+                clearConversationDialog.getSureView().setOnClickListener(v1 -> {
+                    String tagId = clearConversationDialog.getEtTagId().getText().toString();
+                    boolean checked = clearConversationDialog.getCbRemoveMessage().isChecked();
+                    clearConversation(tagId, checked);
+                    clearConversationDialog.cancel();
+                });
+
+                clearConversationDialog.getCancelView().setOnClickListener(v12 -> clearConversationDialog.cancel());
+                clearConversationDialog.show();
+                break;
             default:
                 break;
 
@@ -462,6 +489,34 @@ public class TagTestActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onError(IRongCoreEnum.CoreErrorCode coreErrorCode) {
                 addToList(getStringDate() + " 删除 tag 失败, code :  " + coreErrorCode.getValue());
+            }
+        });
+    }
+
+    private void clearUnreadStatus(String tagId) {
+        RongCoreClient.getInstance().clearMessagesUnreadStatusByTag(tagId, new IRongCoreCallback.ResultCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean aBoolean) {
+                addToList(getStringDate() + "根据 tag 清除未读:" + aBoolean);
+            }
+
+            @Override
+            public void onError(IRongCoreEnum.CoreErrorCode e) {
+                addToList(getStringDate() + "根据 tag 清除未读失败，错误码" + e.code);
+            }
+        });
+    }
+
+    private void clearConversation(String tagId, boolean deleteMessage) {
+        RongCoreClient.getInstance().clearConversationsByTag(tagId, deleteMessage, new IRongCoreCallback.ResultCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean aBoolean) {
+                addToList(getStringDate() + "根据 tag 清除未读:" + aBoolean);
+            }
+
+            @Override
+            public void onError(IRongCoreEnum.CoreErrorCode e) {
+                addToList(getStringDate() + "根据 tag 清除未读失败，错误码" + e.code);
             }
         });
     }

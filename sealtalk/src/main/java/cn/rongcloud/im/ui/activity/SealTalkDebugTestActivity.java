@@ -2,8 +2,10 @@ package cn.rongcloud.im.ui.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import androidx.annotation.Nullable;
@@ -22,6 +24,7 @@ import cn.rongcloud.im.ui.test.TagTestActivity;
 import cn.rongcloud.im.ui.view.SettingItemView;
 import cn.rongcloud.im.utils.ToastUtils;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.common.SharedPreferencesUtils;
 
 public class SealTalkDebugTestActivity extends TitleBaseActivity implements View.OnClickListener {
     private SettingItemView pushConfigModeSiv;
@@ -34,6 +37,10 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
     private SettingItemView groupReadReceiptV2Siv;
     private SettingItemView deviceInfo;
     private SettingItemView referMsgTest;
+    private SettingItemView permissionlistener;
+    public final static String SP_IS_SHOW = "is_show";
+    public final static String SP_PERMISSION_NAME = "permission_config";
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,6 +84,15 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
 
         groupReadReceiptV2Siv.setOnClickListener(this);
         findViewById(R.id.siv_block_msg_test).setOnClickListener(this);
+
+        permissionlistener = findViewById(R.id.siv_permission_listener);
+        SharedPreferences permissionConfigSP = getSharedPreferences(SP_PERMISSION_NAME, MODE_PRIVATE);
+        permissionlistener.setSwitchCheckListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                permissionConfigSP.edit().putBoolean(SP_IS_SHOW, isChecked).commit();
+            }
+        });
     }
 
 

@@ -90,6 +90,14 @@
                 android:layout_height="@dimen/seal_mine_about_height"
                 app:item_content="发送消息敏感词监听"
                 app:item_divider="true" />
+
+            <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/siv_permission_listener"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/seal_mine_about_height"
+                app:item_content="权限申请监听"
+                app:item_divider="true"
+                app:item_switch="true" />
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

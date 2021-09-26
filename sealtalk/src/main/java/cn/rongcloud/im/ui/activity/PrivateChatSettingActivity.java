@@ -18,6 +18,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import io.rong.imkit.notification.RongNotificationManager;
+import io.rong.imlib.RongIMClient.ErrorCode;
+import io.rong.imlib.RongIMClient.ResultCallback;
+import io.rong.imlib.model.Conversation.ConversationNotificationStatus;
+import io.rong.imlib.model.Conversation.ConversationType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,6 +117,7 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
         isNotifySb = findViewById(R.id.siv_user_notification);
         isNotifySb.setSwitchCheckListener((buttonView, isChecked) ->
                 conversationSettingViewModel.setNotificationStatus(isChecked ? Conversation.ConversationNotificationStatus.DO_NOT_DISTURB : Conversation.ConversationNotificationStatus.NOTIFY));
+        updateUserNotification();
         isTopSb = findViewById(R.id.siv_conversation_top);
         isTopSb.setSwitchCheckListener((buttonView, isChecked) ->
                 conversationSettingViewModel.setConversationTop(isChecked, false));
@@ -334,5 +340,29 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    private void updateUserNotification() {
+        RongNotificationManager.getInstance().getConversationNotificationStatus(ConversationType.PRIVATE, targetId, new ResultCallback<ConversationNotificationStatus>() {
+            @Override
+            public void onSuccess(ConversationNotificationStatus conversationNotificationStatus) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        isNotifySb.setCheckedImmediatelyWithOutEvent(conversationNotificationStatus.equals(Conversation.ConversationNotificationStatus.DO_NOT_DISTURB));
+                    }
+                });
+            }
+
+            @Override
+            public void onError(ErrorCode coreErrorCode) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtils.showToast("获取失败-" + coreErrorCode.code);
+                    }
+                });
+            }
+        });
     }
 }

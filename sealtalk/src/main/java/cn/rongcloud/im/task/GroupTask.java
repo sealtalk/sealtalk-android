@@ -46,7 +46,6 @@ import cn.rongcloud.im.utils.NetworkBoundResource;
 import cn.rongcloud.im.utils.NetworkOnlyResource;
 import cn.rongcloud.im.utils.RongGenerate;
 import cn.rongcloud.im.utils.SearchUtils;
-import cn.rongcloud.im.utils.SingleSourceLiveData;
 import io.rong.imkit.utils.CharacterParser;
 import io.rong.imlib.model.Conversation;
 import okhttp3.RequestBody;
@@ -322,6 +321,11 @@ public class GroupTask {
      */
     public LiveData<Resource<Void>> setRegularClear(String groupId, int clearStatus) {
         return new NetworkOnlyResource<Void, Result>() {
+            @Override
+            protected void saveCallResult(@NonNull Void item) {
+                updateGroupRegularClearStateInDB(groupId, clearStatus);
+            }
+
             @NonNull
             @Override
             protected LiveData<Result> createCall() {
@@ -329,11 +333,6 @@ public class GroupTask {
                 paramMap.put("groupId", groupId);
                 paramMap.put("clearStatus", clearStatus);
                 return groupService.setRegularClear(RetrofitUtil.createJsonRequest(paramMap));
-            }
-
-            @Override
-            protected void saveCallResult(@NonNull Void item) {
-                updateGroupRegularClearStateInDB(groupId, clearStatus);
             }
         }.asLiveData();
     }
@@ -555,6 +554,9 @@ public class GroupTask {
      * @return
      */
     public GroupEntity getGroupInfoSync(final String groupId) {
+        if (dbManager == null) {
+            return null;
+        }
         return dbManager.getGroupDao().getGroupInfoSync(groupId);
     }
 
@@ -565,6 +567,9 @@ public class GroupTask {
      * @return
      */
     public List<GroupEntity> getGroupInfoListSync(String[] groupIds) {
+        if (dbManager == null) {
+            return new ArrayList<>();
+        }
         return dbManager.getGroupDao().getGroupInfoListSync(groupIds);
     }
 
@@ -575,25 +580,17 @@ public class GroupTask {
      * @return
      */
     public LiveData<List<GroupEntity>> getGroupInfoList(String[] groupIds) {
-        GroupDao groupDao = dbManager.getGroupDao();
-        LiveData<List<GroupEntity>> groupInfoList = null;
-        if (groupDao != null) {
-            groupInfoList = groupDao.getGroupInfoList(groupIds);
-        } else {
-            groupInfoList = new MutableLiveData<>(null);
+        if (dbManager == null || dbManager.getGroupDao() == null) {
+            return new MutableLiveData<>(null);
         }
-        return groupInfoList;
+        return dbManager.getGroupDao().getGroupInfoList(groupIds);
     }
 
     public LiveData<GroupEntity> getGroupInfoInDB(String groupIds) {
-        GroupDao groupDao = dbManager.getGroupDao();
-        LiveData<GroupEntity> groupInfo = null;
-        if (groupDao != null) {
-            groupInfo = groupDao.getGroupInfo(groupIds);
-        } else {
-            groupInfo = new MutableLiveData<>(null);
+        if (dbManager == null || dbManager.getGroupDao() == null) {
+            return new MutableLiveData<>(null);
         }
-        return groupInfo;
+        return dbManager.getGroupDao().getGroupInfo(groupIds);
     }
 
     /**
@@ -777,6 +774,14 @@ public class GroupTask {
      */
     public LiveData<Resource<Void>> setMuteAll(String groupId, int muteStatus, String userId) {
         return new NetworkOnlyResource<Void, Result>() {
+            @Override
+            protected void saveCallResult(@NonNull Void item) {
+                GroupDao groupDao = dbManager.getGroupDao();
+                if (groupDao != null) {
+                    groupDao.updateMuteAllState(groupId, muteStatus);
+                }
+            }
+
             @NonNull
             @Override
             protected LiveData<Result> createCall() {
@@ -787,14 +792,6 @@ public class GroupTask {
                     paramMap.put("userId", userId);
                 }
                 return groupService.muteAll(RetrofitUtil.createJsonRequest(paramMap));
-            }
-
-            @Override
-            protected void saveCallResult(@NonNull Void item) {
-                GroupDao groupDao = dbManager.getGroupDao();
-                if (groupDao != null) {
-                    groupDao.updateMuteAllState(groupId, muteStatus);
-                }
             }
         }.asLiveData();
     }
@@ -808,6 +805,14 @@ public class GroupTask {
      */
     public LiveData<Resource<Void>> setMemberProtection(String groupId, int memberProtection) {
         return new NetworkOnlyResource<Void, Result>() {
+            @Override
+            protected void saveCallResult(@NonNull Void item) {
+                GroupDao groupDao = dbManager.getGroupDao();
+                if (groupDao != null) {
+                    groupDao.updateMemberProtectionState(groupId, memberProtection);
+                }
+            }
+
             @NonNull
             @Override
             protected LiveData<Result> createCall() {
@@ -815,14 +820,6 @@ public class GroupTask {
                 paramMap.put("groupId", groupId);
                 paramMap.put("memberProtection", memberProtection);
                 return groupService.setGroupProtection(RetrofitUtil.createJsonRequest(paramMap));
-            }
-
-            @Override
-            protected void saveCallResult(@NonNull Void item) {
-                GroupDao groupDao = dbManager.getGroupDao();
-                if (groupDao != null) {
-                    groupDao.updateMemberProtectionState(groupId, memberProtection);
-                }
             }
         }.asLiveData();
     }
@@ -837,15 +834,6 @@ public class GroupTask {
     public LiveData<Resource<Void>> setCertification(String groupId, int certiStatus) {
         return new NetworkOnlyResource<Void, Result<Void>>() {
 
-            @NonNull
-            @Override
-            protected LiveData<Result<Void>> createCall() {
-                HashMap<String, Object> paramMap = new HashMap<>();
-                paramMap.put("groupId", groupId);
-                paramMap.put("certiStatus", certiStatus);
-                return groupService.setCertification(RetrofitUtil.createJsonRequest(paramMap));
-            }
-
             @Override
             protected void saveCallResult(@NonNull Void item) {
                 GroupDao groupDao = dbManager.getGroupDao();
@@ -853,6 +841,15 @@ public class GroupTask {
                     groupDao.updateCertiStatus(groupId, certiStatus);
                 }
                 super.saveCallResult(item);
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<Result<Void>> createCall() {
+                HashMap<String, Object> paramMap = new HashMap<>();
+                paramMap.put("groupId", groupId);
+                paramMap.put("certiStatus", certiStatus);
+                return groupService.setCertification(RetrofitUtil.createJsonRequest(paramMap));
             }
         }.asLiveData();
     }
@@ -1029,16 +1026,6 @@ public class GroupTask {
     public LiveData<Resource<Void>> setNoticeStatus(String groupId, String receiverId, String status, String noticeId) {
         return new NetworkOnlyResource<Void, Result<Void>>() {
 
-            @NonNull
-            @Override
-            protected LiveData<Result<Void>> createCall() {
-                HashMap<String, Object> paramMap = new HashMap<>();
-                paramMap.put("groupId", groupId);
-                paramMap.put("receiverId", receiverId);
-                paramMap.put("status", Integer.valueOf(status));
-                return groupService.setGroupNoticeStatus(RetrofitUtil.createJsonRequest(paramMap));
-            }
-
             @Override
             protected void saveCallResult(@NonNull Void item) {
                 GroupDao groupDao = dbManager.getGroupDao();
@@ -1047,6 +1034,16 @@ public class GroupTask {
                     groupDao.updateGroupNoticeStatus(noticeId, Integer.valueOf(status));
                 }
                 super.saveCallResult(item);
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<Result<Void>> createCall() {
+                HashMap<String, Object> paramMap = new HashMap<>();
+                paramMap.put("groupId", groupId);
+                paramMap.put("receiverId", receiverId);
+                paramMap.put("status", Integer.valueOf(status));
+                return groupService.setGroupNoticeStatus(RetrofitUtil.createJsonRequest(paramMap));
             }
         }.asLiveData();
     }
@@ -1059,12 +1056,6 @@ public class GroupTask {
     public LiveData<Resource<Void>> clearGroupNotice() {
         return new NetworkOnlyResource<Void, Result<Void>>() {
 
-            @NonNull
-            @Override
-            protected LiveData<Result<Void>> createCall() {
-                return groupService.clearGroupNotice();
-            }
-
             @Override
             protected void saveCallResult(@NonNull Void item) {
                 GroupDao groupDao = dbManager.getGroupDao();
@@ -1072,6 +1063,12 @@ public class GroupTask {
                     groupDao.deleteAllGroupNotice();
                 }
                 super.saveCallResult(item);
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<Result<Void>> createCall() {
+                return groupService.clearGroupNotice();
             }
         }.asLiveData();
     }
@@ -1212,33 +1209,6 @@ public class GroupTask {
     public LiveData<Resource<Void>> setGroupMemberInfoDes(String groupId, String memberId, String groupNickname
             , String region, String phone, String WeChat, String Alipay, ArrayList<String> memberDesc) {
         return new NetworkOnlyResource<Void, Result<Void>>() {
-            @NonNull
-            @Override
-            protected LiveData<Result<Void>> createCall() {
-                HashMap<String, Object> bodyMap = new HashMap<>();
-                bodyMap.put("groupId", groupId);
-                bodyMap.put("memberId", memberId);
-                if (groupNickname != null) {
-                    bodyMap.put("groupNickname", groupNickname);
-                }
-                if (region != null) {
-                    bodyMap.put("region", region);
-                }
-                if (phone != null) {
-                    bodyMap.put("phone", phone);
-                }
-                if (WeChat != null) {
-                    bodyMap.put("WeChat", WeChat);
-                }
-                if (Alipay != null) {
-                    bodyMap.put("Alipay", Alipay);
-                }
-                if (memberDesc != null) {
-                    bodyMap.put("memberDesc", memberDesc);
-                }
-                return groupService.setGroupInfoDes(RetrofitUtil.createJsonRequest(bodyMap));
-            }
-
             @Override
             protected void saveCallResult(@NonNull Void item) {
                 super.saveCallResult(item);
@@ -1268,6 +1238,33 @@ public class GroupTask {
                 }
                 GroupDao groupDao = dbManager.getGroupDao();
                 groupDao.insertGroupMemberInfoDes(groupMemberInfoDes);
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<Result<Void>> createCall() {
+                HashMap<String, Object> bodyMap = new HashMap<>();
+                bodyMap.put("groupId", groupId);
+                bodyMap.put("memberId", memberId);
+                if (groupNickname != null) {
+                    bodyMap.put("groupNickname", groupNickname);
+                }
+                if (region != null) {
+                    bodyMap.put("region", region);
+                }
+                if (phone != null) {
+                    bodyMap.put("phone", phone);
+                }
+                if (WeChat != null) {
+                    bodyMap.put("WeChat", WeChat);
+                }
+                if (Alipay != null) {
+                    bodyMap.put("Alipay", Alipay);
+                }
+                if (memberDesc != null) {
+                    bodyMap.put("memberDesc", memberDesc);
+                }
+                return groupService.setGroupInfoDes(RetrofitUtil.createJsonRequest(bodyMap));
             }
         }.asLiveData();
     }

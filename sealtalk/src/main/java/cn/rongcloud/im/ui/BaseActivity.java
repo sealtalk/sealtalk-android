@@ -36,6 +36,7 @@ import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.ui.activity.LoginActivity;
+import cn.rongcloud.im.ui.activity.SplashActivity;
 import cn.rongcloud.im.ui.dialog.LoadingDialog;
 import cn.rongcloud.im.utils.StatusBarUtil;
 import cn.rongcloud.im.utils.ToastUtils;
@@ -65,6 +66,11 @@ public class BaseActivity extends AppCompatActivity {
             fixOrientation();
         }
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            Intent intent = new Intent(this, SplashActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        }
 
         if (isFullScreen()) {
             // 隐藏Activity顶部的状态栏

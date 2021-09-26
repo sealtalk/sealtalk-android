@@ -42,6 +42,7 @@ import io.rong.imlib.chatroom.base.RongChatRoomClient;
 import io.rong.imlib.chatroom.message.ChatRoomKVNotiMessage;
 import io.rong.imlib.model.ChatRoomMemberAction;
 import io.rong.imlib.model.Message;
+import io.rong.imlib.model.MessageContent;
 
 public class ChatRoomStatusDeatilActivity extends TitleBaseActivity implements View.OnClickListener {
 
@@ -92,6 +93,16 @@ public class ChatRoomStatusDeatilActivity extends TitleBaseActivity implements V
                     onEventMainThread((OnKVStatusEvent) chatRoomEvent);
                 } else if (chatRoomEvent instanceof OnReceiveMessageEvent) {
                     onEventMainThread((OnReceiveMessageEvent) chatRoomEvent);
+                }
+            }
+        });
+
+        IMManager.getInstance().getMessageRouter().observe(this, new Observer<Message>() {
+            @Override
+            public void onChanged(Message message) {
+                MessageContent content = message.getContent();
+                if (content instanceof ChatRoomKVNotiMessage) {
+                    onEventMainThread(new OnReceiveMessageEvent(message));
                 }
             }
         });

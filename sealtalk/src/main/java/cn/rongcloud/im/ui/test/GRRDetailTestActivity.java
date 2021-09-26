@@ -19,6 +19,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -353,22 +354,30 @@ public class GRRDetailTestActivity extends TitleBaseActivity {
         // 已读成员列表
         readMemberList = new ArrayList<>();
         // 获取消息中已读成员列表
-        HashMap<String, Long> respondUserIdMap = targetMessage.getGroupReadReceiptInfoV2().getRespondUserIdList();
-        List<Map.Entry<String, Long>> respondUserIdList = new ArrayList<>(respondUserIdMap.entrySet());
+        List<GroupMessageReader> respondUsers = targetMessage.getGroupReadReceiptInfoV2().getRespondUserIdList();
+//        List<Map.Entry<String, Long>> respondUserIdList = new ArrayList<>(respondUserIdMap.entrySet());
         // 通过已读时间进行排序
-        Collections.sort(respondUserIdList, (firstMapEntry, secondMapEntry) ->
-                firstMapEntry.getValue().compareTo(secondMapEntry.getValue()));
+//        Collections.sort(respondUserIdList, (firstMapEntry, secondMapEntry) ->
+//                firstMapEntry.getValue().compareTo(secondMapEntry.getValue()));
+//        (x < y) ? -1 : ((x == y) ? 0 : 1)
+        Collections.sort(respondUsers, new Comparator<GroupMessageReader>() {
+            @Override
+            public int compare(GroupMessageReader o1, GroupMessageReader o2) {
+                long x = o1.getReadTime();
+                long y = o2.getReadTime();
+                return Long.compare(x, y);
+            }
+        });
 
-        List<String> readMemberIdList = new ArrayList<>(respondUserIdMap.keySet());
         // 自己的id
         String currentUserId = RongIMClient.getInstance().getCurrentUserId();
 
         List<GroupMember> tempMemberList = new ArrayList<>(groupMemberList);
 
-        for (String readMemberId : readMemberIdList) {
+        for (GroupMessageReader reader : respondUsers) {
             for (GroupMember groupMember : tempMemberList) {
                 // 已读成员
-                if (readMemberId.equals(groupMember.getUserId())) {
+                if (reader.getUserId().equals(groupMember.getUserId())) {
                     readMemberList.add(groupMember);
                     break;
                 }

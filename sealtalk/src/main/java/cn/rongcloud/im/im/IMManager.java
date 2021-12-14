@@ -1,5 +1,7 @@
 package cn.rongcloud.im.im;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +18,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import cn.rongcloud.im.BuildConfig;
@@ -57,6 +58,7 @@ import cn.rongcloud.im.ui.activity.ForwardActivity;
 import cn.rongcloud.im.ui.activity.GroupNoticeListActivity;
 import cn.rongcloud.im.ui.activity.GroupReadReceiptDetailActivity;
 import cn.rongcloud.im.ui.activity.MainActivity;
+import cn.rongcloud.im.ui.activity.MemberMentionedExActivity;
 import cn.rongcloud.im.ui.activity.NewFriendListActivity;
 import cn.rongcloud.im.ui.activity.PokeInviteChatActivity;
 import cn.rongcloud.im.ui.activity.SubConversationListActivity;
@@ -92,7 +94,6 @@ import io.rong.imlib.common.DeviceUtils;
 import io.rong.imlib.cs.CustomServiceConfig;
 import io.rong.imlib.cs.CustomServiceManager;
 import io.rong.imlib.model.AndroidConfig;
-import io.rong.imlib.model.ConnectOption;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.IOSConfig;
@@ -112,8 +113,6 @@ import io.rong.push.notification.PushNotificationMessage;
 import io.rong.push.pushconfig.PushConfig;
 import io.rong.recognizer.RecognizeExtensionModule;
 import io.rong.sight.SightExtensionModule;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class IMManager {
     private static volatile IMManager instance;
@@ -138,6 +137,17 @@ public class IMManager {
 
 
     private IMManager() {
+        RongMentionManager.getInstance().setMentionedInputListener(new IMentionedInputListener() {
+            @Override
+            public boolean onMentionedInput(Conversation.ConversationType conversationType, String targetId) {
+                Intent intent = new Intent(getContext(), MemberMentionedExActivity.class);
+                intent.putExtra(RouteUtils.CONVERSATION_TYPE, conversationType.getValue());
+                intent.putExtra(RouteUtils.TARGET_ID, targetId);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+                return true;
+            }
+        });
     }
 
     public static IMManager getInstance() {
@@ -590,7 +600,7 @@ public class IMManager {
          */
         PushConfig config = new PushConfig
                 .Builder()
-                .enableFCM(false)          // 在 google-services.json 文件中进行配置
+                .enableFCM(true)          // 在 google-services.json 文件中进行配置
                 .enableHWPush(true)        // 在 AndroidManifest.xml 中搜索 com.huawei.hms.client.appid 进行设置
                 .enableMiPush(BuildConfig.SEALTALK_MI_PUSH_APPID, BuildConfig.SEALTALK_MI_PUSH_APPKEY)
                 .enableMeiZuPush(BuildConfig.SEALTALK_MIZU_PUSH_APPID, BuildConfig.SEALTALK_MIZU_PUSH_APPKEY)
@@ -602,6 +612,7 @@ public class IMManager {
             @Override
             public boolean preNotificationMessageArrived(Context context, PushType pushType, PushNotificationMessage notificationMessage) {
                 RLog.d(TAG, "preNotificationMessageArrived");
+                RongPushClient.recordPushArriveEvent(context, pushType, notificationMessage);
                 return false;
             }
 
@@ -848,11 +859,26 @@ public class IMManager {
                     boolean disableTitle = sharedPreferences.getBoolean("disableTitle", false);
                     String templateId = sharedPreferences.getString("templateId", "");
                     boolean forceDetail = sharedPreferences.getBoolean("forceDetail", false);
-                    MessagePushConfig messagePushConfig = new MessagePushConfig.Builder().setPushTitle(title)
+                    String imageUrlHW = sharedPreferences.getString("imageUrlHW", "");
+                    String imageUrlMi = sharedPreferences.getString("imageUrlMi", "");
+                    String fcmChannelId = sharedPreferences.getString("fcmChannelId", "");
+                    MessagePushConfig messagePushConfig = new MessagePushConfig.Builder()
+                            .setPushTitle(title)
                             .setPushContent(content).setPushData(data).setForceShowDetailContent(forceDetail)
                             .setDisablePushTitle(disableTitle)
                             .setTemplateId(templateId)
-                            .setAndroidConfig(new AndroidConfig.Builder().setNotificationId(id).setChannelIdHW(hw).setChannelIdMi(mi).setChannelIdOPPO(oppo).setTypeVivo(vivo ? AndroidConfig.SYSTEM : AndroidConfig.OPERATE).setFcmCollapseKey(fcm).setFcmImageUrl(imageUrl).setImportanceHW(getImportance(hwImportance)).build())
+                            .setAndroidConfig(new AndroidConfig.Builder()
+                                    .setNotificationId(id)
+                                    .setChannelIdHW(hw).setChannelIdMi(mi)
+                                    .setChannelIdOPPO(oppo)
+                                    .setTypeVivo(vivo ? AndroidConfig.SYSTEM : AndroidConfig.OPERATE)
+                                    .setFcmCollapseKey(fcm)
+                                    .setFcmImageUrl(imageUrl)
+                                    .setImportanceHW(getImportance(hwImportance))
+                                    .setChannelIdFCM(fcmChannelId)
+                                    .setImageUrlMi(imageUrlMi)
+                                    .setImageUrlHW(imageUrlHW)
+                                    .build())
                             .setIOSConfig(new IOSConfig(threadId, apnsId, category, richMediaUri))
                             .build();
                     message.setMessagePushConfig(messagePushConfig);
@@ -908,7 +934,9 @@ public class IMManager {
                             imInfoProvider.updateGroupInfo(groupID);
                             imInfoProvider.updateGroupMember(groupID);
                         } else if (groupNotificationMessage.getOperation().equals("Dismiss")) {
-
+                            // 被踢出群组，删除群组会话和消息
+                            clearConversationAndMessage(groupID, Conversation.ConversationType.GROUP);
+                            imInfoProvider.deleteGroupInfoInDb(groupID);
                         } else if (groupNotificationMessage.getOperation().equals("Kicked")) {
                             //群组踢人
                             boolean isKicked = false;
@@ -1270,23 +1298,6 @@ public class IMManager {
      */
     public LiveData<Boolean> getAutoLoginResult() {
         return autologinResult;
-    }
-
-    /**
-     * 群 @ 监听
-     *
-     * @return
-     */
-    public LiveData<String> mentionedInput() {
-        MutableLiveData<String> result = new MutableLiveData<>();
-        RongMentionManager.getInstance().setMentionedInputListener(new IMentionedInputListener() {
-            @Override
-            public boolean onMentionedInput(Conversation.ConversationType conversationType, String targetId) {
-                result.postValue(targetId);
-                return true;
-            }
-        });
-        return result;
     }
 
     public MutableLiveData<Message> getMessageRouter() {

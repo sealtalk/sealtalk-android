@@ -46,9 +46,7 @@ public class AppViewModel extends AndroidViewModel {
                     boolean hasNew = false;
                     String newVersion = input.data.getAndroidVersion().getVersion();
                     if (sealTalkVersionName != null) {
-                        sealTalkVersionName = sealTalkVersionName.replace(".", "");
-                        newVersion = newVersion.replace(".", "");
-                        if (Integer.parseInt(newVersion.toString()) > Integer.parseInt(sealTalkVersionName.toString())) {
+                        if (hasNewVersion(sealTalkVersionName, newVersion)) {
                             return new Resource<VersionInfo.AndroidVersion>(input.status, input.data.getAndroidVersion(), input.code);
                         }
                     }
@@ -79,6 +77,7 @@ public class AppViewModel extends AndroidViewModel {
 
     /**
      * 获取sdk 版本
+     *
      * @return
      */
     public LiveData<String> getSDKVersion() {
@@ -87,6 +86,7 @@ public class AppViewModel extends AndroidViewModel {
 
     /**
      * sealtalk 版本
+     *
      * @return
      */
     public LiveData<String> getSealTalkVersion() {
@@ -125,6 +125,7 @@ public class AppViewModel extends AndroidViewModel {
 
     /**
      * 当前本地语音
+     *
      * @return
      */
     public LiveData<LangUtils.RCLocale> getLanguageLocal() {
@@ -156,18 +157,24 @@ public class AppViewModel extends AndroidViewModel {
      * @return
      */
     private boolean hasNewVersion(String currentVersion, String newVersion) {
-
-        currentVersion = currentVersion.replace("\\.", "");
-        newVersion = newVersion.replace("\\.", "");
-
-        if (Integer.parseInt(newVersion.toString()) > Integer.parseInt(currentVersion.toString())) {
-            return true;
+        String[] currentVersionArray = currentVersion.split("\\.");
+        String[] newVersionArray = newVersion.split("\\.");
+        if (currentVersionArray.length > 0 && newVersionArray.length > 0) {
+            for (int i = 0; i < newVersionArray.length; i++) {
+                if (i > currentVersionArray.length - 1) {
+                    break;
+                }
+                if (Integer.parseInt(newVersionArray[i]) > Integer.parseInt(currentVersionArray[i])) {
+                    return true;
+                }
+            }
         }
         return false;
     }
 
     /**
      * 切换语音
+     *
      * @param selectedLocale
      */
     public void changeLanguage(LangUtils.RCLocale selectedLocale) {

@@ -240,6 +240,11 @@ public class ConversationActivity extends RongBaseActivity implements UnReadMess
         IMManager.getInstance().clearConversationRecord(mTargetId);
         mHandler.removeCallbacksAndMessages(null);
         UnReadMessageManager.getInstance().removeObserver(this);
+
+        if (rencentPicturePopWindow != null) {
+            rencentPicturePopWindow.dismiss();
+            rencentPicturePopWindow = null;
+        }
     }
 
     @Override
@@ -375,20 +380,6 @@ public class ConversationActivity extends RongBaseActivity implements UnReadMess
                 }
             }
         });
-
-        // 群 @ 跳转
-        conversationViewModel.getGroupAt().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                // 跳转选择界面
-                Intent intent = new Intent(getApplicationContext(), MemberMentionedExActivity.class);
-                intent.putExtra(RouteUtils.CONVERSATION_TYPE, mConversationType.getValue());
-                intent.putExtra(RouteUtils.TARGET_ID, mTargetId);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }
-        });
-
         conversationViewModel.getScreenCaptureStatus(mConversationType.getValue(), mTargetId).observe(this, new Observer<Resource<ScreenCaptureResult>>() {
             @Override
             public void onChanged(Resource<ScreenCaptureResult> screenCaptureResultResource) {
@@ -691,6 +682,11 @@ public class ConversationActivity extends RongBaseActivity implements UnReadMess
             Intent intent = new Intent(this, GroupDetailActivity.class);
             intent.putExtra(IntentExtra.STR_TARGET_ID, mTargetId);
             intent.putExtra(IntentExtra.SERIA_CONVERSATION_TYPE, Conversation.ConversationType.GROUP);
+            startActivity(intent);
+        } else if (conversationType == Conversation.ConversationType.SYSTEM) {
+            Intent intent = new Intent(this, SystemSettingActivity.class);
+            intent.putExtra(IntentExtra.STR_TARGET_ID, mTargetId);
+            intent.putExtra(IntentExtra.SERIA_CONVERSATION_TYPE, Conversation.ConversationType.SYSTEM);
             startActivity(intent);
         } else if (conversationType == Conversation.ConversationType.DISCUSSION) {
 

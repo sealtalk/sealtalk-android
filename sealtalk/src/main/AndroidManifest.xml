@@ -208,6 +208,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".ui.activity.SystemSettingActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".ui.activity.GroupDetailActivity"
             android:screenOrientation="portrait" />
 
@@ -570,6 +574,14 @@
         <activity
             android:name=".ui.test.MessageExpansionDetailActivity"
             android:screenOrientation="portrait" />
+        <!--消息送达-->
+        <activity
+            android:name=".ui.test.MsgDeliveryConversationListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.test.MsgDeliveryTestActivity"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.test.TagTestActivity"
             android:screenOrientation="portrait" />

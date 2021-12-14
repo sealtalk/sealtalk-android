@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import java.lang.ref.WeakReference;
+
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.db.model.UserInfo;
 import cn.rongcloud.im.model.Resource;
@@ -128,7 +130,7 @@ public class MyAccountActivity extends TitleBaseActivity implements View.OnClick
                 }
                 break;
             case R.id.siv_gender:
-                Intent intentGender = new Intent(this,UpdateGenderActivity.class);
+                Intent intentGender = new Intent(this, UpdateGenderActivity.class);
                 startActivity(intentGender);
                 break;
             default:
@@ -142,15 +144,25 @@ public class MyAccountActivity extends TitleBaseActivity implements View.OnClick
      */
     private void showSelectPictureDialog() {
         SelectPictureBottomDialog.Builder builder = new SelectPictureBottomDialog.Builder();
-        builder.setOnSelectPictureListener(new SelectPictureBottomDialog.OnSelectPictureListener() {
-            @Override
-            public void onSelectPicture(Uri uri) {
-                //上传图片
-                uploadPortrait(uri);
-            }
-        });
+        builder.setOnSelectPictureListener(new MySelectPictureBottomDialog(MyAccountActivity.this));
         SelectPictureBottomDialog dialog = builder.build();
         dialog.show(getSupportFragmentManager(), "select_picture_dialog");
+    }
+
+    public class MySelectPictureBottomDialog implements SelectPictureBottomDialog.OnSelectPictureListener {
+        WeakReference<MyAccountActivity> weakActivity;
+
+        public MySelectPictureBottomDialog(MyAccountActivity activity) {
+            weakActivity = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void onSelectPicture(Uri uri) {
+            if (weakActivity.get() != null) {
+                //上传图片
+                uploadPortrait(uri, weakActivity.get());
+            }
+        }
     }
 
 
@@ -159,9 +171,9 @@ public class MyAccountActivity extends TitleBaseActivity implements View.OnClick
      *
      * @param uri
      */
-    private void uploadPortrait(Uri uri) {
-        if (userInfoViewModel != null) {
-            userInfoViewModel.uploadPortrait(uri);
+    private void uploadPortrait(Uri uri, MyAccountActivity accountActivity) {
+        if (accountActivity.userInfoViewModel != null) {
+            accountActivity.userInfoViewModel.uploadPortrait(uri);
         }
     }
 

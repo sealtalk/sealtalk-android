@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_user_notification"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_private_detail_item_height"
+        android:layout_marginTop="@dimen/seal_private_detail_item_margin_top"
+        app:item_content="@string/profile_message_notice"
+        app:item_switch="true"
+        app:item_divider="true"
+        >
+    </cn.rongcloud.im.ui.view.SettingItemView>
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_conversation_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_private_detail_item_height"
+        app:item_content="@string/profile_set_top"
+        app:item_switch="true"
+        app:item_divider="true"
+        >
+    </cn.rongcloud.im.ui.view.SettingItemView>
+
+
+
+    <cn.rongcloud.im.ui.view.SettingItemView
+        android:id="@+id/siv_clean_chat_message"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_private_detail_item_height"
+        app:item_content="@string/profile_clean_message"
+        app:item_right_image="@drawable/seal_ic_mine_go"
+        >
+    </cn.rongcloud.im.ui.view.SettingItemView>
+
+</LinearLayout>

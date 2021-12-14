@@ -139,6 +139,7 @@ public class CountryViewModel extends AndroidViewModel {
     public void loadCountryDatas(String filterStr) {
         if (TextUtils.isEmpty(filterStr)) {
             if (countryInfoList.getValue() == null || countryInfoList.getValue().status != Status.SUCCESS) {
+                filterCountryList.removeSource(countryInfoList);
                 filterCountryList.addSource(countryInfoList, new Observer<Resource<List<CountryInfo>>>() {
                     @Override
                     public void onChanged(Resource<List<CountryInfo>> listResource) {

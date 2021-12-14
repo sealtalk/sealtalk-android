@@ -80,7 +80,7 @@ public class IMInfoProvider {
     private void initInfoProvider(Context context) {
         // 获取用户信息
         RongUserInfoManager.getInstance().setUserInfoProvider(id -> {
-            if(id.equals("__group_apply__")) {
+            if (id.equals("__group_apply__")) {
                 return new io.rong.imlib.model.UserInfo("__group_apply__", context.getResources().getString(R.string.seal_conversation_notification_group),
                         RongUtils.getUriFromDrawableRes(context, R.drawable.seal_group_notice_portrait));
             } else {
@@ -319,6 +319,9 @@ public class IMInfoProvider {
      * @param contactInfoCallback
      */
     public void getContactUserInfo(String userId, IContactCardInfoProvider.IContactCardInfoCallback contactInfoCallback) {
+        if (TextUtils.isEmpty(userId)) {
+            return;
+        }
         ThreadManager.getInstance().runOnUIThread(() -> {
             LiveData<Resource<FriendShipInfo>> friendInfo = friendTask.getFriendInfo(userId);
             triggerLiveData.addSource(friendInfo, resource -> {

@@ -26,7 +26,7 @@ public class GroupApplyMessageItemProvider extends BaseMessageItemProvider<Group
     }
 
     @Override
-    protected void bindMessageContentViewHolder(ViewHolder holder,ViewHolder parentHolder, GroupApplyMessage groupApplyMessage, UiMessage uiMessage, int position, List<UiMessage> list, IViewProviderListener<UiMessage> listener) {
+    protected void bindMessageContentViewHolder(ViewHolder holder, ViewHolder parentHolder, GroupApplyMessage groupApplyMessage, UiMessage uiMessage, int position, List<UiMessage> list, IViewProviderListener<UiMessage> listener) {
 
     }
 
@@ -44,12 +44,18 @@ public class GroupApplyMessageItemProvider extends BaseMessageItemProvider<Group
     public Spannable getSummarySpannable(Context context, GroupApplyMessage groupApplyMessage) {
         String content = "";
         Gson gson = new Gson();
-        GroupApplyMessageData groupApplyMessageData = gson.fromJson(groupApplyMessage.getData(), GroupApplyMessageData.class);
-        if (groupApplyMessageData.getType() == 2) {
-            content = context.getString(R.string.seal_conversation_notification_group_tips_add) + " " + groupApplyMessageData.getTargetGroupName();
-        } else {
-            content = groupApplyMessageData.getOperatorNickname() + " " + context.getString(R.string.seal_conversation_notification_group_tips);
+        if(groupApplyMessage == null) {
+            return new SpannableString("");
         }
+        GroupApplyMessageData groupApplyMessageData = gson.fromJson(groupApplyMessage.getData(), GroupApplyMessageData.class);
+        if (groupApplyMessageData != null) {
+            if (groupApplyMessageData.getType() == 2) {
+                content = context.getString(R.string.seal_conversation_notification_group_tips_add) + " " + groupApplyMessageData.getTargetGroupName();
+            } else {
+                content = groupApplyMessageData.getOperatorNickname() + " " + context.getString(R.string.seal_conversation_notification_group_tips);
+            }
+        }
+
         return new SpannableString(content);
     }
 }

@@ -11,6 +11,7 @@ import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.dialog.ClearCacheDialog;
 import cn.rongcloud.im.ui.dialog.CommonDialog;
 import cn.rongcloud.im.viewmodel.UserInfoViewModel;
+import io.rong.imkit.feature.resend.ResendManager;
 
 /**
  * 账号设置
@@ -88,6 +89,7 @@ public class AccountSettingActivity extends TitleBaseActivity implements View.On
         builder.setDialogButtonClickListener(new CommonDialog.OnDialogButtonClickListener() {
             @Override
             public void onPositiveClick(View v, Bundle bundle) {
+                ResendManager.getInstance().removeAllResendMessage();
                 logout();
                 // 通知退出
                 sendLogoutNotify();

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.NoCopySpan;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -23,17 +24,13 @@ import androidx.lifecycle.ViewModelProviders;
 
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
-import cn.rongcloud.im.model.Resource;
-import cn.rongcloud.im.model.VersionInfo;
 import cn.rongcloud.im.ui.BaseActivity;
 import cn.rongcloud.im.ui.dialog.CommonDialog;
 import cn.rongcloud.im.ui.fragment.LoginFindPasswordFragment;
 import cn.rongcloud.im.ui.fragment.LoginFragment;
 import cn.rongcloud.im.ui.fragment.LoginRegisterFragment;
 import cn.rongcloud.im.utils.StatusBarUtil;
-import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.viewmodel.AppViewModel;
-import cn.rongcloud.im.viewmodel.UserInfoViewModel;
 import io.rong.imkit.utils.language.LangUtils;
 
 /**
@@ -124,9 +121,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private void initRegistrationTerms() {
         registrationTerms = findViewById(R.id.tv_registration_terms);
-        registrationTerms.setText(Html.fromHtml("<font color='#5C6970'>" + getString(R.string.seal_talk_login_bottom_registration_text_front) + "</font>" + "<br>" + "<font color='#5C6970'>" + getString(R.string.seal_talk_login_bottom_registration_text_behand) + "</font>"));
-
-        String text = registrationTerms.getText().toString();
+        Spanned html = Html.fromHtml("<font color='#5C6970'>" + getString(R.string.seal_talk_login_bottom_registration_text_front) + "</font>" + "<br>" + "<font color='#5C6970'>" + getString(R.string.seal_talk_login_bottom_registration_text_behand) + "</font>");
+        String text = html.toString();
         int index = text.indexOf("\"");
         if (index == -1) {
             index = text.indexOf("⟪");
@@ -134,7 +130,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         if (index == -1) {
             return;
         }
-        SpannableString str = new SpannableString(registrationTerms.getText());
+        SpannableString str = new SpannableString(html);
         str.setSpan(new NoRefCopySpan() {
             @Override
             public void onClick(@NonNull View widget) {
@@ -361,7 +357,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         return false;
     }
 
-    public static class NoRefCopySpan extends ClickableSpan {
+    public static class NoRefCopySpan extends ClickableSpan implements NoCopySpan {
 
         @Override
         public void onClick(@NonNull View widget) {

@@ -41,6 +41,12 @@ public class CommonDialog extends DialogFragment {
 
     private ControllerParams params;
 
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        return new NoLeakDialog(requireContext());
+    }
+
     @Override
     public void onStart() {
         super.onStart();

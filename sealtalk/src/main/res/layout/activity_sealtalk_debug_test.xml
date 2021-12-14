@@ -64,10 +64,24 @@
                 app:item_divider="true" />
 
             <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/siv_delivery"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/seal_mine_about_height"
+                app:item_content="消息送达"
+                app:item_divider="true" />
+
+            <cn.rongcloud.im.ui.view.SettingItemView
                 android:id="@+id/siv_shortage"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/seal_mine_about_height"
                 app:item_content="消息断档"
+                app:item_divider="true" />
+
+            <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/siv_shortage_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/seal_mine_about_height"
+                app:item_content="消息断档弹窗"
                 app:item_divider="true" />
 
             <cn.rongcloud.im.ui.view.SettingItemView
@@ -98,6 +112,14 @@
                 app:item_content="权限申请监听"
                 app:item_divider="true"
                 app:item_switch="true" />
+
+            <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/siv_create_notification_channel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/seal_mine_about_height"
+                app:item_content="创建通知通道"
+                app:item_divider="true"
+                />
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

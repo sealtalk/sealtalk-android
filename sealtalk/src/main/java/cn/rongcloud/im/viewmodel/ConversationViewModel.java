@@ -51,7 +51,6 @@ public class ConversationViewModel extends AndroidViewModel {
 
     private IMManager imManager;
     private FriendTask friendTask;
-    private LiveData<String> groupAt;
     private PrivacyTask privacyTask;
 
     public ConversationViewModel(Application application) {
@@ -115,7 +114,6 @@ public class ConversationViewModel extends AndroidViewModel {
             }
         });
 
-        groupAt = imManager.mentionedInput();
 //        getTitleByConversation(targerId, conversationType, title);
     }
 
@@ -313,15 +311,6 @@ public class ConversationViewModel extends AndroidViewModel {
      */
     public LiveData<String> getTitleStr() {
         return titleStr;
-    }
-
-    /**
-     * 群 @
-     *
-     * @return
-     */
-    public LiveData<String> getGroupAt() {
-        return groupAt;
     }
 
 

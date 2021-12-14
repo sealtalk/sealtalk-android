@@ -29,11 +29,14 @@ public class PushConfigDialog extends Dialog {
     private EditText etContent;
     private EditText etData;
     private EditText etHW;
+    private EditText etImageUrlHW;
     private EditText etMi;
+    private EditText etImageUrlMi;
     private EditText etOppo;
     private EditText etThreadId;
     private EditText etApnId;
     private EditText edFcm;
+    private EditText etChannelIdFcm;
     private EditText edTemplateId;
     private EditText edImageUrl;
     private EditText edCategory;
@@ -74,8 +77,10 @@ public class PushConfigDialog extends Dialog {
         etContent = dialogView.findViewById(R.id.et_content);
         etData = dialogView.findViewById(R.id.et_data);
         etHW = dialogView.findViewById(R.id.et_hw);
+        etImageUrlHW = dialogView.findViewById(R.id.et_hw_image_url);
         etHWImportance = dialogView.findViewById(R.id.et_importance_hw);
         etMi = dialogView.findViewById(R.id.et_mi);
+        etImageUrlMi = dialogView.findViewById(R.id.et_mi_image_url);
         etOppo = dialogView.findViewById(R.id.et_oppo);
         etThreadId = dialogView.findViewById(R.id.et_thread_id);
         etApnId = dialogView.findViewById(R.id.et_apns_id);
@@ -87,6 +92,7 @@ public class PushConfigDialog extends Dialog {
         cbDisableTitle = dialogView.findViewById(R.id.cb_is_disable_title);
         cbForceDetail = dialogView.findViewById(R.id.cb_is_show_detail);
         edFcm = dialogView.findViewById(R.id.et_fcm);
+        etChannelIdFcm = dialogView.findViewById(R.id.et_fcm_channel);
         edImageUrl = dialogView.findViewById(R.id.et_image_url);
 
         setContentView(dialogView);
@@ -209,5 +215,29 @@ public class PushConfigDialog extends Dialog {
 
     public void setEtHWImportance(EditText etHWImportance) {
         this.etHWImportance = etHWImportance;
+    }
+
+    public EditText getEtImageUrlHW() {
+        return etImageUrlHW;
+    }
+
+    public void setEtImageUrlHW(EditText etImageUrlHW) {
+        this.etImageUrlHW = etImageUrlHW;
+    }
+
+    public EditText getEtImageUrlMi() {
+        return etImageUrlMi;
+    }
+
+    public void setEtImageUrlMi(EditText etImageUrlMi) {
+        this.etImageUrlMi = etImageUrlMi;
+    }
+
+    public EditText getEtChannelIdFcm() {
+        return etChannelIdFcm;
+    }
+
+    public void setEtChannelIdFcm(EditText etChannelIdFcm) {
+        this.etChannelIdFcm = etChannelIdFcm;
     }
 }

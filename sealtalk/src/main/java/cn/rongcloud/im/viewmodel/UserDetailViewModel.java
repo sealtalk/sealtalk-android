@@ -1,6 +1,7 @@
 package cn.rongcloud.im.viewmodel;
 
 import android.app.Application;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
@@ -62,6 +63,9 @@ public class UserDetailViewModel extends AndroidViewModel {
         groupTask = new GroupTask(application);
 
         // 获取用于信息前先获取好友信息
+        if (TextUtils.isEmpty(userId)) {
+            return;
+        }
         LiveData<Resource<FriendShipInfo>> friendInfo = friendTask.getFriendInfo(userId);
         userInfoLiveData.addSource(friendInfo, friendShipInfoResource -> {
             // 当有结果时，获取用户信息。此前有好友信息则会更新用户表，没有则只获取用户信息
@@ -70,6 +74,7 @@ public class UserDetailViewModel extends AndroidViewModel {
                 userInfoLiveData.addSource(userTask.getUserInfo(userId), resource -> userInfoLiveData.setValue(resource));
             }
         });
+
         LiveData<Resource<UserSimpleInfo>> blackListUser = userTask.getInBlackListUser(userId);
         isInBlackList = Transformations.map(blackListUser, resource -> {
             // 当用户在黑名单时，返回在黑名单状态

@@ -65,16 +65,18 @@ public class PokePlugin implements IPluginModule {
 
         if (conversationType == Conversation.ConversationType.PRIVATE) {
             UserInfo userInfo = RongUserInfoManager.getInstance().getUserInfo(targetId);
-            targetName = userInfo.getName();
+            if (userInfo != null) {
+                targetName = userInfo.getName();
+            }
             isToMulti = false;
         } else if (conversationType == Conversation.ConversationType.GROUP) {
             // 当是群组会话时，判断是否为群主或管理员，仅群主和管理员可以发送戳一下消息
             FragmentActivity activity = fragment.getActivity();
-            if(activity instanceof ConversationActivity){
+            if (activity instanceof ConversationActivity) {
                 ConversationActivity conversationActivity = (ConversationActivity) activity;
                 boolean groupOwner = conversationActivity.isGroupOwner();
                 boolean groupManager = conversationActivity.isGroupManager();
-                if(!groupOwner && !groupManager){
+                if (!groupOwner && !groupManager) {
                     ToastUtils.showToast(R.string.poke_only_group_owner_and_manager_can_send);
                     return;
                 }
@@ -95,11 +97,13 @@ public class PokePlugin implements IPluginModule {
                     @Override
                     public void onAttached(Message message) {
                     }
+
                     @Override
                     public void onSuccess(Message message) {
                         // 记录当前发送的时间
                         sendPokeTimeMap.put(targetId, System.currentTimeMillis());
                     }
+
                     @Override
                     public void onError(Message message, RongIMClient.ErrorCode errorCode) {
                     }
@@ -109,17 +113,21 @@ public class PokePlugin implements IPluginModule {
                     @Override
                     public void onProgress(Message message, int i) {
                     }
+
                     @Override
                     public void onCanceled(Message message) {
                     }
+
                     @Override
                     public void onAttached(Message message) {
                     }
+
                     @Override
                     public void onSuccess(Message message) {
                         // 记录当前发送的时间
                         sendPokeTimeMap.put(targetId, System.currentTimeMillis());
                     }
+
                     @Override
                     public void onError(Message message, RongIMClient.ErrorCode errorCode) {
                     }

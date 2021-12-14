@@ -19,6 +19,8 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import java.lang.ref.WeakReference;
+
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.db.model.FriendDescription;
@@ -103,15 +105,25 @@ public class EditUserDescribeActivity extends TitleBaseActivity implements View.
 
     private void setMorePhotoDialog() {
         SelectPictureBottomDialog.Builder builder = new SelectPictureBottomDialog.Builder();
-        builder.setOnSelectPictureListener(new SelectPictureBottomDialog.OnSelectPictureListener() {
-            @Override
-            public void onSelectPicture(Uri uri) {
-                insertPhoto(uri);
-            }
-        });
+        builder.setOnSelectPictureListener(new MySelectPictureBottomDialog(EditUserDescribeActivity.this));
         SelectPictureBottomDialog dialog = builder.build();
         dialog.setType(PhotoUtils.NO_CROP);
         dialog.show(getSupportFragmentManager(), null);
+    }
+
+    public class MySelectPictureBottomDialog implements SelectPictureBottomDialog.OnSelectPictureListener {
+        WeakReference<EditUserDescribeActivity> weakActivity;
+
+        public MySelectPictureBottomDialog(EditUserDescribeActivity activity) {
+            weakActivity = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void onSelectPicture(Uri uri) {
+            if (weakActivity.get() != null) {
+                insertPhoto(uri, weakActivity.get());
+            }
+        }
     }
 
     private void initViewModel() {
@@ -184,10 +196,10 @@ public class EditUserDescribeActivity extends TitleBaseActivity implements View.
                 tvRegion.getText().toString().substring(1, tvRegion.length()), etPhone.getText().toString(), etMore.getText().toString(), mUri);
     }
 
-    private void insertPhoto(Uri uri) {
+    private void insertPhoto(Uri uri, EditUserDescribeActivity activity) {
         mUri = uri != null ? uri.toString() : "";
-        ivPhoto.setImageURI(null);
-        ivPhoto.setImageURI(uri);
+        activity.ivPhoto.setImageURI(null);
+        activity.ivPhoto.setImageURI(uri);
     }
 
     @Override

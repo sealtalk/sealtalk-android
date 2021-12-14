@@ -736,10 +736,16 @@ public class GroupTask {
     }
 
     public LiveData<List<SearchGroupMember>> searchGroup(String match) {
+        if(dbManager.getGroupDao() == null) {
+            return null;
+        }
         return dbManager.getGroupDao().searchGroup(match);
     }
 
     public LiveData<List<GroupEntity>> searchGroupByName(String match) {
+        if(dbManager.getGroupDao() == null) {
+            return null;
+        }
         return dbManager.getGroupDao().searchGroupByName(match);
     }
 

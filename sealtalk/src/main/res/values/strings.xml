@@ -624,6 +624,6 @@
     <string name="seal_talk_registration_title">注册条款</string>
     <string name="seal_mine_about_debug_setting_umeng_info">查看设备识别信息(友盟添加测试设备需要)</string>
     <string name="seal_mine_about_debug_setting_reference_msg_test">引用消息属性测试</string>
-
+    <string name="zxing_msg_camera_permission_grant_needed">您需要在设置中打开相机权限</string>
 
 </resources>

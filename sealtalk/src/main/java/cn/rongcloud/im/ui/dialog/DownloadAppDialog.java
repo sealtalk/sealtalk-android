@@ -20,8 +20,10 @@ import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.ota.OTAUtils;
 import cn.rongcloud.im.utils.ToastUtils;
+import io.rong.common.RLog;
 
 public class DownloadAppDialog extends DialogFragment {
+    private static final String TAG = "DownloadAppDialog";
 
     @Override
     public void onStart() {
@@ -30,7 +32,7 @@ public class DownloadAppDialog extends DialogFragment {
         // 设置宽度为屏宽, 靠近屏幕底部。
         Window win = getDialog().getWindow();
         // 一定要设置Background，如果不设置，window属性设置无效
-        win.setBackgroundDrawable( new ColorDrawable(Color.TRANSPARENT));
+        win.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         //全屏化对话框
         DisplayMetrics dm = new DisplayMetrics();
@@ -38,7 +40,7 @@ public class DownloadAppDialog extends DialogFragment {
 
         WindowManager.LayoutParams params = win.getAttributes();
         // 使用ViewGroup.LayoutParams，以便Dialog 宽度充满整个屏幕
-        params.width =  ViewGroup.LayoutParams.MATCH_PARENT;
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
         params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         win.setAttributes(params);
     }
@@ -58,7 +60,7 @@ public class DownloadAppDialog extends DialogFragment {
                 downLoadConfig.isShowNotification = true;
                 downLoadConfig.notificationTitle = getString(R.string.seal_mine_about_notifi_title);
                 downLoadConfig.notificationDescription = getString(R.string.seal_mine_about_notifi_loading);
-                OTAUtils otaUtils = new OTAUtils(getActivity().getApplicationContext(),downLoadConfig);
+                OTAUtils otaUtils = new OTAUtils(getActivity().getApplicationContext(), downLoadConfig);
                 otaUtils.startDownloadAndInstall();
                 dismiss();
             }
@@ -67,6 +69,10 @@ public class DownloadAppDialog extends DialogFragment {
         view.findViewById(R.id.siv_web).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (url == null) {
+                    RLog.e(TAG, "url is null");
+                    return;
+                }
                 // 浏览器下载
                 Intent intent = new Intent();
                 intent.setAction("android.intent.action.VIEW");

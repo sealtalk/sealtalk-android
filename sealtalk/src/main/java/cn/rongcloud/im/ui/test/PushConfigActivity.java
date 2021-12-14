@@ -47,8 +47,10 @@ public class PushConfigActivity extends TitleBaseActivity implements View.OnClic
         String content = sharedPreferences.getString("content", "");
         String data = sharedPreferences.getString("data", "");
         String hw = sharedPreferences.getString("hw", "");
+        String imageUrlHW = sharedPreferences.getString("imageUrlHW", "");
         String hwImportance = sharedPreferences.getString("importance", "NORMAL").trim();
         String mi = sharedPreferences.getString("mi", "");
+        String imageUrlMI = sharedPreferences.getString("imageUrlMi", "");
         String oppo = sharedPreferences.getString("oppo", "");
         String threadId = sharedPreferences.getString("threadId", "");
         String apnsId = sharedPreferences.getString("apnsId", "");
@@ -56,6 +58,7 @@ public class PushConfigActivity extends TitleBaseActivity implements View.OnClic
         String richMediaUri = sharedPreferences.getString("richMediaUri", "");
         String templateId = sharedPreferences.getString("templateId", "");
         String fcm = sharedPreferences.getString("fcm", "");
+        String fcmChannelId = sharedPreferences.getString("fcmChannelId", "");
         String imageUrl = sharedPreferences.getString("imageUrl", "");
         boolean vivo = sharedPreferences.getBoolean("vivo", false);
         boolean disableTitle = sharedPreferences.getBoolean("disableTitle", false);
@@ -78,6 +81,10 @@ public class PushConfigActivity extends TitleBaseActivity implements View.OnClic
         pushConfigDialog.getCbVivo().setChecked(vivo);
         pushConfigDialog.getCbDisableTitle().setChecked(disableTitle);
         pushConfigDialog.getCbForceDetail().setChecked(forceDetail);
+        pushConfigDialog.getEtImageUrlHW().setText(imageUrlHW);
+        pushConfigDialog.getEtImageUrlMi().setText(imageUrlMI);
+        pushConfigDialog.getEtChannelIdFcm().setText(fcmChannelId);
+
         pushConfigDialog.getSureView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,6 +103,11 @@ public class PushConfigActivity extends TitleBaseActivity implements View.OnClic
                 String templateId = pushConfigDialog.getEdTemplateId().getText().toString().trim();
                 String imageUrl = pushConfigDialog.getEdImageUrl().getText().toString().trim();
                 String fcm = pushConfigDialog.getEdFcm().getText().toString().trim();
+                String imageUrlHW = pushConfigDialog.getEtImageUrlHW().getText().toString();
+                String imageUrlMI = pushConfigDialog.getEtImageUrlMi().getText().toString();
+                String fcmChannelId = pushConfigDialog.getEtChannelIdFcm().getText().toString();
+
+
                 boolean vivo = pushConfigDialog.getCbVivo().isChecked();
                 boolean disableTitle = pushConfigDialog.getCbDisableTitle().isChecked();
                 boolean forceDetail = pushConfigDialog.getCbForceDetail().isChecked();
@@ -118,6 +130,9 @@ public class PushConfigActivity extends TitleBaseActivity implements View.OnClic
                 edit.putString("templateId", templateId);
                 edit.putString("fcm", fcm);
                 edit.putString("imageUrl", imageUrl);
+                edit.putString("imageUrlHW", imageUrlHW);
+                edit.putString("imageUrlMi", imageUrlMI);
+                edit.putString("fcmChannelId", fcmChannelId);
                 MessagePushConfig startCallMessagePushConfig =
                         new MessagePushConfig.Builder().setPushTitle(title)
                                 .setPushContent(content)
@@ -131,6 +146,9 @@ public class PushConfigActivity extends TitleBaseActivity implements View.OnClic
                                         .setChannelIdOPPO(oppo)
                                         .setFcmCollapseKey(fcm)
                                         .setFcmImageUrl(imageUrl)
+                                        .setImageUrlHW(imageUrlHW)
+                                        .setImageUrlMi(imageUrlMI)
+                                        .setChannelIdFCM(fcmChannelId)
                                         .setTypeVivo(vivo ? AndroidConfig.SYSTEM : AndroidConfig.OPERATE).build())
                                 .setTemplateId(templateId)
                                 .setIOSConfig(new IOSConfig(threadId, apnsId, category, richMediaUri))

@@ -4,15 +4,18 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Display;
 import android.view.Surface;
@@ -31,12 +34,14 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import cn.rongcloud.im.BuildConfig;
 import cn.rongcloud.im.R;
+import cn.rongcloud.im.utils.OSUtils;
 import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.utils.qrcode.client.BeepManager;
 import cn.rongcloud.im.utils.qrcode.client.InactivityTimer;
 import cn.rongcloud.im.utils.qrcode.client.Intents;
-
+import io.rong.imkit.utils.PermissionCheckUtil;
 
 
 /**
@@ -275,9 +280,93 @@ public class CaptureManager {
                 barcodeView.resume();
             } else {
                 // TODO: display better error message.
-                displayFrameworkBugMessageAndExit();
+//                displayFrameworkBugMessageAndExit();
+                gotoCameraPermissionSettingPage();
             }
         }
+    }
+
+    private void gotoCameraPermissionSettingPage() {
+        if (activity.isFinishing() || this.destroyed) {
+            return;
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle(activity.getString(R.string.app_name));
+        builder.setMessage(activity.getString(R.string.zxing_msg_camera_permission_grant_needed));
+        builder.setPositiveButton(R.string.common_confirm, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                showPermissionSettingPage();
+                finish();
+            }
+        });
+        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                finish();
+            }
+        });
+        builder.show();
+    }
+
+    private void showPermissionSettingPage(){
+        if (activity.isFinishing() || this.destroyed) {
+            return;
+        }
+        try {
+            if (OSUtils.isEmui()) {
+                showHWPermissionSettingPage();
+            } else if (OSUtils.isFlyme()) {
+                showMeiZuPermissionSettingPage();
+            } else if (OSUtils.isMiui()) {
+                showXiaomiPermissionSettingPage();
+            } else if (OSUtils.isOppo()) {
+                showOppoPermissionSettingPage();
+            } else {
+                showDefaultPermissionSettingPage();
+            }
+        } catch (Exception e) {
+            showDefaultPermissionSettingPage();
+        }
+    }
+
+    private void showDefaultPermissionSettingPage(){
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", activity.getPackageName(), null);
+        intent.setData(uri);
+        activity.startActivity(intent);
+    }
+
+    private void showHWPermissionSettingPage(){
+        Intent intent = new Intent();
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("packageName", BuildConfig.APPLICATION_ID);
+        ComponentName comp = new ComponentName("com.huawei.systemmanager", "com.huawei.permissionmanager.ui.MainActivity");
+        intent.setComponent(comp);
+        activity.startActivity(intent);
+    }
+
+    private void showMeiZuPermissionSettingPage(){
+        Intent intent = new Intent("com.meizu.safe.security.SHOW_APPSEC");
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+        intent.putExtra("packageName", BuildConfig.APPLICATION_ID);
+        activity.startActivity(intent);
+    }
+
+    private void showXiaomiPermissionSettingPage(){
+        Intent localIntent = new Intent("miui.intent.action.APP_PERM_EDITOR");
+        localIntent.setClassName("com.miui.securitycenter", "com.miui.permcenter.permissions.PermissionsEditorActivity");
+        localIntent.putExtra("extra_pkgname", activity.getPackageName());
+        activity.startActivity(localIntent);
+    }
+
+    private void showOppoPermissionSettingPage(){
+        Intent intent = new Intent();
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("packageName", BuildConfig.APPLICATION_ID);
+        ComponentName comp = new ComponentName("com.color.safecenter", "com.color.safecenter.permission.PermissionManagerActivity");
+        intent.setComponent(comp);
+        activity.startActivity(intent);
     }
 
     /**

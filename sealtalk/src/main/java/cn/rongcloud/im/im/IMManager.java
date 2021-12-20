@@ -600,7 +600,7 @@ public class IMManager {
          */
         PushConfig config = new PushConfig
                 .Builder()
-                .enableFCM(true)          // 在 google-services.json 文件中进行配置
+                .enableFCM(false)          // 在 google-services.json 文件中进行配置
                 .enableHWPush(true)        // 在 AndroidManifest.xml 中搜索 com.huawei.hms.client.appid 进行设置
                 .enableMiPush(BuildConfig.SEALTALK_MI_PUSH_APPID, BuildConfig.SEALTALK_MI_PUSH_APPKEY)
                 .enableMeiZuPush(BuildConfig.SEALTALK_MIZU_PUSH_APPID, BuildConfig.SEALTALK_MIZU_PUSH_APPKEY)

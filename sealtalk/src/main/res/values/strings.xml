@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SealTalk</string>
+    <string name="app_name">融云 IM</string>
     <string name="title_activity_main">MainActivity</string>
     <!-- login-->
     <string name="seal_login_text_new_user">新用户</string>
@@ -70,7 +70,7 @@
 
     <string name="common_member_count" formatted="true">%d 人</string>
 
-    <string name="common_network_unavailable">当前网络不可用</string>
+    <string name="common_network_unavailable">当前网络不可用，请检查你的网络设置</string>
     <string name="common_network_check">请检查网络设置</string>
 
     <!--Main-->
@@ -130,7 +130,7 @@
     <string name="seal_main_mine_set_account">账号设置</string>
     <string name="seal_main_mine_setting_language">多语言</string>
     <string name="seal_main_mine_feedback">意见反馈</string>
-    <string name="seal_main_mine_about">关于 SealTalk</string>
+    <string name="seal_main_mine_about">关于融云 IM</string>
     <string name="seal_main_mine_customer_xn">小能客服</string>
     <string name="seal_main_mine_online_custom_service">在线客服</string>
     <string name="seal_userinfo_item_user_portrait">用户头像</string>
@@ -148,10 +148,11 @@
     <string name="seal_mine_about_update_log">更新日志</string>
     <string name="seal_mine_about_function_introduce">功能介绍</string>
     <string name="seal_mine_about_rongcloud_web">官方网站</string>
-    <string name="seal_mine_about_seal_talk_version">SealTalk 版本</string>
+    <string name="seal_mine_about_seal_talk_version">融云 IM 版本</string>
     <string name="seal_mine_about_sdk_version">SDK 版本</string>
     <string name="debug_mode_is_open">debug 模式已开启</string>
     <string name="seal_mine_about_close_debug_mode">关闭 debug 模式</string>
+    <string name="seal_mine_about_debug_setting">设置</string>
     <string name="seal_mine_about_user_online_status">设置用户在线状态</string>
 
     <string name="seal_title_private_chat">发起聊天</string>
@@ -227,23 +228,23 @@
     <string name="common_set_failed">设置失败</string>
     <string name="seal_mine_my_account_portrait">头像</string>
     <string name="seal_mine_my_account_nickname">昵称</string>
-    <string name="seal_st_account_content_format">SealTalk 号：%s</string>
+    <string name="seal_st_account_content_format">融云 IM 号：%s</string>
 
     <!--stAccount-->
-    <string name="seal_mine_my_account_sknumber">SealTalk 号</string>
+    <string name="seal_mine_my_account_sknumber">融云 IM 号</string>
     <string name="seal_mine_my_account_notset">未设置</string>
     <string name="seal_update_staccout_edittext_hint">以字母开头，6-20个字母、数字、下划线或减号</string>
-    <string name="seal_update_staccout_red_tips">SealTalk 号仅支持以字母开头，6-20个字母、数字、下划线或减号</string>
-    <string name="seal_update_staccout_exit">SealTalk 账号已存在，请重新设置</string>
-    <string name="seal_update_staccount_tips">1.SealTalk 号是账号的唯一凭证，只能设置一次。\n2.设置 SealTalk 账号以后，可通过搜索 SealTalk 号来添加您的好友</string>
+    <string name="seal_update_staccout_red_tips">融云 IM 号仅支持以字母开头，6-20个字母、数字、下划线或减号</string>
+    <string name="seal_update_staccout_exit">融云 IM 账号已存在，请重新设置</string>
+    <string name="seal_update_staccount_tips">1.融云 IM 号是账号的唯一凭证，只能设置一次。\n2.设置融云 IM 账号以后，可通过搜索融云 IM 号来添加您的好友</string>
     <string name="seal_update_staccount_edit_digist">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-</string>
-    <string name="seal_update_staccount_title">设置 SealTalk 号</string>
+    <string name="seal_update_staccount_title">设置融云 IM 号</string>
     <string name="seal_update_staccount_save">保存</string>
-    <string name="seal_staccount_dialog_title">确定 SealTalk 号</string>
-    <string name="seal_staccount_dialog_title_format_error">设置 SealTalk 账号失败</string>
-    <string name="seal_staccount_dialog_content">你确定将 SealTalk 号设置为 @ 吗？确定后将不可修改</string>
-    <string name="seal_staccount_set_success">SealTalk 号设置成功</string>
-    <string name="seal_phone_or_sealtalk_account">手机号/SealTalk 号</string>>
+    <string name="seal_staccount_dialog_title">确定融云 IM 号</string>
+    <string name="seal_staccount_dialog_title_format_error">设置 融云 IM 账号失败</string>
+    <string name="seal_staccount_dialog_content">你确定将融云 IM 号设置为 @ 吗？确定后将不可修改</string>
+    <string name="seal_staccount_set_success">融云 IM 号设置成功</string>
+    <string name="seal_phone_or_sealtalk_account">手机号/融云 IM 号</string>>
 
     <!--gender-->
     <string name="seal_mine_my_account_gender">性别</string>
@@ -253,7 +254,7 @@
     <string name="seal_gender_set_success">设置成功</string>
     <string name="seal_gender_set_fail">设置失败</string>
 
-    <string name="seal_mine_my_account_st_account">SealTalk 号：</string>
+    <string name="seal_mine_my_account_st_account">融云 IM 号：</string>
     <string name="seal_mine_my_account_group_nick_name">群昵称：</string>
     <string name="seal_mine_my_account_phone_number">手机号</string>
     <string name="seal_mine_my_account">"个人信息"</string>
@@ -292,7 +293,7 @@
     <string name="seal_privacy_blacklist_is_empty">黑名单为空</string>
     <string name="seal_privacy_blacklist">黑名单</string>
     <string name="seal_privacy_search_phone">允许通过手机号搜索到我</string>
-    <string name="seal_privacy_search_st_account">允许通过 SealTalk 号搜索到我</string>
+    <string name="seal_privacy_search_st_account">允许通过融云 IM 号搜索到我</string>
     <string name="seal_privacy_friend_verify">加我为好友时需要验证</string>
     <string name="seal_privacy_group_verify">允许被直接添加至群聊</string>
 
@@ -314,12 +315,12 @@
     <string name="seal_new_message_donot_disturb_end">结束时间</string>
     <string name="seal_new_message_donot_disturb">消息免打扰</string>
     <string name="seal_search_empty">没有搜到%s相关的信息</string>
-    <string name="seal_main_chat_tab_more_read_message">···</string>
+    <string name="seal_main_chat_tab_more_read_message">99+</string>
     <string name="seal_main_toast_unread_clear_success">清除成功</string>
     <string name="seal_public_account_information">公众号信息</string>
     <string name="seal_member_mention_all_member">所有人</string>
     <string name="seal_search_phone_number">搜索手机号，如：(86)137XXXXX</string>
-    <string name="seal_search_phone_numeber_and_account">手机号/SealTalk 号</string>
+    <string name="seal_search_phone_numeber_and_account">手机号/融云 IM 号</string>
     <string name="seal_add_friend">加为好友</string>
     <string name="seal_add_text">加好友信息...</string>
     <string name="seal_account_not_exist">用户不存在</string>
@@ -350,7 +351,7 @@
 
     <string name="wx_share_invite_friend_title">融云全球互联网通信云</string>
     <string name="wx_share_invite_friend_content">加我为好友，一起用 Sealtalk 聊天 ！</string>
-    <string name="sms_share_invite_friend_content_format">嗨~ 我正在使用 SealTalk，一款专为同好量身打造的聊天应用，快来试试吧！下载地址：%s</string>
+    <string name="sms_share_invite_friend_content_format">嗨~ 我正在使用融云 IM，一款专为同好量身打造的聊天应用，快来试试吧！下载地址：%s</string>
 
     <string name="zxing_msg_camera_framework_bug">对不起，Android摄像头遇到问题，您需要重启设备</string>
     <string name="zxing_distinguish_picture">识别图中二维码</string>
@@ -359,6 +360,7 @@
     <string name="zxing_close_light">关闭</string>
     <string name="zxing_tips_qrcode_scan">将二维码放入框内，即可自动扫描</string>
     <string name="zxing_scan_from_picture">选择图片</string>
+    <string name="zxing_msg_camera_permission_grant_needed">您需要在设置中打开相机权限</string>
 
     <string name="seal_mine_set_account_dialog_logout_message">是否退出登录?</string>
 
@@ -401,7 +403,7 @@
     <string name="profile_qrcode_group_tips">扫一扫群二维码，立刻加入该群</string>
     <string name="profile_qrcode_private_tips">扫一扫二维码，加我为好友</string>
     <string name="profile_qrcode_group_need_verify">该群已开启进群认证，只能好友邀请进群</string>
-    <string name="profile_qrcode_share_to_sealtalk">分享至 SealTalk</string>
+    <string name="profile_qrcode_share_to_sealtalk">分享至融云 IM</string>
     <string name="profile_qrcode_share_to_wechat">分享至微信</string>
     <string name="profile_qrcode_save_to_phone">保存到手机</string>
     <string name="profile_group_qrcode">群二维码</string>
@@ -430,7 +432,7 @@
     <string name="seal_qrcode_jump_without_login">无用户信息，请先注册</string>
     <string name="seal_mine_about_toast_app_downloading">正在后台下载...</string>
     <string name="seal_mine_about_notifi_loading">正在下载新版本</string>
-    <string name="seal_mine_about_notifi_title">SealTalk 新版本下载</string>
+    <string name="seal_mine_about_notifi_title">融云 IM 新版本下载</string>
     <string name="seal_group_manager_toast_remove_manager_success">删除成功</string>
     <string name="seal_group_manager_toast_remove_manager_failed">删除失败</string>
     <string name="seal_loading_dialog_logining">登录中</string>
@@ -601,29 +603,27 @@
     <string name="seal_login_private_service_error">登录失败 Status :34005</string>
     <string name="seal_group_exit_list_left_title">群管理</string>
 
+    <string name="seal_friend_message">好友消息</string>
+
     <!--debug mode-->
     <string name="setting_open_debug_prompt">是否开启 App Debug 模式(需要重新登录应用)?</string>
     <string name="setting_close_debug_promt">是否关闭 App Debug 模式(需要重新登录应用)?</string>
     <string name="seal_mine_about_push_config">设置推送配置</string>
-    <string name="seal_mine_about_debug_setting">设置</string>
     <string name="seal_mine_about_debug_setting_push_language">设置推送语言</string>
     <string name="seal_mine_about_group_read_receipt_test">群已读回执V2测试</string>
     <string name="debug_group_read_receipt_count_display_tx">"发送方接收到已读回执：已读人数%d      群内总人数%d      "</string>
     <string name="debug_group_read_receipt_count_get_display_tx">获取已读用户时得到的群内成员总数：%d</string>
-
-    <string name="seal_friend_message">好友消息</string>
     <string name="seal_mine_about_chat_room_kv_test">聊天室存储</string>
     <string name="seal_mine_about_chat_room_listener_test">聊天室监听</string>
-
-    <string name="seal_login_text_title">欢迎使用SealTalk</string>
+    <string name="seal_login_text_title">欢迎使用融云 IM</string>
     <string name="seal_talk_login_verify_code">请输入验证码</string>
     <string name="seal_talk_login_send_verify_code">发送验证码</string>
-    <string name="seal_talk_version_text">SealTalk V%s</string>
+    <string name="seal_talk_registration_terms_text">新登录用户即注册开通融云开发者账号\n且表示同意⟪注册条款⟫</string>
+    <string name="seal_talk_version_text">融云 IM V%s</string>
     <string name="seal_talk_login_bottom_registration_text_front">新登录用户即注册开通融云开发者账号</string>
-    <string name="seal_talk_login_bottom_registration_text_behand">且表示同意⟪注册条款⟫</string>
+    <string name="seal_talk_login_bottom_registration_text_behand">且表示同意 ⟪%1$s⟫ 和 IM《%2$s》</string>
     <string name="seal_talk_registration_title">注册条款</string>
+    <string name="seal_talk_privacy_policy_title">隐私政策</string>
     <string name="seal_mine_about_debug_setting_umeng_info">查看设备识别信息(友盟添加测试设备需要)</string>
     <string name="seal_mine_about_debug_setting_reference_msg_test">引用消息属性测试</string>
-    <string name="zxing_msg_camera_permission_grant_needed">您需要在设置中打开相机权限</string>
-
 </resources>

@@ -43,7 +43,7 @@ public class PublicServiceSearchActivity extends TitleBaseActivity implements Pu
     public void onPublicServiceClicked(PublicServiceProfile publicServiceProfile) {
 
         if (publicServiceProfile.isFollow()) {
-            RouteUtils.routeToConversationActivity(getApplicationContext(), publicServiceProfile.getConversationType(), publicServiceProfile.getTargetId());
+            RouteUtils.routeToConversationActivity(this, publicServiceProfile.getConversationType(), publicServiceProfile.getTargetId());
         } else {
             Uri uri = Uri.parse("rong://" +getApplicationInfo().packageName).buildUpon()
                     .appendPath("publicServiceProfile")

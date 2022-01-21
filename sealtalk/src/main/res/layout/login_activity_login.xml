@@ -27,9 +27,9 @@
 
         <ImageView
             android:id="@+id/de_login_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/seal_ic_logo" />
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:src="@drawable/seal_app_logo" />
 
         <TextView
             android:id="@+id/del_login_logo_text"

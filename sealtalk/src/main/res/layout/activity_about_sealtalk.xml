@@ -7,12 +7,12 @@
 
     <ImageView
         android:id="@+id/iv_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/seal_mine_about_logo_margin_top"
         android:layout_marginBottom="@dimen/seal_mine_about_logo_margin_bottom"
-        android:src="@drawable/seal_ic_about_logo" />
+        android:src="@drawable/seal_app_logo" />
 
     <cn.rongcloud.im.ui.view.SettingItemView
         android:id="@+id/siv_update_log"

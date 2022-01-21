@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.NoCopySpan;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -24,13 +23,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
+import cn.rongcloud.im.model.Resource;
+import cn.rongcloud.im.model.VersionInfo;
 import cn.rongcloud.im.ui.BaseActivity;
 import cn.rongcloud.im.ui.dialog.CommonDialog;
 import cn.rongcloud.im.ui.fragment.LoginFindPasswordFragment;
 import cn.rongcloud.im.ui.fragment.LoginFragment;
 import cn.rongcloud.im.ui.fragment.LoginRegisterFragment;
 import cn.rongcloud.im.utils.StatusBarUtil;
+import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.viewmodel.AppViewModel;
+import cn.rongcloud.im.viewmodel.UserInfoViewModel;
 import io.rong.imkit.utils.language.LangUtils;
 
 /**
@@ -121,21 +124,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private void initRegistrationTerms() {
         registrationTerms = findViewById(R.id.tv_registration_terms);
-        Spanned html = Html.fromHtml("<font color='#5C6970'>" + getString(R.string.seal_talk_login_bottom_registration_text_front) + "</font>" + "<br>" + "<font color='#5C6970'>" + getString(R.string.seal_talk_login_bottom_registration_text_behand) + "</font>");
-        String text = html.toString();
-        int index = text.indexOf("\"");
-        if (index == -1) {
-            index = text.indexOf("⟪");
-        }
-        if (index == -1) {
+        final String registrationTitle = getString(R.string.seal_talk_registration_title);
+        final String privacyPolicyTitle = getString(R.string.seal_talk_privacy_policy_title);
+        registrationTerms.setText(Html.fromHtml("<font color='#5C6970'>" +
+                getString(R.string.seal_talk_login_bottom_registration_text_front) + "</font>" + "<br>" + "<font color='#5C6970'>" +
+                String.format(getString(R.string.seal_talk_login_bottom_registration_text_behand),
+                        registrationTitle,
+                        privacyPolicyTitle) + "</font>"));
+
+        String text = registrationTerms.getText().toString();
+        int indexRegistration = text.indexOf(registrationTitle);
+        if (indexRegistration == -1) {
             return;
         }
-        SpannableString str = new SpannableString(html);
+        SpannableString str = new SpannableString(registrationTerms.getText());
         str.setSpan(new NoRefCopySpan() {
             @Override
             public void onClick(@NonNull View widget) {
                 Intent intent = new Intent(LoginActivity.this, WebViewActivity.class);
-                intent.putExtra(WebViewActivity.PARAMS_TITLE, getString(R.string.seal_talk_registration_title));
+                intent.putExtra(WebViewActivity.PARAMS_TITLE, registrationTitle);
                 intent.putExtra(WebViewActivity.PARAMS_URL, "file:///android_asset/agreement_zh.html");
                 startActivity(intent);
             }
@@ -146,7 +153,26 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 ds.setUnderlineText(false);
 
             }
-        }, index, str.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }, indexRegistration - 1, indexRegistration + registrationTitle.length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        int indexPrivacyPolicy = text.indexOf(privacyPolicyTitle);
+
+        str.setSpan(new NoRefCopySpan() {
+            @Override
+            public void onClick(@NonNull View widget) {
+                Intent intent = new Intent(LoginActivity.this, WebViewActivity.class);
+                intent.putExtra(WebViewActivity.PARAMS_TITLE, privacyPolicyTitle);
+                intent.putExtra(WebViewActivity.PARAMS_URL, "file:///android_asset/PrivacyPolicy_zh.html");
+                startActivity(intent);
+            }
+
+            @Override
+            public void updateDrawState(@NonNull TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+
+            }
+        }, indexPrivacyPolicy - 1, indexPrivacyPolicy + privacyPolicyTitle.length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         registrationTerms.setText(str);
         registrationTerms.setMovementMethod(LinkMovementMethod.getInstance());//不设置 没有点击事件
@@ -357,7 +383,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         return false;
     }
 
-    public static class NoRefCopySpan extends ClickableSpan implements NoCopySpan {
+    public static class NoRefCopySpan extends ClickableSpan {
 
         @Override
         public void onClick(@NonNull View widget) {

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SealTalk</string>
+    <string name="app_name">融云 IM</string>
     <string name="title_activity_main">MainActivity</string>
     <!-- login-->
     <string name="seal_login_text_new_user">Sign Up</string>
@@ -196,7 +196,7 @@
     <string name="seal_main_mine_set_account">Account Settings</string>
     <string name="seal_main_mine_setting_language">Language</string>
     <string name="seal_main_mine_feedback">Feedback</string>
-    <string name="seal_main_mine_about">About SealTalk</string>
+    <string name="seal_main_mine_about">About RC IM</string>
     <string name="seal_main_mine_customer_xn">Xiaoneng Customer Service</string>
     <string name="seal_main_mine_online_custom_service">Online customer service</string>
     <string name="seal_userinfo_item_user_portrait">User Portrait</string>
@@ -214,7 +214,7 @@
     <string name="seal_mine_about_update_log">Update Log </string>
     <string name="seal_mine_about_function_introduce">Feature Introduction</string>
     <string name="seal_mine_about_rongcloud_web">Official Website</string>
-    <string name="seal_mine_about_seal_talk_version">SealTalk Version</string>
+    <string name="seal_mine_about_seal_talk_version">RC IM Version</string>
     <string name="seal_mine_about_sdk_version">SDK Version</string>
     <string name="debug_mode_is_open">Debug mode is on</string>
     <string name="seal_mine_about_close_debug_mode">Turn Off Debug Mode</string>
@@ -224,23 +224,23 @@
     <string name="common_clear_failure">Clear failed</string>
     <string name="seal_mine_my_account_portrait">Portrait</string>
     <string name="seal_mine_my_account_nickname">Nickname</string>
-    <string name="seal_st_account_content_format">SealTalk Account：%s</string>
+    <string name="seal_st_account_content_format">RC IM Account：%s</string>
 
     <!--stAccount-->
-    <string name="seal_mine_my_account_sknumber">SealTalk Number</string>
+    <string name="seal_mine_my_account_sknumber">RC IM Number</string>
     <string name="seal_mine_my_account_notset">Not Set</string>
     <string name="seal_update_staccout_edittext_hint">Start with a letter, 6-20 letters, numbers, underscores, or minus signs</string>
-    <string name="seal_update_staccout_red_tips">SealTalk number only supports to start with a letter, 6~20 letters, numbers, underscores</string>
-    <string name="seal_update_staccout_exit">This SealTalk number already exists, please reset</string>
-    <string name="seal_update_staccount_tips">1.The SealTalk number is the unique certificate for the account and can only be set once.\n2.After setting the SealTalk account, you can add your friend by searching for the SealTalk number.</string>
+    <string name="seal_update_staccout_red_tips">RC IM number only supports to start with a letter, 6~20 letters, numbers, underscores</string>
+    <string name="seal_update_staccout_exit">This RC IM number already exists, please reset</string>
+    <string name="seal_update_staccount_tips">1.The RC IM number is the unique certificate for the account and can only be set once.\n2.After setting the RC IM account, you can add your friend by searching for the RC IM number.</string>
     <string name="seal_update_staccount_edit_digist">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-</string>
-    <string name="seal_update_staccount_title">Set up the SealTalk number</string>
+    <string name="seal_update_staccount_title">Set up the SealRC IM Talk number</string>
     <string name="seal_update_staccount_save">Save</string>
     <string name="seal_staccount_dialog_title">Confirm this Sealtalk number</string>
-    <string name="seal_staccount_dialog_title_format_error">Set up SealTalk number failed</string>
-    <string name="seal_staccount_dialog_content">Are you sure set the SealTalk number to @ ? it will not be modified after confirmation</string>
-    <string name="seal_staccount_set_success">Set up SealTalk number success</string>
-    <string name="seal_phone_or_sealtalk_account">Phone number/SealTalk number</string>>
+    <string name="seal_staccount_dialog_title_format_error">Set up RC IM number failed</string>
+    <string name="seal_staccount_dialog_content">Are you sure set the RC IM number to @ ? it will not be modified after confirmation</string>
+    <string name="seal_staccount_set_success">Set up RC IM number success</string>
+    <string name="seal_phone_or_sealtalk_account">Phone number/RC IM number</string>>
 
     <!--gender-->
     <string name="seal_mine_my_account_gender">Gender</string>
@@ -250,7 +250,7 @@
     <string name="seal_gender_set_success">Success</string>
     <string name="seal_gender_set_fail">Failed</string>
 
-    <string name="seal_mine_my_account_st_account">SealTalk number</string>
+    <string name="seal_mine_my_account_st_account">RC IM number</string>
     <string name="seal_mine_my_account_group_nick_name">Group nickname:</string>
     <string name="seal_mine_my_account_phone_number">Phone number</string>
     <string name="seal_mine_my_account">My Account</string>
@@ -316,7 +316,7 @@
     <string name="seal_member_mention_all_member">All</string>
 
     <string name="seal_search_phone_number">Enter mobile (i.e.): (86)137XXXXX</string>
-    <string name="seal_search_phone_numeber_and_account">Mobile/SealTalk account</string>
+    <string name="seal_search_phone_numeber_and_account">Mobile/RC IM account</string>
     <string name="seal_add_friend">Add To Friend</string>
     <string name="seal_add_text">Friend adding info</string>
     <string name="seal_inivte_firend_descprtion_format" formatted="true">I am %s</string>
@@ -338,8 +338,8 @@
     <string name="new_friend_invite_phone_friend">Invite from phonebook</string>
 
     <string name="new_friend_request_permission_title">mobile phonebook matching</string>
-    <string name="new_friend_read_contact_dialog_title">SealTalk Want to access your address book</string>
-    <string name="new_friend_read_contact_dialog_content">Allow Sealtalk to get your address book, to match friends with the server, SealTalk will not save your address book.</string>
+    <string name="new_friend_read_contact_dialog_title">RC IM Want to access your address book</string>
+    <string name="new_friend_read_contact_dialog_content">Allow Sealtalk to get your address book, to match friends with the server, RC IM will not save your address book.</string>
     <string name="new_friend_no_permission_read_contact">Unable to get address book information</string>
     <string name="new_friend_to_setting_accept_contact_permission">Please go to "Settings" to allow this app to get contacts</string>
     <string name="common_enter_setting">Enter settings</string>
@@ -347,7 +347,7 @@
 
     <string name="wx_share_invite_friend_title">Global Internet Communication Cloud</string>
     <string name="wx_share_invite_friend_content">Add me as a friend and Let\'s chat on Sealtalk !</string>
-    <string name="sms_share_invite_friend_content_format">Hi~ I am using SealTalk now, a chat app tailored for the best, come and try it! download it from: %s</string>
+    <string name="sms_share_invite_friend_content_format">Hi~ I am using RC IM now, a chat app tailored for the best, come and try it! download it from: %s</string>
 
     <string name="zxing_msg_camera_framework_bug">Sorry, the Android camera encountered a problem. You may need to restart the device.</string>
     <string name="zxing_distinguish_picture">Identify the Qrcode from the image</string>
@@ -399,7 +399,7 @@
     <string name="profile_qrcode_private_tips">Scan the QR code to add me as a friend</string>
     <string name="profile_qrcode_save_to_phone">Save the picture</string>
     <string name="profile_qrcode_group_need_verify">The group has enable verification, only allow friends invitation to enter the group</string>
-    <string name="profile_qrcode_share_to_sealtalk">Share to SealTalk</string>
+    <string name="profile_qrcode_share_to_sealtalk">Share to RC IM</string>
     <string name="profile_qrcode_share_to_wechat">Share to Wechat</string>
     <string name="profile_group_qrcode">Group QR code</string>
     <string name="seal_main_mine_qrcode">My QR code</string>
@@ -600,6 +600,8 @@
     <string name="seal_login_private_service_error">Login Fail Status :34005</string>
     <string name="seal_system_conversation_title">System messages assistant</string>
 
+
+
     <!--debug mode-->
     <string name="setting_open_debug_prompt">Is the App Debug mode enabled (requires re-login to the app)?</string>
     <string name="setting_close_debug_promt">Is the App Debug mode disabled (requires re-login to the app)?</string>
@@ -613,13 +615,14 @@
 
     <string name="seal_friend_message">Friends news</string>
 
-    <string name="seal_login_text_title">Welcome to SealTalk</string>
+    <string name="seal_login_text_title">Welcome to RC IM</string>
     <string name="seal_talk_login_verify_code">Please enter the verification code</string>
     <string name="seal_talk_login_send_verify_code">Send verification code</string>
-    <string name="seal_talk_version_text">SealTalk V%s</string>
-    <string name="seal_talk_login_bottom_registration_text_front">The new login user will register and open the rongyun developer account</string>
-    <string name="seal_talk_login_bottom_registration_text_behand">and agree to the registration terms</string>
-    <string name="seal_talk_registration_title">Registration terms</string>
+    <string name="seal_talk_version_text">RC IM V%s</string>
+    <string name="seal_talk_login_bottom_registration_text_front">The Login user shall register and open RC developer account</string>
+    <string name="seal_talk_login_bottom_registration_text_behand">and agree to \"%1$s\" and IM \"%2$s\"</string>
+    <string name="seal_talk_privacy_policy_title">Privacy Policy</string>
+    <string name="seal_talk_registration_title">the Registration Terms</string>
     <string name="seal_mine_about_debug_setting_umeng_info">Device info by umeng</string>
     <string name="seal_mine_about_debug_setting_reference_msg_test">Reference message property test</string>
 </resources>

@@ -145,6 +145,7 @@
             <View
                 android:layout_width="0.5dp"
                 android:layout_height="match_parent"
+                android:visibility="gone"
                 android:background="@color/color_divider_line" />
 
             <TextView
@@ -153,6 +154,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:visibility="gone"
                 android:text="@string/profile_qrcode_share_to_wechat"
                 android:textColor="@color/default_clickable_text"
                 android:textSize="13dp" />

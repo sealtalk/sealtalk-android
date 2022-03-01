@@ -7,17 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
-import java.util.List;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.model.GroupMember;
 import cn.rongcloud.im.ui.view.UserInfoItemView;
 import cn.rongcloud.im.utils.ImageLoaderUtils;
+import java.util.List;
 
-/**
- * 列表展示群组成员适配
- */
+/** 列表展示群组成员适配 */
 public class ListGroupMemberAdapter extends BaseAdapter {
     private List<GroupMember> list;
 
@@ -47,7 +43,9 @@ public class ListGroupMemberAdapter extends BaseAdapter {
         ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.profile_item_list_group_member, parent, false);
+            convertView =
+                    LayoutInflater.from(context)
+                            .inflate(R.layout.profile_item_list_group_member, parent, false);
             holder.userInfoUiv = convertView.findViewById(R.id.uiv_userinfo);
             holder.roleTv = convertView.findViewById(R.id.tv_role);
             convertView.setTag(holder);
@@ -74,10 +72,10 @@ public class ListGroupMemberAdapter extends BaseAdapter {
             holder.roleTv.setVisibility(View.GONE);
         }
 
-        ImageLoaderUtils.displayUserPortraitImage(groupMember.getPortraitUri(), holder.userInfoUiv.getHeaderImageView());
+        ImageLoaderUtils.displayUserPortraitImage(
+                groupMember.getPortraitUri(), holder.userInfoUiv.getHeaderImageView());
         return convertView;
     }
-
 
     public void updateListView(List<GroupMember> list) {
         this.list = list;

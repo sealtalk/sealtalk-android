@@ -29,13 +29,10 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
 import android.view.View;
-
+import cn.rongcloud.im.R;
 import com.google.zxing.ResultPoint;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.rongcloud.im.R;
 
 /**
  * This view is overlaid on top of the camera preview. It adds the viewfinder rectangle and partial
@@ -57,7 +54,7 @@ public class NewViewfinderView extends View {
     private final int triAngleLength = dp2px(20);
     private int lineOffsetCount = 0;
     protected Bitmap resultBitmap;
-    protected final int maskColor; //蒙在摄像头上面区域的半透明颜色
+    protected final int maskColor; // 蒙在摄像头上面区域的半透明颜色
     protected final int resultColor;
     protected final int laserColor;
     protected final int resultPointColor;
@@ -90,19 +87,27 @@ public class NewViewfinderView extends View {
         Resources resources = getResources();
 
         // Get setted attributes on view
-        TypedArray attributes = getContext().obtainStyledAttributes(attrs, R.styleable.zxing_finder);
+        TypedArray attributes =
+                getContext().obtainStyledAttributes(attrs, R.styleable.zxing_finder);
 
-        this.maskColor = attributes.getColor(R.styleable.zxing_finder_zxing_viewfinder_mask,
-                resources.getColor(R.color.zxing_viewfinder_mask));
-        this.resultColor = attributes.getColor(R.styleable.zxing_finder_zxing_result_view,
-                resources.getColor(R.color.zxing_result_view));
-        this.laserColor = attributes.getColor(R.styleable.zxing_finder_zxing_viewfinder_laser,
-                resources.getColor(R.color.zxing_viewfinder_laser));
-        this.resultPointColor = attributes.getColor(R.styleable.zxing_finder_zxing_possible_result_points,
-                resources.getColor(R.color.zxing_possible_result_points));
+        this.maskColor =
+                attributes.getColor(
+                        R.styleable.zxing_finder_zxing_viewfinder_mask,
+                        resources.getColor(R.color.zxing_viewfinder_mask));
+        this.resultColor =
+                attributes.getColor(
+                        R.styleable.zxing_finder_zxing_result_view,
+                        resources.getColor(R.color.zxing_result_view));
+        this.laserColor =
+                attributes.getColor(
+                        R.styleable.zxing_finder_zxing_viewfinder_laser,
+                        resources.getColor(R.color.zxing_viewfinder_laser));
+        this.resultPointColor =
+                attributes.getColor(
+                        R.styleable.zxing_finder_zxing_possible_result_points,
+                        resources.getColor(R.color.zxing_possible_result_points));
 
         attributes.recycle();
-
 
         scannerAlpha = 0;
         possibleResultPoints = new ArrayList<>(5);
@@ -111,28 +116,23 @@ public class NewViewfinderView extends View {
 
     public void setCameraPreview(CameraPreview view) {
         this.cameraPreview = view;
-        view.addStateListener(new CameraPreview.StateListener() {
-            @Override
-            public void previewSized() {
-                refreshSizes();
-                invalidate();
-            }
+        view.addStateListener(
+                new CameraPreview.StateListener() {
+                    @Override
+                    public void previewSized() {
+                        refreshSizes();
+                        invalidate();
+                    }
 
-            @Override
-            public void previewStarted() {
+                    @Override
+                    public void previewStarted() {}
 
-            }
+                    @Override
+                    public void previewStopped() {}
 
-            @Override
-            public void previewStopped() {
-
-            }
-
-            @Override
-            public void cameraError(Exception error) {
-
-            }
-        });
+                    @Override
+                    public void cameraError(Exception error) {}
+                });
     }
 
     protected void refreshSizes() {
@@ -202,16 +202,24 @@ public class NewViewfinderView extends View {
             networkPaint.setTextSize(50);
             networkPaint.setAntiAlias(true);
             networkPaint.setColor(getResources().getColor(R.color.white));
-            canvas.drawText(text, width / 2 - textRect.width() * 2 - textRect.width() / 2 + 20, height / 2 - textRect.height() * 3, networkPaint);
-            canvas.drawText(text2, width / 2 - textRect.width() * 2 - textRect.width() / 2 + 20, height / 2 + textRect.height() * 3, networkPaint);
+            canvas.drawText(
+                    text,
+                    width / 2 - textRect.width() * 2 - textRect.width() / 2 + 20,
+                    height / 2 - textRect.height() * 3,
+                    networkPaint);
+            canvas.drawText(
+                    text2,
+                    width / 2 - textRect.width() * 2 - textRect.width() / 2 + 20,
+                    height / 2 + textRect.height() * 3,
+                    networkPaint);
             Paint paint = new Paint();
             paint.setColor(Color.BLACK);
             paint.setAlpha(150);
             paint.setStyle(Paint.Style.FILL);
             canvas.drawRect(0, 0, width, height, paint);
         } else {
-            if(allowScanAnimation) {
-                //循环划线，从上到下
+            if (allowScanAnimation) {
+                // 循环划线，从上到下
                 if (lineOffsetCount > frame.bottom - frame.top - dp2px(10)) {
                     lineOffsetCount = 0;
                 } else {
@@ -221,7 +229,13 @@ public class NewViewfinderView extends View {
                     lineRect.top = frame.top + lineOffsetCount;
                     lineRect.right = frame.right;
                     lineRect.bottom = frame.top + dp2px(10) + lineOffsetCount;
-                    canvas.drawBitmap(((BitmapDrawable) (getResources().getDrawable(R.drawable.zxing_scanline))).getBitmap(), null, lineRect, linePaint);
+                    canvas.drawBitmap(
+                            ((BitmapDrawable)
+                                            (getResources().getDrawable(R.drawable.zxing_scanline)))
+                                    .getBitmap(),
+                            null,
+                            lineRect,
+                            linePaint);
                 }
                 postInvalidateDelayed(10L, frame.left, frame.top, frame.right, frame.bottom);
             }
@@ -239,7 +253,6 @@ public class NewViewfinderView extends View {
         this.isFailNetwork = isFailNetwork;
         postInvalidate();
     }
-
 
     /**
      * Only call from the UI thread.

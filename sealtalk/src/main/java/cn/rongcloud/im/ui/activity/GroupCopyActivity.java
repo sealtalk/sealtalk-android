@@ -5,16 +5,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-
-import java.util.List;
-import java.util.Random;
-
 import cn.rongcloud.im.R;
-import cn.rongcloud.im.common.ErrorCode;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.db.model.GroupEntity;
 import cn.rongcloud.im.model.AddMemberResult;
@@ -31,6 +25,8 @@ import io.rong.imkit.RongIM;
 import io.rong.imkit.userinfo.RongUserInfoManager;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
+import java.util.List;
+import java.util.Random;
 
 public class GroupCopyActivity extends TitleBaseActivity implements View.OnClickListener {
 
@@ -49,7 +45,9 @@ public class GroupCopyActivity extends TitleBaseActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_copy);
         groupId = getIntent().getStringExtra(IntentExtra.GROUP_ID);
-        UserInfo info = RongUserInfoManager.getInstance().getUserInfo(RongIM.getInstance().getCurrentUserId());
+        UserInfo info =
+                RongUserInfoManager.getInstance()
+                        .getUserInfo(RongIM.getInstance().getCurrentUserId());
         if (info != null) {
             currentUserName = info.getName();
         } else {
@@ -70,39 +68,58 @@ public class GroupCopyActivity extends TitleBaseActivity implements View.OnClick
     private void initViewModel() {
         copyGroupViewModel = ViewModelProviders.of(this).get(CopyGroupViewModel.class);
         copyGroupViewModel.requestGroupInfo(groupId);
-        copyGroupViewModel.getGroupInfo().observe(this, new Observer<Resource<GroupEntity>>() {
-            @Override
-            public void onChanged(Resource<GroupEntity> groupEntityResource) {
-                if (groupEntityResource.status != Status.LOADING && groupEntityResource.data != null) {
-                    updateGroupInfo(groupEntityResource.data);
-                }
-            }
-        });
-        copyGroupViewModel.getCopyGroupResult().observe(this, new Observer<Resource<CopyGroupResult>>() {
-            @Override
-            public void onChanged(Resource<CopyGroupResult> copyGroupResultResource) {
-                if (copyGroupResultResource.status == Status.SUCCESS) {
-                    dismissLoadingDialog();
-                    Log.e("CopyGroupResult", "scuccess==");
-                    isCopyNameGoing = false;
-                    if (copyGroupResultResource.data != null) {
-                        RongIM.getInstance().startConversation(GroupCopyActivity.this, Conversation.ConversationType.GROUP, copyGroupResultResource.data.id, copyGroupName);
-                        if (copyGroupResultResource.data.userStatus != null && copyGroupResultResource.data.userStatus.size() > 0) {
-                            showAddMemberTips(copyGroupResultResource.data.userStatus);
-                        }
-                    }
-                } else if (copyGroupResultResource.status == Status.ERROR) {
-                    dismissLoadingDialog();
-                    isCopyNameGoing = false;
-                    ToastUtils.showErrorToast(copyGroupResultResource.code);
-                }
-            }
-        });
+        copyGroupViewModel
+                .getGroupInfo()
+                .observe(
+                        this,
+                        new Observer<Resource<GroupEntity>>() {
+                            @Override
+                            public void onChanged(Resource<GroupEntity> groupEntityResource) {
+                                if (groupEntityResource.status != Status.LOADING
+                                        && groupEntityResource.data != null) {
+                                    updateGroupInfo(groupEntityResource.data);
+                                }
+                            }
+                        });
+        copyGroupViewModel
+                .getCopyGroupResult()
+                .observe(
+                        this,
+                        new Observer<Resource<CopyGroupResult>>() {
+                            @Override
+                            public void onChanged(
+                                    Resource<CopyGroupResult> copyGroupResultResource) {
+                                if (copyGroupResultResource.status == Status.SUCCESS) {
+                                    dismissLoadingDialog();
+                                    Log.e("CopyGroupResult", "scuccess==");
+                                    isCopyNameGoing = false;
+                                    if (copyGroupResultResource.data != null) {
+                                        RongIM.getInstance()
+                                                .startConversation(
+                                                        GroupCopyActivity.this,
+                                                        Conversation.ConversationType.GROUP,
+                                                        copyGroupResultResource.data.id,
+                                                        copyGroupName);
+                                        if (copyGroupResultResource.data.userStatus != null
+                                                && copyGroupResultResource.data.userStatus.size()
+                                                        > 0) {
+                                            showAddMemberTips(
+                                                    copyGroupResultResource.data.userStatus);
+                                        }
+                                    }
+                                } else if (copyGroupResultResource.status == Status.ERROR) {
+                                    dismissLoadingDialog();
+                                    isCopyNameGoing = false;
+                                    ToastUtils.showErrorToast(copyGroupResultResource.code);
+                                }
+                            }
+                        });
     }
 
     private void updateGroupInfo(GroupEntity groupInfo) {
         ImageLoaderUtils.displayUserPortraitImage(groupInfo.getPortraitUri(), groupPortrait);
-        tvGroupMemberNum.setText(getString(R.string.common_member_count, groupInfo.getMemberCount()));
+        tvGroupMemberNum.setText(
+                getString(R.string.common_member_count, groupInfo.getMemberCount()));
     }
 
     private void copyGroup() {
@@ -112,45 +129,54 @@ public class GroupCopyActivity extends TitleBaseActivity implements View.OnClick
         }
         isCopyNameGoing = true;
         currentUserName = currentUserName + ",";
-        //选取当前用户名和随机一位群成员用户名，凑齐群名，不超过6位数
+        // 选取当前用户名和随机一位群成员用户名，凑齐群名，不超过6位数
         if (currentUserName.length() >= 6) {
             copyGroupName = currentUserName.substring(0, 6) + "...";
             copyGroupViewModel.copyGroup(groupId, copyGroupName, "");
         } else {
-            copyGroupViewModel.getGroupMemberInfoList(groupId).observe(this, new Observer<List<GroupMember>>() {
-                @Override
-                public void onChanged(List<GroupMember> listResource) {
-                    copyGroupName = currentUserName;
-                    if (listResource != null && listResource.size() > 0) {
-                        copyGroupName = copyGroupName + listResource.get(new Random().nextInt(listResource.size())).getName();
-                        if (copyGroupName.length() > 6) {
-                            copyGroupName = copyGroupName.substring(0, 6);
-                        }
-                        copyGroupName = copyGroupName + "...";
-                    }
-                    copyGroupViewModel.copyGroup(groupId, copyGroupName, "");
-                }
-            });
+            copyGroupViewModel
+                    .getGroupMemberInfoList(groupId)
+                    .observe(
+                            this,
+                            new Observer<List<GroupMember>>() {
+                                @Override
+                                public void onChanged(List<GroupMember> listResource) {
+                                    copyGroupName = currentUserName;
+                                    if (listResource != null && listResource.size() > 0) {
+                                        copyGroupName =
+                                                copyGroupName
+                                                        + listResource
+                                                                .get(
+                                                                        new Random()
+                                                                                .nextInt(
+                                                                                        listResource
+                                                                                                .size()))
+                                                                .getName();
+                                        if (copyGroupName.length() > 6) {
+                                            copyGroupName = copyGroupName.substring(0, 6);
+                                        }
+                                        copyGroupName = copyGroupName + "...";
+                                    }
+                                    copyGroupViewModel.copyGroup(groupId, copyGroupName, "");
+                                }
+                            });
         }
     }
 
-    /**
-     * 是否复制群提示
-     */
+    /** 是否复制群提示 */
     private synchronized void showCopyCertifiDialog() {
         CommonDialog.Builder builder = new CommonDialog.Builder();
         builder.setContentMessage(getString(R.string.seal_group_manager_copy_tips));
-        builder.setDialogButtonClickListener(new CommonDialog.OnDialogButtonClickListener() {
-            @Override
-            public void onPositiveClick(View v, Bundle bundle) {
-                copyGroup();
-            }
+        builder.setDialogButtonClickListener(
+                new CommonDialog.OnDialogButtonClickListener() {
+                    @Override
+                    public void onPositiveClick(View v, Bundle bundle) {
+                        copyGroup();
+                    }
 
-            @Override
-            public void onNegativeClick(View v, Bundle bundle) {
-
-            }
-        });
+                    @Override
+                    public void onNegativeClick(View v, Bundle bundle) {}
+                });
         CommonDialog certifiTipsDialog = builder.build();
         certifiTipsDialog.show(getSupportFragmentManager().beginTransaction(), "CopyCertifi");
     }
@@ -171,8 +197,8 @@ public class GroupCopyActivity extends TitleBaseActivity implements View.OnClick
      */
     private void showAddMemberTips(List<AddMemberResult> results) {
         String tips = getString(R.string.seal_add_success);
-        //1 为已加入, 2 为等待管理员同意, 3 为等待被邀请者同意
-        //只要有状态 3 ，就提示'已邀请，等待确认'
+        // 1 为已加入, 2 为等待管理员同意, 3 为等待被邀请者同意
+        // 只要有状态 3 ，就提示'已邀请，等待确认'
         for (AddMemberResult result : results) {
             if (result.status == 3) {
                 tips = getString(R.string.seal_add_need_member_agree);

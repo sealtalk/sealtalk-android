@@ -3,23 +3,16 @@ package cn.rongcloud.im.ui.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import java.lang.ref.WeakReference;
 
-/**
- * 解决DialogFragment内存泄漏Bug
- * Created by yanke on 2021/12/8
- */
+/** 解决DialogFragment内存泄漏Bug Created by yanke on 2021/12/8 */
 public class NoLeakDialog extends Dialog {
 
-
-    /**
-     * 主要是防止弱引用指向的 Listener被清除
-     */
+    /** 主要是防止弱引用指向的 Listener被清除 */
     private OnDismissListener mOnDismissListener;
+
     private OnCancelListener mOnCancelListener;
     private OnShowListener mOnShowListener;
 
@@ -31,7 +24,10 @@ public class NoLeakDialog extends Dialog {
         super(context, themeResId);
     }
 
-    protected NoLeakDialog(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
+    protected NoLeakDialog(
+            @NonNull Context context,
+            boolean cancelable,
+            @Nullable OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
     }
 
@@ -100,5 +96,4 @@ public class NoLeakDialog extends Dialog {
             }
         }
     }
-
 }

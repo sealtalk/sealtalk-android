@@ -20,17 +20,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-
 import com.google.zxing.DecodeHintType;
-
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-/**
- * @author Lachezar Dobrev
- */
+/** @author Lachezar Dobrev */
 public final class DecodeHintManager {
 
     private static final String TAG = DecodeHintManager.class.getSimpleName();
@@ -38,19 +34,18 @@ public final class DecodeHintManager {
     // This pattern is used in decoding integer arrays.
     private static final Pattern COMMA = Pattern.compile(",");
 
-    private DecodeHintManager() {
-    }
+    private DecodeHintManager() {}
 
     /**
-     * <p>Split a query string into a list of name-value pairs.</p>
+     * Split a query string into a list of name-value pairs.
      *
-     * <p>This is an alternative to the {@link Uri#getQueryParameterNames()} and
-     * {@link Uri#getQueryParameters(String)}, which are quirky and not suitable
-     * for exist-only Uri parameters.</p>
+     * <p>This is an alternative to the {@link Uri#getQueryParameterNames()} and {@link
+     * Uri#getQueryParameters(String)}, which are quirky and not suitable for exist-only Uri
+     * parameters.
      *
-     * <p>This method ignores multiple parameters with the same name and returns the
-     * first one only. This is technically incorrect, but should be acceptable due
-     * to the method of processing Hints: no multiple values for a hint.</p>
+     * <p>This method ignores multiple parameters with the same name and returns the first one only.
+     * This is technically incorrect, but should be acceptable due to the method of processing
+     * Hints: no multiple values for a hint.
      *
      * @param query query to split
      * @return name-value pairs
@@ -128,9 +123,9 @@ public final class DecodeHintManager {
 
         for (DecodeHintType hintType : DecodeHintType.values()) {
 
-            if (hintType == DecodeHintType.CHARACTER_SET ||
-                    hintType == DecodeHintType.NEED_RESULT_POINT_CALLBACK ||
-                    hintType == DecodeHintType.POSSIBLE_FORMATS) {
+            if (hintType == DecodeHintType.CHARACTER_SET
+                    || hintType == DecodeHintType.NEED_RESULT_POINT_CALLBACK
+                    || hintType == DecodeHintType.POSSIBLE_FORMATS) {
                 continue; // This hint is specified in another way
             }
 
@@ -160,9 +155,9 @@ public final class DecodeHintManager {
                 // An empty parameter is simply a flag-style parameter, assuming true
                 if (parameterText.isEmpty()) {
                     hints.put(hintType, Boolean.TRUE);
-                } else if ("0".equals(parameterText) ||
-                        "false".equalsIgnoreCase(parameterText) ||
-                        "no".equalsIgnoreCase(parameterText)) {
+                } else if ("0".equals(parameterText)
+                        || "false".equalsIgnoreCase(parameterText)
+                        || "no".equalsIgnoreCase(parameterText)) {
                     hints.put(hintType, Boolean.FALSE);
                 } else {
                     hints.put(hintType, Boolean.TRUE);
@@ -173,7 +168,8 @@ public final class DecodeHintManager {
             if (hintType.getValueType().equals(int[].class)) {
                 // An integer array. Used to specify valid lengths.
                 // Strip a trailing comma as in Java style array initialisers.
-                if (!parameterText.isEmpty() && parameterText.charAt(parameterText.length() - 1) == ',') {
+                if (!parameterText.isEmpty()
+                        && parameterText.charAt(parameterText.length() - 1) == ',') {
                     parameterText = parameterText.substring(0, parameterText.length() - 1);
                 }
                 String[] values = COMMA.split(parameterText);
@@ -182,7 +178,13 @@ public final class DecodeHintManager {
                     try {
                         array[i] = Integer.parseInt(values[i]);
                     } catch (NumberFormatException ignored) {
-                        Log.w(TAG, "Skipping array of integers hint " + hintType + " due to invalid numeric value: '" + values[i] + '\'');
+                        Log.w(
+                                TAG,
+                                "Skipping array of integers hint "
+                                        + hintType
+                                        + " due to invalid numeric value: '"
+                                        + values[i]
+                                        + '\'');
                         array = null;
                         break;
                     }
@@ -192,7 +194,9 @@ public final class DecodeHintManager {
                 }
                 continue;
             }
-            Log.w(TAG, "Unsupported hint type '" + hintType + "' of type " + hintType.getValueType());
+            Log.w(
+                    TAG,
+                    "Unsupported hint type '" + hintType + "' of type " + hintType.getValueType());
         }
 
         Log.i(TAG, "Hints from the URI: " + hints);
@@ -208,9 +212,9 @@ public final class DecodeHintManager {
 
         for (DecodeHintType hintType : DecodeHintType.values()) {
 
-            if (hintType == DecodeHintType.CHARACTER_SET ||
-                    hintType == DecodeHintType.NEED_RESULT_POINT_CALLBACK ||
-                    hintType == DecodeHintType.POSSIBLE_FORMATS) {
+            if (hintType == DecodeHintType.CHARACTER_SET
+                    || hintType == DecodeHintType.NEED_RESULT_POINT_CALLBACK
+                    || hintType == DecodeHintType.POSSIBLE_FORMATS) {
                 continue; // This hint is specified in another way
             }
 
@@ -224,7 +228,12 @@ public final class DecodeHintManager {
                     if (hintType.getValueType().isInstance(hintData)) {
                         hints.put(hintType, hintData);
                     } else {
-                        Log.w(TAG, "Ignoring hint " + hintType + " because it is not assignable from " + hintData);
+                        Log.w(
+                                TAG,
+                                "Ignoring hint "
+                                        + hintType
+                                        + " because it is not assignable from "
+                                        + hintData);
                     }
                 }
             }

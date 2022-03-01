@@ -2,13 +2,10 @@ package cn.rongcloud.im.db.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 
-/**
- * 邀请者信息
- */
+/** 邀请者信息 */
 @Entity
 public class GroupNoticeGroupInfo implements Parcelable {
     @ColumnInfo(name = "id")
@@ -33,7 +30,6 @@ public class GroupNoticeGroupInfo implements Parcelable {
         this.nickname = nickname;
     }
 
-
     @Override
     public int describeContents() {
         return 0;
@@ -45,31 +41,35 @@ public class GroupNoticeGroupInfo implements Parcelable {
         dest.writeString(this.nickname);
     }
 
-    public GroupNoticeGroupInfo() {
-    }
+    public GroupNoticeGroupInfo() {}
 
     protected GroupNoticeGroupInfo(Parcel in) {
         this.id = in.readString();
         this.nickname = in.readString();
     }
 
-    public static final Creator<GroupNoticeGroupInfo> CREATOR = new Creator<GroupNoticeGroupInfo>() {
-        @Override
-        public GroupNoticeGroupInfo createFromParcel(Parcel source) {
-            return new GroupNoticeGroupInfo(source);
-        }
+    public static final Creator<GroupNoticeGroupInfo> CREATOR =
+            new Creator<GroupNoticeGroupInfo>() {
+                @Override
+                public GroupNoticeGroupInfo createFromParcel(Parcel source) {
+                    return new GroupNoticeGroupInfo(source);
+                }
 
-        @Override
-        public GroupNoticeGroupInfo[] newArray(int size) {
-            return new GroupNoticeGroupInfo[size];
-        }
-    };
+                @Override
+                public GroupNoticeGroupInfo[] newArray(int size) {
+                    return new GroupNoticeGroupInfo[size];
+                }
+            };
 
     @Override
     public String toString() {
-        return "GroupNoticeRequesterInfo{" +
-                "id='" + id + '\'' +
-                ", nickname='" + nickname + '\'' +
-                '}';
+        return "GroupNoticeRequesterInfo{"
+                + "id='"
+                + id
+                + '\''
+                + ", nickname='"
+                + nickname
+                + '\''
+                + '}';
     }
 }

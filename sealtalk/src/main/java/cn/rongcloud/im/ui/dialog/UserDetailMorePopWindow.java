@@ -1,6 +1,5 @@
 package cn.rongcloud.im.ui.dialog;
 
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -11,12 +10,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.PopupWindow;
-
 import cn.rongcloud.im.R;
 
-/**
- * 用户详情更多弹窗
- */
+/** 用户详情更多弹窗 */
 public class UserDetailMorePopWindow extends PopupWindow {
     private OnPopWindowItemClickListener listener;
     private View contentView;
@@ -26,10 +22,11 @@ public class UserDetailMorePopWindow extends PopupWindow {
     }
 
     @SuppressLint("InflateParams")
-    public UserDetailMorePopWindow(final Activity context, boolean isInBlackList, OnPopWindowItemClickListener listener) {
+    public UserDetailMorePopWindow(
+            final Activity context, boolean isInBlackList, OnPopWindowItemClickListener listener) {
         this.listener = listener;
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater =
+                (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         contentView = inflater.inflate(R.layout.profile_popup_user_detail_title_more, null);
 
         // 设置SelectPicPopupWindow的View
@@ -52,21 +49,21 @@ public class UserDetailMorePopWindow extends PopupWindow {
         this.setAnimationStyle(R.style.AnimationMainTitleMore);
 
         Button blackListBtn = contentView.findViewById(R.id.profile_btn_detail_black_list);
-        blackListBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onClickedBlackList(!isInBlackList);
-                }
-                dismiss();
-            }
-        });
+        blackListBtn.setOnClickListener(
+                new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (listener != null) {
+                            listener.onClickedBlackList(!isInBlackList);
+                        }
+                        dismiss();
+                    }
+                });
         if (isInBlackList) {
             blackListBtn.setText(R.string.profile_detail_remove_from_blacklist);
         } else {
             blackListBtn.setText(R.string.profile_detail_join_the_blacklist);
         }
-
     }
 
     /**

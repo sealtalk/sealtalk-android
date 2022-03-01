@@ -1,8 +1,6 @@
 package cn.rongcloud.im.model.qrcode;
 
-/**
- * QR 中群组信息
- */
+/** QR 中群组信息 */
 public class QRGroupInfo {
     private String groupId;
     private String sharedUserId;

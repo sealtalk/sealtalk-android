@@ -12,7 +12,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import cn.rongcloud.im.R;
 
 public class ChatRoomStatusInputDialog extends Dialog {
@@ -37,7 +36,6 @@ public class ChatRoomStatusInputDialog extends Dialog {
     private LinearLayout llValue;
     private LinearLayout llCheck;
     private LinearLayout llExtra;
-
 
     public ChatRoomStatusInputDialog(Context context) {
         super(context);
@@ -103,7 +101,9 @@ public class ChatRoomStatusInputDialog extends Dialog {
             mLayoutParams.height = android.view.ViewGroup.LayoutParams.MATCH_PARENT;
             mLayoutParams.gravity = Gravity.CENTER;
         }
-        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_chat_room_status_input, null);
+        View dialogView =
+                LayoutInflater.from(getContext())
+                        .inflate(R.layout.dialog_chat_room_status_input, null);
         mTvSure = dialogView.findViewById(R.id.tv_sure);
         mTvCancel = dialogView.findViewById(R.id.tv_cancle);
         etKey = dialogView.findViewById(R.id.et_key);

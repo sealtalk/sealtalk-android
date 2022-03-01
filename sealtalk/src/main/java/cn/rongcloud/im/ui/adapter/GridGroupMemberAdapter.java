@@ -7,18 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
-import java.util.List;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.model.GroupMember;
 import cn.rongcloud.im.ui.widget.SelectableRoundedImageView;
 import cn.rongcloud.im.utils.ImageLoaderUtils;
+import java.util.List;
 
-/**
- * 网格显示群成员的适配
- * 默认在最后一格中显示添加成员
- */
+/** 网格显示群成员的适配 默认在最后一格中显示添加成员 */
 public class GridGroupMemberAdapter extends BaseAdapter {
 
     private List<GroupMember> list;
@@ -33,18 +28,19 @@ public class GridGroupMemberAdapter extends BaseAdapter {
         this.showMemberLimit = showMemberLimit;
     }
 
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.profile_item_grid_group_member, parent, false);
+            convertView =
+                    LayoutInflater.from(context)
+                            .inflate(R.layout.profile_item_grid_group_member, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.avatarView = convertView.findViewById(R.id.profile_iv_grid_member_avatar);
             viewHolder.usernameTv = convertView.findViewById(R.id.profile_iv_grid_tv_username);
             convertView.setTag(viewHolder);
-        } else{
-            viewHolder = (ViewHolder)convertView.getTag();
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
         SelectableRoundedImageView avatarView = viewHolder.avatarView;
         TextView usernameTv = viewHolder.usernameTv;
@@ -52,25 +48,27 @@ public class GridGroupMemberAdapter extends BaseAdapter {
         // 最后一个item
         if (position == getCount() - 1 && (isAllowDelete || isAllowAdd)) {
             // 允许减员
-            if(isAllowDelete){
+            if (isAllowDelete) {
                 usernameTv.setText("");
                 avatarView.setImageDrawable(null);
                 avatarView.setBackgroundResource(R.drawable.profile_ic_grid_member_delete);
-                avatarView.setOnClickListener(v -> {
-                    if (onItemClickedListener != null) {
-                        onItemClickedListener.onAddOrDeleteMemberClicked(false);
-                    }
-                });
-            } else if(isAllowAdd){
+                avatarView.setOnClickListener(
+                        v -> {
+                            if (onItemClickedListener != null) {
+                                onItemClickedListener.onAddOrDeleteMemberClicked(false);
+                            }
+                        });
+            } else if (isAllowAdd) {
                 usernameTv.setText("");
                 avatarView.setImageDrawable(null);
                 avatarView.setBackgroundResource(R.drawable.profile_ic_grid_member_add);
 
-                avatarView.setOnClickListener(v -> {
-                    if (onItemClickedListener != null) {
-                        onItemClickedListener.onAddOrDeleteMemberClicked(true);
-                    }
-                });
+                avatarView.setOnClickListener(
+                        v -> {
+                            if (onItemClickedListener != null) {
+                                onItemClickedListener.onAddOrDeleteMemberClicked(true);
+                            }
+                        });
             }
 
             viewHolder.avatarUrl = null;
@@ -80,12 +78,12 @@ public class GridGroupMemberAdapter extends BaseAdapter {
             avatarView.setBackgroundResource(R.drawable.profile_ic_grid_member_add);
             viewHolder.avatarUrl = null;
 
-            avatarView.setOnClickListener(v -> {
-                if (onItemClickedListener != null) {
-                    onItemClickedListener.onAddOrDeleteMemberClicked(true);
-                }
-
-            });
+            avatarView.setOnClickListener(
+                    v -> {
+                        if (onItemClickedListener != null) {
+                            onItemClickedListener.onAddOrDeleteMemberClicked(true);
+                        }
+                    });
         } else { // 普通成员
             final GroupMember groupMember = list.get(position);
             String groupNickName = groupMember.getGroupNickName();
@@ -97,17 +95,17 @@ public class GridGroupMemberAdapter extends BaseAdapter {
 
             avatarView.setBackgroundResource(android.R.color.transparent);
             String portraitUri = groupMember.getPortraitUri();
-            if(portraitUri != null && !portraitUri.equals(viewHolder.avatarUrl)){
+            if (portraitUri != null && !portraitUri.equals(viewHolder.avatarUrl)) {
                 ImageLoaderUtils.displayUserPortraitImage(portraitUri, avatarView);
                 viewHolder.avatarUrl = portraitUri;
             }
 
-            avatarView.setOnClickListener(v -> {
-                if (onItemClickedListener != null) {
-                    onItemClickedListener.onMemberClicked(groupMember);
-                }
-            });
-
+            avatarView.setOnClickListener(
+                    v -> {
+                        if (onItemClickedListener != null) {
+                            onItemClickedListener.onMemberClicked(groupMember);
+                        }
+                    });
         }
 
         return convertView;
@@ -155,11 +153,9 @@ public class GridGroupMemberAdapter extends BaseAdapter {
         this.isAllowAdd = isAllowAdd;
     }
 
-    /**
-     * 传入新的数据 刷新UI的方法
-     */
+    /** 传入新的数据 刷新UI的方法 */
     public void updateListView(List<GroupMember> list) {
-        if(showMemberLimit > 0) {
+        if (showMemberLimit > 0) {
             if (list != null && list.size() > showMemberLimit) {
                 list = list.subList(0, showMemberLimit);
             }
@@ -193,7 +189,7 @@ public class GridGroupMemberAdapter extends BaseAdapter {
         void onMemberClicked(GroupMember groupMember);
     }
 
-    private class ViewHolder{
+    private class ViewHolder {
         SelectableRoundedImageView avatarView;
         String avatarUrl;
         TextView usernameTv;

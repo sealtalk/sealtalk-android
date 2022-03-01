@@ -1,7 +1,6 @@
 package cn.rongcloud.im.ui.adapter.viewholders;
 
 import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,9 +9,7 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder {
         super(itemView);
     }
 
-    abstract public void update(T t);
+    public abstract void update(T t);
 
-    public void setChecked(boolean b) {
-
-    }
+    public void setChecked(boolean b) {}
 }

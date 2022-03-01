@@ -1,15 +1,19 @@
 package cn.rongcloud.im.ui.adapter.models;
 
-import java.util.List;
-
 import cn.rongcloud.im.db.model.GroupEntity;
+import java.util.List;
 
 public class SearchGroupModel extends SearchModel<GroupEntity> {
     private int groupNameStart;
     private int groupNameEnd;
     private List<GroupMemberMatch> matchedMemberlist;
 
-    public SearchGroupModel(GroupEntity bean, int type, int groupNameStart, int groupNameEnd, List<GroupMemberMatch> memberMatches) {
+    public SearchGroupModel(
+            GroupEntity bean,
+            int type,
+            int groupNameStart,
+            int groupNameEnd,
+            List<GroupMemberMatch> memberMatches) {
         super(bean, type);
         priority = SHOW_PRIORITY_GROUP;
         matchedMemberlist = memberMatches;
@@ -30,7 +34,7 @@ public class SearchGroupModel extends SearchModel<GroupEntity> {
     }
 
     public static class GroupMemberMatch {
-        //start 如果为 -1 则没有找到
+        // start 如果为 -1 则没有找到
         private String name;
         private int nameStart;
         private int nameEnd;
@@ -53,8 +57,6 @@ public class SearchGroupModel extends SearchModel<GroupEntity> {
             return nameEnd;
         }
     }
-
-
 
     private CheckType checkType = CheckType.NONE;
 

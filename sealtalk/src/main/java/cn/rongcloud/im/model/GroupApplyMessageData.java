@@ -58,13 +58,22 @@ public class GroupApplyMessageData {
 
     @Override
     public String toString() {
-        return "GroupApplyMessageData{" +
-                "operatorNickname='" + operatorNickname + '\'' +
-                ", targetGroupId='" + targetGroupId + '\'' +
-                ", targetGroupName='" + targetGroupName + '\'' +
-                ", status=" + status +
-                ", type=" + type +
-                ", timestamp=" + timestamp +
-                '}';
+        return "GroupApplyMessageData{"
+                + "operatorNickname='"
+                + operatorNickname
+                + '\''
+                + ", targetGroupId='"
+                + targetGroupId
+                + '\''
+                + ", targetGroupName='"
+                + targetGroupName
+                + '\''
+                + ", status="
+                + status
+                + ", type="
+                + type
+                + ", timestamp="
+                + timestamp
+                + '}';
     }
 }

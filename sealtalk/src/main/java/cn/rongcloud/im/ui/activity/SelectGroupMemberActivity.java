@@ -1,23 +1,17 @@
 package cn.rongcloud.im.ui.activity;
 
-
-import android.content.Intent;
-import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-
-import java.util.ArrayList;
-
-import cn.rongcloud.im.common.IntentExtra;
-import cn.rongcloud.im.ui.fragment.SelectGroupMemberMultiFragment;
-import cn.rongcloud.im.ui.fragment.SelectMultiFriendFragment;
-
 import static cn.rongcloud.im.common.IntentExtra.STR_TARGET_ID;
 import static cn.rongcloud.im.common.IntentExtra.TITLE;
 
-/**
- * 选择当前群组 groupId 内的人
- */
+import android.content.Intent;
+import android.os.Bundle;
+import androidx.annotation.Nullable;
+import cn.rongcloud.im.common.IntentExtra;
+import cn.rongcloud.im.ui.fragment.SelectGroupMemberMultiFragment;
+import cn.rongcloud.im.ui.fragment.SelectMultiFriendFragment;
+import java.util.ArrayList;
+
+/** 选择当前群组 groupId 内的人 */
 public class SelectGroupMemberActivity extends SelectMultiFriendsActivity {
     private String groupId;
 
@@ -45,5 +39,4 @@ public class SelectGroupMemberActivity extends SelectMultiFriendsActivity {
         setResult(RESULT_OK, intent);
         finish();
     }
-
 }

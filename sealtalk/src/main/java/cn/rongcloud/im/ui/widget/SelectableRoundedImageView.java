@@ -1,6 +1,5 @@
 package cn.rongcloud.im.ui.widget;
 
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -26,7 +25,6 @@ import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.util.AttributeSet;
 import android.widget.ImageView;
-
 import cn.rongcloud.im.R;
 
 @SuppressLint("AppCompatCustomView")
@@ -64,7 +62,7 @@ public class SelectableRoundedImageView extends ImageView {
 
     private Drawable mDrawable;
 
-    private float[] mRadii = new float[] { 0, 0, 0, 0, 0, 0, 0, 0 };
+    private float[] mRadii = new float[] {0, 0, 0, 0, 0, 0, 0, 0};
 
     public SelectableRoundedImageView(Context context) {
         super(context);
@@ -77,41 +75,52 @@ public class SelectableRoundedImageView extends ImageView {
     public SelectableRoundedImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
-        TypedArray a = context.obtainStyledAttributes(attrs,
-                       R.styleable.SelectableRoundedImageView, defStyle, 0);
+        TypedArray a =
+                context.obtainStyledAttributes(
+                        attrs, R.styleable.SelectableRoundedImageView, defStyle, 0);
 
         final int index = a.getInt(R.styleable.SelectableRoundedImageView_android_scaleType, -1);
         if (index >= 0) {
             setScaleType(sScaleTypeArray[index]);
         }
 
-        mLeftTopCornerRadius = a.getDimensionPixelSize(
-                                   R.styleable.SelectableRoundedImageView_sriv_left_top_corner_radius, 0);
-        mRightTopCornerRadius = a.getDimensionPixelSize(
-                                    R.styleable.SelectableRoundedImageView_sriv_right_top_corner_radius, 0);
-        mLeftBottomCornerRadius = a.getDimensionPixelSize(
-                                      R.styleable.SelectableRoundedImageView_sriv_left_bottom_corner_radius, 0);
-        mRightBottomCornerRadius = a.getDimensionPixelSize(
-                                       R.styleable.SelectableRoundedImageView_sriv_right_bottom_corner_radius, 0);
+        mLeftTopCornerRadius =
+                a.getDimensionPixelSize(
+                        R.styleable.SelectableRoundedImageView_sriv_left_top_corner_radius, 0);
+        mRightTopCornerRadius =
+                a.getDimensionPixelSize(
+                        R.styleable.SelectableRoundedImageView_sriv_right_top_corner_radius, 0);
+        mLeftBottomCornerRadius =
+                a.getDimensionPixelSize(
+                        R.styleable.SelectableRoundedImageView_sriv_left_bottom_corner_radius, 0);
+        mRightBottomCornerRadius =
+                a.getDimensionPixelSize(
+                        R.styleable.SelectableRoundedImageView_sriv_right_bottom_corner_radius, 0);
 
-        if (mLeftTopCornerRadius < 0.0f || mRightTopCornerRadius < 0.0f
-                || mLeftBottomCornerRadius < 0.0f || mRightBottomCornerRadius < 0.0f) {
+        if (mLeftTopCornerRadius < 0.0f
+                || mRightTopCornerRadius < 0.0f
+                || mLeftBottomCornerRadius < 0.0f
+                || mRightBottomCornerRadius < 0.0f) {
             throw new IllegalArgumentException("radius values cannot be negative.");
         }
 
-        mRadii = new float[] {
-            mLeftTopCornerRadius, mLeftTopCornerRadius,
-            mRightTopCornerRadius, mRightTopCornerRadius,
-            mRightBottomCornerRadius, mRightBottomCornerRadius,
-            mLeftBottomCornerRadius, mLeftBottomCornerRadius
-        };
+        mRadii =
+                new float[] {
+                    mLeftTopCornerRadius, mLeftTopCornerRadius,
+                    mRightTopCornerRadius, mRightTopCornerRadius,
+                    mRightBottomCornerRadius, mRightBottomCornerRadius,
+                    mLeftBottomCornerRadius, mLeftBottomCornerRadius
+                };
 
-        mBorderWidth = a.getDimensionPixelSize(R.styleable.SelectableRoundedImageView_sriv_border_width, 0);
+        mBorderWidth =
+                a.getDimensionPixelSize(
+                        R.styleable.SelectableRoundedImageView_sriv_border_width, 0);
         if (mBorderWidth < 0) {
             throw new IllegalArgumentException("border width cannot be negative.");
         }
 
-        mBorderColor = a.getColorStateList(R.styleable.SelectableRoundedImageView_sriv_border_color);
+        mBorderColor =
+                a.getColorStateList(R.styleable.SelectableRoundedImageView_sriv_border_color);
         if (mBorderColor == null) {
             mBorderColor = ColorStateList.valueOf(DEFAULT_BORDER_COLOR);
         }
@@ -184,7 +193,7 @@ public class SelectableRoundedImageView extends ImageView {
             try {
                 d = rsrc.getDrawable(mResource);
             } catch (NotFoundException e) {
-//                Log.w(TAG, "Unable to find resource: " + mResource, e);
+                //                Log.w(TAG, "Unable to find resource: " + mResource, e);
                 // Don't try again.
                 mResource = 0;
             }
@@ -215,9 +224,9 @@ public class SelectableRoundedImageView extends ImageView {
      * @param rightTop The desired desired radius for right-top corner in dip.
      * @param leftBottom The desired radius for left-bottom corner in dip.
      * @param rightBottom The desired radius for right-bottom corner in dip.
-     *
      */
-    public void setCornerRadiiDP(float leftTop, float rightTop, float leftBottom, float rightBottom) {
+    public void setCornerRadiiDP(
+            float leftTop, float rightTop, float leftBottom, float rightBottom) {
         final float density = getResources().getDisplayMetrics().density;
 
         final float lt = leftTop * density;
@@ -225,7 +234,7 @@ public class SelectableRoundedImageView extends ImageView {
         final float lb = leftBottom * density;
         final float rb = rightBottom * density;
 
-        mRadii = new float[] { lt, lt, rt, rt, rb, rb, lb, lb };
+        mRadii = new float[] {lt, lt, rt, rt, rb, rb, lb, lb};
         updateDrawable();
     }
 
@@ -236,8 +245,7 @@ public class SelectableRoundedImageView extends ImageView {
     /**
      * Set border width.
      *
-     * @param width
-     *            The desired width in dip.
+     * @param width The desired width in dip.
      */
     public void setBorderWidthDP(float width) {
         float scaledWidth = getResources().getDisplayMetrics().density * width;
@@ -267,8 +275,7 @@ public class SelectableRoundedImageView extends ImageView {
             return;
         }
 
-        mBorderColor = (colors != null) ? colors : ColorStateList
-                       .valueOf(DEFAULT_BORDER_COLOR);
+        mBorderColor = (colors != null) ? colors : ColorStateList.valueOf(DEFAULT_BORDER_COLOR);
         updateDrawable();
         if (mBorderWidth > 0) {
             invalidate();
@@ -302,8 +309,8 @@ public class SelectableRoundedImageView extends ImageView {
 
         private BitmapShader mBitmapShader;
 
-        private float[] mRadii = new float[] { 0, 0, 0, 0, 0, 0, 0, 0 };
-        private float[] mBorderRadii = new float[] { 0, 0, 0, 0, 0, 0, 0, 0 };
+        private float[] mRadii = new float[] {0, 0, 0, 0, 0, 0, 0, 0};
+        private float[] mBorderRadii = new float[] {0, 0, 0, 0, 0, 0, 0, 0};
 
         private boolean mOval = false;
 
@@ -366,7 +373,7 @@ public class SelectableRoundedImageView extends ImageView {
                 if (bm != null) {
                     return new SelectableRoundedCornerDrawable(bm, r);
                 } else {
-//                    Log.w(TAG, "Failed to create bitmap from drawable!");
+                    //                    Log.w(TAG, "Failed to create bitmap from drawable!");
                 }
             }
             return drawable;
@@ -430,8 +437,10 @@ public class SelectableRoundedImageView extends ImageView {
                 m.setRectToRect(mBitmapRect, new RectF(clipBounds), Matrix.ScaleToFit.FILL);
                 mBitmapShader.setLocalMatrix(m);
                 mBounds.set(clipBounds);
-            } else if (ScaleType.FIT_START == mScaleType || ScaleType.FIT_END == mScaleType
-                       || ScaleType.FIT_CENTER == mScaleType || ScaleType.CENTER_INSIDE == mScaleType) {
+            } else if (ScaleType.FIT_START == mScaleType
+                    || ScaleType.FIT_END == mScaleType
+                    || ScaleType.FIT_CENTER == mScaleType
+                    || ScaleType.CENTER_INSIDE == mScaleType) {
                 applyScaleToRadii(canvasMatrix);
                 mBounds.set(mBitmapRect);
             } else if (ScaleType.MATRIX == mScaleType) {
@@ -458,21 +467,24 @@ public class SelectableRoundedImageView extends ImageView {
             final float translateX = values[2];
             final float translateY = values[5];
 
-            final float newScaleX = mBounds.width()
-                                    / (mBounds.width() + mBorderWidth + mBorderWidth);
-            final float newScaleY = mBounds.height()
-                                    / (mBounds.height() + mBorderWidth + mBorderWidth);
+            final float newScaleX =
+                    mBounds.width() / (mBounds.width() + mBorderWidth + mBorderWidth);
+            final float newScaleY =
+                    mBounds.height() / (mBounds.height() + mBorderWidth + mBorderWidth);
 
             canvas.scale(newScaleX, newScaleY);
-            if (ScaleType.FIT_START == mScaleType || ScaleType.FIT_END == mScaleType
-                    || ScaleType.FIT_XY == mScaleType || ScaleType.FIT_CENTER == mScaleType
-                    || ScaleType.CENTER_INSIDE == mScaleType || ScaleType.MATRIX == mScaleType) {
+            if (ScaleType.FIT_START == mScaleType
+                    || ScaleType.FIT_END == mScaleType
+                    || ScaleType.FIT_XY == mScaleType
+                    || ScaleType.FIT_CENTER == mScaleType
+                    || ScaleType.CENTER_INSIDE == mScaleType
+                    || ScaleType.MATRIX == mScaleType) {
                 canvas.translate(mBorderWidth, mBorderWidth);
             } else if (ScaleType.CENTER == mScaleType || ScaleType.CENTER_CROP == mScaleType) {
                 // First, make translate values to 0
                 canvas.translate(
-                    -translateX / (newScaleX * scaleFactorX),
-                    -translateY / (newScaleY * scaleFactorY));
+                        -translateX / (newScaleX * scaleFactorX),
+                        -translateY / (newScaleY * scaleFactorY));
                 // Then, set the final translate values.
                 canvas.translate(-(mBounds.left - mBorderWidth), -(mBounds.top - mBorderWidth));
             }
@@ -490,7 +502,7 @@ public class SelectableRoundedImageView extends ImageView {
             mBorderPaint.setStrokeWidth(mBorderWidth);
 
             mBorderBounds.set(mBounds);
-            mBorderBounds.inset(- mBorderWidth / 2, - mBorderWidth / 2);
+            mBorderBounds.inset(-mBorderWidth / 2, -mBorderWidth / 2);
         }
 
         private void setBorderRadii() {
@@ -543,8 +555,7 @@ public class SelectableRoundedImageView extends ImageView {
         }
 
         public void setCornerRadii(float[] radii) {
-            if (radii == null)
-                return;
+            if (radii == null) return;
 
             if (radii.length != 8) {
                 throw new ArrayIndexOutOfBoundsException("radii[] needs 8 values");
@@ -557,8 +568,9 @@ public class SelectableRoundedImageView extends ImageView {
 
         @Override
         public int getOpacity() {
-            return (mBitmap == null || mBitmap.hasAlpha() || mBitmapPaint.getAlpha() < 255) ? PixelFormat.TRANSLUCENT
-                   : PixelFormat.OPAQUE;
+            return (mBitmap == null || mBitmap.hasAlpha() || mBitmapPaint.getAlpha() < 255)
+                    ? PixelFormat.TRANSLUCENT
+                    : PixelFormat.OPAQUE;
         }
 
         @Override
@@ -619,10 +631,7 @@ public class SelectableRoundedImageView extends ImageView {
         /**
          * Controls border color of this ImageView.
          *
-         * @param colors
-         *            The desired border color. If it's null, no border will be
-         *            drawn.
-         *
+         * @param colors The desired border color. If it's null, no border will be drawn.
          */
         public void setBorderColor(ColorStateList colors) {
             if (colors == null) {
@@ -631,8 +640,8 @@ public class SelectableRoundedImageView extends ImageView {
                 mBorderPaint.setColor(Color.TRANSPARENT);
             } else {
                 mBorderColor = colors;
-                mBorderPaint.setColor(mBorderColor.getColorForState(getState(),
-                                      DEFAULT_BORDER_COLOR));
+                mBorderPaint.setColor(
+                        mBorderColor.getColorForState(getState(), DEFAULT_BORDER_COLOR));
             }
         }
 
@@ -655,5 +664,4 @@ public class SelectableRoundedImageView extends ImageView {
             mScaleType = scaleType;
         }
     }
-
 }

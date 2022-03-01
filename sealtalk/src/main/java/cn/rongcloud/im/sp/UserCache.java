@@ -3,16 +3,11 @@ package cn.rongcloud.im.sp;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
-
+import cn.rongcloud.im.model.UserCacheInfo;
 import com.google.gson.Gson;
 
-import cn.rongcloud.im.model.UserCacheInfo;
-
 /**
- * 缓存登录后的用户信息。 即最有一个登录用户。
- * 当用户退出时可不清理。 可用于登录时自动填充用户账号和密码。
- * 在应用登录运行过程中， 可通过缓存获取当前运行的用户信息。
- * 此类不支持多进程使用
+ * 缓存登录后的用户信息。 即最有一个登录用户。 当用户退出时可不清理。 可用于登录时自动填充用户账号和密码。 在应用登录运行过程中， 可通过缓存获取当前运行的用户信息。 此类不支持多进程使用
  */
 public class UserCache {
     private static final String SP_NAME = "User_cache";
@@ -25,14 +20,17 @@ public class UserCache {
 
     /**
      * 缓存去登录之后 User 的信息。
+     *
      * @param userCacehInfo
      */
     public void saveUserCache(UserCacheInfo userCacehInfo) {
         if (userCacehInfo == null || TextUtils.isEmpty(userCacehInfo.getId())) {
-            return ;
+            return;
         }
         UserCacheInfo tmpCacheInfo = getUserCache();
-        if (tmpCacheInfo != null && !TextUtils.isEmpty(tmpCacheInfo.getId()) && !userCacehInfo.getId().equals(tmpCacheInfo.getId())) {
+        if (tmpCacheInfo != null
+                && !TextUtils.isEmpty(tmpCacheInfo.getId())
+                && !userCacehInfo.getId().equals(tmpCacheInfo.getId())) {
             // 另一个不同的用户
             Gson gson = new Gson();
             String userJson = gson.toJson(userCacehInfo);
@@ -51,17 +49,16 @@ public class UserCache {
         sp.edit().putString(SP_CACHE_USER, userJson).commit();
     }
 
-
-
     /**
      * 获取用户缓存信息
+     *
      * @return
      */
     public UserCacheInfo getUserCache() {
         try {
             String userJson = sp.getString(SP_CACHE_USER, "");
             if (TextUtils.isEmpty(userJson)) {
-                return  null;
+                return null;
             }
 
             Gson gson = new Gson();
@@ -75,6 +72,7 @@ public class UserCache {
 
     /**
      * 获取当前的用户ID
+     *
      * @return
      */
     public String getCurrentUserId() {
@@ -85,13 +83,11 @@ public class UserCache {
         return userCache.getId();
     }
 
-    /**
-     * 退出登录所要清理的缓存
-     */
+    /** 退出登录所要清理的缓存 */
     public void logoutClear() {
         UserCacheInfo userCache = getUserCache();
         if (userCache == null) {
-            return ;
+            return;
         }
         userCache.setLoginToken("");
         userCache.setId("");

@@ -2,10 +2,8 @@ package cn.rongcloud.im.db.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
-import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -15,14 +13,10 @@ public class GroupNoticeInfo implements Parcelable {
     @NonNull
     @ColumnInfo(name = "id")
     private String id;
-    /**
-     * 0: 忽略、1: 同意、2: 等待
-     */
+    /** 0: 忽略、1: 同意、2: 等待 */
     @ColumnInfo(name = "status")
     private int status;
-    /**
-     * 1: 待被邀请者处理、2: 待管理员处理
-     */
+    /** 1: 待被邀请者处理、2: 待管理员处理 */
     @ColumnInfo(name = "type")
     private int type;
 
@@ -138,7 +132,6 @@ public class GroupNoticeInfo implements Parcelable {
         this.groupNickName = groupNickName;
     }
 
-
     @Override
     public int describeContents() {
         return 0;
@@ -159,8 +152,7 @@ public class GroupNoticeInfo implements Parcelable {
         dest.writeString(this.groupNickName);
     }
 
-    public GroupNoticeInfo() {
-    }
+    public GroupNoticeInfo() {}
 
     protected GroupNoticeInfo(Parcel in) {
         this.id = in.readString();
@@ -176,32 +168,53 @@ public class GroupNoticeInfo implements Parcelable {
         this.groupNickName = in.readString();
     }
 
-    public static final Creator<GroupNoticeInfo> CREATOR = new Creator<GroupNoticeInfo>() {
-        @Override
-        public GroupNoticeInfo createFromParcel(Parcel source) {
-            return new GroupNoticeInfo(source);
-        }
+    public static final Creator<GroupNoticeInfo> CREATOR =
+            new Creator<GroupNoticeInfo>() {
+                @Override
+                public GroupNoticeInfo createFromParcel(Parcel source) {
+                    return new GroupNoticeInfo(source);
+                }
 
-        @Override
-        public GroupNoticeInfo[] newArray(int size) {
-            return new GroupNoticeInfo[size];
-        }
-    };
+                @Override
+                public GroupNoticeInfo[] newArray(int size) {
+                    return new GroupNoticeInfo[size];
+                }
+            };
 
     @Override
     public String toString() {
-        return "GroupNoticeInfo{" +
-                "id='" + id + '\'' +
-                ", status=" + status +
-                ", type=" + type +
-                ", createdAt='" + createdAt + '\'' +
-                ", createdTime='" + createdTime + '\'' +
-                ", requesterId='" + requesterId + '\'' +
-                ", requesterNickName='" + requesterNickName + '\'' +
-                ", receiverId='" + receiverId + '\'' +
-                ", receiverNickName='" + receiverNickName + '\'' +
-                ", groupId='" + groupId + '\'' +
-                ", groupNickName='" + groupNickName + '\'' +
-                '}';
+        return "GroupNoticeInfo{"
+                + "id='"
+                + id
+                + '\''
+                + ", status="
+                + status
+                + ", type="
+                + type
+                + ", createdAt='"
+                + createdAt
+                + '\''
+                + ", createdTime='"
+                + createdTime
+                + '\''
+                + ", requesterId='"
+                + requesterId
+                + '\''
+                + ", requesterNickName='"
+                + requesterNickName
+                + '\''
+                + ", receiverId='"
+                + receiverId
+                + '\''
+                + ", receiverNickName='"
+                + receiverNickName
+                + '\''
+                + ", groupId='"
+                + groupId
+                + '\''
+                + ", groupNickName='"
+                + groupNickName
+                + '\''
+                + '}';
     }
 }

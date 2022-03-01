@@ -1,9 +1,7 @@
 package cn.rongcloud.im.utils.qrcode.barcodescanner.camera;
 
 import android.graphics.Bitmap;
-
 import com.google.zxing.LuminanceSource;
-
 
 public class BitmapLuminanceSource extends LuminanceSource {
 

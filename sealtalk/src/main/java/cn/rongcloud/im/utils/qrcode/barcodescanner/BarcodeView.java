@@ -4,24 +4,21 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
-
+import cn.rongcloud.im.R;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.ResultPoint;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.rongcloud.im.R;
-
 /**
  * A view for scanning barcodes.
  *
- * Two methods MUST be called to manage the state:
- * 1. resume() - initialize the camera and start the preview. Call from the Activity's onResume().
- * 2. pause() - stop the preview and release any resources. Call from the Activity's onPause().
+ * <p>Two methods MUST be called to manage the state: 1. resume() - initialize the camera and start
+ * the preview. Call from the Activity's onResume(). 2. pause() - stop the preview and release any
+ * resources. Call from the Activity's onPause().
  *
- * Start decoding with decodeSingle() or decodeContinuous(). Stop decoding with stopDecoding().
+ * <p>Start decoding with decodeSingle() or decodeContinuous(). Stop decoding with stopDecoding().
  *
  * @see CameraPreview for more details on the preview lifecycle.
  */
@@ -39,38 +36,37 @@ public class BarcodeView extends CameraPreview {
 
     private DecoderFactory decoderFactory;
 
-
     private Handler resultHandler;
 
-    private final Handler.Callback resultCallback = new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message message) {
-            if (message.what == R.id.zxing_decode_succeeded) {
-                BarcodeResult result = (BarcodeResult) message.obj;
+    private final Handler.Callback resultCallback =
+            new Handler.Callback() {
+                @Override
+                public boolean handleMessage(Message message) {
+                    if (message.what == R.id.zxing_decode_succeeded) {
+                        BarcodeResult result = (BarcodeResult) message.obj;
 
-                if (result != null) {
-                    if (callback != null && decodeMode != DecodeMode.NONE) {
-                        callback.barcodeResult(result);
-                        if (decodeMode == DecodeMode.SINGLE) {
-                            stopDecoding();
+                        if (result != null) {
+                            if (callback != null && decodeMode != DecodeMode.NONE) {
+                                callback.barcodeResult(result);
+                                if (decodeMode == DecodeMode.SINGLE) {
+                                    stopDecoding();
+                                }
+                            }
                         }
+                        return true;
+                    } else if (message.what == R.id.zxing_decode_failed) {
+                        // Failed. Next preview is automatically tried.
+                        return true;
+                    } else if (message.what == R.id.zxing_possible_result_points) {
+                        List<ResultPoint> resultPoints = (List<ResultPoint>) message.obj;
+                        if (callback != null && decodeMode != DecodeMode.NONE) {
+                            callback.possibleResultPoints(resultPoints);
+                        }
+                        return true;
                     }
+                    return false;
                 }
-                return true;
-            } else if (message.what == R.id.zxing_decode_failed) {
-                // Failed. Next preview is automatically tried.
-                return true;
-            } else if (message.what == R.id.zxing_possible_result_points) {
-                List<ResultPoint> resultPoints = (List<ResultPoint>) message.obj;
-                if (callback != null && decodeMode != DecodeMode.NONE) {
-                    callback.possibleResultPoints(resultPoints);
-                }
-                return true;
-            }
-            return false;
-        }
-    };
-
+            };
 
     public BarcodeView(Context context) {
         super(context);
@@ -95,7 +91,7 @@ public class BarcodeView extends CameraPreview {
     /**
      * Set the DecoderFactory to use. Use this to specify the formats to decode.
      *
-     * Call this from UI thread only.
+     * <p>Call this from UI thread only.
      *
      * @param decoderFactory the DecoderFactory creating Decoders.
      * @see DefaultDecoderFactory
@@ -121,10 +117,7 @@ public class BarcodeView extends CameraPreview {
         return decoder;
     }
 
-    /**
-     *
-     * @return the current DecoderFactory in use.
-     */
+    /** @return the current DecoderFactory in use. */
     public DecoderFactory getDecoderFactory() {
         return decoderFactory;
     }
@@ -132,7 +125,7 @@ public class BarcodeView extends CameraPreview {
     /**
      * Decode a single barcode, then stop decoding.
      *
-     * The callback will only be called on the UI thread.
+     * <p>The callback will only be called on the UI thread.
      *
      * @param callback called with the barcode result, as well as possible ResultPoints
      */
@@ -145,7 +138,7 @@ public class BarcodeView extends CameraPreview {
     /**
      * Continuously decode barcodes. The same barcode may be returned multiple times per second.
      *
-     * The callback will only be called on the UI thread.
+     * <p>The callback will only be called on the UI thread.
      *
      * @param callback called with the barcode result, as well as possible ResultPoints
      */
@@ -155,9 +148,7 @@ public class BarcodeView extends CameraPreview {
         startDecoderThread();
     }
 
-    /**
-     * Stop decoding, but do not stop the preview.
-     */
+    /** Stop decoding, but do not stop the preview. */
     public void stopDecoding() {
         this.decodeMode = DecodeMode.NONE;
         this.callback = null;
@@ -197,7 +188,7 @@ public class BarcodeView extends CameraPreview {
     /**
      * Stops the live preview and decoding.
      *
-     * Call from the Activity's onPause() method.
+     * <p>Call from the Activity's onPause() method.
      */
     @Override
     public void pause() {

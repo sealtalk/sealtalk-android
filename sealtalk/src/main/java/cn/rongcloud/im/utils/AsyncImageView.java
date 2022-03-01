@@ -19,9 +19,8 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.appcompat.widget.AppCompatImageView;
-
+import cn.rongcloud.im.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -33,25 +32,21 @@ import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.process.BitmapProcessor;
-
+import io.rong.common.RLog;
+import io.rong.imkit.utils.RongUtils;
+import io.rong.imkit.widget.RCMessageFrameLayout;
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.net.URLEncoder;
 
-import cn.rongcloud.im.R;
-import io.rong.common.RLog;
-
-import io.rong.imkit.utils.RongUtils;
-import io.rong.imkit.widget.RCMessageFrameLayout;
-
 public class AsyncImageView extends AppCompatImageView {
 
-    private final static String TAG = "AsyncImageView";
+    private static final String TAG = "AsyncImageView";
 
     private boolean isCircle;
     private float minShortSideSize = 0;
     private int mCornerRadius = 0;
-    private final static int AVATAR_SIZE = 80;
+    private static final int AVATAR_SIZE = 80;
 
     private Drawable mDefaultDrawable;
     private WeakReference<Bitmap> mWeakBitmap;
@@ -97,8 +92,7 @@ public class AsyncImageView extends AppCompatImageView {
             if (bitmap == null || bitmap.isRecycled()) {
                 int width = getWidth();
                 int height = getHeight();
-                if (width <= 0 || height <= 0)
-                    return;
+                if (width <= 0 || height <= 0) return;
                 try {
                     bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
                 } catch (OutOfMemoryError e) {
@@ -137,8 +131,7 @@ public class AsyncImageView extends AppCompatImageView {
         int height = bp.getHeight();
         Bitmap bitmap = mShardWeakBitmap == null ? null : mShardWeakBitmap.get();
 
-        if (width <= 0 || height <= 0)
-            return;
+        if (width <= 0 || height <= 0) return;
         if (bitmap == null || bitmap.isRecycled()) {
             try {
                 bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
@@ -177,14 +170,12 @@ public class AsyncImageView extends AppCompatImageView {
     protected void onDetachedFromWindow() {
         if (mWeakBitmap != null) {
             Bitmap bitmap = mWeakBitmap.get();
-            if (bitmap != null && !bitmap.isRecycled())
-                bitmap.recycle();
+            if (bitmap != null && !bitmap.isRecycled()) bitmap.recycle();
             mWeakBitmap = null;
         }
         if (mShardWeakBitmap != null) {
             Bitmap bitmap = mShardWeakBitmap.get();
-            if (bitmap != null && !bitmap.isRecycled())
-                bitmap.recycle();
+            if (bitmap != null && !bitmap.isRecycled()) bitmap.recycle();
             mShardWeakBitmap = null;
         }
         super.onDetachedFromWindow();
@@ -194,22 +185,18 @@ public class AsyncImageView extends AppCompatImageView {
     public void invalidate() {
         if (mWeakBitmap != null) {
             Bitmap bitmap = mWeakBitmap.get();
-            if (bitmap != null && !bitmap.isRecycled())
-                bitmap.recycle();
+            if (bitmap != null && !bitmap.isRecycled()) bitmap.recycle();
             mWeakBitmap = null;
         }
         if (mShardWeakBitmap != null) {
             Bitmap bitmap = mShardWeakBitmap.get();
-            if (bitmap != null && !bitmap.isRecycled())
-                bitmap.recycle();
+            if (bitmap != null && !bitmap.isRecycled()) bitmap.recycle();
             mShardWeakBitmap = null;
         }
         super.invalidate();
     }
 
-    /**
-     * 设置默认图片
-     */
+    /** 设置默认图片 */
     public void setDefaultDrawable() {
         if (mDefaultDrawable != null) {
             DisplayImageOptions options = createDisplayImageOptions(0, false);
@@ -230,7 +217,8 @@ public class AsyncImageView extends AppCompatImageView {
             File file = new File(imageUri.getPath());
             if (!file.exists()) {
                 ImageViewAware imageViewAware = new ImageViewAware(this);
-                ImageLoader.getInstance().displayImage(imageUri.toString(), imageViewAware, options, null, null);
+                ImageLoader.getInstance()
+                        .displayImage(imageUri.toString(), imageViewAware, options, null, null);
             } else {
                 Bitmap bitmap = getBitmap(imageUri);
                 if (bitmap != null) {
@@ -261,66 +249,78 @@ public class AsyncImageView extends AppCompatImageView {
      *
      * @param imageUri 图片地址
      */
-    public void setLocationResource(Uri imageUri, int defRes, final int w, final int h, final ImageLoadingListener loadingListener) {
+    public void setLocationResource(
+            Uri imageUri,
+            int defRes,
+            final int w,
+            final int h,
+            final ImageLoadingListener loadingListener) {
         DisplayImageOptions.Builder builder = new DisplayImageOptions.Builder();
-        DisplayImageOptions options = builder.resetViewBeforeLoading(false)
-                .cacheInMemory(false)
-                .cacheOnDisk(true)
-                .bitmapConfig(Bitmap.Config.ARGB_8888)
-                .showImageOnLoading(defRes)
-                .preProcessor(new BitmapProcessor() {
-                    @Override
-                    public Bitmap process(Bitmap bitmap) {
-                        int widthOrg = bitmap.getWidth();
-                        int heightOrg = bitmap.getHeight();
-                        int xTopLeft = (widthOrg - w) / 2;
-                        int yTopLeft = (heightOrg - h) / 2;
+        DisplayImageOptions options =
+                builder.resetViewBeforeLoading(false)
+                        .cacheInMemory(false)
+                        .cacheOnDisk(true)
+                        .bitmapConfig(Bitmap.Config.ARGB_8888)
+                        .showImageOnLoading(defRes)
+                        .preProcessor(
+                                new BitmapProcessor() {
+                                    @Override
+                                    public Bitmap process(Bitmap bitmap) {
+                                        int widthOrg = bitmap.getWidth();
+                                        int heightOrg = bitmap.getHeight();
+                                        int xTopLeft = (widthOrg - w) / 2;
+                                        int yTopLeft = (heightOrg - h) / 2;
 
-                        if (xTopLeft <= 0 || yTopLeft <= 0) {
-                            return bitmap;
-                        }
+                                        if (xTopLeft <= 0 || yTopLeft <= 0) {
+                                            return bitmap;
+                                        }
 
-                        try {
-                            Bitmap result = Bitmap.createBitmap(bitmap, xTopLeft, yTopLeft, w, h);
-                            if (!bitmap.isRecycled())
-                                bitmap.recycle();
-                            return result;
-                        } catch (OutOfMemoryError e) {
-                            return null;
-                        }
-                    }
-                })
-                .build();
-        ImageLoader.getInstance().displayImage(imageUri == null ? null : imageUri.toString(), this, options, new ImageLoadingListener() {
-            @Override
-            public void onLoadingStarted(String imageUri, View view) {
+                                        try {
+                                            Bitmap result =
+                                                    Bitmap.createBitmap(
+                                                            bitmap, xTopLeft, yTopLeft, w, h);
+                                            if (!bitmap.isRecycled()) bitmap.recycle();
+                                            return result;
+                                        } catch (OutOfMemoryError e) {
+                                            return null;
+                                        }
+                                    }
+                                })
+                        .build();
+        ImageLoader.getInstance()
+                .displayImage(
+                        imageUri == null ? null : imageUri.toString(),
+                        this,
+                        options,
+                        new ImageLoadingListener() {
+                            @Override
+                            public void onLoadingStarted(String imageUri, View view) {}
 
-            }
+                            @Override
+                            public void onLoadingFailed(
+                                    String imageUri, View view, FailReason failReason) {
+                                loadingListener.onLoadingFailed(imageUri, view, failReason);
+                            }
 
-            @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                loadingListener.onLoadingFailed(imageUri, view, failReason);
-            }
+                            @Override
+                            public void onLoadingComplete(
+                                    String imageUri, View view, Bitmap loadedImage) {
+                                File file = ImageLoader.getInstance().getDiskCache().get(imageUri);
+                                if (file != null && file.exists())
+                                    loadingListener.onLoadingComplete(imageUri, view, loadedImage);
+                            }
 
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                File file = ImageLoader.getInstance().getDiskCache().get(imageUri);
-                if (file != null && file.exists())
-                    loadingListener.onLoadingComplete(imageUri, view, loadedImage);
-            }
-
-            @Override
-            public void onLoadingCancelled(String imageUri, View view) {
-                loadingListener.onLoadingCancelled(imageUri, view);
-            }
-        });
+                            @Override
+                            public void onLoadingCancelled(String imageUri, View view) {
+                                loadingListener.onLoadingCancelled(imageUri, view);
+                            }
+                        });
     }
 
     /**
-     * 根据资源地址设置并显示 view，次方法会原图显示。
-     * 如果加载网络图片，加载前先显示设置的默认图片（前提已设置），成功后替换成下载的网络图片
+     * 根据资源地址设置并显示 view，次方法会原图显示。 如果加载网络图片，加载前先显示设置的默认图片（前提已设置），成功后替换成下载的网络图片
      *
-     * @param imageUri     图片地址
+     * @param imageUri 图片地址
      * @param defaultResId 默认资源 id
      */
     public void setResource(String imageUri, int defaultResId) {
@@ -335,7 +335,10 @@ public class AsyncImageView extends AppCompatImageView {
     private Bitmap drawableToBitmap(Drawable drawable) {
         int width = drawable.getIntrinsicWidth();
         int height = drawable.getIntrinsicHeight();
-        Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565;
+        Bitmap.Config config =
+                drawable.getOpacity() != PixelFormat.OPAQUE
+                        ? Bitmap.Config.ARGB_8888
+                        : Bitmap.Config.RGB_565;
         Bitmap bitmap = Bitmap.createBitmap(width, height, config);
         Canvas canvas = new Canvas(bitmap);
         drawable.setBounds(0, 0, width, height);
@@ -344,25 +347,25 @@ public class AsyncImageView extends AppCompatImageView {
     }
 
     /**
-     * 设置头像，此方法会缓存头像，便于快速加载。
-     * 此方法会对图片进行压缩，防止图片过大，卡顿，OOM 问题。
+     * 设置头像，此方法会缓存头像，便于快速加载。 此方法会对图片进行压缩，防止图片过大，卡顿，OOM 问题。
      * 如果加载网络图片，加载前先显示设置的默认图片（前提已设置），成功后替换成下载的网络图片
      *
-     * @param imageUri     头像地址
+     * @param imageUri 头像地址
      * @param defaultResId 默认头像
      */
     public void setAvatar(String imageUri, int defaultResId) {
         ImageViewAware imageViewAware = new ImageViewAware(this);
         ImageSize imageSize = new ImageSize(AVATAR_SIZE, AVATAR_SIZE);
         DisplayImageOptions options = createDisplayImageOptions(defaultResId, true);
-        ImageLoader.getInstance().displayImage(imageUri, imageViewAware, options, imageSize, null, null);
+        ImageLoader.getInstance()
+                .displayImage(imageUri, imageViewAware, options, imageSize, null, null);
     }
 
     /**
      * 根据name自动生成头像, 并设置
      *
-     * @param uid          用户唯一表示
-     * @param name         用户名
+     * @param uid 用户唯一表示
+     * @param name 用户名
      * @param defaultResId 默认头像
      */
     public void setAvatar(String uid, String name, int defaultResId) {
@@ -374,15 +377,16 @@ public class AsyncImageView extends AppCompatImageView {
         if (!TextUtils.isEmpty(name)) {
             key = URLEncoder.encode(name);
         }
-        ImageLoader.getInstance().displayImage("avatar://" + uid + key, imageViewAware, options, imageSize, null, null);
+        ImageLoader.getInstance()
+                .displayImage(
+                        "avatar://" + uid + key, imageViewAware, options, imageSize, null, null);
     }
 
     /**
-     * 设置头像，此方法会缓存头像，便于快速加载。
-     * 此方法会对图片进行压缩，防止图片过大，卡顿，OOM 问题。
+     * 设置头像，此方法会缓存头像，便于快速加载。 此方法会对图片进行压缩，防止图片过大，卡顿，OOM 问题。
      * 如果加载网络图片，加载前先显示设置的默认图片（前提已设置），成功后替换成下载的网络图片
-     * <p/>
-     * 如果布局文件中未添加默认头像，在加载过程，无任何显示，反之会先显示默认头像
+     *
+     * <p>如果布局文件中未添加默认头像，在加载过程，无任何显示，反之会先显示默认头像
      *
      * @param imageUri 头像地址
      */
@@ -391,7 +395,9 @@ public class AsyncImageView extends AppCompatImageView {
             ImageViewAware imageViewAware = new ImageViewAware(this);
             ImageSize imageSize = new ImageSize(AVATAR_SIZE, AVATAR_SIZE);
             DisplayImageOptions options = createDisplayImageOptions(0, true);
-            ImageLoader.getInstance().displayImage(imageUri.toString(), imageViewAware, options, imageSize, null, null);
+            ImageLoader.getInstance()
+                    .displayImage(
+                            imageUri.toString(), imageViewAware, options, imageSize, null, null);
         }
     }
 
@@ -399,7 +405,6 @@ public class AsyncImageView extends AppCompatImageView {
         setLayoutParam(bitmap);
         setImageBitmap(bitmap);
     }
-
 
     private Bitmap getBitmap(Uri uri) {
         Bitmap bitmap = null;
@@ -420,7 +425,8 @@ public class AsyncImageView extends AppCompatImageView {
         return createDisplayImageOptions(defaultResId, cacheInMemory, null);
     }
 
-    private DisplayImageOptions createDisplayImageOptions(int defaultResId, boolean cacheInMemory, Object extraForDownloader) {
+    private DisplayImageOptions createDisplayImageOptions(
+            int defaultResId, boolean cacheInMemory, Object extraForDownloader) {
         DisplayImageOptions.Builder builder = new DisplayImageOptions.Builder();
         Drawable defaultDrawable = mDefaultDrawable;
         if (defaultResId > 0) {
@@ -501,12 +507,10 @@ public class AsyncImageView extends AppCompatImageView {
         }
     }
 
-
     public void setLayoutParam(int width, int height) {
         ViewGroup.LayoutParams params = getLayoutParams();
         params.height = height;
         params.width = width;
         setLayoutParams(params);
     }
-
 }

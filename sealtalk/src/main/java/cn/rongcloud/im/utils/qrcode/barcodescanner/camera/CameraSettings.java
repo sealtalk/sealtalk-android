@@ -2,9 +2,7 @@ package cn.rongcloud.im.utils.qrcode.barcodescanner.camera;
 
 import cn.rongcloud.im.utils.qrcode.client.camera.open.OpenCameraInterface;
 
-/**
- *
- */
+/** */
 public class CameraSettings {
     private int requestedCameraId = OpenCameraInterface.NO_REQUESTED_CAMERA;
     private boolean scanInverted = false;
@@ -28,10 +26,11 @@ public class CameraSettings {
     }
 
     /**
-     * Allows third party apps to specify the camera ID, rather than determine
-     * it automatically based on available cameras and their orientation.
+     * Allows third party apps to specify the camera ID, rather than determine it automatically
+     * based on available cameras and their orientation.
      *
-     * @param requestedCameraId camera ID of the camera to use. A negative value means "no preference".
+     * @param requestedCameraId camera ID of the camera to use. A negative value means "no
+     *     preference".
      */
     public void setRequestedCameraId(int requestedCameraId) {
         this.requestedCameraId = requestedCameraId;
@@ -40,7 +39,7 @@ public class CameraSettings {
     /**
      * Default to false.
      *
-     * Inverted means dark & light colors are inverted.
+     * <p>Inverted means dark & light colors are inverted.
      *
      * @return true if scan is inverted
      */
@@ -81,7 +80,7 @@ public class CameraSettings {
     /**
      * Default to false.
      *
-     * If enabled, metering is performed to determine focus area.
+     * <p>If enabled, metering is performed to determine focus area.
      *
      * @return true if metering is enabled
      */

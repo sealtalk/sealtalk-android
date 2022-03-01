@@ -13,12 +13,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.BaseActivity;
 import io.rong.common.RLog;
@@ -27,11 +21,14 @@ import io.rong.imlib.ChannelClient;
 import io.rong.imlib.IRongCoreCallback;
 import io.rong.imlib.IRongCoreEnum;
 import io.rong.imlib.IRongCoreListener;
-import io.rong.imlib.RongCoreClient;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.GroupMessageDeliverUser;
 import io.rong.imlib.model.Message;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @SuppressLint("SimpleDateFormat")
 public class MsgDeliveryTestActivity extends BaseActivity implements View.OnClickListener {
@@ -55,92 +52,155 @@ public class MsgDeliveryTestActivity extends BaseActivity implements View.OnClic
         initView();
     }
 
-
     private void intData() {
         Intent intent = getIntent();
         if (intent == null) return;
 
         userId = intent.getStringExtra("uerid");
-        conversationType = Conversation.ConversationType.setValue(intent.getIntExtra("conversationType", 1));
+        conversationType =
+                Conversation.ConversationType.setValue(intent.getIntExtra("conversationType", 1));
         RLog.i(TAG, "userId = " + userId);
         RLog.i(TAG, "conversationType = " + conversationType);
         lvContent = findViewById(R.id.lv_content);
         mAdapter = new MsgDeliveryTestActivity.MyAdapter();
         lvContent.setAdapter(mAdapter);
 
-        lvContent.setOnItemClickListener((parent, view, position, id) -> {
-            String uid = messageArrayList.get(position).getUId();
-            String targetId = messageArrayList.get(position).getTargetId();
-            RLog.i(TAG,"uid = " + uid);
-            RLog.i(TAG,"targetId = " + targetId);
-            if (Conversation.ConversationType.PRIVATE.equals(conversationType)) {
-                getPrivateDeliveryTime(uid);
-            } else if (Conversation.ConversationType.GROUP.equals(conversationType)) {
-                getGroupDeliveryTime(uid, targetId);
-            }
-
-        });
-
+        lvContent.setOnItemClickListener(
+                (parent, view, position, id) -> {
+                    String uid = messageArrayList.get(position).getUId();
+                    String targetId = messageArrayList.get(position).getTargetId();
+                    RLog.i(TAG, "uid = " + uid);
+                    RLog.i(TAG, "targetId = " + targetId);
+                    if (Conversation.ConversationType.PRIVATE.equals(conversationType)) {
+                        getPrivateDeliveryTime(uid);
+                    } else if (Conversation.ConversationType.GROUP.equals(conversationType)) {
+                        getGroupDeliveryTime(uid, targetId);
+                    }
+                });
     }
 
     private void getGroupDeliveryTime(String uid, String targetId) {
-        ChannelClient.getInstance().getGroupMessageDeliverList(uid, targetId, "", new IRongCoreListener.IGetGroupMessageDeliverListCallback() {
-            @Override
-            public void onSuccess(int totalCount, List<GroupMessageDeliverUser> users) {
-                if(users == null || users.isEmpty()) {
-                    return;
-                }
-                StringBuilder content = new StringBuilder();
-                for(GroupMessageDeliverUser groupMessageDeliverUser : users) {
-                    content.append("当前 userId : ").append(groupMessageDeliverUser.getUserId())
-                            .append("送达时间 : ").append(formatTime(groupMessageDeliverUser.getDeliverTime())).append(";");
-                }
-                String alertStr = "当前群聊消息的人数为: " + totalCount + ", 送达信息 ： " + content.toString();
-                AlertDialog.Builder builder = new AlertDialog.Builder(MsgDeliveryTestActivity.this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
-                        .setMessage(alertStr)
-                        .setPositiveButton(getString(io.rong.imkit.R.string.rc_dialog_ok), (dialog, which) -> dialog.dismiss()).setCancelable(false);
+        ChannelClient.getInstance()
+                .getGroupMessageDeliverList(
+                        uid,
+                        targetId,
+                        "",
+                        new IRongCoreListener.IGetGroupMessageDeliverListCallback() {
+                            @Override
+                            public void onSuccess(
+                                    int totalCount, List<GroupMessageDeliverUser> users) {
+                                if (users == null || users.isEmpty()) {
+                                    return;
+                                }
+                                StringBuilder content = new StringBuilder();
+                                for (GroupMessageDeliverUser groupMessageDeliverUser : users) {
+                                    content.append("当前 userId : ")
+                                            .append(groupMessageDeliverUser.getUserId())
+                                            .append("送达时间 : ")
+                                            .append(
+                                                    formatTime(
+                                                            groupMessageDeliverUser
+                                                                    .getDeliverTime()))
+                                            .append(";");
+                                }
+                                String alertStr =
+                                        "当前群聊消息的人数为: "
+                                                + totalCount
+                                                + ", 送达信息 ： "
+                                                + content.toString();
+                                AlertDialog.Builder builder =
+                                        new AlertDialog.Builder(
+                                                        MsgDeliveryTestActivity.this,
+                                                        AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
+                                                .setMessage(alertStr)
+                                                .setPositiveButton(
+                                                        getString(
+                                                                io.rong
+                                                                        .imkit
+                                                                        .R
+                                                                        .string
+                                                                        .rc_dialog_ok),
+                                                        (dialog, which) -> dialog.dismiss())
+                                                .setCancelable(false);
 
-                final AlertDialog dialog = builder.create();
-                dialog.show();
-            }
+                                final AlertDialog dialog = builder.create();
+                                dialog.show();
+                            }
 
-            @Override
-            public void onError(IRongCoreEnum.CoreErrorCode coreErrorCode) {
-                String alertStr = "获取消息送达时间失败， 错误码是 ： " + coreErrorCode;
-                AlertDialog.Builder builder = new AlertDialog.Builder(MsgDeliveryTestActivity.this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
-                        .setMessage(alertStr)
-                        .setPositiveButton(getString(io.rong.imkit.R.string.rc_dialog_ok), (dialog, which) -> dialog.dismiss()).setCancelable(false);
+                            @Override
+                            public void onError(IRongCoreEnum.CoreErrorCode coreErrorCode) {
+                                String alertStr = "获取消息送达时间失败， 错误码是 ： " + coreErrorCode;
+                                AlertDialog.Builder builder =
+                                        new AlertDialog.Builder(
+                                                        MsgDeliveryTestActivity.this,
+                                                        AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
+                                                .setMessage(alertStr)
+                                                .setPositiveButton(
+                                                        getString(
+                                                                io.rong
+                                                                        .imkit
+                                                                        .R
+                                                                        .string
+                                                                        .rc_dialog_ok),
+                                                        (dialog, which) -> dialog.dismiss())
+                                                .setCancelable(false);
 
-                final AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        });
+                                final AlertDialog dialog = builder.create();
+                                dialog.show();
+                            }
+                        });
     }
 
     private void getPrivateDeliveryTime(String uid) {
-        ChannelClient.getInstance().getPrivateMessageDeliverTime(uid, " ", new IRongCoreCallback.ResultCallback<Long>() {
-            @Override
-            public void onSuccess(Long aLong) {
-                String alertStr = "当前消息的送达时间为: " + formatTime(aLong);
-                AlertDialog.Builder builder = new AlertDialog.Builder(MsgDeliveryTestActivity.this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
-                        .setMessage(alertStr)
-                        .setPositiveButton(getString(io.rong.imkit.R.string.rc_dialog_ok), (dialog, which) -> dialog.dismiss()).setCancelable(false);
+        ChannelClient.getInstance()
+                .getPrivateMessageDeliverTime(
+                        uid,
+                        " ",
+                        new IRongCoreCallback.ResultCallback<Long>() {
+                            @Override
+                            public void onSuccess(Long aLong) {
+                                String alertStr = "当前消息的送达时间为: " + formatTime(aLong);
+                                AlertDialog.Builder builder =
+                                        new AlertDialog.Builder(
+                                                        MsgDeliveryTestActivity.this,
+                                                        AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
+                                                .setMessage(alertStr)
+                                                .setPositiveButton(
+                                                        getString(
+                                                                io.rong
+                                                                        .imkit
+                                                                        .R
+                                                                        .string
+                                                                        .rc_dialog_ok),
+                                                        (dialog, which) -> dialog.dismiss())
+                                                .setCancelable(false);
 
-                final AlertDialog dialog = builder.create();
-                dialog.show();
-            }
+                                final AlertDialog dialog = builder.create();
+                                dialog.show();
+                            }
 
-            @Override
-            public void onError(IRongCoreEnum.CoreErrorCode e) {
-                String alertStr = "获取消息送达时间失败， 错误码是 ： " + e;
-                AlertDialog.Builder builder = new AlertDialog.Builder(MsgDeliveryTestActivity.this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
-                        .setMessage(alertStr)
-                        .setPositiveButton(getString(io.rong.imkit.R.string.rc_dialog_ok), (dialog, which) -> dialog.dismiss()).setCancelable(false);
+                            @Override
+                            public void onError(IRongCoreEnum.CoreErrorCode e) {
+                                String alertStr = "获取消息送达时间失败， 错误码是 ： " + e;
+                                AlertDialog.Builder builder =
+                                        new AlertDialog.Builder(
+                                                        MsgDeliveryTestActivity.this,
+                                                        AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
+                                                .setMessage(alertStr)
+                                                .setPositiveButton(
+                                                        getString(
+                                                                io.rong
+                                                                        .imkit
+                                                                        .R
+                                                                        .string
+                                                                        .rc_dialog_ok),
+                                                        (dialog, which) -> dialog.dismiss())
+                                                .setCancelable(false);
 
-                final AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        });
+                                final AlertDialog dialog = builder.create();
+                                dialog.show();
+                            }
+                        });
     }
 
     private void initView() {
@@ -156,32 +216,42 @@ public class MsgDeliveryTestActivity extends BaseActivity implements View.OnClic
     }
 
     private void getMessages() {
-        RongIM.getInstance().getHistoryMessages(conversationType, userId, -1, 20, new RongIMClient.ResultCallback<List<Message>>() {
-            @Override
-            public void onSuccess(List<Message> messages) {
-                for (Message message : messages) {
-                    addToList(getStringDate() + ", UID " + message.getUId() + ", 消息内容: " + message.getContent());
-                }
-                messageArrayList.addAll(messages);
-            }
+        RongIM.getInstance()
+                .getHistoryMessages(
+                        conversationType,
+                        userId,
+                        -1,
+                        20,
+                        new RongIMClient.ResultCallback<List<Message>>() {
+                            @Override
+                            public void onSuccess(List<Message> messages) {
+                                for (Message message : messages) {
+                                    addToList(
+                                            getStringDate()
+                                                    + ", UID "
+                                                    + message.getUId()
+                                                    + ", 消息内容: "
+                                                    + message.getContent());
+                                }
+                                messageArrayList.addAll(messages);
+                            }
 
-            @Override
-            public void onError(RongIMClient.ErrorCode e) {
-
-            }
-        });
+                            @Override
+                            public void onError(RongIMClient.ErrorCode e) {}
+                        });
     }
-
 
     private void addToList(String str) {
         contentList.add(str);
         handler.post(() -> mAdapter.notifyDataSetChanged());
-        handler.postDelayed(() -> {
-            if (lvContent != null && mAdapter != null) {
-                lvContent.setSelection(mAdapter.getCount() - 1);
-                Log.e("addToList", "**" + mAdapter.getCount() + "**" + contentList.size());
-            }
-        }, 300);
+        handler.postDelayed(
+                () -> {
+                    if (lvContent != null && mAdapter != null) {
+                        lvContent.setSelection(mAdapter.getCount() - 1);
+                        Log.e("addToList", "**" + mAdapter.getCount() + "**" + contentList.size());
+                    }
+                },
+                300);
     }
 
     public String getStringDate() {
@@ -216,7 +286,9 @@ public class MsgDeliveryTestActivity extends BaseActivity implements View.OnClic
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_msg_delivery_status, null);
+                convertView =
+                        LayoutInflater.from(parent.getContext())
+                                .inflate(R.layout.item_msg_delivery_status, null);
             }
             TextView tvCotent = convertView.findViewById(R.id.tv_content);
             tvCotent.setText(contentList.get(position));

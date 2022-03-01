@@ -4,9 +4,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.db.model.FriendDetailInfo;
 import cn.rongcloud.im.db.model.FriendShipInfo;
@@ -24,19 +22,20 @@ public class CheckableContactViewHolder extends CheckableBaseViewHolder<Checkabl
     private CheckableContactModel model;
     private ImageView checkBox;
 
-
-    public CheckableContactViewHolder(@NonNull View itemView, OnCheckContactClickListener listener) {
+    public CheckableContactViewHolder(
+            @NonNull View itemView, OnCheckContactClickListener listener) {
         super(itemView);
         checkableItemClickListener = listener;
         protraitImageView = itemView.findViewById(R.id.iv_portrait);
         nameTextView = itemView.findViewById(R.id.tv_contact_name);
         checkBox = itemView.findViewById(R.id.cb_select);
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkableItemClickListener.onContactContactClick(model);
-            }
-        });
+        itemView.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        checkableItemClickListener.onContactContactClick(model);
+                    }
+                });
     }
 
     @Override
@@ -70,5 +69,4 @@ public class CheckableContactViewHolder extends CheckableBaseViewHolder<Checkabl
         ImageLoaderUtils.displayUserPortraitImage(portraitUrl, protraitImageView);
         updateCheck(checkBox, contactModel.getCheckType());
     }
-
 }

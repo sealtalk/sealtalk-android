@@ -3,13 +3,8 @@ package cn.rongcloud.im.ui.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.adapter.models.SearchModel;
 import cn.rongcloud.im.ui.adapter.viewholders.BaseViewHolder;
@@ -25,6 +20,8 @@ import cn.rongcloud.im.ui.interfaces.OnContactItemClickListener;
 import cn.rongcloud.im.ui.interfaces.OnGroupItemClickListener;
 import cn.rongcloud.im.ui.interfaces.OnMessageRecordClickListener;
 import cn.rongcloud.im.ui.interfaces.OnShowMoreClickListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchAdapter extends RecyclerView.Adapter<BaseViewHolder<SearchModel>> {
     private List<SearchModel> data;
@@ -34,11 +31,12 @@ public class SearchAdapter extends RecyclerView.Adapter<BaseViewHolder<SearchMod
     private OnContactItemClickListener onContactItemClickListener;
     private OnMessageRecordClickListener onMessageRecordClickListener;
 
-    public SearchAdapter(OnChatItemClickListener chatItemClickListener,
-                         OnGroupItemClickListener onGroupItemClickListener,
-                         OnShowMoreClickListener onShowMoreClickListener,
-                         OnContactItemClickListener onContactItemClickListener,
-                         OnMessageRecordClickListener onMessageRecordClickListener) {
+    public SearchAdapter(
+            OnChatItemClickListener chatItemClickListener,
+            OnGroupItemClickListener onGroupItemClickListener,
+            OnShowMoreClickListener onShowMoreClickListener,
+            OnContactItemClickListener onContactItemClickListener,
+            OnMessageRecordClickListener onMessageRecordClickListener) {
         this.onChatItemClickListener = chatItemClickListener;
         this.onGroupItemClickListener = onGroupItemClickListener;
         this.onShowMoreClickListener = onShowMoreClickListener;
@@ -90,7 +88,6 @@ public class SearchAdapter extends RecyclerView.Adapter<BaseViewHolder<SearchMod
     public void onBindViewHolder(@NonNull BaseViewHolder<SearchModel> holder, int position) {
         holder.update(data.get(position));
     }
-
 
     @Override
     public int getItemViewType(int position) {

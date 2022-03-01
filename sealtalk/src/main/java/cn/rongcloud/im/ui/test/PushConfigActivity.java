@@ -2,11 +2,8 @@ package cn.rongcloud.im.ui.test;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
-
 import androidx.annotation.Nullable;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.ui.activity.TitleBaseActivity;
@@ -16,7 +13,6 @@ import io.rong.imlib.model.IOSConfig;
 import io.rong.imlib.model.MessagePushConfig;
 
 public class PushConfigActivity extends TitleBaseActivity implements View.OnClickListener {
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,81 +81,124 @@ public class PushConfigActivity extends TitleBaseActivity implements View.OnClic
         pushConfigDialog.getEtImageUrlMi().setText(imageUrlMI);
         pushConfigDialog.getEtChannelIdFcm().setText(fcmChannelId);
 
-        pushConfigDialog.getSureView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String id = pushConfigDialog.getEtId().getText().toString();
-                String title = pushConfigDialog.getEtTitle().getText().toString();
-                String content = pushConfigDialog.getEtContent().getText().toString();
-                String data = pushConfigDialog.getEtData().getText().toString();
-                String hw = pushConfigDialog.getEtHW().getText().toString();
-                String hwImportance = pushConfigDialog.getEtHWImportance().getText().toString();
-                String mi = pushConfigDialog.getEtMi().getText().toString();
-                String oppo = pushConfigDialog.getEtOppo().getText().toString();
-                String threadId = pushConfigDialog.getEtThreadId().getText().toString();
-                String apnsId = pushConfigDialog.getEtApnId().getText().toString();
-                String category = pushConfigDialog.getEdCategory().getText().toString();
-                String richMediaUri = pushConfigDialog.getEdRichMediaUri().getText().toString();
-                String templateId = pushConfigDialog.getEdTemplateId().getText().toString().trim();
-                String imageUrl = pushConfigDialog.getEdImageUrl().getText().toString().trim();
-                String fcm = pushConfigDialog.getEdFcm().getText().toString().trim();
-                String imageUrlHW = pushConfigDialog.getEtImageUrlHW().getText().toString();
-                String imageUrlMI = pushConfigDialog.getEtImageUrlMi().getText().toString();
-                String fcmChannelId = pushConfigDialog.getEtChannelIdFcm().getText().toString();
+        pushConfigDialog
+                .getSureView()
+                .setOnClickListener(
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String id = pushConfigDialog.getEtId().getText().toString();
+                                String title = pushConfigDialog.getEtTitle().getText().toString();
+                                String content =
+                                        pushConfigDialog.getEtContent().getText().toString();
+                                String data = pushConfigDialog.getEtData().getText().toString();
+                                String hw = pushConfigDialog.getEtHW().getText().toString();
+                                String hwImportance =
+                                        pushConfigDialog.getEtHWImportance().getText().toString();
+                                String mi = pushConfigDialog.getEtMi().getText().toString();
+                                String oppo = pushConfigDialog.getEtOppo().getText().toString();
+                                String threadId =
+                                        pushConfigDialog.getEtThreadId().getText().toString();
+                                String apnsId = pushConfigDialog.getEtApnId().getText().toString();
+                                String category =
+                                        pushConfigDialog.getEdCategory().getText().toString();
+                                String richMediaUri =
+                                        pushConfigDialog.getEdRichMediaUri().getText().toString();
+                                String templateId =
+                                        pushConfigDialog
+                                                .getEdTemplateId()
+                                                .getText()
+                                                .toString()
+                                                .trim();
+                                String imageUrl =
+                                        pushConfigDialog
+                                                .getEdImageUrl()
+                                                .getText()
+                                                .toString()
+                                                .trim();
+                                String fcm =
+                                        pushConfigDialog.getEdFcm().getText().toString().trim();
+                                String imageUrlHW =
+                                        pushConfigDialog.getEtImageUrlHW().getText().toString();
+                                String imageUrlMI =
+                                        pushConfigDialog.getEtImageUrlMi().getText().toString();
+                                String fcmChannelId =
+                                        pushConfigDialog.getEtChannelIdFcm().getText().toString();
 
-
-                boolean vivo = pushConfigDialog.getCbVivo().isChecked();
-                boolean disableTitle = pushConfigDialog.getCbDisableTitle().isChecked();
-                boolean forceDetail = pushConfigDialog.getCbForceDetail().isChecked();
-                SharedPreferences.Editor edit = getSharedPreferences("push_config", MODE_PRIVATE).edit();
-                edit.putString("id", id);
-                edit.putString("title", title);
-                edit.putString("content", content);
-                edit.putString("data", data);
-                edit.putString("hw", hw);
-                edit.putString("importance", hwImportance);
-                edit.putString("mi", mi);
-                edit.putString("oppo", oppo);
-                edit.putString("threadId", threadId);
-                edit.putString("apnsId", apnsId);
-                edit.putString("category", category);
-                edit.putString("richMediaUri", richMediaUri);
-                edit.putBoolean("vivo", vivo);
-                edit.putBoolean("disableTitle", disableTitle);
-                edit.putBoolean("forceDetail", forceDetail);
-                edit.putString("templateId", templateId);
-                edit.putString("fcm", fcm);
-                edit.putString("imageUrl", imageUrl);
-                edit.putString("imageUrlHW", imageUrlHW);
-                edit.putString("imageUrlMi", imageUrlMI);
-                edit.putString("fcmChannelId", fcmChannelId);
-                MessagePushConfig startCallMessagePushConfig =
-                        new MessagePushConfig.Builder().setPushTitle(title)
-                                .setPushContent(content)
-                                .setPushData(data)
-                                .setForceShowDetailContent(forceDetail)
-                                .setAndroidConfig(new AndroidConfig.Builder()
-                                        .setNotificationId(id)
-                                        .setChannelIdHW(hw)
-                                        .setImportanceHW(IMManager.getInstance().getImportance(hwImportance.trim()))
-                                        .setChannelIdMi(mi)
-                                        .setChannelIdOPPO(oppo)
-                                        .setFcmCollapseKey(fcm)
-                                        .setFcmImageUrl(imageUrl)
-                                        .setImageUrlHW(imageUrlHW)
-                                        .setImageUrlMi(imageUrlMI)
-                                        .setChannelIdFCM(fcmChannelId)
-                                        .setTypeVivo(vivo ? AndroidConfig.SYSTEM : AndroidConfig.OPERATE).build())
-                                .setTemplateId(templateId)
-                                .setIOSConfig(new IOSConfig(threadId, apnsId, category, richMediaUri))
-                                .build();
-                //SealTalk 发起和挂断的 pushConfig 内容一致，开发者根据实际需求配置
-                MessagePushConfig hangupCallMessagePushConfig = startCallMessagePushConfig;
-                RongCallClient.setPushConfig(startCallMessagePushConfig, hangupCallMessagePushConfig);
-                edit.commit();
-                pushConfigDialog.dismiss();
-            }
-        });
+                                boolean vivo = pushConfigDialog.getCbVivo().isChecked();
+                                boolean disableTitle =
+                                        pushConfigDialog.getCbDisableTitle().isChecked();
+                                boolean forceDetail =
+                                        pushConfigDialog.getCbForceDetail().isChecked();
+                                SharedPreferences.Editor edit =
+                                        getSharedPreferences("push_config", MODE_PRIVATE).edit();
+                                edit.putString("id", id);
+                                edit.putString("title", title);
+                                edit.putString("content", content);
+                                edit.putString("data", data);
+                                edit.putString("hw", hw);
+                                edit.putString("importance", hwImportance);
+                                edit.putString("mi", mi);
+                                edit.putString("oppo", oppo);
+                                edit.putString("threadId", threadId);
+                                edit.putString("apnsId", apnsId);
+                                edit.putString("category", category);
+                                edit.putString("richMediaUri", richMediaUri);
+                                edit.putBoolean("vivo", vivo);
+                                edit.putBoolean("disableTitle", disableTitle);
+                                edit.putBoolean("forceDetail", forceDetail);
+                                edit.putString("templateId", templateId);
+                                edit.putString("fcm", fcm);
+                                edit.putString("imageUrl", imageUrl);
+                                edit.putString("imageUrlHW", imageUrlHW);
+                                edit.putString("imageUrlMi", imageUrlMI);
+                                edit.putString("fcmChannelId", fcmChannelId);
+                                MessagePushConfig startCallMessagePushConfig =
+                                        new MessagePushConfig.Builder()
+                                                .setPushTitle(title)
+                                                .setPushContent(content)
+                                                .setPushData(data)
+                                                .setForceShowDetailContent(forceDetail)
+                                                .setAndroidConfig(
+                                                        new AndroidConfig.Builder()
+                                                                .setNotificationId(id)
+                                                                .setChannelIdHW(hw)
+                                                                .setImportanceHW(
+                                                                        IMManager.getInstance()
+                                                                                .getImportance(
+                                                                                        hwImportance
+                                                                                                .trim()))
+                                                                .setChannelIdMi(mi)
+                                                                .setChannelIdOPPO(oppo)
+                                                                .setFcmCollapseKey(fcm)
+                                                                .setFcmImageUrl(imageUrl)
+                                                                .setImageUrlHW(imageUrlHW)
+                                                                .setImageUrlMi(imageUrlMI)
+                                                                .setChannelIdFCM(fcmChannelId)
+                                                                .setTypeVivo(
+                                                                        vivo
+                                                                                ? AndroidConfig
+                                                                                        .SYSTEM
+                                                                                : AndroidConfig
+                                                                                        .OPERATE)
+                                                                .build())
+                                                .setTemplateId(templateId)
+                                                .setIOSConfig(
+                                                        new IOSConfig(
+                                                                threadId,
+                                                                apnsId,
+                                                                category,
+                                                                richMediaUri))
+                                                .build();
+                                // SealTalk 发起和挂断的 pushConfig 内容一致，开发者根据实际需求配置
+                                MessagePushConfig hangupCallMessagePushConfig =
+                                        startCallMessagePushConfig;
+                                RongCallClient.setPushConfig(
+                                        startCallMessagePushConfig, hangupCallMessagePushConfig);
+                                edit.commit();
+                                pushConfigDialog.dismiss();
+                            }
+                        });
         pushConfigDialog.show();
     }
 }

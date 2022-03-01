@@ -1,19 +1,14 @@
 package cn.rongcloud.im.ui.fragment;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
-
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.List;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.db.model.FriendShipInfo;
@@ -26,10 +21,9 @@ import cn.rongcloud.im.ui.interfaces.SearchableInterface;
 import cn.rongcloud.im.utils.CharacterParser;
 import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.viewmodel.ForwardSearchViewModel;
+import java.util.List;
 
-/**
- * 搜索。
- */
+/** 搜索。 */
 public class ForwardSearchFragment extends BaseFragment implements SearchableInterface {
     private static final String TAG = "ForwardSearchFragment";
     private ForwardSearchAdapter adapter;
@@ -56,38 +50,51 @@ public class ForwardSearchFragment extends BaseFragment implements SearchableInt
         recyclerView.setAdapter(adapter);
     }
 
-
     @Override
     protected void onInitViewModel() {
         viewModel = createViewModel();
-        viewModel.getSearchAll().observe(this, new Observer<List<SearchModel>>() {
-            @Override
-            public void onChanged(List<SearchModel> searchModels) {
-                SLog.i(TAG, "searchModels.size() = " + searchModels.size());
-                if (searchModels == null || searchModels.size() == 0 || (searchModels.size() == 1 && searchModels.get(0).getType() == R.layout.search_fragment_recycler_title_layout)) {
-                    emptyView.setVisibility(View.VISIBLE);
-                    String empty = String.format(getString(R.string.seal_search_empty), initSearch);
-                    int start = empty.indexOf(initSearch);
-                    emptyView.setText(CharacterParser.getSpannable(empty, start, start + initSearch.length()));
-                    recyclerView.setVisibility(View.GONE);
-                } else {
-                    emptyView.setVisibility(View.GONE);
-                    recyclerView.setVisibility(View.VISIBLE);
-                    if (adapter != null) {
-                        adapter.updateData(searchModels);
-                    }
-                }
-            }
-        });
+        viewModel
+                .getSearchAll()
+                .observe(
+                        this,
+                        new Observer<List<SearchModel>>() {
+                            @Override
+                            public void onChanged(List<SearchModel> searchModels) {
+                                SLog.i(TAG, "searchModels.size() = " + searchModels.size());
+                                if (searchModels == null
+                                        || searchModels.size() == 0
+                                        || (searchModels.size() == 1
+                                                && searchModels.get(0).getType()
+                                                        == R.layout
+                                                                .search_fragment_recycler_title_layout)) {
+                                    emptyView.setVisibility(View.VISIBLE);
+                                    String empty =
+                                            String.format(
+                                                    getString(R.string.seal_search_empty),
+                                                    initSearch);
+                                    int start = empty.indexOf(initSearch);
+                                    emptyView.setText(
+                                            CharacterParser.getSpannable(
+                                                    empty, start, start + initSearch.length()));
+                                    recyclerView.setVisibility(View.GONE);
+                                } else {
+                                    emptyView.setVisibility(View.GONE);
+                                    recyclerView.setVisibility(View.VISIBLE);
+                                    if (adapter != null) {
+                                        adapter.updateData(searchModels);
+                                    }
+                                }
+                            }
+                        });
 
         if (!TextUtils.isEmpty(initSearch)) {
             search(initSearch);
         }
     }
 
-
     /**
      * 创建 viewmodel
+     *
      * @return
      */
     public ForwardSearchViewModel createViewModel() {
@@ -96,7 +103,11 @@ public class ForwardSearchFragment extends BaseFragment implements SearchableInt
         if (bundle != null) {
             isSelect = getArguments().getBoolean(IntentExtra.IS_SELECT, false);
         }
-        return  ViewModelProviders.of(this, new ForwardSearchViewModel.Factory(isSelect, getActivity().getApplication())).get(ForwardSearchViewModel.class);
+        return ViewModelProviders.of(
+                        this,
+                        new ForwardSearchViewModel.Factory(
+                                isSelect, getActivity().getApplication()))
+                .get(ForwardSearchViewModel.class);
     }
 
     @Override
@@ -116,6 +127,7 @@ public class ForwardSearchFragment extends BaseFragment implements SearchableInt
 
     /**
      * 群组项被点击了
+     *
      * @param groupEntity
      */
     protected void onItemGroupClicked(GroupEntity groupEntity) {
@@ -126,6 +138,7 @@ public class ForwardSearchFragment extends BaseFragment implements SearchableInt
 
     /**
      * 好友项被点击了
+     *
      * @param friendShipInfo
      */
     protected void onItemFriendClicked(FriendShipInfo friendShipInfo) {
@@ -134,10 +147,9 @@ public class ForwardSearchFragment extends BaseFragment implements SearchableInt
         }
     }
 
-
-
     /**
      * 设置群组点击项
+     *
      * @param listener
      */
     public void setOnGroupItemClickListener(OnGroupItemClickListener listener) {
@@ -146,6 +158,7 @@ public class ForwardSearchFragment extends BaseFragment implements SearchableInt
 
     /**
      * 设置联系人（好友）点击项
+     *
      * @param listener
      */
     public void setOnContactItemClickListener(OnContactItemClickListener listener) {
@@ -154,6 +167,7 @@ public class ForwardSearchFragment extends BaseFragment implements SearchableInt
 
     /**
      * 设置已经选择的用户
+     *
      * @param selectGroupIds
      * @param selectFriendIds
      */
@@ -165,16 +179,19 @@ public class ForwardSearchFragment extends BaseFragment implements SearchableInt
     }
 
     private void createAdapter() {
-        adapter = new ForwardSearchAdapter(new OnGroupItemClickListener() {
-            @Override
-            public void onGroupClicked(GroupEntity groupEntity) {
-                onItemGroupClicked(groupEntity);
-            }
-        }, new OnContactItemClickListener() {
-            @Override
-            public void onItemContactClick(FriendShipInfo friendShipInfo) {
-                onItemFriendClicked(friendShipInfo);
-            }
-        });
+        adapter =
+                new ForwardSearchAdapter(
+                        new OnGroupItemClickListener() {
+                            @Override
+                            public void onGroupClicked(GroupEntity groupEntity) {
+                                onItemGroupClicked(groupEntity);
+                            }
+                        },
+                        new OnContactItemClickListener() {
+                            @Override
+                            public void onItemContactClick(FriendShipInfo friendShipInfo) {
+                                onItemFriendClicked(friendShipInfo);
+                            }
+                        });
     }
 }

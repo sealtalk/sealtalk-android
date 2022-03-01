@@ -4,40 +4,51 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
 import com.google.gson.annotations.SerializedName;
 
 @Entity(tableName = "user")
 public class UserInfo {
-    @PrimaryKey
-    @NonNull
-    private String id;
+    @PrimaryKey @NonNull private String id;
+
     @ColumnInfo(name = "portrait_uri")
     private String portraitUri;
+
     @ColumnInfo(name = "name")
-    @SerializedName(value = "name", alternate = {"nickname"})
+    @SerializedName(
+            value = "name",
+            alternate = {"nickname"})
     private String name;
+
     @ColumnInfo(name = "name_spelling")
     private String nameSpelling;
+
     @ColumnInfo(name = "name_spelling_initial")
     private String nameSpellingInitial;
+
     @ColumnInfo(name = "alias")
     private String alias;
+
     @ColumnInfo(name = "alias_spelling")
     private String aliasSpelling;
 
     @ColumnInfo(name = "alias_spelling_initial")
     private String aliasSpellingInitial;
+
     @ColumnInfo(name = "region")
     private String region;
+
     @ColumnInfo(name = "phone_number")
     private String phoneNumber;
+
     @ColumnInfo(name = "friend_status")
     private int friendStatus;
+
     @ColumnInfo(name = "order_spelling")
     private String orderSpelling;
+
     @ColumnInfo(name = "st_account")
     private String stAccount;
+
     @ColumnInfo(name = "gender")
     private String gender;
 
@@ -153,24 +164,50 @@ public class UserInfo {
         this.aliasSpellingInitial = aliasSpellingInitial;
     }
 
-
     @Override
     public String toString() {
-        return "UserInfo{" +
-                "id='" + id + '\'' +
-                ", portraitUri='" + portraitUri + '\'' +
-                ", name='" + name + '\'' +
-                ", nameSpelling='" + nameSpelling + '\'' +
-                ", nameSpellingInitial='" + nameSpellingInitial + '\'' +
-                ", alias='" + alias + '\'' +
-                ", aliasSpelling='" + aliasSpelling + '\'' +
-                ", aliasSpellingInitial='" + aliasSpellingInitial + '\'' +
-                ", region='" + region + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", friendStatus=" + friendStatus +
-                ", orderSpelling='" + orderSpelling + '\'' +
-                ", stAccount='" + stAccount + '\'' +
-                ", gender='" + gender + '\'' +
-                '}';
+        return "UserInfo{"
+                + "id='"
+                + id
+                + '\''
+                + ", portraitUri='"
+                + portraitUri
+                + '\''
+                + ", name='"
+                + name
+                + '\''
+                + ", nameSpelling='"
+                + nameSpelling
+                + '\''
+                + ", nameSpellingInitial='"
+                + nameSpellingInitial
+                + '\''
+                + ", alias='"
+                + alias
+                + '\''
+                + ", aliasSpelling='"
+                + aliasSpelling
+                + '\''
+                + ", aliasSpellingInitial='"
+                + aliasSpellingInitial
+                + '\''
+                + ", region='"
+                + region
+                + '\''
+                + ", phoneNumber='"
+                + phoneNumber
+                + '\''
+                + ", friendStatus="
+                + friendStatus
+                + ", orderSpelling='"
+                + orderSpelling
+                + '\''
+                + ", stAccount='"
+                + stAccount
+                + '\''
+                + ", gender='"
+                + gender
+                + '\''
+                + '}';
     }
 }

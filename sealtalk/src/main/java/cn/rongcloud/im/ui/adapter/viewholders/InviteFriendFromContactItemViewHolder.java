@@ -5,17 +5,14 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.model.SimplePhoneContactInfo;
 import cn.rongcloud.im.ui.adapter.models.ListItemModel;
 
-/**
- * 从通讯录邀请好友列表视图
- */
-public class InviteFriendFromContactItemViewHolder extends BaseItemViewHolder<ListItemModel<SimplePhoneContactInfo>> {
+/** 从通讯录邀请好友列表视图 */
+public class InviteFriendFromContactItemViewHolder
+        extends BaseItemViewHolder<ListItemModel<SimplePhoneContactInfo>> {
     private Context context;
 
     private ListItemModel<SimplePhoneContactInfo> model;
@@ -39,9 +36,7 @@ public class InviteFriendFromContactItemViewHolder extends BaseItemViewHolder<Li
     }
 
     @Override
-    public void setOnLongClickItemListener(View.OnLongClickListener listener) {
-
-    }
+    public void setOnLongClickItemListener(View.OnLongClickListener listener) {}
 
     @Override
     public void update(ListItemModel<SimplePhoneContactInfo> phoneContactInfoListItemModel) {
@@ -75,23 +70,21 @@ public class InviteFriendFromContactItemViewHolder extends BaseItemViewHolder<Li
         checkBox.setOnCheckedChangeListener(checkListener);
     }
 
-    /**
-     * 选择框选择监听
-     */
-    private CompoundButton.OnCheckedChangeListener checkListener = new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if (model != null) {
-                if (isChecked) {
-                    model.setCheckStatus(ListItemModel.CheckStatus.CHECKED);
-                } else {
-                    model.setCheckStatus(ListItemModel.CheckStatus.UNCHECKED);
+    /** 选择框选择监听 */
+    private CompoundButton.OnCheckedChangeListener checkListener =
+            new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (model != null) {
+                        if (isChecked) {
+                            model.setCheckStatus(ListItemModel.CheckStatus.CHECKED);
+                        } else {
+                            model.setCheckStatus(ListItemModel.CheckStatus.UNCHECKED);
+                        }
+                        if (checkBoxClickListener != null) {
+                            checkBoxClickListener.onClick(checkBox);
+                        }
+                    }
                 }
-                if (checkBoxClickListener != null) {
-                    checkBoxClickListener.onClick(checkBox);
-                }
-            }
-        }
-    };
-
+            };
 }

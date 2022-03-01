@@ -1,23 +1,16 @@
 package cn.rongcloud.im.ui.activity;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.db.model.FriendShipInfo;
 import cn.rongcloud.im.model.GroupMember;
@@ -30,11 +23,13 @@ import cn.rongcloud.im.ui.widget.SelectableRoundedImageView;
 import cn.rongcloud.im.ui.widget.boundview.BoundedHorizontalScrollView;
 import cn.rongcloud.im.utils.ImageLoaderUtils;
 import cn.rongcloud.im.viewmodel.SelectMultiViewModel;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-/**
- * 不要直接请求此 Activity
- */
-public class SelectMultiFriendsActivity extends SelectBaseActivity implements View.OnClickListener, OnSelectCountChangeListener {
+/** 不要直接请求此 Activity */
+public class SelectMultiFriendsActivity extends SelectBaseActivity
+        implements View.OnClickListener, OnSelectCountChangeListener {
     private SelectMultiFriendFragment selectMultiFriendFragment;
     private SelectMultiViewModel selectMultiViewModel;
     private TextView titleConfirmTv;
@@ -65,22 +60,30 @@ public class SelectMultiFriendsActivity extends SelectBaseActivity implements Vi
     private void initViewModel() {
         selectMultiViewModel = ViewModelProviders.of(this).get(SelectMultiViewModel.class);
 
-        selectMultiViewModel.getSelectedCount().observe(this, selectCount -> {
-            if (selectCount > 0) {
-                setConfirmEnable(true);
-            } else if (confirmEnabledWhenNoChecked()) {
-                setConfirmEnable(true);
-            } else {
-                setConfirmEnable(false);
-            }
-        });
+        selectMultiViewModel
+                .getSelectedCount()
+                .observe(
+                        this,
+                        selectCount -> {
+                            if (selectCount > 0) {
+                                setConfirmEnable(true);
+                            } else if (confirmEnabledWhenNoChecked()) {
+                                setConfirmEnable(true);
+                            } else {
+                                setConfirmEnable(false);
+                            }
+                        });
 
-        selectMultiViewModel.getCheckedChangeData().observe(this, new Observer<CheckableContactModel>() {
-            @Override
-            public void onChanged(CheckableContactModel checkableContactModel) {
-                updateSelectContent(checkableContactModel);
-            }
-        });
+        selectMultiViewModel
+                .getCheckedChangeData()
+                .observe(
+                        this,
+                        new Observer<CheckableContactModel>() {
+                            @Override
+                            public void onChanged(CheckableContactModel checkableContactModel) {
+                                updateSelectContent(checkableContactModel);
+                            }
+                        });
     }
 
     private void updateSelectContent(CheckableContactModel checkableContactModel) {
@@ -89,19 +92,22 @@ public class SelectMultiFriendsActivity extends SelectBaseActivity implements Vi
             FriendShipInfo friendShipInfo = (FriendShipInfo) bean;
             String portraitUri = friendShipInfo.getUser().getPortraitUri();
             if (checkableContactModel.getCheckType() == CheckType.CHECKED) {
-                View view = LayoutInflater.from(this).inflate(R.layout.item_select_content, null, false);
+                View view =
+                        LayoutInflater.from(this)
+                                .inflate(R.layout.item_select_content, null, false);
                 SelectableRoundedImageView ivPortrait = view.findViewById(R.id.iv_portrait);
                 if (!TextUtils.isEmpty(portraitUri)) {
                     ImageLoaderUtils.displayUserPortraitImage(portraitUri, ivPortrait);
                 }
                 selectViewMap.put(friendShipInfo.getUser().getId(), view);
                 llSelectContent.addView(view);
-                llSelectContent.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        scrollView.fullScroll(ScrollView.FOCUS_RIGHT);
-                    }
-                });
+                llSelectContent.post(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                scrollView.fullScroll(ScrollView.FOCUS_RIGHT);
+                            }
+                        });
             } else if (checkableContactModel.getCheckType() == CheckType.NONE) {
                 View view = selectViewMap.get(friendShipInfo.getUser().getId());
                 if (view != null) {
@@ -113,7 +119,9 @@ public class SelectMultiFriendsActivity extends SelectBaseActivity implements Vi
             GroupMember groupMember = (GroupMember) bean;
             String portraitUri = groupMember.getPortraitUri();
             if (checkableContactModel.getCheckType() == CheckType.CHECKED) {
-                View view = LayoutInflater.from(this).inflate(R.layout.item_select_content, null, false);
+                View view =
+                        LayoutInflater.from(this)
+                                .inflate(R.layout.item_select_content, null, false);
                 SelectableRoundedImageView ivPortrait = view.findViewById(R.id.iv_portrait);
                 if (!TextUtils.isEmpty(portraitUri)) {
                     ImageLoaderUtils.displayUserPortraitImage(portraitUri, ivPortrait);
@@ -121,12 +129,13 @@ public class SelectMultiFriendsActivity extends SelectBaseActivity implements Vi
                 view.setTag(groupMember.getUserId());
                 selectViewMap.put(groupMember.getUserId(), view);
                 llSelectContent.addView(view);
-                llSelectContent.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        scrollView.fullScroll(ScrollView.FOCUS_RIGHT);
-                    }
-                });
+                llSelectContent.post(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                scrollView.fullScroll(ScrollView.FOCUS_RIGHT);
+                            }
+                        });
             } else if (checkableContactModel.getCheckType() == CheckType.NONE) {
                 View view = selectViewMap.get(groupMember.getUserId());
                 if (view != null) {
@@ -147,35 +156,33 @@ public class SelectMultiFriendsActivity extends SelectBaseActivity implements Vi
             titleConfirmTv.setTextColor(getResources().getColor(R.color.color_blue_9F));
         } else {
             titleConfirmTv.setClickable(false);
-            titleConfirmTv.setTextColor(getResources().getColor(R.color.seal_group_detail_clean_tips));
+            titleConfirmTv.setTextColor(
+                    getResources().getColor(R.color.seal_group_detail_clean_tips));
         }
     }
-
 
     protected SelectMultiFriendFragment getSelectMultiFriendFragment() {
         return new SelectMultiFriendFragment();
     }
 
-    /**
-     * @param v 右上角点击
-     */
+    /** @param v 右上角点击 */
     @Override
     public void onClick(View v) {
-        onConfirmClicked(selectMultiFriendFragment.getCheckedList(), selectMultiFriendFragment.getCheckedInitGroupList());
+        onConfirmClicked(
+                selectMultiFriendFragment.getCheckedList(),
+                selectMultiFriendFragment.getCheckedInitGroupList());
     }
 
-    /**
-     * 右下角点击事件
-     */
+    /** 右下角点击事件 */
     @Override
     protected void onConfirmClick() {
-        onConfirmClicked(selectMultiFriendFragment.getCheckedList(), selectMultiFriendFragment.getCheckedInitGroupList());
+        onConfirmClicked(
+                selectMultiFriendFragment.getCheckedList(),
+                selectMultiFriendFragment.getCheckedInitGroupList());
     }
-
 
     @Override
-    public void onSelectCountChange(int groupCount, int userCount) {
-    }
+    public void onSelectCountChange(int groupCount, int userCount) {}
 
     public ArrayList<String> getCheckedFriendIds() {
         return selectMultiFriendFragment.getCheckedFriendList();
@@ -186,8 +193,7 @@ public class SelectMultiFriendsActivity extends SelectBaseActivity implements Vi
     }
 
     /**
-     * 是否在没有选择时可以点击确定,默认为未选择时不可点击
-     * 重写此方法以开启状态在未选择时可点击确认
+     * 是否在没有选择时可以点击确定,默认为未选择时不可点击 重写此方法以开启状态在未选择时可点击确认
      *
      * @return
      */

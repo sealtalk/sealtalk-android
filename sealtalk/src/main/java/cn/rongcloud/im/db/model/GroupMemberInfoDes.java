@@ -2,14 +2,14 @@ package cn.rongcloud.im.db.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-
 import java.util.ArrayList;
 
-@Entity(tableName = "group_member_info_des", primaryKeys = {"groupId", "memberId"})
+@Entity(
+        tableName = "group_member_info_des",
+        primaryKeys = {"groupId", "memberId"})
 public class GroupMemberInfoDes implements Parcelable {
 
     @ColumnInfo(name = "groupId")
@@ -119,8 +119,7 @@ public class GroupMemberInfoDes implements Parcelable {
         dest.writeStringList(this.memberDesc);
     }
 
-    public GroupMemberInfoDes() {
-    }
+    public GroupMemberInfoDes() {}
 
     protected GroupMemberInfoDes(Parcel in) {
         this.groupId = in.readString();
@@ -133,29 +132,45 @@ public class GroupMemberInfoDes implements Parcelable {
         this.memberDesc = in.createStringArrayList();
     }
 
-    public static final Creator<GroupMemberInfoDes> CREATOR = new Creator<GroupMemberInfoDes>() {
-        @Override
-        public GroupMemberInfoDes createFromParcel(Parcel source) {
-            return new GroupMemberInfoDes(source);
-        }
+    public static final Creator<GroupMemberInfoDes> CREATOR =
+            new Creator<GroupMemberInfoDes>() {
+                @Override
+                public GroupMemberInfoDes createFromParcel(Parcel source) {
+                    return new GroupMemberInfoDes(source);
+                }
 
-        @Override
-        public GroupMemberInfoDes[] newArray(int size) {
-            return new GroupMemberInfoDes[size];
-        }
-    };
+                @Override
+                public GroupMemberInfoDes[] newArray(int size) {
+                    return new GroupMemberInfoDes[size];
+                }
+            };
 
     @Override
     public String toString() {
-        return "GroupMemberInfoDes{" +
-                "groupId='" + groupId + '\'' +
-                ", memberId='" + memberId + '\'' +
-                ", groupNickname='" + groupNickname + '\'' +
-                ", region='" + region + '\'' +
-                ", phone='" + phone + '\'' +
-                ", WeChat='" + WeChat + '\'' +
-                ", Alipay='" + Alipay + '\'' +
-                ", memberDesc=" + memberDesc +
-                '}';
+        return "GroupMemberInfoDes{"
+                + "groupId='"
+                + groupId
+                + '\''
+                + ", memberId='"
+                + memberId
+                + '\''
+                + ", groupNickname='"
+                + groupNickname
+                + '\''
+                + ", region='"
+                + region
+                + '\''
+                + ", phone='"
+                + phone
+                + '\''
+                + ", WeChat='"
+                + WeChat
+                + '\''
+                + ", Alipay='"
+                + Alipay
+                + '\''
+                + ", memberDesc="
+                + memberDesc
+                + '}';
     }
 }

@@ -13,7 +13,7 @@ public class PhoneContactInfoEntity {
     private String phoneNumber;
 
     @ColumnInfo(name = "is_friend")
-    private int relationship;   // 0 非好友 1 好友
+    private int relationship; // 0 非好友 1 好友
 
     @ColumnInfo(name = "user_id")
     private String userId;

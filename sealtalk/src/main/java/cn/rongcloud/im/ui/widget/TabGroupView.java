@@ -4,14 +4,11 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * 动态设置按钮的布局
- */
+/** 动态设置按钮的布局 */
 public abstract class TabGroupView extends LinearLayout {
 
     private OnTabSelectedListener listener;
@@ -41,19 +38,20 @@ public abstract class TabGroupView extends LinearLayout {
                 views = new HashMap<>();
             }
             View view = createView(item);
-            LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, 1.0f);
+            LayoutParams params =
+                    new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, 1.0f);
             views.put(item.id, view);
             view.setTag(item);
             addView(view, params);
-            view.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemClick(item, listener, view);
-                }
-            });
+            view.setOnClickListener(
+                    new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            onItemClick(item, listener, view);
+                        }
+                    });
         }
     }
-
 
     protected void onItemClick(TabItem item, OnTabSelectedListener listener, View view) {
         setSelected(item);
@@ -61,7 +59,6 @@ public abstract class TabGroupView extends LinearLayout {
             listener.onSelected(view, item);
         }
     }
-
 
     public void setSelected(TabItem item) {
         setSelected(item.id);
@@ -74,11 +71,11 @@ public abstract class TabGroupView extends LinearLayout {
         }
         int childCount = getChildCount();
         if (childCount > 0) {
-            for (int i =0; i < childCount; i++) {
+            for (int i = 0; i < childCount; i++) {
                 View view = getChildAt(i);
                 Object tag = view.getTag();
                 if (tag != null && tag instanceof TabItem) {
-                    TabItem itemdata = (TabItem)tag;
+                    TabItem itemdata = (TabItem) tag;
                     if (itemdata.id == id) {
                         if (!view.isSelected()) {
                             view.setSelected(true);
@@ -95,7 +92,6 @@ public abstract class TabGroupView extends LinearLayout {
         }
     }
 
-
     public <T extends View> T getView(TabItem item) {
         return getView(item.id);
     }
@@ -111,7 +107,6 @@ public abstract class TabGroupView extends LinearLayout {
 
         return (T) view;
     }
-
 
     public void setItemEnabled(TabItem item, boolean enabled) {
         setItemEnabled(item.id, enabled);
@@ -143,7 +138,6 @@ public abstract class TabGroupView extends LinearLayout {
         view.setVisibility(visibile);
     }
 
-
     public void setEnabled(boolean enabled) {
         if (views == null) {
             return;
@@ -158,15 +152,14 @@ public abstract class TabGroupView extends LinearLayout {
 
     /**
      * 当前选项的 id
+     *
      * @return
      */
     public int getSelectedItemId() {
         return currentSelectedId;
     }
 
-
     public interface OnTabSelectedListener {
         void onSelected(View view, TabItem item);
     }
-
 }

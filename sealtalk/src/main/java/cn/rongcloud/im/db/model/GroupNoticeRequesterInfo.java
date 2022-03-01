@@ -2,13 +2,10 @@ package cn.rongcloud.im.db.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 
-/**
- * 邀请者信息
- */
+/** 邀请者信息 */
 @Entity
 public class GroupNoticeRequesterInfo implements Parcelable {
     @ColumnInfo(name = "id")
@@ -33,7 +30,6 @@ public class GroupNoticeRequesterInfo implements Parcelable {
         this.nickname = nickname;
     }
 
-
     @Override
     public int describeContents() {
         return 0;
@@ -45,31 +41,35 @@ public class GroupNoticeRequesterInfo implements Parcelable {
         dest.writeString(this.nickname);
     }
 
-    public GroupNoticeRequesterInfo() {
-    }
+    public GroupNoticeRequesterInfo() {}
 
     protected GroupNoticeRequesterInfo(Parcel in) {
         this.id = in.readString();
         this.nickname = in.readString();
     }
 
-    public static final Parcelable.Creator<GroupNoticeRequesterInfo> CREATOR = new Parcelable.Creator<GroupNoticeRequesterInfo>() {
-        @Override
-        public GroupNoticeRequesterInfo createFromParcel(Parcel source) {
-            return new GroupNoticeRequesterInfo(source);
-        }
+    public static final Parcelable.Creator<GroupNoticeRequesterInfo> CREATOR =
+            new Parcelable.Creator<GroupNoticeRequesterInfo>() {
+                @Override
+                public GroupNoticeRequesterInfo createFromParcel(Parcel source) {
+                    return new GroupNoticeRequesterInfo(source);
+                }
 
-        @Override
-        public GroupNoticeRequesterInfo[] newArray(int size) {
-            return new GroupNoticeRequesterInfo[size];
-        }
-    };
+                @Override
+                public GroupNoticeRequesterInfo[] newArray(int size) {
+                    return new GroupNoticeRequesterInfo[size];
+                }
+            };
 
     @Override
     public String toString() {
-        return "GroupNoticeRequesterInfo{" +
-                "id='" + id + '\'' +
-                ", nickname='" + nickname + '\'' +
-                '}';
+        return "GroupNoticeRequesterInfo{"
+                + "id='"
+                + id
+                + '\''
+                + ", nickname='"
+                + nickname
+                + '\''
+                + '}';
     }
 }

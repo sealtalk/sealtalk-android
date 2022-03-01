@@ -1,6 +1,5 @@
 package cn.rongcloud.im.db.model;
 
-
 import cn.rongcloud.im.model.BlackListUser;
 
 public class FriendBlackInfo {
@@ -13,5 +12,4 @@ public class FriendBlackInfo {
     public BlackListUser getUser() {
         return user;
     }
-
 }

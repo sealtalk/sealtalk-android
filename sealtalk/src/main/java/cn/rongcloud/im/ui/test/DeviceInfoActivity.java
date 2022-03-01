@@ -1,17 +1,12 @@
 package cn.rongcloud.im.ui.test;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.widget.TextView;
-
-import com.umeng.commonsdk.UMConfigure;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.BaseActivity;
+import com.umeng.commonsdk.UMConfigure;
 
-/**
- * 设备相关信息，友盟添加测试设备时需要
- */
+/** 设备相关信息，友盟添加测试设备时需要 */
 public class DeviceInfoActivity extends BaseActivity {
 
     @Override

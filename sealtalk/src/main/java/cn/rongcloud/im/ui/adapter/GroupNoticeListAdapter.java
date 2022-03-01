@@ -5,14 +5,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.db.model.GroupNoticeInfo;
 import cn.rongcloud.im.ui.widget.SelectableRoundedImageView;
 import io.rong.imkit.utils.RongDateUtils;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GroupNoticeListAdapter extends BaseAdapter {
 
@@ -65,37 +63,54 @@ public class GroupNoticeListAdapter extends BaseAdapter {
         // 0: 忽略、1: 同意、2: 等待 3 已过期
         if (info.getStatus() == 0) {
             holder.tvLeft.setVisibility(View.GONE);
-            holder.tvRight.setText(parent.getContext().getString(R.string.seal_group_notice_ignored));
-            holder.tvRight.setTextColor(parent.getContext().getResources().getColor(R.color.seal_login_text_button_color));
+            holder.tvRight.setText(
+                    parent.getContext().getString(R.string.seal_group_notice_ignored));
+            holder.tvRight.setTextColor(
+                    parent.getContext()
+                            .getResources()
+                            .getColor(R.color.seal_login_text_button_color));
         } else if (info.getStatus() == 1) {
             holder.tvLeft.setVisibility(View.GONE);
-            holder.tvRight.setText(parent.getContext().getString(R.string.seal_group_notice_agreed));
-            holder.tvRight.setTextColor(parent.getContext().getResources().getColor(R.color.seal_login_text_button_color));
+            holder.tvRight.setText(
+                    parent.getContext().getString(R.string.seal_group_notice_agreed));
+            holder.tvRight.setTextColor(
+                    parent.getContext()
+                            .getResources()
+                            .getColor(R.color.seal_login_text_button_color));
         } else if (info.getStatus() == 3) {
             holder.tvLeft.setVisibility(View.GONE);
-            holder.tvRight.setText(parent.getContext().getString(R.string.seal_group_notice_overdue));
-            holder.tvRight.setTextColor(parent.getContext().getResources().getColor(R.color.seal_login_text_button_color));
+            holder.tvRight.setText(
+                    parent.getContext().getString(R.string.seal_group_notice_overdue));
+            holder.tvRight.setTextColor(
+                    parent.getContext()
+                            .getResources()
+                            .getColor(R.color.seal_login_text_button_color));
         } else if (info.getStatus() == 2) {
             holder.tvLeft.setVisibility(View.VISIBLE);
             holder.tvRight.setText(parent.getContext().getString(R.string.seal_group_notice_agree));
-            holder.tvRight.setTextColor(parent.getContext().getResources().getColor(R.color.seal_group_notice_item_agree));
+            holder.tvRight.setTextColor(
+                    parent.getContext()
+                            .getResources()
+                            .getColor(R.color.seal_group_notice_item_agree));
         }
-        holder.tvLeft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mOnItemButtonClick != null) {
-                    mOnItemButtonClick.onButtonIgnoreClick(v, position, info);
-                }
-            }
-        });
-        holder.tvRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mOnItemButtonClick != null) {
-                    mOnItemButtonClick.onButtonAgreeClick(v, position, info);
-                }
-            }
-        });
+        holder.tvLeft.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mOnItemButtonClick != null) {
+                            mOnItemButtonClick.onButtonIgnoreClick(v, position, info);
+                        }
+                    }
+                });
+        holder.tvRight.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mOnItemButtonClick != null) {
+                            mOnItemButtonClick.onButtonAgreeClick(v, position, info);
+                        }
+                    }
+                });
         // 1: 待被邀请者处理、2: 待管理员处理
         if (info.getType() == 1) {
             if (!TextUtils.isEmpty(info.getGroupNickName())) {
@@ -104,7 +119,8 @@ public class GroupNoticeListAdapter extends BaseAdapter {
             if (!TextUtils.isEmpty(info.getRequesterNickName())) {
                 holder.requestName.setText(info.getRequesterNickName());
             }
-            if (!TextUtils.isEmpty(info.getReceiverId())) {//&& info.getReceiverId().equals(RongIM.getInstance().getCurrentUserId())
+            if (!TextUtils.isEmpty(info.getReceiverId())) { // &&
+                // info.getReceiverId().equals(RongIM.getInstance().getCurrentUserId())
                 holder.requestCotent.setText(R.string.seal_conversation_notification_group_tips);
             }
             if (!TextUtils.isEmpty(info.getGroupId())) {
@@ -123,7 +139,9 @@ public class GroupNoticeListAdapter extends BaseAdapter {
             }
         }
         if (!TextUtils.isEmpty(info.getCreatedTime())) {
-            holder.tvTime.setText(RongDateUtils.getConversationFormatDate(Long.valueOf(info.getCreatedTime()), convertView.getContext()));
+            holder.tvTime.setText(
+                    RongDateUtils.getConversationFormatDate(
+                            Long.valueOf(info.getCreatedTime()), convertView.getContext()));
         }
         return convertView;
     }
@@ -147,9 +165,7 @@ public class GroupNoticeListAdapter extends BaseAdapter {
         this.mOnItemButtonClick = onItemButtonClick;
     }
 
-    /**
-     * 点击事件接口
-     */
+    /** 点击事件接口 */
     public interface OnItemButtonClick {
         boolean onButtonAgreeClick(View view, int position, GroupNoticeInfo info);
 

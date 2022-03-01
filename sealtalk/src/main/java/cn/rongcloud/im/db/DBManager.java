@@ -1,9 +1,7 @@
 package cn.rongcloud.im.db;
 
 import android.content.Context;
-
 import androidx.room.Room;
-
 import cn.rongcloud.im.common.LogTag;
 import cn.rongcloud.im.db.dao.FriendDao;
 import cn.rongcloud.im.db.dao.GroupDao;
@@ -12,12 +10,10 @@ import cn.rongcloud.im.db.dao.UserDao;
 import cn.rongcloud.im.utils.log.SLog;
 import io.rong.imlib.MD5;
 
-/**
- * 数据库管理类
- */
+/** 数据库管理类 */
 public class DBManager {
     private final String DB_NAME_FORMAT = "user_%s";
-    private volatile static DBManager instance;
+    private static volatile DBManager instance;
     private Context context;
     private SealTalkDatabase database;
     private String currentUserId;
@@ -56,9 +52,13 @@ public class DBManager {
         }
         currentUserId = userId;
         String userIdMD5 = MD5.encrypt(userId);
-        database = Room.databaseBuilder(context, SealTalkDatabase.class, String.format(DB_NAME_FORMAT, userIdMD5))
-                .fallbackToDestructiveMigration()
-                .build();
+        database =
+                Room.databaseBuilder(
+                                context,
+                                SealTalkDatabase.class,
+                                String.format(DB_NAME_FORMAT, userIdMD5))
+                        .fallbackToDestructiveMigration()
+                        .build();
         SLog.d(LogTag.DB, "openDb,userId:" + currentUserId);
     }
 

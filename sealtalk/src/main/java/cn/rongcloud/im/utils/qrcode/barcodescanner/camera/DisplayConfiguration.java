@@ -1,14 +1,10 @@
 package cn.rongcloud.im.utils.qrcode.barcodescanner.camera;
 
 import android.graphics.Rect;
-
+import cn.rongcloud.im.utils.qrcode.barcodescanner.Size;
 import java.util.List;
 
-import cn.rongcloud.im.utils.qrcode.barcodescanner.Size;
-
-/**
- *
- */
+/** */
 public class DisplayConfiguration {
     private static final String TAG = DisplayConfiguration.class.getSimpleName();
 
@@ -59,25 +55,23 @@ public class DisplayConfiguration {
     /**
      * Choose the best preview size, based on our display size.
      *
-     * We prefer:
-     * 1. no scaling
-     * 2. least downscaling
-     * 3. least upscaling
+     * <p>We prefer: 1. no scaling 2. least downscaling 3. least upscaling
      *
-     * We do not care much about aspect ratio, since we just crop away extra pixels. We only choose
-     * the size to minimize scaling.
+     * <p>We do not care much about aspect ratio, since we just crop away extra pixels. We only
+     * choose the size to minimize scaling.
      *
-     * In the future we may consider choosing the biggest possible preview size, to maximize the
+     * <p>In the future we may consider choosing the biggest possible preview size, to maximize the
      * resolution we have for decoding. We need more testing to see whether or not that is feasible.
      *
-     * @param sizes supported preview sizes, containing at least one size. Sizes are in natural camera orientation.
-     * @param isRotated true if the camera is rotated perpendicular to the current display orientation
+     * @param sizes supported preview sizes, containing at least one size. Sizes are in natural
+     *     camera orientation.
+     * @param isRotated true if the camera is rotated perpendicular to the current display
+     *     orientation
      * @return the best preview size, never null
      */
     public Size getBestPreviewSize(List<Size> sizes, boolean isRotated) {
         // Sample of supported preview sizes:
         // http://www.kirill.org/ar/ar.php
-
 
         final Size desired = getDesiredPreviewSize(isRotated);
 
@@ -87,7 +81,7 @@ public class DisplayConfiguration {
     /**
      * Scale the preview to cover the viewfinder, then center it.
      *
-     * Aspect ratio is preserved.
+     * <p>Aspect ratio is preserved.
      *
      * @param previewSize the size of the preview (camera), in current display orientation
      * @return a rect placing the preview

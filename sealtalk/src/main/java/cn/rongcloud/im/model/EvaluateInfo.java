@@ -1,12 +1,11 @@
 package cn.rongcloud.im.model;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class EvaluateInfo {
 
@@ -26,7 +25,6 @@ public class EvaluateInfo {
     private int settingMode;
     private long updateTime;
     private int operateType;
-
 
     public void setConfigId(String configId) {
         this.configId = configId;
@@ -156,10 +154,7 @@ public class EvaluateInfo {
         return operateType;
     }
 
-    public EvaluateInfo() {
-    }
-
-
+    public EvaluateInfo() {}
 
     public static List<EvaluateInfo> getEvaluateInfoList(JSONObject jsonObj) {
         List<EvaluateInfo> evaluateInfoList = new ArrayList<>();
@@ -178,11 +173,13 @@ public class EvaluateInfo {
                     evaluateInfo.setLabelId(jsonObject.optString("labelId"));
                     String labelNames = jsonObject.optString("labelName");
                     evaluateInfo.setLabelNameList(Arrays.asList(labelNames.split(",")));
-                    evaluateInfo.setQuestionFlag(jsonObject.optInt("isQuestionFlag", 0) == 1 ? true : false);
+                    evaluateInfo.setQuestionFlag(
+                            jsonObject.optInt("isQuestionFlag", 0) == 1 ? true : false);
                     evaluateInfo.setScore(jsonObject.optInt("score"));
                     evaluateInfo.setScoreExplain(jsonObject.optString("scoreExplain"));
                     evaluateInfo.setTagMust(jsonObject.optInt("isTagMust", 0) == 1 ? true : false);
-                    evaluateInfo.setInputMust(jsonObject.optInt("isInputMust", 0) == 1 ? true : false);
+                    evaluateInfo.setInputMust(
+                            jsonObject.optInt("isInputMust", 0) == 1 ? true : false);
                     evaluateInfo.setInputLanguage(jsonObject.optString("inputLanguage"));
                     evaluateInfo.setCreateTime(jsonObject.optLong("createTime", 0));
                     evaluateInfo.setSettingMode(jsonObject.optInt("settingMode"));

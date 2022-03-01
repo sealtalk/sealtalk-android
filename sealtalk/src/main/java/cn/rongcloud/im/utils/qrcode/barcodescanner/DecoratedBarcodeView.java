@@ -4,37 +4,30 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.view.KeyEvent;
 import android.widget.FrameLayout;
-import android.widget.TextView;
-
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.DecodeHintType;
-import com.google.zxing.MultiFormatReader;
-import com.google.zxing.ResultPoint;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.utils.qrcode.barcodescanner.camera.CameraSettings;
 import cn.rongcloud.im.utils.qrcode.client.DecodeFormatManager;
 import cn.rongcloud.im.utils.qrcode.client.DecodeHintManager;
 import cn.rongcloud.im.utils.qrcode.client.Intents;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.DecodeHintType;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.ResultPoint;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Encapsulates BarcodeView, ViewfinderView and status text.
- * <p>
- * To customize the UI, use BarcodeView and ViewfinderView directly.
+ *
+ * <p>To customize the UI, use BarcodeView and ViewfinderView directly.
  */
 public class DecoratedBarcodeView extends FrameLayout {
     private BarcodeView barcodeView;
     private NewViewfinderView viewFinder;
 
-    /**
-     * The instance of @link TorchListener to send events callback.
-     */
+    /** The instance of @link TorchListener to send events callback. */
     private TorchListener torchListener;
 
     private class WrappedCallback implements BarcodeCallback {
@@ -82,8 +75,10 @@ public class DecoratedBarcodeView extends FrameLayout {
         // Get attributes set on view
         TypedArray attributes = getContext().obtainStyledAttributes(attrs, R.styleable.zxing_view);
 
-        int scannerLayout = attributes.getResourceId(
-                R.styleable.zxing_view_zxing_scanner_layout, R.layout.zxing_barcode_scanner);
+        int scannerLayout =
+                attributes.getResourceId(
+                        R.styleable.zxing_view_zxing_scanner_layout,
+                        R.layout.zxing_barcode_scanner);
 
         attributes.recycle();
 
@@ -93,29 +88,25 @@ public class DecoratedBarcodeView extends FrameLayout {
 
         if (barcodeView == null) {
             throw new IllegalArgumentException(
-                    "There is no a BarcodeView on provided layout " +
-                            "with the id \"zxing_barcode_surface\".");
+                    "There is no a BarcodeView on provided layout "
+                            + "with the id \"zxing_barcode_surface\".");
         }
 
         // Pass on any preview-related attributes
         barcodeView.initializeAttributes(attrs);
 
-
         viewFinder = (NewViewfinderView) findViewById(R.id.zxing_viewfinder_view);
 
         if (viewFinder == null) {
             throw new IllegalArgumentException(
-                    "There is no a ViewfinderView on provided layout " +
-                            "with the id \"zxing_viewfinder_view\".");
+                    "There is no a ViewfinderView on provided layout "
+                            + "with the id \"zxing_viewfinder_view\".");
         }
 
         viewFinder.setCameraPreview(barcodeView);
-
     }
 
-    /**
-     * Initialize with no custom attributes setted.
-     */
+    /** Initialize with no custom attributes setted. */
     private void initialize() {
         initialize(null);
     }
@@ -148,19 +139,16 @@ public class DecoratedBarcodeView extends FrameLayout {
         reader.setHints(decodeHints);
 
         barcodeView.setCameraSettings(settings);
-        barcodeView.setDecoderFactory(new DefaultDecoderFactory(decodeFormats, decodeHints, characterSet, inverted));
+        barcodeView.setDecoderFactory(
+                new DefaultDecoderFactory(decodeFormats, decodeHints, characterSet, inverted));
     }
 
-    /**
-     * @see BarcodeView#pause()
-     */
+    /** @see BarcodeView#pause() */
     public void pause() {
         barcodeView.pause();
     }
 
-    /**
-     * @see BarcodeView#resume()
-     */
+    /** @see BarcodeView#resume() */
     public void resume() {
         barcodeView.resume();
     }
@@ -173,30 +161,22 @@ public class DecoratedBarcodeView extends FrameLayout {
         return viewFinder;
     }
 
-    /**
-     * @see BarcodeView#decodeSingle(BarcodeCallback)
-     */
+    /** @see BarcodeView#decodeSingle(BarcodeCallback) */
     public void decodeSingle(BarcodeCallback callback) {
         barcodeView.decodeSingle(new WrappedCallback(callback));
     }
 
-    /**
-     * @see BarcodeView#decodeContinuous(BarcodeCallback)
-     */
+    /** @see BarcodeView#decodeContinuous(BarcodeCallback) */
     public void decodeContinuous(BarcodeCallback callback) {
         barcodeView.decodeContinuous(new WrappedCallback(callback));
     }
 
-    /**
-     * 是否停止解码，但不停止预览。
-     */
-    public void stopDecoding(){
+    /** 是否停止解码，但不停止预览。 */
+    public void stopDecoding() {
         barcodeView.stopDecoding();
     }
 
-    /**
-     * Turn on the device's flashlight. 开灯
-     */
+    /** Turn on the device's flashlight. 开灯 */
     public void setTorchOn() {
         barcodeView.setTorch(true);
 
@@ -205,9 +185,7 @@ public class DecoratedBarcodeView extends FrameLayout {
         }
     }
 
-    /**
-     * Turn off the device's flashlight. 关灯
-     */
+    /** Turn off the device's flashlight. 关灯 */
     public void setTorchOff() {
         barcodeView.setTorch(false);
 
@@ -220,9 +198,7 @@ public class DecoratedBarcodeView extends FrameLayout {
         this.torchListener = listener;
     }
 
-    /**
-     * The interceptor to torch/fflashlight events (turn on, turn off).
-     */
+    /** The interceptor to torch/fflashlight events (turn on, turn off). */
     public interface TorchListener {
 
         void onTorchOn();

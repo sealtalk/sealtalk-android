@@ -1,20 +1,16 @@
 package cn.rongcloud.im.viewmodel;
 
 import android.app.Application;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.task.FriendTask;
 import cn.rongcloud.im.utils.SingleSourceLiveData;
 
-/**
- * 设置别名视图模型
- */
+/** 设置别名视图模型 */
 public class EditAliasViewModel extends AndroidViewModel {
     private SingleSourceLiveData<Resource<Void>> setAliasResult = new SingleSourceLiveData<>();
 
@@ -49,7 +45,6 @@ public class EditAliasViewModel extends AndroidViewModel {
         return setAliasResult;
     }
 
-
     public static class Factory extends ViewModelProvider.NewInstanceFactory {
         private String userId;
         private Application application;
@@ -63,7 +58,9 @@ public class EditAliasViewModel extends AndroidViewModel {
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
             try {
-                return modelClass.getConstructor(Application.class, String.class).newInstance(application, userId);
+                return modelClass
+                        .getConstructor(Application.class, String.class)
+                        .newInstance(application, userId);
             } catch (Exception e) {
                 throw new RuntimeException("Cannot create an instance of " + modelClass, e);
             }

@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.widget.DragPointView;
 import cn.rongcloud.im.ui.widget.TabItem;
@@ -60,17 +59,21 @@ public class MainBottomTabItem extends RelativeLayout {
         super.setSelected(selected);
         if (mAnimationDrawable != null) {
             if (selected) {
-                AnimationDrawable animationDrawable = (AnimationDrawable) getResources().getDrawable(mAnimationDrawable.drawableAnimation);
+                AnimationDrawable animationDrawable =
+                        (AnimationDrawable)
+                                getResources().getDrawable(mAnimationDrawable.drawableAnimation);
                 tabImage.setImageDrawable(animationDrawable);
                 animationDrawable.setOneShot(true);
                 animationDrawable.start();
             } else {
                 // 防止点击过快动画还未结束
-//                AnimationDrawable animationDrawable = (AnimationDrawable) tabImage.getBackground();
-//                if (animationDrawable!=null && animationDrawable.isRunning()){
-//                    animationDrawable.stop();
-//                }
-                tabImage.setImageDrawable(getResources().getDrawable(mAnimationDrawable.drawableNormal));
+                //                AnimationDrawable animationDrawable = (AnimationDrawable)
+                // tabImage.getBackground();
+                //                if (animationDrawable!=null && animationDrawable.isRunning()){
+                //                    animationDrawable.stop();
+                //                }
+                tabImage.setImageDrawable(
+                        getResources().getDrawable(mAnimationDrawable.drawableNormal));
             }
         }
         tabImage.setSelected(selected);

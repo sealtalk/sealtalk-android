@@ -5,18 +5,15 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.model.PhoneContactInfo;
 import cn.rongcloud.im.ui.adapter.models.ListItemModel;
 import cn.rongcloud.im.utils.ImageLoaderUtils;
 
-/**
- * 从通讯录添加好友列表视图
- */
-public class AddFriendFromContactItemViewHolder extends BaseItemViewHolder<ListItemModel<PhoneContactInfo>> {
+/** 从通讯录添加好友列表视图 */
+public class AddFriendFromContactItemViewHolder
+        extends BaseItemViewHolder<ListItemModel<PhoneContactInfo>> {
     private Context context;
     private final int ADD_BUTTON_PADDING_VERTICAL_DP = 5;
     private final int ADD_BUTTON_PADDING_HORIZON_DP = 13;
@@ -44,14 +41,10 @@ public class AddFriendFromContactItemViewHolder extends BaseItemViewHolder<ListI
     }
 
     @Override
-    public void setOnClickItemListener(View.OnClickListener listener) {
-    }
+    public void setOnClickItemListener(View.OnClickListener listener) {}
 
     @Override
-    public void setOnLongClickItemListener(View.OnLongClickListener listener) {
-
-    }
-
+    public void setOnLongClickItemListener(View.OnLongClickListener listener) {}
 
     @Override
     public void update(ListItemModel<PhoneContactInfo> phoneContactInfoListItemModel) {
@@ -62,7 +55,8 @@ public class AddFriendFromContactItemViewHolder extends BaseItemViewHolder<ListI
         nameTv.setText(data.getContactName());
         String stAccount = data.getStAccount();
         if (!TextUtils.isEmpty(stAccount)) {
-            stAccountTv.setText(context.getString(R.string.seal_st_account_content_format, stAccount));
+            stAccountTv.setText(
+                    context.getString(R.string.seal_st_account_content_format, stAccount));
             stAccountTv.setVisibility(View.VISIBLE);
         } else {
             stAccountTv.setVisibility(View.GONE);
@@ -71,16 +65,21 @@ public class AddFriendFromContactItemViewHolder extends BaseItemViewHolder<ListI
         if (data.isFriend() == 0) { // 非好友
             addTv.setText(R.string.seal_new_friend_add);
             addTv.setTextColor(context.getResources().getColor(R.color.text_white));
-            addTv.setPadding(addButtonPaddingHorizonPx, addButtonPaddingVerticalPx, addButtonPaddingHorizonPx, addButtonPaddingVerticalPx);
+            addTv.setPadding(
+                    addButtonPaddingHorizonPx,
+                    addButtonPaddingVerticalPx,
+                    addButtonPaddingHorizonPx,
+                    addButtonPaddingVerticalPx);
             addTv.setBackgroundResource(R.drawable.common_btn_blue_selector);
-            addTv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (addFriendClickedListener != null) {
-                        addFriendClickedListener.onAddFriendClicked(userId);
-                    }
-                }
-            });
+            addTv.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (addFriendClickedListener != null) {
+                                addFriendClickedListener.onAddFriendClicked(userId);
+                            }
+                        }
+                    });
         } else {
             addTv.setText(R.string.seal_new_friend_added);
             addTv.setPadding(0, 0, 0, 0);

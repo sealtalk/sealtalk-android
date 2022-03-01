@@ -5,19 +5,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
-
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.db.model.GroupExitedMemberInfo;
 import cn.rongcloud.im.ui.widget.SelectableRoundedImageView;
 import cn.rongcloud.im.utils.ImageLoaderUtils;
 import io.rong.imkit.utils.RongDateUtils;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GroupExitedListAdapter extends BaseAdapter {
-
 
     private List<GroupExitedMemberInfo> datas = new ArrayList<>();
     private final int QUIT_BY_GROUP_OWNER = 0;
@@ -32,7 +28,6 @@ public class GroupExitedListAdapter extends BaseAdapter {
         this.datas.addAll(datas);
         notifyDataSetChanged();
     }
-
 
     @Override
     public int getCount() {
@@ -66,20 +61,36 @@ public class GroupExitedListAdapter extends BaseAdapter {
         GroupExitedMemberInfo info = datas.get(position);
         holder.tvTitle.setText(info.getQuitNickname());
         if (!TextUtils.isEmpty(info.getQuitPortraitUri())) {
-            ImageLoaderUtils.displayGroupPortraitImage(info.getQuitPortraitUri(), holder.ivPortrait);
+            ImageLoaderUtils.displayGroupPortraitImage(
+                    info.getQuitPortraitUri(), holder.ivPortrait);
         }
         if (!TextUtils.isEmpty(info.getQuitTime())) {
-            holder.tvTime.setText(RongDateUtils.getConversationFormatDate(Long.valueOf(info.getQuitTime()), convertView.getContext()));
+            holder.tvTime.setText(
+                    RongDateUtils.getConversationFormatDate(
+                            Long.valueOf(info.getQuitTime()), convertView.getContext()));
         }
         switch (info.getQuitReason()) {
             case QUIT_BY_GROUP_OWNER:
-                holder.tvContent.setText(convertView.getContext().getString(R.string.seal_group_manager_exited_content_owner, info.getOperatorName()));
+                holder.tvContent.setText(
+                        convertView
+                                .getContext()
+                                .getString(
+                                        R.string.seal_group_manager_exited_content_owner,
+                                        info.getOperatorName()));
                 break;
             case QUIT_BY_GROUP_MANAGER:
-                holder.tvContent.setText(convertView.getContext().getString(R.string.seal_group_manager_exited_content_manager, info.getOperatorName()));
+                holder.tvContent.setText(
+                        convertView
+                                .getContext()
+                                .getString(
+                                        R.string.seal_group_manager_exited_content_manager,
+                                        info.getOperatorName()));
                 break;
             case QUIT_ACTIVE:
-                holder.tvContent.setText(convertView.getContext().getString(R.string.seal_group_manager_exited_content_active));
+                holder.tvContent.setText(
+                        convertView
+                                .getContext()
+                                .getString(R.string.seal_group_manager_exited_content_active));
                 break;
         }
         return convertView;

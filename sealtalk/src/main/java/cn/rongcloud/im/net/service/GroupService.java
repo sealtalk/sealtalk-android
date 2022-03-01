@@ -1,21 +1,19 @@
 package cn.rongcloud.im.net.service;
 
 import androidx.lifecycle.LiveData;
-
-import java.util.List;
-
 import cn.rongcloud.im.db.model.GroupEntity;
 import cn.rongcloud.im.db.model.GroupExitedMemberInfo;
 import cn.rongcloud.im.db.model.GroupMemberInfoDes;
 import cn.rongcloud.im.model.AddMemberResult;
 import cn.rongcloud.im.model.CopyGroupResult;
+import cn.rongcloud.im.model.GroupMemberInfoResult;
 import cn.rongcloud.im.model.GroupNoticeInfoResult;
 import cn.rongcloud.im.model.GroupNoticeResult;
-import cn.rongcloud.im.model.GroupMemberInfoResult;
 import cn.rongcloud.im.model.GroupResult;
 import cn.rongcloud.im.model.RegularClearStatusResult;
 import cn.rongcloud.im.model.Result;
 import cn.rongcloud.im.net.SealTalkUrl;
+import java.util.List;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -66,7 +64,8 @@ public interface GroupService {
     LiveData<Result<GroupEntity>> getGroupInfo(@Path("group_id") String groupId);
 
     @GET(SealTalkUrl.GROUP_GET_MEMBER_INFO)
-    LiveData<Result<List<GroupMemberInfoResult>>> getGroupMemberList(@Path("group_id") String groupId);
+    LiveData<Result<List<GroupMemberInfoResult>>> getGroupMemberList(
+            @Path("group_id") String groupId);
 
     @POST(SealTalkUrl.GROUP_REMOVE_MANAGER)
     LiveData<Result> removeManager(@Body RequestBody body);
@@ -115,5 +114,4 @@ public interface GroupService {
 
     @POST(SealTalkUrl.GROUP_SET_MEMBER_INFO_DES)
     LiveData<Result<Void>> setGroupInfoDes(@Body RequestBody body);
-
 }

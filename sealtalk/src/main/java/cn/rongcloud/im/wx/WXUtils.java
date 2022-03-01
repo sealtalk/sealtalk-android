@@ -1,12 +1,13 @@
 package cn.rongcloud.im.wx;
 
 import android.graphics.Bitmap;
-
 import java.io.ByteArrayOutputStream;
 
 public class WXUtils {
     public static String buildTransaction(final String type) {
-        return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
+        return (type == null)
+                ? String.valueOf(System.currentTimeMillis())
+                : type + System.currentTimeMillis();
     }
 
     public static byte[] bmpToByteArray(Bitmap bmp, boolean isRecycle) {

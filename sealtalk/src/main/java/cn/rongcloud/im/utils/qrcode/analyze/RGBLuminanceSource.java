@@ -2,11 +2,8 @@ package cn.rongcloud.im.utils.qrcode.analyze;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
 import com.google.zxing.LuminanceSource;
-
 import java.io.FileNotFoundException;
-
 
 public final class RGBLuminanceSource extends LuminanceSource {
     private final byte[] luminances;
@@ -47,8 +44,7 @@ public final class RGBLuminanceSource extends LuminanceSource {
     @Override
     public byte[] getRow(int y, byte[] row) {
         if (y < 0 || y >= getHeight()) {
-            throw new IllegalArgumentException(
-                    "Requested row is outside the image: " + y);
+            throw new IllegalArgumentException("Requested row is outside the image: " + y);
         }
         int width = getWidth();
         if (row == null || row.length < width) {

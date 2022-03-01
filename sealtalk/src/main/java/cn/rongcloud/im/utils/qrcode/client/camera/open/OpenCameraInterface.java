@@ -23,12 +23,9 @@ public final class OpenCameraInterface {
 
     private static final String TAG = OpenCameraInterface.class.getName();
 
-    private OpenCameraInterface() {
-    }
+    private OpenCameraInterface() {}
 
-    /**
-     * For {@link #open(int)}, means no preference for which camera to open.
-     */
+    /** For {@link #open(int)}, means no preference for which camera to open. */
     public static final int NO_REQUESTED_CAMERA = -1;
 
     public static int getCameraId(int requestedId) {
@@ -71,8 +68,8 @@ public final class OpenCameraInterface {
     /**
      * Opens the requested camera with {@link Camera#open(int)}, if one exists.
      *
-     * @param requestedId camera ID of the camera to use. A negative value
-     *                    or {@link #NO_REQUESTED_CAMERA} means "no preference"
+     * @param requestedId camera ID of the camera to use. A negative value or {@link
+     *     #NO_REQUESTED_CAMERA} means "no preference"
      * @return handle to {@link Camera} that was opened
      */
     public static Camera open(int requestedId) {

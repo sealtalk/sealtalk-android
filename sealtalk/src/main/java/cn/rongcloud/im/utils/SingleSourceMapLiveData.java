@@ -5,10 +5,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
-
 /**
- * 设置并监听单一数据源，并做数据转换时使用 LiveData
- * 方便于当需要切换数据源时自动取消掉前一个数据源的监听
+ * 设置并监听单一数据源，并做数据转换时使用 LiveData 方便于当需要切换数据源时自动取消掉前一个数据源的监听
  *
  * @param <F> 数据源类型
  * @param <R> 转换的结果类型
@@ -28,20 +26,21 @@ public class SingleSourceMapLiveData<F, R> extends MutableLiveData<R> {
         lastMapFunction = mapFunction;
     }
 
-    private final Observer<F> observer = new Observer<F>() {
-        @Override
-        public void onChanged(F t) {
-            if (t != null && t == lastData) {
-                return;
-            }
+    private final Observer<F> observer =
+            new Observer<F>() {
+                @Override
+                public void onChanged(F t) {
+                    if (t != null && t == lastData) {
+                        return;
+                    }
 
-            lastData = t;
-            R mapResult = lastMapFunction.apply(t);
+                    lastData = t;
+                    R mapResult = lastMapFunction.apply(t);
 
-            lastResult = mapResult;
-            setValue(lastResult);
-        }
-    };
+                    lastResult = mapResult;
+                    setValue(lastResult);
+                }
+            };
 
     /**
      * 设置数据源，当有已设置过的数据源时会取消该数据源的监听

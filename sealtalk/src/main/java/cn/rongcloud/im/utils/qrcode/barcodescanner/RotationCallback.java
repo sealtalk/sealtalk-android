@@ -1,8 +1,6 @@
 package cn.rongcloud.im.utils.qrcode.barcodescanner;
 
-/**
- *
- */
+/** */
 public interface RotationCallback {
     /**
      * Rotation changed.

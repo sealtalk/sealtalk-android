@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-
 import androidx.viewpager.widget.ViewPager;
 
 public class ReadReceiptViewPager extends ViewPager {
@@ -23,20 +22,20 @@ public class ReadReceiptViewPager extends ViewPager {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
         int height = 0;
-        //下面遍历所有child的高度
+        // 下面遍历所有child的高度
         for (int i = 0; i < getChildCount(); i++) {
             if (getCurrentItem() == i) {
                 View child = getChildAt(i);
-                child.measure(widthMeasureSpec,
-                              View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+                child.measure(
+                        widthMeasureSpec,
+                        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
                 int h = child.getMeasuredHeight();
-                if (h > height) //采用最大的view的高度。
-                    height = h;
+                if (h > height) // 采用最大的view的高度。
+                height = h;
             }
         }
 
-        heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(height,
-                            View.MeasureSpec.EXACTLY);
+        heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY);
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
@@ -51,16 +50,13 @@ public class ReadReceiptViewPager extends ViewPager {
 
     @Override
     public boolean onTouchEvent(MotionEvent arg0) {
-        if (unscrollable)
-            return false;
-        else
-            return super.onTouchEvent(arg0);
+        if (unscrollable) return false;
+        else return super.onTouchEvent(arg0);
     }
+
     @Override
     public boolean onInterceptTouchEvent(MotionEvent arg0) {
-        if (unscrollable)
-            return false;
-        else
-            return super.onInterceptTouchEvent(arg0);
+        if (unscrollable) return false;
+        else return super.onInterceptTouchEvent(arg0);
     }
 }

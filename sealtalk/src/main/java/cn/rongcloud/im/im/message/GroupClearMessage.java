@@ -1,24 +1,20 @@
 package cn.rongcloud.im.im.message;
 
 import android.os.Parcel;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
-
 import io.rong.common.ParcelUtils;
 import io.rong.common.RLog;
 import io.rong.imlib.MessageTag;
 import io.rong.imlib.model.MessageContent;
+import java.io.UnsupportedEncodingException;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 @MessageTag(value = "ST:MsgClear", flag = MessageTag.NONE)
 public class GroupClearMessage extends MessageContent {
 
     private long clearTime;
 
-    private GroupClearMessage() {
-    }
+    private GroupClearMessage() {}
 
     public GroupClearMessage(Parcel in) {
         this.clearTime = ParcelUtils.readLongFromParcel(in);
@@ -38,20 +34,21 @@ public class GroupClearMessage extends MessageContent {
         } catch (JSONException var4) {
             RLog.e("GroupNotificationMessage", "JSONException " + var4.getMessage());
         }
-
     }
 
-    public static final Creator<GroupClearMessage> CREATOR = new Creator<GroupClearMessage>() {
-        public GroupClearMessage createFromParcel(Parcel source) {
-            return new GroupClearMessage(source);
-        }
+    public static final Creator<GroupClearMessage> CREATOR =
+            new Creator<GroupClearMessage>() {
+                public GroupClearMessage createFromParcel(Parcel source) {
+                    return new GroupClearMessage(source);
+                }
 
-        public GroupClearMessage[] newArray(int size) {
-            return new GroupClearMessage[size];
-        }
-    };
+                public GroupClearMessage[] newArray(int size) {
+                    return new GroupClearMessage[size];
+                }
+            };
 
-    public static GroupClearMessage obtain(String operatorUserId, String operation, long clearTime, String message) {
+    public static GroupClearMessage obtain(
+            String operatorUserId, String operation, long clearTime, String message) {
         GroupClearMessage obj = new GroupClearMessage();
         obj.clearTime = clearTime;
         return obj;
@@ -69,7 +66,7 @@ public class GroupClearMessage extends MessageContent {
     public byte[] encode() {
         JSONObject jsonObj = new JSONObject();
         try {
-            jsonObj.put("clearTime",this.clearTime);
+            jsonObj.put("clearTime", this.clearTime);
         } catch (JSONException var4) {
             RLog.e("GroupNotificationMessage", "JSONException " + var4.getMessage());
         }
@@ -93,8 +90,6 @@ public class GroupClearMessage extends MessageContent {
 
     @Override
     public String toString() {
-        return "GroupClearMessage{" +
-                ", clearTime=" + clearTime +
-                '}';
+        return "GroupClearMessage{" + ", clearTime=" + clearTime + '}';
     }
 }

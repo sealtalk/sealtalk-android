@@ -1,8 +1,6 @@
 package cn.rongcloud.im.ui.test;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,15 +8,8 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.ui.activity.TitleBaseActivity;
@@ -32,6 +23,10 @@ import io.rong.imlib.chatroom.base.RongChatRoomClient;
 import io.rong.imlib.chatroom.message.ChatRoomKVNotiMessage;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ChatRoomStatusActivity extends TitleBaseActivity implements View.OnClickListener {
 
@@ -55,73 +50,111 @@ public class ChatRoomStatusActivity extends TitleBaseActivity implements View.On
     }
 
     private void initListener() {
-        RongIMClient.getInstance().setKVStatusListener(new RongIMClient.KVStatusListener() {
+        RongIMClient.getInstance()
+                .setKVStatusListener(
+                        new RongIMClient.KVStatusListener() {
 
-            @Override
-            public void onChatRoomKVSync(String roomId) {
-                Log.e("ChatDetailActivity", "ChatRoomStatusActivity***onChatRoomKVStatusSync");
-                ChatRoomStatusDeatilActivity.OnKVStatusEvent event = new ChatRoomStatusDeatilActivity.OnKVStatusEvent(roomId, ChatRoomStatusDeatilActivity.OnKVStatusEvent.KV_SYNC, new HashMap<>());
-                ChatRoomStatusDeatilActivity.kvStatusEventList.add(event);
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        chatRoomViewModel.executeChatRoomEvent(event);
-                    }
-                });
-//                RongContext.getInstance().getEventBus().post(event);
-            }
+                            @Override
+                            public void onChatRoomKVSync(String roomId) {
+                                Log.e(
+                                        "ChatDetailActivity",
+                                        "ChatRoomStatusActivity***onChatRoomKVStatusSync");
+                                ChatRoomStatusDeatilActivity.OnKVStatusEvent event =
+                                        new ChatRoomStatusDeatilActivity.OnKVStatusEvent(
+                                                roomId,
+                                                ChatRoomStatusDeatilActivity.OnKVStatusEvent
+                                                        .KV_SYNC,
+                                                new HashMap<>());
+                                ChatRoomStatusDeatilActivity.kvStatusEventList.add(event);
+                                handler.post(
+                                        new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                chatRoomViewModel.executeChatRoomEvent(event);
+                                            }
+                                        });
+                                //
+                                // RongContext.getInstance().getEventBus().post(event);
+                            }
 
-            @Override
-            public void onChatRoomKVUpdate(String roomId, Map<String, String> chatRoomKvMap) {
-                Log.e("ChatDetailActivity", "ChatRoomStatusActivity***onChatRoomKVStatusChange");
-                ChatRoomStatusDeatilActivity.OnKVStatusEvent event = new ChatRoomStatusDeatilActivity.OnKVStatusEvent(roomId, ChatRoomStatusDeatilActivity.OnKVStatusEvent.KV_CHANGE, chatRoomKvMap);
-                if (isFirstKVStatusDidChange) {
-                    ChatRoomStatusDeatilActivity.kvStatusEventList.add(event);
-                    isFirstKVStatusDidChange = false;
-                }
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        chatRoomViewModel.executeChatRoomEvent(event);
-                    }
-                });
-//                RongContext.getInstance().getEventBus().post(event);
-            }
+                            @Override
+                            public void onChatRoomKVUpdate(
+                                    String roomId, Map<String, String> chatRoomKvMap) {
+                                Log.e(
+                                        "ChatDetailActivity",
+                                        "ChatRoomStatusActivity***onChatRoomKVStatusChange");
+                                ChatRoomStatusDeatilActivity.OnKVStatusEvent event =
+                                        new ChatRoomStatusDeatilActivity.OnKVStatusEvent(
+                                                roomId,
+                                                ChatRoomStatusDeatilActivity.OnKVStatusEvent
+                                                        .KV_CHANGE,
+                                                chatRoomKvMap);
+                                if (isFirstKVStatusDidChange) {
+                                    ChatRoomStatusDeatilActivity.kvStatusEventList.add(event);
+                                    isFirstKVStatusDidChange = false;
+                                }
+                                handler.post(
+                                        new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                chatRoomViewModel.executeChatRoomEvent(event);
+                                            }
+                                        });
+                                //
+                                // RongContext.getInstance().getEventBus().post(event);
+                            }
 
-            @Override
-            public void onChatRoomKVRemove(String roomId, Map<String, String> chatRoomKvMap) {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        chatRoomViewModel.executeChatRoomEvent(new ChatRoomStatusDeatilActivity.OnKVStatusEvent(roomId, ChatRoomStatusDeatilActivity.OnKVStatusEvent.KV_REMOVE, chatRoomKvMap));
-                    }
-                });
-//                RongContext.getInstance().getEventBus().post(new ChatRoomStatusDeatilActivity.OnKVStatusEvent(roomId, ChatRoomStatusDeatilActivity.OnKVStatusEvent.KV_REMOVE, chatRoomKvMap));
-            }
-        });
+                            @Override
+                            public void onChatRoomKVRemove(
+                                    String roomId, Map<String, String> chatRoomKvMap) {
+                                handler.post(
+                                        new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                chatRoomViewModel.executeChatRoomEvent(
+                                                        new ChatRoomStatusDeatilActivity
+                                                                .OnKVStatusEvent(
+                                                                roomId,
+                                                                ChatRoomStatusDeatilActivity
+                                                                        .OnKVStatusEvent.KV_REMOVE,
+                                                                chatRoomKvMap));
+                                            }
+                                        });
+                                //                RongContext.getInstance().getEventBus().post(new
+                                // ChatRoomStatusDeatilActivity.OnKVStatusEvent(roomId,
+                                // ChatRoomStatusDeatilActivity.OnKVStatusEvent.KV_REMOVE,
+                                // chatRoomKvMap));
+                            }
+                        });
 
-        IMManager.getInstance().getMessageRouter().observe(this, new Observer<Message>() {
-            @Override
-            public void onChanged(Message message) {
-                MessageContent content = message.getContent();
-                if (content instanceof ChatRoomKVNotiMessage) {
-                    ChatRoomStatusDeatilActivity.historyMessage.put(message.getUId(), message);
-                    chatRoomViewModel.executeChatRoomEvent(new ChatRoomStatusDeatilActivity.OnReceiveMessageEvent(message));
-                }
-            }
-        });
+        IMManager.getInstance()
+                .getMessageRouter()
+                .observe(
+                        this,
+                        new Observer<Message>() {
+                            @Override
+                            public void onChanged(Message message) {
+                                MessageContent content = message.getContent();
+                                if (content instanceof ChatRoomKVNotiMessage) {
+                                    ChatRoomStatusDeatilActivity.historyMessage.put(
+                                            message.getUId(), message);
+                                    chatRoomViewModel.executeChatRoomEvent(
+                                            new ChatRoomStatusDeatilActivity.OnReceiveMessageEvent(
+                                                    message));
+                                }
+                            }
+                        });
     }
 
-//        private void initReceiveMessageListener() {
-//        RongIM.setOnReceiveMessageListener(new RongIMClient.OnReceiveMessageListener() {
-//            @Override
-//            public boolean onReceived(Message message, int left) {
-//
-//                return false;
-//            }
-//        });
-//    }
-
+    //        private void initReceiveMessageListener() {
+    //        RongIM.setOnReceiveMessageListener(new RongIMClient.OnReceiveMessageListener() {
+    //            @Override
+    //            public boolean onReceived(Message message, int left) {
+    //
+    //                return false;
+    //            }
+    //        });
+    //    }
 
     private void initView() {
         Button btnChatRoom1 = findViewById(R.id.btn_chat_room1);
@@ -130,7 +163,6 @@ public class ChatRoomStatusActivity extends TitleBaseActivity implements View.On
         findViewById(R.id.btn_get_kvs_no_join_room2).setOnClickListener(this);
         btnChatRoom1.setOnClickListener(this);
         btnChatRoom2.setOnClickListener(this);
-
     }
 
     @Override
@@ -152,54 +184,64 @@ public class ChatRoomStatusActivity extends TitleBaseActivity implements View.On
     }
 
     private void getAllChatRoomEntries(String roomId) {
-        RongChatRoomClient.getInstance().getAllChatRoomEntries(roomId, new IRongCoreCallback.ResultCallback<Map<String, String>>() {
-            @Override
-            public void onSuccess(Map<String, String> kvMap) {
-                StringBuilder messageBuilder = new StringBuilder();
-                for (Map.Entry<String, String> entry : kvMap.entrySet()) {
-                    String key = entry.getKey();
-                    String value = entry.getValue();
-                    messageBuilder.append("key=" + key + " , value=" + value);
-                    messageBuilder.append("\n");
-                }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        new AlertDialog.Builder(ChatRoomStatusActivity.this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
-                                .setMessage(messageBuilder.toString())
-                                .setCancelable(true)
-                                .show();
-                    }
-                });
-            }
+        RongChatRoomClient.getInstance()
+                .getAllChatRoomEntries(
+                        roomId,
+                        new IRongCoreCallback.ResultCallback<Map<String, String>>() {
+                            @Override
+                            public void onSuccess(Map<String, String> kvMap) {
+                                StringBuilder messageBuilder = new StringBuilder();
+                                for (Map.Entry<String, String> entry : kvMap.entrySet()) {
+                                    String key = entry.getKey();
+                                    String value = entry.getValue();
+                                    messageBuilder.append("key=" + key + " , value=" + value);
+                                    messageBuilder.append("\n");
+                                }
+                                runOnUiThread(
+                                        new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                new AlertDialog.Builder(
+                                                                ChatRoomStatusActivity.this,
+                                                                AlertDialog
+                                                                        .THEME_DEVICE_DEFAULT_LIGHT)
+                                                        .setMessage(messageBuilder.toString())
+                                                        .setCancelable(true)
+                                                        .show();
+                                            }
+                                        });
+                            }
 
-            @Override
-            public void onError(IRongCoreEnum.CoreErrorCode e) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ToastUtils.showToast("获取失败,errorCode= " + e.code);
-                    }
-                });
-
-            }
-        });
-
+                            @Override
+                            public void onError(IRongCoreEnum.CoreErrorCode e) {
+                                runOnUiThread(
+                                        new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                ToastUtils.showToast("获取失败,errorCode= " + e.code);
+                                            }
+                                        });
+                            }
+                        });
     }
 
     private void joinRoom(String roomId) {
-        RongIM.getInstance().joinChatRoom(roomId, 20, new RongIMClient.OperationCallback() {
-            @Override
-            public void onSuccess() {
-                ToastUtils.showToast("成功加入聊天室");
-                toDeatail(roomId);
-            }
+        RongIM.getInstance()
+                .joinChatRoom(
+                        roomId,
+                        20,
+                        new RongIMClient.OperationCallback() {
+                            @Override
+                            public void onSuccess() {
+                                ToastUtils.showToast("成功加入聊天室");
+                                toDeatail(roomId);
+                            }
 
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-                ToastUtils.showToast("加入聊天室失败,errorCode= " + errorCode.code);
-            }
-        });
+                            @Override
+                            public void onError(RongIMClient.ErrorCode errorCode) {
+                                ToastUtils.showToast("加入聊天室失败,errorCode= " + errorCode.code);
+                            }
+                        });
     }
 
     private void toDeatail(String roomId) {

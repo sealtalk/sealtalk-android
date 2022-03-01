@@ -1,4 +1,3 @@
 package cn.rongcloud.im.ui.activity;
 
-public class QRCodeResultActivity extends TitleBaseActivity {
-}
+public class QRCodeResultActivity extends TitleBaseActivity {}

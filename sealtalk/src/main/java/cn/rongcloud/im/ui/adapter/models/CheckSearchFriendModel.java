@@ -5,7 +5,13 @@ import cn.rongcloud.im.db.model.FriendShipInfo;
 public class CheckSearchFriendModel extends SearchFriendModel {
     private CheckType checkType = CheckType.NONE;
 
-    public CheckSearchFriendModel(FriendShipInfo bean, int type, int nameStart, int nameEnd, int aliasStart, int aliasEnd) {
+    public CheckSearchFriendModel(
+            FriendShipInfo bean,
+            int type,
+            int nameStart,
+            int nameEnd,
+            int aliasStart,
+            int aliasEnd) {
         super(bean, type, nameStart, nameEnd, aliasStart, aliasEnd);
     }
 

@@ -17,7 +17,7 @@ public class GroupNoticeInfoResult {
 
     public Group group;
 
-    public static class Requester{
+    public static class Requester {
         public Requester(String id, String nickname) {
             this.id = id;
             this.nickname = nickname;
@@ -25,10 +25,9 @@ public class GroupNoticeInfoResult {
 
         public String id;
         public String nickname;
-
     }
 
-    public static class Receiver{
+    public static class Receiver {
         public Receiver(String id, String nickname) {
             this.id = id;
             this.nickname = nickname;
@@ -38,7 +37,7 @@ public class GroupNoticeInfoResult {
         public String nickname;
     }
 
-    public static class Group{
+    public static class Group {
         public Group(String id, String name) {
             this.id = id;
             this.name = name;

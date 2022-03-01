@@ -4,16 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
 import java.util.Date;
 
 @Entity(tableName = "friend")
 public class FriendInfo {
-    @PrimaryKey
-    @NonNull
-    private String id;
+    @PrimaryKey @NonNull private String id;
+
     @ColumnInfo(name = "message")
     private String message;
+
     @ColumnInfo(name = "updateAt")
     private Date updatedAt;
 

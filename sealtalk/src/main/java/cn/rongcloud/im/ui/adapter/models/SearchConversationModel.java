@@ -7,7 +7,12 @@ public class SearchConversationModel extends SearchModel<SearchConversationResul
     private String name;
     private String portraitUrl;
 
-    public SearchConversationModel(SearchConversationResult bean, int type, String filter, String name, String portraitUrl) {
+    public SearchConversationModel(
+            SearchConversationResult bean,
+            int type,
+            String filter,
+            String name,
+            String portraitUrl) {
         super(bean, type);
         priority = SHOW_PRIORITY_CONVERSATION;
         this.filter = filter;

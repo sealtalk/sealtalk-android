@@ -1,22 +1,19 @@
 package cn.rongcloud.im.utils.qrcode.barcodescanner;
 
-
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.google.zxing.ResultMetadataType;
 import com.google.zxing.ResultPoint;
-
 import java.util.Map;
 
 /**
  * This contains the result of a barcode scan.
  *
- * This class delegate all read-only fields of {@link Result},
- * and adds a bitmap with scanned barcode.
+ * <p>This class delegate all read-only fields of {@link Result}, and adds a bitmap with scanned
+ * barcode.
  */
 public class BarcodeResult {
     private static final float PREVIEW_LINE_WIDTH = 4.0f;
@@ -32,9 +29,11 @@ public class BarcodeResult {
         this.sourceData = sourceData;
     }
 
-    private static void drawLine(Canvas canvas, Paint paint, ResultPoint a, ResultPoint b, int scaleFactor) {
+    private static void drawLine(
+            Canvas canvas, Paint paint, ResultPoint a, ResultPoint b, int scaleFactor) {
         if (a != null && b != null) {
-            canvas.drawLine(a.getX() / scaleFactor,
+            canvas.drawLine(
+                    a.getX() / scaleFactor,
                     a.getY() / scaleFactor,
                     b.getX() / scaleFactor,
                     b.getY() / scaleFactor,
@@ -42,9 +41,7 @@ public class BarcodeResult {
         }
     }
 
-    /**
-     * @return wrapped {@link Result}
-     */
+    /** @return wrapped {@link Result} */
     public Result getResult() {
         return mResult;
     }
@@ -67,7 +64,9 @@ public class BarcodeResult {
         ResultPoint[] points = mResult.getResultPoints();
 
         if (points != null && points.length > 0 && bitmap != null) {
-            barcode = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+            barcode =
+                    Bitmap.createBitmap(
+                            bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(barcode);
             canvas.drawBitmap(bitmap, 0, 0, null);
             Paint paint = new Paint();
@@ -75,9 +74,9 @@ public class BarcodeResult {
             if (points.length == 2) {
                 paint.setStrokeWidth(PREVIEW_LINE_WIDTH);
                 drawLine(canvas, paint, points[0], points[1], mScaleFactor);
-            } else if (points.length == 4 &&
-                    (mResult.getBarcodeFormat() == BarcodeFormat.UPC_A ||
-                            mResult.getBarcodeFormat() == BarcodeFormat.EAN_13)) {
+            } else if (points.length == 4
+                    && (mResult.getBarcodeFormat() == BarcodeFormat.UPC_A
+                            || mResult.getBarcodeFormat() == BarcodeFormat.EAN_13)) {
                 // Hacky special case -- draw two lines, for the barcode and metadata
                 drawLine(canvas, paint, points[0], points[1], mScaleFactor);
                 drawLine(canvas, paint, points[2], points[3], mScaleFactor);
@@ -85,7 +84,8 @@ public class BarcodeResult {
                 paint.setStrokeWidth(PREVIEW_DOT_WIDTH);
                 for (ResultPoint point : points) {
                     if (point != null) {
-                        canvas.drawPoint(point.getX() / mScaleFactor, point.getY() / mScaleFactor, paint);
+                        canvas.drawPoint(
+                                point.getX() / mScaleFactor, point.getY() / mScaleFactor, paint);
                     }
                 }
             }
@@ -93,11 +93,8 @@ public class BarcodeResult {
         return barcode;
     }
 
-    /**
-     *
-     * @return Bitmap preview scale factor
-     */
-    public int getBitmapScaleFactor(){
+    /** @return Bitmap preview scale factor */
+    public int getBitmapScaleFactor() {
         return mScaleFactor;
     }
 
@@ -118,9 +115,9 @@ public class BarcodeResult {
     }
 
     /**
-     * @return points related to the barcode in the image. These are typically points
-     * identifying finder patterns or the corners of the barcode. The exact meaning is
-     * specific to the type of barcode that was decoded.
+     * @return points related to the barcode in the image. These are typically points identifying
+     *     finder patterns or the corners of the barcode. The exact meaning is specific to the type
+     *     of barcode that was decoded.
      * @see Result#getResultPoints()
      */
     public ResultPoint[] getResultPoints() {
@@ -136,9 +133,9 @@ public class BarcodeResult {
     }
 
     /**
-     * @return {@link Map} mapping {@link ResultMetadataType} keys to values. May be
-     * {@code null}. This contains optional metadata about what was detected about the barcode,
-     * like orientation.
+     * @return {@link Map} mapping {@link ResultMetadataType} keys to values. May be {@code null}.
+     *     This contains optional metadata about what was detected about the barcode, like
+     *     orientation.
      * @see Result#getResultMetadata()
      */
     public Map<ResultMetadataType, Object> getResultMetadata() {

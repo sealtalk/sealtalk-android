@@ -3,9 +3,7 @@ package cn.rongcloud.im.utils.qrcode.barcodescanner;
 import android.content.Context;
 import android.util.AttributeSet;
 
-/**
- * Used as an alias for DecoratedBarcodeView, for backwards-compatibility.
- */
+/** Used as an alias for DecoratedBarcodeView, for backwards-compatibility. */
 public class CompoundBarcodeView extends DecoratedBarcodeView {
     public CompoundBarcodeView(Context context) {
         super(context);

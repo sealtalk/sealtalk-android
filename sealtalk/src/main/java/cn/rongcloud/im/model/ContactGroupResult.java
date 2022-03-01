@@ -1,8 +1,7 @@
 package cn.rongcloud.im.model;
 
-import java.util.List;
-
 import cn.rongcloud.im.db.model.GroupEntity;
+import java.util.List;
 
 public class ContactGroupResult {
     private int total;

@@ -1,18 +1,9 @@
 package cn.rongcloud.im.ui.adapter;
 
-import android.content.Context;
-import android.view.View;
-import android.view.ViewGroup;
+/** Created by weiqinxiao on 15/11/6. */
+// Todo
 
-
-import io.rong.imlib.model.Conversation;
-
-/**
- * Created by weiqinxiao on 15/11/6.
- */
-//Todo
-
-//public class SubConversationListAdapterEx extends SubConversationListAdapter {
+// public class SubConversationListAdapterEx extends SubConversationListAdapter {
 //
 //    public SubConversationListAdapterEx(Context context) {
 //        super(context);
@@ -30,4 +21,4 @@ import io.rong.imlib.model.Conversation;
 //        }
 //        super.bindView(v, position, data);
 //    }
-//}
+// }

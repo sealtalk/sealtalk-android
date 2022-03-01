@@ -1,7 +1,6 @@
 package cn.rongcloud.im.ui.fragment;
 
 import androidx.lifecycle.ViewModelProviders;
-
 import cn.rongcloud.im.viewmodel.CommonListBaseViewModel;
 import cn.rongcloud.im.viewmodel.ForwardSelectContactViewModel;
 

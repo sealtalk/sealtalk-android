@@ -4,20 +4,16 @@ import android.content.Context;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.view.ViewGroup;
-
-import com.google.gson.Gson;
-
-import java.util.List;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.im.message.GroupApplyMessage;
 import cn.rongcloud.im.model.GroupApplyMessageData;
+import com.google.gson.Gson;
 import io.rong.imkit.conversation.messgelist.provider.BaseMessageItemProvider;
 import io.rong.imkit.model.UiMessage;
-import io.rong.imkit.widget.adapter.BaseAdapter;
 import io.rong.imkit.widget.adapter.IViewProviderListener;
 import io.rong.imkit.widget.adapter.ViewHolder;
 import io.rong.imlib.model.MessageContent;
+import java.util.List;
 
 public class GroupApplyMessageItemProvider extends BaseMessageItemProvider<GroupApplyMessage> {
     @Override
@@ -26,12 +22,23 @@ public class GroupApplyMessageItemProvider extends BaseMessageItemProvider<Group
     }
 
     @Override
-    protected void bindMessageContentViewHolder(ViewHolder holder, ViewHolder parentHolder, GroupApplyMessage groupApplyMessage, UiMessage uiMessage, int position, List<UiMessage> list, IViewProviderListener<UiMessage> listener) {
-
-    }
+    protected void bindMessageContentViewHolder(
+            ViewHolder holder,
+            ViewHolder parentHolder,
+            GroupApplyMessage groupApplyMessage,
+            UiMessage uiMessage,
+            int position,
+            List<UiMessage> list,
+            IViewProviderListener<UiMessage> listener) {}
 
     @Override
-    protected boolean onItemClick(ViewHolder holder, GroupApplyMessage groupApplyMessage, UiMessage uiMessage, int position, List<UiMessage> list, IViewProviderListener<UiMessage> listener) {
+    protected boolean onItemClick(
+            ViewHolder holder,
+            GroupApplyMessage groupApplyMessage,
+            UiMessage uiMessage,
+            int position,
+            List<UiMessage> list,
+            IViewProviderListener<UiMessage> listener) {
         return false;
     }
 
@@ -44,15 +51,23 @@ public class GroupApplyMessageItemProvider extends BaseMessageItemProvider<Group
     public Spannable getSummarySpannable(Context context, GroupApplyMessage groupApplyMessage) {
         String content = "";
         Gson gson = new Gson();
-        if(groupApplyMessage == null) {
+        if (groupApplyMessage == null) {
             return new SpannableString("");
         }
-        GroupApplyMessageData groupApplyMessageData = gson.fromJson(groupApplyMessage.getData(), GroupApplyMessageData.class);
+        GroupApplyMessageData groupApplyMessageData =
+                gson.fromJson(groupApplyMessage.getData(), GroupApplyMessageData.class);
         if (groupApplyMessageData != null) {
             if (groupApplyMessageData.getType() == 2) {
-                content = context.getString(R.string.seal_conversation_notification_group_tips_add) + " " + groupApplyMessageData.getTargetGroupName();
+                content =
+                        context.getString(R.string.seal_conversation_notification_group_tips_add)
+                                + " "
+                                + groupApplyMessageData.getTargetGroupName();
             } else {
-                content = groupApplyMessageData.getOperatorNickname() + " " + context.getString(R.string.seal_conversation_notification_group_tips);
+                content =
+                        groupApplyMessageData.getOperatorNickname()
+                                + " "
+                                + context.getString(
+                                        R.string.seal_conversation_notification_group_tips);
             }
         }
 

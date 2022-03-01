@@ -1,9 +1,6 @@
 package cn.rongcloud.im.model;
 
-
-/**
- * 基础通讯录信息
- */
+/** 基础通讯录信息 */
 public class SimplePhoneContactInfo {
     private String phone;
     private String name;

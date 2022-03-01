@@ -7,32 +7,38 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-
-import java.util.List;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.model.ContactNotificationMessageData;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import io.rong.imkit.conversation.messgelist.provider.BaseMessageItemProvider;
 import io.rong.imkit.model.UiMessage;
-import io.rong.imkit.widget.adapter.BaseAdapter;
 import io.rong.imkit.widget.adapter.IViewProviderListener;
 import io.rong.imkit.widget.adapter.ViewHolder;
 import io.rong.imlib.model.MessageContent;
 import io.rong.message.ContactNotificationMessage;
+import java.util.List;
 
-public class ContactNotificationMessageProvider extends BaseMessageItemProvider<ContactNotificationMessage> {
+public class ContactNotificationMessageProvider
+        extends BaseMessageItemProvider<ContactNotificationMessage> {
 
     @Override
     protected ViewHolder onCreateMessageContentViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rc_item_information_notification_message, null);
+        View view =
+                LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.rc_item_information_notification_message, null);
         return new ViewHolder(view.getContext(), view);
     }
 
     @Override
-    protected void bindMessageContentViewHolder(ViewHolder holder,ViewHolder parentHolder, ContactNotificationMessage content, UiMessage uiMessage, int position, List<UiMessage> list, IViewProviderListener<UiMessage> listener) {
+    protected void bindMessageContentViewHolder(
+            ViewHolder holder,
+            ViewHolder parentHolder,
+            ContactNotificationMessage content,
+            UiMessage uiMessage,
+            int position,
+            List<UiMessage> list,
+            IViewProviderListener<UiMessage> listener) {
         if (content != null) {
             if (!TextUtils.isEmpty(content.getExtra())) {
                 ContactNotificationMessageData bean = null;
@@ -44,15 +50,27 @@ public class ContactNotificationMessageProvider extends BaseMessageItemProvider<
                 } finally {
                     if (bean != null && !TextUtils.isEmpty(bean.getSourceUserNickname())) {
                         if (content.getOperation().equals("AcceptResponse")) {
-                            holder.setText(R.id.rc_msg,holder.getContext().getResources().getString(R.string.msg_contact_notification_someone_agree_your_request));
+                            holder.setText(
+                                    R.id.rc_msg,
+                                    holder.getContext()
+                                            .getResources()
+                                            .getString(
+                                                    R.string
+                                                            .msg_contact_notification_someone_agree_your_request));
                         }
                     } else {
                         if (content.getOperation().equals("AcceptResponse")) {
-                            holder.setText(R.id.rc_msg,holder.getContext().getResources().getString(R.string.msg_contact_notification_agree_your_request));
+                            holder.setText(
+                                    R.id.rc_msg,
+                                    holder.getContext()
+                                            .getResources()
+                                            .getString(
+                                                    R.string
+                                                            .msg_contact_notification_agree_your_request));
                         }
                     }
                     if (content.getOperation().equals("Request")) {
-                        holder.setText(R.id.rc_msg,content.getMessage());
+                        holder.setText(R.id.rc_msg, content.getMessage());
                     }
                 }
             }
@@ -60,7 +78,13 @@ public class ContactNotificationMessageProvider extends BaseMessageItemProvider<
     }
 
     @Override
-    protected boolean onItemClick(ViewHolder holder, ContactNotificationMessage contactNotificationMessage, UiMessage uiMessage, int position, List<UiMessage> list, IViewProviderListener<UiMessage> listener) {
+    protected boolean onItemClick(
+            ViewHolder holder,
+            ContactNotificationMessage contactNotificationMessage,
+            UiMessage uiMessage,
+            int position,
+            List<UiMessage> list,
+            IViewProviderListener<UiMessage> listener) {
         return false;
     }
 
@@ -81,11 +105,16 @@ public class ContactNotificationMessageProvider extends BaseMessageItemProvider<
             } finally {
                 if (bean != null && !TextUtils.isEmpty(bean.getSourceUserNickname())) {
                     if (content.getOperation().equals("AcceptResponse")) {
-                        return new SpannableString(context.getString(R.string.msg_contact_notification_someone_agree_your_request));
+                        return new SpannableString(
+                                context.getString(
+                                        R.string
+                                                .msg_contact_notification_someone_agree_your_request));
                     }
                 } else {
                     if (content.getOperation().equals("AcceptResponse")) {
-                        return new SpannableString(context.getString(R.string.msg_contact_notification_agree_your_request));
+                        return new SpannableString(
+                                context.getString(
+                                        R.string.msg_contact_notification_agree_your_request));
                     }
                 }
                 if (content.getOperation().equals("Request")) {

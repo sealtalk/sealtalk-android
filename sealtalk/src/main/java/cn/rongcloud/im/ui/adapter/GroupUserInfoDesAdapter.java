@@ -8,19 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.activity.GroupUserInfoActivity;
-import cn.rongcloud.im.ui.activity.UserDetailActivity;
 import cn.rongcloud.im.ui.widget.ClearWriteEditText;
-import cn.rongcloud.im.utils.ToastUtils;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class GroupUserInfoDesAdapter extends RecyclerView.Adapter {
 
@@ -33,13 +27,13 @@ public class GroupUserInfoDesAdapter extends RecyclerView.Adapter {
     public GroupUserInfoDesAdapter(Context mContext) {
         this.mContext = mContext;
         data = new ArrayList<>();
-        //最少添加一个
+        // 最少添加一个
         data.add("");
     }
 
     public GroupUserInfoDesAdapter(Context context, int type) {
         data = new ArrayList<>();
-        //最少添加一个
+        // 最少添加一个
         data.add("");
         mContext = context;
         mType = type;
@@ -51,7 +45,7 @@ public class GroupUserInfoDesAdapter extends RecyclerView.Adapter {
     }
 
     public ArrayList<String> getData() {
-        //删除空的字符串
+        // 删除空的字符串
         Iterator<String> iterator = data.iterator();
         while (iterator.hasNext()) {
             String str = iterator.next();
@@ -85,49 +79,51 @@ public class GroupUserInfoDesAdapter extends RecyclerView.Adapter {
         if (holder instanceof DescriptionViewHolder) {
             DescriptionViewHolder desHolder = (DescriptionViewHolder) holder;
             if (mType == GroupUserInfoActivity.FROM_USER_DETAIL) {
-                //只做展示，无法编辑
+                // 只做展示，无法编辑
                 desHolder.cetDes.setEnabled(false);
                 desHolder.cetDes.setClearDrawableNeverShow(true);
                 desHolder.tvDelete.setVisibility(View.GONE);
                 if (TextUtils.isEmpty(data.get(position))) {
-                    desHolder.cetDes.setText(R.string.seal_group_user_info_des_no_set, TextView.BufferType.EDITABLE);
+                    desHolder.cetDes.setText(
+                            R.string.seal_group_user_info_des_no_set, TextView.BufferType.EDITABLE);
                 } else {
                     desHolder.cetDes.setText(data.get(position), TextView.BufferType.EDITABLE);
                 }
             } else {
                 desHolder.cetDes.setText(data.get(position), TextView.BufferType.EDITABLE);
             }
-            desHolder.cetDes.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            desHolder.cetDes.addTextChangedListener(
+                    new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(
+                                CharSequence s, int start, int count, int after) {}
 
-                }
+                        @Override
+                        public void onTextChanged(
+                                CharSequence s, int start, int before, int count) {}
 
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    //替换元素
-                    data.set(desHolder.getAdapterPosition(), s.toString());
-                }
-            });
-            desHolder.tvDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    removeItem(desHolder.getAdapterPosition());
-                }
-            });
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            // 替换元素
+                            data.set(desHolder.getAdapterPosition(), s.toString());
+                        }
+                    });
+            desHolder.tvDelete.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            removeItem(desHolder.getAdapterPosition());
+                        }
+                    });
         } else if (holder instanceof DescriptionAddViewHolder) {
             DescriptionAddViewHolder desHolder = (DescriptionAddViewHolder) holder;
-            desHolder.tvAdd.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    addItem("");
-                }
-            });
+            desHolder.tvAdd.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            addItem("");
+                        }
+                    });
         }
     }
 
@@ -146,7 +142,7 @@ public class GroupUserInfoDesAdapter extends RecyclerView.Adapter {
     }
 
     public void removeItem(int postion) {
-        //最少保留一条
+        // 最少保留一条
         if (data.size() <= 1) {
             return;
         }
@@ -155,7 +151,7 @@ public class GroupUserInfoDesAdapter extends RecyclerView.Adapter {
     }
 
     public void addItem(String s) {
-        //最多添加10条
+        // 最多添加10条
         if (data.size() >= 10) {
             return;
         }
@@ -171,10 +167,12 @@ public class GroupUserInfoDesAdapter extends RecyclerView.Adapter {
             super(itemView);
             tvDelete = itemView.findViewById(R.id.tv_delete);
             cetDes = itemView.findViewById(R.id.cet_description);
-            cetDes.setClearDrawable(itemView.getContext().getResources().getDrawable(R.drawable.seal_st_account_delete));
+            cetDes.setClearDrawable(
+                    itemView.getContext()
+                            .getResources()
+                            .getDrawable(R.drawable.seal_st_account_delete));
             cetDes.setShowClearDrawableNoFocus(true);
         }
-
     }
 
     class DescriptionAddViewHolder extends RecyclerView.ViewHolder {
@@ -184,6 +182,5 @@ public class GroupUserInfoDesAdapter extends RecyclerView.Adapter {
             super(itemView);
             tvAdd = itemView.findViewById(R.id.tv_add);
         }
-
     }
 }

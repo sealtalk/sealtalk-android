@@ -3,7 +3,6 @@ package io.rong.recognizer;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -12,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.RecognizerListener;
@@ -20,20 +18,14 @@ import com.iflytek.cloud.RecognizerResult;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechRecognizer;
-import com.iflytek.cloud.SpeechUtility;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-
+import io.rong.common.RLog;
 import java.util.Locale;
 import java.util.Random;
-
-import io.rong.common.RLog;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Recognizer extends RelativeLayout implements RecognizerListener {
-    private final static String TAG = "Recognizer";
+    private static final String TAG = "Recognizer";
 
     private ImageView imgMic;
     private RelativeLayout rlBottom;
@@ -46,10 +38,10 @@ public class Recognizer extends RelativeLayout implements RecognizerListener {
     private static String mAppId;
 
     /**
-     * 开发者可以通过此接口设置自己从科大讯飞官网申请的 appId。
-     * 此方法可以在 SDK init 之后调用。
+     * 开发者可以通过此接口设置自己从科大讯飞官网申请的 appId。 此方法可以在 SDK init 之后调用。
      *
-     * 注意： appid 必须和下载的SDK保持一致，否则会出现10407错误
+     * <p>注意： appid 必须和下载的SDK保持一致，否则会出现10407错误
+     *
      * @param appId 自定义的 appId
      */
     public static void setAppId(String appId) {
@@ -69,45 +61,49 @@ public class Recognizer extends RelativeLayout implements RecognizerListener {
     private void initViews() {
         setClickable(true);
         setBackgroundColor(getResources().getColor(R.color.rc_recognizerview_bg_normal));
-        RelativeLayout recognizerContainer = (RelativeLayout) LayoutInflater.from(getContext()).inflate(R.layout.rc_view_recognizer, null);
+        RelativeLayout recognizerContainer =
+                (RelativeLayout)
+                        LayoutInflater.from(getContext())
+                                .inflate(R.layout.rc_view_recognizer, null);
         View rlMic = recognizerContainer.findViewById(R.id.rl_mic);
-        rlMic.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mIat == null || !mIat.isListening()) {
-                    startRecognize();
-                } else {
-                    reset();
-                }
-            }
-        });
+        rlMic.setOnClickListener(
+                new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (mIat == null || !mIat.isListening()) {
+                            startRecognize();
+                        } else {
+                            reset();
+                        }
+                    }
+                });
         imgMic = (ImageView) recognizerContainer.findViewById(R.id.img_mic);
 
         TextView tvClear = (TextView) recognizerContainer.findViewById(R.id.btn_clear);
-        tvClear.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != resultCallBack) {
-                    resultCallBack.onClearClick();
-                }
-            }
-        });
+        tvClear.setOnClickListener(
+                new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (null != resultCallBack) {
+                            resultCallBack.onClearClick();
+                        }
+                    }
+                });
         rlBottom = (RelativeLayout) recognizerContainer.findViewById(R.id.rl_bottom);
         addView(recognizerContainer);
         random = new Random();
         IflytekSpeech.initSDK(getContext(), mAppId);
     }
 
-    /**
-     * 初始化监听器。
-     */
-    private static InitListener mInitListener = new InitListener() {
+    /** 初始化监听器。 */
+    private static InitListener mInitListener =
+            new InitListener() {
 
-        @Override
-        public void onInit(int code) {
-            RLog.i(TAG, "onInit " + code);
-        }
-    };
+                @Override
+                public void onInit(int code) {
+                    RLog.i(TAG, "onInit " + code);
+                }
+            };
 
     public void startRecognize() {
         if (null == mIat) {
@@ -137,7 +133,6 @@ public class Recognizer extends RelativeLayout implements RecognizerListener {
         mIat.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD);
         // 设置返回结果格式
         mIat.setParameter(SpeechConstant.RESULT_TYPE, "json");
-
 
         mIat.setParameter(SpeechConstant.DOMAIN, "iat");
         if ("zh".equals(Locale.getDefault().getLanguage().toLowerCase())) {
@@ -218,7 +213,6 @@ public class Recognizer extends RelativeLayout implements RecognizerListener {
         }
     }
 
-
     private void endOfSpeech() {
         if (null == imgMic) return;
         imgMic.setImageResource(R.drawable.rc_anim_speech_end);
@@ -226,7 +220,6 @@ public class Recognizer extends RelativeLayout implements RecognizerListener {
         imgMic.clearAnimation();
         animEnd.start();
     }
-
 
     private void beginOfSpeech() {
         if (null == imgMic) return;
@@ -289,7 +282,11 @@ public class Recognizer extends RelativeLayout implements RecognizerListener {
     @Override
     public void onError(SpeechError speechError) {
         if (speechError.getErrorCode() == ErrorCode.ERROR_NO_NETWORK) {
-            Toast.makeText(getContext(), getContext().getString(R.string.rc_plugin_recognize_check_network), Toast.LENGTH_SHORT).show();
+            Toast.makeText(
+                            getContext(),
+                            getContext().getString(R.string.rc_plugin_recognize_check_network),
+                            Toast.LENGTH_SHORT)
+                    .show();
         }
         if (imgMic != null) {
             imgMic.setImageResource(R.drawable.rc_recognize_disable);

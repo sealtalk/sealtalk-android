@@ -11,21 +11,17 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.activity.TitleBaseActivity;
 import io.rong.imlib.IRongCallback;
-import io.rong.imlib.RongCoreClient;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.discussion.message.DiscussionNotificationMessage;
 import io.rong.imlib.discussion.model.Discussion;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DiscussionActivity extends TitleBaseActivity implements View.OnClickListener {
 
@@ -92,18 +88,22 @@ public class DiscussionActivity extends TitleBaseActivity implements View.OnClic
         userIdList.add("1");
         userIdList.add("2");
         userIdList.add("3");
-        RongIMClient.getInstance().createDiscussion("讨论组", userIdList, new RongIMClient.CreateDiscussionCallback() {
-            @Override
-            public void onSuccess(String s) {
-                currentDiscussionId = s;
-                addToList("create success ===" + s);
-            }
+        RongIMClient.getInstance()
+                .createDiscussion(
+                        "讨论组",
+                        userIdList,
+                        new RongIMClient.CreateDiscussionCallback() {
+                            @Override
+                            public void onSuccess(String s) {
+                                currentDiscussionId = s;
+                                addToList("create success ===" + s);
+                            }
 
-            @Override
-            public void onError(RongIMClient.ErrorCode e) {
-                addToList("create discussion failed === " + e.toString());
-            }
-        });
+                            @Override
+                            public void onError(RongIMClient.ErrorCode e) {
+                                addToList("create discussion failed === " + e.toString());
+                            }
+                        });
     }
 
     private void addMemberToDiscussion() {
@@ -114,20 +114,25 @@ public class DiscussionActivity extends TitleBaseActivity implements View.OnClic
         List<String> userIdList = new ArrayList<>();
         userIdList.add("4");
         userIdList.add("5");
-        RongIMClient.getInstance().addMemberToDiscussion(currentDiscussionId, userIdList, new RongIMClient.OperationCallback() {
-            @Override
-            public void onSuccess() {
-                addToList("add Member success ===");
-            }
+        RongIMClient.getInstance()
+                .addMemberToDiscussion(
+                        currentDiscussionId,
+                        userIdList,
+                        new RongIMClient.OperationCallback() {
+                            @Override
+                            public void onSuccess() {
+                                addToList("add Member success ===");
+                            }
 
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-                addToList("add Member failed === " + errorCode.toString());
-            }
-        });
+                            @Override
+                            public void onError(RongIMClient.ErrorCode errorCode) {
+                                addToList("add Member failed === " + errorCode.toString());
+                            }
+                        });
     }
 
-    private RongIMClient.DiscussionInviteStatus discussionInviteStatus = RongIMClient.DiscussionInviteStatus.OPENED;
+    private RongIMClient.DiscussionInviteStatus discussionInviteStatus =
+            RongIMClient.DiscussionInviteStatus.OPENED;
 
     private void setDiscussionInviteStatus() {
         if (TextUtils.isEmpty(currentDiscussionId)) {
@@ -139,17 +144,23 @@ public class DiscussionActivity extends TitleBaseActivity implements View.OnClic
         } else {
             discussionInviteStatus = RongIMClient.DiscussionInviteStatus.OPENED;
         }
-        RongIMClient.getInstance().setDiscussionInviteStatus(currentDiscussionId, discussionInviteStatus, new RongIMClient.OperationCallback() {
-            @Override
-            public void onSuccess() {
-                addToList("set Discussion InviteStatus success ===");
-            }
+        RongIMClient.getInstance()
+                .setDiscussionInviteStatus(
+                        currentDiscussionId,
+                        discussionInviteStatus,
+                        new RongIMClient.OperationCallback() {
+                            @Override
+                            public void onSuccess() {
+                                addToList("set Discussion InviteStatus success ===");
+                            }
 
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-                addToList("set Discussion InviteStatus failed ===" + errorCode.toString());
-            }
-        });
+                            @Override
+                            public void onError(RongIMClient.ErrorCode errorCode) {
+                                addToList(
+                                        "set Discussion InviteStatus failed ==="
+                                                + errorCode.toString());
+                            }
+                        });
     }
 
     private void removeMemberFromDiscussion() {
@@ -157,17 +168,21 @@ public class DiscussionActivity extends TitleBaseActivity implements View.OnClic
             Toast.makeText(this, "讨论组未创建", Toast.LENGTH_SHORT).show();
             return;
         }
-        RongIMClient.getInstance().removeMemberFromDiscussion(currentDiscussionId, "5", new RongIMClient.OperationCallback() {
-            @Override
-            public void onSuccess() {
-                addToList("remove Member success ===");
-            }
+        RongIMClient.getInstance()
+                .removeMemberFromDiscussion(
+                        currentDiscussionId,
+                        "5",
+                        new RongIMClient.OperationCallback() {
+                            @Override
+                            public void onSuccess() {
+                                addToList("remove Member success ===");
+                            }
 
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-                addToList("remove Member failed === " + errorCode.toString());
-            }
-        });
+                            @Override
+                            public void onError(RongIMClient.ErrorCode errorCode) {
+                                addToList("remove Member failed === " + errorCode.toString());
+                            }
+                        });
     }
 
     private void renameDiscussion() {
@@ -175,17 +190,21 @@ public class DiscussionActivity extends TitleBaseActivity implements View.OnClic
             Toast.makeText(this, "讨论组未创建", Toast.LENGTH_SHORT).show();
             return;
         }
-        RongIMClient.getInstance().setDiscussionName(currentDiscussionId, "讨论组 1", new RongIMClient.OperationCallback() {
-            @Override
-            public void onSuccess() {
-                addToList("rename Discussion success ===");
-            }
+        RongIMClient.getInstance()
+                .setDiscussionName(
+                        currentDiscussionId,
+                        "讨论组 1",
+                        new RongIMClient.OperationCallback() {
+                            @Override
+                            public void onSuccess() {
+                                addToList("rename Discussion success ===");
+                            }
 
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-                addToList("rename Discussion failed === " + errorCode.toString());
-            }
-        });
+                            @Override
+                            public void onError(RongIMClient.ErrorCode errorCode) {
+                                addToList("rename Discussion failed === " + errorCode.toString());
+                            }
+                        });
     }
 
     private void quitDiscussion() {
@@ -193,17 +212,20 @@ public class DiscussionActivity extends TitleBaseActivity implements View.OnClic
             Toast.makeText(this, "讨论组未创建", Toast.LENGTH_SHORT).show();
             return;
         }
-        RongIMClient.getInstance().quitDiscussion(currentDiscussionId, new RongIMClient.OperationCallback() {
-            @Override
-            public void onSuccess() {
-                addToList("quit Discussion success ===");
-            }
+        RongIMClient.getInstance()
+                .quitDiscussion(
+                        currentDiscussionId,
+                        new RongIMClient.OperationCallback() {
+                            @Override
+                            public void onSuccess() {
+                                addToList("quit Discussion success ===");
+                            }
 
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-                addToList("quit Discussion failed === " + errorCode.toString());
-            }
-        });
+                            @Override
+                            public void onError(RongIMClient.ErrorCode errorCode) {
+                                addToList("quit Discussion failed === " + errorCode.toString());
+                            }
+                        });
     }
 
     private void getDiscussionInfo() {
@@ -211,26 +233,39 @@ public class DiscussionActivity extends TitleBaseActivity implements View.OnClic
             Toast.makeText(this, "讨论组未创建", Toast.LENGTH_SHORT).show();
             return;
         }
-        RongIMClient.getInstance().getDiscussion(currentDiscussionId, new RongIMClient.ResultCallback<Discussion>() {
-            @Override
-            public void onSuccess(Discussion discussion) {
-                addToList("get Discussion success === " + "Discussion{" +
-                        "id='" + discussion.getId() + '\'' +
-                        ", name='" + discussion.getName() + '\'' +
-                        ", creatorId='" + discussion.getCreatorId() + '\'' +
-                        ", isOpen=" + discussion.isOpen() +
-                        ", memberIdList=" + discussion.getMemberIdList() +
-                        '}');
-            }
+        RongIMClient.getInstance()
+                .getDiscussion(
+                        currentDiscussionId,
+                        new RongIMClient.ResultCallback<Discussion>() {
+                            @Override
+                            public void onSuccess(Discussion discussion) {
+                                addToList(
+                                        "get Discussion success === "
+                                                + "Discussion{"
+                                                + "id='"
+                                                + discussion.getId()
+                                                + '\''
+                                                + ", name='"
+                                                + discussion.getName()
+                                                + '\''
+                                                + ", creatorId='"
+                                                + discussion.getCreatorId()
+                                                + '\''
+                                                + ", isOpen="
+                                                + discussion.isOpen()
+                                                + ", memberIdList="
+                                                + discussion.getMemberIdList()
+                                                + '}');
+                            }
 
-            @Override
-            public void onError(RongIMClient.ErrorCode e) {
-                addToList("get Discussion failed === " + e.toString());
-            }
-        });
+                            @Override
+                            public void onError(RongIMClient.ErrorCode e) {
+                                addToList("get Discussion failed === " + e.toString());
+                            }
+                        });
     }
 
-    private void sendDiscussionMessage(){
+    private void sendDiscussionMessage() {
         if (TextUtils.isEmpty(currentDiscussionId)) {
             Toast.makeText(this, "讨论组未创建", Toast.LENGTH_SHORT).show();
             return;
@@ -238,41 +273,51 @@ public class DiscussionActivity extends TitleBaseActivity implements View.OnClic
         DiscussionNotificationMessage message = new DiscussionNotificationMessage();
         message.setType(1);
         message.setOperator(RongIMClient.getInstance().getCurrentUserId());
-        RongIMClient.getInstance().sendMessage(Conversation.ConversationType.DISCUSSION, currentDiscussionId, message, "", "", new IRongCallback.ISendMessageCallback() {
-            @Override
-            public void onAttached(Message message) {
+        RongIMClient.getInstance()
+                .sendMessage(
+                        Conversation.ConversationType.DISCUSSION,
+                        currentDiscussionId,
+                        message,
+                        "",
+                        "",
+                        new IRongCallback.ISendMessageCallback() {
+                            @Override
+                            public void onAttached(Message message) {}
 
-            }
+                            @Override
+                            public void onSuccess(Message message) {
+                                addToList("send Discussion Message Success === ");
+                            }
 
-            @Override
-            public void onSuccess(Message message) {
-                addToList("send Discussion Message Success === ");
-            }
-
-            @Override
-            public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-                addToList("send Discussion Message === " + errorCode.toString());
-            }
-        });
+                            @Override
+                            public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+                                addToList("send Discussion Message === " + errorCode.toString());
+                            }
+                        });
     }
 
     public void addToList(String str) {
         contentList.add(str);
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.notifyDataSetChanged();
-            }
-        });
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (lvContent != null && mAdapter != null) {
-                    lvContent.setSelection(mAdapter.getCount() - 1);
-                    Log.e("addToList", "**" + mAdapter.getCount() + "**" + contentList.size());
-                }
-            }
-        }, 300);
+        handler.post(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        mAdapter.notifyDataSetChanged();
+                    }
+                });
+        handler.postDelayed(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        if (lvContent != null && mAdapter != null) {
+                            lvContent.setSelection(mAdapter.getCount() - 1);
+                            Log.e(
+                                    "addToList",
+                                    "**" + mAdapter.getCount() + "**" + contentList.size());
+                        }
+                    }
+                },
+                300);
     }
 
     private class MyAdapter extends BaseAdapter {
@@ -295,7 +340,9 @@ public class DiscussionActivity extends TitleBaseActivity implements View.OnClic
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_test_status, null);
+                convertView =
+                        LayoutInflater.from(parent.getContext())
+                                .inflate(R.layout.item_test_status, null);
             }
             TextView tvCotent = convertView.findViewById(R.id.tv_content);
             tvCotent.setText(contentList.get(position));

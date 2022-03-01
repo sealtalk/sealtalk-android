@@ -5,9 +5,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.GridView;
 
-/**
- * 自适应高度 GridView
- */
+/** 自适应高度 GridView */
 public class WrapHeightGridView extends GridView {
 
     public WrapHeightGridView(Context context) {
@@ -32,6 +30,4 @@ public class WrapHeightGridView extends GridView {
         int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
         super.onMeasure(widthMeasureSpec, expandSpec);
     }
-
-
 }

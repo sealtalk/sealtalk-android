@@ -1,18 +1,14 @@
 package cn.rongcloud.im.utils.qrcode.barcodescanner.camera;
 
 import android.graphics.Rect;
-
 import cn.rongcloud.im.utils.qrcode.barcodescanner.Size;
 
-/**
- * Scales the size so that it fits exactly. Aspect ratio is NOT preserved.
- */
+/** Scales the size so that it fits exactly. Aspect ratio is NOT preserved. */
 public class FitXYStrategy extends PreviewScalingStrategy {
     private static final String TAG = FitXYStrategy.class.getSimpleName();
 
-
     private static float absRatio(float ratio) {
-        if(ratio < 1.0f) {
+        if (ratio < 1.0f) {
             return 1.0f / ratio;
         } else {
             return ratio;
@@ -22,10 +18,9 @@ public class FitXYStrategy extends PreviewScalingStrategy {
     /**
      * Get a score for our size.
      *
-     * Based on heuristics for penalizing scaling and cropping.
+     * <p>Based on heuristics for penalizing scaling and cropping.
      *
-     * 1.0 is perfect (exact match).
-     * 0.0 means we can't use it at all.
+     * <p>1.0 is perfect (exact match). 0.0 means we can't use it at all.
      *
      * @param size the camera preview size (that can be scaled)
      * @param desired the viewfinder size
@@ -33,7 +28,7 @@ public class FitXYStrategy extends PreviewScalingStrategy {
      */
     @Override
     protected float getScore(Size size, Size desired) {
-        if(size.width <= 0 || size.height <= 0) {
+        if (size.width <= 0 || size.height <= 0) {
             return 0f;
         }
         float scaleX = absRatio(size.width * 1.0f / desired.width);
@@ -41,7 +36,10 @@ public class FitXYStrategy extends PreviewScalingStrategy {
 
         float scaleScore = 1.0f / scaleX / scaleY;
 
-        float distortion = absRatio((1.0f * size.width / size.height) / (1.0f * desired.width / desired.height));
+        float distortion =
+                absRatio(
+                        (1.0f * size.width / size.height)
+                                / (1.0f * desired.width / desired.height));
 
         // Distortion is bad!
         float distortionScore = 1.0f / distortion / distortion / distortion;

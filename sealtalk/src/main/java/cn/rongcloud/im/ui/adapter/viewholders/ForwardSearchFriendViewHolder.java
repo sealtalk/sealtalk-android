@@ -5,9 +5,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.db.model.FriendDetailInfo;
 import cn.rongcloud.im.db.model.FriendShipInfo;
@@ -34,24 +32,27 @@ public class ForwardSearchFriendViewHolder extends ForwardCheckViewHolder<Search
         tvNickName = itemView.findViewById(R.id.tv_detail);
         llDescription = itemView.findViewById(R.id.ll_description);
         checkBox = itemView.findViewById(R.id.cb_select);
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 点击高边状态
-                if (listener != null && searchFriendModel != null) {
-                    if (searchFriendModel.getCheckType() != CheckType.NONE && searchFriendModel.getCheckType() != CheckType.DISABLE) {
-                        if (searchFriendModel.getCheckType() == CheckType.CHECKED) {
-                            searchFriendModel.setCheckType(CheckType.UNCHECKED);
-                            checkBox.setChecked(false);
-                        } else  if (searchFriendModel.getCheckType() == CheckType.UNCHECKED) {
-                            searchFriendModel.setCheckType(CheckType.CHECKED);
-                            checkBox.setChecked(true);
+        itemView.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // 点击高边状态
+                        if (listener != null && searchFriendModel != null) {
+                            if (searchFriendModel.getCheckType() != CheckType.NONE
+                                    && searchFriendModel.getCheckType() != CheckType.DISABLE) {
+                                if (searchFriendModel.getCheckType() == CheckType.CHECKED) {
+                                    searchFriendModel.setCheckType(CheckType.UNCHECKED);
+                                    checkBox.setChecked(false);
+                                } else if (searchFriendModel.getCheckType()
+                                        == CheckType.UNCHECKED) {
+                                    searchFriendModel.setCheckType(CheckType.CHECKED);
+                                    checkBox.setChecked(true);
+                                }
+                            }
+                            listener.onItemContactClick(searchFriendModel.getBean());
                         }
                     }
-                    listener.onItemContactClick(searchFriendModel.getBean());
-                }
-            }
-        });
+                });
     }
 
     @Override
@@ -60,7 +61,7 @@ public class ForwardSearchFriendViewHolder extends ForwardCheckViewHolder<Search
         // 更接数据类型进行显示
         if (searchFriendModel.getCheckType() == CheckType.NONE) {
             checkBox.setVisibility(View.GONE);
-        } else  if (searchFriendModel.getCheckType() == CheckType.DISABLE) {
+        } else if (searchFriendModel.getCheckType() == CheckType.DISABLE) {
             checkBox.setVisibility(View.VISIBLE);
             checkBox.setEnabled(false);
         } else {
@@ -78,20 +79,32 @@ public class ForwardSearchFriendViewHolder extends ForwardCheckViewHolder<Search
         if (!TextUtils.isEmpty(friendShipInfo.getDisplayName())) {
             llDescription.setVisibility(View.VISIBLE);
 
-            if(searchFriendModel.getAliseStart() != -1){
-                tvDisplayName.setText(CharacterParser.getSpannable(friendShipInfo.getDisplayName(), searchFriendModel.getAliseStart(), searchFriendModel.getAliseEnd()));
+            if (searchFriendModel.getAliseStart() != -1) {
+                tvDisplayName.setText(
+                        CharacterParser.getSpannable(
+                                friendShipInfo.getDisplayName(),
+                                searchFriendModel.getAliseStart(),
+                                searchFriendModel.getAliseEnd()));
             } else {
                 tvDisplayName.setText(friendShipInfo.getDisplayName());
             }
 
-            if (searchFriendModel.getNameStart() != -1){
-                tvNickName.setText(CharacterParser.getSpannable(info.getNickname(), searchFriendModel.getNameStart(), searchFriendModel.getNameEnd()));
+            if (searchFriendModel.getNameStart() != -1) {
+                tvNickName.setText(
+                        CharacterParser.getSpannable(
+                                info.getNickname(),
+                                searchFriendModel.getNameStart(),
+                                searchFriendModel.getNameEnd()));
             } else {
                 tvNickName.setText(info.getNickname());
             }
         } else {
-            if(searchFriendModel.getNameStart() != -1){
-                tvDisplayName.setText(CharacterParser.getSpannable(info.getNickname(), searchFriendModel.getNameStart(), searchFriendModel.getNameEnd()));
+            if (searchFriendModel.getNameStart() != -1) {
+                tvDisplayName.setText(
+                        CharacterParser.getSpannable(
+                                info.getNickname(),
+                                searchFriendModel.getNameStart(),
+                                searchFriendModel.getNameEnd()));
             } else {
                 tvDisplayName.setText(info.getNickname());
             }
@@ -111,5 +124,4 @@ public class ForwardSearchFriendViewHolder extends ForwardCheckViewHolder<Search
             checkBox.setChecked(false);
         }
     }
-
 }

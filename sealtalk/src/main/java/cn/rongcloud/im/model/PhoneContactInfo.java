@@ -5,18 +5,25 @@ import androidx.room.ColumnInfo;
 public class PhoneContactInfo {
     @ColumnInfo(name = "user_id")
     private String userId;
+
     @ColumnInfo(name = "phone_number")
     private String phone;
+
     @ColumnInfo(name = "name")
     private String nickName;
+
     @ColumnInfo(name = "name_spelling")
     private String nickNameSpelling;
+
     @ColumnInfo(name = "portrait_uri")
     private String portraitUrl;
+
     @ColumnInfo(name = "is_friend")
     private int isFriend;
+
     @ColumnInfo(name = "st_account")
     private String stAccount;
+
     @ColumnInfo(name = "contact_name")
     private String contactName;
 

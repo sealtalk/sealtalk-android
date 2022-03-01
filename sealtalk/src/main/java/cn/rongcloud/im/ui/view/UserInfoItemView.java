@@ -9,10 +9,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.widget.SelectableRoundedImageView;
 
@@ -24,17 +22,12 @@ public class UserInfoItemView extends FrameLayout {
     private View vDivider;
     private View.OnClickListener portraitListener;
 
-    /**
-     * 在左侧显示头像
-     */
+    /** 在左侧显示头像 */
     public static final int SHOW_LEFT = 0;
-    /**
-     * 在右侧显示头像
-     */
+    /** 在右侧显示头像 */
     public static final int SHOW_RIGHT = 1;
 
     private int currentShow = SHOW_LEFT;
-
 
     public UserInfoItemView(@NonNull Context context) {
         super(context);
@@ -46,7 +39,8 @@ public class UserInfoItemView extends FrameLayout {
         initView(attrs);
     }
 
-    public UserInfoItemView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public UserInfoItemView(
+            @NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView(attrs);
     }
@@ -59,7 +53,7 @@ public class UserInfoItemView extends FrameLayout {
         leftHeaderIv.setVisibility(VISIBLE);
         rightHeaderIv.setVisibility(GONE);
 
-        if(portraitListener != null){
+        if (portraitListener != null) {
             rightHeaderIv.setOnClickListener(portraitListener);
             leftHeaderIv.setOnClickListener(portraitListener);
         }
@@ -67,8 +61,10 @@ public class UserInfoItemView extends FrameLayout {
         vDivider.setVisibility(View.GONE);
         view.setBackgroundResource(R.drawable.seal_mine_setting_item_selector);
 
-
-        TypedArray ta = attrs == null ? null : getContext().obtainStyledAttributes(attrs, R.styleable.UserInfoItemView);
+        TypedArray ta =
+                attrs == null
+                        ? null
+                        : getContext().obtainStyledAttributes(attrs, R.styleable.UserInfoItemView);
         if (ta != null) {
             Drawable drawable = null;
             final int N = ta.getIndexCount();
@@ -76,20 +72,23 @@ public class UserInfoItemView extends FrameLayout {
                 int attr = ta.getIndex(i);
                 switch (attr) {
                     case R.styleable.UserInfoItemView_item_userinfo_portrait:
-                        drawable = ta.getDrawable(R.styleable.UserInfoItemView_item_userinfo_portrait);
+                        drawable =
+                                ta.getDrawable(R.styleable.UserInfoItemView_item_userinfo_portrait);
                         break;
                     case R.styleable.UserInfoItemView_item_right_show:
                         boolean showRight = ta.getBoolean(attr, false);
                         currentShow = showRight ? SHOW_RIGHT : SHOW_LEFT;
                         break;
                     case R.styleable.UserInfoItemView_item_userinfo_portrait_width:
-                        float width = ta.getDimension(R.styleable.UserInfoItemView_item_userinfo_portrait_width, 0);
+                        float width =
+                                ta.getDimension(
+                                        R.styleable.UserInfoItemView_item_userinfo_portrait_width,
+                                        0);
                         ViewGroup.LayoutParams leftLayoutParams = leftHeaderIv.getLayoutParams();
                         ViewGroup.LayoutParams rightLayoutParams = rightHeaderIv.getLayoutParams();
                         if (width > 0) {
                             leftLayoutParams.width = Math.round(width);
                             rightLayoutParams.width = Math.round(width);
-
                         }
                         rightHeaderIv.setLayoutParams(rightLayoutParams);
                         leftHeaderIv.setLayoutParams(leftLayoutParams);
@@ -98,8 +97,10 @@ public class UserInfoItemView extends FrameLayout {
 
                     case R.styleable.UserInfoItemView_item_userinfo_portrait_height:
                         float height = ta.getDimension(attr, 0);
-                        ViewGroup.LayoutParams leftLayoutParamsHeight = leftHeaderIv.getLayoutParams();
-                        ViewGroup.LayoutParams rightLayoutParamsHeight = rightHeaderIv.getLayoutParams();
+                        ViewGroup.LayoutParams leftLayoutParamsHeight =
+                                leftHeaderIv.getLayoutParams();
+                        ViewGroup.LayoutParams rightLayoutParamsHeight =
+                                rightHeaderIv.getLayoutParams();
                         if (height > 0) {
                             leftLayoutParamsHeight.height = Math.round(height);
                             rightLayoutParamsHeight.height = Math.round(height);
@@ -142,7 +143,6 @@ public class UserInfoItemView extends FrameLayout {
                     leftHeaderIv.setImageDrawable(drawable);
                 }
             }
-
         }
     }
 
@@ -163,6 +163,7 @@ public class UserInfoItemView extends FrameLayout {
 
     /**
      * 设置用户名字
+     *
      * @param resId
      */
     public void setName(int resId) {
@@ -171,15 +172,16 @@ public class UserInfoItemView extends FrameLayout {
 
     /**
      * 设置用户名字
+     *
      * @param name
      */
     public void setName(String name) {
         nameTv.setText(name);
     }
 
-
     /**
      * 获取name 控件
+     *
      * @return
      */
     public TextView getNameTv() {
@@ -188,6 +190,7 @@ public class UserInfoItemView extends FrameLayout {
 
     /**
      * 获得头像控件
+     *
      * @return
      */
     public ImageView getHeaderImageView() {
@@ -201,6 +204,7 @@ public class UserInfoItemView extends FrameLayout {
 
     /**
      * 设置用户头像
+     *
      * @param portraitResId
      */
     public void setPortrait(int portraitResId) {
@@ -209,6 +213,7 @@ public class UserInfoItemView extends FrameLayout {
 
     /**
      * 设置用户头像， 可设置像是位置
+     *
      * @param portraitResId
      * @param showLocation 显示位置， 可设置 {@link SHOW_LEFT } 或 {@link SHOW_RIGHT }
      */
@@ -229,25 +234,25 @@ public class UserInfoItemView extends FrameLayout {
      *
      * @param listener
      */
-    public void setPortraitOnClickedListener(View.OnClickListener listener){
+    public void setPortraitOnClickedListener(View.OnClickListener listener) {
         portraitListener = listener;
-        if(leftHeaderIv != null){
+        if (leftHeaderIv != null) {
             leftHeaderIv.setOnClickListener(listener);
         }
 
-        if(rightHeaderIv != null){
+        if (rightHeaderIv != null) {
             rightHeaderIv.setOnClickListener(listener);
         }
     }
 
     /**
      * 名字颜色
+     *
      * @param colorRes
      */
     public void setNameTextColor(int colorRes) {
         nameTv.setTextColor(colorRes);
     }
-
 
     public void setDividerVisibility(int visibility) {
         vDivider.setVisibility(visibility);

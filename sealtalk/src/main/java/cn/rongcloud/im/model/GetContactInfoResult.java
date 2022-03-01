@@ -1,15 +1,13 @@
 package cn.rongcloud.im.model;
 
-/**
- * 获取通讯录信息
- */
+/** 获取通讯录信息 */
 public class GetContactInfoResult {
-    private int registered;     // 0 未注册 1 已注册
-    private int relationship;   // 0 非好友 1 好友
-    private String stAccount;   // sealtalk 号
-    private String phone;       // 电话号码
-    private String id;          // 用户 id
-    private String nickname;    // 用户昵称
+    private int registered; // 0 未注册 1 已注册
+    private int relationship; // 0 非好友 1 好友
+    private String stAccount; // sealtalk 号
+    private String phone; // 电话号码
+    private String id; // 用户 id
+    private String nickname; // 用户昵称
     private String portraitUri; // 用户头像
 
     public int getRegistered() {

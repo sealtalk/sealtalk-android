@@ -3,9 +3,7 @@ package cn.rongcloud.im.utils.qrcode.barcodescanner;
 import com.google.zxing.ResultPoint;
 import com.google.zxing.ResultPointCallback;
 
-/**
- * ResultPointCallback delegating the ResultPoints to a decoder.
- */
+/** ResultPointCallback delegating the ResultPoints to a decoder. */
 public class DecoderResultPointCallback implements ResultPointCallback {
     private Decoder decoder;
 
@@ -13,8 +11,7 @@ public class DecoderResultPointCallback implements ResultPointCallback {
         this.decoder = decoder;
     }
 
-    public DecoderResultPointCallback() {
-    }
+    public DecoderResultPointCallback() {}
 
     public Decoder getDecoder() {
         return decoder;
@@ -26,7 +23,7 @@ public class DecoderResultPointCallback implements ResultPointCallback {
 
     @Override
     public void foundPossibleResultPoint(ResultPoint point) {
-        if(decoder != null) {
+        if (decoder != null) {
             decoder.foundPossibleResultPoint(point);
         }
     }

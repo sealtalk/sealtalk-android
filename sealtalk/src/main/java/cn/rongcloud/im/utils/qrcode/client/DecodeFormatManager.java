@@ -17,9 +17,7 @@
 package cn.rongcloud.im.utils.qrcode.client;
 
 import android.content.Intent;
-
 import com.google.zxing.BarcodeFormat;
-
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -35,22 +33,27 @@ public final class DecodeFormatManager {
     static final Set<BarcodeFormat> INDUSTRIAL_FORMATS;
     public static final Set<BarcodeFormat> ONE_D_FORMATS;
     public static final Set<BarcodeFormat> QR_CODE_FORMATS = EnumSet.of(BarcodeFormat.QR_CODE);
-    public static final Set<BarcodeFormat> DATA_MATRIX_FORMATS = EnumSet.of(BarcodeFormat.DATA_MATRIX);
+    public static final Set<BarcodeFormat> DATA_MATRIX_FORMATS =
+            EnumSet.of(BarcodeFormat.DATA_MATRIX);
     static final Set<BarcodeFormat> AZTEC_FORMATS = EnumSet.of(BarcodeFormat.AZTEC);
     static final Set<BarcodeFormat> PDF417_FORMATS = EnumSet.of(BarcodeFormat.PDF_417);
 
     static {
-        PRODUCT_FORMATS = EnumSet.of(BarcodeFormat.UPC_A,
-                BarcodeFormat.UPC_E,
-                BarcodeFormat.EAN_13,
-                BarcodeFormat.EAN_8,
-                BarcodeFormat.RSS_14,
-                BarcodeFormat.RSS_EXPANDED);
-        INDUSTRIAL_FORMATS = EnumSet.of(BarcodeFormat.CODE_39,
-                BarcodeFormat.CODE_93,
-                BarcodeFormat.CODE_128,
-                BarcodeFormat.ITF,
-                BarcodeFormat.CODABAR);
+        PRODUCT_FORMATS =
+                EnumSet.of(
+                        BarcodeFormat.UPC_A,
+                        BarcodeFormat.UPC_E,
+                        BarcodeFormat.EAN_13,
+                        BarcodeFormat.EAN_8,
+                        BarcodeFormat.RSS_14,
+                        BarcodeFormat.RSS_EXPANDED);
+        INDUSTRIAL_FORMATS =
+                EnumSet.of(
+                        BarcodeFormat.CODE_39,
+                        BarcodeFormat.CODE_93,
+                        BarcodeFormat.CODE_128,
+                        BarcodeFormat.ITF,
+                        BarcodeFormat.CODABAR);
         ONE_D_FORMATS = EnumSet.copyOf(PRODUCT_FORMATS);
         ONE_D_FORMATS.addAll(INDUSTRIAL_FORMATS);
     }
@@ -67,8 +70,7 @@ public final class DecodeFormatManager {
         FORMATS_FOR_MODE.put(Intents.Scan.PDF417_MODE, PDF417_FORMATS);
     }
 
-    private DecodeFormatManager() {
-    }
+    private DecodeFormatManager() {}
 
     public static Set<BarcodeFormat> parseDecodeFormats(Intent intent) {
         Iterable<String> scanFormats = null;
@@ -79,7 +81,8 @@ public final class DecodeFormatManager {
         return parseDecodeFormats(scanFormats, intent.getStringExtra(Intents.Scan.MODE));
     }
 
-    private static Set<BarcodeFormat> parseDecodeFormats(Iterable<String> scanFormats, String decodeMode) {
+    private static Set<BarcodeFormat> parseDecodeFormats(
+            Iterable<String> scanFormats, String decodeMode) {
         if (scanFormats != null) {
             Set<BarcodeFormat> formats = EnumSet.noneOf(BarcodeFormat.class);
             try {

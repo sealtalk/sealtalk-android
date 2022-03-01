@@ -5,10 +5,8 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-
-import java.util.List;
-
 import cn.rongcloud.im.db.model.UserInfo;
+import java.util.List;
 
 @Dao
 public interface UserDao {
@@ -24,7 +22,8 @@ public interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertUserList(List<UserInfo> userInfo);
 
-    @Query("UPDATE user SET name=:name, name_spelling=:nameSpelling, portrait_uri=:portraitUrl WHERE id=:id")
+    @Query(
+            "UPDATE user SET name=:name, name_spelling=:nameSpelling, portrait_uri=:portraitUrl WHERE id=:id")
     int updateNameAndPortrait(String id, String name, String nameSpelling, String portraitUrl);
 
     @Query("UPDATE user SET st_account=:sAccount WHERE id=:id")
@@ -39,7 +38,8 @@ public interface UserDao {
     @Query("UPDATE user SET name=:name,name_spelling=:nameSpelling WHERE id=:id")
     int updateName(String id, String name, String nameSpelling);
 
-    @Query("UPDATE user SET alias=:alias,alias_spelling=:aliasSpelling,order_spelling=:aliasSpelling WHERE id=:id")
+    @Query(
+            "UPDATE user SET alias=:alias,alias_spelling=:aliasSpelling,order_spelling=:aliasSpelling WHERE id=:id")
     int updateAlias(String id, String alias, String aliasSpelling);
 
     @Query("UPDATE user SET portrait_uri=:portraitUrl WHERE id=:id")
@@ -53,5 +53,4 @@ public interface UserDao {
 
     @Query("UPDATE user SET friend_status=:friendStatus WHERE id in (:idList)")
     int updateFriendsStatus(List<String> idList, int friendStatus);
-
 }

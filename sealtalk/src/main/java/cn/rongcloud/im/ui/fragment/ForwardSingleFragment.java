@@ -1,18 +1,15 @@
 package cn.rongcloud.im.ui.fragment;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.db.model.FriendShipInfo;
@@ -27,26 +24,22 @@ import cn.rongcloud.im.ui.interfaces.OnGroupItemClickListener;
 import cn.rongcloud.im.ui.interfaces.SearchableInterface;
 import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.viewmodel.ForwardTransferDialogViewModel;
+import java.util.ArrayList;
+import java.util.List;
 
-import static android.app.Activity.RESULT_OK;
-
-/**
- * 此页面是转发的单选页面。 具有单选并转发的功能
- */
+/** 此页面是转发的单选页面。 具有单选并转发的功能 */
 public class ForwardSingleFragment extends BaseFragment implements SearchableInterface {
-
 
     private OnForwardComfirmListener listener;
 
-    /**
-     * Fragment 的类型。
-     */
+    /** Fragment 的类型。 */
     private enum Type {
         RECENT_LIST(0),
         SEARCH(1),
         GROUPS(2);
 
         int value;
+
         Type(int value) {
             this.value = value;
         }
@@ -65,7 +58,6 @@ public class ForwardSingleFragment extends BaseFragment implements SearchableInt
     private ForwardTransferDialogViewModel viewModel;
     private int currentFragmentIndex = Type.RECENT_LIST.getValue();
 
-
     @Override
     protected int getLayoutResId() {
         return R.layout.forward_fragment_single;
@@ -78,6 +70,7 @@ public class ForwardSingleFragment extends BaseFragment implements SearchableInt
 
     /**
      * 显示framgne
+     *
      * @param index 下标, 可通过 Type 的getValue() 获取对应 fragment 的 index
      */
     private void showFragment(int index) {
@@ -107,16 +100,16 @@ public class ForwardSingleFragment extends BaseFragment implements SearchableInt
         currentFragmentIndex = index;
     }
 
-
     /**
      * 创建fragment
+     *
      * @param index
      * @return
      */
     private Fragment createFragment(int index) {
         Fragment fragment = null;
         if (index == Type.RECENT_LIST.getValue()) {
-            fragment  = createRecentListFragment();
+            fragment = createRecentListFragment();
         } else if (index == Type.SEARCH.getValue()) {
             fragment = createSearchFragment();
         } else {
@@ -127,6 +120,7 @@ public class ForwardSingleFragment extends BaseFragment implements SearchableInt
 
     /**
      * 创建群组
+     *
      * @return
      */
     private Fragment createGroupsFragment() {
@@ -134,87 +128,96 @@ public class ForwardSingleFragment extends BaseFragment implements SearchableInt
         Bundle bundle = new Bundle();
         bundle.putBoolean(IntentExtra.IS_SELECT, false);
         forwardGroupListFragment.setArguments(bundle);
-        forwardGroupListFragment.setOnItemClickListener(new CommonListAdapter.OnItemClickListener() {
-            @Override
-            public void onClick(View v, int position, ListItemModel data) {
-                final ListItemModel.ItemView.Type type = data.getItemView().getType();
-                switch (type) {
-                    case GROUP:
-                        final GroupEntity groupEntity = (GroupEntity) data.getData();
-                        viewModel.showTransferToGroupDialog(groupEntity);
-                        break;
+        forwardGroupListFragment.setOnItemClickListener(
+                new CommonListAdapter.OnItemClickListener() {
+                    @Override
+                    public void onClick(View v, int position, ListItemModel data) {
+                        final ListItemModel.ItemView.Type type = data.getItemView().getType();
+                        switch (type) {
+                            case GROUP:
+                                final GroupEntity groupEntity = (GroupEntity) data.getData();
+                                viewModel.showTransferToGroupDialog(groupEntity);
+                                break;
 
-                    default:
-                        //DO Nothing
-                        break;
-                }
-            }
-        });
+                            default:
+                                // DO Nothing
+                                break;
+                        }
+                    }
+                });
 
         return forwardGroupListFragment;
     }
 
-
     /**
      * 创建搜索查询页面
+     *
      * @return
      */
     private Fragment createSearchFragment() {
         ForwardSearchFragment fragment = new ForwardSearchFragment();
-        fragment.setOnContactItemClickListener(new OnContactItemClickListener() {
-            @Override
-            public void onItemContactClick(FriendShipInfo friendShipInfo) {
-                viewModel.showTransferToFriendDialog(friendShipInfo);
-            }
-        });
+        fragment.setOnContactItemClickListener(
+                new OnContactItemClickListener() {
+                    @Override
+                    public void onItemContactClick(FriendShipInfo friendShipInfo) {
+                        viewModel.showTransferToFriendDialog(friendShipInfo);
+                    }
+                });
 
-        fragment.setOnGroupItemClickListener(new OnGroupItemClickListener() {
-            @Override
-            public void onGroupClicked(GroupEntity groupEntity) {
-                viewModel.showTransferToGroupDialog(groupEntity);
-            }
-        });
+        fragment.setOnGroupItemClickListener(
+                new OnGroupItemClickListener() {
+                    @Override
+                    public void onGroupClicked(GroupEntity groupEntity) {
+                        viewModel.showTransferToGroupDialog(groupEntity);
+                    }
+                });
         return fragment;
     }
 
     /**
      * 创建最近联系列表
+     *
      * @return
      */
     private Fragment createRecentListFragment() {
         ForwordRecentListFragment recentListFragment = new ForwordRecentListFragment();
-        recentListFragment.setOnItemClickListener(new CommonListAdapter.OnItemClickListener() {
-            @Override
-            public void onClick(View v, int position, ListItemModel data) {
-                final ListItemModel.ItemView.Type type = data.getItemView().getType();
-                switch (type) {
-                    case FUN:
-                        switch (data.getId()) {
-                            case "1": //创建一个聊天
-                                Intent intent = new Intent(getContext(), SelectForwardCreateChatActivity.class);
-                                startActivityForResult(intent, REQUEST_CREATE_CHAT);
+        recentListFragment.setOnItemClickListener(
+                new CommonListAdapter.OnItemClickListener() {
+                    @Override
+                    public void onClick(View v, int position, ListItemModel data) {
+                        final ListItemModel.ItemView.Type type = data.getItemView().getType();
+                        switch (type) {
+                            case FUN:
+                                switch (data.getId()) {
+                                    case "1": // 创建一个聊天
+                                        Intent intent =
+                                                new Intent(
+                                                        getContext(),
+                                                        SelectForwardCreateChatActivity.class);
+                                        startActivityForResult(intent, REQUEST_CREATE_CHAT);
+                                        break;
+                                    case "2": // 选择一个群
+                                        showFragment(Type.GROUPS.getValue());
+                                        break;
+                                    default:
+                                        break;
+                                }
                                 break;
-                            case "2": //选择一个群
-                                showFragment(Type.GROUPS.getValue());
+                            case GROUP:
+                                final GroupEntity groupEntity = (GroupEntity) data.getData();
+                                viewModel.showTransferToGroupDialog(groupEntity);
+                                break;
+                            case FRIEND:
+                                final FriendShipInfo friendShipInfo =
+                                        (FriendShipInfo) data.getData();
+                                viewModel.showTransferToFriendDialog(friendShipInfo);
                                 break;
                             default:
+                                // DO Nothing
                                 break;
                         }
-                        break;
-                    case GROUP:
-                        final GroupEntity groupEntity = (GroupEntity) data.getData();
-                        viewModel.showTransferToGroupDialog(groupEntity);
-                        break;
-                    case FRIEND:
-                        final FriendShipInfo friendShipInfo = (FriendShipInfo) data.getData();
-                        viewModel.showTransferToFriendDialog(friendShipInfo);
-                        break;
-                    default:
-                        //DO Nothing
-                        break;
-                }
-            }
-        });
+                    }
+                });
 
         return recentListFragment;
     }
@@ -223,34 +226,38 @@ public class ForwardSingleFragment extends BaseFragment implements SearchableInt
     protected void onInitViewModel() {
         viewModel = ViewModelProviders.of(this).get(ForwardTransferDialogViewModel.class);
 
-        /**
-         * 显示转发给朋友的dialig 的监听
-         */
-        viewModel.getShowTransferToFriendDialog().observe(this, new Observer<FriendShipInfo>() {
-            @Override
-            public void onChanged(FriendShipInfo friendShipInfo) {
-                if (listener != null && friendShipInfo != null) {
-                    List<FriendShipInfo> friendShipInfos = new ArrayList<>();
-                    friendShipInfos.add(friendShipInfo);
-                    listener.onForward(null, friendShipInfos);
-                }
-            }
-        });
+        /** 显示转发给朋友的dialig 的监听 */
+        viewModel
+                .getShowTransferToFriendDialog()
+                .observe(
+                        this,
+                        new Observer<FriendShipInfo>() {
+                            @Override
+                            public void onChanged(FriendShipInfo friendShipInfo) {
+                                if (listener != null && friendShipInfo != null) {
+                                    List<FriendShipInfo> friendShipInfos = new ArrayList<>();
+                                    friendShipInfos.add(friendShipInfo);
+                                    listener.onForward(null, friendShipInfos);
+                                }
+                            }
+                        });
 
-        /**
-         * 显示转发给群组的dialig 的监听
-         */
-        viewModel.getShowTransferToGroupDialog().observe(this, new Observer<GroupEntity>() {
-            @Override
-            public void onChanged(GroupEntity groupEntity) {
-                SLog.d("ss_group", "group==" + groupEntity);
-                if (listener != null && groupEntity != null) {
-                    List<GroupEntity> groups = new ArrayList<>();
-                    groups.add(groupEntity);
-                    listener.onForward(groups, null);
-                }
-            }
-        });
+        /** 显示转发给群组的dialig 的监听 */
+        viewModel
+                .getShowTransferToGroupDialog()
+                .observe(
+                        this,
+                        new Observer<GroupEntity>() {
+                            @Override
+                            public void onChanged(GroupEntity groupEntity) {
+                                SLog.d("ss_group", "group==" + groupEntity);
+                                if (listener != null && groupEntity != null) {
+                                    List<GroupEntity> groups = new ArrayList<>();
+                                    groups.add(groupEntity);
+                                    listener.onForward(groups, null);
+                                }
+                            }
+                        });
     }
 
     @Override
@@ -259,7 +266,7 @@ public class ForwardSingleFragment extends BaseFragment implements SearchableInt
             showFragment(Type.SEARCH.getValue());
         }
         showFragment(Type.SEARCH.getValue());
-        ((ForwardSearchFragment)fragments[Type.SEARCH.getValue()]).search(match);
+        ((ForwardSearchFragment) fragments[Type.SEARCH.getValue()]).search(match);
     }
 
     @Override
@@ -273,9 +280,9 @@ public class ForwardSingleFragment extends BaseFragment implements SearchableInt
             return;
         }
 
-        ForwardSearchFragment fragment = (ForwardSearchFragment)fragments[Type.SEARCH.getValue()];
+        ForwardSearchFragment fragment = (ForwardSearchFragment) fragments[Type.SEARCH.getValue()];
         if (fragment != null) {
-            ((ForwardSearchFragment)fragments[Type.SEARCH.getValue()]).clear();
+            ((ForwardSearchFragment) fragments[Type.SEARCH.getValue()]).clear();
             showFragment(Type.RECENT_LIST.getValue());
         }
     }
@@ -286,9 +293,10 @@ public class ForwardSingleFragment extends BaseFragment implements SearchableInt
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CREATE_CHAT:
-                    //选择列表返回
-                    ArrayList<String> selectList = data.getStringArrayListExtra(IntentExtra.LIST_STR_ID_LIST);
-                    if (selectList == null || selectList.size()  <=  0) {
+                    // 选择列表返回
+                    ArrayList<String> selectList =
+                            data.getStringArrayListExtra(IntentExtra.LIST_STR_ID_LIST);
+                    if (selectList == null || selectList.size() <= 0) {
                         return;
                     }
                     if (selectList.size() == 1) {
@@ -302,7 +310,7 @@ public class ForwardSingleFragment extends BaseFragment implements SearchableInt
 
                     break;
                 case REQUEST_CREATE_GROUP:
-                    //创建群组返回
+                    // 创建群组返回
                     String groupId = data.getStringExtra(IntentExtra.GROUP_ID);
                     viewModel.showTransferToGroupDialog(groupId);
 
@@ -315,26 +323,26 @@ public class ForwardSingleFragment extends BaseFragment implements SearchableInt
 
     /**
      * 返回按钮
+     *
      * @return
      */
     public boolean onBackKey() {
         if (currentFragmentIndex == Type.SEARCH.getValue()) {
             clear();
             return true;
-        } else  if (currentFragmentIndex == Type.GROUPS.getValue()) {
+        } else if (currentFragmentIndex == Type.GROUPS.getValue()) {
             showFragment(Type.RECENT_LIST.getValue());
             return true;
         }
         return false;
     }
 
-
     /**
      * 点击转发监听
+     *
      * @param listener
      */
     public void setOnForwardComfirmListener(OnForwardComfirmListener listener) {
         this.listener = listener;
     }
-
 }

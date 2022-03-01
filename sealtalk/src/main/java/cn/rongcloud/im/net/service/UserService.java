@@ -1,9 +1,6 @@
 package cn.rongcloud.im.net.service;
 
 import androidx.lifecycle.LiveData;
-
-import java.util.List;
-
 import cn.rongcloud.im.db.model.FriendBlackInfo;
 import cn.rongcloud.im.db.model.UserInfo;
 import cn.rongcloud.im.model.ContactGroupResult;
@@ -15,6 +12,7 @@ import cn.rongcloud.im.model.Result;
 import cn.rongcloud.im.model.UploadTokenResult;
 import cn.rongcloud.im.model.VerifyResult;
 import cn.rongcloud.im.net.SealTalkUrl;
+import java.util.List;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -67,7 +65,6 @@ public interface UserService {
 
     @POST(SealTalkUrl.CHANGE_PASSWORD)
     LiveData<Result> changePassword(@Body RequestBody body);
-
 
     /**
      * 获取黑名单信息

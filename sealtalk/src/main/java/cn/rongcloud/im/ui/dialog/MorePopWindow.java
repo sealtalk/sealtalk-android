@@ -1,6 +1,5 @@
 package cn.rongcloud.im.ui.dialog;
 
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -12,16 +11,13 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
-
 import cn.rongcloud.im.R;
-
 
 public class MorePopWindow extends PopupWindow implements PopupWindow.OnDismissListener {
     private Activity context;
     private OnPopWindowItemClickListener listener;
     private View contentView;
     private static final float ALPHA_TRANSPARENT_COMPLETE = 1.0f;
-
 
     public interface OnPopWindowItemClickListener {
         void onStartChartClick();
@@ -37,8 +33,8 @@ public class MorePopWindow extends PopupWindow implements PopupWindow.OnDismissL
     public MorePopWindow(final Activity context, OnPopWindowItemClickListener listener) {
         this.listener = listener;
         this.context = context;
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater =
+                (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         contentView = inflater.inflate(R.layout.main_popup_title_more, null);
 
         // 设置SelectPicPopupWindow的View
@@ -61,45 +57,55 @@ public class MorePopWindow extends PopupWindow implements PopupWindow.OnDismissL
 
         // 设置SelectPicPopupWindow弹出窗体动画效果
         this.setAnimationStyle(R.style.AnimationMainTitleMore);
-        contentView.findViewById(R.id.btn_start_chat).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onStartChartClick();
-                }
-                dismiss();
-            }
-        });
-        contentView.findViewById(R.id.btn_create_group).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onCreateGroupClick();
-                }
-                dismiss();
-            }
-        });
-        contentView.findViewById(R.id.btn_add_friends).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onAddFriendClick();
-                }
-                dismiss();
-            }
-        });
-        contentView.findViewById(R.id.btn_scan).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onScanClick();
-                }
-                dismiss();
-            }
-        });
-
+        contentView
+                .findViewById(R.id.btn_start_chat)
+                .setOnClickListener(
+                        new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (listener != null) {
+                                    listener.onStartChartClick();
+                                }
+                                dismiss();
+                            }
+                        });
+        contentView
+                .findViewById(R.id.btn_create_group)
+                .setOnClickListener(
+                        new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (listener != null) {
+                                    listener.onCreateGroupClick();
+                                }
+                                dismiss();
+                            }
+                        });
+        contentView
+                .findViewById(R.id.btn_add_friends)
+                .setOnClickListener(
+                        new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (listener != null) {
+                                    listener.onAddFriendClick();
+                                }
+                                dismiss();
+                            }
+                        });
+        contentView
+                .findViewById(R.id.btn_scan)
+                .setOnClickListener(
+                        new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (listener != null) {
+                                    listener.onScanClick();
+                                }
+                                dismiss();
+                            }
+                        });
     }
-
 
     /**
      * 显示popupWindow
@@ -148,6 +154,5 @@ public class MorePopWindow extends PopupWindow implements PopupWindow.OnDismissL
     public void onDismiss() {
         super.dismiss();
         setAlpha(ALPHA_TRANSPARENT_COMPLETE);
-
     }
 }

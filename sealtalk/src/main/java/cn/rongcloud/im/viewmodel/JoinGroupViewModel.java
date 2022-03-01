@@ -1,21 +1,17 @@
 package cn.rongcloud.im.viewmodel;
 
 import android.app.Application;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-
 import cn.rongcloud.im.db.model.GroupEntity;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.task.GroupTask;
 import cn.rongcloud.im.utils.SingleSourceLiveData;
 
-/**
- * 加入群组视图模型
- */
+/** 加入群组视图模型 */
 public class JoinGroupViewModel extends AndroidViewModel {
     private String groupId;
     private GroupTask groupTask;
@@ -55,18 +51,14 @@ public class JoinGroupViewModel extends AndroidViewModel {
         return joinGroupResult;
     }
 
-    /**
-     * 请求加入群组
-     */
-    public void joinToGroup(){
+    /** 请求加入群组 */
+    public void joinToGroup() {
         joinGroupResult.setSource(groupTask.joinGroup(groupId));
     }
-
 
     public static class Factory implements ViewModelProvider.Factory {
         private Application application;
         private String groupId;
-
 
         public Factory(Application application, String groupId) {
             this.application = application;
@@ -77,7 +69,9 @@ public class JoinGroupViewModel extends AndroidViewModel {
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
             try {
-                return modelClass.getConstructor(Application.class, String.class).newInstance(application, groupId);
+                return modelClass
+                        .getConstructor(Application.class, String.class)
+                        .newInstance(application, groupId);
             } catch (Exception e) {
                 throw new RuntimeException("Cannot create an instance of " + modelClass, e);
             }

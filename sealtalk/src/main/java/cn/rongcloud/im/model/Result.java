@@ -5,16 +5,16 @@ import cn.rongcloud.im.common.NetConstant;
 
 /**
  * 网络请求结果基础类
+ *
  * @param <T> 请求结果的实体类
  */
 public class Result<T> {
     public int code;
     public T result;
 
-    public Result(){
-    }
+    public Result() {}
 
-    public Result(int code){
+    public Result(int code) {
         this.code = code;
     }
 
@@ -34,11 +34,11 @@ public class Result<T> {
         this.result = result;
     }
 
-    public boolean isSuccess(){
+    public boolean isSuccess() {
         return code == NetConstant.REQUEST_SUCCESS_CODE;
     }
 
-    public String getErrorMessage(){
+    public String getErrorMessage() {
         return ErrorCode.fromCode(code).getMessage();
     }
 }

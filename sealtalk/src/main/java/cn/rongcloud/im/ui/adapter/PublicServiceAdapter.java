@@ -3,18 +3,15 @@ package cn.rongcloud.im.ui.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.adapter.models.ContactModel;
 import cn.rongcloud.im.ui.adapter.viewholders.BaseViewHolder;
 import cn.rongcloud.im.ui.adapter.viewholders.PublicServiceViewHolder;
 import cn.rongcloud.im.ui.interfaces.PublicServiceClickListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PublicServiceAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private PublicServiceClickListener publicServiceClickListener;
@@ -29,7 +26,9 @@ public class PublicServiceAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     @Override
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         BaseViewHolder viewHolder = null;
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.seal_public_service_item, parent, false);
+        View itemView =
+                LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.seal_public_service_item, parent, false);
         viewHolder = new PublicServiceViewHolder(itemView, publicServiceClickListener);
         return viewHolder;
     }

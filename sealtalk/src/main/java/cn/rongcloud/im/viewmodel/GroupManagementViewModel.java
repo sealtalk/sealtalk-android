@@ -1,7 +1,6 @@
 package cn.rongcloud.im.viewmodel;
 
 import android.app.Application;
-
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.AndroidViewModel;
@@ -11,12 +10,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 import cn.rongcloud.im.db.model.GroupEntity;
 import cn.rongcloud.im.model.GroupMember;
 import cn.rongcloud.im.model.Resource;
@@ -25,19 +18,26 @@ import cn.rongcloud.im.task.GroupTask;
 import cn.rongcloud.im.utils.CharacterParser;
 import cn.rongcloud.im.utils.SingleSourceLiveData;
 import cn.rongcloud.im.utils.SingleSourceMapLiveData;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class GroupManagementViewModel extends AndroidViewModel {
     private String groupId;
-    private MediatorLiveData<Resource<List<GroupMember>>> groupManagements = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<List<GroupMember>>> groupManagements =
+            new MediatorLiveData<>();
     private MutableLiveData<GroupMember> groupOwner = new MutableLiveData<>();
     private MediatorLiveData<Resource<Void>> removeManagerResult = new MediatorLiveData<>();
     private MediatorLiveData<Resource<Void>> addManagerResult = new MediatorLiveData<>();
     private MediatorLiveData<Resource<Void>> transferResult = new MediatorLiveData<>();
     private MediatorLiveData<GroupEntity> groupInfo = new MediatorLiveData<>();
     private GroupTask groupTask;
-    private SingleSourceMapLiveData<Resource<List<GroupMember>>, List<GroupMember>> groupMembersWithoutGroupOwner;
+    private SingleSourceMapLiveData<Resource<List<GroupMember>>, List<GroupMember>>
+            groupMembersWithoutGroupOwner;
     private SingleSourceLiveData<Resource<Void>> muteAllResult = new SingleSourceLiveData<>();
-    private SingleSourceLiveData<Resource<Void>> memberProtectionResult = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<Void>> memberProtectionResult =
+            new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<Void>> setCerifiResult = new SingleSourceLiveData<>();
 
     public GroupManagementViewModel(@NonNull Application application) {
@@ -54,15 +54,17 @@ public class GroupManagementViewModel extends AndroidViewModel {
 
     private void getGroupInfo(String groupId) {
         LiveData<GroupEntity> mGroupEntity = groupTask.getGroupInfoInDB(groupId);
-        groupInfo.addSource(mGroupEntity, new Observer<GroupEntity>() {
-            @Override
-            public void onChanged(GroupEntity groupEntity) {
-                if (groupEntity != null) {
-                    groupInfo.removeSource(mGroupEntity);
-                    groupInfo.postValue(groupEntity);
-                }
-            }
-        });
+        groupInfo.addSource(
+                mGroupEntity,
+                new Observer<GroupEntity>() {
+                    @Override
+                    public void onChanged(GroupEntity groupEntity) {
+                        if (groupEntity != null) {
+                            groupInfo.removeSource(mGroupEntity);
+                            groupInfo.postValue(groupEntity);
+                        }
+                    }
+                });
     }
 
     /**
@@ -114,70 +116,86 @@ public class GroupManagementViewModel extends AndroidViewModel {
     }
 
     private void groupMemberInfo(String groupId) {
-        LiveData<Resource<List<GroupMember>>> getGroupMembers = groupTask.getGroupMemberInfoList(groupId);
-        groupManagements.addSource(getGroupMembers, new Observer<Resource<List<GroupMember>>>() {
-            @Override
-            public void onChanged(Resource<List<GroupMember>> listResource) {
-                List<GroupMember> managements = new ArrayList<>();
-                if (listResource != null && listResource.data != null && listResource.data.size() > 0) {
-                    List<GroupMember> data = listResource.data;
-                    for (GroupMember member : data) {
-                        if (member.getMemberRole() == GroupMember.Role.GROUP_OWNER) {
-                            groupOwner.postValue(member);
-                        } else if (member.getMemberRole() == GroupMember.Role.MANAGEMENT) {
-                            managements.add(member);
-                        }
-                    }
-                }
-
-                groupManagements.postValue(new Resource<>(listResource.status, managements, listResource.code));
-            }
-        });
-
-
-        groupMembersWithoutGroupOwner = new SingleSourceMapLiveData<>(new Function<Resource<List<GroupMember>>, List<GroupMember>>() {
-            @Override
-            public List<GroupMember> apply(Resource<List<GroupMember>> input) {
-                List<GroupMember> withoutGroupOnwer = new ArrayList<>();
-                if (input != null && input.data != null && input.data.size() > 0) {
-                    List<GroupMember> data = input.data;
-                    withoutGroupOnwer.addAll(data);
-                    for (GroupMember member : data) {
-                        if (member.getMemberRole() == GroupMember.Role.GROUP_OWNER) {
-                            withoutGroupOnwer.remove(member);
-                        }
-                        String sortString = "#";
-                        //汉字转换成拼音
-                        String pinyin = CharacterParser.getInstance().getSpelling(member.getName());
-                        if (pinyin != null) {
-                            if (pinyin.length() > 0) {
-                                sortString = pinyin.substring(0, 1).toUpperCase();
+        LiveData<Resource<List<GroupMember>>> getGroupMembers =
+                groupTask.getGroupMemberInfoList(groupId);
+        groupManagements.addSource(
+                getGroupMembers,
+                new Observer<Resource<List<GroupMember>>>() {
+                    @Override
+                    public void onChanged(Resource<List<GroupMember>> listResource) {
+                        List<GroupMember> managements = new ArrayList<>();
+                        if (listResource != null
+                                && listResource.data != null
+                                && listResource.data.size() > 0) {
+                            List<GroupMember> data = listResource.data;
+                            for (GroupMember member : data) {
+                                if (member.getMemberRole() == GroupMember.Role.GROUP_OWNER) {
+                                    groupOwner.postValue(member);
+                                } else if (member.getMemberRole() == GroupMember.Role.MANAGEMENT) {
+                                    managements.add(member);
+                                }
                             }
                         }
-                        // 正则表达式，判断首字母是否是英文字母
-                        if (sortString.matches("[A-Z]")) {
-                            member.setNameSpelling(sortString.toUpperCase());
-                        } else {
-                            member.setNameSpelling("#");
-                        }
+
+                        groupManagements.postValue(
+                                new Resource<>(
+                                        listResource.status, managements, listResource.code));
                     }
-                    Collections.sort(withoutGroupOnwer, new Comparator<GroupMember>() {
-                        @Override
-                        public int compare(GroupMember o1, GroupMember o2) {
-                            if (o1.getNameSpelling().equals("@") || o2.getNameSpelling().equals("#")) {
-                                return -1;
-                            } else if (o1.getNameSpelling().equals("#") || o2.getNameSpelling().equals("@")) {
-                                return 1;
-                            } else {
-                                return o1.getNameSpelling().compareTo(o2.getNameSpelling());
+                });
+
+        groupMembersWithoutGroupOwner =
+                new SingleSourceMapLiveData<>(
+                        new Function<Resource<List<GroupMember>>, List<GroupMember>>() {
+                            @Override
+                            public List<GroupMember> apply(Resource<List<GroupMember>> input) {
+                                List<GroupMember> withoutGroupOnwer = new ArrayList<>();
+                                if (input != null && input.data != null && input.data.size() > 0) {
+                                    List<GroupMember> data = input.data;
+                                    withoutGroupOnwer.addAll(data);
+                                    for (GroupMember member : data) {
+                                        if (member.getMemberRole()
+                                                == GroupMember.Role.GROUP_OWNER) {
+                                            withoutGroupOnwer.remove(member);
+                                        }
+                                        String sortString = "#";
+                                        // 汉字转换成拼音
+                                        String pinyin =
+                                                CharacterParser.getInstance()
+                                                        .getSpelling(member.getName());
+                                        if (pinyin != null) {
+                                            if (pinyin.length() > 0) {
+                                                sortString = pinyin.substring(0, 1).toUpperCase();
+                                            }
+                                        }
+                                        // 正则表达式，判断首字母是否是英文字母
+                                        if (sortString.matches("[A-Z]")) {
+                                            member.setNameSpelling(sortString.toUpperCase());
+                                        } else {
+                                            member.setNameSpelling("#");
+                                        }
+                                    }
+                                    Collections.sort(
+                                            withoutGroupOnwer,
+                                            new Comparator<GroupMember>() {
+                                                @Override
+                                                public int compare(GroupMember o1, GroupMember o2) {
+                                                    if (o1.getNameSpelling().equals("@")
+                                                            || o2.getNameSpelling().equals("#")) {
+                                                        return -1;
+                                                    } else if (o1.getNameSpelling().equals("#")
+                                                            || o2.getNameSpelling().equals("@")) {
+                                                        return 1;
+                                                    } else {
+                                                        return o1.getNameSpelling()
+                                                                .compareTo(o2.getNameSpelling());
+                                                    }
+                                                }
+                                            });
+                                    return withoutGroupOnwer;
+                                }
+                                return null;
                             }
-                        }
-                    });
-                    return withoutGroupOnwer;
-                }
-                return null;
-            }
-        });
+                        });
         groupMembersWithoutGroupOwner.setSource(getGroupMembers);
     }
 
@@ -217,7 +235,6 @@ public class GroupManagementViewModel extends AndroidViewModel {
         return addManagerResult;
     }
 
-
     /**
      * 除群主之外的所有成员
      *
@@ -243,31 +260,37 @@ public class GroupManagementViewModel extends AndroidViewModel {
      */
     public void deleteManagement(GroupMember member) {
 
-        LiveData<Resource<Void>> resourceLiveData = groupTask.removeManager(member.getGroupId(), new String[]{member.getUserId()});
+        LiveData<Resource<Void>> resourceLiveData =
+                groupTask.removeManager(member.getGroupId(), new String[] {member.getUserId()});
 
-        removeManagerResult.addSource(resourceLiveData, new Observer<Resource<Void>>() {
-            @Override
-            public void onChanged(Resource<Void> resource) {
-                if (resource.status != Status.LOADING) {
-                    removeManagerResult.removeSource(resourceLiveData);
-                }
-
-                if (resource.status == Status.SUCCESS) {
-                    groupMemberInfo(groupId);
-                    removeManagerResult.addSource(groupManagements, new Observer<Resource<List<GroupMember>>>() {
-                        @Override
-                        public void onChanged(Resource<List<GroupMember>> listResource) {
-                            if (listResource.status != Status.LOADING) {
-                                removeManagerResult.removeSource(groupManagements);
-                                removeManagerResult.postValue(resource);
-                            }
+        removeManagerResult.addSource(
+                resourceLiveData,
+                new Observer<Resource<Void>>() {
+                    @Override
+                    public void onChanged(Resource<Void> resource) {
+                        if (resource.status != Status.LOADING) {
+                            removeManagerResult.removeSource(resourceLiveData);
                         }
-                    });
-                } else {
-                    removeManagerResult.postValue(resource);
-                }
-            }
-        });
+
+                        if (resource.status == Status.SUCCESS) {
+                            groupMemberInfo(groupId);
+                            removeManagerResult.addSource(
+                                    groupManagements,
+                                    new Observer<Resource<List<GroupMember>>>() {
+                                        @Override
+                                        public void onChanged(
+                                                Resource<List<GroupMember>> listResource) {
+                                            if (listResource.status != Status.LOADING) {
+                                                removeManagerResult.removeSource(groupManagements);
+                                                removeManagerResult.postValue(resource);
+                                            }
+                                        }
+                                    });
+                        } else {
+                            removeManagerResult.postValue(resource);
+                        }
+                    }
+                });
     }
 
     /**
@@ -283,31 +306,35 @@ public class GroupManagementViewModel extends AndroidViewModel {
 
         LiveData<Resource<Void>> resourceLiveData = groupTask.addManager(groupId, memIds);
 
-        addManagerResult.addSource(resourceLiveData, new Observer<Resource<Void>>() {
-            @Override
-            public void onChanged(Resource<Void> resource) {
-                if (resource.status != Status.LOADING) {
-                    addManagerResult.removeSource(resourceLiveData);
-                }
-
-                if (resource.status == Status.SUCCESS) {
-                    groupMemberInfo(groupId);
-                    addManagerResult.addSource(groupManagements, new Observer<Resource<List<GroupMember>>>() {
-                        @Override
-                        public void onChanged(Resource<List<GroupMember>> listResource) {
-                            if (listResource.status != Status.LOADING) {
-                                addManagerResult.removeSource(groupManagements);
-                                addManagerResult.postValue(resource);
-                            }
+        addManagerResult.addSource(
+                resourceLiveData,
+                new Observer<Resource<Void>>() {
+                    @Override
+                    public void onChanged(Resource<Void> resource) {
+                        if (resource.status != Status.LOADING) {
+                            addManagerResult.removeSource(resourceLiveData);
                         }
-                    });
-                } else {
-                    addManagerResult.postValue(resource);
-                }
-            }
-        });
-    }
 
+                        if (resource.status == Status.SUCCESS) {
+                            groupMemberInfo(groupId);
+                            addManagerResult.addSource(
+                                    groupManagements,
+                                    new Observer<Resource<List<GroupMember>>>() {
+                                        @Override
+                                        public void onChanged(
+                                                Resource<List<GroupMember>> listResource) {
+                                            if (listResource.status != Status.LOADING) {
+                                                addManagerResult.removeSource(groupManagements);
+                                                addManagerResult.postValue(resource);
+                                            }
+                                        }
+                                    });
+                        } else {
+                            addManagerResult.postValue(resource);
+                        }
+                    }
+                });
+    }
 
     /**
      * 转让群角色
@@ -316,34 +343,39 @@ public class GroupManagementViewModel extends AndroidViewModel {
      * @param userId
      */
     public void transferGroupOwner(String groupId, String userId) {
-//        transferResult.setSource(groupTask.transferGroup(groupId, userId));
+        //        transferResult.setSource(groupTask.transferGroup(groupId, userId));
         LiveData<Resource<Void>> transferGroup = groupTask.transferGroup(groupId, userId);
-        transferResult.addSource(transferGroup, new Observer<Resource<Void>>() {
-            @Override
-            public void onChanged(Resource<Void> resource) {
-                if (resource.status != Status.LOADING) {
-                    transferResult.removeSource(transferGroup);
-                }
+        transferResult.addSource(
+                transferGroup,
+                new Observer<Resource<Void>>() {
+                    @Override
+                    public void onChanged(Resource<Void> resource) {
+                        if (resource.status != Status.LOADING) {
+                            transferResult.removeSource(transferGroup);
+                        }
 
-                if (resource.status == Status.SUCCESS) {
-                    LiveData<Resource<List<GroupMember>>> groupMemberInfoList = groupTask.getGroupMemberInfoList(groupId);
-                    transferResult.addSource(groupMemberInfoList, new Observer<Resource<List<GroupMember>>>() {
-                        @Override
-                        public void onChanged(Resource<List<GroupMember>> resourceMemberList) {
-                            if (resourceMemberList.status != Status.LOADING) {
-                                transferResult.removeSource(groupMemberInfoList);
-                                return;
-                            }
+                        if (resource.status == Status.SUCCESS) {
+                            LiveData<Resource<List<GroupMember>>> groupMemberInfoList =
+                                    groupTask.getGroupMemberInfoList(groupId);
+                            transferResult.addSource(
+                                    groupMemberInfoList,
+                                    new Observer<Resource<List<GroupMember>>>() {
+                                        @Override
+                                        public void onChanged(
+                                                Resource<List<GroupMember>> resourceMemberList) {
+                                            if (resourceMemberList.status != Status.LOADING) {
+                                                transferResult.removeSource(groupMemberInfoList);
+                                                return;
+                                            }
+                                            transferResult.postValue(resource);
+                                        }
+                                    });
+                        } else {
                             transferResult.postValue(resource);
                         }
-                    });
-                } else {
-                    transferResult.postValue(resource);
-                }
-            }
-        });
+                    }
+                });
     }
-
 
     public static class Factory extends ViewModelProvider.NewInstanceFactory {
         private String groupId;
@@ -358,11 +390,12 @@ public class GroupManagementViewModel extends AndroidViewModel {
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
             try {
-                return modelClass.getConstructor(String.class, Application.class).newInstance(groupId, application);
+                return modelClass
+                        .getConstructor(String.class, Application.class)
+                        .newInstance(groupId, application);
             } catch (Exception e) {
                 throw new RuntimeException("Cannot create an instance of " + modelClass, e);
             }
         }
     }
-
 }

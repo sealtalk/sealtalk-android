@@ -12,7 +12,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import cn.rongcloud.im.R;
 
 public class PushConfigDialog extends Dialog {
@@ -68,7 +67,8 @@ public class PushConfigDialog extends Dialog {
             mLayoutParams.height = android.view.ViewGroup.LayoutParams.MATCH_PARENT;
             mLayoutParams.gravity = Gravity.CENTER;
         }
-        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_push_config, null);
+        View dialogView =
+                LayoutInflater.from(getContext()).inflate(R.layout.dialog_push_config, null);
         mTvSure = dialogView.findViewById(R.id.tv_sure);
         mTvCancel = dialogView.findViewById(R.id.tv_cancle);
         etId = dialogView.findViewById(R.id.et_id);

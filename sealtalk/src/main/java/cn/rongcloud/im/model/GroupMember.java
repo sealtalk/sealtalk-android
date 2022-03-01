@@ -10,6 +10,7 @@ public class GroupMember {
         MANAGEMENT(2);
 
         int value;
+
         Role(int value) {
             this.value = value;
         }
@@ -28,23 +29,30 @@ public class GroupMember {
 
     @ColumnInfo(name = "group_id")
     private String groupId;
+
     @ColumnInfo(name = "user_id")
     private String userId;
+
     @ColumnInfo(name = "portrait_uri")
     private String portraitUri;
+
     @ColumnInfo(name = "nickname")
     private String groupNickName;
+
     @ColumnInfo(name = "nickname_spelling")
     private String groupNickNameSpelling;
+
     @ColumnInfo(name = "name")
     private String name;
+
     @ColumnInfo(name = "name_spelling")
     private String nameSpelling;
+
     @ColumnInfo(name = "role")
     private int role;
+
     @ColumnInfo(name = "join_time")
     private long joinTime;
-
 
     public String getGroupId() {
         return groupId;

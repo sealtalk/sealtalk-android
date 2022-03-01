@@ -26,13 +26,10 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
-
+import cn.rongcloud.im.R;
 import com.google.zxing.ResultPoint;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.rongcloud.im.R;
 
 /**
  * This view is overlaid on top of the camera preview. It adds the viewfinder rectangle and partial
@@ -75,16 +72,25 @@ public class ViewfinderView extends View {
         Resources resources = getResources();
 
         // Get setted attributes on view
-        TypedArray attributes = getContext().obtainStyledAttributes(attrs, R.styleable.zxing_finder);
+        TypedArray attributes =
+                getContext().obtainStyledAttributes(attrs, R.styleable.zxing_finder);
 
-        this.maskColor = attributes.getColor(R.styleable.zxing_finder_zxing_viewfinder_mask,
-                resources.getColor(R.color.zxing_viewfinder_mask));
-        this.resultColor = attributes.getColor(R.styleable.zxing_finder_zxing_result_view,
-                resources.getColor(R.color.zxing_result_view));
-        this.laserColor = attributes.getColor(R.styleable.zxing_finder_zxing_viewfinder_laser,
-                resources.getColor(R.color.zxing_viewfinder_laser));
-        this.resultPointColor = attributes.getColor(R.styleable.zxing_finder_zxing_possible_result_points,
-                resources.getColor(R.color.zxing_possible_result_points));
+        this.maskColor =
+                attributes.getColor(
+                        R.styleable.zxing_finder_zxing_viewfinder_mask,
+                        resources.getColor(R.color.zxing_viewfinder_mask));
+        this.resultColor =
+                attributes.getColor(
+                        R.styleable.zxing_finder_zxing_result_view,
+                        resources.getColor(R.color.zxing_result_view));
+        this.laserColor =
+                attributes.getColor(
+                        R.styleable.zxing_finder_zxing_viewfinder_laser,
+                        resources.getColor(R.color.zxing_viewfinder_laser));
+        this.resultPointColor =
+                attributes.getColor(
+                        R.styleable.zxing_finder_zxing_possible_result_points,
+                        resources.getColor(R.color.zxing_possible_result_points));
 
         attributes.recycle();
 
@@ -95,37 +101,32 @@ public class ViewfinderView extends View {
 
     public void setCameraPreview(CameraPreview view) {
         this.cameraPreview = view;
-        view.addStateListener(new CameraPreview.StateListener() {
-            @Override
-            public void previewSized() {
-                refreshSizes();
-                invalidate();
-            }
+        view.addStateListener(
+                new CameraPreview.StateListener() {
+                    @Override
+                    public void previewSized() {
+                        refreshSizes();
+                        invalidate();
+                    }
 
-            @Override
-            public void previewStarted() {
+                    @Override
+                    public void previewStarted() {}
 
-            }
+                    @Override
+                    public void previewStopped() {}
 
-            @Override
-            public void previewStopped() {
-
-            }
-
-            @Override
-            public void cameraError(Exception error) {
-
-            }
-        });
+                    @Override
+                    public void cameraError(Exception error) {}
+                });
     }
 
     protected void refreshSizes() {
-        if(cameraPreview == null) {
+        if (cameraPreview == null) {
             return;
         }
         Rect framingRect = cameraPreview.getFramingRect();
         Rect previewFramingRect = cameraPreview.getPreviewFramingRect();
-        if(framingRect != null && previewFramingRect != null) {
+        if (framingRect != null && previewFramingRect != null) {
             this.framingRect = framingRect;
             this.previewFramingRect = previewFramingRect;
         }
@@ -180,9 +181,11 @@ public class ViewfinderView extends View {
                 paint.setAlpha(CURRENT_POINT_OPACITY);
                 paint.setColor(resultPointColor);
                 for (ResultPoint point : currentPossible) {
-                    canvas.drawCircle(frameLeft + (int) (point.getX() * scaleX),
+                    canvas.drawCircle(
+                            frameLeft + (int) (point.getX() * scaleX),
                             frameTop + (int) (point.getY() * scaleY),
-                            POINT_SIZE, paint);
+                            POINT_SIZE,
+                            paint);
                 }
             }
             if (currentLast != null) {
@@ -190,15 +193,18 @@ public class ViewfinderView extends View {
                 paint.setColor(resultPointColor);
                 float radius = POINT_SIZE / 2.0f;
                 for (ResultPoint point : currentLast) {
-                    canvas.drawCircle(frameLeft + (int) (point.getX() * scaleX),
+                    canvas.drawCircle(
+                            frameLeft + (int) (point.getX() * scaleX),
                             frameTop + (int) (point.getY() * scaleY),
-                            radius, paint);
+                            radius,
+                            paint);
                 }
             }
 
             // Request another update at the animation interval, but only repaint the laser line,
             // not the entire viewfinder mask.
-            postInvalidateDelayed(ANIMATION_DELAY,
+            postInvalidateDelayed(
+                    ANIMATION_DELAY,
                     frame.left - POINT_SIZE,
                     frame.top - POINT_SIZE,
                     frame.right + POINT_SIZE,

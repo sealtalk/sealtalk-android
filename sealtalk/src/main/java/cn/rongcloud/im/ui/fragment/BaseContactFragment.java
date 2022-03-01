@@ -3,14 +3,13 @@ package cn.rongcloud.im.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.widget.SideBar;
 
-public class BaseContactFragment extends BaseFragment implements SideBar.OnTouchingLetterChangedListener {
+public class BaseContactFragment extends BaseFragment
+        implements SideBar.OnTouchingLetterChangedListener {
     private static String TAG = "BaseContactFragment";
     protected RecyclerView recyclerView;
     protected SideBar sideBar;
@@ -37,8 +36,5 @@ public class BaseContactFragment extends BaseFragment implements SideBar.OnTouch
      * @param s
      */
     @Override
-    public void onTouchingLetterChanged(String s) {
-
-    }
-
+    public void onTouchingLetterChanged(String s) {}
 }

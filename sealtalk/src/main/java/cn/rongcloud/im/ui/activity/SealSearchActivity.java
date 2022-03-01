@@ -3,11 +3,9 @@ package cn.rongcloud.im.ui.activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.db.model.FriendShipInfo;
 import cn.rongcloud.im.db.model.GroupEntity;
@@ -23,21 +21,26 @@ import cn.rongcloud.im.ui.interfaces.OnContactItemClickListener;
 import cn.rongcloud.im.ui.interfaces.OnGroupItemClickListener;
 import cn.rongcloud.im.ui.interfaces.OnMessageRecordClickListener;
 import cn.rongcloud.im.ui.interfaces.OnShowMoreClickListener;
-import cn.rongcloud.im.viewmodel.SearchMessageModel;
 import cn.rongcloud.im.utils.log.SLog;
+import cn.rongcloud.im.viewmodel.SearchMessageModel;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.SearchConversationResult;
 
-public class SealSearchActivity extends SealSearchBaseActivity implements TextWatcher, OnContactItemClickListener,
-        OnGroupItemClickListener, OnChatItemClickListener, OnShowMoreClickListener, OnMessageRecordClickListener {
+public class SealSearchActivity extends SealSearchBaseActivity
+        implements TextWatcher,
+                OnContactItemClickListener,
+                OnGroupItemClickListener,
+                OnChatItemClickListener,
+                OnShowMoreClickListener,
+                OnMessageRecordClickListener {
     private static final String TAG = "SealSearchActivity";
     private SearchAllFragment searchAllFragment;
     private SearchFriendFragment searchFriendFragment;
     private SearchConversationFragment searchConversationFragment;
     private SearchGroupFragment searchGroupFragment;
     private SearchMessageFragment searchMessageFragment;
-    private SearchBaseFragment currentFragment; //当前Fragment
+    private SearchBaseFragment currentFragment; // 当前Fragment
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,11 +64,10 @@ public class SealSearchActivity extends SealSearchBaseActivity implements TextWa
     @Override
     public void onItemContactClick(FriendShipInfo friendShipInfo) {
         String displayName = friendShipInfo.getDisplayName();
-        if(TextUtils.isEmpty(displayName)){
+        if (TextUtils.isEmpty(displayName)) {
             displayName = friendShipInfo.getUser().getNickname();
         }
-        RongIM.getInstance().startPrivateChat(this, friendShipInfo.getUser().getId(),
-                displayName);
+        RongIM.getInstance().startPrivateChat(this, friendShipInfo.getUser().getId(), displayName);
     }
 
     /**
@@ -73,19 +75,22 @@ public class SealSearchActivity extends SealSearchBaseActivity implements TextWa
      *
      * @param searchConversationModel
      */
-
     @Override
     public void OnChatItemClicked(SearchConversationModel searchConversationModel) {
         SearchConversationResult result = searchConversationModel.getBean();
         if (result.getMatchCount() == 1) {
-            RongIM.getInstance().startConversation(this,
-                    result.getConversation().getConversationType(),
-                    result.getConversation().getTargetId(),
-                    searchConversationModel.getName(),result.getConversation().getSentTime());
+            RongIM.getInstance()
+                    .startConversation(
+                            this,
+                            result.getConversation().getConversationType(),
+                            result.getConversation().getTargetId(),
+                            searchConversationModel.getName(),
+                            result.getConversation().getSentTime());
         } else {
 
             searchMessageFragment = new SearchMessageFragment();
-            searchMessageFragment.init(this,
+            searchMessageFragment.init(
+                    this,
                     searchConversationModel.getBean().getConversation().getTargetId(),
                     searchConversationModel.getBean().getConversation().getConversationType(),
                     searchConversationModel.getName(),
@@ -144,10 +149,13 @@ public class SealSearchActivity extends SealSearchBaseActivity implements TextWa
     @Override
     public void onMessageRecordClick(SearchMessageModel searchMessageModel) {
         Message message = searchMessageModel.getBean();
-        RongIM.getInstance().startConversation(this,
-                message.getConversationType(),
-                message.getTargetId(), searchMessageModel.getName(),
-                message.getSentTime());
+        RongIM.getInstance()
+                .startConversation(
+                        this,
+                        message.getConversationType(),
+                        message.getTargetId(),
+                        searchMessageModel.getName(),
+                        message.getSentTime());
     }
 
     private void pushFragment(SearchBaseFragment fragment) {
@@ -164,7 +172,7 @@ public class SealSearchActivity extends SealSearchBaseActivity implements TextWa
     public void onBackPressed() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragmentManager.getBackStackEntryCount() == 1) {
-            //只有searchAllFragment
+            // 只有searchAllFragment
             finish();
         } else {
             super.onBackPressed();

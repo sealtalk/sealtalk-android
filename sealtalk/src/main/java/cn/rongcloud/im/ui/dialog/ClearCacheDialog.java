@@ -1,14 +1,11 @@
 package cn.rongcloud.im.ui.dialog;
 
 import android.os.Environment;
-
-import java.io.File;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.utils.ToastUtils;
+import java.io.File;
 
 public class ClearCacheDialog extends CommonDialog {
-
 
     @Override
     protected boolean onPositiveClick() {
@@ -17,11 +14,12 @@ public class ClearCacheDialog extends CommonDialog {
         return true;
     }
 
-    /**
-     * 清理缓存
-     */
+    /** 清理缓存 */
     private void clearFiles() {
-        File file = new File(Environment.getExternalStorageDirectory().getPath() + getContext().getPackageName());
+        File file =
+                new File(
+                        Environment.getExternalStorageDirectory().getPath()
+                                + getContext().getPackageName());
         deleteFile(file);
     }
 

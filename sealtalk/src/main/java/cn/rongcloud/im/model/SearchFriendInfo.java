@@ -7,7 +7,6 @@ public class SearchFriendInfo {
     private String stAccount;
     private String gender;
 
-
     public void setId(String id) {
         this.id = id;
     }

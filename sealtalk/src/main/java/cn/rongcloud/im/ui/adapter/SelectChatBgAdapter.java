@@ -1,15 +1,12 @@
 package cn.rongcloud.im.ui.adapter;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import cn.rongcloud.im.R;
 
 public class SelectChatBgAdapter extends RecyclerView.Adapter {
@@ -17,7 +14,6 @@ public class SelectChatBgAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private OnItemClickListener mListener;
     private String selectedBg;
-
 
     public SelectChatBgAdapter(Context context) {
         this.mContext = context;
@@ -32,9 +28,14 @@ public class SelectChatBgAdapter extends RecyclerView.Adapter {
         mListener = listener;
     }
 
-    private int[] defaultBg = {R.drawable.seal_default_chat_bg1, R.drawable.seal_default_chat_bg2,
-            R.drawable.seal_default_chat_bg3, R.drawable.seal_default_chat_bg4,
-            R.drawable.seal_default_chat_bg5, R.drawable.seal_default_chat_bg6};
+    private int[] defaultBg = {
+        R.drawable.seal_default_chat_bg1,
+        R.drawable.seal_default_chat_bg2,
+        R.drawable.seal_default_chat_bg3,
+        R.drawable.seal_default_chat_bg4,
+        R.drawable.seal_default_chat_bg5,
+        R.drawable.seal_default_chat_bg6
+    };
 
     @NonNull
     @Override
@@ -48,16 +49,19 @@ public class SelectChatBgAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ChatBgViewHolder chatBgViewHolder = (ChatBgViewHolder) holder;
-        chatBgViewHolder.ivContent.setImageDrawable(mContext.getResources().getDrawable(defaultBg[position]));
-        chatBgViewHolder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mListener != null) {
-                    mListener.onItemClick(defaultBg[position]);
-                }
-            }
-        });
-        if (selectedBg.contains(mContext.getResources().getResourceEntryName(defaultBg[position]))) {
+        chatBgViewHolder.ivContent.setImageDrawable(
+                mContext.getResources().getDrawable(defaultBg[position]));
+        chatBgViewHolder.mView.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mListener != null) {
+                            mListener.onItemClick(defaultBg[position]);
+                        }
+                    }
+                });
+        if (selectedBg.contains(
+                mContext.getResources().getResourceEntryName(defaultBg[position]))) {
             chatBgViewHolder.ivSelect.setVisibility(View.VISIBLE);
         } else {
             chatBgViewHolder.ivSelect.setVisibility(View.GONE);

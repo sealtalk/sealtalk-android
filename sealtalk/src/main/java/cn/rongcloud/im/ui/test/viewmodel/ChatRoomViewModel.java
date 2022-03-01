@@ -1,13 +1,9 @@
 package cn.rongcloud.im.ui.test.viewmodel;
 
 import android.app.Application;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MediatorLiveData;
-
-import io.rong.imkit.IMCenter;
-import io.rong.imkit.event.uievent.PageEvent;
 
 public class ChatRoomViewModel extends AndroidViewModel {
 

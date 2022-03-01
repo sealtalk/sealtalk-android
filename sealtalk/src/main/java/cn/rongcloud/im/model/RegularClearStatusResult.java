@@ -1,8 +1,6 @@
 package cn.rongcloud.im.model;
 
-/**
- * 定时清理服务器返回结果
- */
+/** 定时清理服务器返回结果 */
 public class RegularClearStatusResult {
     // 0 关闭、 3 清理 3 天前、 7 清理 7 天前、 36 清理 36 小时前
     public int clearStatus;

@@ -9,18 +9,13 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-
-import java.lang.ref.WeakReference;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.db.model.FriendDescription;
@@ -36,7 +31,7 @@ import cn.rongcloud.im.utils.PhotoUtils;
 import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.viewmodel.EditUserDescribeViewModel;
-
+import java.lang.ref.WeakReference;
 
 public class EditUserDescribeActivity extends TitleBaseActivity implements View.OnClickListener {
 
@@ -53,8 +48,8 @@ public class EditUserDescribeActivity extends TitleBaseActivity implements View.
     private EditUserDescribeViewModel editUserDescribeViewModel;
     private FileManager fileManager;
     private final int REQUEST_OPERATION_PICTURE = 2889;
-    public final static int OPERATE_PICTURE_SAVE = 0x1212;
-    public final static int OPERATE_PICTURE_DELETE = 0x1211;
+    public static final int OPERATE_PICTURE_SAVE = 0x1212;
+    public static final int OPERATE_PICTURE_DELETE = 0x1211;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,33 +64,34 @@ public class EditUserDescribeActivity extends TitleBaseActivity implements View.
     private void initView() {
         getTitleBar().setTitle(getString(R.string.profile_set_display_name));
         getTitleBar().getBtnRight().setVisibility(View.GONE);
-        getTitleBar().setOnBtnRightClickListener(getString(R.string.seal_describe_more_btn_complete), new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showSaveConfirmDialog();
-            }
-        });
+        getTitleBar()
+                .setOnBtnRightClickListener(
+                        getString(R.string.seal_describe_more_btn_complete),
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                showSaveConfirmDialog();
+                            }
+                        });
         etDisplayName = findViewById(R.id.et_display_name);
         etPhone = findViewById(R.id.et_phone);
         tvMoreNum = findViewById(R.id.tv_more_num);
         tvMoreNum.setText(getString(R.string.seal_describe_more_num, 0));
         etMore = findViewById(R.id.et_more);
-        etMore.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        etMore.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(
+                            CharSequence s, int start, int count, int after) {}
 
-            }
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                tvMoreNum.setText(getString(R.string.seal_describe_more_num, s.length()));
-            }
-        });
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        tvMoreNum.setText(getString(R.string.seal_describe_more_num, s.length()));
+                    }
+                });
         ivPhoto = findViewById(R.id.iv_photo);
         flMore = findViewById(R.id.fl_more);
         flMore.setOnClickListener(this);
@@ -105,13 +101,15 @@ public class EditUserDescribeActivity extends TitleBaseActivity implements View.
 
     private void setMorePhotoDialog() {
         SelectPictureBottomDialog.Builder builder = new SelectPictureBottomDialog.Builder();
-        builder.setOnSelectPictureListener(new MySelectPictureBottomDialog(EditUserDescribeActivity.this));
+        builder.setOnSelectPictureListener(
+                new MySelectPictureBottomDialog(EditUserDescribeActivity.this));
         SelectPictureBottomDialog dialog = builder.build();
         dialog.setType(PhotoUtils.NO_CROP);
         dialog.show(getSupportFragmentManager(), null);
     }
 
-    public class MySelectPictureBottomDialog implements SelectPictureBottomDialog.OnSelectPictureListener {
+    public class MySelectPictureBottomDialog
+            implements SelectPictureBottomDialog.OnSelectPictureListener {
         WeakReference<EditUserDescribeActivity> weakActivity;
 
         public MySelectPictureBottomDialog(EditUserDescribeActivity activity) {
@@ -127,45 +125,62 @@ public class EditUserDescribeActivity extends TitleBaseActivity implements View.
     }
 
     private void initViewModel() {
-        editUserDescribeViewModel = ViewModelProviders.of(this,
-                new EditUserDescribeViewModel.Factory(getApplication(), userId)).get(EditUserDescribeViewModel.class);
-        editUserDescribeViewModel.getFriendDescription().observe(this, new Observer<Resource<FriendDescription>>() {
-            @Override
-            public void onChanged(Resource<FriendDescription> friendDescriptionResource) {
-                if (friendDescriptionResource.status != Status.LOADING && friendDescriptionResource.data != null) {
-                    updateView(friendDescriptionResource.data);
-                }
-            }
-        });
-        editUserDescribeViewModel.setFriendDescriptionResult().observe(this, new Observer<Resource<Void>>() {
-            @Override
-            public void onChanged(Resource<Void> voidResource) {
-                if (voidResource.status == Status.SUCCESS) {
-                    dismissLoadingDialog();
-                    ToastUtils.showToast(R.string.seal_describe_more_btn_set_success);
-                    finish();
-                } else if (voidResource.status == Status.ERROR) {
-                    dismissLoadingDialog();
-                    ToastUtils.showToast(R.string.seal_describe_more_btn_set_fail);
-                    finish();
-                }
-            }
-        });
+        editUserDescribeViewModel =
+                ViewModelProviders.of(
+                                this,
+                                new EditUserDescribeViewModel.Factory(getApplication(), userId))
+                        .get(EditUserDescribeViewModel.class);
+        editUserDescribeViewModel
+                .getFriendDescription()
+                .observe(
+                        this,
+                        new Observer<Resource<FriendDescription>>() {
+                            @Override
+                            public void onChanged(
+                                    Resource<FriendDescription> friendDescriptionResource) {
+                                if (friendDescriptionResource.status != Status.LOADING
+                                        && friendDescriptionResource.data != null) {
+                                    updateView(friendDescriptionResource.data);
+                                }
+                            }
+                        });
+        editUserDescribeViewModel
+                .setFriendDescriptionResult()
+                .observe(
+                        this,
+                        new Observer<Resource<Void>>() {
+                            @Override
+                            public void onChanged(Resource<Void> voidResource) {
+                                if (voidResource.status == Status.SUCCESS) {
+                                    dismissLoadingDialog();
+                                    ToastUtils.showToast(
+                                            R.string.seal_describe_more_btn_set_success);
+                                    finish();
+                                } else if (voidResource.status == Status.ERROR) {
+                                    dismissLoadingDialog();
+                                    ToastUtils.showToast(R.string.seal_describe_more_btn_set_fail);
+                                    finish();
+                                }
+                            }
+                        });
     }
 
     private void updateView(FriendDescription friendDescriptionResource) {
         if (!TextUtils.isEmpty(friendDescriptionResource.getDisplayName())) {
-            etDisplayName.setText(friendDescriptionResource.getDisplayName(), TextView.BufferType.EDITABLE);
+            etDisplayName.setText(
+                    friendDescriptionResource.getDisplayName(), TextView.BufferType.EDITABLE);
         }
         if (!TextUtils.isEmpty(friendDescriptionResource.getPhone())) {
             etPhone.setText(friendDescriptionResource.getPhone(), TextView.BufferType.EDITABLE);
         }
         if (!TextUtils.isEmpty(friendDescriptionResource.getDescription())) {
-            etMore.setText(friendDescriptionResource.getDescription(), TextView.BufferType.EDITABLE);
+            etMore.setText(
+                    friendDescriptionResource.getDescription(), TextView.BufferType.EDITABLE);
         }
         if (!TextUtils.isEmpty(friendDescriptionResource.getImageUri())) {
             mUri = friendDescriptionResource.getImageUri();
-            ImageLoaderUtils.displayUserDescritpionImage(friendDescriptionResource.getImageUri(), ivPhoto);
+            ImageLoaderUtils.displayUserDescritpionImage(
+                    friendDescriptionResource.getImageUri(), ivPhoto);
         }
         if (!TextUtils.isEmpty(friendDescriptionResource.getRegion())) {
             tvRegion.setText("+" + friendDescriptionResource.getRegion());
@@ -175,25 +190,30 @@ public class EditUserDescribeActivity extends TitleBaseActivity implements View.
     private void showSaveConfirmDialog() {
         CommonDialog.Builder builder = new CommonDialog.Builder();
         builder.setContentMessage(getString(R.string.seal_describe_more_save_tips));
-        builder.setDialogButtonClickListener(new CommonDialog.OnDialogButtonClickListener() {
-            @Override
-            public void onPositiveClick(View v, Bundle bundle) {
-                setFriendDescription();
-            }
+        builder.setDialogButtonClickListener(
+                new CommonDialog.OnDialogButtonClickListener() {
+                    @Override
+                    public void onPositiveClick(View v, Bundle bundle) {
+                        setFriendDescription();
+                    }
 
-            @Override
-            public void onNegativeClick(View v, Bundle bundle) {
-
-            }
-        });
+                    @Override
+                    public void onNegativeClick(View v, Bundle bundle) {}
+                });
         CommonDialog deleteDialog = builder.build();
-        deleteDialog.show(getSupportFragmentManager().beginTransaction(), "AddCategoriesDialogFragment");
+        deleteDialog.show(
+                getSupportFragmentManager().beginTransaction(), "AddCategoriesDialogFragment");
     }
 
     private void setFriendDescription() {
         showLoadingDialog("");
-        editUserDescribeViewModel.setFriendDescription(userId, etDisplayName.getText().toString(),
-                tvRegion.getText().toString().substring(1, tvRegion.length()), etPhone.getText().toString(), etMore.getText().toString(), mUri);
+        editUserDescribeViewModel.setFriendDescription(
+                userId,
+                etDisplayName.getText().toString(),
+                tvRegion.getText().toString().substring(1, tvRegion.length()),
+                etPhone.getText().toString(),
+                etMore.getText().toString(),
+                mUri);
     }
 
     private void insertPhoto(Uri uri, EditUserDescribeActivity activity) {
@@ -206,13 +226,15 @@ public class EditUserDescribeActivity extends TitleBaseActivity implements View.
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_SELECT_COUNTRY) {
-            CountryInfo info = data.getParcelableExtra(SelectCountryActivity.RESULT_PARAMS_COUNTRY_INFO);
+            CountryInfo info =
+                    data.getParcelableExtra(SelectCountryActivity.RESULT_PARAMS_COUNTRY_INFO);
             SLog.d("edit_des_country", "info = " + info);
             tvRegion.setText(info.getZipCode());
         } else if (resultCode == RESULT_OK && requestCode == REQUEST_OPERATION_PICTURE) {
             if (data.getIntExtra(IntentExtra.OPERATE_PICTURE_ACTION, -1) == OPERATE_PICTURE_SAVE) {
                 savePicture();
-            } else if (data.getIntExtra(IntentExtra.OPERATE_PICTURE_ACTION, -1) == OPERATE_PICTURE_DELETE) {
+            } else if (data.getIntExtra(IntentExtra.OPERATE_PICTURE_ACTION, -1)
+                    == OPERATE_PICTURE_DELETE) {
                 deletePicture();
             }
         }
@@ -226,16 +248,26 @@ public class EditUserDescribeActivity extends TitleBaseActivity implements View.
     private void savePicture() {
         Bitmap bitmap = ((BitmapDrawable) ivPhoto.getDrawable()).getBitmap();
         if (bitmap != null) {
-            fileManager.saveBitmapToPictures(bitmap).observe(this, new Observer<Resource<String>>() {
-                @Override
-                public void onChanged(Resource<String> stringResource) {
-                    if (stringResource.status == Status.SUCCESS) {
-                        SLog.d("saveBitmapToPictures", stringResource.data);
-                        ToastUtils.showToast(R.string.seal_dialog_describe_more_save_success);
-                        MediaScannerConnection.scanFile(EditUserDescribeActivity.this.getApplicationContext(), new String[]{stringResource.data}, null, null);
-                    }
-                }
-            });
+            fileManager
+                    .saveBitmapToPictures(bitmap)
+                    .observe(
+                            this,
+                            new Observer<Resource<String>>() {
+                                @Override
+                                public void onChanged(Resource<String> stringResource) {
+                                    if (stringResource.status == Status.SUCCESS) {
+                                        SLog.d("saveBitmapToPictures", stringResource.data);
+                                        ToastUtils.showToast(
+                                                R.string.seal_dialog_describe_more_save_success);
+                                        MediaScannerConnection.scanFile(
+                                                EditUserDescribeActivity.this
+                                                        .getApplicationContext(),
+                                                new String[] {stringResource.data},
+                                                null,
+                                                null);
+                                    }
+                                }
+                            });
         }
     }
 
@@ -252,7 +284,8 @@ public class EditUserDescribeActivity extends TitleBaseActivity implements View.
                 }
                 break;
             case R.id.tv_region:
-                startActivityForResult(new Intent(this, SelectCountryActivity.class), REQUEST_CODE_SELECT_COUNTRY);
+                startActivityForResult(
+                        new Intent(this, SelectCountryActivity.class), REQUEST_CODE_SELECT_COUNTRY);
                 break;
         }
     }
@@ -260,8 +293,8 @@ public class EditUserDescribeActivity extends TitleBaseActivity implements View.
     private void enterImagePreview() {
         Intent intent = new Intent(this, ImagePreviewActivity.class);
         intent.putExtra(IntentExtra.URL, mUri);
-        intent.putExtra(IntentExtra.IMAGE_PREVIEW_TYPE, ImagePreviewActivity.FROM_EDIT_USER_DESCRIBE);
+        intent.putExtra(
+                IntentExtra.IMAGE_PREVIEW_TYPE, ImagePreviewActivity.FROM_EDIT_USER_DESCRIBE);
         startActivityForResult(intent, REQUEST_OPERATION_PICTURE);
     }
-
 }

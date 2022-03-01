@@ -1,27 +1,22 @@
 package cn.rongcloud.im.viewmodel;
 
 import android.app.Application;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-
+import cn.rongcloud.im.db.model.FriendShipInfo;
+import cn.rongcloud.im.db.model.GroupEntity;
+import cn.rongcloud.im.task.FriendTask;
+import cn.rongcloud.im.task.GroupTask;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import cn.rongcloud.im.db.model.FriendShipInfo;
-import cn.rongcloud.im.db.model.GroupEntity;
-import cn.rongcloud.im.task.FriendTask;
-import cn.rongcloud.im.task.GroupTask;
-
-/**
- * 转发时,这里保存最终选择的数据
- */
+/** 转发时,这里保存最终选择的数据 */
 public class ForwardMultiViewModel extends AndroidViewModel {
     private Set<String> checkedGroupList;
     private Set<String> checkedFriendList;
@@ -49,9 +44,9 @@ public class ForwardMultiViewModel extends AndroidViewModel {
         checkedFriendList.addAll(checkUsers);
         checkedGroupList = new HashSet<>();
         checkedGroupList.addAll(checkGroups);
-        checkCountLiveData.postValue(new CheckCount(checkedGroupList.size(), checkedFriendList.size()));
+        checkCountLiveData.postValue(
+                new CheckCount(checkedGroupList.size(), checkedFriendList.size()));
     }
-
 
     public void switchCheckGroup(GroupEntity groupEntity) {
         String id = groupEntity.getId();
@@ -60,7 +55,8 @@ public class ForwardMultiViewModel extends AndroidViewModel {
         } else {
             checkedGroupList.add(id);
         }
-        checkCountLiveData.postValue(new CheckCount(checkedGroupList.size(), checkedFriendList.size()));
+        checkCountLiveData.postValue(
+                new CheckCount(checkedGroupList.size(), checkedFriendList.size()));
     }
 
     public void switchCheckFriend(FriendShipInfo friendShipInfo) {
@@ -70,7 +66,8 @@ public class ForwardMultiViewModel extends AndroidViewModel {
         } else {
             checkedFriendList.add(id);
         }
-        checkCountLiveData.postValue(new CheckCount(checkedGroupList.size(), checkedFriendList.size()));
+        checkCountLiveData.postValue(
+                new CheckCount(checkedGroupList.size(), checkedFriendList.size()));
     }
 
     public LiveData<CheckCount> getCheckCountLiveData() {
@@ -133,26 +130,33 @@ public class ForwardMultiViewModel extends AndroidViewModel {
             return;
         }
         taskCount = 2;
-        LiveData<List<GroupEntity>> groupLiveData = groupTask.getGroupInfoList(groupIds.toArray(new String[groupIds.size()]));
-        dialogDataMutableLiveData.addSource(groupLiveData, new Observer<List<GroupEntity>>() {
-            @Override
-            public void onChanged(List<GroupEntity> entities) {
-                dialogDataMutableLiveData.removeSource(groupLiveData);
-                groupEntities = entities;
-                taskCount--;
-                setDialogDataValue();
-            }
-        });
-        LiveData<List<FriendShipInfo>> friendLiveData = friendTask.getFriendShipInfoListFromDB(friendIds.toArray(new String[friendIds.size()]));
-        dialogDataMutableLiveData.addSource(friendLiveData, new Observer<List<FriendShipInfo>>() {
-            @Override
-            public void onChanged(List<FriendShipInfo> friendShipInfoList) {
-                dialogDataMutableLiveData.removeSource(friendLiveData);
-                friendShipInfos = friendShipInfoList;
-                taskCount--;
-                setDialogDataValue();
-            }
-        });
+        LiveData<List<GroupEntity>> groupLiveData =
+                groupTask.getGroupInfoList(groupIds.toArray(new String[groupIds.size()]));
+        dialogDataMutableLiveData.addSource(
+                groupLiveData,
+                new Observer<List<GroupEntity>>() {
+                    @Override
+                    public void onChanged(List<GroupEntity> entities) {
+                        dialogDataMutableLiveData.removeSource(groupLiveData);
+                        groupEntities = entities;
+                        taskCount--;
+                        setDialogDataValue();
+                    }
+                });
+        LiveData<List<FriendShipInfo>> friendLiveData =
+                friendTask.getFriendShipInfoListFromDB(
+                        friendIds.toArray(new String[friendIds.size()]));
+        dialogDataMutableLiveData.addSource(
+                friendLiveData,
+                new Observer<List<FriendShipInfo>>() {
+                    @Override
+                    public void onChanged(List<FriendShipInfo> friendShipInfoList) {
+                        dialogDataMutableLiveData.removeSource(friendLiveData);
+                        friendShipInfos = friendShipInfoList;
+                        taskCount--;
+                        setDialogDataValue();
+                    }
+                });
     }
 
     private void setDialogDataValue() {
@@ -160,7 +164,6 @@ public class ForwardMultiViewModel extends AndroidViewModel {
             dialogDataMutableLiveData.postValue(new DialogData(groupEntities, friendShipInfos));
         }
     }
-
 
     public MediatorLiveData<DialogData> getDialogDataMutableLiveData() {
         return dialogDataMutableLiveData;

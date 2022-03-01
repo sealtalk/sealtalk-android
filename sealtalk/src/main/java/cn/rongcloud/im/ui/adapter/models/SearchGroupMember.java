@@ -2,13 +2,11 @@ package cn.rongcloud.im.ui.adapter.models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
-
 import cn.rongcloud.im.db.model.GroupEntity;
 
 public class SearchGroupMember {
 
-    @Embedded
-    private GroupEntity groupEntity;
+    @Embedded private GroupEntity groupEntity;
 
     @ColumnInfo(name = "member_id")
     private String memberId;

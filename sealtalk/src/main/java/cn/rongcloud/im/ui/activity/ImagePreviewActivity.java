@@ -9,9 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.ui.dialog.OperatePictureBottomDialog;
@@ -68,22 +66,23 @@ public class ImagePreviewActivity extends TitleBaseActivity implements View.OnCl
             titleBar.setTitle(getString(R.string.profile_picture_detail));
             tvRight.setText(R.string.profile_picture_more);
         }
-        tvRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mType == FROM_DEFAULT) {
-                    finish();
-                } else if (mType == FROM_ALUMB) {
-                    Intent intent = new Intent();
-                    setResult(RESULT_OK, intent);
-                    finish();
-                } else if (mType == FROM_RECENT_PICTURE) {
-                    finish();
-                } else if (mType == FROM_EDIT_USER_DESCRIBE) {
-                    showOperatePictureDialog();
-                }
-            }
-        });
+        tvRight.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mType == FROM_DEFAULT) {
+                            finish();
+                        } else if (mType == FROM_ALUMB) {
+                            Intent intent = new Intent();
+                            setResult(RESULT_OK, intent);
+                            finish();
+                        } else if (mType == FROM_RECENT_PICTURE) {
+                            finish();
+                        } else if (mType == FROM_EDIT_USER_DESCRIBE) {
+                            showOperatePictureDialog();
+                        }
+                    }
+                });
         if (uri.toLowerCase().startsWith("http://") || uri.toLowerCase().startsWith("https://")) {
             ImageLoaderUtils.displayUserDescritpionImage(uri, ivCotnet);
         } else {
@@ -97,23 +96,28 @@ public class ImagePreviewActivity extends TitleBaseActivity implements View.OnCl
 
     private void showOperatePictureDialog() {
         OperatePictureBottomDialog operatePictureBottomDialog = new OperatePictureBottomDialog();
-        operatePictureBottomDialog.setOnDialogButtonClickListener(new OperatePictureBottomDialog.OnDialogButtonClickListener() {
-            @Override
-            public void onClickSave() {
-                Intent intentSend = new Intent();
-                intentSend.putExtra(IntentExtra.OPERATE_PICTURE_ACTION, EditUserDescribeActivity.OPERATE_PICTURE_SAVE);
-                setResult(RESULT_OK, intentSend);
-                finish();
-            }
+        operatePictureBottomDialog.setOnDialogButtonClickListener(
+                new OperatePictureBottomDialog.OnDialogButtonClickListener() {
+                    @Override
+                    public void onClickSave() {
+                        Intent intentSend = new Intent();
+                        intentSend.putExtra(
+                                IntentExtra.OPERATE_PICTURE_ACTION,
+                                EditUserDescribeActivity.OPERATE_PICTURE_SAVE);
+                        setResult(RESULT_OK, intentSend);
+                        finish();
+                    }
 
-            @Override
-            public void onClickDelete() {
-                Intent intentSend = new Intent();
-                intentSend.putExtra(IntentExtra.OPERATE_PICTURE_ACTION, EditUserDescribeActivity.OPERATE_PICTURE_DELETE);
-                setResult(RESULT_OK, intentSend);
-                finish();
-            }
-        });
+                    @Override
+                    public void onClickDelete() {
+                        Intent intentSend = new Intent();
+                        intentSend.putExtra(
+                                IntentExtra.OPERATE_PICTURE_ACTION,
+                                EditUserDescribeActivity.OPERATE_PICTURE_DELETE);
+                        setResult(RESULT_OK, intentSend);
+                        finish();
+                    }
+                });
         operatePictureBottomDialog.show(getSupportFragmentManager(), null);
     }
 

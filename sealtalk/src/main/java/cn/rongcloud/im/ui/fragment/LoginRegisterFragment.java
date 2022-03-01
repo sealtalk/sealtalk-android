@@ -8,11 +8,9 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.ErrorCode;
 import cn.rongcloud.im.model.CountryInfo;
@@ -21,8 +19,8 @@ import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.ui.activity.SelectCountryActivity;
 import cn.rongcloud.im.ui.widget.ClearWriteEditText;
-import cn.rongcloud.im.viewmodel.LoginViewModel;
 import cn.rongcloud.im.utils.log.SLog;
+import cn.rongcloud.im.viewmodel.LoginViewModel;
 
 public class LoginRegisterFragment extends BaseFragment {
 
@@ -58,151 +56,171 @@ public class LoginRegisterFragment extends BaseFragment {
 
         sendCodeBtn.setEnabled(false);
 
-        phoneEdit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // do nothing
-            }
+        phoneEdit.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        // do nothing
+                    }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() > 0 && !isRequestVerifyCode) {
-                    sendCodeBtn.setEnabled(true);
-                } else {
-                    sendCodeBtn.setEnabled(false);
-                }
-            }
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if (s.length() > 0 && !isRequestVerifyCode) {
+                            sendCodeBtn.setEnabled(true);
+                        } else {
+                            sendCodeBtn.setEnabled(false);
+                        }
+                    }
 
-            @Override
-            public void afterTextChanged(Editable s) {
-                // do nothing
-            }
-        });
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        // do nothing
+                    }
+                });
 
-        codeEdit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // do nothing
-            }
+        codeEdit.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        // do nothing
+                    }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                if (s.length() == 6) {
-//                    AMUtils.onInactive(mContext, mCodeEdit);
-//                }
-            }
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        //                if (s.length() == 6) {
+                        //                    AMUtils.onInactive(mContext, mCodeEdit);
+                        //                }
+                    }
 
-            @Override
-            public void afterTextChanged(Editable s) {
-                // do nothing
-            }
-        });
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        // do nothing
+                    }
+                });
 
-        passwordEdit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // do nothing
-            }
+        passwordEdit.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        // do nothing
+                    }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() > 5) {
-                    registerBtn.setEnabled(true);
-                } else {
-                    registerBtn.setEnabled(false);
-                }
-            }
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if (s.length() > 5) {
+                            registerBtn.setEnabled(true);
+                        } else {
+                            registerBtn.setEnabled(false);
+                        }
+                    }
 
-            @Override
-            public void afterTextChanged(Editable s) {
-                // do nothing
-            }
-        });
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        // do nothing
+                    }
+                });
     }
 
     @Override
     protected void onInitViewModel() {
         loginViewModel = ViewModelProviders.of(getActivity()).get(LoginViewModel.class);
 
-        loginViewModel.getSendCodeState().observe(this, new Observer<Resource<String>>() {
-            @Override
-            public void onChanged(Resource<String> resource) {
-                //提示
-                if (resource.status == Status.SUCCESS) {
-                    showToast(R.string.seal_login_toast_send_code_success);
-                } else if (resource.status == Status.LOADING) {
+        loginViewModel
+                .getSendCodeState()
+                .observe(
+                        this,
+                        new Observer<Resource<String>>() {
+                            @Override
+                            public void onChanged(Resource<String> resource) {
+                                // 提示
+                                if (resource.status == Status.SUCCESS) {
+                                    showToast(R.string.seal_login_toast_send_code_success);
+                                } else if (resource.status == Status.LOADING) {
 
-                } else {
-                    showToast(resource.message);
-                    sendCodeBtn.setEnabled(true);
-                    //phoneEdit.setEnabled(true);
-                }
-            }
-        });
-
+                                } else {
+                                    showToast(resource.message);
+                                    sendCodeBtn.setEnabled(true);
+                                    // phoneEdit.setEnabled(true);
+                                }
+                            }
+                        });
 
         // 等待接受验证码倒计时， 并刷新及时按钮的刷新
-        loginViewModel.getCodeCountDown().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                if (integer > 0) {
-                    sendCodeBtn.setText(integer + "s");
-                    isRequestVerifyCode = true;
-                } else {
-                    // 当计时结束时， 恢复按钮的状态
-                    sendCodeBtn.setEnabled(true);
-                    //phoneEdit.setEnabled(true);
-                    sendCodeBtn.setText(R.string.seal_login_send_code);
-                    isRequestVerifyCode = false;
+        loginViewModel
+                .getCodeCountDown()
+                .observe(
+                        this,
+                        new Observer<Integer>() {
+                            @Override
+                            public void onChanged(Integer integer) {
+                                if (integer > 0) {
+                                    sendCodeBtn.setText(integer + "s");
+                                    isRequestVerifyCode = true;
+                                } else {
+                                    // 当计时结束时， 恢复按钮的状态
+                                    sendCodeBtn.setEnabled(true);
+                                    // phoneEdit.setEnabled(true);
+                                    sendCodeBtn.setText(R.string.seal_login_send_code);
+                                    isRequestVerifyCode = false;
+                                }
+                            }
+                        });
 
-                }
-            }
-        });
+        loginViewModel
+                .getRegisterResult()
+                .observe(
+                        this,
+                        new Observer<Resource<RegisterResult>>() {
+                            @Override
+                            public void onChanged(Resource<RegisterResult> resource) {
+                                if (resource.status == Status.SUCCESS) {
+                                    if (listener != null) {
+                                        String phone = phoneEdit.getText().toString();
+                                        String countryName = countryNameTv.getText().toString();
+                                        String countryCode = countryCodeTv.getText().toString();
+                                        listener.onRegisterSuccess(phone, countryCode, countryName);
+                                    }
 
-        loginViewModel.getRegisterResult().observe(this, new Observer<Resource<RegisterResult>>() {
-            @Override
-            public void onChanged(Resource<RegisterResult> resource) {
-                if(resource.status == Status.SUCCESS){
-                    if (listener != null) {
-                        String phone = phoneEdit.getText().toString();
-                        String countryName = countryNameTv.getText().toString();
-                        String countryCode = countryCodeTv.getText().toString();
-                        listener.onRegisterSuccess(phone,  countryCode, countryName);
-                    }
-
-                    dismissLoadingDialog(new Runnable() {
-                        @Override
-                        public void run() {
-                            showToast(R.string.seal_login_register_toast_register_success);
-                        }
-                    });
-                } else if(resource.status == Status.ERROR){
-                    int code = resource.code;
-                    SLog.d("ss_register", "register failed = " + code);
-                    if (resource.code != ErrorCode.CHECK_VERIFY_CODE_FAILED.getCode()) {
-                        sendCodeBtn.setEnabled(true);
-                        //phoneEdit.setEnabled(true);
-                        sendCodeBtn.setText(R.string.seal_login_send_code);
-                        isRequestVerifyCode = false;
-                    }
-                    dismissLoadingDialog(new Runnable() {
-                        @Override
-                        public void run() {
-                            showToast(resource.message);
-                        }
-                    });
-                } else {
-                    showLoadingDialog(R.string.seal_login_register_registering);
-                }
-            }
-        });
+                                    dismissLoadingDialog(
+                                            new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    showToast(
+                                                            R.string
+                                                                    .seal_login_register_toast_register_success);
+                                                }
+                                            });
+                                } else if (resource.status == Status.ERROR) {
+                                    int code = resource.code;
+                                    SLog.d("ss_register", "register failed = " + code);
+                                    if (resource.code
+                                            != ErrorCode.CHECK_VERIFY_CODE_FAILED.getCode()) {
+                                        sendCodeBtn.setEnabled(true);
+                                        // phoneEdit.setEnabled(true);
+                                        sendCodeBtn.setText(R.string.seal_login_send_code);
+                                        isRequestVerifyCode = false;
+                                    }
+                                    dismissLoadingDialog(
+                                            new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    showToast(resource.message);
+                                                }
+                                            });
+                                } else {
+                                    showLoadingDialog(R.string.seal_login_register_registering);
+                                }
+                            }
+                        });
     }
 
     @Override
     protected void onClick(View v, int id) {
         switch (id) {
             case R.id.ll_reg_country_select:
-                startActivityForResult(new Intent(getActivity(), SelectCountryActivity.class), REQUEST_CODE_SELECT_COUNTRY);
+                startActivityForResult(
+                        new Intent(getActivity(), SelectCountryActivity.class),
+                        REQUEST_CODE_SELECT_COUNTRY);
                 break;
             case R.id.btn_reg_send_code:
                 String phoneNumber = phoneEdit.getText().toString().trim();
@@ -214,7 +232,7 @@ public class LoginRegisterFragment extends BaseFragment {
                 // 请求发送验证码时， 禁止手机号改动和获取验证码的按钮改动
                 // 请求完成后在恢复原来状态
                 sendCodeBtn.setEnabled(false);
-                //phoneEdit.setEnabled(false);
+                // phoneEdit.setEnabled(false);
                 sendCode(phoneCode, phoneNumber);
 
                 break;
@@ -262,9 +280,9 @@ public class LoginRegisterFragment extends BaseFragment {
                     return;
                 }
 
-                if(TextUtils.isEmpty(phoneCodeReg)){
+                if (TextUtils.isEmpty(phoneCodeReg)) {
                     phoneCodeReg = "86";
-                }else if(phoneCodeReg.startsWith("+")){
+                } else if (phoneCodeReg.startsWith("+")) {
                     phoneCodeReg = phoneCodeReg.substring(1);
                 }
                 register(phoneCodeReg, phone, code, userName, password);
@@ -276,6 +294,7 @@ public class LoginRegisterFragment extends BaseFragment {
 
     /**
      * 请求发送验证码
+     *
      * @param phoneCode 国家地区的手机区号
      * @param phoneNumber 手机号
      */
@@ -283,7 +302,12 @@ public class LoginRegisterFragment extends BaseFragment {
         loginViewModel.sendCode(phoneCode, phoneNumber);
     }
 
-    private void register(String phoneCode, String phoneNumber, String shortMsgCode, String  nickName, String password) {
+    private void register(
+            String phoneCode,
+            String phoneNumber,
+            String shortMsgCode,
+            String nickName,
+            String password) {
         loginViewModel.register(phoneCode, phoneNumber, shortMsgCode, nickName, password);
     }
 
@@ -291,7 +315,8 @@ public class LoginRegisterFragment extends BaseFragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == getActivity().RESULT_OK && requestCode == REQUEST_CODE_SELECT_COUNTRY) {
-            CountryInfo info = data.getParcelableExtra(SelectCountryActivity.RESULT_PARAMS_COUNTRY_INFO);
+            CountryInfo info =
+                    data.getParcelableExtra(SelectCountryActivity.RESULT_PARAMS_COUNTRY_INFO);
             SLog.d("ss_country", "info = " + info);
             countryNameTv.setText(info.getCountryName());
             countryCodeTv.setText(info.getZipCode());

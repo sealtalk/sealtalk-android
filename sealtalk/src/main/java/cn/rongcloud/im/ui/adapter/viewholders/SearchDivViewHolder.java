@@ -1,7 +1,6 @@
 package cn.rongcloud.im.ui.adapter.viewholders;
 
 import android.view.View;
-
 import androidx.annotation.NonNull;
 
 public class SearchDivViewHolder extends BaseViewHolder {
@@ -12,6 +11,6 @@ public class SearchDivViewHolder extends BaseViewHolder {
 
     @Override
     public void update(Object o) {
-        //do nothing
+        // do nothing
     }
 }

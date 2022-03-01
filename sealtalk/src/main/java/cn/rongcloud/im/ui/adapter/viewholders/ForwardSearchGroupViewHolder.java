@@ -5,11 +5,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-
-import java.util.List;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.db.model.GroupEntity;
 import cn.rongcloud.im.ui.adapter.models.CheckType;
@@ -17,6 +13,7 @@ import cn.rongcloud.im.ui.adapter.models.SearchGroupModel;
 import cn.rongcloud.im.ui.interfaces.OnGroupItemClickListener;
 import cn.rongcloud.im.utils.CharacterParser;
 import cn.rongcloud.im.utils.ImageLoaderUtils;
+import java.util.List;
 
 public class ForwardSearchGroupViewHolder extends ForwardCheckViewHolder<SearchGroupModel> {
 
@@ -37,23 +34,25 @@ public class ForwardSearchGroupViewHolder extends ForwardCheckViewHolder<SearchG
         llDescription = itemView.findViewById(R.id.ll_description);
         checkBox = itemView.findViewById(R.id.cb_select);
         checkBox.setVisibility(View.VISIBLE);
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (groupItemClickListener != null) {
-                    if (searchGroupModel.getCheckType() != CheckType.NONE && searchGroupModel.getCheckType() != CheckType.DISABLE) {
-                        if (searchGroupModel.getCheckType() == CheckType.CHECKED) {
-                            searchGroupModel.setCheckType(CheckType.UNCHECKED);
-                            checkBox.setChecked(false);
-                        } else  if (searchGroupModel.getCheckType() == CheckType.UNCHECKED) {
-                            searchGroupModel.setCheckType(CheckType.CHECKED);
-                            checkBox.setChecked(true);
+        itemView.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (groupItemClickListener != null) {
+                            if (searchGroupModel.getCheckType() != CheckType.NONE
+                                    && searchGroupModel.getCheckType() != CheckType.DISABLE) {
+                                if (searchGroupModel.getCheckType() == CheckType.CHECKED) {
+                                    searchGroupModel.setCheckType(CheckType.UNCHECKED);
+                                    checkBox.setChecked(false);
+                                } else if (searchGroupModel.getCheckType() == CheckType.UNCHECKED) {
+                                    searchGroupModel.setCheckType(CheckType.CHECKED);
+                                    checkBox.setChecked(true);
+                                }
+                            }
+                            groupItemClickListener.onGroupClicked(searchGroupModel.getBean());
                         }
                     }
-                    groupItemClickListener.onGroupClicked(searchGroupModel.getBean());
-                }
-            }
-        });
+                });
     }
 
     @Override
@@ -62,7 +61,7 @@ public class ForwardSearchGroupViewHolder extends ForwardCheckViewHolder<SearchG
         // 更接数据类型进行显示
         if (searchGroupModel.getCheckType() == CheckType.NONE) {
             checkBox.setVisibility(View.GONE);
-        } else  if (searchGroupModel.getCheckType() == CheckType.DISABLE) {
+        } else if (searchGroupModel.getCheckType() == CheckType.DISABLE) {
             checkBox.setEnabled(false);
         } else {
             checkBox.setVisibility(View.VISIBLE);
@@ -77,10 +76,15 @@ public class ForwardSearchGroupViewHolder extends ForwardCheckViewHolder<SearchG
         if (searchGroupModel.getGroupNameStart() == -1) {
             tvNickName.setText(groupEntity.getName());
         } else {
-            tvNickName.setText(CharacterParser.getSpannable(groupEntity.getName(), searchGroupModel.getGroupNameStart(), searchGroupModel.getGroupNameEnd()));
+            tvNickName.setText(
+                    CharacterParser.getSpannable(
+                            groupEntity.getName(),
+                            searchGroupModel.getGroupNameStart(),
+                            searchGroupModel.getGroupNameEnd()));
         }
         ImageLoaderUtils.displayUserPortraitImage(groupEntity.getPortraitUri(), portrait);
-        List<SearchGroupModel.GroupMemberMatch> memberMatches = searchGroupModel.getMatchedMemberlist();
+        List<SearchGroupModel.GroupMemberMatch> memberMatches =
+                searchGroupModel.getMatchedMemberlist();
         if (memberMatches == null || memberMatches.size() == 0) {
             llDescription.setVisibility(View.GONE);
         } else if (memberMatches.size() > 0) {
@@ -89,7 +93,11 @@ public class ForwardSearchGroupViewHolder extends ForwardCheckViewHolder<SearchG
             for (int i = 0; i < memberMatches.size(); i++) {
                 SearchGroupModel.GroupMemberMatch memberMatch = memberMatches.get(i);
                 if (memberMatch.getNameStart() != -1) {
-                    SpannableStringBuilder spannable = CharacterParser.getSpannable(memberMatch.getName(), memberMatch.getNameStart(), memberMatch.getNameEnd());
+                    SpannableStringBuilder spannable =
+                            CharacterParser.getSpannable(
+                                    memberMatch.getName(),
+                                    memberMatch.getNameStart(),
+                                    memberMatch.getNameEnd());
                     builder.append(spannable);
                     if (i != memberMatches.size() - 1) {
                         builder.append("、");

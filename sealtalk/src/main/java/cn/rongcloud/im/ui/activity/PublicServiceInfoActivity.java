@@ -1,12 +1,10 @@
 package cn.rongcloud.im.ui.activity;
 
-import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-
-import cn.rongcloud.im.R;
-
 import static cn.rongcloud.im.ui.view.SealTitleBar.Type.NORMAL;
+
+import android.os.Bundle;
+import androidx.annotation.Nullable;
+import cn.rongcloud.im.R;
 
 public class PublicServiceInfoActivity extends TitleBaseActivity {
     @Override

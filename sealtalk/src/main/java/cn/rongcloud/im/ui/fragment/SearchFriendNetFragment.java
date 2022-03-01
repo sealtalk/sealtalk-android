@@ -1,5 +1,8 @@
 package cn.rongcloud.im.ui.fragment;
 
+import static android.app.Activity.RESULT_OK;
+import static cn.rongcloud.im.ui.activity.SelectCountryActivity.RESULT_PARAMS_COUNTRY_INFO;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -7,18 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.model.CountryInfo;
 import cn.rongcloud.im.ui.activity.SelectCountryActivity;
 import cn.rongcloud.im.ui.interfaces.OnSearchFriendClickListener;
-
-import static android.app.Activity.RESULT_OK;
-import static cn.rongcloud.im.ui.activity.SelectCountryActivity.RESULT_PARAMS_COUNTRY_INFO;
 
 public class SearchFriendNetFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "SearchFriendNetFragment";
@@ -36,7 +34,10 @@ public class SearchFriendNetFragment extends Fragment implements View.OnClickLis
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(
+            @NonNull LayoutInflater inflater,
+            @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_search_friend_net, container, false);
         selectCountry = view.findViewById(R.id.search_country_select);
         tvCountryName = view.findViewById(R.id.search_country_name);
@@ -60,7 +61,8 @@ public class SearchFriendNetFragment extends Fragment implements View.OnClickLis
                     String region = tvRegion.getText().toString();
                     String phone = tvRegion.getText().toString();
                     if (!TextUtils.isEmpty(region) && !TextUtils.isEmpty(phone)) {
-                        onSearchFriendClick.onSearchClick(region.substring(1), tvPhone.getText().toString());
+                        onSearchFriendClick.onSearchClick(
+                                region.substring(1), tvPhone.getText().toString());
                     }
                 }
                 break;

@@ -2,9 +2,7 @@ package cn.rongcloud.im.viewmodel;
 
 import android.app.Application;
 import android.util.Log;
-
 import androidx.annotation.NonNull;
-
 import cn.rongcloud.im.ui.adapter.models.CheckType;
 import cn.rongcloud.im.ui.adapter.models.CheckableContactModel;
 
@@ -20,7 +18,7 @@ public class SelectSingleViewModel extends SelectBaseViewModel {
         Log.i(TAG, "onItemClicked");
         switch (checkableContactModel.getCheckType()) {
             case DISABLE:
-                //不可选 do nothind
+                // 不可选 do nothind
                 break;
             case CHECKED:
                 checkableContactModel.setCheckType(CheckType.NONE);
@@ -33,7 +31,6 @@ public class SelectSingleViewModel extends SelectBaseViewModel {
                 break;
             default:
                 break;
-
         }
     }
 }

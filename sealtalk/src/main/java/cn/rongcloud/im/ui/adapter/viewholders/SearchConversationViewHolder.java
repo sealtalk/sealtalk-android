@@ -3,9 +3,7 @@ package cn.rongcloud.im.ui.adapter.viewholders;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.adapter.models.SearchConversationModel;
 import cn.rongcloud.im.ui.interfaces.OnChatItemClickListener;
@@ -26,14 +24,15 @@ public class SearchConversationViewHolder extends BaseViewHolder<SearchConversat
         portrait = itemView.findViewById(R.id.iv_portrait);
         tvName = itemView.findViewById(R.id.tv_name);
         tvDetail = itemView.findViewById(R.id.tv_detail);
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.OnChatItemClicked(model);
-                }
-            }
-        });
+        itemView.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (listener != null) {
+                            listener.OnChatItemClicked(model);
+                        }
+                    }
+                });
     }
 
     @Override
@@ -42,12 +41,18 @@ public class SearchConversationViewHolder extends BaseViewHolder<SearchConversat
         SearchConversationResult result = searchConversationModel.getBean();
         tvName.setText(searchConversationModel.getName());
         if (result.getMatchCount() > 1) {
-            tvDetail.setText(String.format(itemView.getContext().getString(R.string.seal_search_item_chat_records), result.getMatchCount()));
+            tvDetail.setText(
+                    String.format(
+                            itemView.getContext().getString(R.string.seal_search_item_chat_records),
+                            result.getMatchCount()));
         } else {
-            tvDetail.setText(CharacterParser.getColoredChattingRecord(searchConversationModel.getFilter(), result.getConversation().getLatestMessage(), itemView.getContext()));
+            tvDetail.setText(
+                    CharacterParser.getColoredChattingRecord(
+                            searchConversationModel.getFilter(),
+                            result.getConversation().getLatestMessage(),
+                            itemView.getContext()));
         }
-        ImageLoaderUtils.displayUserPortraitImage(searchConversationModel.getPortraitUrl(), portrait);
+        ImageLoaderUtils.displayUserPortraitImage(
+                searchConversationModel.getPortraitUrl(), portrait);
     }
-
-
 }

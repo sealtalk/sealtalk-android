@@ -2,7 +2,6 @@ package cn.rongcloud.im.db.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -11,9 +10,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "friend_description")
 public class FriendDescription implements Parcelable {
 
-    @PrimaryKey
-    @NonNull
-    private String id;
+    @PrimaryKey @NonNull private String id;
 
     @ColumnInfo(name = "displayName")
     private String displayName;
@@ -79,18 +76,27 @@ public class FriendDescription implements Parcelable {
         this.imageUri = imageUri;
     }
 
-
-
     @Override
     public String toString() {
-        return "FriendDescription{" +
-                "id=" + id +
-                ", displayName='" + displayName + '\'' +
-                ", region='" + region + '\'' +
-                ", phone='" + phone + '\'' +
-                ", description='" + description + '\'' +
-                ", imageUri='" + imageUri + '\'' +
-                '}';
+        return "FriendDescription{"
+                + "id="
+                + id
+                + ", displayName='"
+                + displayName
+                + '\''
+                + ", region='"
+                + region
+                + '\''
+                + ", phone='"
+                + phone
+                + '\''
+                + ", description='"
+                + description
+                + '\''
+                + ", imageUri='"
+                + imageUri
+                + '\''
+                + '}';
     }
 
     @Override
@@ -108,8 +114,7 @@ public class FriendDescription implements Parcelable {
         dest.writeString(this.imageUri);
     }
 
-    public FriendDescription() {
-    }
+    public FriendDescription() {}
 
     protected FriendDescription(Parcel in) {
         this.id = in.readString();
@@ -120,15 +125,16 @@ public class FriendDescription implements Parcelable {
         this.imageUri = in.readString();
     }
 
-    public static final Creator<FriendDescription> CREATOR = new Creator<FriendDescription>() {
-        @Override
-        public FriendDescription createFromParcel(Parcel source) {
-            return new FriendDescription(source);
-        }
+    public static final Creator<FriendDescription> CREATOR =
+            new Creator<FriendDescription>() {
+                @Override
+                public FriendDescription createFromParcel(Parcel source) {
+                    return new FriendDescription(source);
+                }
 
-        @Override
-        public FriendDescription[] newArray(int size) {
-            return new FriendDescription[size];
-        }
-    };
+                @Override
+                public FriendDescription[] newArray(int size) {
+                    return new FriendDescription[size];
+                }
+            };
 }

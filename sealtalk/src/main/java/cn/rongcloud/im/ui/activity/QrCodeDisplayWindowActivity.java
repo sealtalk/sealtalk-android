@@ -2,14 +2,10 @@ package cn.rongcloud.im.ui.activity;
 
 import android.os.Bundle;
 import android.view.View;
-
 import androidx.annotation.Nullable;
-
 import cn.rongcloud.im.R;
 
-/**
- * 显示二维码窗口界面
- */
+/** 显示二维码窗口界面 */
 public class QrCodeDisplayWindowActivity extends QrCodeDisplayActivity {
     private final String TAG = "QrCodeDisplayWindowActivity";
 
@@ -21,19 +17,19 @@ public class QrCodeDisplayWindowActivity extends QrCodeDisplayActivity {
     }
 
     @Override
-    public int getContentViewId(){
+    public int getContentViewId() {
         return R.layout.profile_activity_show_qrcode_window;
     }
 
-    private void initView(){
+    private void initView() {
         getTitleBar().setVisibility(View.GONE);
         View mainView = findViewById(R.id.profile_ll_qr_main);
-        mainView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        mainView.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
     }
-
 }

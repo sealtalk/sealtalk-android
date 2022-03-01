@@ -1,12 +1,10 @@
 package cn.rongcloud.im.net;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
-import cn.rongcloud.im.common.NetConstant;
-
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import cn.rongcloud.im.common.NetConstant;
 
 public class HttpClientManager {
     private static final String TAG = "HttpClientManager";
@@ -41,8 +39,8 @@ public class HttpClientManager {
      * @param auth
      */
     public void setAuthHeader(String auth) {
-        SharedPreferences.Editor config = context.getSharedPreferences(NetConstant.API_SP_NAME_NET, MODE_PRIVATE)
-                .edit();
+        SharedPreferences.Editor config =
+                context.getSharedPreferences(NetConstant.API_SP_NAME_NET, MODE_PRIVATE).edit();
         config.putString(NetConstant.API_SP_KEY_NET_HEADER_AUTH, auth);
         config.commit();
     }
@@ -53,16 +51,15 @@ public class HttpClientManager {
      * @return
      */
     public String getCurrentAuth() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(NetConstant.API_SP_NAME_NET, MODE_PRIVATE);
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences(NetConstant.API_SP_NAME_NET, MODE_PRIVATE);
         return sharedPreferences.getString(NetConstant.API_SP_KEY_NET_HEADER_AUTH, null);
     }
 
-    /**
-     * 清除包括cookie和登录认证
-     */
+    /** 清除包括cookie和登录认证 */
     public void clearRequestCache() {
-        SharedPreferences.Editor config = context.getSharedPreferences(NetConstant.API_SP_NAME_NET, MODE_PRIVATE)
-                .edit();
+        SharedPreferences.Editor config =
+                context.getSharedPreferences(NetConstant.API_SP_NAME_NET, MODE_PRIVATE).edit();
         config.remove(NetConstant.API_SP_KEY_NET_HEADER_AUTH);
         config.remove(NetConstant.API_SP_KEY_NET_COOKIE_SET);
         config.commit();

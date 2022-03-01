@@ -3,7 +3,6 @@ package cn.rongcloud.im.ui.view;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
-
 import cn.rongcloud.im.ui.widget.TabGroupView;
 import cn.rongcloud.im.ui.widget.TabItem;
 
@@ -66,10 +65,7 @@ public class MainBottomTabGroupView extends TabGroupView {
         this.doubleListener = listener;
     }
 
-
-    /**
-     * tab 双击监听
-     */
+    /** tab 双击监听 */
     public interface OnTabDoubleClickListener {
         void onDoubleClick(TabItem item, View view);
     }

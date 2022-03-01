@@ -1,8 +1,6 @@
 package cn.rongcloud.im.model;
 
-/**
- * 用户登录返回结果
- */
+/** 用户登录返回结果 */
 public class LoginResult {
     public String id;
     public String token;

@@ -3,8 +3,6 @@ package cn.rongcloud.im.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
-
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 import cn.rongcloud.im.R;
@@ -43,7 +41,9 @@ public class SystemSettingActivity extends TitleBaseActivity implements View.OnC
         }
 
         targetId = intent.getStringExtra(IntentExtra.STR_TARGET_ID);
-        conversationType = (Conversation.ConversationType) intent.getSerializableExtra(IntentExtra.SERIA_CONVERSATION_TYPE);
+        conversationType =
+                (Conversation.ConversationType)
+                        intent.getSerializableExtra(IntentExtra.SERIA_CONVERSATION_TYPE);
         initView();
         initViewModel();
     }
@@ -53,38 +53,64 @@ public class SystemSettingActivity extends TitleBaseActivity implements View.OnC
         findViewById(R.id.siv_clean_chat_message).setOnClickListener(this);
 
         isNotifySb = findViewById(R.id.siv_user_notification);
-        isNotifySb.setSwitchCheckListener((buttonView, isChecked) ->
-                conversationSettingViewModel.setNotificationStatus(isChecked ? Conversation.ConversationNotificationStatus.DO_NOT_DISTURB : Conversation.ConversationNotificationStatus.NOTIFY));
+        isNotifySb.setSwitchCheckListener(
+                (buttonView, isChecked) ->
+                        conversationSettingViewModel.setNotificationStatus(
+                                isChecked
+                                        ? Conversation.ConversationNotificationStatus.DO_NOT_DISTURB
+                                        : Conversation.ConversationNotificationStatus.NOTIFY));
         updateUserNotification();
         isTopSb = findViewById(R.id.siv_conversation_top);
-        isTopSb.setSwitchCheckListener((buttonView, isChecked) ->
-                conversationSettingViewModel.setConversationTop(isChecked, false));
-
+        isTopSb.setSwitchCheckListener(
+                (buttonView, isChecked) ->
+                        conversationSettingViewModel.setConversationTop(isChecked, false));
     }
 
-
     private void initViewModel() {
-        conversationSettingViewModel = ViewModelProviders.of(this, new ConversationSettingViewModel.Factory(getApplication(), conversationType, targetId)).get(ConversationSettingViewModel.class);
+        conversationSettingViewModel =
+                ViewModelProviders.of(
+                                this,
+                                new ConversationSettingViewModel.Factory(
+                                        getApplication(), conversationType, targetId))
+                        .get(ConversationSettingViewModel.class);
 
-        conversationSettingViewModel.getNotificationStatus().observe(this, conversationNotificationStatus -> isNotifySb.setCheckedImmediatelyWithOutEvent(conversationNotificationStatus.equals(Conversation.ConversationNotificationStatus.DO_NOT_DISTURB)));
+        conversationSettingViewModel
+                .getNotificationStatus()
+                .observe(
+                        this,
+                        conversationNotificationStatus ->
+                                isNotifySb.setCheckedImmediatelyWithOutEvent(
+                                        conversationNotificationStatus.equals(
+                                                Conversation.ConversationNotificationStatus
+                                                        .DO_NOT_DISTURB)));
 
-        conversationSettingViewModel.getTopStatus().observe(this, isTop -> isTopSb.setCheckedImmediatelyWithOutEvent(isTop));
+        conversationSettingViewModel
+                .getTopStatus()
+                .observe(this, isTop -> isTopSb.setCheckedImmediatelyWithOutEvent(isTop));
 
-        conversationSettingViewModel.getOperationResult().observe(this, operationResult -> {
-            if (operationResult.mResultCode == OperationResult.SUCCESS) {
-                if (operationResult.mAction.equals(OperationResult.Action.CLEAR_CONVERSATION_MESSAGES)) {
-                    ToastUtils.showToast(R.string.common_clear_success);
-                } else {
-                    ToastUtils.showToast(getString(R.string.seal_set_clean_time_success));
-                }
-            } else {
-                if (operationResult.mAction.equals(OperationResult.Action.CLEAR_CONVERSATION_MESSAGES)) {
-                    ToastUtils.showToast(R.string.common_clear_failure);
-                } else {
-                    ToastUtils.showToast(getString(R.string.seal_set_clean_time_fail));
-                }
-            }
-        });
+        conversationSettingViewModel
+                .getOperationResult()
+                .observe(
+                        this,
+                        operationResult -> {
+                            if (operationResult.mResultCode == OperationResult.SUCCESS) {
+                                if (operationResult.mAction.equals(
+                                        OperationResult.Action.CLEAR_CONVERSATION_MESSAGES)) {
+                                    ToastUtils.showToast(R.string.common_clear_success);
+                                } else {
+                                    ToastUtils.showToast(
+                                            getString(R.string.seal_set_clean_time_success));
+                                }
+                            } else {
+                                if (operationResult.mAction.equals(
+                                        OperationResult.Action.CLEAR_CONVERSATION_MESSAGES)) {
+                                    ToastUtils.showToast(R.string.common_clear_failure);
+                                } else {
+                                    ToastUtils.showToast(
+                                            getString(R.string.seal_set_clean_time_fail));
+                                }
+                            }
+                        });
     }
 
     @Override
@@ -94,13 +120,13 @@ public class SystemSettingActivity extends TitleBaseActivity implements View.OnC
         }
     }
 
-    /**
-     * 显示清除聊天消息对话框
-     */
+    /** 显示清除聊天消息对话框 */
     private void showCleanMessageDialog() {
-        PromptPopupDialog.newInstance(this,
-                getString(R.string.profile_clean_private_chat_history)).setLayoutRes(io.rong.imkit.R.layout.rc_dialog_popup_prompt_warning)
-                .setPromptButtonClickedListener(() -> conversationSettingViewModel.clearMessages(0, false)).show();
+        PromptPopupDialog.newInstance(this, getString(R.string.profile_clean_private_chat_history))
+                .setLayoutRes(io.rong.imkit.R.layout.rc_dialog_popup_prompt_warning)
+                .setPromptButtonClickedListener(
+                        () -> conversationSettingViewModel.clearMessages(0, false))
+                .show();
     }
 
     @Override
@@ -109,16 +135,30 @@ public class SystemSettingActivity extends TitleBaseActivity implements View.OnC
     }
 
     private void updateUserNotification() {
-        RongNotificationManager.getInstance().getConversationNotificationStatus(Conversation.ConversationType.PRIVATE, targetId, new RongIMClient.ResultCallback<Conversation.ConversationNotificationStatus>() {
-            @Override
-            public void onSuccess(Conversation.ConversationNotificationStatus conversationNotificationStatus) {
-                runOnUiThread(() -> isNotifySb.setCheckedImmediatelyWithOutEvent(conversationNotificationStatus.equals(Conversation.ConversationNotificationStatus.DO_NOT_DISTURB)));
-            }
+        RongNotificationManager.getInstance()
+                .getConversationNotificationStatus(
+                        Conversation.ConversationType.PRIVATE,
+                        targetId,
+                        new RongIMClient.ResultCallback<
+                                Conversation.ConversationNotificationStatus>() {
+                            @Override
+                            public void onSuccess(
+                                    Conversation.ConversationNotificationStatus
+                                            conversationNotificationStatus) {
+                                runOnUiThread(
+                                        () ->
+                                                isNotifySb.setCheckedImmediatelyWithOutEvent(
+                                                        conversationNotificationStatus.equals(
+                                                                Conversation
+                                                                        .ConversationNotificationStatus
+                                                                        .DO_NOT_DISTURB)));
+                            }
 
-            @Override
-            public void onError(RongIMClient.ErrorCode coreErrorCode) {
-                runOnUiThread(() -> ToastUtils.showToast("获取失败-" + coreErrorCode.code));
-            }
-        });
+                            @Override
+                            public void onError(RongIMClient.ErrorCode coreErrorCode) {
+                                runOnUiThread(
+                                        () -> ToastUtils.showToast("获取失败-" + coreErrorCode.code));
+                            }
+                        });
     }
 }

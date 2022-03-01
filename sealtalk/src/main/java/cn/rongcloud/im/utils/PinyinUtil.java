@@ -3,9 +3,7 @@ package cn.rongcloud.im.utils;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by luoyanlong on 2018/05/29.
- */
+/** Created by luoyanlong on 2018/05/29. */
 public class PinyinUtil {
 
     private static Map<String, String> letterMap = new HashMap<>();
@@ -63,5 +61,4 @@ public class PinyinUtil {
         }
         return strings;
     }
-
 }

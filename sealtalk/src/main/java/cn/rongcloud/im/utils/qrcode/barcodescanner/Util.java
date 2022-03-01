@@ -2,9 +2,7 @@ package cn.rongcloud.im.utils.qrcode.barcodescanner;
 
 import android.os.Looper;
 
-/**
- *
- */
+/** */
 public class Util {
     public static void validateMainThread() {
         if (Looper.getMainLooper() != Looper.myLooper()) {

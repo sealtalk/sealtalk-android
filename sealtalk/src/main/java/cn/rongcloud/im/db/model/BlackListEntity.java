@@ -6,9 +6,7 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "black_list")
 public class BlackListEntity {
-    @PrimaryKey
-    @NonNull
-    private String id;
+    @PrimaryKey @NonNull private String id;
 
     @NonNull
     public String getId() {

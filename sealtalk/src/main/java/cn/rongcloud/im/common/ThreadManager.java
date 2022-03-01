@@ -3,7 +3,6 @@ package cn.rongcloud.im.common;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
-
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -18,14 +17,11 @@ public class ThreadManager {
     private static Executor mWorkThreadExecutor = Executors.newFixedThreadPool(CORE_POOL_SIZE);
     private static Handler mMainThreadHandler;
 
-
     private ThreadManager() {
         mMainThreadHandler = new Handler(Looper.getMainLooper());
     }
 
-    public void init(Context context) {
-
-    }
+    public void init(Context context) {}
 
     public static ThreadManager getInstance() {
         if (sInstance == null) {
@@ -46,8 +42,7 @@ public class ThreadManager {
         mMainThreadHandler.post(runnable);
     }
 
-    public boolean isInMainThread(){
+    public boolean isInMainThread() {
         return Looper.getMainLooper().getThread() == Thread.currentThread();
     }
-
 }

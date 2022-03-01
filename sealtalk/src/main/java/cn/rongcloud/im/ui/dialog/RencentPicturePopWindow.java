@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.ui.activity.ImagePreviewActivity;
@@ -27,8 +26,8 @@ public class RencentPicturePopWindow extends PopupWindow implements View.OnClick
     @SuppressLint("InflateParams")
     public RencentPicturePopWindow(final Activity context) {
         activity = context;
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater =
+                (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         contentView = inflater.inflate(R.layout.recent_picture_popup, null);
         contentView.setOnClickListener(this);
         ivPicture = contentView.findViewById(R.id.iv_picture);
@@ -42,17 +41,15 @@ public class RencentPicturePopWindow extends PopupWindow implements View.OnClick
         this.setBackgroundDrawable(dw);
         this.setAnimationStyle(R.style.AnimationMainTitleMore);
     }
-    public void setIvPicture(String uri){
+
+    public void setIvPicture(String uri) {
         mUri = uri;
         ivPicture.setScaleType(ImageView.ScaleType.CENTER_CROP);
         ivPicture.setImageURI(Uri.parse(uri));
     }
-    /**
-     * 显示popupWindow
-     *
-     */
+    /** 显示popupWindow */
     public void showPopupWindow(int h) {
-        showAtLocation(contentView, Gravity.BOTTOM|Gravity.RIGHT,dp2px(8),h+dp2px(4));
+        showAtLocation(contentView, Gravity.BOTTOM | Gravity.RIGHT, dp2px(8), h + dp2px(4));
     }
 
     private int dp2px(int dp) {

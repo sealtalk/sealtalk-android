@@ -1,8 +1,8 @@
 package cn.rongcloud.im.net;
 
 import cn.rongcloud.im.common.ErrorCode;
-import cn.rongcloud.im.common.ResultCallback;
 import cn.rongcloud.im.common.LogTag;
+import cn.rongcloud.im.common.ResultCallback;
 import cn.rongcloud.im.model.Result;
 import cn.rongcloud.im.utils.log.SLog;
 import retrofit2.Call;
@@ -26,8 +26,9 @@ public class CallBackWrapper<R> implements Callback<Result<R>> {
             } else {
                 mCallBack.onFail(code);
             }
-            SLog.e(LogTag.API, "url:" + call.request().url().toString()
-                    + " ,code:" + body.getCode());
+            SLog.e(
+                    LogTag.API,
+                    "url:" + call.request().url().toString() + " ,code:" + body.getCode());
         } else {
             SLog.e(LogTag.API, "url:" + call.request().url().toString() + ", no response body");
             mCallBack.onFail(ErrorCode.API_ERR_OTHER.getCode());
@@ -36,7 +37,9 @@ public class CallBackWrapper<R> implements Callback<Result<R>> {
 
     @Override
     public void onFailure(Call<Result<R>> call, Throwable t) {
-        SLog.e(LogTag.API, call.request().url().toString() + " - " + (t != null ? t.getMessage() : ""));
+        SLog.e(
+                LogTag.API,
+                call.request().url().toString() + " - " + (t != null ? t.getMessage() : ""));
         mCallBack.onFail(ErrorCode.NETWORK_ERROR.getCode());
     }
 }

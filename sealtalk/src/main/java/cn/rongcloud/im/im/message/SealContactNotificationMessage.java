@@ -1,7 +1,6 @@
 package cn.rongcloud.im.im.message;
 
 import android.os.Parcel;
-
 import io.rong.imlib.MessageTag;
 import io.rong.message.ContactNotificationMessage;
 

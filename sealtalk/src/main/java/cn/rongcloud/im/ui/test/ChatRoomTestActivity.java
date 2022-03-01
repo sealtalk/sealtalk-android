@@ -3,7 +3,6 @@ package cn.rongcloud.im.ui.test;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.activity.TitleBaseActivity;
 import cn.rongcloud.im.ui.view.SettingItemView;

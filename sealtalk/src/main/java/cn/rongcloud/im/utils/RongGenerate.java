@@ -9,7 +9,7 @@ import android.graphics.Rect;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.view.View;
-
+import io.rong.imlib.model.UserInfo;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -17,11 +17,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Random;
 
-import io.rong.imlib.model.UserInfo;
-
-/**
- * 生成头像使用工具类
- */
+/** 生成头像使用工具类 */
 public class RongGenerate {
     private static final String FILE_SCHEMA = "file://";
 
@@ -59,19 +55,17 @@ public class RongGenerate {
         return saveBitmap(context, bitmap, string + "_" + userId);
     }
 
-    private static File getCacheDir(Context context){
+    private static File getCacheDir(Context context) {
         File cacheDir = context.getExternalCacheDir();
-        if(cacheDir == null){
+        if (cacheDir == null) {
             cacheDir = context.getCacheDir();
         }
         return cacheDir;
     }
 
     public static String generateDefaultAvatar(Context context, UserInfo userInfo) {
-        if (userInfo == null)
-            return null;
-        else
-            return generateDefaultAvatar(context, userInfo.getName(), userInfo.getUserId());
+        if (userInfo == null) return null;
+        else return generateDefaultAvatar(context, userInfo.getName(), userInfo.getUserId());
     }
 
     private static void createDir(String saveaddress) {
@@ -112,18 +106,17 @@ public class RongGenerate {
         return portraitColors[i];
     }
 
-
     private static int getAscii(char cn) {
         byte[] bytes = (String.valueOf(cn)).getBytes();
-        if (bytes.length == 1) { //单字节字符
+        if (bytes.length == 1) { // 单字节字符
             return bytes[0];
-        } else if (bytes.length == 2) { //双字节字符
+        } else if (bytes.length == 2) { // 双字节字符
             int hightByte = 256 + bytes[0];
             int lowByte = 256 + bytes[1];
             int ascii = (256 * hightByte + lowByte) - 256 * 256;
             return ascii;
         } else {
-            return 0; //错误
+            return 0; // 错误
         }
     }
 
@@ -139,15 +132,14 @@ public class RongGenerate {
         return view.getDrawingCache();
     }
 
-
-    private final static int[] li_SecPosValue = {1601, 1637, 1833, 2078, 2274,
-                                                 2302, 2433, 2594, 2787, 3106, 3212, 3472, 3635, 3722, 3730, 3858,
-                                                 4027, 4086, 4390, 4558, 4684, 4925, 5249, 5590
-                                                };
-    private final static String[] lc_FirstLetter = {"a", "b", "c", "d", "e",
-                                                    "f", "g", "h", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
-                                                    "t", "w", "x", "y", "z"
-                                                   };
+    private static final int[] li_SecPosValue = {
+        1601, 1637, 1833, 2078, 2274, 2302, 2433, 2594, 2787, 3106, 3212, 3472, 3635, 3722, 3730,
+        3858, 4027, 4086, 4390, 4558, 4684, 4925, 5249, 5590
+    };
+    private static final String[] lc_FirstLetter = {
+        "a", "b", "c", "d", "e", "f", "g", "h", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
+        "t", "w", "x", "y", "z"
+    };
 
     /**
      * 取得给定汉字串的首字母串,即声母串
@@ -208,8 +200,8 @@ public class RongGenerate {
     /**
      * 字符串编码转换
      *
-     * @param str           要转换编码的字符串
-     * @param charsetName   原来的编码
+     * @param str 要转换编码的字符串
+     * @param charsetName 原来的编码
      * @param toCharsetName 转换后的编码
      * @return 经过编码转换后的字符串
      */

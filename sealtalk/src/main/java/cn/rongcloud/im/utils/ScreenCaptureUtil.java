@@ -10,56 +10,45 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
-
 import androidx.loader.content.CursorLoader;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 获取手机系统截屏的通知工具类
- */
+/** 获取手机系统截屏的通知工具类 */
 public class ScreenCaptureUtil {
 
     private static final String[] KEYWORDS = {
-            "screenshot", "screen_shot", "screen-shot", "screen shot",
-            "screencapture", "screen_capture", "screen-capture", "screen capture",
-            "screencap", "screen_cap", "screen-cap", "screen cap"
+        "screenshot", "screen_shot", "screen-shot", "screen shot",
+        "screencapture", "screen_capture", "screen-capture", "screen capture",
+        "screencap", "screen_cap", "screen-cap", "screen cap"
     };
 
-    /**
-     * 读取媒体数据库时需要读取的列
-     */
+    /** 读取媒体数据库时需要读取的列 */
     private static final String[] MEDIA_PROJECTIONS = {
-            MediaStore.Images.ImageColumns.DATA,
-            MediaStore.Images.ImageColumns.DATE_TAKEN,
+        MediaStore.Images.ImageColumns.DATA, MediaStore.Images.ImageColumns.DATE_TAKEN,
     };
 
     private static final String[] projection = {
-            MediaStore.Files.FileColumns._ID,
-            MediaStore.Files.FileColumns.DATA,
-            MediaStore.Files.FileColumns.DATE_ADDED,
-            MediaStore.Files.FileColumns.MEDIA_TYPE,
-            MediaStore.Files.FileColumns.MIME_TYPE,
-            MediaStore.Files.FileColumns.TITLE,
-            MediaStore.Video.Media.DURATION
+        MediaStore.Files.FileColumns._ID,
+        MediaStore.Files.FileColumns.DATA,
+        MediaStore.Files.FileColumns.DATE_ADDED,
+        MediaStore.Files.FileColumns.MEDIA_TYPE,
+        MediaStore.Files.FileColumns.MIME_TYPE,
+        MediaStore.Files.FileColumns.TITLE,
+        MediaStore.Video.Media.DURATION
     };
 
     private HandlerThread mHandlerThread;
     private Handler mHandler;
-    /**
-     * 内部存储器内容观察者
-     */
+    /** 内部存储器内容观察者 */
     private ContentObserver mInternalObserver;
-    /**
-     * 外部存储器内容观察者
-     */
+    /** 外部存储器内容观察者 */
     private ContentObserver mExternalObserver;
+
     private Context mContext;
     private ScreenShotListener screenShotListener;
     private List<Long> handleDataTaken;
-
 
     public ScreenCaptureUtil(Context mContext) {
         this.mContext = mContext;
@@ -72,8 +61,10 @@ public class ScreenCaptureUtil {
         mHandlerThread.start();
         mHandler = new Handler(mHandlerThread.getLooper());
         // 初始化
-        mInternalObserver = new MediaContentObserver(MediaStore.Images.Media.INTERNAL_CONTENT_URI, mHandler);
-        mExternalObserver = new MediaContentObserver(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, mHandler);
+        mInternalObserver =
+                new MediaContentObserver(MediaStore.Images.Media.INTERNAL_CONTENT_URI, mHandler);
+        mExternalObserver =
+                new MediaContentObserver(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, mHandler);
     }
 
     public void setScreenShotListener(ScreenShotListener listener) {
@@ -82,21 +73,15 @@ public class ScreenCaptureUtil {
 
     public void register() {
         // 添加监听
-        mContext.getContentResolver().registerContentObserver(
-                MediaStore.Images.Media.INTERNAL_CONTENT_URI,
-                false,
-                mInternalObserver
-        );
-        mContext.getContentResolver().registerContentObserver(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                false,
-                mExternalObserver
-        );
+        mContext.getContentResolver()
+                .registerContentObserver(
+                        MediaStore.Images.Media.INTERNAL_CONTENT_URI, false, mInternalObserver);
+        mContext.getContentResolver()
+                .registerContentObserver(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, false, mExternalObserver);
     }
 
-    /**
-     * 在生命周期的结束时使用
-     */
+    /** 在生命周期的结束时使用 */
     public void unRegister() {
         // 注销监听
         mContext.getContentResolver().unregisterContentObserver(mInternalObserver);
@@ -104,11 +89,9 @@ public class ScreenCaptureUtil {
         handleDataTaken.clear();
     }
 
-    /**
-     * 处理监听到的资源
-     */
+    /** 处理监听到的资源 */
     private synchronized void handleMediaRowData(String data, long dateTaken) {
-        //有的机型会重复发同一资源处理消息，避免重复过滤
+        // 有的机型会重复发同一资源处理消息，避免重复过滤
         if (handleDataTaken.contains(dateTaken)) {
             return;
         }
@@ -123,9 +106,7 @@ public class ScreenCaptureUtil {
         }
     }
 
-    /**
-     * 判断是否是截屏
-     */
+    /** 判断是否是截屏 */
     private boolean checkScreenShot(String data, long dateTaken) {
 
         data = data.toLowerCase();
@@ -164,13 +145,14 @@ public class ScreenCaptureUtil {
         Cursor cursor = null;
         try {
             // 数据改变时查询数据库中最后加入的一条数据
-            cursor = mContext.getContentResolver().query(
-                    contentUri,
-                    MEDIA_PROJECTIONS,
-                    null,
-                    null,
-                    MediaStore.Images.ImageColumns.DATE_ADDED + " desc limit 1"
-            );
+            cursor =
+                    mContext.getContentResolver()
+                            .query(
+                                    contentUri,
+                                    MEDIA_PROJECTIONS,
+                                    null,
+                                    null,
+                                    MediaStore.Images.ImageColumns.DATE_ADDED + " desc limit 1");
 
             if (cursor == null) {
                 return;
@@ -210,17 +192,20 @@ public class ScreenCaptureUtil {
      */
     public MediaItem getLastPictureItems(Context context) {
         String selection;
-        selection = MediaStore.Files.FileColumns.MEDIA_TYPE + "="
-                + MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
+        selection =
+                MediaStore.Files.FileColumns.MEDIA_TYPE
+                        + "="
+                        + MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
         Uri queryUri = MediaStore.Files.getContentUri("external");
-        CursorLoader cursorLoader = new CursorLoader(
-                context,
-                queryUri,
-                projection,
-                selection,
-                null, // Selection args (none).
-                MediaStore.Files.FileColumns.DATE_ADDED + " DESC" // Sort order.
-        );
+        CursorLoader cursorLoader =
+                new CursorLoader(
+                        context,
+                        queryUri,
+                        projection,
+                        selection,
+                        null, // Selection args (none).
+                        MediaStore.Files.FileColumns.DATE_ADDED + " DESC" // Sort order.
+                        );
 
         Cursor cursor = cursorLoader.loadInBackground();
         if (cursor != null) {
@@ -280,8 +265,7 @@ public class ScreenCaptureUtil {
             dest.writeLong(this.addTime);
         }
 
-        public MediaItem() {
-        }
+        public MediaItem() {}
 
         protected MediaItem(Parcel in) {
             this.id = in.readString();
@@ -294,37 +278,49 @@ public class ScreenCaptureUtil {
             this.addTime = in.readLong();
         }
 
-        public final Creator<ScreenCaptureUtil.MediaItem> CREATOR = new Creator<MediaItem>() {
-            @Override
-            public MediaItem createFromParcel(Parcel source) {
-                return new ScreenCaptureUtil.MediaItem(source);
-            }
+        public final Creator<ScreenCaptureUtil.MediaItem> CREATOR =
+                new Creator<MediaItem>() {
+                    @Override
+                    public MediaItem createFromParcel(Parcel source) {
+                        return new ScreenCaptureUtil.MediaItem(source);
+                    }
 
-            @Override
-            public MediaItem[] newArray(int size) {
-                return new MediaItem[size];
-            }
-        };
+                    @Override
+                    public MediaItem[] newArray(int size) {
+                        return new MediaItem[size];
+                    }
+                };
 
         @Override
         public String toString() {
-            return "MediaItem{" +
-                    "id='" + id + '\'' +
-                    ", name='" + name + '\'' +
-                    ", mediaType=" + mediaType +
-                    ", mimeType='" + mimeType + '\'' +
-                    ", uri='" + uri + '\'' +
-                    ", selected=" + selected +
-                    ", duration=" + duration +
-                    ", addTime=" + addTime +
-                    ", CREATOR=" + CREATOR +
-                    '}';
+            return "MediaItem{"
+                    + "id='"
+                    + id
+                    + '\''
+                    + ", name='"
+                    + name
+                    + '\''
+                    + ", mediaType="
+                    + mediaType
+                    + ", mimeType='"
+                    + mimeType
+                    + '\''
+                    + ", uri='"
+                    + uri
+                    + '\''
+                    + ", selected="
+                    + selected
+                    + ", duration="
+                    + duration
+                    + ", addTime="
+                    + addTime
+                    + ", CREATOR="
+                    + CREATOR
+                    + '}';
         }
     }
 
-    /**
-     * 截屏后的通知回调
-     */
+    /** 截屏后的通知回调 */
     public interface ScreenShotListener {
         void onScreenShotComplete(String data, long dateTaken);
 

@@ -2,15 +2,12 @@ package cn.rongcloud.im.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.lifecycle.ViewModelProviders;
-
-import java.util.ArrayList;
-
 import cn.rongcloud.im.ui.adapter.models.CheckableContactModel;
 import cn.rongcloud.im.ui.interfaces.OnSelectCountChangeListener;
 import cn.rongcloud.im.viewmodel.SelectBaseViewModel;
 import cn.rongcloud.im.viewmodel.SelectMultiViewModel;
+import java.util.ArrayList;
 
 public class SelectMultiFriendFragment extends SelectBaseFragment {
     private static final String TAG = "SelectMultiFriendFragment";
@@ -53,7 +50,7 @@ public class SelectMultiFriendFragment extends SelectBaseFragment {
 
             int friendCount = 0;
             ArrayList<String> checkedFriendList = getCheckedFriendList();
-            if(checkedFriendList != null){
+            if (checkedFriendList != null) {
                 friendCount = checkedFriendList.size();
             }
 
@@ -66,12 +63,11 @@ public class SelectMultiFriendFragment extends SelectBaseFragment {
         viewModel.loadFriendShip(uncheckableInitIdList, checkedInitIdList, checkedInitGroupList);
     }
 
-    public void search(String keyword){
+    public void search(String keyword) {
         selectMultiViewModel.searchFriend(keyword);
     }
 
-    public void loadAll(){
+    public void loadAll() {
         selectMultiViewModel.loadFriendShip();
     }
-
 }

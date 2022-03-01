@@ -3,15 +3,10 @@ package cn.rongcloud.im.viewmodel;
 import android.app.Activity;
 import android.app.Application;
 import android.text.TextUtils;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.rongcloud.im.common.BatchForwardHelper;
 import cn.rongcloud.im.common.ErrorCode;
 import cn.rongcloud.im.db.model.FriendShipInfo;
@@ -22,11 +17,13 @@ import io.rong.imkit.feature.forward.ForwardManager;
 import io.rong.imkit.userinfo.RongUserInfoManager;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.location.message.LocationMessage;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
-import io.rong.imlib.location.message.LocationMessage;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ForwardActivityViewModel extends AndroidViewModel {
     private MutableLiveData<Boolean> isSingleLiveData;
@@ -50,28 +47,46 @@ public class ForwardActivityViewModel extends AndroidViewModel {
         return isSingleLiveData;
     }
 
-    public void ForwardMessage(Activity activity, List<GroupEntity> groupEntityList, List<FriendShipInfo> friendShipInfoList, List<Message> messageList) {
+    public void ForwardMessage(
+            Activity activity,
+            List<GroupEntity> groupEntityList,
+            List<FriendShipInfo> friendShipInfoList,
+            List<Message> messageList) {
         ForwardMessage(activity, groupEntityList, friendShipInfoList, messageList, true);
     }
 
-    public void ForwardMessage(Activity activity, List<GroupEntity> groupEntityList, List<FriendShipInfo> friendShipInfoList, List<Message> messageList, boolean useSDKForward) {
+    public void ForwardMessage(
+            Activity activity,
+            List<GroupEntity> groupEntityList,
+            List<FriendShipInfo> friendShipInfoList,
+            List<Message> messageList,
+            boolean useSDKForward) {
         ArrayList<Conversation> conversationList = new ArrayList<>();
         if (groupEntityList != null) {
             for (GroupEntity groupEntity : groupEntityList) {
                 if (useSDKForward) {
-                    conversationList.add(Conversation.obtain(Conversation.ConversationType.GROUP, groupEntity.getId(), ""));
+                    conversationList.add(
+                            Conversation.obtain(
+                                    Conversation.ConversationType.GROUP, groupEntity.getId(), ""));
                 } else {
-                    forwardMessage(Conversation.ConversationType.GROUP, groupEntity.getId(), messageList);
+                    forwardMessage(
+                            Conversation.ConversationType.GROUP, groupEntity.getId(), messageList);
                 }
             }
-
         }
         if (friendShipInfoList != null) {
             for (FriendShipInfo friendShipInfo : friendShipInfoList) {
                 if (useSDKForward) {
-                    conversationList.add(Conversation.obtain(Conversation.ConversationType.PRIVATE, friendShipInfo.getUser().getId(), ""));
+                    conversationList.add(
+                            Conversation.obtain(
+                                    Conversation.ConversationType.PRIVATE,
+                                    friendShipInfo.getUser().getId(),
+                                    ""));
                 } else {
-                    forwardMessage(Conversation.ConversationType.PRIVATE, friendShipInfo.getUser().getId(), messageList);
+                    forwardMessage(
+                            Conversation.ConversationType.PRIVATE,
+                            friendShipInfo.getUser().getId(),
+                            messageList);
                 }
             }
         }
@@ -86,7 +101,10 @@ public class ForwardActivityViewModel extends AndroidViewModel {
      * @param conversationType
      * @param targetId
      */
-    private void forwardMessage(Conversation.ConversationType conversationType, String targetId, List<Message> messageList) {
+    private void forwardMessage(
+            Conversation.ConversationType conversationType,
+            String targetId,
+            List<Message> messageList) {
         for (Message fwdMessage : messageList) {
             MessageContent messageContent = fwdMessage.getContent();
             if (messageContent != null) {
@@ -94,27 +112,34 @@ public class ForwardActivityViewModel extends AndroidViewModel {
             }
             if (messageContent instanceof ContactMessage) {
                 String portraitUrl = ((ContactMessage) messageContent).getImgUrl();
-                if (TextUtils.isEmpty(portraitUrl) || portraitUrl.toLowerCase().startsWith("file://")) {
+                if (TextUtils.isEmpty(portraitUrl)
+                        || portraitUrl.toLowerCase().startsWith("file://")) {
                     portraitUrl = null;
                 }
                 String sendContactMsgUserName = "";
-                UserInfo userInfo = RongUserInfoManager.getInstance().getUserInfo(RongIMClient.getInstance().getCurrentUserId());
+                UserInfo userInfo =
+                        RongUserInfoManager.getInstance()
+                                .getUserInfo(RongIMClient.getInstance().getCurrentUserId());
                 if (userInfo != null) {
                     sendContactMsgUserName = userInfo.getName();
                 }
-                ContactMessage contactMessage = ContactMessage.obtain(((ContactMessage) messageContent).getId(),
-                        ((ContactMessage) messageContent).getName(), portraitUrl,
-                        RongIMClient.getInstance().getCurrentUserId(), sendContactMsgUserName, null);
+                ContactMessage contactMessage =
+                        ContactMessage.obtain(
+                                ((ContactMessage) messageContent).getId(),
+                                ((ContactMessage) messageContent).getName(),
+                                portraitUrl,
+                                RongIMClient.getInstance().getCurrentUserId(),
+                                sendContactMsgUserName,
+                                null);
                 Message message = Message.obtain(targetId, conversationType, contactMessage);
                 sendMessage(message);
 
-            } else if (messageContent instanceof LocationMessage) {//判断是否是定位消息
+            } else if (messageContent instanceof LocationMessage) { // 判断是否是定位消息
                 Message message = Message.obtain(targetId, conversationType, messageContent);
                 sendMessage(message);
             } else {
                 Message message = Message.obtain(targetId, conversationType, messageContent);
                 sendMessage(message);
-
             }
         }
     }
@@ -126,41 +151,38 @@ public class ForwardActivityViewModel extends AndroidViewModel {
      */
     private void sendMessage(Message message) {
         BatchForwardHelper.getInstance().batchSendMessage(message, callback);
-
     }
 
     public MutableLiveData<Resource> getForwardSuccessLiveData() {
         return forwardSuccessLiveData;
     }
 
-    private IRongCallback.ISendMediaMessageCallback callback = new IRongCallback.ISendMediaMessageCallback() {
-        @Override
-        public void onProgress(Message message, int i) {
+    private IRongCallback.ISendMediaMessageCallback callback =
+            new IRongCallback.ISendMediaMessageCallback() {
+                @Override
+                public void onProgress(Message message, int i) {}
 
-        }
+                @Override
+                public void onCanceled(Message message) {}
 
-        @Override
-        public void onCanceled(Message message) {
+                @Override
+                public void onAttached(Message message) {}
 
-        }
+                @Override
+                public void onSuccess(Message message) {
+                    forwardSuccessLiveData.postValue(Resource.success(null));
+                }
 
-        @Override
-        public void onAttached(Message message) {
-
-        }
-
-        @Override
-        public void onSuccess(Message message) {
-            forwardSuccessLiveData.postValue(Resource.success(null));
-        }
-
-        @Override
-        public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-            if (errorCode == RongIMClient.ErrorCode.RC_NET_UNAVAILABLE || errorCode == RongIMClient.ErrorCode.RC_NET_CHANNEL_INVALID) {
-                forwardSuccessLiveData.postValue(Resource.error(ErrorCode.NETWORK_ERROR.getCode(), null));
-            } else {
-                forwardSuccessLiveData.postValue(Resource.error(ErrorCode.UNKNOWN_ERROR.getCode(), null));
-            }
-        }
-    };
+                @Override
+                public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+                    if (errorCode == RongIMClient.ErrorCode.RC_NET_UNAVAILABLE
+                            || errorCode == RongIMClient.ErrorCode.RC_NET_CHANNEL_INVALID) {
+                        forwardSuccessLiveData.postValue(
+                                Resource.error(ErrorCode.NETWORK_ERROR.getCode(), null));
+                    } else {
+                        forwardSuccessLiveData.postValue(
+                                Resource.error(ErrorCode.UNKNOWN_ERROR.getCode(), null));
+                    }
+                }
+            };
 }

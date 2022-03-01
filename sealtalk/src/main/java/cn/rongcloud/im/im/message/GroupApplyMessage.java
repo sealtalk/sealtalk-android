@@ -1,16 +1,13 @@
 package cn.rongcloud.im.im.message;
 
 import android.os.Parcel;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
-
 import io.rong.common.ParcelUtils;
 import io.rong.common.RLog;
 import io.rong.imlib.MessageTag;
 import io.rong.imlib.model.MessageContent;
+import java.io.UnsupportedEncodingException;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 @MessageTag(value = "ST:GrpApply", flag = MessageTag.ISPERSISTED)
 public class GroupApplyMessage extends MessageContent {
@@ -19,8 +16,7 @@ public class GroupApplyMessage extends MessageContent {
     private String operation;
     private String data;
 
-    private GroupApplyMessage() {
-    }
+    private GroupApplyMessage() {}
 
     public GroupApplyMessage(Parcel in) {
         this.operatorUserId = ParcelUtils.readFromParcel(in);
@@ -44,20 +40,21 @@ public class GroupApplyMessage extends MessageContent {
         } catch (JSONException var4) {
             RLog.e("GroupNotificationMessage", "JSONException " + var4.getMessage());
         }
-
     }
 
-    public static final Creator<GroupApplyMessage> CREATOR = new Creator<GroupApplyMessage>() {
-        public GroupApplyMessage createFromParcel(Parcel source) {
-            return new GroupApplyMessage(source);
-        }
+    public static final Creator<GroupApplyMessage> CREATOR =
+            new Creator<GroupApplyMessage>() {
+                public GroupApplyMessage createFromParcel(Parcel source) {
+                    return new GroupApplyMessage(source);
+                }
 
-        public GroupApplyMessage[] newArray(int size) {
-            return new GroupApplyMessage[size];
-        }
-    };
+                public GroupApplyMessage[] newArray(int size) {
+                    return new GroupApplyMessage[size];
+                }
+            };
 
-    public static GroupApplyMessage obtain(String operatorUserId, String operation, String data, String message) {
+    public static GroupApplyMessage obtain(
+            String operatorUserId, String operation, String data, String message) {
         GroupApplyMessage obj = new GroupApplyMessage();
         obj.operatorUserId = operatorUserId;
         obj.operation = operation;
@@ -95,7 +92,7 @@ public class GroupApplyMessage extends MessageContent {
         try {
             jsonObj.put("operatorUserId", this.operatorUserId);
             jsonObj.put("operation", this.operation);
-            jsonObj.put("data",this.data);
+            jsonObj.put("data", this.data);
         } catch (JSONException var4) {
             RLog.e("GroupNotificationMessage", "JSONException " + var4.getMessage());
         }

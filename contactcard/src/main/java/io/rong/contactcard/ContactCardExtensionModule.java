@@ -1,12 +1,7 @@
 package io.rong.contactcard;
 
 import android.content.Context;
-
 import androidx.fragment.app.Fragment;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import io.rong.contactcard.message.ContactMessage;
 import io.rong.contactcard.message.ContactMessageItemProvider;
 import io.rong.imkit.config.RongConfigCenter;
@@ -17,52 +12,49 @@ import io.rong.imkit.conversation.extension.component.plugin.IPluginModule;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Created by Beyond on 2017/4/14.
- */
-
+/** Created by Beyond on 2017/4/14. */
 public class ContactCardExtensionModule implements IExtensionModule {
     private final String TAG = this.getClass().getSimpleName();
 
     private IContactCardClickListener iContactCardClickListener;
 
-    public ContactCardExtensionModule(IContactCardSelectListProvider iContactCardSelectListProvider
-            , IContactCardInfoProvider iContactCardInfoProvider
-            , IContactCardClickListener iContactCardClickListener) {
-        ContactCardContext.getInstance().setContactCardSelectListProvider(iContactCardSelectListProvider);
+    public ContactCardExtensionModule(
+            IContactCardSelectListProvider iContactCardSelectListProvider,
+            IContactCardInfoProvider iContactCardInfoProvider,
+            IContactCardClickListener iContactCardClickListener) {
+        ContactCardContext.getInstance()
+                .setContactCardSelectListProvider(iContactCardSelectListProvider);
         ContactCardContext.getInstance().setContactCardInfoProvider(iContactCardInfoProvider);
         this.iContactCardClickListener = iContactCardClickListener;
     }
 
-    public ContactCardExtensionModule(IContactCardInfoProvider iContactCardInfoProvider
-            , IContactCardClickListener iContactCardClickListener) {
+    public ContactCardExtensionModule(
+            IContactCardInfoProvider iContactCardInfoProvider,
+            IContactCardClickListener iContactCardClickListener) {
         ContactCardContext.getInstance().setContactCardInfoProvider(iContactCardInfoProvider);
         this.iContactCardClickListener = iContactCardClickListener;
     }
 
     @Override
     public void onInit(Context context, String appKey) {
-        RongIMClient.registerMessageType(ContactMessage.class); //注册名片消息
+        RongIMClient.registerMessageType(ContactMessage.class); // 注册名片消息
 
-        //Todo
-        RongConfigCenter.conversationConfig().addMessageProvider(new ContactMessageItemProvider(iContactCardClickListener));
+        // Todo
+        RongConfigCenter.conversationConfig()
+                .addMessageProvider(new ContactMessageItemProvider(iContactCardClickListener));
     }
 
     @Override
-    public void onAttachedToExtension(Fragment fragment, RongExtension extension) {
-
-    }
+    public void onAttachedToExtension(Fragment fragment, RongExtension extension) {}
 
     @Override
-    public void onDetachedFromExtension() {
-
-    }
+    public void onDetachedFromExtension() {}
 
     @Override
-    public void onReceivedMessage(Message message) {
-
-    }
+    public void onReceivedMessage(Message message) {}
 
     @Override
     public List<IPluginModule> getPluginModules(Conversation.ConversationType conversationType) {
@@ -80,7 +72,5 @@ public class ContactCardExtensionModule implements IExtensionModule {
     }
 
     @Override
-    public void onDisconnect() {
-
-    }
+    public void onDisconnect() {}
 }

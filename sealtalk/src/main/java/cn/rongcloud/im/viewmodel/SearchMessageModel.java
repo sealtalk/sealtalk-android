@@ -8,7 +8,8 @@ public class SearchMessageModel extends SearchModel<Message> {
     private String portiaitUrl;
     private String search;
 
-    public SearchMessageModel(Message bean, int type, String name, String portiaitUrl, String search) {
+    public SearchMessageModel(
+            Message bean, int type, String name, String portiaitUrl, String search) {
         super(bean, type);
         this.name = name;
         this.portiaitUrl = portiaitUrl;

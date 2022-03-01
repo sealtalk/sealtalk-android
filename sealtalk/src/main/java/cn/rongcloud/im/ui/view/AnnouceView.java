@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import cn.rongcloud.im.R;
 
 public class AnnouceView extends RelativeLayout {
@@ -37,18 +36,21 @@ public class AnnouceView extends RelativeLayout {
         msgTv = view.findViewById(R.id.tv_announce_msg);
         announceIv = view.findViewById(R.id.iv_announce);
         arrowIv = view.findViewById(R.id.iv_announce_arrow);
-        view.findViewById(R.id.ll_annouce).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null && !TextUtils.isEmpty(url)) {
-                    listener.onClick(v, url);
-                }
-            }
-        });
+        view.findViewById(R.id.ll_annouce)
+                .setOnClickListener(
+                        new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (listener != null && !TextUtils.isEmpty(url)) {
+                                    listener.onClick(v, url);
+                                }
+                            }
+                        });
     }
 
     /**
      * 设置通知信息
+     *
      * @param content
      * @param url
      */
@@ -68,18 +70,18 @@ public class AnnouceView extends RelativeLayout {
 
     /**
      * 设置点击监听
+     *
      * @param listener
      */
     public void setOnAnnounceClickListener(OnAnnounceClickListener listener) {
         this.listener = listener;
     }
 
-    /**
-     * 通知点击监听接口
-     */
+    /** 通知点击监听接口 */
     public interface OnAnnounceClickListener {
         /**
          * 点击
+         *
          * @param v
          * @param url 具体通知内容的路径
          */

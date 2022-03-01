@@ -4,16 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
-
-import java.util.List;
-
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.ui.adapter.models.SearchModel;
 import cn.rongcloud.im.ui.interfaces.OnGroupItemClickListener;
+import java.util.List;
 
 public class SearchGroupByNameFragment extends SearchBaseFragment {
     private String lastSearchWord = "";
@@ -25,24 +22,35 @@ public class SearchGroupByNameFragment extends SearchBaseFragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(
+            @NonNull LayoutInflater inflater,
+            @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        viewModel.getGroupContactSearhByName().observe(this, new Observer<List<SearchModel>>() {
-            @Override
-            public void onChanged(List<SearchModel> searchModels) {
-                updateData(searchModels);
+        viewModel
+                .getGroupContactSearhByName()
+                .observe(
+                        this,
+                        new Observer<List<SearchModel>>() {
+                            @Override
+                            public void onChanged(List<SearchModel> searchModels) {
+                                updateData(searchModels);
 
-                if (resultListener != null) {
-                    resultListener.onSearchResult(lastSearchWord, searchModels);
-                }
-            }
-        });
+                                if (resultListener != null) {
+                                    resultListener.onSearchResult(lastSearchWord, searchModels);
+                                }
+                            }
+                        });
 
-        viewModel.getGroupContactList().observe(this, resource -> {
-            if (resource.status != Status.LOADING) {
-                search(lastSearchWord);
-            }
-        });
+        viewModel
+                .getGroupContactList()
+                .observe(
+                        this,
+                        resource -> {
+                            if (resource.status != Status.LOADING) {
+                                search(lastSearchWord);
+                            }
+                        });
         viewModel.requestGroupContactList();
         return view;
     }

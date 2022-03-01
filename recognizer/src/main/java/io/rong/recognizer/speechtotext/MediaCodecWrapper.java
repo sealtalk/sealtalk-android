@@ -22,7 +22,6 @@ import android.media.MediaFormat;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.Surface;
-
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayDeque;
@@ -31,10 +30,9 @@ import java.util.Queue;
 
 /**
  * Simplifies the MediaCodec interface by wrapping around the buffer processing operations.
- * <p>
- * Come from
- * <a href="https://github.com/googlesamples/android-BasicMediaDecoder">BasicMediaDecoder</a>
- * </p>
+ *
+ * <p>Come from <a
+ * href="https://github.com/googlesamples/android-BasicMediaDecoder">BasicMediaDecoder</a>
  */
 public class MediaCodecWrapper {
 
@@ -50,16 +48,14 @@ public class MediaCodecWrapper {
     private OutputFormatChangedListener mOutputFormatChangedListener = null;
 
     /**
-     * Callback for decodes frames. Observers can register a listener for optional stream
-     * of decoded data
+     * Callback for decodes frames. Observers can register a listener for optional stream of decoded
+     * data
      */
     public interface OutputSampleListener {
         void outputSample(MediaCodecWrapper sender, MediaCodec.BufferInfo info, ByteBuffer buffer);
     }
 
-    /**
-     * The {@link MediaCodec} that is managed by this class.
-     */
+    /** The {@link MediaCodec} that is managed by this class. */
     private MediaCodec mDecoder;
 
     // References to the internal buffers managed by the codec. The codec
@@ -90,9 +86,7 @@ public class MediaCodecWrapper {
         mAvailableOutputBuffers = new ArrayDeque<>(mInputBuffers.length);
     }
 
-    /**
-     * Releases resources and ends the encoding/decoding session.
-     */
+    /** Releases resources and ends the encoding/decoding session. */
     public void stopAndRelease() {
         if (mDecoder != null) {
             mDecoder.stop();
@@ -102,20 +96,17 @@ public class MediaCodecWrapper {
         mHandler = null;
     }
 
-    /**
-     * Getter for the registered {@link OutputFormatChangedListener}
-     */
+    /** Getter for the registered {@link OutputFormatChangedListener} */
     public OutputFormatChangedListener getOutputFormatChangedListener() {
         return mOutputFormatChangedListener;
     }
 
     /**
-     *
      * @param outputFormatChangedListener the listener for callback.
      * @param handler message handler for posting the callback.
      */
-    public void setOutputFormatChangedListener(final OutputFormatChangedListener
-            outputFormatChangedListener, Handler handler) {
+    public void setOutputFormatChangedListener(
+            final OutputFormatChangedListener outputFormatChangedListener, Handler handler) {
         mOutputFormatChangedListener = outputFormatChangedListener;
 
         // Making sure we don't block ourselves due to a bad implementation of the callback by
@@ -125,23 +116,21 @@ public class MediaCodecWrapper {
             if (Looper.myLooper() != null) {
                 mHandler = new Handler();
             } else {
-                throw new IllegalArgumentException(
-                        "Looper doesn't exist in the calling thread");
+                throw new IllegalArgumentException("Looper doesn't exist in the calling thread");
             }
         }
     }
 
     /**
-     * Constructs the {@link MediaCodecWrapper} wrapper object around the video codec.
-     * The codec is created using the encapsulated information in the
-     * {@link MediaFormat} object.
+     * Constructs the {@link MediaCodecWrapper} wrapper object around the video codec. The codec is
+     * created using the encapsulated information in the {@link MediaFormat} object.
      *
      * @param trackFormat The format of the media object to be decoded.
      * @param surface Surface to render the decoded frames.
      * @return
      */
-    public static MediaCodecWrapper fromVideoFormat(final MediaFormat trackFormat,
-            Surface surface) throws IOException {
+    public static MediaCodecWrapper fromVideoFormat(final MediaFormat trackFormat, Surface surface)
+            throws IOException {
         MediaCodecWrapper result = null;
         MediaCodec videoCodec = null;
 
@@ -152,7 +141,7 @@ public class MediaCodecWrapper {
         // a codec that can decode this mime type.
         if (mimeType.contains("video/")) {
             videoCodec = MediaCodec.createDecoderByType(mimeType);
-            videoCodec.configure(trackFormat, surface, null,  0);
+            videoCodec.configure(trackFormat, surface, null, 0);
         }
 
         // If codec creation was successful, then create a wrapper object around the
@@ -166,9 +155,8 @@ public class MediaCodecWrapper {
     }
 
     /**
-     * Constructs the {@link MediaCodecWrapper} wrapper object around the audio codec.
-     * The codec is created using the encapsulated information in the
-     * {@link MediaFormat} object.
+     * Constructs the {@link MediaCodecWrapper} wrapper object around the audio codec. The codec is
+     * created using the encapsulated information in the {@link MediaFormat} object.
      *
      * @param trackFormat The format of the media object to be decoded.
      * @return
@@ -185,7 +173,7 @@ public class MediaCodecWrapper {
         // a codec that can decode this mime type.
         if (mimeType.contains("audio/")) {
             codec = MediaCodec.createDecoderByType(mimeType);
-            codec.configure(trackFormat, null, null,  0);
+            codec.configure(trackFormat, null, null, 0);
         }
 
         // If codec creation was successful, then create a wrapper object around the
@@ -201,42 +189,43 @@ public class MediaCodecWrapper {
     /**
      * Write a media sample to the decoder.
      *
-     * A "sample" here refers to a single atomic access unit in the media stream. The definition
-     * of "access unit" is dependent on the type of encoding used, but it typically refers to
-     * a single frame of video or a few seconds of audio. {@link MediaExtractor}
-     * extracts data from a stream one sample at a time.
+     * <p>A "sample" here refers to a single atomic access unit in the media stream. The definition
+     * of "access unit" is dependent on the type of encoding used, but it typically refers to a
+     * single frame of video or a few seconds of audio. {@link MediaExtractor} extracts data from a
+     * stream one sample at a time.
      *
-     * @param input A ByteBuffer containing the input data for one sample. The buffer must be set
-     * up for reading, with its position set to the beginning of the sample data and its limit
-     * set to the end of the sample data.
-     *
-     * @param presentationTimeUs  The time, relative to the beginning of the media stream,
-     * at which this buffer should be rendered.
-     *
-     * @param flags Flags to pass to the decoder. See {@link MediaCodec#queueInputBuffer(int,
-     * int, int, long, int)}
-     *
+     * @param input A ByteBuffer containing the input data for one sample. The buffer must be set up
+     *     for reading, with its position set to the beginning of the sample data and its limit set
+     *     to the end of the sample data.
+     * @param presentationTimeUs The time, relative to the beginning of the media stream, at which
+     *     this buffer should be rendered.
+     * @param flags Flags to pass to the decoder. See {@link MediaCodec#queueInputBuffer(int, int,
+     *     int, long, int)}
      * @throws MediaCodec.CryptoException
      */
-    public boolean writeSample(final ByteBuffer input,
+    public boolean writeSample(
+            final ByteBuffer input,
             final MediaCodec.CryptoInfo crypto,
             final long presentationTimeUs,
-            final int flags) throws MediaCodec.CryptoException, WriteException {
+            final int flags)
+            throws MediaCodec.CryptoException, WriteException {
         boolean result = false;
         int size = input.remaining();
 
         // check if we have dequed input buffers available from the codec
-        if (size > 0 &&  !mAvailableInputBuffers.isEmpty()) {
+        if (size > 0 && !mAvailableInputBuffers.isEmpty()) {
             int index = mAvailableInputBuffers.remove();
             ByteBuffer buffer = mInputBuffers[index];
 
             // we can't write our sample to a lesser capacity input buffer.
             if (size > buffer.capacity()) {
-                throw new MediaCodecWrapper.WriteException(String.format(Locale.US,
-                        "Insufficient capacity in MediaCodec buffer: "
-                            + "tried to write %d, buffer capacity is %d.",
-                        input.remaining(),
-                        buffer.capacity()));
+                throw new MediaCodecWrapper.WriteException(
+                        String.format(
+                                Locale.US,
+                                "Insufficient capacity in MediaCodec buffer: "
+                                        + "tried to write %d, buffer capacity is %d.",
+                                input.remaining(),
+                                buffer.capacity()));
             }
 
             buffer.clear();
@@ -259,22 +248,20 @@ public class MediaCodecWrapper {
     /**
      * Write a media sample to the decoder.
      *
-     * A "sample" here refers to a single atomic access unit in the media stream. The definition
-     * of "access unit" is dependent on the type of encoding used, but it typically refers to
-     * a single frame of video or a few seconds of audio. {@link MediaExtractor}
-     * extracts data from a stream one sample at a time.
+     * <p>A "sample" here refers to a single atomic access unit in the media stream. The definition
+     * of "access unit" is dependent on the type of encoding used, but it typically refers to a
+     * single frame of video or a few seconds of audio. {@link MediaExtractor} extracts data from a
+     * stream one sample at a time.
      *
-     * @param extractor  Instance of {@link MediaExtractor} wrapping the media.
-     *
-     * @param presentationTimeUs The time, relative to the beginning of the media stream,
-     * at which this buffer should be rendered.
-     *
-     * @param flags  Flags to pass to the decoder. See {@link MediaCodec#queueInputBuffer(int,
-     * int, int, long, int)}
-     *
+     * @param extractor Instance of {@link MediaExtractor} wrapping the media.
+     * @param presentationTimeUs The time, relative to the beginning of the media stream, at which
+     *     this buffer should be rendered.
+     * @param flags Flags to pass to the decoder. See {@link MediaCodec#queueInputBuffer(int, int,
+     *     int, long, int)}
      * @throws MediaCodec.CryptoException
      */
-    public boolean writeSample(final MediaExtractor extractor,
+    public boolean writeSample(
+            final MediaExtractor extractor,
             final boolean isSecure,
             final long presentationTimeUs,
             int flags) {
@@ -309,7 +296,6 @@ public class MediaCodecWrapper {
      * released i.e. the head element of the queue.
      *
      * @param out_bufferInfo An output var to hold the buffer info.
-     *
      * @return True, if the peek was successful.
      */
     public boolean peekSample(MediaCodec.BufferInfo out_bufferInfo) {
@@ -320,11 +306,7 @@ public class MediaCodecWrapper {
             int index = mAvailableOutputBuffers.peek();
             MediaCodec.BufferInfo info = mOutputBufferInfo[index];
             // metadata of the sample
-            out_bufferInfo.set(
-                    info.offset,
-                    info.size,
-                    info.presentationTimeUs,
-                    info.flags);
+            out_bufferInfo.set(info.offset, info.size, info.presentationTimeUs, info.flags);
             result = true;
         }
         return result;
@@ -333,11 +315,9 @@ public class MediaCodecWrapper {
     /**
      * Processes, releases and optionally renders the output buffer available at the head of the
      * queue. All observers are notified with a callback. See {@link
-     * OutputSampleListener#outputSample(MediaCodecWrapper, MediaCodec.BufferInfo,
-     * ByteBuffer)}
+     * OutputSampleListener#outputSample(MediaCodecWrapper, MediaCodec.BufferInfo, ByteBuffer)}
      *
      * @param render True, if the buffer is to be rendered on the {@link Surface} configured
-     *
      */
     public void popSample(boolean render) {
         // dequeue available buffers and synchronize our data structures with the codec.
@@ -351,10 +331,9 @@ public class MediaCodecWrapper {
     }
 
     /**
-     * Processes, releases and transfer the output buffer available at the head of the
-     * queue. All observers are notified with a callback. See {@link
-     * OutputSampleListener#outputSample(MediaCodecWrapper, MediaCodec.BufferInfo,
-     * ByteBuffer)}
+     * Processes, releases and transfer the output buffer available at the head of the queue. All
+     * observers are notified with a callback. See {@link
+     * OutputSampleListener#outputSample(MediaCodecWrapper, MediaCodec.BufferInfo, ByteBuffer)}
      *
      * @return type[] return the sample data
      */
@@ -378,10 +357,7 @@ public class MediaCodecWrapper {
         return null;
     }
 
-    /**
-     * Synchronize this object's state with the internal state of the wrapped
-     * MediaCodec.
-     */
+    /** Synchronize this object's state with the internal state of the wrapped MediaCodec. */
     private void update() {
         // BEGIN_INCLUDE(update_codec_state)
         int index;
@@ -392,11 +368,10 @@ public class MediaCodecWrapper {
             mAvailableInputBuffers.add(index);
         }
 
-
         // Likewise with output buffers. If the output buffers have changed, start using the
         // new set of output buffers. If the output format has changed, notify listeners.
         MediaCodec.BufferInfo info = new MediaCodec.BufferInfo();
-        while ((index = mDecoder.dequeueOutputBuffer(info, 0)) !=  MediaCodec.INFO_TRY_AGAIN_LATER) {
+        while ((index = mDecoder.dequeueOutputBuffer(info, 0)) != MediaCodec.INFO_TRY_AGAIN_LATER) {
             switch (index) {
                 case MediaCodec.INFO_OUTPUT_BUFFERS_CHANGED:
                     mOutputBuffers = mDecoder.getOutputBuffers();
@@ -405,15 +380,14 @@ public class MediaCodecWrapper {
                     break;
                 case MediaCodec.INFO_OUTPUT_FORMAT_CHANGED:
                     if (mOutputFormatChangedListener != null) {
-                        mHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                mOutputFormatChangedListener
-                                        .outputFormatChanged(MediaCodecWrapper.this,
-                                                mDecoder.getOutputFormat());
-
-                            }
-                        });
+                        mHandler.post(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mOutputFormatChangedListener.outputFormatChanged(
+                                                MediaCodecWrapper.this, mDecoder.getOutputFormat());
+                                    }
+                                });
                     }
                     break;
                 default:
@@ -429,7 +403,6 @@ public class MediaCodecWrapper {
                     }
                     break;
             }
-
         }
         // END_INCLUDE(update_codec_state)
 

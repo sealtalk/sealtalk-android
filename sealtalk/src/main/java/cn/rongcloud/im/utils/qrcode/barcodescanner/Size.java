@@ -2,9 +2,7 @@ package cn.rongcloud.im.utils.qrcode.barcodescanner;
 
 import androidx.annotation.NonNull;
 
-/**
- *
- */
+/** */
 public class Size implements Comparable<Size> {
     public final int width;
     public final int height;
@@ -43,7 +41,7 @@ public class Size implements Comparable<Size> {
      * @return the scaled size
      */
     public Size scaleFit(Size into) {
-        if(width * into.height >= into.width * height) {
+        if (width * into.height >= into.width * height) {
             // match width
             return new Size(into.width, height * into.width / width);
         } else {
@@ -59,7 +57,7 @@ public class Size implements Comparable<Size> {
      * @return the scaled size
      */
     public Size scaleCrop(Size into) {
-        if(width * into.height <= into.width * height) {
+        if (width * into.height <= into.width * height) {
             // match width
             return new Size(into.width, height * into.width / width);
         } else {
@@ -78,9 +76,7 @@ public class Size implements Comparable<Size> {
         return width <= other.width && height <= other.height;
     }
 
-    /**
-     * Default sort order is ascending by size.
-     */
+    /** Default sort order is ascending by size. */
     @Override
     public int compareTo(@NonNull Size other) {
         int aPixels = this.height * this.width;

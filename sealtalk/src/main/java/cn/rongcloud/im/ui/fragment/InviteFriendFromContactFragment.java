@@ -1,18 +1,15 @@
 package cn.rongcloud.im.ui.fragment;
 
 import android.view.View;
-
 import androidx.lifecycle.ViewModelProviders;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.rongcloud.im.model.SimplePhoneContactInfo;
 import cn.rongcloud.im.ui.adapter.CommonListAdapter;
 import cn.rongcloud.im.ui.adapter.ListWithSideBarBaseAdapter;
 import cn.rongcloud.im.ui.adapter.models.ListItemModel;
 import cn.rongcloud.im.viewmodel.CommonListBaseViewModel;
 import cn.rongcloud.im.viewmodel.InviteFriendFromContactViewModel;
+import java.util.ArrayList;
+import java.util.List;
 
 public class InviteFriendFromContactFragment extends CommonListBaseFragment {
     private OnContactSelectedListener onContactSelectedListener;
@@ -20,7 +17,8 @@ public class InviteFriendFromContactFragment extends CommonListBaseFragment {
 
     @Override
     protected CommonListBaseViewModel createViewModel() {
-        inviteFriendFromContactViewModel = ViewModelProviders.of(this).get(InviteFriendFromContactViewModel.class);
+        inviteFriendFromContactViewModel =
+                ViewModelProviders.of(this).get(InviteFriendFromContactViewModel.class);
         return inviteFriendFromContactViewModel;
     }
 
@@ -32,15 +30,16 @@ public class InviteFriendFromContactFragment extends CommonListBaseFragment {
     @Override
     protected ListWithSideBarBaseAdapter getAdapter() {
         CommonListAdapter adapter = (CommonListAdapter) super.getAdapter();
-        adapter.setOnItemClickListener(new CommonListAdapter.OnItemClickListener() {
-            @Override
-            public void onClick(View v, int position, ListItemModel data) {
-                if (onContactSelectedListener != null) {
-                    int selectedSize = adapter.getSelectedOtherIds().size();
-                    onContactSelectedListener.OnContactSelected(data, selectedSize);
-                }
-            }
-        });
+        adapter.setOnItemClickListener(
+                new CommonListAdapter.OnItemClickListener() {
+                    @Override
+                    public void onClick(View v, int position, ListItemModel data) {
+                        if (onContactSelectedListener != null) {
+                            int selectedSize = adapter.getSelectedOtherIds().size();
+                            onContactSelectedListener.OnContactSelected(data, selectedSize);
+                        }
+                    }
+                });
         return adapter;
     }
 
@@ -56,9 +55,11 @@ public class InviteFriendFromContactFragment extends CommonListBaseFragment {
         List<String> selectedOtherIds = listAdapter.getSelectedOtherIds();
         if (data != null) {
             for (ListItemModel model : data) {
-                if (model.getData() instanceof SimplePhoneContactInfo &&
-                        (model.getCheckStatus() == ListItemModel.CheckStatus.CHECKED
-                         || selectedOtherIds.contains(model.getId()) // 当 adapter 未执行 onBindViewHolder 时，部分选择状态没有被刷新
+                if (model.getData() instanceof SimplePhoneContactInfo
+                        && (model.getCheckStatus() == ListItemModel.CheckStatus.CHECKED
+                                || selectedOtherIds.contains(
+                                        model.getId()) // 当 adapter 未执行 onBindViewHolder
+                        // 时，部分选择状态没有被刷新
                         )) {
                     SimplePhoneContactInfo info = (SimplePhoneContactInfo) model.getData();
                     result.add(info);
@@ -80,5 +81,4 @@ public class InviteFriendFromContactFragment extends CommonListBaseFragment {
     public void search(String keyword) {
         inviteFriendFromContactViewModel.search(keyword);
     }
-
 }

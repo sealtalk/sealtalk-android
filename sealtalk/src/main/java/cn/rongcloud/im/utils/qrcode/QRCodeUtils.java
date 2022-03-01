@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.text.TextUtils;
-
+import cn.rongcloud.im.utils.qrcode.client.DecodeFormatManager;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.DecodeHintType;
@@ -17,7 +17,6 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -26,15 +25,13 @@ import java.net.URL;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import cn.rongcloud.im.utils.qrcode.client.DecodeFormatManager;
-
 public class QRCodeUtils {
     /**
      * 生成带 logo 的二维码
      *
      * @param text 生成二维码的字符串
-     * @param w    生成二维码的宽
-     * @param h    生成二维码的高
+     * @param w 生成二维码的宽
+     * @param h 生成二维码的高
      * @param logo 生成二维码中间的 logo 如果生成不带 logo 的二维码参数传 null 即可
      * @return 生成二维码的 Bitmap
      */
@@ -58,15 +55,19 @@ public class QRCodeUtils {
             }
             Hashtable<EncodeHintType, Object> hints = new Hashtable<EncodeHintType, Object>();
             hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
-            //容错级别
+            // 容错级别
             hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M);
-            //设置空白边距的宽度
+            // 设置空白边距的宽度
             hints.put(EncodeHintType.MARGIN, 0);
-            BitMatrix bitMatrix = new QRCodeWriter().encode(text, BarcodeFormat.QR_CODE, w, h, hints);
+            BitMatrix bitMatrix =
+                    new QRCodeWriter().encode(text, BarcodeFormat.QR_CODE, w, h, hints);
             int[] pixels = new int[w * h];
             for (int y = 0; y < h; y++) {
                 for (int x = 0; x < w; x++) {
-                    if (x >= offsetX && x < offsetX + scaleWidth && y >= offsetY && y < offsetY + scaleHeight) {
+                    if (x >= offsetX
+                            && x < offsetX + scaleWidth
+                            && y >= offsetY
+                            && y < offsetY + scaleHeight) {
                         int pixel = scaleLogo.getPixel(x - offsetX, y - offsetY);
                         if (pixel == 0) {
                             if (bitMatrix.get(x, y)) {
@@ -85,8 +86,7 @@ public class QRCodeUtils {
                     }
                 }
             }
-            Bitmap bitmap = Bitmap.createBitmap(w, h,
-                    Bitmap.Config.ARGB_8888);
+            Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
             bitmap.setPixels(pixels, 0, w, 0, 0, w, h);
             return bitmap;
         } catch (WriterException e) {
@@ -98,7 +98,8 @@ public class QRCodeUtils {
     private static Bitmap getScaleLogo(Bitmap logo, int w, int h) {
         if (logo == null) return null;
         Matrix matrix = new Matrix();
-        float scaleFactor = Math.min(w * 1.0f / 5 / logo.getWidth(), h * 1.0f / 5 / logo.getHeight());
+        float scaleFactor =
+                Math.min(w * 1.0f / 5 / logo.getWidth(), h * 1.0f / 5 / logo.getHeight());
         matrix.postScale(scaleFactor, scaleFactor);
         return Bitmap.createBitmap(logo, 0, 0, logo.getWidth(), logo.getHeight(), matrix, true);
     }
@@ -115,19 +116,16 @@ public class QRCodeUtils {
         if (path.startsWith("http://")) {
             return analyzeBitmap(getImage(path));
         } else {
-            /**
-             * 首先判断图片的大小,若图片过大,则执行图片的裁剪操作,防止OOM
-             */
+            /** 首先判断图片的大小,若图片过大,则执行图片的裁剪操作,防止OOM */
             Bitmap mBitmap;
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true; // 先获取原大小
-            BitmapFactory.decodeFile(path,options);
+            BitmapFactory.decodeFile(path, options);
             int sampleSize = (int) (options.outHeight / (float) 400);
-            if (sampleSize <= 0)
-                sampleSize = 1;
+            if (sampleSize <= 0) sampleSize = 1;
             options.inSampleSize = sampleSize;
             options.inJustDecodeBounds = false; // 获取新的大小
-            mBitmap = BitmapFactory.decodeFile(path,options);
+            mBitmap = BitmapFactory.decodeFile(path, options);
             mBitmap = zoomImg(mBitmap, mBitmap.getWidth() * 3, mBitmap.getHeight() * 3);
             return analyzeBitmap(mBitmap);
         }
@@ -172,6 +170,7 @@ public class QRCodeUtils {
 
     /**
      * 解析二维码位图
+     *
      * @param bitmap
      * @return 结果字符串
      */
@@ -193,7 +192,7 @@ public class QRCodeUtils {
         hints.put(DecodeHintType.POSSIBLE_FORMATS, decodeFormats);
         // 设置继续的字符编码格式为UTF8
         hints.put(DecodeHintType.CHARACTER_SET, "utf-8");
-//         设置解析配置参数
+        //         设置解析配置参数
         multiFormatReader.setHints(hints);
 
         // 开始对图像资源解码
@@ -204,7 +203,11 @@ public class QRCodeUtils {
             int height = bitmap.getHeight();
             int[] pixels = new int[width * height];
             bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
-            rawResult = multiFormatReader.decodeWithState(new BinaryBitmap(new HybridBinarizer(new RGBLuminanceSource(width, height, pixels))));
+            rawResult =
+                    multiFormatReader.decodeWithState(
+                            new BinaryBitmap(
+                                    new HybridBinarizer(
+                                            new RGBLuminanceSource(width, height, pixels))));
             result = rawResult.getText();
         } catch (Exception e) {
             e.printStackTrace();

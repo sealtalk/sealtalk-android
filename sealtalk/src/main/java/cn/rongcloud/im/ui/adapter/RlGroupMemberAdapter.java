@@ -1,24 +1,21 @@
 package cn.rongcloud.im.ui.adapter;
 
+import static cn.rongcloud.im.ui.adapter.RlGroupMemberAdapter.*;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.model.GroupMember;
 import cn.rongcloud.im.ui.widget.SelectableRoundedImageView;
 import cn.rongcloud.im.utils.ImageLoaderUtils;
-
-import static cn.rongcloud.im.ui.adapter.RlGroupMemberAdapter.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RlGroupMemberAdapter extends Adapter<RlGroupMemberViewHolder> {
 
@@ -49,14 +46,15 @@ public class RlGroupMemberAdapter extends Adapter<RlGroupMemberViewHolder> {
         } else if (!TextUtils.isEmpty(groupMember.getName())) {
             usernameTv.setText(groupMember.getName());
         }
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onItemClickedListener != null) {
-                    onItemClickedListener.onMemberClicked(memberList.get(position));
-                }
-            }
-        });
+        holder.itemView.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (onItemClickedListener != null) {
+                            onItemClickedListener.onMemberClicked(memberList.get(position));
+                        }
+                    }
+                });
     }
 
     @Override
@@ -64,9 +62,7 @@ public class RlGroupMemberAdapter extends Adapter<RlGroupMemberViewHolder> {
         return memberList.size();
     }
 
-    /**
-     * 传入新的数据 刷新UI的方法
-     */
+    /** 传入新的数据 刷新UI的方法 */
     public void updateListView(List<GroupMember> list) {
         this.memberList = list;
         notifyDataSetChanged();

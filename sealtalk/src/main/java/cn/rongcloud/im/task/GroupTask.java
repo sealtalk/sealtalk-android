@@ -3,17 +3,11 @@ package cn.rongcloud.im.task;
 import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import cn.rongcloud.im.db.DBManager;
 import cn.rongcloud.im.db.dao.GroupDao;
 import cn.rongcloud.im.db.dao.GroupMemberDao;
@@ -48,6 +42,9 @@ import cn.rongcloud.im.utils.RongGenerate;
 import cn.rongcloud.im.utils.SearchUtils;
 import io.rong.imkit.utils.CharacterParser;
 import io.rong.imlib.model.Conversation;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import okhttp3.RequestBody;
 
 public class GroupTask {
@@ -58,7 +55,10 @@ public class GroupTask {
 
     public GroupTask(Context context) {
         this.context = context.getApplicationContext();
-        groupService = HttpClientManager.getInstance(context).getClient().createService(GroupService.class);
+        groupService =
+                HttpClientManager.getInstance(context)
+                        .getClient()
+                        .createService(GroupService.class);
         dbManager = DBManager.getInstance(context);
         fileManager = new FileManager(context);
     }
@@ -90,7 +90,8 @@ public class GroupTask {
      * @param memberList
      * @return
      */
-    public LiveData<Resource<List<AddMemberResult>>> addGroupMember(String groupId, List<String> memberList) {
+    public LiveData<Resource<List<AddMemberResult>>> addGroupMember(
+            String groupId, List<String> memberList) {
         return new NetworkOnlyResource<List<AddMemberResult>, Result<List<AddMemberResult>>>() {
             @NonNull
             @Override
@@ -169,7 +170,8 @@ public class GroupTask {
                     groupMemberDao.deleteGroupMember(groupId);
                 }
 
-                IMManager.getInstance().clearConversationAndMessage(groupId, Conversation.ConversationType.GROUP);
+                IMManager.getInstance()
+                        .clearConversationAndMessage(groupId, Conversation.ConversationType.GROUP);
             }
 
             @NonNull
@@ -202,7 +204,8 @@ public class GroupTask {
                     groupMemberDao.deleteGroupMember(groupId);
                 }
 
-                IMManager.getInstance().clearConversationAndMessage(groupId, Conversation.ConversationType.GROUP);
+                IMManager.getInstance()
+                        .clearConversationAndMessage(groupId, Conversation.ConversationType.GROUP);
             }
 
             @NonNull
@@ -232,7 +235,6 @@ public class GroupTask {
                 bodyMap.put("userId", userId);
                 return groupService.transferGroup(RetrofitUtil.createJsonRequest(bodyMap));
             }
-
         }.asLiveData();
     }
 
@@ -251,17 +253,24 @@ public class GroupTask {
                 GroupDao groupDao = dbManager.getGroupDao();
                 if (groupDao != null) {
                     int updateResult;
-                    updateResult = groupDao.updateGroupName(groupId, groupName, CharacterParser.getInstance().getSelling(groupName));
+                    updateResult =
+                            groupDao.updateGroupName(
+                                    groupId,
+                                    groupName,
+                                    CharacterParser.getInstance().getSelling(groupName));
 
                     // 更新成时同时更新缓存
                     if (updateResult > 0) {
                         GroupEntity groupInfo = groupDao.getGroupInfoSync(groupId);
                         if (groupInfo != null) {
-                            IMManager.getInstance().updateGroupInfoCache(groupId, groupName, Uri.parse(groupInfo.getPortraitUri()));
+                            IMManager.getInstance()
+                                    .updateGroupInfoCache(
+                                            groupId,
+                                            groupName,
+                                            Uri.parse(groupInfo.getPortraitUri()));
                         }
                     }
                 }
-
             }
 
             @NonNull
@@ -399,37 +408,43 @@ public class GroupTask {
         MediatorLiveData<Resource<Void>> result = new MediatorLiveData<>();
         // 先上传图片文件
         LiveData<Resource<String>> uploadResource = fileManager.uploadImage(portraitUrl);
-        result.addSource(uploadResource, resource -> {
-            if (resource.status != Status.LOADING) {
-                result.removeSource(uploadResource);
-            }
-
-            if (resource.status == Status.ERROR) {
-                result.setValue(Resource.error(resource.code, null));
-                return;
-            }
-
-            if (resource.status == Status.SUCCESS) {
-                String uploadUrl = resource.data;
-
-                // 获取上传成功的地址后更新地址
-                LiveData<Resource<Void>> setPortraitResource = setGroupPortrait(groupId, uploadUrl);
-                result.addSource(setPortraitResource, portraitResultResource -> {
-                    if (portraitResultResource.status != Status.LOADING) {
-                        result.removeSource(setPortraitResource);
+        result.addSource(
+                uploadResource,
+                resource -> {
+                    if (resource.status != Status.LOADING) {
+                        result.removeSource(uploadResource);
                     }
 
-                    if (portraitResultResource.status == Status.ERROR) {
-                        result.setValue(Resource.error(portraitResultResource.code, null));
+                    if (resource.status == Status.ERROR) {
+                        result.setValue(Resource.error(resource.code, null));
                         return;
                     }
 
-                    if (portraitResultResource.status == Status.SUCCESS) {
-                        result.setValue(Resource.success(null));
+                    if (resource.status == Status.SUCCESS) {
+                        String uploadUrl = resource.data;
+
+                        // 获取上传成功的地址后更新地址
+                        LiveData<Resource<Void>> setPortraitResource =
+                                setGroupPortrait(groupId, uploadUrl);
+                        result.addSource(
+                                setPortraitResource,
+                                portraitResultResource -> {
+                                    if (portraitResultResource.status != Status.LOADING) {
+                                        result.removeSource(setPortraitResource);
+                                    }
+
+                                    if (portraitResultResource.status == Status.ERROR) {
+                                        result.setValue(
+                                                Resource.error(portraitResultResource.code, null));
+                                        return;
+                                    }
+
+                                    if (portraitResultResource.status == Status.SUCCESS) {
+                                        result.setValue(Resource.success(null));
+                                    }
+                                });
                     }
                 });
-            }
-        });
 
         return result;
     }
@@ -454,7 +469,9 @@ public class GroupTask {
                     // 更新成时同时更新缓存
                     if (updateResult > 0) {
                         GroupEntity groupInfo = groupDao.getGroupInfoSync(groupId);
-                        IMManager.getInstance().updateGroupInfoCache(groupId, groupInfo.getName(), Uri.parse(portraitUrl));
+                        IMManager.getInstance()
+                                .updateGroupInfoCache(
+                                        groupId, groupInfo.getName(), Uri.parse(portraitUrl));
                     }
                 }
             }
@@ -511,19 +528,28 @@ public class GroupTask {
 
                     String portraitUri = groupEntity.getPortraitUri();
                     if (TextUtils.isEmpty(portraitUri)) {
-                        portraitUri = RongGenerate.generateDefaultAvatar(context, groupEntity.getId(), groupEntity.getName());
+                        portraitUri =
+                                RongGenerate.generateDefaultAvatar(
+                                        context, groupEntity.getId(), groupEntity.getName());
                         groupEntity.setPortraitUri(portraitUri);
                     }
-                    groupEntity.setNameSpelling(SearchUtils.fullSearchableString(groupEntity.getName()));
-                    groupEntity.setNameSpellingInitial(SearchUtils.initialSearchableString(groupEntity.getName()));
-                    groupEntity.setOrderSpelling(CharacterParser.getInstance().getSelling(groupEntity.getName()));
+                    groupEntity.setNameSpelling(
+                            SearchUtils.fullSearchableString(groupEntity.getName()));
+                    groupEntity.setNameSpellingInitial(
+                            SearchUtils.initialSearchableString(groupEntity.getName()));
+                    groupEntity.setOrderSpelling(
+                            CharacterParser.getInstance().getSelling(groupEntity.getName()));
                     groupEntity.setIsInContact(groupIsContact);
                     groupEntity.setRegularClearState(regularClearState);
                     groupDao.insertGroup(groupEntity);
                 }
 
                 // 更新 IMKit 缓存群组数据
-                IMManager.getInstance().updateGroupInfoCache(groupEntity.getId(), groupEntity.getName(), Uri.parse(groupEntity.getPortraitUri()));
+                IMManager.getInstance()
+                        .updateGroupInfoCache(
+                                groupEntity.getId(),
+                                groupEntity.getName(),
+                                Uri.parse(groupEntity.getPortraitUri()));
             }
 
             @NonNull
@@ -600,7 +626,8 @@ public class GroupTask {
      * @param filterByName 通过姓名模糊匹配
      * @return
      */
-    public LiveData<Resource<List<GroupMember>>> getGroupMemberInfoList(final String groupId, String filterByName) {
+    public LiveData<Resource<List<GroupMember>>> getGroupMemberInfoList(
+            final String groupId, String filterByName) {
         return new NetworkBoundResource<List<GroupMember>, Result<List<GroupMemberInfoResult>>>() {
             @Override
             protected void saveCallResult(@NonNull Result<List<GroupMemberInfoResult>> item) {
@@ -623,7 +650,8 @@ public class GroupTask {
                     groupEntity.setGroupId(groupId);
 
                     // 默认优先显示群备注名。当没有群备注时，则看此用户为当前用户的好友，如果是好友则显示备注名称。其次再试显示用户名
-                    String displayName = TextUtils.isEmpty(info.getDisplayName()) ? "" : info.getDisplayName();
+                    String displayName =
+                            TextUtils.isEmpty(info.getDisplayName()) ? "" : info.getDisplayName();
                     String nameInKitCache = displayName;
 
                     if (TextUtils.isEmpty(nameInKitCache)) {
@@ -640,7 +668,8 @@ public class GroupTask {
                     groupEntityList.add(groupEntity);
 
                     // 更新 IMKit 缓存群组成员数据
-                    IMManager.getInstance().updateGroupMemberInfoCache(groupId, user.getId(), nameInKitCache);
+                    IMManager.getInstance()
+                            .updateGroupMemberInfoCache(groupId, user.getId(), nameInKitCache);
 
                     if (userDao != null) {
                         // 更新已存在的用户信息
@@ -648,17 +677,26 @@ public class GroupTask {
 
                         // 当没有头像时生成默认头像
                         if (TextUtils.isEmpty(portraitUri)) {
-                            portraitUri = RongGenerate.generateDefaultAvatar(context, user.getId(), user.getName());
+                            portraitUri =
+                                    RongGenerate.generateDefaultAvatar(
+                                            context, user.getId(), user.getName());
                             user.setPortraitUri(portraitUri);
                         }
-                        int updateResult = userDao.updateNameAndPortrait(user.getId(), user.getName(), io.rong.imkit.utils.CharacterParser.getInstance().getSelling(user.getName()), user.getPortraitUri());
+                        int updateResult =
+                                userDao.updateNameAndPortrait(
+                                        user.getId(),
+                                        user.getName(),
+                                        io.rong.imkit.utils.CharacterParser.getInstance()
+                                                .getSelling(user.getName()),
+                                        user.getPortraitUri());
 
                         // 当没有更新成功时，添加到新用户列表中
                         if (updateResult == 0) {
                             UserInfo userInfo = new UserInfo();
                             userInfo.setId(user.getId());
                             userInfo.setName(user.getName());
-                            userInfo.setNameSpelling(SearchUtils.fullSearchableString(user.getName()));
+                            userInfo.setNameSpelling(
+                                    SearchUtils.fullSearchableString(user.getName()));
                             userInfo.setPortraitUri(user.getPortraitUri());
                             newUserList.add(userInfo);
                         }
@@ -674,7 +712,6 @@ public class GroupTask {
                     // 插入新的用户信息
                     userDao.insertUserListIgnoreExist(newUserList);
                 }
-
             }
 
             @Override
@@ -727,7 +764,8 @@ public class GroupTask {
         return null;
     }
 
-    public LiveData<List<GroupMember>> searchGroupMemberInDB(final String groupId, String searchKey) {
+    public LiveData<List<GroupMember>> searchGroupMemberInDB(
+            final String groupId, String searchKey) {
         GroupMemberDao groupMemberDao = dbManager.getGroupMemberDao();
         if (groupMemberDao != null) {
             return groupMemberDao.searchGroupMember(groupId, searchKey);
@@ -736,14 +774,14 @@ public class GroupTask {
     }
 
     public LiveData<List<SearchGroupMember>> searchGroup(String match) {
-        if(dbManager.getGroupDao() == null) {
+        if (dbManager.getGroupDao() == null) {
             return null;
         }
         return dbManager.getGroupDao().searchGroup(match);
     }
 
     public LiveData<List<GroupEntity>> searchGroupByName(String match) {
-        if(dbManager.getGroupDao() == null) {
+        if (dbManager.getGroupDao() == null) {
             return null;
         }
         return dbManager.getGroupDao().searchGroupByName(match);
@@ -775,7 +813,7 @@ public class GroupTask {
      *
      * @param groupId
      * @param muteStatus 1开启禁言，0关闭禁言
-     * @param userId     可发言用户id，不设置除了群主和管理员，全员禁言
+     * @param userId 可发言用户id，不设置除了群主和管理员，全员禁言
      * @return
      */
     public LiveData<Resource<Void>> setMuteAll(String groupId, int muteStatus, String userId) {
@@ -955,9 +993,9 @@ public class GroupTask {
      *
      * @return
      */
-
     public LiveData<Resource<List<GroupNoticeInfo>>> getGroupNoticeInfo() {
-        return new NetworkBoundResource<List<GroupNoticeInfo>, Result<List<GroupNoticeInfoResult>>>() {
+        return new NetworkBoundResource<
+                List<GroupNoticeInfo>, Result<List<GroupNoticeInfoResult>>>() {
 
             @Override
             protected void saveCallResult(@NonNull Result<List<GroupNoticeInfoResult>> item) {
@@ -991,14 +1029,13 @@ public class GroupTask {
                         }
                         infoList.add(noticeInfo);
                     }
-                    //防止直接 delteAll 导致的返回数据 success 状态导致返回错误的空数据结果
+                    // 防止直接 delteAll 导致的返回数据 success 状态导致返回错误的空数据结果
                     groupDao.deleteAllGroupNotice(idList);
                     groupDao.insertGroupNotice(infoList);
                 } else if (resultList != null) {
                     // 返回无通知数据时清空数据库的数据
                     groupDao.deleteAllGroupNotice();
                 }
-
             }
 
             @NonNull
@@ -1017,7 +1054,6 @@ public class GroupTask {
             protected LiveData<Result<List<GroupNoticeInfoResult>>> createCall() {
                 return groupService.getGroupNoticeInfo();
             }
-
         }.asLiveData();
     }
 
@@ -1026,10 +1062,11 @@ public class GroupTask {
      *
      * @param groupId
      * @param receiverId
-     * @param status     0 忽略、 1 同意
+     * @param status 0 忽略、 1 同意
      * @return
      */
-    public LiveData<Resource<Void>> setNoticeStatus(String groupId, String receiverId, String status, String noticeId) {
+    public LiveData<Resource<Void>> setNoticeStatus(
+            String groupId, String receiverId, String status, String noticeId) {
         return new NetworkOnlyResource<Void, Result<Void>>() {
 
             @Override
@@ -1087,7 +1124,8 @@ public class GroupTask {
      * @param portraitUri
      * @return
      */
-    public LiveData<Resource<CopyGroupResult>> copyGroup(String groupId, String name, String portraitUri) {
+    public LiveData<Resource<CopyGroupResult>> copyGroup(
+            String groupId, String name, String portraitUri) {
         return new NetworkOnlyResource<CopyGroupResult, Result<CopyGroupResult>>() {
             @NonNull
             @Override
@@ -1108,9 +1146,10 @@ public class GroupTask {
      *
      * @return
      */
-
-    public LiveData<Resource<List<GroupExitedMemberInfo>>> getGroupExitedMemberInfo(String groupId) {
-        return new NetworkBoundResource<List<GroupExitedMemberInfo>, Result<List<GroupExitedMemberInfo>>>() {
+    public LiveData<Resource<List<GroupExitedMemberInfo>>> getGroupExitedMemberInfo(
+            String groupId) {
+        return new NetworkBoundResource<
+                List<GroupExitedMemberInfo>, Result<List<GroupExitedMemberInfo>>>() {
 
             @Override
             protected void saveCallResult(@NonNull Result<List<GroupExitedMemberInfo>> item) {
@@ -1127,13 +1166,13 @@ public class GroupTask {
                 }
             }
 
-
             @NonNull
             @Override
             protected LiveData<List<GroupExitedMemberInfo>> loadFromDb() {
                 GroupDao groupDao = dbManager.getGroupDao();
                 if (groupDao != null) {
-                    LiveData<List<GroupExitedMemberInfo>> liveInfoList = groupDao.getGroupExitedList();
+                    LiveData<List<GroupExitedMemberInfo>> liveInfoList =
+                            groupDao.getGroupExitedList();
                     return liveInfoList;
                 }
                 return new MutableLiveData<>(null);
@@ -1144,9 +1183,9 @@ public class GroupTask {
             protected LiveData<Result<List<GroupExitedMemberInfo>>> createCall() {
                 HashMap<String, Object> bodyMap = new HashMap<>();
                 bodyMap.put("groupId", groupId);
-                return groupService.getGroupExitedMemberInfo(RetrofitUtil.createJsonRequest(bodyMap));
+                return groupService.getGroupExitedMemberInfo(
+                        RetrofitUtil.createJsonRequest(bodyMap));
             }
-
         }.asLiveData();
     }
 
@@ -1157,8 +1196,8 @@ public class GroupTask {
      * @param memberId
      * @return
      */
-
-    public LiveData<Resource<GroupMemberInfoDes>> getGroupMemberInfoDes(String groupId, String memberId) {
+    public LiveData<Resource<GroupMemberInfoDes>> getGroupMemberInfoDes(
+            String groupId, String memberId) {
         return new NetworkBoundResource<GroupMemberInfoDes, Result<GroupMemberInfoDes>>() {
 
             @Override
@@ -1175,13 +1214,13 @@ public class GroupTask {
                 }
             }
 
-
             @NonNull
             @Override
             protected LiveData<GroupMemberInfoDes> loadFromDb() {
                 GroupDao groupDao = dbManager.getGroupDao();
                 if (groupDao != null) {
-                    LiveData<GroupMemberInfoDes> info = groupDao.getGroupMemberInfoDes(groupId, memberId);
+                    LiveData<GroupMemberInfoDes> info =
+                            groupDao.getGroupMemberInfoDes(groupId, memberId);
                     return info;
                 }
                 return new MutableLiveData<>(null);
@@ -1195,25 +1234,31 @@ public class GroupTask {
                 bodyMap.put("memberId", memberId);
                 return groupService.getGroupInfoDes(RetrofitUtil.createJsonRequest(bodyMap));
             }
-
         }.asLiveData();
     }
 
     /**
      * 设置群成员用户信息
      *
-     * @param groupId       群 Id	String	必填
-     * @param memberId      群用户 Id	String	必填
-     * @param groupNickname 群成员昵称 String	非必填
-     * @param region        区号	String	非必填
-     * @param phone         电话	String	非必填
-     * @param WeChat        微信号	String	非必填
-     * @param Alipay        支付宝号	String	非必填
-     * @param memberDesc    描述 array 非必填
+     * @param groupId 群 Id String 必填
+     * @param memberId 群用户 Id String 必填
+     * @param groupNickname 群成员昵称 String 非必填
+     * @param region 区号 String 非必填
+     * @param phone 电话 String 非必填
+     * @param WeChat 微信号 String 非必填
+     * @param Alipay 支付宝号 String 非必填
+     * @param memberDesc 描述 array 非必填
      * @return
      */
-    public LiveData<Resource<Void>> setGroupMemberInfoDes(String groupId, String memberId, String groupNickname
-            , String region, String phone, String WeChat, String Alipay, ArrayList<String> memberDesc) {
+    public LiveData<Resource<Void>> setGroupMemberInfoDes(
+            String groupId,
+            String memberId,
+            String groupNickname,
+            String region,
+            String phone,
+            String WeChat,
+            String Alipay,
+            ArrayList<String> memberDesc) {
         return new NetworkOnlyResource<Void, Result<Void>>() {
             @Override
             protected void saveCallResult(@NonNull Void item) {
@@ -1223,7 +1268,7 @@ public class GroupTask {
                 groupMemberInfoDes.setMemberId(memberId);
                 if (groupNickname != null) {
                     groupMemberInfoDes.setGroupNickname(groupNickname);
-                    //设置成功后更新 groupMember 数据库 NickName
+                    // 设置成功后更新 groupMember 数据库 NickName
                     GroupMemberDao groupMemberDao = dbManager.getGroupMemberDao();
                     groupMemberDao.updateMemberNickName(groupNickname, groupId, memberId);
                 }

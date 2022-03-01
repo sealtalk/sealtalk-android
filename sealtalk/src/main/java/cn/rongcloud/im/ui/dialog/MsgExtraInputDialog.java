@@ -11,7 +11,6 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import cn.rongcloud.im.R;
 
 public class MsgExtraInputDialog extends Dialog {
@@ -21,7 +20,7 @@ public class MsgExtraInputDialog extends Dialog {
     protected WindowManager.LayoutParams mLayoutParams;
 
     private int mType;
-    public static int TYPE_SET= 0x1456;
+    public static int TYPE_SET = 0x1456;
     public static int TYPE_DELETE = 0x1457;
     public static int TYPE_SEND_MESSAGE = 0x1458;
     public static int TYPE_SHORTAGE = 0x1459;
@@ -89,7 +88,6 @@ public class MsgExtraInputDialog extends Dialog {
         initView(context);
     }
 
-
     public EditText getEtKey() {
         return etKey;
     }
@@ -97,7 +95,6 @@ public class MsgExtraInputDialog extends Dialog {
     public EditText getEtValue() {
         return etValue;
     }
-
 
     public TextView getSureView() {
         return mTvSure;
@@ -127,7 +124,8 @@ public class MsgExtraInputDialog extends Dialog {
             mLayoutParams.height = android.view.ViewGroup.LayoutParams.MATCH_PARENT;
             mLayoutParams.gravity = Gravity.CENTER;
         }
-        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_msg_extra_input, null);
+        View dialogView =
+                LayoutInflater.from(getContext()).inflate(R.layout.dialog_msg_extra_input, null);
         mTvSure = dialogView.findViewById(R.id.tv_sure);
         mTvCancel = dialogView.findViewById(R.id.tv_cancle);
         mTVAdd = dialogView.findViewById(R.id.add_item);
@@ -149,10 +147,10 @@ public class MsgExtraInputDialog extends Dialog {
             llValue.setVisibility(View.GONE);
             llSendMsg.setVisibility(View.GONE);
             mTVAdd.setText("添加 Key");
-        } else if(mType == TYPE_SEND_MESSAGE) {
+        } else if (mType == TYPE_SEND_MESSAGE) {
             llUID.setVisibility(View.GONE);
             mTvSure.setText("发送");
-        } else if(mType == TYPE_SHORTAGE) {
+        } else if (mType == TYPE_SHORTAGE) {
             uidText.setText("时间");
             keyText.setText("数量");
             valText.setText("顺序");

@@ -22,31 +22,24 @@ import android.os.Build;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.rongcloud.im.utils.qrcode.barcodescanner.Size;
 import cn.rongcloud.im.utils.qrcode.barcodescanner.SourceData;
 import cn.rongcloud.im.utils.qrcode.client.AmbientLightManager;
 import cn.rongcloud.im.utils.qrcode.client.camera.CameraConfigurationUtils;
 import cn.rongcloud.im.utils.qrcode.client.camera.open.OpenCameraInterface;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Wrapper to manage the Camera. This is not thread-safe, and the methods must always be called
- * from the same thread.
+ * Wrapper to manage the Camera. This is not thread-safe, and the methods must always be called from
+ * the same thread.
  *
+ * <p>Call order:
  *
- * Call order:
- *
- * 1. setCameraSettings()
- * 2. open(), set desired preview size (any order)
- * 3. configure(), setPreviewDisplay(holder) (any order)
- * 4. startPreview()
- * 5. requestPreviewFrame (repeat)
- * 6. stopPreview()
- * 7. close()
+ * <p>1. setCameraSettings() 2. open(), set desired preview size (any order) 3. configure(),
+ * setPreviewDisplay(holder) (any order) 4. startPreview() 5. requestPreviewFrame (repeat) 6.
+ * stopPreview() 7. close()
  */
 public final class CameraManager {
 
@@ -70,18 +63,16 @@ public final class CameraManager {
     private Size requestedPreviewSize;
     private Size previewSize;
 
-    private int rotationDegrees = -1;    // camera rotation vs display rotation
+    private int rotationDegrees = -1; // camera rotation vs display rotation
 
     private Context context;
-
 
     private final class CameraPreviewCallback implements Camera.PreviewCallback {
         private PreviewCallback callback;
 
         private Size resolution;
 
-        public CameraPreviewCallback() {
-        }
+        public CameraPreviewCallback() {}
 
         public void setResolution(Size resolution) {
             this.resolution = resolution;
@@ -98,7 +89,13 @@ public final class CameraManager {
             if (cameraResolution != null && callback != null) {
                 int format = camera.getParameters().getPreviewFormat();
                 try {
-                    SourceData source = new SourceData(data, cameraResolution.width, cameraResolution.height, format, getCameraRotation());
+                    SourceData source =
+                            new SourceData(
+                                    data,
+                                    cameraResolution.width,
+                                    cameraResolution.height,
+                                    format,
+                                    getCameraRotation());
                     callback.onPreview(source);
                 } catch (IllegalArgumentException e) {
                     // Image data does not match the resolution
@@ -107,7 +104,7 @@ public final class CameraManager {
                 }
             } else {
                 Log.d(TAG, "Got preview callback, but no handler or resolution available");
-                if(callback != null) {
+                if (callback != null) {
                     // Should generally not happen
                     callback.onPreviewError(new Exception("No resolution available"));
                 }
@@ -126,9 +123,7 @@ public final class CameraManager {
         cameraPreviewCallback = new CameraPreviewCallback();
     }
 
-    /**
-     * Must be called from camera thread.
-     */
+    /** Must be called from camera thread. */
     public void open() {
         camera = OpenCameraInterface.open(settings.getRequestedCameraId());
         if (camera == null) {
@@ -143,20 +138,18 @@ public final class CameraManager {
     /**
      * Configure the camera parameters, including preview size.
      *
-     * The camera must be opened before calling this.
+     * <p>The camera must be opened before calling this.
      *
-     * Must be called from camera thread.
+     * <p>Must be called from camera thread.
      */
     public void configure() {
-        if(camera == null) {
+        if (camera == null) {
             throw new RuntimeException("Camera not open");
         }
         setParameters();
     }
 
-    /**
-     * Must be called from camera thread.
-     */
+    /** Must be called from camera thread. */
     public void setPreviewDisplay(SurfaceHolder holder) throws IOException {
         setPreviewDisplay(new CameraSurface(holder));
     }
@@ -168,7 +161,7 @@ public final class CameraManager {
     /**
      * Asks the camera hardware to begin drawing preview frames to the screen.
      *
-     * Must be called from camera thread.
+     * <p>Must be called from camera thread.
      */
     public void startPreview() {
         Camera theCamera = camera;
@@ -184,7 +177,7 @@ public final class CameraManager {
     /**
      * Tells the camera to stop drawing preview frames.
      *
-     * Must be called from camera thread.
+     * <p>Must be called from camera thread.
      */
     public void stopPreview() {
         if (autoFocusManager != null) {
@@ -205,7 +198,7 @@ public final class CameraManager {
     /**
      * Closes the camera driver if still in use.
      *
-     * Must be called from camera thread.
+     * <p>Must be called from camera thread.
      */
     public void close() {
         if (camera != null) {
@@ -214,20 +207,17 @@ public final class CameraManager {
         }
     }
 
-    /**
-     * @return true if the camera rotation is perpendicular to the current display rotation.
-     */
+    /** @return true if the camera rotation is perpendicular to the current display rotation. */
     public boolean isCameraRotated() {
-        if(rotationDegrees == -1) {
+        if (rotationDegrees == -1) {
             throw new IllegalStateException("Rotation not calculated yet. Call configure() first.");
         }
         return rotationDegrees % 180 != 0;
     }
 
     /**
-     *
      * @return the camera rotation relative to display rotation, in degrees. Typically 0 if the
-     *    display is in landscape orientation.
+     *     display is in landscape orientation.
      */
     public int getCameraRotation() {
         return rotationDegrees;
@@ -248,7 +238,9 @@ public final class CameraManager {
 
         //noinspection ConstantConditions
         if (parameters == null) {
-            Log.w(TAG, "Device error: no camera parameters are available. Proceeding without configuration.");
+            Log.w(
+                    TAG,
+                    "Device error: no camera parameters are available. Proceeding without configuration.");
             return;
         }
 
@@ -278,14 +270,14 @@ public final class CameraManager {
                     CameraConfigurationUtils.setMetering(parameters);
                 }
             }
-
         }
 
         List<Size> previewSizes = getPreviewSizes(parameters);
         if (previewSizes.size() == 0) {
             requestedPreviewSize = null;
         } else {
-            requestedPreviewSize = displayConfiguration.getBestPreviewSize(previewSizes, isCameraRotated());
+            requestedPreviewSize =
+                    displayConfiguration.getBestPreviewSize(previewSizes, isCameraRotated());
 
             parameters.setPreviewSize(requestedPreviewSize.width, requestedPreviewSize.height);
         }
@@ -340,8 +332,8 @@ public final class CameraManager {
         int result;
         if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
             result = (cameraInfo.orientation + degrees) % 360;
-            result = (360 - result) % 360;  // compensate the mirror
-        } else {  // back-facing
+            result = (360 - result) % 360; // compensate the mirror
+        } else { // back-facing
             result = (cameraInfo.orientation - degrees + 360) % 360;
         }
         Log.i(TAG, "Camera Display Orientation: " + result);
@@ -380,10 +372,7 @@ public final class CameraManager {
         cameraPreviewCallback.setResolution(previewSize);
     }
 
-    /**
-     * This returns false if the camera is not opened yet, failed to open, or has
-     * been closed.
-     */
+    /** This returns false if the camera is not opened yet, failed to open, or has been closed. */
     public boolean isOpen() {
         return camera != null;
     }
@@ -415,8 +404,8 @@ public final class CameraManager {
     /**
      * A single preview frame will be returned to the supplied callback.
      *
-     * The thread on which this called is undefined, so a Handler should be used to post the result
-     * to the correct thread.
+     * <p>The thread on which this called is undefined, so a Handler should be used to post the
+     * result to the correct thread.
      *
      * @param callback The callback to receive the preview.
      */
@@ -470,9 +459,9 @@ public final class CameraManager {
         Camera.Parameters parameters = camera.getParameters();
         if (parameters != null) {
             String flashMode = parameters.getFlashMode();
-            return flashMode != null &&
-                    (Camera.Parameters.FLASH_MODE_ON.equals(flashMode) ||
-                            Camera.Parameters.FLASH_MODE_TORCH.equals(flashMode));
+            return flashMode != null
+                    && (Camera.Parameters.FLASH_MODE_ON.equals(flashMode)
+                            || Camera.Parameters.FLASH_MODE_TORCH.equals(flashMode));
         } else {
             return false;
         }

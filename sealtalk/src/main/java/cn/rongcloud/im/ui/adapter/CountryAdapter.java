@@ -4,16 +4,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.SectionIndexer;
-
-import java.util.List;
-
 import cn.rongcloud.im.model.CountryInfo;
 import cn.rongcloud.im.ui.adapter.item.SelectCountryItem;
+import java.util.List;
 
-
-/**
- * 国家地区列表的 Adapter
- */
+/** 国家地区列表的 Adapter */
 public class CountryAdapter extends BaseAdapter implements SectionIndexer {
 
     private List<CountryInfo> countryList;
@@ -30,12 +25,12 @@ public class CountryAdapter extends BaseAdapter implements SectionIndexer {
 
     @Override
     public int getCount() {
-        return countryList == null? 0 : countryList.size();
+        return countryList == null ? 0 : countryList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return countryList == null? null : countryList.get(position);
+        return countryList == null ? null : countryList.get(position);
     }
 
     @Override
@@ -45,13 +40,12 @@ public class CountryAdapter extends BaseAdapter implements SectionIndexer {
         }
 
         final CountryInfo data = countryList.get(position);
-        //根据position获取分类的首字母的Char ascii值
+        // 根据position获取分类的首字母的Char ascii值
         int section = getSectionForPosition(position);
-        //如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
-        ((SelectCountryItem)convertView).setData(data, position == getPositionForSection(section));
+        // 如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
+        ((SelectCountryItem) convertView).setData(data, position == getPositionForSection(section));
         return convertView;
     }
-
 
     @Override
     public int getSectionForPosition(int position) {
@@ -74,5 +68,4 @@ public class CountryAdapter extends BaseAdapter implements SectionIndexer {
         }
         return -1;
     }
-
 }

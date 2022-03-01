@@ -7,11 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-
 import cn.rongcloud.im.R;
 
 public class SelectCleanTimeDialog extends DialogFragment implements View.OnClickListener {
@@ -20,7 +18,10 @@ public class SelectCleanTimeDialog extends DialogFragment implements View.OnClic
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(
+            @NonNull LayoutInflater inflater,
+            @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_select_clean_time, null);
         Button cleanSixtySixHour = view.findViewById(R.id.btn_clean_thirty_six_hour);
         Button cleanThreeDay = view.findViewById(R.id.btn_clean_three_day);
@@ -32,7 +33,7 @@ public class SelectCleanTimeDialog extends DialogFragment implements View.OnClic
         cleanNot.setOnClickListener(this);
 
         Dialog dialog = getDialog();
-        if(dialog != null){
+        if (dialog != null) {
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         }
 
@@ -58,7 +59,6 @@ public class SelectCleanTimeDialog extends DialogFragment implements View.OnClic
             }
             SelectCleanTimeDialog.this.dismiss();
         }
-
     }
 
     public void setOnDialogButtonClickListener(OnDialogButtonClickListener listener) {

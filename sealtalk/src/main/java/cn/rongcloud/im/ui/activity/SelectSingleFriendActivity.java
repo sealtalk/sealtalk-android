@@ -3,16 +3,13 @@ package cn.rongcloud.im.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentTransaction;
-
-import java.util.ArrayList;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.ui.fragment.SelectSingleFragment;
 import cn.rongcloud.im.ui.view.SealTitleBar;
+import java.util.ArrayList;
 
 public class SelectSingleFriendActivity extends SelectBaseActivity implements View.OnClickListener {
     private SelectSingleFragment selectSingleFragment;
@@ -33,12 +30,16 @@ public class SelectSingleFriendActivity extends SelectBaseActivity implements Vi
 
     @Override
     public void onClick(View v) {
-        onConfirmClicked(selectSingleFragment.getCheckedList(),selectSingleFragment.getCheckedInitGroupList());
+        onConfirmClicked(
+                selectSingleFragment.getCheckedList(),
+                selectSingleFragment.getCheckedInitGroupList());
     }
 
     @Override
     protected void onConfirmClick() {
-        onConfirmClicked(selectSingleFragment.getCheckedList(),selectSingleFragment.getCheckedInitGroupList());
+        onConfirmClicked(
+                selectSingleFragment.getCheckedList(),
+                selectSingleFragment.getCheckedInitGroupList());
     }
 
     @Override

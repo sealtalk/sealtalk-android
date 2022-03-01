@@ -2,24 +2,21 @@ package cn.rongcloud.im.model;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import cn.rongcloud.im.common.ErrorCode;
 
 /**
  * 资源结果包装类，此类反应资源获取的状态和结果
+ *
  * @param <T>
  */
 public class Resource<T> {
-    @NonNull
-    public final Status status;
+    @NonNull public final Status status;
 
-    @Nullable
-    public final String message;
+    @Nullable public final String message;
 
     public final int code;
 
-    @Nullable
-    public final T data;
+    @Nullable public final T data;
 
     public Resource(@NonNull Status status, @Nullable T data, @Nullable int code) {
         this.status = status;
@@ -70,10 +67,14 @@ public class Resource<T> {
 
     @Override
     public String toString() {
-        return "Resource{" +
-                "status=" + status +
-                ", message='" + message + '\'' +
-                ", data=" + data +
-                '}';
+        return "Resource{"
+                + "status="
+                + status
+                + ", message='"
+                + message
+                + '\''
+                + ", data="
+                + data
+                + '}';
     }
 }

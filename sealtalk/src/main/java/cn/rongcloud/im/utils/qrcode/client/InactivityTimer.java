@@ -23,9 +23,7 @@ import android.content.IntentFilter;
 import android.os.BatteryManager;
 import android.os.Handler;
 
-/**
- * Finishes an context after a period of inactivity if the device is on battery power.
- */
+/** Finishes an context after a period of inactivity if the device is on battery power. */
 public final class InactivityTimer {
 
     private static final String TAG = InactivityTimer.class.getSimpleName();
@@ -47,9 +45,7 @@ public final class InactivityTimer {
         handler = new Handler();
     }
 
-    /**
-     * Trigger activity, resetting the timer.
-     */
+    /** Trigger activity, resetting the timer. */
     public void activity() {
         cancelCallback();
         if (onBattery) {
@@ -57,17 +53,13 @@ public final class InactivityTimer {
         }
     }
 
-    /**
-     * Start the activity timer.
-     */
+    /** Start the activity timer. */
     public void start() {
         registerReceiver();
         activity();
     }
 
-    /**
-     * Cancel the activity timer.
-     */
+    /** Cancel the activity timer. */
     public void cancel() {
         cancelCallback();
         unregisterReceiver();
@@ -82,7 +74,8 @@ public final class InactivityTimer {
 
     private void registerReceiver() {
         if (!registered) {
-            context.registerReceiver(powerStatusReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+            context.registerReceiver(
+                    powerStatusReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
             registered = true;
         }
     }
@@ -106,14 +99,16 @@ public final class InactivityTimer {
         public void onReceive(Context context, Intent intent) {
             if (Intent.ACTION_BATTERY_CHANGED.equals(intent.getAction())) {
                 // 0 indicates that we're on battery
-                final boolean onBatteryNow = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1) <= 0;
+                final boolean onBatteryNow =
+                        intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1) <= 0;
                 // post on handler to run in main thread
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        onBattery(onBatteryNow);
-                    }
-                });
+                handler.post(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                onBattery(onBatteryNow);
+                            }
+                        });
             }
         }
     }

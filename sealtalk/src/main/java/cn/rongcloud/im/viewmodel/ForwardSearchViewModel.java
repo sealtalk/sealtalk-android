@@ -2,7 +2,6 @@ package cn.rongcloud.im.viewmodel;
 
 import android.app.Application;
 import android.text.TextUtils;
-
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.AndroidViewModel;
@@ -11,12 +10,6 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.db.model.FriendShipInfo;
 import cn.rongcloud.im.db.model.GroupEntity;
@@ -30,6 +23,10 @@ import cn.rongcloud.im.ui.adapter.models.SearchModel;
 import cn.rongcloud.im.utils.SearchUtils;
 import cn.rongcloud.im.utils.SingleSourceMapLiveData;
 import cn.rongcloud.im.utils.log.SLog;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ForwardSearchViewModel extends AndroidViewModel {
     private static final String TAG = "ForwardSearchViewModel";
@@ -58,26 +55,30 @@ public class ForwardSearchViewModel extends AndroidViewModel {
     protected void init(@NonNull Application application) {
         friendTask = new FriendTask(application);
         groupTask = new GroupTask(application);
-        friendSearch = new SingleSourceMapLiveData<List<FriendShipInfo>, List<SearchModel>>(new Function<List<FriendShipInfo>, List<SearchModel>>() {
+        friendSearch =
+                new SingleSourceMapLiveData<List<FriendShipInfo>, List<SearchModel>>(
+                        new Function<List<FriendShipInfo>, List<SearchModel>>() {
 
-            @Override
-            public List<SearchModel> apply(List<FriendShipInfo> input) {
-                return convertFriend(input);
-            }
-        });
+                            @Override
+                            public List<SearchModel> apply(List<FriendShipInfo> input) {
+                                return convertFriend(input);
+                            }
+                        });
 
-        groupSearch = new SingleSourceMapLiveData<List<SearchGroupMember>, List<SearchModel>>(new Function<List<SearchGroupMember>, List<SearchModel>>() {
-            @Override
-            public List<SearchModel> apply(List<SearchGroupMember> input) {
-                return convertGroupSearch(input);
-            }
-        });
+        groupSearch =
+                new SingleSourceMapLiveData<List<SearchGroupMember>, List<SearchModel>>(
+                        new Function<List<SearchGroupMember>, List<SearchModel>>() {
+                            @Override
+                            public List<SearchModel> apply(List<SearchGroupMember> input) {
+                                return convertGroupSearch(input);
+                            }
+                        });
         initSearchAllLiveData();
     }
 
-
     /**
      * 查找搜索
+     *
      * @param match
      */
     public void search(String match) {
@@ -88,27 +89,31 @@ public class ForwardSearchViewModel extends AndroidViewModel {
 
     private void initSearchAllLiveData() {
         searchAll = new MediatorLiveData<List<SearchModel>>();
-        searchAll.addSource(friendSearch, new Observer<List<SearchModel>>() {
-            @Override
-            public void onChanged(List<SearchModel> searchFriendModels) {
-                SLog.i(TAG, "searchAll friendSearch size: " + searchFriendModels.size());
-                List<SearchModel> samples = new ArrayList<>();
-                samples.addAll(searchFriendModels);
-                orderData(samples);
-                searchAll.setValue(resultAll);
-            }
-        });
+        searchAll.addSource(
+                friendSearch,
+                new Observer<List<SearchModel>>() {
+                    @Override
+                    public void onChanged(List<SearchModel> searchFriendModels) {
+                        SLog.i(TAG, "searchAll friendSearch size: " + searchFriendModels.size());
+                        List<SearchModel> samples = new ArrayList<>();
+                        samples.addAll(searchFriendModels);
+                        orderData(samples);
+                        searchAll.setValue(resultAll);
+                    }
+                });
 
-        searchAll.addSource(groupSearch, new Observer<List<SearchModel>>() {
-            @Override
-            public void onChanged(List<SearchModel> searchGroupModels) {
-                SLog.i(TAG, "searchAll groupSearch size: " + searchGroupModels.size());
-                List<SearchModel> samples = new ArrayList<>();
-                samples.addAll(searchGroupModels);
-                orderData(samples);
-                searchAll.setValue(resultAll);
-            }
-        });
+        searchAll.addSource(
+                groupSearch,
+                new Observer<List<SearchModel>>() {
+                    @Override
+                    public void onChanged(List<SearchModel> searchGroupModels) {
+                        SLog.i(TAG, "searchAll groupSearch size: " + searchGroupModels.size());
+                        List<SearchModel> samples = new ArrayList<>();
+                        samples.addAll(searchGroupModels);
+                        orderData(samples);
+                        searchAll.setValue(resultAll);
+                    }
+                });
     }
 
     /**
@@ -117,10 +122,10 @@ public class ForwardSearchViewModel extends AndroidViewModel {
      * @param models
      */
     private void orderData(List<SearchModel> models) {
-        if (resultAll == null || models.isEmpty())
-            return;
+        if (resultAll == null || models.isEmpty()) return;
         int priorityTarget = models.get(0).getPriority();
-        if (resultAll.isEmpty() || priorityTarget > resultAll.get(resultAll.size() - 1).getPriority()) {
+        if (resultAll.isEmpty()
+                || priorityTarget > resultAll.get(resultAll.size() - 1).getPriority()) {
             resultAll.addAll(models);
             return;
         }
@@ -133,8 +138,6 @@ public class ForwardSearchViewModel extends AndroidViewModel {
             }
         }
     }
-
-
 
     public void searchFriend(String match) {
         SLog.i(TAG, "searchFriend match: " + match);
@@ -175,9 +178,9 @@ public class ForwardSearchViewModel extends AndroidViewModel {
                 }
             }
 
-            searchFriendModel = createFriendGroupModel(info,
-                    nickNameIndex, nickNameIndexEnd,
-                    displayIndex, displayIndexEnd);
+            searchFriendModel =
+                    createFriendGroupModel(
+                            info, nickNameIndex, nickNameIndexEnd, displayIndex, displayIndexEnd);
             output.add(searchFriendModel);
         }
         return output;
@@ -185,7 +188,8 @@ public class ForwardSearchViewModel extends AndroidViewModel {
 
     private List<SearchModel> convertGroupSearch(List<SearchGroupMember> input) {
         List<SearchModel> output = new ArrayList<>();
-        HashMap<GroupEntity, List<SearchGroupModel.GroupMemberMatch>> groupEntityListHashMap = new HashMap<>();
+        HashMap<GroupEntity, List<SearchGroupModel.GroupMemberMatch>> groupEntityListHashMap =
+                new HashMap<>();
         for (SearchGroupMember info : input) {
             int start = -1;
             int end = -1;
@@ -198,15 +202,19 @@ public class ForwardSearchViewModel extends AndroidViewModel {
                 groupEntityListHashMap.put(info.getGroupEntity(), new ArrayList<>());
             }
             if (start != -1) {
-                groupEntityListHashMap.get(info.getGroupEntity()).add(new SearchGroupModel.GroupMemberMatch(info.getNickName(), start, end));
+                groupEntityListHashMap
+                        .get(info.getGroupEntity())
+                        .add(new SearchGroupModel.GroupMemberMatch(info.getNickName(), start, end));
             }
         }
 
         SearchGroupModel searchGroupModel = null;
-        for (Map.Entry<GroupEntity, List<SearchGroupModel.GroupMemberMatch>> entry : groupEntityListHashMap.entrySet()) {
+        for (Map.Entry<GroupEntity, List<SearchGroupModel.GroupMemberMatch>> entry :
+                groupEntityListHashMap.entrySet()) {
             int start = -1;
             int end = -1;
-            SearchUtils.Range range = SearchUtils.rangeOfKeyword(entry.getKey().getName(), groupMatch);
+            SearchUtils.Range range =
+                    SearchUtils.rangeOfKeyword(entry.getKey().getName(), groupMatch);
             if (range != null) {
                 start = range.getStart();
                 end = range.getEnd() + 1;
@@ -221,8 +229,18 @@ public class ForwardSearchViewModel extends AndroidViewModel {
         return searchAll;
     }
 
-    protected SearchGroupModel createSearchGroupModel(GroupEntity entity, int start, int end, List<SearchGroupModel.GroupMemberMatch> matchs) {
-        SearchGroupModel searchGroupModel = new SearchGroupModel(entity, R.layout.serach_fragment_forward_recycler_group_item, start, end, matchs);
+    protected SearchGroupModel createSearchGroupModel(
+            GroupEntity entity,
+            int start,
+            int end,
+            List<SearchGroupModel.GroupMemberMatch> matchs) {
+        SearchGroupModel searchGroupModel =
+                new SearchGroupModel(
+                        entity,
+                        R.layout.serach_fragment_forward_recycler_group_item,
+                        start,
+                        end,
+                        matchs);
         searchGroupModel.setId(entity.getId());
         if (isSelect) {
             searchGroupModel.setCheckType(CheckType.UNCHECKED);
@@ -230,17 +248,26 @@ public class ForwardSearchViewModel extends AndroidViewModel {
         return searchGroupModel;
     }
 
-    protected SearchFriendModel createFriendGroupModel(FriendShipInfo info, int nickNameIndex, int nickNameIndexEnd, int displayIndex, int displayIndexEnd) {
-        SearchFriendModel searchFriendModel = new SearchFriendModel(info, R.layout.serach_fragment_forward_recycler_friend_item,
-                nickNameIndex, nickNameIndexEnd,
-                displayIndex, displayIndexEnd);
+    protected SearchFriendModel createFriendGroupModel(
+            FriendShipInfo info,
+            int nickNameIndex,
+            int nickNameIndexEnd,
+            int displayIndex,
+            int displayIndexEnd) {
+        SearchFriendModel searchFriendModel =
+                new SearchFriendModel(
+                        info,
+                        R.layout.serach_fragment_forward_recycler_friend_item,
+                        nickNameIndex,
+                        nickNameIndexEnd,
+                        displayIndex,
+                        displayIndexEnd);
         searchFriendModel.setId(info.getUser().getId());
         if (isSelect) {
             searchFriendModel.setCheckType(CheckType.UNCHECKED);
         }
         return searchFriendModel;
     }
-
 
     public static class Factory extends ViewModelProvider.NewInstanceFactory {
         private boolean isSelect;
@@ -255,7 +282,9 @@ public class ForwardSearchViewModel extends AndroidViewModel {
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
             try {
-                return modelClass.getConstructor(boolean.class, Application.class).newInstance(isSelect, application);
+                return modelClass
+                        .getConstructor(boolean.class, Application.class)
+                        .newInstance(isSelect, application);
             } catch (Exception e) {
                 throw new RuntimeException("Cannot create an instance of " + modelClass, e);
             }

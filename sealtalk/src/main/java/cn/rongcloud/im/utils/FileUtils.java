@@ -2,13 +2,11 @@ package cn.rongcloud.im.utils;
 
 import android.graphics.Bitmap;
 import android.os.Environment;
-
-import java.io.File;
-import java.io.FileOutputStream;
-
 import cn.rongcloud.im.SealApp;
 import cn.rongcloud.im.common.LogTag;
 import cn.rongcloud.im.utils.log.SLog;
+import java.io.File;
+import java.io.FileOutputStream;
 
 public class FileUtils {
     public static String saveBitmapToFile(Bitmap bitmap, File toFile) {
@@ -28,7 +26,8 @@ public class FileUtils {
     }
 
     public static String saveBitmapToPublicPictures(Bitmap bitmap, String fileName) {
-        File saveFileDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File saveFileDirectory =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         if (!saveFileDirectory.exists()) {
             saveFileDirectory.mkdirs();
         }
@@ -39,7 +38,7 @@ public class FileUtils {
 
     public static String saveBitmapToCache(Bitmap bitmap, String fileName) {
         File saveFileDirectory = SealApp.getApplication().getExternalCacheDir();
-        if(saveFileDirectory == null){
+        if (saveFileDirectory == null) {
             saveFileDirectory = SealApp.getApplication().getCacheDir();
         }
         if (!saveFileDirectory.exists()) {

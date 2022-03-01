@@ -4,13 +4,10 @@ import android.media.MediaCodec;
 import android.media.MediaExtractor;
 import android.os.AsyncTask;
 import androidx.annotation.NonNull;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-/**
- * 解码 amr 格式音频文件的异步任务
- */
+/** 解码 amr 格式音频文件的异步任务 */
 public class DecodeAmrTask extends AsyncTask<String, Void, byte[]> {
 
     private MediaExtractor extractor = new MediaExtractor();
@@ -56,15 +53,20 @@ public class DecodeAmrTask extends AsyncTask<String, Void, byte[]> {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
             while (!isCancelled()) {
-                boolean isEos = ((extractor.getSampleFlags() & MediaCodec
-                        .BUFFER_FLAG_END_OF_STREAM) == MediaCodec.BUFFER_FLAG_END_OF_STREAM);
+                boolean isEos =
+                        ((extractor.getSampleFlags() & MediaCodec.BUFFER_FLAG_END_OF_STREAM)
+                                == MediaCodec.BUFFER_FLAG_END_OF_STREAM);
 
                 // BEGIN_INCLUDE(write_sample)
                 if (!isEos) {
                     // Try to submit the sample to the codec and if successful advance the
                     // extractor to the next available sample to read.
-                    boolean result = codecWrapper.writeSample(extractor, false,
-                            extractor.getSampleTime(), extractor.getSampleFlags());
+                    boolean result =
+                            codecWrapper.writeSample(
+                                    extractor,
+                                    false,
+                                    extractor.getSampleTime(),
+                                    extractor.getSampleFlags());
 
                     if (result) {
                         // Advancing the extractor is a blocking operation and it MUST be
@@ -121,5 +123,4 @@ public class DecodeAmrTask extends AsyncTask<String, Void, byte[]> {
 
         callback.onCallback(null);
     }
-
 }

@@ -22,12 +22,12 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Handler;
-
 import cn.rongcloud.im.utils.qrcode.barcodescanner.camera.CameraManager;
 import cn.rongcloud.im.utils.qrcode.barcodescanner.camera.CameraSettings;
 
 /**
- * Detects ambient light and switches on the front light when very dark, and off again when sufficiently light.
+ * Detects ambient light and switches on the front light when very dark, and off again when
+ * sufficiently light.
  *
  * @author Sean Owen
  * @author Nikolaus Huber
@@ -44,7 +44,8 @@ public final class AmbientLightManager implements SensorEventListener {
 
     private Handler handler;
 
-    public AmbientLightManager(Context context, CameraManager cameraManager, CameraSettings settings) {
+    public AmbientLightManager(
+            Context context, CameraManager cameraManager, CameraSettings settings) {
         this.context = context;
         this.cameraManager = cameraManager;
         this.cameraSettings = settings;
@@ -54,29 +55,33 @@ public final class AmbientLightManager implements SensorEventListener {
 
     public void start() {
         if (cameraSettings.isAutoTorchEnabled()) {
-            SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+            SensorManager sensorManager =
+                    (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
             lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
             if (lightSensor != null) {
-                sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
+                sensorManager.registerListener(
+                        this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
             }
         }
     }
 
     public void stop() {
         if (lightSensor != null) {
-            SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+            SensorManager sensorManager =
+                    (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
             sensorManager.unregisterListener(this);
             lightSensor = null;
         }
     }
 
     private void setTorch(final boolean on) {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                cameraManager.setTorch(on);
-            }
-        });
+        handler.post(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        cameraManager.setTorch(on);
+                    }
+                });
     }
 
     @Override

@@ -7,21 +7,25 @@ public class UserCacheInfo extends UserInfo {
     private String loginToken;
     private String password;
 
-    public UserCacheInfo(){
-
-    }
+    public UserCacheInfo() {}
 
     public UserCacheInfo(String id) {
         setId(id);
     }
 
-    public UserCacheInfo(String id, String loginToken, String phoneNumber, String password, String region, CountryInfo info) {
-            setId(id);
-            setPhoneNumber(phoneNumber);
-            setLoginToken(loginToken);
-            setCountryInfo(info);
-            setRegion(region);
-            setPassword(password);
+    public UserCacheInfo(
+            String id,
+            String loginToken,
+            String phoneNumber,
+            String password,
+            String region,
+            CountryInfo info) {
+        setId(id);
+        setPhoneNumber(phoneNumber);
+        setLoginToken(loginToken);
+        setCountryInfo(info);
+        setRegion(region);
+        setPassword(password);
     }
 
     public UserCacheInfo(String id, String token, String phone, String region, CountryInfo info) {
@@ -80,7 +84,6 @@ public class UserCacheInfo extends UserInfo {
         this.loginToken = loginToken;
     }
 
-
     public String getPassword() {
         return password;
     }
@@ -88,6 +91,4 @@ public class UserCacheInfo extends UserInfo {
     public void setPassword(String password) {
         this.password = password;
     }
-
-
 }

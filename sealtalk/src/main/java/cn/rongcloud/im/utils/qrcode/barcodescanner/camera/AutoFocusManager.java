@@ -20,13 +20,12 @@ import android.hardware.Camera;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * This should be created and used from the camera thread only. The thread message queue is used
- * to run all operations on the same thread.
+ * This should be created and used from the camera thread only. The thread message queue is used to
+ * run all operations on the same thread.
  */
 public final class AutoFocusManager {
 
@@ -50,48 +49,53 @@ public final class AutoFocusManager {
         FOCUS_MODES_CALLING_AF.add(Camera.Parameters.FOCUS_MODE_MACRO);
     }
 
-    private final Handler.Callback focusHandlerCallback = new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message msg) {
-            if (msg.what == MESSAGE_FOCUS) {
-                focus();
-                return true;
-            }
-            return false;
-        }
-    };
-
-    private final Camera.AutoFocusCallback autoFocusCallback = new Camera.AutoFocusCallback() {
-        @Override
-        public void onAutoFocus(boolean success, Camera theCamera) {
-            handler.post(new Runnable() {
+    private final Handler.Callback focusHandlerCallback =
+            new Handler.Callback() {
                 @Override
-                public void run() {
-                    focusing = false;
-                    autoFocusAgainLater();
+                public boolean handleMessage(Message msg) {
+                    if (msg.what == MESSAGE_FOCUS) {
+                        focus();
+                        return true;
+                    }
+                    return false;
                 }
-            });
-        }
-    };
+            };
+
+    private final Camera.AutoFocusCallback autoFocusCallback =
+            new Camera.AutoFocusCallback() {
+                @Override
+                public void onAutoFocus(boolean success, Camera theCamera) {
+                    handler.post(
+                            new Runnable() {
+                                @Override
+                                public void run() {
+                                    focusing = false;
+                                    autoFocusAgainLater();
+                                }
+                            });
+                }
+            };
 
     public AutoFocusManager(Camera camera, CameraSettings settings) {
         this.handler = new Handler(focusHandlerCallback);
         this.camera = camera;
         String currentFocusMode = camera.getParameters().getFocusMode();
-        useAutoFocus = settings.isAutoFocusEnabled() && FOCUS_MODES_CALLING_AF.contains(currentFocusMode);
-        Log.i(TAG, "Current focus mode '" + currentFocusMode + "'; use auto focus? " + useAutoFocus);
+        useAutoFocus =
+                settings.isAutoFocusEnabled() && FOCUS_MODES_CALLING_AF.contains(currentFocusMode);
+        Log.i(
+                TAG,
+                "Current focus mode '" + currentFocusMode + "'; use auto focus? " + useAutoFocus);
         start();
     }
 
     private synchronized void autoFocusAgainLater() {
         if (!stopped && !handler.hasMessages(MESSAGE_FOCUS)) {
-            handler.sendMessageDelayed(handler.obtainMessage(MESSAGE_FOCUS), AUTO_FOCUS_INTERVAL_MS);
+            handler.sendMessageDelayed(
+                    handler.obtainMessage(MESSAGE_FOCUS), AUTO_FOCUS_INTERVAL_MS);
         }
     }
 
-    /**
-     * Start auto-focus. The first focus will happen now, then repeated every two seconds.
-     */
+    /** Start auto-focus. The first focus will happen now, then repeated every two seconds. */
     public void start() {
         stopped = false;
         focus();
@@ -117,9 +121,7 @@ public final class AutoFocusManager {
         handler.removeMessages(MESSAGE_FOCUS);
     }
 
-    /**
-     * Stop auto-focus.
-     */
+    /** Stop auto-focus. */
     public void stop() {
         stopped = true;
         focusing = false;

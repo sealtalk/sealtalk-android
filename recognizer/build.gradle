@@ -6,8 +6,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 20220120
-        versionName "5.1.8"
+        versionCode 20220301
+        versionName "5.2.0"
     }
     buildTypes {
         release {
@@ -33,7 +33,7 @@ android {
 
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
-    api 'cn.rongcloud.sdk:im_kit:5.1.8'
+    api 'cn.rongcloud.sdk:im_kit:5.2.0'
     api 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation files('libs/Msc.jar')
 }

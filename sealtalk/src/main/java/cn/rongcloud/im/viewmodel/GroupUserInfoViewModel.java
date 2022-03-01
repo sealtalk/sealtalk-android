@@ -1,21 +1,20 @@
 package cn.rongcloud.im.viewmodel;
 
 import android.app.Application;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-
-import java.util.ArrayList;
-
 import cn.rongcloud.im.db.model.GroupMemberInfoDes;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.task.GroupTask;
 import cn.rongcloud.im.utils.SingleSourceLiveData;
+import java.util.ArrayList;
 
 public class GroupUserInfoViewModel extends AndroidViewModel {
-    private SingleSourceLiveData<Resource<GroupMemberInfoDes>> groupMemberInfoDes = new SingleSourceLiveData<>();
-    private SingleSourceLiveData<Resource<Void>> setGroupMemberInfoDesResult = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<GroupMemberInfoDes>> groupMemberInfoDes =
+            new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<Void>> setGroupMemberInfoDesResult =
+            new SingleSourceLiveData<>();
     private GroupTask groupTask;
 
     public GroupUserInfoViewModel(@NonNull Application application) {
@@ -49,15 +48,28 @@ public class GroupUserInfoViewModel extends AndroidViewModel {
      * @param Alipay
      * @param memberDesc
      */
-    public void setMemberInfoDes(String groupId, String memberId, String groupNickname
-            , String region, String phone, String WeChat, String Alipay, ArrayList<String> memberDesc) {
-        setGroupMemberInfoDesResult.setSource(groupTask.setGroupMemberInfoDes(groupId, memberId, groupNickname
-                , region, phone, WeChat, Alipay, memberDesc));
+    public void setMemberInfoDes(
+            String groupId,
+            String memberId,
+            String groupNickname,
+            String region,
+            String phone,
+            String WeChat,
+            String Alipay,
+            ArrayList<String> memberDesc) {
+        setGroupMemberInfoDesResult.setSource(
+                groupTask.setGroupMemberInfoDes(
+                        groupId,
+                        memberId,
+                        groupNickname,
+                        region,
+                        phone,
+                        WeChat,
+                        Alipay,
+                        memberDesc));
     }
 
     public LiveData<Resource<Void>> setMemberInfoDesResult() {
         return setGroupMemberInfoDesResult;
     }
-
 }
-

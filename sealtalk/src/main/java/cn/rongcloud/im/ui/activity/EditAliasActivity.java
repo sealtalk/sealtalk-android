@@ -6,22 +6,18 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.ui.view.SealTitleBar;
 import cn.rongcloud.im.utils.ToastUtils;
-import cn.rongcloud.im.viewmodel.EditAliasViewModel;
 import cn.rongcloud.im.utils.log.SLog;
+import cn.rongcloud.im.viewmodel.EditAliasViewModel;
 import io.rong.imkit.conversation.extension.component.emoticon.AndroidEmoji;
 
-/**
- * 设置备注名界面
- */
+/** 设置备注名界面 */
 public class EditAliasActivity extends TitleBaseActivity {
     private final String TAG = "EditAliasActivity";
 
@@ -63,43 +59,49 @@ public class EditAliasActivity extends TitleBaseActivity {
 
     private void initView() {
         inputAliasEt = findViewById(R.id.profile_et_input_alias);
-        inputAliasEt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+        inputAliasEt.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(
+                            CharSequence s, int start, int count, int after) {}
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s != null) {
-                    int start = inputAliasEt.getSelectionStart();
-                    int end = inputAliasEt.getSelectionEnd();
-                    inputAliasEt.removeTextChangedListener(this);
-                    inputAliasEt.setText(AndroidEmoji.ensure(s.toString()));
-                    inputAliasEt.addTextChangedListener(this);
-                    inputAliasEt.setSelection(start, end);
-                }
-            }
-        });
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        if (s != null) {
+                            int start = inputAliasEt.getSelectionStart();
+                            int end = inputAliasEt.getSelectionEnd();
+                            inputAliasEt.removeTextChangedListener(this);
+                            inputAliasEt.setText(AndroidEmoji.ensure(s.toString()));
+                            inputAliasEt.addTextChangedListener(this);
+                            inputAliasEt.setSelection(start, end);
+                        }
+                    }
+                });
 
         // 点击保存时设置备注名
-        titleConfirmTv.setOnClickListener(v -> editAliasViewModel.setAlias(inputAliasEt.getText().toString()));
+        titleConfirmTv.setOnClickListener(
+                v -> editAliasViewModel.setAlias(inputAliasEt.getText().toString()));
     }
 
     private void initViewModel() {
-        editAliasViewModel = ViewModelProviders.of(this
-                , new EditAliasViewModel.Factory(getApplication(), targetId))
-                .get(EditAliasViewModel.class);
+        editAliasViewModel =
+                ViewModelProviders.of(
+                                this, new EditAliasViewModel.Factory(getApplication(), targetId))
+                        .get(EditAliasViewModel.class);
 
-        editAliasViewModel.getSetAliasResult().observe(this, resource -> {
-            if (resource.status == Status.SUCCESS) {
-                finish();
-            } else if (resource.status == Status.ERROR) {
-                ToastUtils.showToast(resource.message);
-            }
-        });
+        editAliasViewModel
+                .getSetAliasResult()
+                .observe(
+                        this,
+                        resource -> {
+                            if (resource.status == Status.SUCCESS) {
+                                finish();
+                            } else if (resource.status == Status.ERROR) {
+                                ToastUtils.showToast(resource.message);
+                            }
+                        });
     }
 }

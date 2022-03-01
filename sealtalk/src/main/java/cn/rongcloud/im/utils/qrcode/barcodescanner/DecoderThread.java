@@ -6,20 +6,15 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
 import android.util.Log;
-
-import com.google.zxing.LuminanceSource;
-import com.google.zxing.Result;
-import com.google.zxing.ResultPoint;
-
-import java.util.List;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.utils.qrcode.barcodescanner.camera.CameraInstance;
 import cn.rongcloud.im.utils.qrcode.barcodescanner.camera.PreviewCallback;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.Result;
+import com.google.zxing.ResultPoint;
+import java.util.List;
 
-/**
- *
- */
+/** */
 public class DecoderThread {
     private static final String TAG = DecoderThread.class.getSimpleName();
 
@@ -32,18 +27,19 @@ public class DecoderThread {
     private boolean running = false;
     private final Object LOCK = new Object();
 
-    private final Handler.Callback callback = new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message message) {
-            if (message.what == R.id.zxing_decode) {
-                decode((SourceData) message.obj);
-            } else if(message.what == R.id.zxing_preview_failed) {
-                // Error already logged. Try again.
-                requestNextPreview();
-            }
-            return true;
-        }
-    };
+    private final Handler.Callback callback =
+            new Handler.Callback() {
+                @Override
+                public boolean handleMessage(Message message) {
+                    if (message.what == R.id.zxing_decode) {
+                        decode((SourceData) message.obj);
+                    } else if (message.what == R.id.zxing_preview_failed) {
+                        // Error already logged. Try again.
+                        requestNextPreview();
+                    }
+                    return true;
+                }
+            };
 
     public DecoderThread(CameraInstance cameraInstance, Decoder decoder, Handler resultHandler) {
         Util.validateMainThread();
@@ -72,7 +68,7 @@ public class DecoderThread {
     /**
      * Start decoding.
      *
-     * This must be called from the UI thread.
+     * <p>This must be called from the UI thread.
      */
     public void start() {
         Util.validateMainThread();
@@ -87,7 +83,7 @@ public class DecoderThread {
     /**
      * Stop decoding.
      *
-     * This must be called from the UI thread.
+     * <p>This must be called from the UI thread.
      */
     public void stop() {
         Util.validateMainThread();
@@ -99,31 +95,33 @@ public class DecoderThread {
         }
     }
 
-    private final PreviewCallback previewCallback = new PreviewCallback() {
-        @Override
-        public void onPreview(SourceData sourceData) {
-            // Only post if running, to prevent a warning like this:
-            //   java.lang.RuntimeException: Handler (android.os.Handler) sending message to a Handler on a dead thread
+    private final PreviewCallback previewCallback =
+            new PreviewCallback() {
+                @Override
+                public void onPreview(SourceData sourceData) {
+                    // Only post if running, to prevent a warning like this:
+                    //   java.lang.RuntimeException: Handler (android.os.Handler) sending message to
+                    // a Handler on a dead thread
 
-            // synchronize to handle cases where this is called concurrently with stop()
-            synchronized (LOCK) {
-                if (running) {
-                    // Post to our thread.
-                    handler.obtainMessage(R.id.zxing_decode, sourceData).sendToTarget();
+                    // synchronize to handle cases where this is called concurrently with stop()
+                    synchronized (LOCK) {
+                        if (running) {
+                            // Post to our thread.
+                            handler.obtainMessage(R.id.zxing_decode, sourceData).sendToTarget();
+                        }
+                    }
                 }
-            }
-        }
 
-        @Override
-        public void onPreviewError(Exception e) {
-            synchronized (LOCK) {
-                if (running) {
-                    // Post to our thread.
-                    handler.obtainMessage(R.id.zxing_preview_failed).sendToTarget();
+                @Override
+                public void onPreviewError(Exception e) {
+                    synchronized (LOCK) {
+                        if (running) {
+                            // Post to our thread.
+                            handler.obtainMessage(R.id.zxing_preview_failed).sendToTarget();
+                        }
+                    }
                 }
-            }
-        }
-    };
+            };
 
     private void requestNextPreview() {
         if (cameraInstance.isOpen()) {
@@ -145,7 +143,7 @@ public class DecoderThread {
         sourceData.setCropRect(cropRect);
         LuminanceSource source = createSource(sourceData);
 
-        if(source != null) {
+        if (source != null) {
             rawResult = decoder.decode(source);
         }
 
@@ -155,7 +153,8 @@ public class DecoderThread {
             Log.d(TAG, "Found barcode in " + (end - start) + " ms");
             if (resultHandler != null) {
                 BarcodeResult barcodeResult = new BarcodeResult(rawResult, sourceData);
-                Message message = Message.obtain(resultHandler, R.id.zxing_decode_succeeded, barcodeResult);
+                Message message =
+                        Message.obtain(resultHandler, R.id.zxing_decode_succeeded, barcodeResult);
                 Bundle bundle = new Bundle();
                 message.setData(bundle);
                 message.sendToTarget();
@@ -168,7 +167,8 @@ public class DecoderThread {
         }
         if (resultHandler != null) {
             List<ResultPoint> resultPoints = decoder.getPossibleResultPoints();
-            Message message = Message.obtain(resultHandler, R.id.zxing_possible_result_points, resultPoints);
+            Message message =
+                    Message.obtain(resultHandler, R.id.zxing_possible_result_points, resultPoints);
             message.sendToTarget();
         }
         requestNextPreview();

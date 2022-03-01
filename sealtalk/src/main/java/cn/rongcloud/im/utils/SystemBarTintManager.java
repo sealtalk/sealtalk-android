@@ -1,19 +1,18 @@
-package cn.rongcloud.im.utils;/*
- * Copyright (C) 2013 readyState Software Ltd
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
+package cn.rongcloud.im.utils; /*
+                                * Copyright (C) 2013 readyState Software Ltd
+                                *
+                                * Licensed under the Apache License, Version 2.0 (the "License");
+                                * you may not use this file except in compliance with the License.
+                                * You may obtain a copy of the License at
+                                *
+                                *      http://www.apache.org/licenses/LICENSE-2.0
+                                *
+                                * Unless required by applicable law or agreed to in writing, software
+                                * distributed under the License is distributed on an "AS IS" BASIS,
+                                * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+                                * See the License for the specific language governing permissions and
+                                * limitations under the License.
+                                */
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -33,25 +32,24 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout.LayoutParams;
-
 import java.lang.reflect.Method;
 
 /**
- * Class to manage status and navigation bar tint effects when using KitKat
- * translucent system UI modes.
+ * Class to manage status and navigation bar tint effects when using KitKat translucent system UI
+ * modes.
  */
 public class SystemBarTintManager {
 
-    /**
-     * The default system bar tint color value.
-     */
+    /** The default system bar tint color value. */
     public static final int DEFAULT_TINT_COLOR = 0x99000000;
+
     private static String sNavBarOverride;
 
     static {
         // Android allows a system property to override the presence of the navigation bar.
         // Used by the emulator.
-        // See https://github.com/android/platform_frameworks_base/blob/master/policy/src/com/android/internal/policy/impl/PhoneWindowManager.java#L1076
+        // See
+        // https://github.com/android/platform_frameworks_base/blob/master/policy/src/com/android/internal/policy/impl/PhoneWindowManager.java#L1076
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             try {
                 Class c = Class.forName("android.os.SystemProperties");
@@ -73,9 +71,8 @@ public class SystemBarTintManager {
     private View mNavBarTintView;
 
     /**
-     * Constructor. Call this in the host activity onCreate method after its
-     * content view has been set. You should always create new instances when
-     * the host activity is recreated.
+     * Constructor. Call this in the host activity onCreate method after its content view has been
+     * set. You should always create new instances when the host activity is recreated.
      *
      * @param activity The host activity.
      */
@@ -88,8 +85,9 @@ public class SystemBarTintManager {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // check theme attrs
-            int[] attrs = {android.R.attr.windowTranslucentStatus,
-                    android.R.attr.windowTranslucentNavigation};
+            int[] attrs = {
+                android.R.attr.windowTranslucentStatus, android.R.attr.windowTranslucentNavigation
+            };
             TypedArray a = activity.obtainStyledAttributes(attrs);
             try {
                 mStatusBarAvailable = a.getBoolean(0, false);
@@ -122,15 +120,14 @@ public class SystemBarTintManager {
         if (mNavBarAvailable) {
             setupNavBarView(activity, decorViewGroup);
         }
-
     }
 
     /**
      * Enable tinting of the system navigation bar.
-     * <p>
-     * If the platform does not have soft navigation keys, is running Jelly Bean
-     * or earlier, or translucent system UI modes have not been enabled in either
-     * the theme or via window flags, then this method does nothing.
+     *
+     * <p>If the platform does not have soft navigation keys, is running Jelly Bean or earlier, or
+     * translucent system UI modes have not been enabled in either the theme or via window flags,
+     * then this method does nothing.
      *
      * @param enabled True to enable tinting, false to disable it (default).
      */
@@ -293,10 +290,9 @@ public class SystemBarTintManager {
 
     /**
      * Enable tinting of the system status bar.
-     * <p>
-     * If the platform is running Jelly Bean or earlier, or translucent system
-     * UI modes have not been enabled in either the theme or via window flags,
-     * then this method does nothing.
+     *
+     * <p>If the platform is running Jelly Bean or earlier, or translucent system UI modes have not
+     * been enabled in either the theme or via window flags, then this method does nothing.
      *
      * @param enabled True to enable tinting, false to disable it (default).
      */
@@ -318,7 +314,8 @@ public class SystemBarTintManager {
 
     private void setupStatusBarView(Context context, ViewGroup decorViewGroup) {
         mStatusBarTintView = new View(context);
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, mConfig.getStatusBarHeight());
+        LayoutParams params =
+                new LayoutParams(LayoutParams.MATCH_PARENT, mConfig.getStatusBarHeight());
         params.gravity = Gravity.TOP;
         if (mNavBarAvailable && !mConfig.isNavigationAtBottom()) {
             params.rightMargin = mConfig.getNavigationBarWidth();
@@ -346,14 +343,15 @@ public class SystemBarTintManager {
     }
 
     /**
-     * Class which describes system bar sizing and other characteristics for the current
-     * device configuration.
+     * Class which describes system bar sizing and other characteristics for the current device
+     * configuration.
      */
     public static class SystemBarConfig {
 
         private static final String STATUS_BAR_HEIGHT_RES_NAME = "status_bar_height";
         private static final String NAV_BAR_HEIGHT_RES_NAME = "navigation_bar_height";
-        private static final String NAV_BAR_HEIGHT_LANDSCAPE_RES_NAME = "navigation_bar_height_landscape";
+        private static final String NAV_BAR_HEIGHT_LANDSCAPE_RES_NAME =
+                "navigation_bar_height_landscape";
         private static final String NAV_BAR_WIDTH_RES_NAME = "navigation_bar_width";
         private static final String SHOW_NAV_BAR_RES_NAME = "config_showNavigationBar";
 
@@ -367,9 +365,11 @@ public class SystemBarTintManager {
         private final boolean mInPortrait;
         private final float mSmallestWidthDp;
 
-        private SystemBarConfig(Activity activity, boolean translucentStatusBar, boolean traslucentNavBar) {
+        private SystemBarConfig(
+                Activity activity, boolean translucentStatusBar, boolean traslucentNavBar) {
             Resources res = activity.getResources();
-            mInPortrait = (res.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT);
+            mInPortrait =
+                    (res.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT);
             mSmallestWidthDp = getSmallestWidthDp(activity);
             mStatusBarHeight = getInternalDimensionSize(res, STATUS_BAR_HEIGHT_RES_NAME);
             mActionBarHeight = getActionBarHeight(activity);
@@ -386,7 +386,9 @@ public class SystemBarTintManager {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                 TypedValue tv = new TypedValue();
                 context.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true);
-                result = TypedValue.complexToDimensionPixelSize(tv.data, context.getResources().getDisplayMetrics());
+                result =
+                        TypedValue.complexToDimensionPixelSize(
+                                tv.data, context.getResources().getDisplayMetrics());
             }
             return result;
         }
@@ -463,9 +465,9 @@ public class SystemBarTintManager {
         }
 
         /**
-         * Should a navigation bar appear at the bottom of the screen in the current
-         * device configuration? A navigation bar may appear on the right side of
-         * the screen in certain configurations.
+         * Should a navigation bar appear at the bottom of the screen in the current device
+         * configuration? A navigation bar may appear on the right side of the screen in certain
+         * configurations.
          *
          * @return True if navigation should appear at the bottom of the screen, False otherwise.
          */
@@ -503,8 +505,8 @@ public class SystemBarTintManager {
         /**
          * Get the height of the system navigation bar.
          *
-         * @return The height of the navigation bar (in pixels). If the device does not have
-         * soft navigation keys, this will always return 0.
+         * @return The height of the navigation bar (in pixels). If the device does not have soft
+         *     navigation keys, this will always return 0.
          */
         public int getNavigationBarHeight() {
             return mNavigationBarHeight;
@@ -513,8 +515,8 @@ public class SystemBarTintManager {
         /**
          * Get the width of the system navigation bar when it is placed vertically on the screen.
          *
-         * @return The width of the navigation bar (in pixels). If the device does not have
-         * soft navigation keys, this will always return 0.
+         * @return The width of the navigation bar (in pixels). If the device does not have soft
+         *     navigation keys, this will always return 0.
          */
         public int getNavigationBarWidth() {
             return mNavigationBarWidth;
@@ -527,7 +529,8 @@ public class SystemBarTintManager {
          * @return The layout inset (in pixels).
          */
         public int getPixelInsetTop(boolean withActionBar) {
-            return (mTranslucentStatusBar ? mStatusBarHeight : 0) + (withActionBar ? mActionBarHeight : 0);
+            return (mTranslucentStatusBar ? mStatusBarHeight : 0)
+                    + (withActionBar ? mActionBarHeight : 0);
         }
 
         /**
@@ -555,7 +558,5 @@ public class SystemBarTintManager {
                 return 0;
             }
         }
-
     }
-
 }

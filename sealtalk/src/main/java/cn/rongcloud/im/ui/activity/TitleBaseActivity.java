@@ -6,9 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ViewFlipper;
-
 import androidx.annotation.Nullable;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.BaseActivity;
 import cn.rongcloud.im.ui.view.SealTitleBar;
@@ -24,18 +22,23 @@ public abstract class TitleBaseActivity extends BaseActivity {
         titleBar = findViewById(R.id.title_bar);
         contentContainer = findViewById(R.id.layout_container);
         setTitleBarType(SealTitleBar.Type.NORMAL);
-        getTitleBar().setOnBtnLeftClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        getTitleBar()
+                .setOnBtnLeftClickListener(
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                finish();
+                            }
+                        });
     }
 
     @Override
     public void setContentView(View view) {
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
+        LinearLayout.LayoutParams lp =
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        1);
         contentContainer.addView(view, lp);
     }
 

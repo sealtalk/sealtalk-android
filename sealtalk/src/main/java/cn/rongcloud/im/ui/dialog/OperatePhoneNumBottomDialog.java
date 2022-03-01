@@ -10,13 +10,10 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.utils.ToastUtils;
-
 
 public class OperatePhoneNumBottomDialog extends BaseBottomDialog implements View.OnClickListener {
 
@@ -28,14 +25,16 @@ public class OperatePhoneNumBottomDialog extends BaseBottomDialog implements Vie
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(
+            @NonNull LayoutInflater inflater,
+            @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_operate_phone_num, null);
         view.findViewById(R.id.btn_take_call).setOnClickListener(this);
         view.findViewById(R.id.btn_copy).setOnClickListener(this);
         view.findViewById(R.id.btn_cancel).setOnClickListener(this);
         return view;
     }
-
 
     @Override
     public void onClick(View v) {
@@ -52,9 +51,7 @@ public class OperatePhoneNumBottomDialog extends BaseBottomDialog implements Vie
         dismiss();
     }
 
-    /**
-     * 拨打电话
-     */
+    /** 拨打电话 */
     private void toCallPhone(String phoneNum) {
         if (!TextUtils.isEmpty(phoneNum)) {
             Uri telUri = Uri.parse("tel:" + phoneNum);
@@ -70,7 +67,8 @@ public class OperatePhoneNumBottomDialog extends BaseBottomDialog implements Vie
      * @param text 文本
      */
     public void copyText(final CharSequence text) {
-        ClipboardManager cm = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipboardManager cm =
+                (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
         cm.setPrimaryClip(ClipData.newPlainText("text", text));
         ToastUtils.showToast(R.string.seal_dialog_operate_phone_num_copy_success);
     }

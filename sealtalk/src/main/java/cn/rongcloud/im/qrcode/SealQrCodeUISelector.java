@@ -2,14 +2,9 @@ package cn.rongcloud.im.qrcode;
 
 import android.content.Context;
 import android.content.Intent;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-
-import java.util.Date;
-import java.util.List;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.ErrorCode;
 import cn.rongcloud.im.common.IntentExtra;
@@ -23,10 +18,9 @@ import cn.rongcloud.im.ui.activity.JoinGroupActivity;
 import cn.rongcloud.im.ui.activity.UserDetailActivity;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
+import java.util.List;
 
-/**
- * QR 二维码界面跳转工具
- */
+/** QR 二维码界面跳转工具 */
 public class SealQrCodeUISelector {
     private Context context;
     private GroupTask groupTask;
@@ -35,7 +29,6 @@ public class SealQrCodeUISelector {
         this.context = context;
         groupTask = new GroupTask(context);
     }
-
 
     /**
      * 根据 QR 二维码中的 uri 进行相应的界面展示
@@ -68,27 +61,35 @@ public class SealQrCodeUISelector {
      */
     private void checkGroupIsExist(String groupId, MutableLiveData<Resource<String>> result) {
         LiveData<Resource<GroupEntity>> groupInfo = groupTask.getGroupInfo(groupId);
-        groupInfo.observeForever(new Observer<Resource<GroupEntity>>() {
-            @Override
-            public void onChanged(Resource<GroupEntity> resource) {
-                if (resource.status != Status.LOADING || resource.data != null) {
-                    groupInfo.removeObserver(this);
-                }
+        groupInfo.observeForever(
+                new Observer<Resource<GroupEntity>>() {
+                    @Override
+                    public void onChanged(Resource<GroupEntity> resource) {
+                        if (resource.status != Status.LOADING || resource.data != null) {
+                            groupInfo.removeObserver(this);
+                        }
 
-                GroupEntity data = resource.data;
+                        GroupEntity data = resource.data;
 
-                if (data != null) {
-                    String groupName = data.getName();
-                    checkIsInGroup(groupId, groupName, result);
-                } else if (resource.status == Status.ERROR) {
-                    if (resource.code == ErrorCode.API_COMMON_ERROR.getCode()) {
-                        result.postValue(Resource.error(ErrorCode.QRCODE_ERROR.getCode(), context.getString(R.string.profile_group_not_exist)));
-                    } else {
-                        result.postValue(Resource.error(ErrorCode.QRCODE_ERROR.getCode(), resource.message));
+                        if (data != null) {
+                            String groupName = data.getName();
+                            checkIsInGroup(groupId, groupName, result);
+                        } else if (resource.status == Status.ERROR) {
+                            if (resource.code == ErrorCode.API_COMMON_ERROR.getCode()) {
+                                result.postValue(
+                                        Resource.error(
+                                                ErrorCode.QRCODE_ERROR.getCode(),
+                                                context.getString(
+                                                        R.string.profile_group_not_exist)));
+                            } else {
+                                result.postValue(
+                                        Resource.error(
+                                                ErrorCode.QRCODE_ERROR.getCode(),
+                                                resource.message));
+                            }
+                        }
                     }
-                }
-            }
-        });
+                });
     }
 
     /**
@@ -97,40 +98,43 @@ public class SealQrCodeUISelector {
      * @param groupId
      * @param groupName
      */
-    private void checkIsInGroup(String groupId, String groupName, MutableLiveData<Resource<String>> result) {
-        LiveData<Resource<List<GroupMember>>> groupMemberList = groupTask.getGroupMemberInfoList(groupId);
+    private void checkIsInGroup(
+            String groupId, String groupName, MutableLiveData<Resource<String>> result) {
+        LiveData<Resource<List<GroupMember>>> groupMemberList =
+                groupTask.getGroupMemberInfoList(groupId);
         String currentUserId = RongIM.getInstance().getCurrentUserId();
 
-        groupMemberList.observeForever(new Observer<Resource<List<GroupMember>>>() {
-            @Override
-            public void onChanged(Resource<List<GroupMember>> resource) {
-                if (resource.status != Status.LOADING) {
-                    groupMemberList.removeObserver(this);
-                }
-                // 获取成员列表
-                if (resource.status == Status.SUCCESS) {
-                    List<GroupMember> groupMemberList = resource.data;
-                    if (groupMemberList != null) {
-                        for (GroupMember groupMember : groupMemberList) {
-                            String userId = groupMember.getUserId();
-                            if (currentUserId.equals(userId)) {
-                                // 群组中包含自己则跳转到群聊天界面
-                                toGroupChat(groupId, groupName, result);
+        groupMemberList.observeForever(
+                new Observer<Resource<List<GroupMember>>>() {
+                    @Override
+                    public void onChanged(Resource<List<GroupMember>> resource) {
+                        if (resource.status != Status.LOADING) {
+                            groupMemberList.removeObserver(this);
+                        }
+                        // 获取成员列表
+                        if (resource.status == Status.SUCCESS) {
+                            List<GroupMember> groupMemberList = resource.data;
+                            if (groupMemberList != null) {
+                                for (GroupMember groupMember : groupMemberList) {
+                                    String userId = groupMember.getUserId();
+                                    if (currentUserId.equals(userId)) {
+                                        // 群组中包含自己则跳转到群聊天界面
+                                        toGroupChat(groupId, groupName, result);
+                                        return;
+                                    }
+                                }
+
+                                // 如果群组成员中没有自己则跳转到加入群组界面
+                                showJoinGroup(groupId, result);
                                 return;
                             }
                         }
 
-                        // 如果群组成员中没有自己则跳转到加入群组界面
-                        showJoinGroup(groupId, result);
-                        return;
+                        if (resource.status == Status.ERROR) {
+                            showJoinGroup(groupId, result);
+                        }
                     }
-                }
-
-                if (resource.status == Status.ERROR) {
-                    showJoinGroup(groupId, result);
-                }
-            }
-        });
+                });
     }
 
     /**
@@ -140,8 +144,11 @@ public class SealQrCodeUISelector {
      * @param groupName
      * @param result
      */
-    private void toGroupChat(String groupId, String groupName, MutableLiveData<Resource<String>> result) {
-        RongIM.getInstance().startConversation(context, Conversation.ConversationType.GROUP, groupId, groupName);
+    private void toGroupChat(
+            String groupId, String groupName, MutableLiveData<Resource<String>> result) {
+        RongIM.getInstance()
+                .startConversation(
+                        context, Conversation.ConversationType.GROUP, groupId, groupName);
         result.postValue(Resource.success(null));
     }
 
@@ -169,10 +176,11 @@ public class SealQrCodeUISelector {
         result.postValue(Resource.success(null));
     }
 
-    /**
-     * 其他二维码时不做处理
-     */
+    /** 其他二维码时不做处理 */
     private void showOther(MutableLiveData<Resource<String>> result) {
-        result.postValue(Resource.error(ErrorCode.QRCODE_ERROR.getCode(), context.getString(R.string.zxing_qr_can_not_recognized)));
+        result.postValue(
+                Resource.error(
+                        ErrorCode.QRCODE_ERROR.getCode(),
+                        context.getString(R.string.zxing_qr_can_not_recognized)));
     }
 }

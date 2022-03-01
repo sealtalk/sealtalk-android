@@ -3,17 +3,11 @@ package cn.rongcloud.im.task;
 import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import cn.rongcloud.im.common.ErrorCode;
 import cn.rongcloud.im.common.ResultCallback;
 import cn.rongcloud.im.db.DBManager;
@@ -50,25 +44,26 @@ import cn.rongcloud.im.utils.RongGenerate;
 import cn.rongcloud.im.utils.SearchUtils;
 import cn.rongcloud.im.utils.log.SLog;
 import io.rong.imlib.model.Conversation;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import okhttp3.RequestBody;
 
-/**
- * 用户相关业务处理
- */
+/** 用户相关业务处理 */
 public class UserTask {
     private FileManager fileManager;
     private UserService userService;
     private Context context;
     private DBManager dbManager;
     private IMManager imManager;
-    //存储当前最新一次登录的用户信息
+    // 存储当前最新一次登录的用户信息
     private UserCache userCache;
     private CountryCache countryCache;
 
-
     public UserTask(Context context) {
         this.context = context.getApplicationContext();
-        userService = HttpClientManager.getInstance(context).getClient().createService(UserService.class);
+        userService =
+                HttpClientManager.getInstance(context).getClient().createService(UserService.class);
         dbManager = DBManager.getInstance(context.getApplicationContext());
         fileManager = new FileManager(context.getApplicationContext());
         userCache = new UserCache(context.getApplicationContext());
@@ -79,53 +74,68 @@ public class UserTask {
     /**
      * 用户登录
      *
-     * @param region   国家区号
-     * @param phone    手机号码
+     * @param region 国家区号
+     * @param phone 手机号码
      * @param password 密码
      */
     public LiveData<Resource<String>> login(String region, String phone, String password) {
         MediatorLiveData<Resource<String>> result = new MediatorLiveData<>();
         result.setValue(Resource.loading(null));
-        LiveData<Resource<LoginResult>> login = new NetworkOnlyResource<LoginResult, Result<LoginResult>>() {
-            @NonNull
-            @Override
-            protected LiveData<Result<LoginResult>> createCall() {
-                HashMap<String, Object> paramsMap = new HashMap<>();
-                paramsMap.put("region", region);
-                paramsMap.put("phone", phone);
-                paramsMap.put("password", password);
-                RequestBody body = RetrofitUtil.createJsonRequest(paramsMap);
-                return userService.loginLiveData(body);
-            }
-        }.asLiveData();
-        result.addSource(login, loginResultResource -> {
-            if (loginResultResource.status == Status.SUCCESS) {
-                result.removeSource(login);
-                LoginResult loginResult = loginResultResource.data;
-                if (loginResult != null) {
-                    imManager.connectIM(loginResult.token, true, new ResultCallback<String>() {
-                        @Override
-                        public void onSuccess(String s) {
-                            result.postValue(Resource.success(s));
-                            // 存储当前登录成功的用户信息
-                            UserCacheInfo info = new UserCacheInfo(s, loginResult.token, phone, password, region, countryCache.getCountryInfoByRegion(region));
-                            userCache.saveUserCache(info);
-                        }
+        LiveData<Resource<LoginResult>> login =
+                new NetworkOnlyResource<LoginResult, Result<LoginResult>>() {
+                    @NonNull
+                    @Override
+                    protected LiveData<Result<LoginResult>> createCall() {
+                        HashMap<String, Object> paramsMap = new HashMap<>();
+                        paramsMap.put("region", region);
+                        paramsMap.put("phone", phone);
+                        paramsMap.put("password", password);
+                        RequestBody body = RetrofitUtil.createJsonRequest(paramsMap);
+                        return userService.loginLiveData(body);
+                    }
+                }.asLiveData();
+        result.addSource(
+                login,
+                loginResultResource -> {
+                    if (loginResultResource.status == Status.SUCCESS) {
+                        result.removeSource(login);
+                        LoginResult loginResult = loginResultResource.data;
+                        if (loginResult != null) {
+                            imManager.connectIM(
+                                    loginResult.token,
+                                    true,
+                                    new ResultCallback<String>() {
+                                        @Override
+                                        public void onSuccess(String s) {
+                                            result.postValue(Resource.success(s));
+                                            // 存储当前登录成功的用户信息
+                                            UserCacheInfo info =
+                                                    new UserCacheInfo(
+                                                            s,
+                                                            loginResult.token,
+                                                            phone,
+                                                            password,
+                                                            region,
+                                                            countryCache.getCountryInfoByRegion(
+                                                                    region));
+                                            userCache.saveUserCache(info);
+                                        }
 
-                        @Override
-                        public void onFail(int errorCode) {
-                            result.postValue(Resource.error(errorCode, null));
+                                        @Override
+                                        public void onFail(int errorCode) {
+                                            result.postValue(Resource.error(errorCode, null));
+                                        }
+                                    });
+                        } else {
+                            result.setValue(
+                                    Resource.error(ErrorCode.API_ERR_OTHER.getCode(), null));
                         }
-                    });
-                } else {
-                    result.setValue(Resource.error(ErrorCode.API_ERR_OTHER.getCode(), null));
-                }
-            } else if (loginResultResource.status == Status.ERROR) {
-                result.setValue(Resource.error(loginResultResource.code, null));
-            } else {
-                // do nothing
-            }
-        });
+                    } else if (loginResultResource.status == Status.ERROR) {
+                        result.setValue(Resource.error(loginResultResource.code, null));
+                    } else {
+                        // do nothing
+                    }
+                });
         return result;
     }
 
@@ -151,7 +161,9 @@ public class UserTask {
 
                     // 当没有头像时生成默认头像
                     if (TextUtils.isEmpty(portraitUri)) {
-                        portraitUri = RongGenerate.generateDefaultAvatar(context, userInfo.getId(), userInfo.getName());
+                        portraitUri =
+                                RongGenerate.generateDefaultAvatar(
+                                        context, userInfo.getId(), userInfo.getName());
                         userInfo.setPortraitUri(portraitUri);
                     }
 
@@ -164,7 +176,12 @@ public class UserTask {
                         userDao.updateGender(userInfo.getId(), gender);
                     }
                     // 更新现有用户信息若没有则创建新的用户信息，防止覆盖其他已有字段
-                    int resultCount = userDao.updateNameAndPortrait(userInfo.getId(), userInfo.getName(), nameSpelling, portraitUri);
+                    int resultCount =
+                            userDao.updateNameAndPortrait(
+                                    userInfo.getId(),
+                                    userInfo.getName(),
+                                    nameSpelling,
+                                    portraitUri);
                     if (resultCount == 0) {
                         // 当前用户的话， 判断是否有电话号码， 没有则从缓存中取出
                         if (userInfo.getId().equals(imManager.getCurrentId())) {
@@ -183,7 +200,12 @@ public class UserTask {
                 if (userDao != null) {
                     alias = userDao.getUserByIdSync(userInfo.getId()).getAlias();
                 }
-                IMManager.getInstance().updateUserInfoCache(userInfo.getId(), userInfo.getName(), Uri.parse(userInfo.getPortraitUri()), alias);
+                IMManager.getInstance()
+                        .updateUserInfoCache(
+                                userInfo.getId(),
+                                userInfo.getName(),
+                                Uri.parse(userInfo.getPortraitUri()),
+                                alias);
             }
 
             @NonNull
@@ -215,7 +237,6 @@ public class UserTask {
     public UserInfo getUserInfoSync(final String userId) {
         return dbManager.getUserDao().getUserByIdSync(userId);
     }
-
 
     /**
      * 发送验证码
@@ -249,55 +270,70 @@ public class UserTask {
      * @param password
      * @return
      */
-    public LiveData<Resource<RegisterResult>> register(String phoneCode, String phoneNumber, String shortMsgCode, String nickName, String password) {
+    public LiveData<Resource<RegisterResult>> register(
+            String phoneCode,
+            String phoneNumber,
+            String shortMsgCode,
+            String nickName,
+            String password) {
         MediatorLiveData<Resource<RegisterResult>> result = new MediatorLiveData<>();
         result.setValue(Resource.loading(null));
-        LiveData<Resource<VerifyResult>> verify = new NetworkOnlyResource<VerifyResult, Result<VerifyResult>>() {
-            @NonNull
-            @Override
-            protected LiveData<Result<VerifyResult>> createCall() {
-                HashMap<String, Object> paramsMap = new HashMap<>();
-                paramsMap.put("region", phoneCode);
-                paramsMap.put("phone", phoneNumber);
-                paramsMap.put("code", shortMsgCode);
-                RequestBody body = RetrofitUtil.createJsonRequest(paramsMap);
-                return userService.verifyCode(body);
-            }
-        }.asLiveData();
-        result.addSource(verify, verifyResult -> {
-            if (verifyResult.status == Status.SUCCESS) {
-                String verifyToken = verifyResult.data.verification_token;
-                LiveData<Resource<RegisterResult>> register = new NetworkOnlyResource<RegisterResult, Result<RegisterResult>>() {
+        LiveData<Resource<VerifyResult>> verify =
+                new NetworkOnlyResource<VerifyResult, Result<VerifyResult>>() {
                     @NonNull
                     @Override
-                    protected LiveData<Result<RegisterResult>> createCall() {
+                    protected LiveData<Result<VerifyResult>> createCall() {
                         HashMap<String, Object> paramsMap = new HashMap<>();
-                        paramsMap.put("nickname", nickName);
-                        paramsMap.put("password", password);
-                        paramsMap.put("verification_token", verifyToken);
+                        paramsMap.put("region", phoneCode);
+                        paramsMap.put("phone", phoneNumber);
+                        paramsMap.put("code", shortMsgCode);
                         RequestBody body = RetrofitUtil.createJsonRequest(paramsMap);
-                        return userService.register(body);
+                        return userService.verifyCode(body);
                     }
                 }.asLiveData();
+        result.addSource(
+                verify,
+                verifyResult -> {
+                    if (verifyResult.status == Status.SUCCESS) {
+                        String verifyToken = verifyResult.data.verification_token;
+                        LiveData<Resource<RegisterResult>> register =
+                                new NetworkOnlyResource<RegisterResult, Result<RegisterResult>>() {
+                                    @NonNull
+                                    @Override
+                                    protected LiveData<Result<RegisterResult>> createCall() {
+                                        HashMap<String, Object> paramsMap = new HashMap<>();
+                                        paramsMap.put("nickname", nickName);
+                                        paramsMap.put("password", password);
+                                        paramsMap.put("verification_token", verifyToken);
+                                        RequestBody body =
+                                                RetrofitUtil.createJsonRequest(paramsMap);
+                                        return userService.register(body);
+                                    }
+                                }.asLiveData();
 
-                result.addSource(register, registerResult -> {
-                    if (registerResult.status == Status.SUCCESS) {
-                        if (registerResult != null) {
-                            result.postValue(registerResult);
-                        } else {
-                            result.setValue(Resource.error(ErrorCode.API_ERR_OTHER.getCode(), null));
-                        }
-                    } else if (registerResult.status == Status.ERROR) {
-                        result.setValue(Resource.error(registerResult.code, null));
+                        result.addSource(
+                                register,
+                                registerResult -> {
+                                    if (registerResult.status == Status.SUCCESS) {
+                                        if (registerResult != null) {
+                                            result.postValue(registerResult);
+                                        } else {
+                                            result.setValue(
+                                                    Resource.error(
+                                                            ErrorCode.API_ERR_OTHER.getCode(),
+                                                            null));
+                                        }
+                                    } else if (registerResult.status == Status.ERROR) {
+                                        result.setValue(Resource.error(registerResult.code, null));
+                                    }
+                                });
+
+                    } else if (verifyResult.status == Status.ERROR) {
+                        result.setValue(Resource.error(verifyResult.code, null));
+                    } else {
+                        result.setValue(Resource.loading(null));
                     }
                 });
-
-            } else if (verifyResult.status == Status.ERROR) {
-                result.setValue(Resource.error(verifyResult.code, null));
-            } else {
-                result.setValue(Resource.loading(null));
-            }
-        });
 
         return result;
     }
@@ -349,61 +385,72 @@ public class UserTask {
      * @param password
      * @return
      */
-    public LiveData<Resource<String>> resetPassword(String countryCode, String phoneNumber, String shortMsgCode, String password) {
+    public LiveData<Resource<String>> resetPassword(
+            String countryCode, String phoneNumber, String shortMsgCode, String password) {
         MediatorLiveData<Resource<String>> result = new MediatorLiveData<>();
         result.setValue(Resource.loading(null));
-        LiveData<Resource<VerifyResult>> verify = new NetworkOnlyResource<VerifyResult, Result<VerifyResult>>() {
-            @NonNull
-            @Override
-            protected LiveData<Result<VerifyResult>> createCall() {
-                HashMap<String, Object> paramsMap = new HashMap<>();
-                paramsMap.put("region", countryCode);
-                paramsMap.put("phone", phoneNumber);
-                paramsMap.put("code", shortMsgCode);
-                RequestBody body = RetrofitUtil.createJsonRequest(paramsMap);
-                return userService.verifyCode(body);
-            }
-        }.asLiveData();
+        LiveData<Resource<VerifyResult>> verify =
+                new NetworkOnlyResource<VerifyResult, Result<VerifyResult>>() {
+                    @NonNull
+                    @Override
+                    protected LiveData<Result<VerifyResult>> createCall() {
+                        HashMap<String, Object> paramsMap = new HashMap<>();
+                        paramsMap.put("region", countryCode);
+                        paramsMap.put("phone", phoneNumber);
+                        paramsMap.put("code", shortMsgCode);
+                        RequestBody body = RetrofitUtil.createJsonRequest(paramsMap);
+                        return userService.verifyCode(body);
+                    }
+                }.asLiveData();
 
-        result.addSource(verify, verifyResult -> {
-            if (verifyResult != null) {
-                if (verifyResult.status == Status.SUCCESS) {
-                    String verifyToken = verifyResult.data.verification_token;
-                    LiveData<Resource<String>> resetPassword = new NetworkOnlyResource<String, Result<String>>() {
+        result.addSource(
+                verify,
+                verifyResult -> {
+                    if (verifyResult != null) {
+                        if (verifyResult.status == Status.SUCCESS) {
+                            String verifyToken = verifyResult.data.verification_token;
+                            LiveData<Resource<String>> resetPassword =
+                                    new NetworkOnlyResource<String, Result<String>>() {
 
-                        @NonNull
-                        @Override
-                        protected LiveData<Result<String>> createCall() {
-                            HashMap<String, Object> paramsMap = new HashMap<>();
-                            paramsMap.put("password", password);
-                            paramsMap.put("verification_token", verifyToken);
-                            RequestBody body = RetrofitUtil.createJsonRequest(paramsMap);
-                            return userService.resetPassword(body);
+                                        @NonNull
+                                        @Override
+                                        protected LiveData<Result<String>> createCall() {
+                                            HashMap<String, Object> paramsMap = new HashMap<>();
+                                            paramsMap.put("password", password);
+                                            paramsMap.put("verification_token", verifyToken);
+                                            RequestBody body =
+                                                    RetrofitUtil.createJsonRequest(paramsMap);
+                                            return userService.resetPassword(body);
+                                        }
+                                    }.asLiveData();
+
+                            result.addSource(
+                                    resetPassword,
+                                    resetPasswordResult -> {
+                                        if (resetPasswordResult.status == Status.SUCCESS) {
+                                            if (resetPasswordResult != null) {
+                                                result.postValue(resetPasswordResult);
+                                            } else {
+                                                result.setValue(
+                                                        Resource.error(
+                                                                ErrorCode.API_ERR_OTHER.getCode(),
+                                                                null));
+                                            }
+                                        } else if (resetPasswordResult.status == Status.ERROR) {
+                                            result.setValue(
+                                                    Resource.error(resetPasswordResult.code, null));
+                                        }
+                                    });
+
+                        } else if (verifyResult.status == Status.ERROR) {
+                            result.setValue(Resource.error(verifyResult.code, null));
+                        } else {
+                            result.setValue(Resource.loading(null));
                         }
-                    }.asLiveData();
-
-                    result.addSource(resetPassword, resetPasswordResult -> {
-                        if (resetPasswordResult.status == Status.SUCCESS) {
-                            if (resetPasswordResult != null) {
-                                result.postValue(resetPasswordResult);
-                            } else {
-                                result.setValue(Resource.error(ErrorCode.API_ERR_OTHER.getCode(), null));
-                            }
-                        } else if (resetPasswordResult.status == Status.ERROR) {
-                            result.setValue(Resource.error(resetPasswordResult.code, null));
-                        }
-                    });
-
-                } else if (verifyResult.status == Status.ERROR) {
-                    result.setValue(Resource.error(verifyResult.code, null));
-                } else {
-                    result.setValue(Resource.loading(null));
-                }
-            } else if (verifyResult.status == Status.ERROR) {
-                result.setValue(Resource.error(verifyResult.code, null));
-            }
-
-        });
+                    } else if (verifyResult.status == Status.ERROR) {
+                        result.setValue(Resource.error(verifyResult.code, null));
+                    }
+                });
         return result;
     }
 
@@ -431,7 +478,7 @@ public class UserTask {
 
             @Override
             protected void saveCallResult(@NonNull Result item) {
-                //更新 nickName
+                // 更新 nickName
                 saveAndSyncNickname(nickName);
             }
         }.asLiveData();
@@ -464,7 +511,6 @@ public class UserTask {
                 updateStAccount(IMManager.getInstance().getCurrentId(), stAccount);
             }
         }.asLiveData();
-
     }
 
     public LiveData<Resource<Result>> setGender(String gender) {
@@ -494,40 +540,45 @@ public class UserTask {
         MediatorLiveData<Resource<Result>> result = new MediatorLiveData<>();
         result.setValue(Resource.loading(null));
         LiveData<Resource<String>> uploadResource = fileManager.uploadImage(imageUri);
-        result.addSource(uploadResource, new Observer<Resource<String>>() {
-            @Override
-            public void onChanged(Resource<String> resource) {
-                if (resource.status != Status.LOADING) {
-                    result.removeSource(uploadResource);
-                }
-
-                if (resource.status == Status.ERROR) {
-                    result.setValue(Resource.error(resource.code, null));
-                    return;
-                }
-
-                if (resource.status == Status.SUCCESS) {
-                    LiveData<Resource<Result>> setPortrait = setPortrait(resource.data);
-                    result.addSource(setPortrait, new Observer<Resource<Result>>() {
-                        @Override
-                        public void onChanged(Resource<Result> resultResource) {
-
-                            if (resultResource.status != Status.LOADING) {
-                                result.removeSource(setPortrait);
-                            }
-
-                            if (resultResource.status == Status.ERROR) {
-                                result.setValue(Resource.error(resultResource.code, null));
-                                return;
-                            }
-                            if (resultResource.status == Status.SUCCESS) {
-                                result.setValue(resultResource);
-                            }
+        result.addSource(
+                uploadResource,
+                new Observer<Resource<String>>() {
+                    @Override
+                    public void onChanged(Resource<String> resource) {
+                        if (resource.status != Status.LOADING) {
+                            result.removeSource(uploadResource);
                         }
-                    });
-                }
-            }
-        });
+
+                        if (resource.status == Status.ERROR) {
+                            result.setValue(Resource.error(resource.code, null));
+                            return;
+                        }
+
+                        if (resource.status == Status.SUCCESS) {
+                            LiveData<Resource<Result>> setPortrait = setPortrait(resource.data);
+                            result.addSource(
+                                    setPortrait,
+                                    new Observer<Resource<Result>>() {
+                                        @Override
+                                        public void onChanged(Resource<Result> resultResource) {
+
+                                            if (resultResource.status != Status.LOADING) {
+                                                result.removeSource(setPortrait);
+                                            }
+
+                                            if (resultResource.status == Status.ERROR) {
+                                                result.setValue(
+                                                        Resource.error(resultResource.code, null));
+                                                return;
+                                            }
+                                            if (resultResource.status == Status.SUCCESS) {
+                                                result.setValue(resultResource);
+                                            }
+                                        }
+                                    });
+                        }
+                    }
+                });
 
         return result;
     }
@@ -557,13 +608,11 @@ public class UserTask {
 
             @Override
             protected void saveCallResult(@NonNull Result item) {
-                //更新 头像
+                // 更新 头像
                 saveAndSyncPortrait(IMManager.getInstance().getCurrentId(), portraitUrl);
             }
-
         }.asLiveData();
     }
-
 
     /**
      * 保存并同步用户的头像
@@ -573,12 +622,12 @@ public class UserTask {
      */
     public void saveAndSyncPortrait(String userId, String portraitUrl) {
         saveAndSyncUserInfo(userId, null, portraitUrl);
-//
-//        UserDao userDao = dbManager.getUserDao();
-//        if (userDao != null) {
-//            int i = userDao.updatePortrait(userId, portraitUrl);
-//            SLog.d("ss_update", "i=" + i);
-//        }
+        //
+        //        UserDao userDao = dbManager.getUserDao();
+        //        if (userDao != null) {
+        //            int i = userDao.updatePortrait(userId, portraitUrl);
+        //            SLog.d("ss_update", "i=" + i);
+        //        }
     }
 
     /**
@@ -609,10 +658,20 @@ public class UserTask {
                 portraitUrl = userInfo == null ? "" : userInfo.getPortraitUri();
             }
 
-            int i = userDao.updateNameAndPortrait(userId, nickName, CharacterParser.getInstance().getSpelling(nickName), portraitUrl);
+            int i =
+                    userDao.updateNameAndPortrait(
+                            userId,
+                            nickName,
+                            CharacterParser.getInstance().getSpelling(nickName),
+                            portraitUrl);
             SLog.d("ss_update", "i=" + i);
 
-            IMManager.getInstance().updateUserInfoCache(userId, nickName, Uri.parse(portraitUrl), userInfo == null ? "" : userInfo.getAlias());
+            IMManager.getInstance()
+                    .updateUserInfoCache(
+                            userId,
+                            nickName,
+                            Uri.parse(portraitUrl),
+                            userInfo == null ? "" : userInfo.getAlias());
         }
     }
 
@@ -637,7 +696,6 @@ public class UserTask {
             SLog.d("gender_update", "i=" + i);
         }
     }
-
 
     /**
      * 修改用户密码
@@ -675,7 +733,6 @@ public class UserTask {
         return userCache.getUserCache();
     }
 
-
     /**
      * 获取黑名单用户
      *
@@ -709,14 +766,18 @@ public class UserTask {
 
                     // 当没有头像时生成默认头像
                     if (TextUtils.isEmpty(portraitUri)) {
-                        portraitUri = RongGenerate.generateDefaultAvatar(context, blackUser.getId(), nickname);
+                        portraitUri =
+                                RongGenerate.generateDefaultAvatar(
+                                        context, blackUser.getId(), nickname);
                         user.setPortraitUri(portraitUri);
                     } else {
                         user.setPortraitUri(portraitUri);
                     }
 
                     // 更新现有用户信息若没有则创建新的用户信息，防止覆盖其他已有字段
-                    int resultCount = userDao.updateNameAndPortrait(user.getId(), user.getName(), nameSpelling, portraitUri);
+                    int resultCount =
+                            userDao.updateNameAndPortrait(
+                                    user.getId(), user.getName(), nameSpelling, portraitUri);
                     if (resultCount == 0) {
                         userDao.insertUser(user);
                     }
@@ -754,7 +815,6 @@ public class UserTask {
         }.asLiveData();
     }
 
-
     /**
      * 添加到黑名单
      *
@@ -771,7 +831,8 @@ public class UserTask {
                     friendDao.addToBlackList(blackListEntity);
                 }
 
-                IMManager.getInstance().clearConversationAndMessage(userId, Conversation.ConversationType.PRIVATE);
+                IMManager.getInstance()
+                        .clearConversationAndMessage(userId, Conversation.ConversationType.PRIVATE);
             }
 
             @NonNull
@@ -831,12 +892,17 @@ public class UserTask {
                     for (GroupEntity groupEntity : list) {
                         String portraitUri = groupEntity.getPortraitUri();
                         if (TextUtils.isEmpty(portraitUri)) {
-                            portraitUri = RongGenerate.generateDefaultAvatar(context, groupEntity.getId(), groupEntity.getName());
+                            portraitUri =
+                                    RongGenerate.generateDefaultAvatar(
+                                            context, groupEntity.getId(), groupEntity.getName());
                             groupEntity.setPortraitUri(portraitUri);
                         }
-                        groupEntity.setNameSpelling(SearchUtils.fullSearchableString(groupEntity.getName()));
-                        groupEntity.setNameSpellingInitial(SearchUtils.initialSearchableString(groupEntity.getName()));
-                        groupEntity.setOrderSpelling(CharacterParser.getInstance().getSpelling(groupEntity.getName()));
+                        groupEntity.setNameSpelling(
+                                SearchUtils.fullSearchableString(groupEntity.getName()));
+                        groupEntity.setNameSpellingInitial(
+                                SearchUtils.initialSearchableString(groupEntity.getName()));
+                        groupEntity.setOrderSpelling(
+                                CharacterParser.getInstance().getSpelling(groupEntity.getName()));
                         // 设置在该群是在通讯录中
                         groupEntity.setIsInContact(1);
                     }
@@ -863,7 +929,6 @@ public class UserTask {
         }.asLiveData();
     }
 
-
     /**
      * 从数据中获取用户是否在黑名单
      *
@@ -889,28 +954,32 @@ public class UserTask {
             dbSource = new MutableLiveData<>(null);
         }
 
-        result.addSource(blackListResource, resource -> {
-            if (resource.status != Status.LOADING) {
-                result.removeSource(blackListResource);
-            }
+        result.addSource(
+                blackListResource,
+                resource -> {
+                    if (resource.status != Status.LOADING) {
+                        result.removeSource(blackListResource);
+                    }
 
-            if (resource.status == Status.SUCCESS) {
-                result.addSource(dbSource, newData -> {
-                    result.setValue(Resource.success(newData));
+                    if (resource.status == Status.SUCCESS) {
+                        result.addSource(
+                                dbSource,
+                                newData -> {
+                                    result.setValue(Resource.success(newData));
+                                });
+                    } else if (resource.status == Status.ERROR) {
+                        result.addSource(
+                                dbSource,
+                                newData -> {
+                                    result.setValue(Resource.error(resource.code, newData));
+                                });
+                    }
                 });
-            } else if (resource.status == Status.ERROR) {
-                result.addSource(dbSource, newData -> {
-                    result.setValue(Resource.error(resource.code, newData));
-                });
-            }
-        });
 
         return result;
     }
 
-    /**
-     * 退出登录
-     */
+    /** 退出登录 */
     public void logout() {
         userCache.logoutClear();
         dbManager.closeDb();
@@ -934,7 +1003,8 @@ public class UserTask {
             protected LiveData<Result> createCall() {
                 HashMap<String, Object> bodyMap = new HashMap<>();
                 bodyMap.put("pokeStatus", isReceive ? 1 : 0); // 0 不允许; 1 允许
-                return userService.setReceivePokeMessageStatus(RetrofitUtil.createJsonRequest(bodyMap));
+                return userService.setReceivePokeMessageStatus(
+                        RetrofitUtil.createJsonRequest(bodyMap));
             }
         }.asLiveData();
     }
@@ -963,59 +1033,80 @@ public class UserTask {
      * 用户注册登录
      *
      * @param region 国家区号
-     * @param phone  手机号码
-     * @param code   密码
+     * @param phone 手机号码
+     * @param code 密码
      */
     public LiveData<Resource<String>> registerAndLogin(String region, String phone, String code) {
         MediatorLiveData<Resource<String>> result = new MediatorLiveData<>();
         result.setValue(Resource.loading(null));
-        LiveData<Resource<LoginResult>> login = new NetworkOnlyResource<LoginResult, Result<LoginResult>>() {
-            @NonNull
-            @Override
-            protected LiveData<Result<LoginResult>> createCall() {
-                HashMap<String, Object> paramsMap = new HashMap<>();
-                paramsMap.put("region", region);
-                paramsMap.put("phone", phone);
-                paramsMap.put("code", code);
-                RequestBody body = RetrofitUtil.createJsonRequest(paramsMap);
-                return userService.registerAndLogin(body);
-            }
-        }.asLiveData();
-        result.addSource(login, loginResultResource -> {
-            if (loginResultResource.status == Status.SUCCESS) {
-                result.removeSource(login);
-                LoginResult loginResult = loginResultResource.data;
-                if (loginResult != null) {
-                    imManager.connectIM(loginResult.token, true, new ResultCallback<String>() {
-                        @Override
-                        public void onSuccess(String s) {
-                            result.postValue(Resource.success(s));
-                            // 存储当前登录成功的用户信息
-                            UserCacheInfo info = new UserCacheInfo(s, loginResult.token, phone, region, countryCache.getCountryInfoByRegion(region));
-                            userCache.saveUserCache(info);
-                        }
-
-                        @Override
-                        public void onFail(int errorCode) {
-                            result.postValue(Resource.error(errorCode, null));
-                        }
-                    });
-                } else {
-                    if (loginResultResource.code == ErrorCode.LOGIN_VERIFY_CODE_FAILED.getCode()) {
-                        result.setValue(Resource.error(ErrorCode.LOGIN_VERIFY_CODE_FAILED.getCode(), null));
-                    } else if (loginResultResource.code == ErrorCode.LOGIN_VERIFY_CODE_EXPIRED.getCode()) {
-                        result.setValue(Resource.error(ErrorCode.LOGIN_VERIFY_CODE_EXPIRED.getCode(), null));
-                    } else {
-                        result.setValue(Resource.error(ErrorCode.API_ERR_OTHER.getCode(), null));
+        LiveData<Resource<LoginResult>> login =
+                new NetworkOnlyResource<LoginResult, Result<LoginResult>>() {
+                    @NonNull
+                    @Override
+                    protected LiveData<Result<LoginResult>> createCall() {
+                        HashMap<String, Object> paramsMap = new HashMap<>();
+                        paramsMap.put("region", region);
+                        paramsMap.put("phone", phone);
+                        paramsMap.put("code", code);
+                        RequestBody body = RetrofitUtil.createJsonRequest(paramsMap);
+                        return userService.registerAndLogin(body);
                     }
-                }
-            } else if (loginResultResource.status == Status.ERROR) {
-                result.setValue(Resource.error(loginResultResource.code, null));
-            } else {
-                // do nothing
-            }
-        });
+                }.asLiveData();
+        result.addSource(
+                login,
+                loginResultResource -> {
+                    if (loginResultResource.status == Status.SUCCESS) {
+                        result.removeSource(login);
+                        LoginResult loginResult = loginResultResource.data;
+                        if (loginResult != null) {
+                            imManager.connectIM(
+                                    loginResult.token,
+                                    true,
+                                    new ResultCallback<String>() {
+                                        @Override
+                                        public void onSuccess(String s) {
+                                            result.postValue(Resource.success(s));
+                                            // 存储当前登录成功的用户信息
+                                            UserCacheInfo info =
+                                                    new UserCacheInfo(
+                                                            s,
+                                                            loginResult.token,
+                                                            phone,
+                                                            region,
+                                                            countryCache.getCountryInfoByRegion(
+                                                                    region));
+                                            userCache.saveUserCache(info);
+                                        }
+
+                                        @Override
+                                        public void onFail(int errorCode) {
+                                            result.postValue(Resource.error(errorCode, null));
+                                        }
+                                    });
+                        } else {
+                            if (loginResultResource.code
+                                    == ErrorCode.LOGIN_VERIFY_CODE_FAILED.getCode()) {
+                                result.setValue(
+                                        Resource.error(
+                                                ErrorCode.LOGIN_VERIFY_CODE_FAILED.getCode(),
+                                                null));
+                            } else if (loginResultResource.code
+                                    == ErrorCode.LOGIN_VERIFY_CODE_EXPIRED.getCode()) {
+                                result.setValue(
+                                        Resource.error(
+                                                ErrorCode.LOGIN_VERIFY_CODE_EXPIRED.getCode(),
+                                                null));
+                            } else {
+                                result.setValue(
+                                        Resource.error(ErrorCode.API_ERR_OTHER.getCode(), null));
+                            }
+                        }
+                    } else if (loginResultResource.status == Status.ERROR) {
+                        result.setValue(Resource.error(loginResultResource.code, null));
+                    } else {
+                        // do nothing
+                    }
+                });
         return result;
     }
-
 }

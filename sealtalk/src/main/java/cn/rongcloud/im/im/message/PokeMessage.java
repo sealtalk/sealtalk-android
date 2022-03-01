@@ -1,30 +1,22 @@
 package cn.rongcloud.im.im.message;
 
 import android.os.Parcel;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.nio.charset.StandardCharsets;
-
 import cn.rongcloud.im.common.LogTag;
 import cn.rongcloud.im.utils.log.SLog;
 import io.rong.common.ParcelUtils;
 import io.rong.imlib.MessageTag;
 import io.rong.imlib.model.MessageContent;
+import java.nio.charset.StandardCharsets;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-/**
- * 戳一下消息
- */
+/** 戳一下消息 */
 @MessageTag(value = "ST:PokeMsg", flag = MessageTag.ISPERSISTED | MessageTag.ISCOUNTED)
 public class PokeMessage extends MessageContent {
-    /**
-     * 戳一下内容
-     */
+    /** 戳一下内容 */
     private String content;
 
-    private PokeMessage() {
-    }
+    private PokeMessage() {}
 
     public PokeMessage(byte[] data) {
         String jsonStr = null;
@@ -40,7 +32,6 @@ public class PokeMessage extends MessageContent {
     public PokeMessage(Parcel in) {
         content = ParcelUtils.readFromParcel(in);
     }
-
 
     public String getContent() {
         return content;
@@ -76,14 +67,14 @@ public class PokeMessage extends MessageContent {
         ParcelUtils.writeToParcel(dest, this.content);
     }
 
-    public static final Creator<PokeMessage> CREATOR = new Creator<PokeMessage>() {
-        public PokeMessage createFromParcel(Parcel source) {
-            return new PokeMessage(source);
-        }
+    public static final Creator<PokeMessage> CREATOR =
+            new Creator<PokeMessage>() {
+                public PokeMessage createFromParcel(Parcel source) {
+                    return new PokeMessage(source);
+                }
 
-        public PokeMessage[] newArray(int size) {
-            return new PokeMessage[size];
-        }
-    };
-
+                public PokeMessage[] newArray(int size) {
+                    return new PokeMessage[size];
+                }
+            };
 }

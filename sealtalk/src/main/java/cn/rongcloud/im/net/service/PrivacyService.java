@@ -1,10 +1,8 @@
 package cn.rongcloud.im.net.service;
 
 import androidx.lifecycle.LiveData;
-
 import cn.rongcloud.im.model.PrivacyResult;
 import cn.rongcloud.im.model.Result;
-
 import cn.rongcloud.im.model.ScreenCaptureResult;
 import cn.rongcloud.im.net.SealTalkUrl;
 import okhttp3.RequestBody;

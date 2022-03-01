@@ -5,15 +5,12 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-
-import java.util.List;
-
 import cn.rongcloud.im.db.model.GroupEntity;
 import cn.rongcloud.im.db.model.GroupExitedMemberInfo;
 import cn.rongcloud.im.db.model.GroupMemberInfoDes;
 import cn.rongcloud.im.db.model.GroupNoticeInfo;
-import cn.rongcloud.im.model.RegularClearStatusResult;
 import cn.rongcloud.im.ui.adapter.models.SearchGroupMember;
+import java.util.List;
 
 @Dao
 public interface GroupDao {
@@ -39,33 +36,35 @@ public interface GroupDao {
     @Query("DELETE FROM `group` WHERE id=:groupId")
     void deleteGroup(String groupId);
 
-    @Query("SELECT `group`.id,`group`.name,`group`.portrait_url,`group`.bulletin," +
-            "`group`.delete_at,`group`.max_member_count,`group`.member_count," +
-            "`group`.owner_user_id,`group`.name_spelling," +
-            "`group`.name_spelling_initial,`group`.order_spelling,`group`.type,`group`.bulletin_time," +
-            "`group`.is_in_contact,`group`.regular_clear_state,`group`.is_mute_all,`group`.certification_status," +
-            "group_member.group_id as member_id,user.name as nickname " +
-            "from `group` " +
-            "left join group_member " +
-            "on `group`.id = group_member.group_id " +
-            "left join user " +
-            "on group_member.user_id = user.id  " +
-            "where `group`.name like '%' || :matchSearch || '%' " +
-            "OR `group`.name_spelling like '%$' || :matchSearch || '%' " +
-            "OR `group`.name_spelling_initial like  '%' || :matchSearch || '%' " +
-            "OR user.name like '%' || :matchSearch || '%' " +
-            "OR user.name_spelling like '%$' || :matchSearch || '%' " +
-            "OR user.name_spelling_initial  like '%' || :matchSearch || '%' " +
-            "group by `group`.id " +
-            "order by user.name_spelling ")
+    @Query(
+            "SELECT `group`.id,`group`.name,`group`.portrait_url,`group`.bulletin,"
+                    + "`group`.delete_at,`group`.max_member_count,`group`.member_count,"
+                    + "`group`.owner_user_id,`group`.name_spelling,"
+                    + "`group`.name_spelling_initial,`group`.order_spelling,`group`.type,`group`.bulletin_time,"
+                    + "`group`.is_in_contact,`group`.regular_clear_state,`group`.is_mute_all,`group`.certification_status,"
+                    + "group_member.group_id as member_id,user.name as nickname "
+                    + "from `group` "
+                    + "left join group_member "
+                    + "on `group`.id = group_member.group_id "
+                    + "left join user "
+                    + "on group_member.user_id = user.id  "
+                    + "where `group`.name like '%' || :matchSearch || '%' "
+                    + "OR `group`.name_spelling like '%$' || :matchSearch || '%' "
+                    + "OR `group`.name_spelling_initial like  '%' || :matchSearch || '%' "
+                    + "OR user.name like '%' || :matchSearch || '%' "
+                    + "OR user.name_spelling like '%$' || :matchSearch || '%' "
+                    + "OR user.name_spelling_initial  like '%' || :matchSearch || '%' "
+                    + "group by `group`.id "
+                    + "order by user.name_spelling ")
     LiveData<List<SearchGroupMember>> searchGroup(String matchSearch);
 
-    @Query("SELECT * " +
-            "from `group` " +
-            "where name like '%' || :matchSearch || '%' " +
-            "OR name_spelling like '%' || :matchSearch || '%' " +
-            "OR name_spelling_initial like '%' || :matchSearch || '%' " +
-            "order by name_spelling ")
+    @Query(
+            "SELECT * "
+                    + "from `group` "
+                    + "where name like '%' || :matchSearch || '%' "
+                    + "OR name_spelling like '%' || :matchSearch || '%' "
+                    + "OR name_spelling_initial like '%' || :matchSearch || '%' "
+                    + "order by name_spelling ")
     LiveData<List<GroupEntity>> searchGroupByName(String matchSearch);
 
     @Query("SELECT * FROM `group` WHERE id IN (:groupIds)")

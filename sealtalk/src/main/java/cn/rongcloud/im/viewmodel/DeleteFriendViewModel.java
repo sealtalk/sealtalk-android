@@ -1,22 +1,18 @@
 package cn.rongcloud.im.viewmodel;
 
 import android.app.Application;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-
-import java.util.List;
-
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.task.FriendTask;
 import cn.rongcloud.im.utils.SingleSourceLiveData;
+import java.util.List;
 
-/**
- * 删除好友视图模型
- */
+/** 删除好友视图模型 */
 public class DeleteFriendViewModel extends AndroidViewModel {
     private FriendTask friendTask;
-    private SingleSourceLiveData<Resource<Object>> deleteFriendsResult = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<Object>> deleteFriendsResult =
+            new SingleSourceLiveData<>();
 
     public DeleteFriendViewModel(@NonNull Application application) {
         super(application);

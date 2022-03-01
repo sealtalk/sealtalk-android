@@ -11,33 +11,37 @@ import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.List;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.im.message.PokeMessage;
 import io.rong.imkit.conversation.messgelist.provider.BaseMessageItemProvider;
 import io.rong.imkit.model.UiMessage;
-import io.rong.imkit.widget.adapter.BaseAdapter;
 import io.rong.imkit.widget.adapter.IViewProviderListener;
 import io.rong.imkit.widget.adapter.ViewHolder;
 import io.rong.imlib.model.MessageContent;
+import java.util.List;
 
-/**
- * 戳一下消息模版
- */
+/** 戳一下消息模版 */
 public class PokeMessageItemProvider extends BaseMessageItemProvider<PokeMessage> {
     private final float POKE_ICON_WIDTH_DP = 15f;
     private final float POKE_ICON_HEIGHT_DP = 18.6f;
 
     @Override
     protected ViewHolder onCreateMessageContentViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_item_poke_message, parent, false);
-        return new ViewHolder(view.getContext(),view);
+        View view =
+                LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.message_item_poke_message, parent, false);
+        return new ViewHolder(view.getContext(), view);
     }
 
     @Override
-    protected void bindMessageContentViewHolder(ViewHolder holder,ViewHolder parentHolder, PokeMessage pokeMessage, UiMessage uiMessage, int position, List<UiMessage> list, IViewProviderListener<UiMessage> listener) {
+    protected void bindMessageContentViewHolder(
+            ViewHolder holder,
+            ViewHolder parentHolder,
+            PokeMessage pokeMessage,
+            UiMessage uiMessage,
+            int position,
+            List<UiMessage> list,
+            IViewProviderListener<UiMessage> listener) {
         Context context = holder.getContext();
         String content = pokeMessage.getContent();
         if (TextUtils.isEmpty(content)) {
@@ -48,13 +52,20 @@ public class PokeMessageItemProvider extends BaseMessageItemProvider<PokeMessage
         SpannableString contentSpan = new SpannableString(itemContent);
 
         // 设置"戳一下"文字的颜色
-        ForegroundColorSpan pokeTitleSpan = new ForegroundColorSpan(context.getResources().getColor(R.color.default_clickable_text));
+        ForegroundColorSpan pokeTitleSpan =
+                new ForegroundColorSpan(
+                        context.getResources().getColor(R.color.default_clickable_text));
         int pokeTitleStarIndex = itemContent.indexOf(pokeTitle);
         int pokeTitleEndIndex = pokeTitleStarIndex + pokeTitle.length();
-        contentSpan.setSpan(pokeTitleSpan, pokeTitleStarIndex, pokeTitleEndIndex, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        contentSpan.setSpan(
+                pokeTitleSpan,
+                pokeTitleStarIndex,
+                pokeTitleEndIndex,
+                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
         // 设置戳一下图标
-        Drawable pokeImg = context.getResources().getDrawable(R.drawable.im_plugin_img_dialog_send_poke);
+        Drawable pokeImg =
+                context.getResources().getDrawable(R.drawable.im_plugin_img_dialog_send_poke);
         float densityDpi = context.getResources().getDisplayMetrics().density;
         int pokeImgWidth = (int) (POKE_ICON_WIDTH_DP * densityDpi);
         int pokeImgHeight = (int) (POKE_ICON_HEIGHT_DP * densityDpi);
@@ -62,11 +73,17 @@ public class PokeMessageItemProvider extends BaseMessageItemProvider<PokeMessage
         ImageSpan imageSpan = new ImageSpan(pokeImg);
         contentSpan.setSpan(imageSpan, 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
-        holder.setText(R.id.item_tv_poke_message,contentSpan);
+        holder.setText(R.id.item_tv_poke_message, contentSpan);
     }
 
     @Override
-    protected boolean onItemClick(ViewHolder holder, PokeMessage pokeMessage, UiMessage uiMessage, int position,List<UiMessage> list, IViewProviderListener<UiMessage> listener) {
+    protected boolean onItemClick(
+            ViewHolder holder,
+            PokeMessage pokeMessage,
+            UiMessage uiMessage,
+            int position,
+            List<UiMessage> list,
+            IViewProviderListener<UiMessage> listener) {
         return false;
     }
 

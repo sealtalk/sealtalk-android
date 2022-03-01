@@ -21,15 +21,13 @@ import android.graphics.Rect;
 import android.hardware.Camera;
 import android.os.Build;
 import android.util.Log;
-
+import cn.rongcloud.im.utils.qrcode.barcodescanner.camera.CameraSettings;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
-
-import cn.rongcloud.im.utils.qrcode.barcodescanner.camera.CameraSettings;
 
 /**
  * Utility methods for configuring the Android camera.
@@ -48,41 +46,47 @@ public final class CameraConfigurationUtils {
     private static final int MAX_FPS = 20;
     private static final int AREA_PER_1000 = 400;
 
-    private CameraConfigurationUtils() {
-    }
+    private CameraConfigurationUtils() {}
 
-    public static void setFocus(Camera.Parameters parameters,
-								CameraSettings.FocusMode focusModeSetting,
-                                boolean safeMode) {
+    public static void setFocus(
+            Camera.Parameters parameters,
+            CameraSettings.FocusMode focusModeSetting,
+            boolean safeMode) {
         List<String> supportedFocusModes = parameters.getSupportedFocusModes();
         String focusMode = null;
 
-		if (safeMode || focusModeSetting == CameraSettings.FocusMode.AUTO) {
-			focusMode = findSettableValue("focus mode",
-					supportedFocusModes,
-					Camera.Parameters.FOCUS_MODE_AUTO);
-		} else if (focusModeSetting == CameraSettings.FocusMode.CONTINUOUS) {
-			focusMode = findSettableValue("focus mode",
-					supportedFocusModes,
-					Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE,
-					Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO,
-					Camera.Parameters.FOCUS_MODE_AUTO);
-		} else if (focusModeSetting == CameraSettings.FocusMode.INFINITY) {
-			focusMode = findSettableValue("focus mode",
-					supportedFocusModes,
-					Camera.Parameters.FOCUS_MODE_INFINITY);
-		} else if (focusModeSetting == CameraSettings.FocusMode.MACRO) {
-			focusMode = findSettableValue("focus mode",
-					supportedFocusModes,
-					Camera.Parameters.FOCUS_MODE_MACRO);
-		}
+        if (safeMode || focusModeSetting == CameraSettings.FocusMode.AUTO) {
+            focusMode =
+                    findSettableValue(
+                            "focus mode", supportedFocusModes, Camera.Parameters.FOCUS_MODE_AUTO);
+        } else if (focusModeSetting == CameraSettings.FocusMode.CONTINUOUS) {
+            focusMode =
+                    findSettableValue(
+                            "focus mode",
+                            supportedFocusModes,
+                            Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE,
+                            Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO,
+                            Camera.Parameters.FOCUS_MODE_AUTO);
+        } else if (focusModeSetting == CameraSettings.FocusMode.INFINITY) {
+            focusMode =
+                    findSettableValue(
+                            "focus mode",
+                            supportedFocusModes,
+                            Camera.Parameters.FOCUS_MODE_INFINITY);
+        } else if (focusModeSetting == CameraSettings.FocusMode.MACRO) {
+            focusMode =
+                    findSettableValue(
+                            "focus mode", supportedFocusModes, Camera.Parameters.FOCUS_MODE_MACRO);
+        }
 
         // Maybe selected auto-focus but not available, so fall through here:
         if (!safeMode && focusMode == null) {
-            focusMode = findSettableValue("focus mode",
-                    supportedFocusModes,
-                    Camera.Parameters.FOCUS_MODE_MACRO,
-                    Camera.Parameters.FOCUS_MODE_EDOF);
+            focusMode =
+                    findSettableValue(
+                            "focus mode",
+                            supportedFocusModes,
+                            Camera.Parameters.FOCUS_MODE_MACRO,
+                            Camera.Parameters.FOCUS_MODE_EDOF);
         }
         if (focusMode != null) {
             if (focusMode.equals(parameters.getFocusMode())) {
@@ -97,14 +101,16 @@ public final class CameraConfigurationUtils {
         List<String> supportedFlashModes = parameters.getSupportedFlashModes();
         String flashMode;
         if (on) {
-            flashMode = findSettableValue("flash mode",
-                    supportedFlashModes,
-                    Camera.Parameters.FLASH_MODE_TORCH,
-                    Camera.Parameters.FLASH_MODE_ON);
+            flashMode =
+                    findSettableValue(
+                            "flash mode",
+                            supportedFlashModes,
+                            Camera.Parameters.FLASH_MODE_TORCH,
+                            Camera.Parameters.FLASH_MODE_ON);
         } else {
-            flashMode = findSettableValue("flash mode",
-                    supportedFlashModes,
-                    Camera.Parameters.FLASH_MODE_OFF);
+            flashMode =
+                    findSettableValue(
+                            "flash mode", supportedFlashModes, Camera.Parameters.FLASH_MODE_OFF);
         }
         if (flashMode != null) {
             if (flashMode.equals(parameters.getFlashMode())) {
@@ -122,15 +128,26 @@ public final class CameraConfigurationUtils {
         float step = parameters.getExposureCompensationStep();
         if ((minExposure != 0 || maxExposure != 0) && step > 0.0f) {
             // Set low when light is on
-            float targetCompensation = lightOn ? MIN_EXPOSURE_COMPENSATION : MAX_EXPOSURE_COMPENSATION;
+            float targetCompensation =
+                    lightOn ? MIN_EXPOSURE_COMPENSATION : MAX_EXPOSURE_COMPENSATION;
             int compensationSteps = Math.round(targetCompensation / step);
             float actualCompensation = step * compensationSteps;
             // Clamp value:
             compensationSteps = Math.max(Math.min(compensationSteps, maxExposure), minExposure);
             if (parameters.getExposureCompensation() == compensationSteps) {
-                Log.i(TAG, "Exposure compensation already set to " + compensationSteps + " / " + actualCompensation);
+                Log.i(
+                        TAG,
+                        "Exposure compensation already set to "
+                                + compensationSteps
+                                + " / "
+                                + actualCompensation);
             } else {
-                Log.i(TAG, "Setting exposure compensation to " + compensationSteps + " / " + actualCompensation);
+                Log.i(
+                        TAG,
+                        "Setting exposure compensation to "
+                                + compensationSteps
+                                + " / "
+                                + actualCompensation);
                 parameters.setExposureCompensation(compensationSteps);
             }
         } else {
@@ -164,7 +181,8 @@ public final class CameraConfigurationUtils {
                     Log.i(TAG, "FPS range already set to " + Arrays.toString(suitableFPSRange));
                 } else {
                     Log.i(TAG, "Setting FPS range to " + Arrays.toString(suitableFPSRange));
-                    parameters.setPreviewFpsRange(suitableFPSRange[Camera.Parameters.PREVIEW_FPS_MIN_INDEX],
+                    parameters.setPreviewFpsRange(
+                            suitableFPSRange[Camera.Parameters.PREVIEW_FPS_MIN_INDEX],
                             suitableFPSRange[Camera.Parameters.PREVIEW_FPS_MAX_INDEX]);
                 }
             }
@@ -220,9 +238,11 @@ public final class CameraConfigurationUtils {
             Log.i(TAG, "Barcode scene mode already set");
             return;
         }
-        String sceneMode = findSettableValue("scene mode",
-                parameters.getSupportedSceneModes(),
-                Camera.Parameters.SCENE_MODE_BARCODE);
+        String sceneMode =
+                findSettableValue(
+                        "scene mode",
+                        parameters.getSupportedSceneModes(),
+                        Camera.Parameters.SCENE_MODE_BARCODE);
         if (sceneMode != null) {
             parameters.setSceneMode(sceneMode);
         }
@@ -245,7 +265,8 @@ public final class CameraConfigurationUtils {
         }
     }
 
-    private static Integer indexOfClosestZoom(Camera.Parameters parameters, double targetZoomRatio) {
+    private static Integer indexOfClosestZoom(
+            Camera.Parameters parameters, double targetZoomRatio) {
         List<Integer> ratios = parameters.getZoomRatios();
         Log.i(TAG, "Zoom ratios: " + ratios);
         int maxZoom = parameters.getMaxZoom();
@@ -272,17 +293,18 @@ public final class CameraConfigurationUtils {
             Log.i(TAG, "Negative effect already set");
             return;
         }
-        String colorMode = findSettableValue("color effect",
-                parameters.getSupportedColorEffects(),
-                Camera.Parameters.EFFECT_NEGATIVE);
+        String colorMode =
+                findSettableValue(
+                        "color effect",
+                        parameters.getSupportedColorEffects(),
+                        Camera.Parameters.EFFECT_NEGATIVE);
         if (colorMode != null) {
             parameters.setColorEffect(colorMode);
         }
     }
 
-    private static String findSettableValue(String name,
-                                            Collection<String> supportedValues,
-                                            String... desiredValues) {
+    private static String findSettableValue(
+            String name, Collection<String> supportedValues, String... desiredValues) {
         Log.i(TAG, "Requesting " + name + " value from among: " + Arrays.toString(desiredValues));
         Log.i(TAG, "Supported " + name + " values: " + supportedValues);
         if (supportedValues != null) {

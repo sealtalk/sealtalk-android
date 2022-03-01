@@ -2,7 +2,6 @@ package cn.rongcloud.im.utils;
 
 import android.content.Context;
 import android.text.TextUtils;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -25,15 +24,16 @@ public class SearchUtils {
         mContext = context.getApplicationContext();
     }
 
-    public synchronized static void init(Context context) {
+    public static synchronized void init(Context context) {
         if (instance == null) {
             instance = new SearchUtils(context);
         }
     }
 
-    private synchronized static HashMap<String, ArrayList<String>> getHanziMap() {
+    private static synchronized HashMap<String, ArrayList<String>> getHanziMap() {
         HashMap<String, ArrayList<String>> pinyinHashMap;
-        if (instance.softHanziMap == null || (pinyinHashMap = instance.softHanziMap.get()) == null) {
+        if (instance.softHanziMap == null
+                || (pinyinHashMap = instance.softHanziMap.get()) == null) {
             pinyinHashMap = instance.loadHanziMap();
             instance.softHanziMap = new SoftReference<>(pinyinHashMap);
         }
@@ -43,7 +43,10 @@ public class SearchUtils {
     private HashMap<String, ArrayList<String>> loadHanziMap() {
         HashMap<String, ArrayList<String>> tmpMap = new HashMap<>();
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(mContext.getAssets().open("unicode_to_hanyu_pinyin.txt")));
+            BufferedReader br =
+                    new BufferedReader(
+                            new InputStreamReader(
+                                    mContext.getAssets().open("unicode_to_hanyu_pinyin.txt")));
             String line = br.readLine();
             char[] ch = new char[1];
             while (line != null) {
@@ -55,8 +58,7 @@ public class SearchUtils {
                         value = value.substring(1, value.length() - 1);
                         String[] vs = value.split(",");
                         ArrayList<String> values = new ArrayList<>();
-                        for (String v :
-                                vs) {
+                        for (String v : vs) {
                             String pinyin = v.substring(0, v.length() - 1);
                             if (!values.contains(pinyin)) {
                                 values.add(values.size(), pinyin);
@@ -79,9 +81,9 @@ public class SearchUtils {
     }
 
     /**
-     * 例1: name = 乐查. return = $lecha|$lezha|$yuecha|$yuezha|$cha|$zha|
-     * 例2: name = 一一一乐查. return = $yiyiyilecha|$yiyiyiyuecha|$yiyilecha|$yiyiyuecha|$yilecha|$yiyuecha|$lecha|$yuecha|$cha|
-     * 例3: name = 一一一一乐查. return = $yiyiyiyilecha|$yiyiyilecha|$yiyilecha|$yilecha|$lecha|$cha|
+     * 例1: name = 乐查. return = $lecha|$lezha|$yuecha|$yuezha|$cha|$zha| 例2: name = 一一一乐查. return =
+     * $yiyiyilecha|$yiyiyiyuecha|$yiyilecha|$yiyiyuecha|$yilecha|$yiyuecha|$lecha|$yuecha|$cha| 例3:
+     * name = 一一一一乐查. return = $yiyiyiyilecha|$yiyiyilecha|$yiyilecha|$yilecha|$lecha|$cha|
      */
     public static String fullSearchableString(String name) {
         if (TextUtils.isEmpty(name)) {
@@ -101,9 +103,8 @@ public class SearchUtils {
     }
 
     /**
-     * 例1: name = 乐查. return = [lc, lz, yc, yz]
-     * 例2: name = 一一一乐查. return = [yyylc, yyyyc]
-     * 例3: name = 一一一一乐查. return = [yyyylc]
+     * 例1: name = 乐查. return = [lc, lz, yc, yz] 例2: name = 一一一乐查. return = [yyylc, yyyyc] 例3: name =
+     * 一一一一乐查. return = [yyyylc]
      */
     private static List<String> initialKeyword(String name) {
         List<List<String>> lists = new ArrayList<>();
@@ -130,9 +131,8 @@ public class SearchUtils {
     }
 
     /**
-     * 例1: name = 乐查. return = lc|lz|yc|yz|
-     * 例2: name = 一一一乐查. return = yyylc|yyyyc|
-     * 例3: name = 一一一一乐查. return = yyyylc|
+     * 例1: name = 乐查. return = lc|lz|yc|yz| 例2: name = 一一一乐查. return = yyylc|yyyyc| 例3: name =
+     * 一一一一乐查. return = yyyylc|
      */
     public static String initialSearchableString(String name) {
         if (TextUtils.isEmpty(name)) {
@@ -151,9 +151,8 @@ public class SearchUtils {
     }
 
     /**
-     * 例1: name = 乐查. return = [[le, yue], [cha, zha]]
-     * 例2: name = 一一一乐查. return = [[yi], [yi], [yi], [le, yue], [cha]]
-     * 例3: name = 一一一一乐查. return = [[yi], [yi], [yi], [yi], [le], [cha]]
+     * 例1: name = 乐查. return = [[le, yue], [cha, zha]] 例2: name = 一一一乐查. return = [[yi], [yi], [yi],
+     * [le, yue], [cha]] 例3: name = 一一一一乐查. return = [[yi], [yi], [yi], [yi], [le], [cha]]
      */
     private static List<List<String>> hanziToPinyin(String name) {
         List<List<String>> lists = new ArrayList<>();
@@ -174,9 +173,8 @@ public class SearchUtils {
     }
 
     /**
-     * 例1: name = 乐查. return = [lecha, lezha, yuecha, yuezha]
-     * 例2: name = 一一一乐查. return = [yiyiyilecha, yiyiyiyuecha]
-     * 例2: name = 一一一一乐查. return = [yiyiyiyilecha]
+     * 例1: name = 乐查. return = [lecha, lezha, yuecha, yuezha] 例2: name = 一一一乐查. return =
+     * [yiyiyilecha, yiyiyiyuecha] 例2: name = 一一一一乐查. return = [yiyiyiyilecha]
      */
     private static List<String> hanziToPinyinCombination(String name) {
         return combinations(hanziToPinyin(name));
@@ -214,7 +212,7 @@ public class SearchUtils {
         }
         return combinationList;
     }
-    //TODO 这个地方有问题，输入"i"时，结果显示不对。
+    // TODO 这个地方有问题，输入"i"时，结果显示不对。
     public static Range rangeOfKeyword(String name, String keyword) {
         Range range;
 
@@ -347,16 +345,12 @@ public class SearchUtils {
         return null;
     }
 
-    /**
-     * attention: the range of '王' in "王明强" is 0, 0
-     */
+    /** attention: the range of '王' in "王明强" is 0, 0 */
     public static class Range {
         private int start;
         private int end;
 
-        public Range() {
-
-        }
+        public Range() {}
 
         public Range(int start, int end) {
             this.start = start;

@@ -10,21 +10,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.activity.TitleBaseActivity;
 import cn.rongcloud.im.utils.ToastUtils;
 import io.rong.imkit.IMCenter;
-import io.rong.imlib.ReadReceiptV2Manager;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.IRongCoreEnum;
+import io.rong.imlib.ReadReceiptV2Manager;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.GroupMessageReader;
 import io.rong.imlib.model.Message;
 import io.rong.message.TextMessage;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * @decription 群已读回执V2功能测试页面
@@ -50,73 +50,96 @@ public class GRRSenderTestActivity extends TitleBaseActivity {
     }
 
     private void initView() {
-        getTitleBar().setTitle(getResources().getString(R.string.seal_mine_about_group_read_receipt_test));
+        getTitleBar()
+                .setTitle(
+                        getResources().getString(R.string.seal_mine_about_group_read_receipt_test));
 
         readReceiptUserListView = (ListView) findViewById(R.id.lv_read_receipt_user_list_content);
-        displayToRecceiveReadReceiptCmd = (TextView) findViewById(R.id.tv_receive_read_receipt_count);
+        displayToRecceiveReadReceiptCmd =
+                (TextView) findViewById(R.id.tv_receive_read_receipt_count);
         displayToGetReadReceiptUserList = (TextView) findViewById(R.id.tv_get_read_receipt_count);
         btnSendGroupMsg = (Button) findViewById(R.id.btn_send_group_msg);
         btnGetReadReceiptUserList = (Button) findViewById(R.id.btn_get_read_receipt_user_list);
 
         String groupId = getIntent().getStringExtra("groupId");
-        Conversation.ConversationType conversationType = Conversation.ConversationType.setValue(getIntent().getIntExtra("conversationType", 0));
+        Conversation.ConversationType conversationType =
+                Conversation.ConversationType.setValue(
+                        getIntent().getIntExtra("conversationType", 0));
         displayToRecceiveReadReceiptCmd.setText(getDisplayCount(0, 0));
 
         adapter = new GroupReadReceiptAdapter();
         readReceiptUserListView.setAdapter(adapter);
 
-        btnSendGroupMsg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (conversationType != Conversation.ConversationType.GROUP) {
-                    ToastUtils.showToast("只支持群组会话");
-                    return;
-                }
-                TextMessage textMessage = TextMessage.obtain("群已读回执:" + new Random().nextInt(10000));
-                Message message = Message.obtain(groupId, conversationType, textMessage);
-                IMCenter.getInstance().sendMessage(message, null, null, new IRongCallback.ISendMessageCallback() {
+        btnSendGroupMsg.setOnClickListener(
+                new View.OnClickListener() {
                     @Override
-                    public void onAttached(Message message) {
+                    public void onClick(View v) {
+                        if (conversationType != Conversation.ConversationType.GROUP) {
+                            ToastUtils.showToast("只支持群组会话");
+                            return;
+                        }
+                        TextMessage textMessage =
+                                TextMessage.obtain("群已读回执:" + new Random().nextInt(10000));
+                        Message message = Message.obtain(groupId, conversationType, textMessage);
+                        IMCenter.getInstance()
+                                .sendMessage(
+                                        message,
+                                        null,
+                                        null,
+                                        new IRongCallback.ISendMessageCallback() {
+                                            @Override
+                                            public void onAttached(Message message) {}
 
-                    }
+                                            @Override
+                                            public void onSuccess(Message message) {
+                                                ToastUtils.showToast("发送成功");
+                                                message1 = message;
+                                            }
 
-                    @Override
-                    public void onSuccess(Message message) {
-                        ToastUtils.showToast("发送成功");
-                        message1 = message;
-                    }
-
-                    @Override
-                    public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-                        ToastUtils.showToast("发送失败" + errorCode.code);
-                    }
-                });
-            }
-        });
-
-        btnGetReadReceiptUserList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ReadReceiptV2Manager.getInstance().getGroupMessageReaderList(message1, new ReadReceiptV2Manager.IGetMessageReadUserListCallback() {
-                    @Override
-                    public void onSuccess(int members, List<GroupMessageReader> users) {
-                        ToastUtils.showToast("获取成功");
-                        String getDisplayCountTx = String.format(getString(R.string.debug_group_read_receipt_count_get_display_tx), members);
-                        displayToGetReadReceiptUserList.setText(getDisplayCountTx);
-
-                        contentList.clear();
-                        contentList.addAll(users);
-                        adapter.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onError(IRongCoreEnum.CoreErrorCode coreErrorCode) {
-                        ToastUtils.showToast("获取失败-" + coreErrorCode.code);
+                                            @Override
+                                            public void onError(
+                                                    Message message,
+                                                    RongIMClient.ErrorCode errorCode) {
+                                                ToastUtils.showToast("发送失败" + errorCode.code);
+                                            }
+                                        });
                     }
                 });
 
-            }
-        });
+        btnGetReadReceiptUserList.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ReadReceiptV2Manager.getInstance()
+                                .getGroupMessageReaderList(
+                                        message1,
+                                        new ReadReceiptV2Manager.IGetMessageReadUserListCallback() {
+                                            @Override
+                                            public void onSuccess(
+                                                    int members, List<GroupMessageReader> users) {
+                                                ToastUtils.showToast("获取成功");
+                                                String getDisplayCountTx =
+                                                        String.format(
+                                                                getString(
+                                                                        R.string
+                                                                                .debug_group_read_receipt_count_get_display_tx),
+                                                                members);
+                                                displayToGetReadReceiptUserList.setText(
+                                                        getDisplayCountTx);
+
+                                                contentList.clear();
+                                                contentList.addAll(users);
+                                                adapter.notifyDataSetChanged();
+                                            }
+
+                                            @Override
+                                            public void onError(
+                                                    IRongCoreEnum.CoreErrorCode coreErrorCode) {
+                                                ToastUtils.showToast("获取失败-" + coreErrorCode.code);
+                                            }
+                                        });
+                    }
+                });
 
         // 添加会话界面
         CustomConversationFragment conversationFragment = new CustomConversationFragment();
@@ -127,10 +150,14 @@ public class GRRSenderTestActivity extends TitleBaseActivity {
     }
 
     private String getDisplayCount(int readCount, int totalCount) {
-        String displayCount = String.format(getResources().getString(R.string.debug_group_read_receipt_count_display_tx), readCount, totalCount);
+        String displayCount =
+                String.format(
+                        getResources()
+                                .getString(R.string.debug_group_read_receipt_count_display_tx),
+                        readCount,
+                        totalCount);
         return displayCount;
     }
-
 
     private class GroupReadReceiptAdapter extends BaseAdapter {
 
@@ -152,7 +179,9 @@ public class GRRSenderTestActivity extends TitleBaseActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_msg_extra_status, null);
+                convertView =
+                        LayoutInflater.from(parent.getContext())
+                                .inflate(R.layout.item_msg_extra_status, null);
             }
             TextView tvCotent = convertView.findViewById(R.id.tv_content);
             GroupMessageReader user = contentList.get(position);

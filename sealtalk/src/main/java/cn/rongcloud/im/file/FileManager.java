@@ -7,25 +7,10 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
-
-import com.qiniu.android.http.ResponseInfo;
-import com.qiniu.android.storage.UpCompletionHandler;
-import com.qiniu.android.storage.UploadManager;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
 import cn.rongcloud.im.SealApp;
 import cn.rongcloud.im.common.ErrorCode;
 import cn.rongcloud.im.common.LogTag;
@@ -41,9 +26,18 @@ import cn.rongcloud.im.net.service.UserService;
 import cn.rongcloud.im.utils.FileUtils;
 import cn.rongcloud.im.utils.NetworkOnlyResource;
 import cn.rongcloud.im.utils.log.SLog;
-import io.rong.imlib.NativeClient;
+import com.qiniu.android.http.ResponseInfo;
+import com.qiniu.android.storage.UpCompletionHandler;
+import com.qiniu.android.storage.UploadManager;
 import io.rong.message.utils.BitmapUtil;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import okhttp3.ResponseBody;
+import org.json.JSONException;
+import org.json.JSONObject;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -69,13 +63,16 @@ public class FileManager {
     public LiveData<Resource<String>> saveBitmapToPictures(Bitmap bitmap, String fileName) {
         MutableLiveData<Resource<String>> result = new MutableLiveData<>();
         result.postValue(Resource.loading(null));
-        ThreadManager.getInstance().runOnWorkThread(new Runnable() {
-            @Override
-            public void run() {
-                String path = FileUtils.saveBitmapToPublicPictures(bitmap, fileName);
-                result.postValue(Resource.success(path));
-            }
-        });
+        ThreadManager.getInstance()
+                .runOnWorkThread(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                String path =
+                                        FileUtils.saveBitmapToPublicPictures(bitmap, fileName);
+                                result.postValue(Resource.success(path));
+                            }
+                        });
         return result;
     }
 
@@ -88,13 +85,15 @@ public class FileManager {
     public LiveData<Resource<String>> saveBitmapToCache(Bitmap bitmap, String fileName) {
         MutableLiveData<Resource<String>> result = new MutableLiveData<>();
         result.postValue(Resource.loading(null));
-        ThreadManager.getInstance().runOnWorkThread(new Runnable() {
-            @Override
-            public void run() {
-                String path = FileUtils.saveBitmapToCache(bitmap, fileName);
-                result.postValue(Resource.success(path));
-            }
-        });
+        ThreadManager.getInstance()
+                .runOnWorkThread(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                String path = FileUtils.saveBitmapToCache(bitmap, fileName);
+                                result.postValue(Resource.success(path));
+                            }
+                        });
         return result;
     }
 
@@ -129,42 +128,52 @@ public class FileManager {
     public LiveData<Resource<String>> uploadImage(Uri imageUri) {
         MediatorLiveData<Resource<String>> result = new MediatorLiveData<>();
         LiveData<Resource<UploadTokenResult>> imageUploadTokenResource = getUploadToken();
-        result.addSource(imageUploadTokenResource, tokenResultResource -> {
-            // 当有结果时移除数据源
-            if (tokenResultResource.status != Status.LOADING) {
-                result.removeSource(imageUploadTokenResource);
-            }
-
-            // 获取 token 失败时返回错误
-            if (tokenResultResource.status == Status.ERROR) {
-                result.setValue(Resource.error(tokenResultResource.code, null));
-                return;
-            }
-
-            if (tokenResultResource.status == Status.SUCCESS) {
-                UploadTokenResult tokenResult = tokenResultResource.data;
-                // 当获取 token 成功时上传服务器至七牛，目前没有其他云服务器所以不做类型判断
-                LiveData<Resource<String>> uploadResource = uploadFileByQiNiu(imageUri, tokenResult.getToken());
-                result.addSource(uploadResource, uploadResultResource -> {
+        result.addSource(
+                imageUploadTokenResource,
+                tokenResultResource -> {
                     // 当有结果时移除数据源
-                    if (uploadResultResource.status != Status.LOADING) {
-                        result.removeSource(uploadResource);
+                    if (tokenResultResource.status != Status.LOADING) {
+                        result.removeSource(imageUploadTokenResource);
                     }
 
-                    // 获取上传失败时返回错误
-                    if (uploadResultResource.status == Status.ERROR) {
-                        result.setValue(Resource.error(uploadResultResource.code, null));
+                    // 获取 token 失败时返回错误
+                    if (tokenResultResource.status == Status.ERROR) {
+                        result.setValue(Resource.error(tokenResultResource.code, null));
                         return;
                     }
 
-                    if (uploadResultResource.status == Status.SUCCESS) {
-                        // 返回上传后结果 url
-                        String resultUrl = "http://" + tokenResult.getDomain() + "/" + uploadResultResource.data;
-                        result.setValue(Resource.success(resultUrl));
+                    if (tokenResultResource.status == Status.SUCCESS) {
+                        UploadTokenResult tokenResult = tokenResultResource.data;
+                        // 当获取 token 成功时上传服务器至七牛，目前没有其他云服务器所以不做类型判断
+                        LiveData<Resource<String>> uploadResource =
+                                uploadFileByQiNiu(imageUri, tokenResult.getToken());
+                        result.addSource(
+                                uploadResource,
+                                uploadResultResource -> {
+                                    // 当有结果时移除数据源
+                                    if (uploadResultResource.status != Status.LOADING) {
+                                        result.removeSource(uploadResource);
+                                    }
+
+                                    // 获取上传失败时返回错误
+                                    if (uploadResultResource.status == Status.ERROR) {
+                                        result.setValue(
+                                                Resource.error(uploadResultResource.code, null));
+                                        return;
+                                    }
+
+                                    if (uploadResultResource.status == Status.SUCCESS) {
+                                        // 返回上传后结果 url
+                                        String resultUrl =
+                                                "http://"
+                                                        + tokenResult.getDomain()
+                                                        + "/"
+                                                        + uploadResultResource.data;
+                                        result.setValue(Resource.success(resultUrl));
+                                    }
+                                });
                     }
                 });
-            }
-        });
         return result;
     }
 
@@ -200,24 +209,32 @@ public class FileManager {
             uploadFile = new File(getRealPathFromUri(fileUri));
         }
         UploadManager uploadManager = new UploadManager();
-        uploadManager.put(uploadFile, null, uploadToken, new UpCompletionHandler() {
-            @Override
-            public void complete(String s, ResponseInfo responseInfo, JSONObject jsonObject) {
-                if (responseInfo.isOK()) {
-                    try {
-                        String key = (String) jsonObject.get("key");
-                        result.postValue(Resource.success(key));
-                    } catch (JSONException e) {
-                        SLog.e(LogTag.API, "qiniu upload success,but cannot get key");
-                        result.postValue(Resource.error(ErrorCode.API_ERR_OTHER.getCode(), null));
+        uploadManager.put(
+                uploadFile,
+                null,
+                uploadToken,
+                new UpCompletionHandler() {
+                    @Override
+                    public void complete(
+                            String s, ResponseInfo responseInfo, JSONObject jsonObject) {
+                        if (responseInfo.isOK()) {
+                            try {
+                                String key = (String) jsonObject.get("key");
+                                result.postValue(Resource.success(key));
+                            } catch (JSONException e) {
+                                SLog.e(LogTag.API, "qiniu upload success,but cannot get key");
+                                result.postValue(
+                                        Resource.error(ErrorCode.API_ERR_OTHER.getCode(), null));
+                            }
+                        } else {
+                            int statusCode = responseInfo.statusCode;
+                            SLog.e(LogTag.API, "qiniu upload failed, status code:" + statusCode);
+                            result.postValue(
+                                    Resource.error(ErrorCode.API_ERR_OTHER.getCode(), null));
+                        }
                     }
-                } else {
-                    int statusCode = responseInfo.statusCode;
-                    SLog.e(LogTag.API, "qiniu upload failed, status code:" + statusCode);
-                    result.postValue(Resource.error(ErrorCode.API_ERR_OTHER.getCode(), null));
-                }
-            }
-        }, null);
+                },
+                null);
 
         return result;
     }
@@ -244,7 +261,7 @@ public class FileManager {
     }
 
     private static int COMPRESSED_SIZE = 1080;
-    private final static String IMAGE_LOCAL_PATH = "/image/local/seal/";
+    private static final String IMAGE_LOCAL_PATH = "/image/local/seal/";
     private static int MAX_ORIGINAL_IMAGE_SIZE = 500;
     private static int COMPRESSED_FULL_QUALITY = 100;
     private static int COMPRESSED_QUALITY = 70;
@@ -258,7 +275,14 @@ public class FileManager {
         if (contentUri.getScheme().equals("file")) {
             localPath = contentUri.toString().substring(5);
         } else if (contentUri.getScheme().equals("content")) {
-            Cursor cursor = context.getContentResolver().query(contentUri, new String[]{MediaStore.Images.Media.DATA}, null, null, null);
+            Cursor cursor =
+                    context.getContentResolver()
+                            .query(
+                                    contentUri,
+                                    new String[] {MediaStore.Images.Media.DATA},
+                                    null,
+                                    null,
+                                    null);
             cursor.moveToFirst();
             localPath = cursor.getString(0);
             cursor.close();
@@ -268,15 +292,15 @@ public class FileManager {
         long fileSize = file.length() / 1024;
         Bitmap bitmap = null;
         try {
-            Log.e("uploadCompressImage","localPath***" + localPath);
-            bitmap = BitmapUtil.getNewResizedBitmap(context,
-                    Uri.parse("file://"+localPath), COMPRESSED_SIZE);
+            Log.e("uploadCompressImage", "localPath***" + localPath);
+            bitmap =
+                    BitmapUtil.getNewResizedBitmap(
+                            context, Uri.parse("file://" + localPath), COMPRESSED_SIZE);
             if (bitmap != null) {
                 String dir = uri.toString() + IMAGE_LOCAL_PATH;
-                Log.e("uploadCompressImage","dir***" + dir);
+                Log.e("uploadCompressImage", "dir***" + dir);
                 file = new File(dir);
-                if (!file.exists())
-                    file.mkdirs();
+                if (!file.exists()) file.mkdirs();
                 file = new File(dir + file.getName());
                 BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
                 boolean success;
@@ -292,10 +316,9 @@ public class FileManager {
                     bitmap.compress(Bitmap.CompressFormat.PNG, quality, bos);
                 }
                 bos.close();
-//                model.setLocalUri(Uri.parse("file://" + dir + name));
-                Log.e("uploadCompressImage","file://" + dir + file.getName());
-                if (!bitmap.isRecycled())
-                    bitmap.recycle();
+                //                model.setLocalUri(Uri.parse("file://" + dir + name));
+                Log.e("uploadCompressImage", "file://" + dir + file.getName());
+                if (!bitmap.isRecycled()) bitmap.recycle();
                 return uploadImage(Uri.parse("file://" + dir + file.getName()));
             }
         } catch (IOException e) {
@@ -306,7 +329,7 @@ public class FileManager {
 
     public static String getSavePath() {
         File saveFileDirectory = SealApp.getApplication().getExternalCacheDir();
-        if(saveFileDirectory == null){
+        if (saveFileDirectory == null) {
             saveFileDirectory = SealApp.getApplication().getCacheDir();
         }
         if (!saveFileDirectory.exists()) {
@@ -325,20 +348,22 @@ public class FileManager {
      */
     public LiveData<Resource<String>> downloadFile(String downloadFilePath, String saveFilePath) {
         MutableLiveData<Resource<String>> result = new MutableLiveData<>();
-        appService.downloadFile(downloadFilePath).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                InputStream inputStream = response.body().byteStream();
-                File saveFile = new File(saveFilePath);
+        appService
+                .downloadFile(downloadFilePath)
+                .enqueue(
+                        new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(
+                                    Call<ResponseBody> call, Response<ResponseBody> response) {
+                                InputStream inputStream = response.body().byteStream();
+                                File saveFile = new File(saveFilePath);
 
-                //TODO input 写进 file
-            }
+                                // TODO input 写进 file
+                            }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {}
+                        });
         return result;
     }
 }

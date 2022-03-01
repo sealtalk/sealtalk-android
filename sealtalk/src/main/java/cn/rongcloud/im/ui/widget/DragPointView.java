@@ -26,7 +26,6 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.AbsListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
 import androidx.viewpager.widget.ViewPager;
 
 @SuppressLint("AppCompatCustomView")
@@ -67,28 +66,36 @@ public class DragPointView extends TextView {
     @SuppressWarnings("deprecation")
     public void setBackgroundColor(int backgroundColor) {
         this.backgroundColor = backgroundColor;
-        DragPointView.this.setBackgroundDrawable(createStateListDrawable((getHeight() > getWidth() ? getHeight()
-                : getWidth()) / 2, backgroundColor));
+        DragPointView.this.setBackgroundDrawable(
+                createStateListDrawable(
+                        (getHeight() > getWidth() ? getHeight() : getWidth()) / 2,
+                        backgroundColor));
     }
 
     private void initbg() {
         setGravity(Gravity.CENTER);
-        getViewTreeObserver().addOnPreDrawListener(new OnPreDrawListener() {
+        getViewTreeObserver()
+                .addOnPreDrawListener(
+                        new OnPreDrawListener() {
 
-            @SuppressWarnings("deprecation")
-            @Override
-            public boolean onPreDraw() {
-                if (!initBgFlag) {
-                    DragPointView.this.setBackgroundDrawable(createStateListDrawable(
-                                (getHeight() > getWidth() ? getHeight() : getWidth()) / 2, backgroundColor));
-                    initBgFlag = true;
-                    return false;
-                }
-                return true;
-            }
-        });
+                            @SuppressWarnings("deprecation")
+                            @Override
+                            public boolean onPreDraw() {
+                                if (!initBgFlag) {
+                                    DragPointView.this.setBackgroundDrawable(
+                                            createStateListDrawable(
+                                                    (getHeight() > getWidth()
+                                                                    ? getHeight()
+                                                                    : getWidth())
+                                                            / 2,
+                                                    backgroundColor));
+                                    initBgFlag = true;
+                                    return false;
+                                }
+                                return true;
+                            }
+                        });
     }
-
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -110,7 +117,8 @@ public class DragPointView extends TextView {
                 y = location[1] + (getHeight() / 2) - p[1];
                 r = (getWidth() + getHeight()) / 4;
                 pointView = new PointView(getContext());
-                pointView.setLayoutParams(new ViewGroup.LayoutParams(root.getWidth(), root.getHeight()));
+                pointView.setLayoutParams(
+                        new ViewGroup.LayoutParams(root.getWidth(), root.getHeight()));
                 setDrawingCacheEnabled(true);
                 pointView.catchBitmap = getDrawingCache();
                 pointView.setLocation(x, y, r, event.getRawX() - p[0], event.getRawY() - p[1]);
@@ -127,7 +135,7 @@ public class DragPointView extends TextView {
                 }
                 if (!pointView.broken) { // 没有拉断
                     pointView.cancel();
-                } else if (pointView.nearby) {// 拉断了,但是又回去了
+                } else if (pointView.nearby) { // 拉断了,但是又回去了
                     pointView.cancel();
                 } else { // 彻底拉断了
                     pointView.broken();
@@ -148,8 +156,7 @@ public class DragPointView extends TextView {
             } catch (ClassCastException e) {
                 return null;
             }
-            if (v == null)
-                return null;
+            if (v == null) return null;
             if (v instanceof AbsListView || v instanceof ScrollView || v instanceof ViewPager) {
                 return (ViewGroup) v;
             }
@@ -231,17 +238,22 @@ public class DragPointView extends TextView {
                     canvas.drawCircle(c1.x, c1.y, c1.r, paint);
                     path.moveTo((float) (c1.x - c1.r * sin), (float) (c1.y - c1.r * cos));
                     path.lineTo((float) (c1.x + c1.r * sin), (float) (c1.y + c1.r * cos));
-                    path.quadTo((c1.x + c2.x) / 2, (c1.y + c2.y) / 2, (float) (c2.x + c2.r * sin), (float) (c2.y + c2.r
-                                * cos));
+                    path.quadTo(
+                            (c1.x + c2.x) / 2,
+                            (c1.y + c2.y) / 2,
+                            (float) (c2.x + c2.r * sin),
+                            (float) (c2.y + c2.r * cos));
                     path.lineTo((float) (c2.x - c2.r * sin), (float) (c2.y - c2.r * cos));
-                    path.quadTo((c1.x + c2.x) / 2, (c1.y + c2.y) / 2, (float) (c1.x - c1.r * sin), (float) (c1.y - c1.r
-                                * cos));
+                    path.quadTo(
+                            (c1.x + c2.x) / 2,
+                            (c1.y + c2.y) / 2,
+                            (float) (c1.x - c1.r * sin),
+                            (float) (c1.y - c1.r * cos));
                     canvas.drawPath(path, paint);
                 } else {
                     broken = true; // 已经拉断了
                 }
             }
-
         }
 
         public void cancel() {
@@ -250,37 +262,39 @@ public class DragPointView extends TextView {
             ValueAnimator animx = ValueAnimator.ofFloat(c2.x, c1.x);
             animx.setDuration(duration);
             animx.setInterpolator(new OvershootInterpolator(2));
-            animx.addUpdateListener(new AnimatorUpdateListener() {
+            animx.addUpdateListener(
+                    new AnimatorUpdateListener() {
 
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    c2.x = (float) animation.getAnimatedValue();
-                    invalidate();
-                }
-            });
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            c2.x = (float) animation.getAnimatedValue();
+                            invalidate();
+                        }
+                    });
             ValueAnimator animy = ValueAnimator.ofFloat(c2.y, c1.y);
             animy.setDuration(duration);
             animy.setInterpolator(new OvershootInterpolator(2));
-            animy.addUpdateListener(new AnimatorUpdateListener() {
+            animy.addUpdateListener(
+                    new AnimatorUpdateListener() {
 
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    c2.y = (float) animation.getAnimatedValue();
-                    invalidate();
-                }
-            });
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            c2.y = (float) animation.getAnimatedValue();
+                            invalidate();
+                        }
+                    });
             set.playTogether(animx, animy);
-            set.addListener(new AnimatorListenerAdapter() {
+            set.addListener(
+                    new AnimatorListenerAdapter() {
 
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    ViewGroup vg = (ViewGroup) PointView.this.getParent();
-                    vg.removeView(PointView.this);
-                    DragPointView.this.setVisibility(View.VISIBLE);
-                }
-            });
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            ViewGroup vg = (ViewGroup) PointView.this.getParent();
+                            vg.removeView(PointView.this);
+                            DragPointView.this.setVisibility(View.VISIBLE);
+                        }
+                    });
             set.start();
-
         }
 
         public void broken() {
@@ -289,21 +303,23 @@ public class DragPointView extends TextView {
             ValueAnimator a = ValueAnimator.ofInt(0, 100);
             a.setDuration(duration);
             a.setInterpolator(new LinearInterpolator());
-            a.addUpdateListener(new AnimatorUpdateListener() {
+            a.addUpdateListener(
+                    new AnimatorUpdateListener() {
 
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    brokenProgress = (int) animation.getAnimatedValue();
-                    invalidate();
-                }
-            });
-            a.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    ViewGroup vg = (ViewGroup) PointView.this.getParent();
-                    vg.removeView(PointView.this);
-                }
-            });
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            brokenProgress = (int) animation.getAnimatedValue();
+                            invalidate();
+                        }
+                    });
+            a.addListener(
+                    new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            ViewGroup vg = (ViewGroup) PointView.this.getParent();
+                            vg.removeView(PointView.this);
+                        }
+                    });
             a.start();
             if (dragListencer != null) {
                 dragListencer.onDragOut();
@@ -328,12 +344,11 @@ public class DragPointView extends TextView {
                 return distance;
             }
         }
-
     }
 
     /**
      * @param radius 圆角角度
-     * @param color  填充颜色
+     * @param color 填充颜色
      * @return StateListDrawable 对象
      * @author zy
      */
@@ -347,5 +362,4 @@ public class DragPointView extends TextView {
         bg.addState(View.EMPTY_STATE_SET, gradientStateNormal);
         return bg;
     }
-
 }

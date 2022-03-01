@@ -2,9 +2,7 @@ package cn.rongcloud.im.ui.adapter.viewholders;
 
 import android.view.View;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.adapter.models.ListItemModel;
 
@@ -17,18 +15,13 @@ public class CommonTextItemViewHolder extends BaseItemViewHolder<ListItemModel<S
     }
 
     @Override
-    public void setOnClickItemListener(View.OnClickListener listener) {
-
-    }
+    public void setOnClickItemListener(View.OnClickListener listener) {}
 
     @Override
-    public void setOnLongClickItemListener(View.OnLongClickListener listener) {
-
-    }
+    public void setOnLongClickItemListener(View.OnLongClickListener listener) {}
 
     @Override
     public void update(ListItemModel<String> contactModel) {
         tvTitle.setText(contactModel.getDisplayName());
     }
-
 }

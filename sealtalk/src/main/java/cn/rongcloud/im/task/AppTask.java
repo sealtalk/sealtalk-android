@@ -1,18 +1,15 @@
 package cn.rongcloud.im.task;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.LocaleList;
 import android.util.DisplayMetrics;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-
-import java.util.List;
-import java.util.Locale;
-
 import cn.rongcloud.im.model.ChatRoomResult;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Result;
@@ -24,8 +21,8 @@ import io.rong.imkit.utils.language.LangUtils;
 import io.rong.imkit.utils.language.RongConfigurationManager;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.common.BuildVar;
-
-import static android.content.Context.MODE_PRIVATE;
+import java.util.List;
+import java.util.Locale;
 
 public class AppTask {
 
@@ -33,7 +30,8 @@ public class AppTask {
     private Context context;
 
     public AppTask(Context context) {
-        appsService = HttpClientManager.getInstance(context).getClient().createService(AppService.class);
+        appsService =
+                HttpClientManager.getInstance(context).getClient().createService(AppService.class);
         this.context = context.getApplicationContext();
     }
 
@@ -88,7 +86,10 @@ public class AppTask {
      * @return
      */
     public LangUtils.RCLocale getLanguageLocal() {
-        LangUtils.RCLocale appLocale = RongConfigurationManager.getInstance().getAppLocale(context);// RongConfigurationManager.getInstance().getAppLocale(context);
+        LangUtils.RCLocale appLocale =
+                RongConfigurationManager.getInstance()
+                        .getAppLocale(
+                                context); // RongConfigurationManager.getInstance().getAppLocale(context);
         if (appLocale == LangUtils.RCLocale.LOCALE_AUTO) {
             Locale systemLocale = RongConfigurationManager.getInstance().getSystemLocale();
             if (systemLocale.getLanguage().equals(Locale.CHINESE.getLanguage())) {
@@ -110,11 +111,12 @@ public class AppTask {
      * @param selectedLocale
      */
     public boolean changeLanguage(LangUtils.RCLocale selectedLocale) {
-        //todo
-//        LangUtils.RCLocale appLocale = RongConfigurationManager.getInstance().getAppLocale(context);
-//        if (selectedLocale == appLocale) {
-//            return false;
-//        }
+        // todo
+        //        LangUtils.RCLocale appLocale =
+        // RongConfigurationManager.getInstance().getAppLocale(context);
+        //        if (selectedLocale == appLocale) {
+        //            return false;
+        //        }
 
         if (selectedLocale == LangUtils.RCLocale.LOCALE_CHINA) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -128,17 +130,18 @@ public class AppTask {
                 // 保存语言状态
                 LangUtils.saveLocale(context, selectedLocale);
 
-//                Resources resources = getResources();
-//                Configuration config = resources.getConfiguration();
-//                DisplayMetrics dm = resources.getDisplayMetrics();
-//                if (language.equals("en")) {
-//                    config.locale = Locale.ENGLISH;
-//                } else {
-//                    config.locale = Locale.SIMPLIFIED_CHINESE;
-//                }
-//                resources.updateConfiguration(config, dm);
+                //                Resources resources = getResources();
+                //                Configuration config = resources.getConfiguration();
+                //                DisplayMetrics dm = resources.getDisplayMetrics();
+                //                if (language.equals("en")) {
+                //                    config.locale = Locale.ENGLISH;
+                //                } else {
+                //                    config.locale = Locale.SIMPLIFIED_CHINESE;
+                //                }
+                //                resources.updateConfiguration(config, dm);
             } else {
-                RongConfigurationManager.getInstance().switchLocale(LangUtils.RCLocale.LOCALE_CHINA, context);
+                RongConfigurationManager.getInstance()
+                        .switchLocale(LangUtils.RCLocale.LOCALE_CHINA, context);
             }
             setPushLanguage(RongIMClient.PushLanguage.ZH_CN);
         } else if (selectedLocale == LangUtils.RCLocale.LOCALE_US) {
@@ -151,9 +154,10 @@ public class AppTask {
                 config.setLocales(localeList);
                 resources.updateConfiguration(config, dm);
                 LangUtils.saveLocale(context, selectedLocale);
-//                updateResources(context,"en");
+                //                updateResources(context,"en");
             } else {
-                RongConfigurationManager.getInstance().switchLocale(LangUtils.RCLocale.LOCALE_US, context);
+                RongConfigurationManager.getInstance()
+                        .switchLocale(LangUtils.RCLocale.LOCALE_US, context);
             }
             setPushLanguage(RongIMClient.PushLanguage.EN_US);
         } else if (selectedLocale == LangUtils.RCLocale.LOCALE_ARAB) {
@@ -167,9 +171,10 @@ public class AppTask {
                 resources.updateConfiguration(config, dm);
                 LangUtils.saveLocale(context, selectedLocale);
             } else {
-                RongConfigurationManager.getInstance().switchLocale(LangUtils.RCLocale.LOCALE_ARAB, context);
+                RongConfigurationManager.getInstance()
+                        .switchLocale(LangUtils.RCLocale.LOCALE_ARAB, context);
             }
-//            setPushLanguage(RongIMClient.PushLanguage.LOCALE_ARAB);
+            //            setPushLanguage(RongIMClient.PushLanguage.LOCALE_ARAB);
         }
 
         return true;
@@ -189,7 +194,6 @@ public class AppTask {
             res.updateConfiguration(config, res.getDisplayMetrics());
         }
         return context;
-
     }
 
     /**
@@ -198,19 +202,21 @@ public class AppTask {
      * @param language
      */
     public void setPushLanguage(RongIMClient.PushLanguage language) {
-        RongIMClient.getInstance().setPushLanguageCode(language.getMsg(), new RongIMClient.OperationCallback() {
-            @Override
-            public void onSuccess() {
-                //设置成功也存起来
-                //todo
-                // RongConfigurationManager.getInstance().setPushLanguage(context, language);
-            }
+        RongIMClient.getInstance()
+                .setPushLanguageCode(
+                        language.getMsg(),
+                        new RongIMClient.OperationCallback() {
+                            @Override
+                            public void onSuccess() {
+                                // 设置成功也存起来
+                                // todo
+                                // RongConfigurationManager.getInstance().setPushLanguage(context,
+                                // language);
+                            }
 
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-
-            }
-        });
+                            @Override
+                            public void onError(RongIMClient.ErrorCode errorCode) {}
+                        });
     }
 
     /**
@@ -219,7 +225,7 @@ public class AppTask {
      * @return
      */
     public boolean isDebugMode() {
-        //TODO 获取是否是 Debug 模式
+        // TODO 获取是否是 Debug 模式
         return context.getSharedPreferences("config", MODE_PRIVATE).getBoolean("isDebug", false);
     }
 }

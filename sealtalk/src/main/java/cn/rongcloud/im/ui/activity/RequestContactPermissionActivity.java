@@ -5,18 +5,15 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.utils.CheckPermissionUtils;
 import cn.rongcloud.im.utils.ToastUtils;
 
-/**
- * 请求通讯录权限界面
- */
-public class RequestContactPermissionActivity extends TitleBaseActivity implements View.OnClickListener {
+/** 请求通讯录权限界面 */
+public class RequestContactPermissionActivity extends TitleBaseActivity
+        implements View.OnClickListener {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,7 +28,8 @@ public class RequestContactPermissionActivity extends TitleBaseActivity implemen
     protected void onResume() {
         super.onResume();
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
+                == PackageManager.PERMISSION_GRANTED) {
             finish();
         }
     }
@@ -49,9 +47,7 @@ public class RequestContactPermissionActivity extends TitleBaseActivity implemen
         }
     }
 
-    /**
-     * 跳转到权限设置界面
-     */
+    /** 跳转到权限设置界面 */
     private void toSetting() {
         try {
             CheckPermissionUtils.toPermissionSetting(this);
@@ -59,7 +55,8 @@ public class RequestContactPermissionActivity extends TitleBaseActivity implemen
             try {
                 CheckPermissionUtils.startAppSetting(this);
             } catch (Exception e2) {
-                ToastUtils.showToast(R.string.new_friend_no_permission_can_not_to_setting, Toast.LENGTH_LONG);
+                ToastUtils.showToast(
+                        R.string.new_friend_no_permission_can_not_to_setting, Toast.LENGTH_LONG);
             }
         }
     }

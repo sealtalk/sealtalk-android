@@ -3,14 +3,12 @@ package cn.rongcloud.im.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * 国家信息类
- */
+/** 国家信息类 */
 public class CountryInfo implements Parcelable {
 
-    private String countryName;      //国家名
-    private String zipCode;          //区号
-    private String firstChar;        //首字母
+    private String countryName; // 国家名
+    private String zipCode; // 区号
+    private String firstChar; // 首字母
     private String countryNameCN;
     private String countryNameEN;
 
@@ -54,16 +52,25 @@ public class CountryInfo implements Parcelable {
         this.countryNameEN = countryNameEN;
     }
 
-
     @Override
     public String toString() {
-        return "CountryInfo{" +
-                "countryName='" + countryName + '\'' +
-                ", zipCode='" + zipCode + '\'' +
-                ", firstChar='" + firstChar + '\'' +
-                ", countryNameCN='" + countryNameCN + '\'' +
-                ", countryNameEN='" + countryNameEN + '\'' +
-                '}';
+        return "CountryInfo{"
+                + "countryName='"
+                + countryName
+                + '\''
+                + ", zipCode='"
+                + zipCode
+                + '\''
+                + ", firstChar='"
+                + firstChar
+                + '\''
+                + ", countryNameCN='"
+                + countryNameCN
+                + '\''
+                + ", countryNameEN='"
+                + countryNameEN
+                + '\''
+                + '}';
     }
 
     @Override
@@ -80,8 +87,7 @@ public class CountryInfo implements Parcelable {
         dest.writeString(this.countryNameEN);
     }
 
-    public CountryInfo() {
-    }
+    public CountryInfo() {}
 
     protected CountryInfo(Parcel in) {
         this.countryName = in.readString();
@@ -91,15 +97,16 @@ public class CountryInfo implements Parcelable {
         this.countryNameEN = in.readString();
     }
 
-    public static final Parcelable.Creator<CountryInfo> CREATOR = new Parcelable.Creator<CountryInfo>() {
-        @Override
-        public CountryInfo createFromParcel(Parcel source) {
-            return new CountryInfo(source);
-        }
+    public static final Parcelable.Creator<CountryInfo> CREATOR =
+            new Parcelable.Creator<CountryInfo>() {
+                @Override
+                public CountryInfo createFromParcel(Parcel source) {
+                    return new CountryInfo(source);
+                }
 
-        @Override
-        public CountryInfo[] newArray(int size) {
-            return new CountryInfo[size];
-        }
-    };
+                @Override
+                public CountryInfo[] newArray(int size) {
+                    return new CountryInfo[size];
+                }
+            };
 }

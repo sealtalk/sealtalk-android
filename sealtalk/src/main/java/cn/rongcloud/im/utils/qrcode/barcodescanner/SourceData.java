@@ -5,14 +5,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
-
 import com.google.zxing.PlanarYUVLuminanceSource;
-
 import java.io.ByteArrayOutputStream;
 
-/**
- * Raw preview data from a camera.
- */
+/** Raw preview data from a camera. */
 public class SourceData {
     /** Raw YUV data */
     private byte[] data;
@@ -26,14 +22,16 @@ public class SourceData {
     /** The format of the image data. ImageFormat.NV21 and ImageFormat.YUY2 are supported. */
     private int imageFormat;
 
-    /** Rotation in degrees (0, 90, 180 or 270). This is camera rotation relative to display rotation. */
+    /**
+     * Rotation in degrees (0, 90, 180 or 270). This is camera rotation relative to display
+     * rotation.
+     */
     private int rotation;
 
     /** Crop rectangle, in display orientation. */
     private Rect cropRect;
 
     /**
-     *
      * @param data the image data
      * @param dataWidth width of the data
      * @param dataHeight height of the data
@@ -46,10 +44,15 @@ public class SourceData {
         this.dataHeight = dataHeight;
         this.rotation = rotation;
         this.imageFormat = imageFormat;
-        if(dataWidth * dataHeight > data.length) {
-            throw new IllegalArgumentException("Image data does not match the resolution. " + dataWidth + "x" + dataHeight + " > " + data.length);
+        if (dataWidth * dataHeight > data.length) {
+            throw new IllegalArgumentException(
+                    "Image data does not match the resolution. "
+                            + dataWidth
+                            + "x"
+                            + dataHeight
+                            + " > "
+                            + data.length);
         }
-
     }
 
     public Rect getCropRect() {
@@ -69,26 +72,17 @@ public class SourceData {
         return data;
     }
 
-    /**
-     *
-     * @return width of the data
-     */
+    /** @return width of the data */
     public int getDataWidth() {
         return dataWidth;
     }
 
-    /**
-     *
-     * @return height of the data
-     */
+    /** @return height of the data */
     public int getDataHeight() {
         return dataHeight;
     }
 
-    /**
-     *
-     * @return true if the preview image is rotated orthogonal to the display
-     */
+    /** @return true if the preview image is rotated orthogonal to the display */
     public boolean isRotated() {
         return rotation % 180 != 0;
     }
@@ -103,9 +97,25 @@ public class SourceData {
         // not the preview for decoding.
         if (isRotated()) {
             //noinspection SuspiciousNameCombination
-            return new PlanarYUVLuminanceSource(rotated, dataHeight, dataWidth, cropRect.left, cropRect.top, cropRect.width(), cropRect.height(), false);
+            return new PlanarYUVLuminanceSource(
+                    rotated,
+                    dataHeight,
+                    dataWidth,
+                    cropRect.left,
+                    cropRect.top,
+                    cropRect.width(),
+                    cropRect.height(),
+                    false);
         } else {
-            return new PlanarYUVLuminanceSource(rotated, dataWidth, dataHeight, cropRect.left, cropRect.top, cropRect.width(), cropRect.height(), false);
+            return new PlanarYUVLuminanceSource(
+                    rotated,
+                    dataWidth,
+                    dataHeight,
+                    cropRect.left,
+                    cropRect.top,
+                    cropRect.width(),
+                    cropRect.height(),
+                    false);
         }
     }
 
@@ -129,7 +139,7 @@ public class SourceData {
     }
 
     private Bitmap getBitmap(Rect cropRect, int scaleFactor) {
-        if(isRotated()) {
+        if (isRotated()) {
             //noinspection SuspiciousNameCombination
             cropRect = new Rect(cropRect.top, cropRect.left, cropRect.bottom, cropRect.right);
         }
@@ -148,13 +158,22 @@ public class SourceData {
         if (rotation != 0) {
             Matrix imageMatrix = new Matrix();
             imageMatrix.postRotate(rotation);
-            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), imageMatrix, false);
+            bitmap =
+                    Bitmap.createBitmap(
+                            bitmap,
+                            0,
+                            0,
+                            bitmap.getWidth(),
+                            bitmap.getHeight(),
+                            imageMatrix,
+                            false);
         }
 
         return bitmap;
     }
 
-    public static byte[] rotateCameraPreview(int cameraRotation, byte[] data, int imageWidth, int imageHeight) {
+    public static byte[] rotateCameraPreview(
+            int cameraRotation, byte[] data, int imageWidth, int imageHeight) {
         switch (cameraRotation) {
             case 0:
                 return data;
@@ -173,8 +192,8 @@ public class SourceData {
     /**
      * Rotate an image by 90 degrees CW.
      *
-     * @param data        the image data, in with the first width * height bytes being the luminance data.
-     * @param imageWidth  the width of the image
+     * @param data the image data, in with the first width * height bytes being the luminance data.
+     * @param imageWidth the width of the image
      * @param imageHeight the height of the image
      * @return the rotated bytes
      */
@@ -196,8 +215,8 @@ public class SourceData {
     /**
      * Rotate an image by 180 degrees.
      *
-     * @param data        the image data, in with the first width * height bytes being the luminance data.
-     * @param imageWidth  the width of the image
+     * @param data the image data, in with the first width * height bytes being the luminance data.
+     * @param imageWidth the width of the image
      * @param imageHeight the height of the image
      * @return the rotated bytes
      */
@@ -216,8 +235,8 @@ public class SourceData {
     /**
      * Rotate an image by 90 degrees CCW.
      *
-     * @param data        the image data, in with the first width * height bytes being the luminance data.
-     * @param imageWidth  the width of the image
+     * @param data the image data, in with the first width * height bytes being the luminance data.
+     * @param imageWidth the width of the image
      * @param imageHeight the height of the image
      * @return the rotated bytes
      */

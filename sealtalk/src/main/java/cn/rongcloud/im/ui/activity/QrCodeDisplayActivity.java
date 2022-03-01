@@ -13,13 +13,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
-
-import java.io.File;
-import java.util.ArrayList;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.db.model.GroupEntity;
@@ -37,22 +32,19 @@ import cn.rongcloud.im.wx.WXManager;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.message.ImageMessage;
+import java.io.File;
+import java.util.ArrayList;
 
-/**
- * 显示二维码界面
- */
+/** 显示二维码界面 */
 public class QrCodeDisplayActivity extends TitleBaseActivity implements View.OnClickListener {
     private final String TAG = "QrCodeDisplayActivity";
-    static public final int REQUEST_CODE_ASK_PERMISSIONS = 100;
+    public static final int REQUEST_CODE_ASK_PERMISSIONS = 100;
     private final int REQUEST_CODE_FORWARD_TO_SEALTALK = 1000;
-    /**
-     * 分享类型定义：SealTalk
-     */
+    /** 分享类型定义：SealTalk */
     private final int SHARE_TYPE_SEALTALK = 0;
-    /**
-     * 分享类型定义：微信
-     */
+    /** 分享类型定义：微信 */
     private final int SHARE_TYPE_WECHAT = 1;
+
     private QrCodeDisplayType qrType;
     private String targetId;
     private String fromId;
@@ -67,7 +59,7 @@ public class QrCodeDisplayActivity extends TitleBaseActivity implements View.OnC
     private TextView qrNoCodeDescribeTv;
 
     private DisplayQRCodeViewModel qrCodeViewModel;
-    private int shareType = -1;// 分享类型，用于当保存
+    private int shareType = -1; // 分享类型，用于当保存
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,7 +73,9 @@ public class QrCodeDisplayActivity extends TitleBaseActivity implements View.OnC
             return;
         }
 
-        qrType = (QrCodeDisplayType) intent.getSerializableExtra(IntentExtra.SERIA_QRCODE_DISPLAY_TYPE);
+        qrType =
+                (QrCodeDisplayType)
+                        intent.getSerializableExtra(IntentExtra.SERIA_QRCODE_DISPLAY_TYPE);
         targetId = intent.getStringExtra(IntentExtra.STR_TARGET_ID);
         fromId = intent.getStringExtra(IntentExtra.START_FROM_ID);
 
@@ -134,60 +128,90 @@ public class QrCodeDisplayActivity extends TitleBaseActivity implements View.OnC
         qrCodeViewModel = ViewModelProviders.of(this).get(DisplayQRCodeViewModel.class);
 
         // 获取 QRCode 结果
-        qrCodeViewModel.getQRCode().observe(this, resource -> {
-            if (resource.data != null) {
-                qrCodeIv.setImageBitmap(resource.data);
-            }
-        });
+        qrCodeViewModel
+                .getQRCode()
+                .observe(
+                        this,
+                        resource -> {
+                            if (resource.data != null) {
+                                qrCodeIv.setImageBitmap(resource.data);
+                            }
+                        });
 
         ViewGroup.LayoutParams qrCodeLayoutParams = qrCodeIv.getLayoutParams();
 
         if (qrType == QrCodeDisplayType.GROUP) {
             // 获取群组信息结果
-            qrCodeViewModel.getGroupInfo().observe(this, resource -> {
-                if (resource.data != null) {
-                    updateGroupInfo(resource.data);
-                }
-            });
+            qrCodeViewModel
+                    .getGroupInfo()
+                    .observe(
+                            this,
+                            resource -> {
+                                if (resource.data != null) {
+                                    updateGroupInfo(resource.data);
+                                }
+                            });
             // 请求群组信息
             qrCodeViewModel.requestGroupInfo(targetId);
             // 获取群组二维码
-            qrCodeViewModel.requestGroupQRCode(targetId, fromId, qrCodeLayoutParams.width, qrCodeLayoutParams.height);
+            qrCodeViewModel.requestGroupQRCode(
+                    targetId, fromId, qrCodeLayoutParams.width, qrCodeLayoutParams.height);
         } else if (qrType == QrCodeDisplayType.PRIVATE) {
             // 获取用户信息结果
-            qrCodeViewModel.getUserInfo().observe(this, resource -> {
-                if (resource.data != null) {
-                    updateUserInfo(resource.data);
-                }
-            });
+            qrCodeViewModel
+                    .getUserInfo()
+                    .observe(
+                            this,
+                            resource -> {
+                                if (resource.data != null) {
+                                    updateUserInfo(resource.data);
+                                }
+                            });
 
             // 请求用户信息
             qrCodeViewModel.requestUserInfo(targetId);
             // 获取用户二维码
-            qrCodeViewModel.requestUserQRCode(targetId, qrCodeLayoutParams.width, qrCodeLayoutParams.height);
+            qrCodeViewModel.requestUserQRCode(
+                    targetId, qrCodeLayoutParams.width, qrCodeLayoutParams.height);
         }
 
         // 保存图片到本地
-        qrCodeViewModel.getSaveLocalBitmapResult().observe(this, resource -> {
-            if (resource.status == Status.SUCCESS) {
-                // 保存成功后加入媒体扫描中，使相册中可以显示此图片
-                MediaScannerConnection.scanFile(QrCodeDisplayActivity.this.getApplicationContext(), new String[]{resource.data}, null, null);
+        qrCodeViewModel
+                .getSaveLocalBitmapResult()
+                .observe(
+                        this,
+                        resource -> {
+                            if (resource.status == Status.SUCCESS) {
+                                // 保存成功后加入媒体扫描中，使相册中可以显示此图片
+                                MediaScannerConnection.scanFile(
+                                        QrCodeDisplayActivity.this.getApplicationContext(),
+                                        new String[] {resource.data},
+                                        null,
+                                        null);
 
-                String msg = QrCodeDisplayActivity.this.getString(R.string.profile_save_picture_at) + ":" + resource.data;
-                ToastUtils.showToast(msg, Toast.LENGTH_LONG);
-            }
-        });
+                                String msg =
+                                        QrCodeDisplayActivity.this.getString(
+                                                        R.string.profile_save_picture_at)
+                                                + ":"
+                                                + resource.data;
+                                ToastUtils.showToast(msg, Toast.LENGTH_LONG);
+                            }
+                        });
 
         // 分享至 SealTalk 或 微信
-        qrCodeViewModel.getSaveCacheBitmapResult().observe(this, resource -> {
-            if (resource.status == Status.SUCCESS) {
-                if (shareType == SHARE_TYPE_WECHAT) {
-                    shareToWeChat();
-                } else if (shareType == SHARE_TYPE_SEALTALK) {
-                    shareToSealTalk();
-                }
-            }
-        });
+        qrCodeViewModel
+                .getSaveCacheBitmapResult()
+                .observe(
+                        this,
+                        resource -> {
+                            if (resource.status == Status.SUCCESS) {
+                                if (shareType == SHARE_TYPE_WECHAT) {
+                                    shareToWeChat();
+                                } else if (shareType == SHARE_TYPE_SEALTALK) {
+                                    shareToSealTalk();
+                                }
+                            }
+                        });
     }
 
     /**
@@ -232,9 +256,7 @@ public class QrCodeDisplayActivity extends TitleBaseActivity implements View.OnC
         }
     }
 
-    /**
-     * 保存二维码到本地
-     */
+    /** 保存二维码到本地 */
     private void saveQRCodeToLocal() {
         if (!checkHasStoragePermission()) {
             return;
@@ -242,9 +264,7 @@ public class QrCodeDisplayActivity extends TitleBaseActivity implements View.OnC
         qrCodeViewModel.saveQRCodeToLocal(ViewCapture.getViewBitmap(qrCodeCardLl));
     }
 
-    /**
-     * 分享至 SealTalk
-     */
+    /** 分享至 SealTalk */
     private void shareToSealTalk() {
         Resource<String> resource = qrCodeViewModel.getSaveCacheBitmapResult().getValue();
         if (resource != null && resource.data != null) {
@@ -270,9 +290,7 @@ public class QrCodeDisplayActivity extends TitleBaseActivity implements View.OnC
         }
     }
 
-    /**
-     * 分享至微信
-     */
+    /** 分享至微信 */
     private void shareToWeChat() {
         Resource<String> resource = qrCodeViewModel.getSaveCacheBitmapResult().getValue();
         if (resource != null && resource.data != null) {
@@ -293,7 +311,9 @@ public class QrCodeDisplayActivity extends TitleBaseActivity implements View.OnC
         if (Build.VERSION.SDK_INT >= 23) {
             int checkPermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
             if (checkPermission != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS);
+                requestPermissions(
+                        new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        REQUEST_CODE_ASK_PERMISSIONS);
                 return false;
             }
         }

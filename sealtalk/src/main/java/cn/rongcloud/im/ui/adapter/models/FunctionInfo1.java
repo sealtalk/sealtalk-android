@@ -4,6 +4,7 @@ public class FunctionInfo1 {
     private int nameResId;
     private int drawableRes;
     private boolean isShowDot;
+
     public FunctionInfo1(int name, int drawableRes) {
         this.nameResId = name;
         this.drawableRes = drawableRes;

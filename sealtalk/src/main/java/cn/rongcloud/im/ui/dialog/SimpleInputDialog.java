@@ -1,6 +1,5 @@
 package cn.rongcloud.im.ui.dialog;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -12,13 +11,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-
 import cn.rongcloud.im.R;
-
 
 public class SimpleInputDialog extends DialogFragment implements View.OnClickListener {
     private EditText inputEt;
@@ -34,15 +30,18 @@ public class SimpleInputDialog extends DialogFragment implements View.OnClickLis
     @Override
     public void onStart() {
         super.onStart();
-        //透明化背景
+        // 透明化背景
         Window window = getDialog().getWindow();
-        //背景色
+        // 背景色
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(
+            @NonNull LayoutInflater inflater,
+            @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
         View contentView = inflater.inflate(R.layout.common_dialog_simple_input, container, false);
         inputEt = contentView.findViewById(R.id.common_et_dialog_input);
         confirmTv = contentView.findViewById(R.id.common_tv_dialog_confirm);
@@ -110,5 +109,4 @@ public class SimpleInputDialog extends DialogFragment implements View.OnClickLis
          */
         boolean onConfirmClicked(EditText input);
     }
-
 }

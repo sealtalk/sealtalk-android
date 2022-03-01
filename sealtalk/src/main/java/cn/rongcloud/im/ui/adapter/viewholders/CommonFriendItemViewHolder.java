@@ -2,9 +2,7 @@ package cn.rongcloud.im.ui.adapter.viewholders;
 
 import android.view.View;
 import android.widget.CheckBox;
-
 import androidx.annotation.NonNull;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.db.model.FriendShipInfo;
 import cn.rongcloud.im.ui.adapter.models.ListItemModel;
@@ -24,39 +22,43 @@ public class CommonFriendItemViewHolder extends BaseItemViewHolder<ListItemModel
         checkBox = itemView.findViewById(R.id.cb_select);
         checkBox.setVisibility(View.VISIBLE);
         checkBox.setClickable(false);
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        itemView.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-                if (model != null) {
-                    if (model.getCheckStatus() != ListItemModel.CheckStatus.NONE && model.getCheckStatus() != ListItemModel.CheckStatus.DISABLE) {
-                        if (model.getCheckStatus() == ListItemModel.CheckStatus.CHECKED) {
-                            model.setCheckStatus(ListItemModel.CheckStatus.UNCHECKED);
-                            checkBox.setChecked(false);
-                        } else if (model.getCheckStatus() == ListItemModel.CheckStatus.UNCHECKED) {
-                            model.setCheckStatus(ListItemModel.CheckStatus.CHECKED);
-                            checkBox.setChecked(true);
+                        if (model != null) {
+                            if (model.getCheckStatus() != ListItemModel.CheckStatus.NONE
+                                    && model.getCheckStatus()
+                                            != ListItemModel.CheckStatus.DISABLE) {
+                                if (model.getCheckStatus() == ListItemModel.CheckStatus.CHECKED) {
+                                    model.setCheckStatus(ListItemModel.CheckStatus.UNCHECKED);
+                                    checkBox.setChecked(false);
+                                } else if (model.getCheckStatus()
+                                        == ListItemModel.CheckStatus.UNCHECKED) {
+                                    model.setCheckStatus(ListItemModel.CheckStatus.CHECKED);
+                                    checkBox.setChecked(true);
+                                }
+                            }
+                        }
+
+                        if (listener != null) {
+                            listener.onClick(v);
                         }
                     }
-                }
-
-                if (listener != null) {
-                    listener.onClick(v);
-                }
-            }
-        });
-        itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (longClickListener != null) {
-                    longClickListener.onLongClick(v);
-                    return true;
-                }
-                return false;
-            }
-        });
+                });
+        itemView.setOnLongClickListener(
+                new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        if (longClickListener != null) {
+                            longClickListener.onLongClick(v);
+                            return true;
+                        }
+                        return false;
+                    }
+                });
     }
-
 
     @Override
     public void setOnClickItemListener(View.OnClickListener listener) {
@@ -88,7 +90,8 @@ public class CommonFriendItemViewHolder extends BaseItemViewHolder<ListItemModel
         }
 
         infoUiv.setName(model.getDisplayName());
-        ImageLoaderUtils.displayUserPortraitImage(model.getPortraitUrl(), infoUiv.getHeaderImageView());
+        ImageLoaderUtils.displayUserPortraitImage(
+                model.getPortraitUrl(), infoUiv.getHeaderImageView());
     }
 
     @Override
@@ -109,5 +112,4 @@ public class CommonFriendItemViewHolder extends BaseItemViewHolder<ListItemModel
             infoUiv.setDividerVisibility(View.GONE);
         }
     }
-
 }

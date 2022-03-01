@@ -5,18 +5,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.sp.UserConfigCache;
-import cn.rongcloud.im.ui.adapter.decoration.GridSpacingItemDecoration;
 import cn.rongcloud.im.ui.adapter.SelectChatBgAdapter;
+import cn.rongcloud.im.ui.adapter.decoration.GridSpacingItemDecoration;
 import cn.rongcloud.im.ui.view.SettingItemView;
 import cn.rongcloud.im.utils.PhotoUtils;
 import cn.rongcloud.im.utils.ToastUtils;
@@ -48,12 +45,13 @@ public class SelectChatBgActivity extends TitleBaseActivity implements View.OnCl
             userConfig.setChatbgUri(drawableIdtoUri(R.drawable.seal_default_chat_bg1));
         }
         mAdapter.setCheckItem(userConfig.getChatbgUri());
-        mAdapter.setOnItemClickListener(new SelectChatBgAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int id) {
-                toImagePreview(drawableIdtoUri(id), ImagePreviewActivity.FROM_DEFAULT);
-            }
-        });
+        mAdapter.setOnItemClickListener(
+                new SelectChatBgAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(int id) {
+                        toImagePreview(drawableIdtoUri(id), ImagePreviewActivity.FROM_DEFAULT);
+                    }
+                });
         rvBgContent.addItemDecoration(new GridSpacingItemDecoration(3, 10, true));
         rvBgContent.setHasFixedSize(true);
         rvBgContent.setLayoutManager(new GridLayoutManager(this, 3));
@@ -71,15 +69,16 @@ public class SelectChatBgActivity extends TitleBaseActivity implements View.OnCl
     }
 
     private void initPhotoUtil() {
-        photoUtils = new PhotoUtils(new PhotoUtils.OnPhotoResultListener() {
-            @Override
-            public void onPhotoResult(Uri uri) {
-            }
+        photoUtils =
+                new PhotoUtils(
+                        new PhotoUtils.OnPhotoResultListener() {
+                            @Override
+                            public void onPhotoResult(Uri uri) {}
 
-            @Override
-            public void onPhotoCancel() {
-            }
-        }, PhotoUtils.NO_CROP);
+                            @Override
+                            public void onPhotoCancel() {}
+                        },
+                        PhotoUtils.NO_CROP);
     }
 
     @Override
@@ -89,13 +88,13 @@ public class SelectChatBgActivity extends TitleBaseActivity implements View.OnCl
             case REQUEST_SET_BG:
                 if (resultCode == RESULT_OK) {
                     updateDefaultBgState();
-                    //存储设置状态
+                    // 存储设置状态
                     userConfig.setChatbgUri(currentSelectUri);
                     ToastUtils.showToast(getString(R.string.seal_select_chat_bg_set_success));
                 }
                 break;
             case PhotoUtils.INTENT_SELECT:
-                //从相册中选择图片
+                // 从相册中选择图片
                 if (data != null && data.getData() != null) {
                     Uri imageUri = data.getData();
                     toImagePreview(imageUri.toString(), ImagePreviewActivity.FROM_ALUMB);
@@ -109,9 +108,12 @@ public class SelectChatBgActivity extends TitleBaseActivity implements View.OnCl
     }
 
     private String drawableIdtoUri(int id) {
-        return ContentResolver.SCHEME_ANDROID_RESOURCE + "://"
-                + getResources().getResourcePackageName(id) + "/"
-                + getResources().getResourceTypeName(id) + "/"
+        return ContentResolver.SCHEME_ANDROID_RESOURCE
+                + "://"
+                + getResources().getResourcePackageName(id)
+                + "/"
+                + getResources().getResourceTypeName(id)
+                + "/"
                 + getResources().getResourceEntryName(id);
     }
 

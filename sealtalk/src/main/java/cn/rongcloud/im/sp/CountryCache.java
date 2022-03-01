@@ -3,13 +3,10 @@ package cn.rongcloud.im.sp;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
-
+import cn.rongcloud.im.model.CountryInfo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.util.List;
-
-import cn.rongcloud.im.model.CountryInfo;
 
 public class CountryCache {
     private static final String SP_NAME = "country_list_cache";
@@ -22,6 +19,7 @@ public class CountryCache {
 
     /**
      * 存储国家地区消息
+     *
      * @param countryInfoList
      */
     public void saveCountryList(List<CountryInfo> countryInfoList) {
@@ -35,6 +33,7 @@ public class CountryCache {
 
     /**
      * 获取国家地区信息缓存
+     *
      * @return
      */
     public List<CountryInfo> getCountryListCache() {
@@ -44,8 +43,8 @@ public class CountryCache {
                 return null;
             }
             Gson gson = new Gson();
-            List<CountryInfo> countryInfoList = gson.fromJson(json, new TypeToken<List<CountryInfo>>() {
-            }.getType());
+            List<CountryInfo> countryInfoList =
+                    gson.fromJson(json, new TypeToken<List<CountryInfo>>() {}.getType());
             return countryInfoList;
 
         } catch (Exception e) {
@@ -56,6 +55,7 @@ public class CountryCache {
 
     /**
      * 获取国家信息
+     *
      * @param region
      * @return
      */
@@ -65,7 +65,7 @@ public class CountryCache {
             return null;
         }
 
-        for (CountryInfo info: countryListCache ) {
+        for (CountryInfo info : countryListCache) {
             if (region.equals(info.getZipCode())) {
                 return info;
             }

@@ -3,15 +3,12 @@ package cn.rongcloud.im.ui.view;
 import android.content.Context;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.widget.ClearWriteEditText;
 
@@ -55,33 +52,35 @@ public class SealTitleBar extends RelativeLayout {
         tvRight = view.findViewById(R.id.tv_right);
         flContent = view.findViewById(R.id.fl_content);
         tvClear = view.findViewById(R.id.tv_clear);
-        tvClear.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                etSearch.setText("");
-                etSearch.clearFocus();
-                if (searchClearTextClickedListener != null) {
-                    searchClearTextClickedListener.onSearchClearTextClicked();
-                }
-            }
-        });
-//        etSearch.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                final int DRAWABLE_RIGHT = 2;
-//                if (event.getAction() == MotionEvent.ACTION_UP) {
-////                    if (event.getRawX() >= (etSearch.getRight() - 2 * etSearch.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-////                        etSearch.setText("");
-////                        etSearch.clearFocus();
-////                        if(searchClearTextClickedListener != null){
-////                            searchClearTextClickedListener.onSearchClearTextClicked();
-////                        }
-////                        return true;
-////                    }
-//                }
-//                return false;
-//            }
-//        });
+        tvClear.setOnClickListener(
+                new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        etSearch.setText("");
+                        etSearch.clearFocus();
+                        if (searchClearTextClickedListener != null) {
+                            searchClearTextClickedListener.onSearchClearTextClicked();
+                        }
+                    }
+                });
+        //        etSearch.setOnTouchListener(new View.OnTouchListener() {
+        //            @Override
+        //            public boolean onTouch(View v, MotionEvent event) {
+        //                final int DRAWABLE_RIGHT = 2;
+        //                if (event.getAction() == MotionEvent.ACTION_UP) {
+        ////                    if (event.getRawX() >= (etSearch.getRight() - 2 *
+        // etSearch.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+        ////                        etSearch.setText("");
+        ////                        etSearch.clearFocus();
+        ////                        if(searchClearTextClickedListener != null){
+        ////                            searchClearTextClickedListener.onSearchClearTextClicked();
+        ////                        }
+        ////                        return true;
+        ////                    }
+        //                }
+        //                return false;
+        //            }
+        //        });
 
         setType(Type.NORMAL);
     }
@@ -107,17 +106,11 @@ public class SealTitleBar extends RelativeLayout {
     }
 
     public enum Type {
-        /**
-         * 正常的模式， 有左右按钮和 title
-         */
+        /** 正常的模式， 有左右按钮和 title */
         NORMAL,
-        /**
-         * 搜索框， 有左边按钮和搜索框
-         */
+        /** 搜索框， 有左边按钮和搜索框 */
         SEARCH,
-        /**
-         * 正在输入
-         */
+        /** 正在输入 */
         TYPING
     }
 
@@ -204,7 +197,6 @@ public class SealTitleBar extends RelativeLayout {
         btnRight.setVisibility(View.VISIBLE);
     }
 
-
     /**
      * 右按钮监听
      *
@@ -270,9 +262,7 @@ public class SealTitleBar extends RelativeLayout {
         searchClearTextClickedListener = listener;
     }
 
-    /**
-     * 当搜索模式时点击清除搜索监听
-     */
+    /** 当搜索模式时点击清除搜索监听 */
     public interface OnSearchClearTextClickedListener {
         void onSearchClearTextClicked();
     }

@@ -1,10 +1,6 @@
 package cn.rongcloud.im.net.service;
 
 import androidx.lifecycle.LiveData;
-
-import java.util.List;
-import java.util.Map;
-
 import cn.rongcloud.im.db.model.FriendDescription;
 import cn.rongcloud.im.db.model.FriendShipInfo;
 import cn.rongcloud.im.model.AddFriendResult;
@@ -12,6 +8,8 @@ import cn.rongcloud.im.model.GetContactInfoResult;
 import cn.rongcloud.im.model.Result;
 import cn.rongcloud.im.model.SearchFriendInfo;
 import cn.rongcloud.im.net.SealTalkUrl;
+import java.util.List;
+import java.util.Map;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -79,7 +77,8 @@ public interface FriendService {
      * @return
      */
     @GET(SealTalkUrl.FIND_FRIEND)
-    LiveData<Result<SearchFriendInfo>> searchFriend(@QueryMap(encoded = true) Map<String, String> queryMap);
+    LiveData<Result<SearchFriendInfo>> searchFriend(
+            @QueryMap(encoded = true) Map<String, String> queryMap);
 
     @POST(SealTalkUrl.DELETE_FREIND)
     LiveData<Result> deleteFriend(@Body RequestBody body);

@@ -1,33 +1,35 @@
-/**
- * Copyright 2019 bejson.com
- */
+/** Copyright 2019 bejson.com */
 package cn.rongcloud.im.db.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
-
 import java.util.Date;
 
 public class FriendShipInfo implements Parcelable {
 
     @ColumnInfo(name = "alias")
     private String displayName;
+
     @ColumnInfo(name = "message")
     private String message;
+
     @ColumnInfo(name = "friend_status")
     private int status;
+
     @ColumnInfo(name = "updateAt")
     private Date updatedAt;
-    @Embedded
-    private FriendDetailInfo user;
+
+    @Embedded private FriendDetailInfo user;
+
     @ColumnInfo(name = "alias_spelling")
     private String disPlayNameSpelling;
-    @ColumnInfo(name= "nickname")
+
+    @ColumnInfo(name = "nickname")
     private String groupDisplayName;
-    @ColumnInfo(name= "nickname_spelling")
+
+    @ColumnInfo(name = "nickname_spelling")
     private String groupDisplayNameSpelling;
 
     public String getDisplayName() {
@@ -61,7 +63,6 @@ public class FriendShipInfo implements Parcelable {
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
-
 
     public FriendDetailInfo getUser() {
         return user;
@@ -97,16 +98,29 @@ public class FriendShipInfo implements Parcelable {
 
     @Override
     public String toString() {
-        return "FriendShipInfo{" +
-                "displayName='" + displayName + '\'' +
-                ", message='" + message + '\'' +
-                ", status=" + status +
-                ", updatedAt=" + updatedAt +
-                ", user=" + user +
-                ", disPlayNameSpelling='" + disPlayNameSpelling + '\'' +
-                ", groupDisplayName='" + groupDisplayName + '\'' +
-                ", groupDisplayNameSpelling='" + groupDisplayNameSpelling + '\'' +
-                '}';
+        return "FriendShipInfo{"
+                + "displayName='"
+                + displayName
+                + '\''
+                + ", message='"
+                + message
+                + '\''
+                + ", status="
+                + status
+                + ", updatedAt="
+                + updatedAt
+                + ", user="
+                + user
+                + ", disPlayNameSpelling='"
+                + disPlayNameSpelling
+                + '\''
+                + ", groupDisplayName='"
+                + groupDisplayName
+                + '\''
+                + ", groupDisplayNameSpelling='"
+                + groupDisplayNameSpelling
+                + '\''
+                + '}';
     }
 
     @Override
@@ -126,8 +140,7 @@ public class FriendShipInfo implements Parcelable {
         dest.writeString(this.groupDisplayNameSpelling);
     }
 
-    public FriendShipInfo() {
-    }
+    public FriendShipInfo() {}
 
     protected FriendShipInfo(Parcel in) {
         this.displayName = in.readString();
@@ -141,15 +154,16 @@ public class FriendShipInfo implements Parcelable {
         this.groupDisplayNameSpelling = in.readString();
     }
 
-    public static final Parcelable.Creator<FriendShipInfo> CREATOR = new Parcelable.Creator<FriendShipInfo>() {
-        @Override
-        public FriendShipInfo createFromParcel(Parcel source) {
-            return new FriendShipInfo(source);
-        }
+    public static final Parcelable.Creator<FriendShipInfo> CREATOR =
+            new Parcelable.Creator<FriendShipInfo>() {
+                @Override
+                public FriendShipInfo createFromParcel(Parcel source) {
+                    return new FriendShipInfo(source);
+                }
 
-        @Override
-        public FriendShipInfo[] newArray(int size) {
-            return new FriendShipInfo[size];
-        }
-    };
+                @Override
+                public FriendShipInfo[] newArray(int size) {
+                    return new FriendShipInfo[size];
+                }
+            };
 }

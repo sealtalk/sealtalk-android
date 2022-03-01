@@ -2,64 +2,66 @@ package cn.rongcloud.im.viewmodel;
 
 import android.app.Application;
 import android.net.Uri;
-
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 import cn.rongcloud.im.db.model.GroupEntity;
 import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.model.AddMemberResult;
 import cn.rongcloud.im.model.GroupMember;
 import cn.rongcloud.im.model.GroupNoticeResult;
-import cn.rongcloud.im.model.GroupRegularClearResult;
-import cn.rongcloud.im.model.RegularClearStatusResult;
 import cn.rongcloud.im.model.Resource;
-import cn.rongcloud.im.model.Result;
 import cn.rongcloud.im.model.ScreenCaptureResult;
 import cn.rongcloud.im.task.GroupTask;
 import cn.rongcloud.im.task.PrivacyTask;
 import cn.rongcloud.im.utils.SingleSourceLiveData;
 import cn.rongcloud.im.utils.SingleSourceMapLiveData;
 import io.rong.imlib.model.Conversation;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
-/**
- * 群组详情视图模型
- */
+/** 群组详情视图模型 */
 public class GroupDetailViewModel extends AndroidViewModel {
-    private SingleSourceLiveData<Resource<GroupEntity>> groupInfoLiveData = new SingleSourceLiveData<>();
-    private SingleSourceMapLiveData<Resource<List<GroupMember>>, Resource<List<GroupMember>>> groupMemberListLiveData;
-    private SingleSourceLiveData<Resource<GroupNoticeResult>> groupNotice = new SingleSourceLiveData<>();
-    private SingleSourceLiveData<Resource<Integer>> regularClearState = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<GroupEntity>> groupInfoLiveData =
+            new SingleSourceLiveData<>();
+    private SingleSourceMapLiveData<Resource<List<GroupMember>>, Resource<List<GroupMember>>>
+            groupMemberListLiveData;
+    private SingleSourceLiveData<Resource<GroupNoticeResult>> groupNotice =
+            new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<Integer>> regularClearState =
+            new SingleSourceLiveData<>();
 
     private String groupId;
     private Conversation.ConversationType conversationType;
     private GroupTask groupTask;
     private PrivacyTask privacyTask;
 
-    private SingleSourceLiveData<Resource<Void>> uploadPortraitResult = new SingleSourceLiveData<>();
-    private SingleSourceMapLiveData<Resource<List<AddMemberResult>>, Resource<List<AddMemberResult>>> addGroupMemberResult;
+    private SingleSourceLiveData<Resource<Void>> uploadPortraitResult =
+            new SingleSourceLiveData<>();
+    private SingleSourceMapLiveData<
+                    Resource<List<AddMemberResult>>, Resource<List<AddMemberResult>>>
+            addGroupMemberResult;
     private SingleSourceMapLiveData<Resource<Void>, Resource<Void>> removeGroupMemberResult;
-    private SingleSourceLiveData<Resource<Void>> renameGroupNameResult = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<Void>> renameGroupNameResult =
+            new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<Void>> exitGroupResult = new SingleSourceLiveData<>();
     private MediatorLiveData<GroupMember> myselfInfo = new MediatorLiveData<>();
 
     private SingleSourceLiveData<Resource<Void>> saveToContactResult = new SingleSourceLiveData<>();
-    private SingleSourceLiveData<Resource<Void>> removeFromContactResult = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<Void>> removeFromContactResult =
+            new SingleSourceLiveData<>();
 
-    private SingleSourceLiveData<Resource<ScreenCaptureResult>> screenCaptureResult = new SingleSourceLiveData<>();
-    private SingleSourceLiveData<Resource<Void>> setScreenCaptureResult = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<ScreenCaptureResult>> screenCaptureResult =
+            new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<Void>> setScreenCaptureResult =
+            new SingleSourceLiveData<>();
 
     private SingleSourceLiveData<Resource<Void>> setCleanTimeResult = new SingleSourceLiveData<>();
     private IMManager imManager;
@@ -71,7 +73,10 @@ public class GroupDetailViewModel extends AndroidViewModel {
         imManager = IMManager.getInstance();
     }
 
-    public GroupDetailViewModel(@NonNull Application application, String targetId, Conversation.ConversationType conversationType) {
+    public GroupDetailViewModel(
+            @NonNull Application application,
+            String targetId,
+            Conversation.ConversationType conversationType) {
         super(application);
         this.groupId = targetId;
         this.conversationType = conversationType;
@@ -82,85 +87,122 @@ public class GroupDetailViewModel extends AndroidViewModel {
 
         groupInfoLiveData.setSource(groupTask.getGroupInfo(groupId));
 
-        groupMemberListLiveData = new SingleSourceMapLiveData<>(new Function<Resource<List<GroupMember>>, Resource<List<GroupMember>>>() {
-            @Override
-            public Resource<List<GroupMember>> apply(Resource<List<GroupMember>> input) {
-                if (input != null && input.data != null) {
-                    List<GroupMember> tmpList = new ArrayList<>();
-                    tmpList.addAll(input.data);
+        groupMemberListLiveData =
+                new SingleSourceMapLiveData<>(
+                        new Function<Resource<List<GroupMember>>, Resource<List<GroupMember>>>() {
+                            @Override
+                            public Resource<List<GroupMember>> apply(
+                                    Resource<List<GroupMember>> input) {
+                                if (input != null && input.data != null) {
+                                    List<GroupMember> tmpList = new ArrayList<>();
+                                    tmpList.addAll(input.data);
 
-                    Collections.sort(tmpList, new Comparator<GroupMember>() {
-                        @Override
-                        public int compare(GroupMember lhs, GroupMember rhs) {
-                            if (lhs.getRole() == GroupMember.Role.GROUP_OWNER.getValue()) {
-                                return -1;
-                            } else if (lhs.getRole() != GroupMember.Role.GROUP_OWNER.getValue() && rhs.getRole() == GroupMember.Role.GROUP_OWNER.getValue()) {
-                                return 1;
-                            } else if (lhs.getRole() == GroupMember.Role.MANAGEMENT.getValue() && rhs.getRole() == GroupMember.Role.MEMBER.getValue()) {
-                                return -1;
-                            } else if (lhs.getRole() == GroupMember.Role.MEMBER.getValue() && rhs.getRole() == GroupMember.Role.MANAGEMENT.getValue()) {
-                                return 1;
-                            } else if (lhs.getRole() == GroupMember.Role.MANAGEMENT.getValue() && rhs.getRole() == GroupMember.Role.MANAGEMENT.getValue()) {
-                                return lhs.getJoinTime() > rhs.getJoinTime() ? 1 : -1;
-                            } else if (lhs.getRole() == GroupMember.Role.MEMBER.getValue() && rhs.getRole() == GroupMember.Role.MEMBER.getValue()) {
-                                return lhs.getJoinTime() > rhs.getJoinTime() ? 1 : -1;
+                                    Collections.sort(
+                                            tmpList,
+                                            new Comparator<GroupMember>() {
+                                                @Override
+                                                public int compare(
+                                                        GroupMember lhs, GroupMember rhs) {
+                                                    if (lhs.getRole()
+                                                            == GroupMember.Role.GROUP_OWNER
+                                                                    .getValue()) {
+                                                        return -1;
+                                                    } else if (lhs.getRole()
+                                                                    != GroupMember.Role.GROUP_OWNER
+                                                                            .getValue()
+                                                            && rhs.getRole()
+                                                                    == GroupMember.Role.GROUP_OWNER
+                                                                            .getValue()) {
+                                                        return 1;
+                                                    } else if (lhs.getRole()
+                                                                    == GroupMember.Role.MANAGEMENT
+                                                                            .getValue()
+                                                            && rhs.getRole()
+                                                                    == GroupMember.Role.MEMBER
+                                                                            .getValue()) {
+                                                        return -1;
+                                                    } else if (lhs.getRole()
+                                                                    == GroupMember.Role.MEMBER
+                                                                            .getValue()
+                                                            && rhs.getRole()
+                                                                    == GroupMember.Role.MANAGEMENT
+                                                                            .getValue()) {
+                                                        return 1;
+                                                    } else if (lhs.getRole()
+                                                                    == GroupMember.Role.MANAGEMENT
+                                                                            .getValue()
+                                                            && rhs.getRole()
+                                                                    == GroupMember.Role.MANAGEMENT
+                                                                            .getValue()) {
+                                                        return lhs.getJoinTime() > rhs.getJoinTime()
+                                                                ? 1
+                                                                : -1;
+                                                    } else if (lhs.getRole()
+                                                                    == GroupMember.Role.MEMBER
+                                                                            .getValue()
+                                                            && rhs.getRole()
+                                                                    == GroupMember.Role.MEMBER
+                                                                            .getValue()) {
+                                                        return lhs.getJoinTime() > rhs.getJoinTime()
+                                                                ? 1
+                                                                : -1;
+                                                    }
+
+                                                    return 0;
+                                                }
+                                            });
+                                    return new Resource<>(input.status, tmpList, input.code);
+                                }
+                                return new Resource<>(input.status, null, input.code);
                             }
-
-                            return 0;
-                        }
-                    });
-                    return new Resource<>(input.status, tmpList, input.code);
-                }
-                return new Resource<>(input.status, null, input.code);
-            }
-        });
+                        });
 
         groupMemberListLiveData.setSource(groupTask.getGroupMemberInfoList(groupId));
 
-        addGroupMemberResult = new SingleSourceMapLiveData<>(resource -> {
-            // 考虑到新增成员后一些数据需要同步所以重新加载群组信息和新成员信息
-            refreshGroupInfo();
-            refreshGroupMemberList();
-            return resource;
-        });
+        addGroupMemberResult =
+                new SingleSourceMapLiveData<>(
+                        resource -> {
+                            // 考虑到新增成员后一些数据需要同步所以重新加载群组信息和新成员信息
+                            refreshGroupInfo();
+                            refreshGroupMemberList();
+                            return resource;
+                        });
 
-        removeGroupMemberResult = new SingleSourceMapLiveData<>(resource -> {
-            // 删除成员后一些数据需要同步所以重新加载群组信息，因为是删除操作所以不需要再加载成员信息
-            refreshGroupInfo();
-            return resource;
-        });
+        removeGroupMemberResult =
+                new SingleSourceMapLiveData<>(
+                        resource -> {
+                            // 删除成员后一些数据需要同步所以重新加载群组信息，因为是删除操作所以不需要再加载成员信息
+                            refreshGroupInfo();
+                            return resource;
+                        });
 
-        myselfInfo.addSource(groupMemberListLiveData, new Observer<Resource<List<GroupMember>>>() {
-            @Override
-            public void onChanged(Resource<List<GroupMember>> listResource) {
-                if (listResource.data != null && listResource.data.size() > 0) {
-                    for (GroupMember member : listResource.data) {
-                        if (member.getUserId().equals(imManager.getCurrentId())) {
-                            myselfInfo.postValue(member);
-                            break;
+        myselfInfo.addSource(
+                groupMemberListLiveData,
+                new Observer<Resource<List<GroupMember>>>() {
+                    @Override
+                    public void onChanged(Resource<List<GroupMember>> listResource) {
+                        if (listResource.data != null && listResource.data.size() > 0) {
+                            for (GroupMember member : listResource.data) {
+                                if (member.getUserId().equals(imManager.getCurrentId())) {
+                                    myselfInfo.postValue(member);
+                                    break;
+                                }
+                            }
                         }
                     }
-                }
-            }
-        });
+                });
 
         requestGroupNotice(groupId);
         requestRegularState(groupId);
         getScreenCaptureStatus();
     }
 
-    /**
-     * 刷新群组信息
-     * 此方法一般不需要调用，默认在初始化时会数据刷新，仅在特殊情况需要请求网络同步最新数据时需要
-     */
+    /** 刷新群组信息 此方法一般不需要调用，默认在初始化时会数据刷新，仅在特殊情况需要请求网络同步最新数据时需要 */
     public void refreshGroupInfo() {
         groupInfoLiveData.setSource(groupTask.getGroupInfo(groupId));
     }
 
-    /**
-     * 刷新群组成员列表
-     * 此方法一般不需要调用，默认在初始化时会数据刷新，仅在特殊情况需要请求网络同步最新数据时需要
-     */
+    /** 刷新群组成员列表 此方法一般不需要调用，默认在初始化时会数据刷新，仅在特殊情况需要请求网络同步最新数据时需要 */
     public void refreshGroupMemberList() {
         groupMemberListLiveData.setSource(groupTask.getGroupMemberInfoList(groupId));
     }
@@ -259,16 +301,12 @@ public class GroupDetailViewModel extends AndroidViewModel {
         return renameGroupNameResult;
     }
 
-    /**
-     * 解散群组
-     */
+    /** 解散群组 */
     public void dismissGroup() {
         exitGroupResult.setSource(groupTask.dismissGroup(groupId));
     }
 
-    /**
-     * 退出群组
-     */
+    /** 退出群组 */
     public void exitGroup() {
         exitGroupResult.setSource(groupTask.quitGroup(groupId));
     }
@@ -291,9 +329,7 @@ public class GroupDetailViewModel extends AndroidViewModel {
         return myselfInfo;
     }
 
-    /**
-     * 保存到通讯录
-     */
+    /** 保存到通讯录 */
     public void saveToContact() {
         Resource<GroupEntity> value = groupInfoLiveData.getValue();
         if (value != null && value.data != null && value.data.getIsInContact() == 1) return;
@@ -309,9 +345,7 @@ public class GroupDetailViewModel extends AndroidViewModel {
         return saveToContactResult;
     }
 
-    /**
-     * 从通讯录中删除
-     */
+    /** 从通讯录中删除 */
     public void removeFromContact() {
         Resource<GroupEntity> value = groupInfoLiveData.getValue();
         if (value != null && value.data != null && value.data.getIsInContact() == 0) return;
@@ -368,7 +402,6 @@ public class GroupDetailViewModel extends AndroidViewModel {
         return setCleanTimeResult;
     }
 
-
     /**
      * 获取群公告
      *
@@ -378,11 +411,10 @@ public class GroupDetailViewModel extends AndroidViewModel {
         return groupNotice;
     }
 
-    /**
-     * 获取是否开启截屏通知(群内聊天 targetId 为 groupId)
-     */
+    /** 获取是否开启截屏通知(群内聊天 targetId 为 groupId) */
     private void getScreenCaptureStatus() {
-        screenCaptureResult.setSource(privacyTask.getScreenCapture(conversationType.getValue(), groupId));
+        screenCaptureResult.setSource(
+                privacyTask.getScreenCapture(conversationType.getValue(), groupId));
     }
 
     public LiveData<Resource<ScreenCaptureResult>> getScreenCaptureStatusResult() {
@@ -395,11 +427,12 @@ public class GroupDetailViewModel extends AndroidViewModel {
      * @param status
      */
     public void setScreenCaptureStatus(int status) {
-        setScreenCaptureResult.setSource(privacyTask.setScreenCapture(conversationType.getValue(), groupId, status));
+        setScreenCaptureResult.setSource(
+                privacyTask.setScreenCapture(conversationType.getValue(), groupId, status));
     }
 
-    public LiveData<Resource<Void>> getSetScreenCaptureResult(){
-        return  setScreenCaptureResult;
+    public LiveData<Resource<Void>> getSetScreenCaptureResult() {
+        return setScreenCaptureResult;
     }
 
     public static class Factory implements ViewModelProvider.Factory {
@@ -407,7 +440,10 @@ public class GroupDetailViewModel extends AndroidViewModel {
         private Conversation.ConversationType conversationType;
         private Application application;
 
-        public Factory(Application application, String targetId, Conversation.ConversationType conversationType) {
+        public Factory(
+                Application application,
+                String targetId,
+                Conversation.ConversationType conversationType) {
             this.conversationType = conversationType;
             this.targetId = targetId;
             this.application = application;
@@ -417,7 +453,12 @@ public class GroupDetailViewModel extends AndroidViewModel {
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
             try {
-                return modelClass.getConstructor(Application.class, String.class, Conversation.ConversationType.class).newInstance(application, targetId, conversationType);
+                return modelClass
+                        .getConstructor(
+                                Application.class,
+                                String.class,
+                                Conversation.ConversationType.class)
+                        .newInstance(application, targetId, conversationType);
             } catch (Exception e) {
                 throw new RuntimeException("Cannot create an instance of " + modelClass, e);
             }

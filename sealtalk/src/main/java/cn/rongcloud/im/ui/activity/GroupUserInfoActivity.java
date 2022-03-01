@@ -6,13 +6,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.db.model.GroupMemberInfoDes;
@@ -23,9 +21,7 @@ import cn.rongcloud.im.ui.adapter.GroupUserInfoDesAdapter;
 import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.viewmodel.GroupUserInfoViewModel;
 
-/**
- * 群组个人信息
- */
+/** 群组个人信息 */
 public class GroupUserInfoActivity extends TitleBaseActivity {
 
     private static final int REQUEST_CODE_SELECT_COUNTRY = 1040;
@@ -41,7 +37,7 @@ public class GroupUserInfoActivity extends TitleBaseActivity {
     private String groupId;
     private String memberId;
     private int mType;
-    public final static int FROM_USER_DETAIL = 0x786;
+    public static final int FROM_USER_DETAIL = 0x786;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,13 +53,15 @@ public class GroupUserInfoActivity extends TitleBaseActivity {
     private void initView() {
         getTitleBar().setTitle(getString(R.string.seal_group_user_info_title));
         if (mType != FROM_USER_DETAIL) {
-            getTitleBar().setOnBtnRightClickListener(getString(R.string.seal_group_user_info_des_confirm)
-                    , new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            setMemberInfoDes();
-                        }
-                    });
+            getTitleBar()
+                    .setOnBtnRightClickListener(
+                            getString(R.string.seal_group_user_info_des_confirm),
+                            new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    setMemberInfoDes();
+                                }
+                            });
         }
         etNickName = findViewById(R.id.et_nick_name);
         etPhone = findViewById(R.id.et_phone);
@@ -72,20 +70,25 @@ public class GroupUserInfoActivity extends TitleBaseActivity {
         tvNameTitle = findViewById(R.id.tv_name_title);
         rvDes = findViewById(R.id.rv_des);
         tvRegion = findViewById(R.id.tv_region);
-        tvRegion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(new Intent(GroupUserInfoActivity.this, SelectCountryActivity.class), REQUEST_CODE_SELECT_COUNTRY);
-            }
-        });
+        tvRegion.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivityForResult(
+                                new Intent(GroupUserInfoActivity.this, SelectCountryActivity.class),
+                                REQUEST_CODE_SELECT_COUNTRY);
+                    }
+                });
         if (mType == FROM_USER_DETAIL) {
-            //来自用户详情页，只展示，不可编辑
+            // 来自用户详情页，只展示，不可编辑
             mAdapter = new GroupUserInfoDesAdapter(this, FROM_USER_DETAIL);
             tvNameTitle.setText(R.string.seal_group_user_info_name);
-            etNickName.setText(R.string.seal_group_user_info_des_no_set, TextView.BufferType.EDITABLE);
+            etNickName.setText(
+                    R.string.seal_group_user_info_des_no_set, TextView.BufferType.EDITABLE);
             etPhone.setText(R.string.seal_group_user_info_des_no_set, TextView.BufferType.EDITABLE);
             etVchat.setText(R.string.seal_group_user_info_des_no_set, TextView.BufferType.EDITABLE);
-            etAliPay.setText(R.string.seal_group_user_info_des_no_set, TextView.BufferType.EDITABLE);
+            etAliPay.setText(
+                    R.string.seal_group_user_info_des_no_set, TextView.BufferType.EDITABLE);
             etNickName.setEnabled(false);
             etPhone.setEnabled(false);
             etVchat.setEnabled(false);
@@ -98,34 +101,43 @@ public class GroupUserInfoActivity extends TitleBaseActivity {
         rvDes.setLayoutManager(mLayoutManager);
         rvDes.setItemAnimator(null);
         rvDes.setAdapter(mAdapter);
-
-
     }
 
     private void initViewModel() {
         groupUserInfoViewModel = ViewModelProviders.of(this).get(GroupUserInfoViewModel.class);
         groupUserInfoViewModel.requestMemberInfoDes(groupId, memberId);
-        groupUserInfoViewModel.getGroupMemberInfoDes().observe(this, new Observer<Resource<GroupMemberInfoDes>>() {
-            @Override
-            public void onChanged(Resource<GroupMemberInfoDes> groupMemberInfoDesResource) {
-                if (groupMemberInfoDesResource.status != Status.LOADING && groupMemberInfoDesResource.data != null) {
-                    updateView(groupMemberInfoDesResource.data);
-                }
-            }
-        });
-        groupUserInfoViewModel.setMemberInfoDesResult().observe(this, new Observer<Resource<Void>>() {
-            @Override
-            public void onChanged(Resource<Void> voidResource) {
-                if (voidResource.status == Status.SUCCESS) {
-                    ToastUtils.showToast(R.string.seal_group_user_info_des_confirm_success);
-                    finish();
-                } else if (voidResource.status == Status.ERROR) {
-                    if (!TextUtils.isEmpty(voidResource.message)) {
-                        ToastUtils.showToast(voidResource.message);
-                    }
-                }
-            }
-        });
+        groupUserInfoViewModel
+                .getGroupMemberInfoDes()
+                .observe(
+                        this,
+                        new Observer<Resource<GroupMemberInfoDes>>() {
+                            @Override
+                            public void onChanged(
+                                    Resource<GroupMemberInfoDes> groupMemberInfoDesResource) {
+                                if (groupMemberInfoDesResource.status != Status.LOADING
+                                        && groupMemberInfoDesResource.data != null) {
+                                    updateView(groupMemberInfoDesResource.data);
+                                }
+                            }
+                        });
+        groupUserInfoViewModel
+                .setMemberInfoDesResult()
+                .observe(
+                        this,
+                        new Observer<Resource<Void>>() {
+                            @Override
+                            public void onChanged(Resource<Void> voidResource) {
+                                if (voidResource.status == Status.SUCCESS) {
+                                    ToastUtils.showToast(
+                                            R.string.seal_group_user_info_des_confirm_success);
+                                    finish();
+                                } else if (voidResource.status == Status.ERROR) {
+                                    if (!TextUtils.isEmpty(voidResource.message)) {
+                                        ToastUtils.showToast(voidResource.message);
+                                    }
+                                }
+                            }
+                        });
     }
 
     private void updateView(GroupMemberInfoDes data) {
@@ -150,17 +162,24 @@ public class GroupUserInfoActivity extends TitleBaseActivity {
     }
 
     private void setMemberInfoDes() {
-        //国家码需去掉 '+' 号
-        groupUserInfoViewModel.setMemberInfoDes(groupId, memberId, etNickName.getText().toString()
-                , tvRegion.getText().toString().replace("+", ""), etPhone.getText().toString(), etVchat.getText().toString()
-                , etAliPay.getText().toString(), mAdapter.getData());
+        // 国家码需去掉 '+' 号
+        groupUserInfoViewModel.setMemberInfoDes(
+                groupId,
+                memberId,
+                etNickName.getText().toString(),
+                tvRegion.getText().toString().replace("+", ""),
+                etPhone.getText().toString(),
+                etVchat.getText().toString(),
+                etAliPay.getText().toString(),
+                mAdapter.getData());
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_SELECT_COUNTRY) {
-            CountryInfo info = data.getParcelableExtra(SelectCountryActivity.RESULT_PARAMS_COUNTRY_INFO);
+            CountryInfo info =
+                    data.getParcelableExtra(SelectCountryActivity.RESULT_PARAMS_COUNTRY_INFO);
             tvRegion.setText(info.getZipCode());
         }
     }

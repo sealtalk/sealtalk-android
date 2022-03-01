@@ -7,7 +7,6 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.model.GroupMember;
 import cn.rongcloud.im.ui.view.UserInfoItemView;
@@ -36,14 +35,14 @@ public class GroupManagerItem extends RelativeLayout {
 
     private void initView() {
         View.inflate(getContext(), R.layout.item_group_manager, this);
-        firstCharll= findViewById(R.id.ll_firstchar);
+        firstCharll = findViewById(R.id.ll_firstchar);
         firstCharTv = findViewById(R.id.tv_char);
         memberUiv = findViewById(R.id.uiv_member);
         selectCb = findViewById(R.id.cb_select);
     }
 
     public void setData(GroupMember data, boolean isFirst) {
-        //如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
+        // 如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
         if (isFirst) {
             firstCharll.setVisibility(View.VISIBLE);
             firstCharTv.setText(data.getNameSpelling());
@@ -52,11 +51,13 @@ public class GroupManagerItem extends RelativeLayout {
         }
 
         memberUiv.setName(data.getName());
-        ImageLoaderUtils.displayUserPortraitImage(data.getPortraitUri(), memberUiv.getHeaderImageView());
+        ImageLoaderUtils.displayUserPortraitImage(
+                data.getPortraitUri(), memberUiv.getHeaderImageView());
     }
 
     /**
      * 选择选择问题
+     *
      * @param checked
      */
     public void setChecked(boolean checked) {
@@ -73,12 +74,11 @@ public class GroupManagerItem extends RelativeLayout {
         selectCb.setVisibility(visibility);
     }
 
-
     //    /**
-//     * 设置选择监听
-//     * @param listener
-//     */
-//    public void setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener listener) {
-//        selectCb.setOnCheckedChangeListener(listener);
-//    }
+    //     * 设置选择监听
+    //     * @param listener
+    //     */
+    //    public void setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener listener) {
+    //        selectCb.setOnCheckedChangeListener(listener);
+    //    }
 }

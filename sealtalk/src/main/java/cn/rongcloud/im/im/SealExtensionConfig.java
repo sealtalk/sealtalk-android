@@ -1,10 +1,7 @@
 package cn.rongcloud.im.im;
 
-import java.util.List;
-
 import io.rong.callkit.AudioPlugin;
 import io.rong.callkit.VideoPlugin;
-import io.rong.imkit.IMCenter;
 import io.rong.imkit.conversation.extension.DefaultExtensionConfig;
 import io.rong.imkit.conversation.extension.component.plugin.FilePlugin;
 import io.rong.imkit.conversation.extension.component.plugin.IPluginModule;
@@ -12,12 +9,18 @@ import io.rong.imkit.feature.destruct.DestructPlugin;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.sight.SightPlugin;
+import java.util.List;
 
 public class SealExtensionConfig extends DefaultExtensionConfig {
     @Override
-    public List<IPluginModule> getPluginModules(Conversation.ConversationType conversationType, String targetId) {
+    public List<IPluginModule> getPluginModules(
+            Conversation.ConversationType conversationType, String targetId) {
         List<IPluginModule> pluginList = super.getPluginModules(conversationType, targetId);
-        IPluginModule sightPlugin = null, filePlugin = null, audioPlugin = null, videoPlugin = null, destructPlugin = null;
+        IPluginModule sightPlugin = null,
+                filePlugin = null,
+                audioPlugin = null,
+                videoPlugin = null,
+                destructPlugin = null;
         for (IPluginModule pluginModule : pluginList) {
             if (pluginModule instanceof SightPlugin) {
                 sightPlugin = pluginModule;
@@ -30,7 +33,6 @@ public class SealExtensionConfig extends DefaultExtensionConfig {
             } else if (pluginModule instanceof DestructPlugin) {
                 destructPlugin = pluginModule;
             }
-
         }
         if (sightPlugin != null && pluginList.size() > 1) {
             pluginList.remove(sightPlugin);

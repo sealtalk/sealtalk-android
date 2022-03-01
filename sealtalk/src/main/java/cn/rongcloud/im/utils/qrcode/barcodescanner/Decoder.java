@@ -8,16 +8,15 @@ import com.google.zxing.Result;
 import com.google.zxing.ResultPoint;
 import com.google.zxing.ResultPointCallback;
 import com.google.zxing.common.HybridBinarizer;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * A class for decoding images.
  *
- * A decoder contains all the configuration required for the binarization and decoding process.
+ * <p>A decoder contains all the configuration required for the binarization and decoding process.
  *
- * The actual decoding should happen on a dedicated thread.
+ * <p>The actual decoding should happen on a dedicated thread.
  */
 public class Decoder implements ResultPointCallback {
     private Reader reader;
@@ -25,7 +24,7 @@ public class Decoder implements ResultPointCallback {
     /**
      * Create a new Decoder with the specified Reader.
      *
-     * It is recommended to use an instance of MultiFormatReader in most cases.
+     * <p>It is recommended to use an instance of MultiFormatReader in most cases.
      *
      * @param reader the reader
      */
@@ -40,7 +39,7 @@ public class Decoder implements ResultPointCallback {
     /**
      * Given an image source, attempt to decode the barcode.
      *
-     * Must not raise an exception.
+     * <p>Must not raise an exception.
      *
      * @param source the image source
      * @return a Result or null
@@ -52,7 +51,7 @@ public class Decoder implements ResultPointCallback {
     /**
      * Given an image source, convert to a binary bitmap.
      *
-     * Override this to use a custom binarizer.
+     * <p>Override this to use a custom binarizer.
      *
      * @param source the image source
      * @return a BinaryBitmap
@@ -89,7 +88,7 @@ public class Decoder implements ResultPointCallback {
     /**
      * Call immediately after decode(), from the same thread.
      *
-     * The result is undefined while decode() is running.
+     * <p>The result is undefined while decode() is running.
      *
      * @return possible ResultPoints from the last decode.
      */

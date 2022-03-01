@@ -4,17 +4,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.SectionIndexer;
-
+import cn.rongcloud.im.model.GroupMember;
+import cn.rongcloud.im.ui.adapter.item.GroupManagerItem;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.rongcloud.im.model.GroupMember;
-import cn.rongcloud.im.ui.adapter.item.GroupManagerItem;
-
-
-/**
- * 群管理的 Adapter
- */
+/** 群管理的 Adapter */
 public class GroupManagerAdapter extends BaseAdapter implements SectionIndexer {
 
     private int MAX_SIZE = 0;
@@ -23,6 +18,7 @@ public class GroupManagerAdapter extends BaseAdapter implements SectionIndexer {
     private List<GroupMember> selected = new ArrayList<>();
     private OnGroupManagerListener listener;
     private boolean isUseCheck = false;
+
     public void setMaxSelectSize(int size) {
         MAX_SIZE = size;
         if (!isUseCheck && size > 1) {
@@ -44,13 +40,14 @@ public class GroupManagerAdapter extends BaseAdapter implements SectionIndexer {
 
         // 当更新列表时，从已选中人列表中移除掉不存在的人
         int selectSize = selected.size();
-        boolean isSelectedChanged = false;  // 已选列表是否发生了改变
+        boolean isSelectedChanged = false; // 已选列表是否发生了改变
         if (datas != null && selectSize > 0) {
             for (int i = selectSize - 1; i >= 0; i--) {
                 String selectedId = selected.get(i).getUserId();
                 boolean isContain = false;
                 for (GroupMember groupMember : datas) {
-                    if(groupMember.getUserId() != null && groupMember.getUserId().equals(selectedId)){
+                    if (groupMember.getUserId() != null
+                            && groupMember.getUserId().equals(selectedId)) {
                         // 因原保存的对象与新的对象不同所以移除并替换
                         selected.remove(i);
                         selected.add(groupMember);
@@ -58,7 +55,7 @@ public class GroupManagerAdapter extends BaseAdapter implements SectionIndexer {
                         break;
                     }
                 }
-                if(!isContain) {
+                if (!isContain) {
                     selected.remove(i);
                     isSelectedChanged = true;
                 }
@@ -66,7 +63,7 @@ public class GroupManagerAdapter extends BaseAdapter implements SectionIndexer {
         }
 
         // 当已选列表发生了改变，则提示监听
-        if(isSelectedChanged && listener != null){
+        if (isSelectedChanged && listener != null) {
             listener.onSelected(selected.size(), selected);
         }
 
@@ -104,44 +101,45 @@ public class GroupManagerAdapter extends BaseAdapter implements SectionIndexer {
         }
 
         final GroupMember data = datas.get(position);
-        //根据position获取分类的首字母的Char ascii值
+        // 根据position获取分类的首字母的Char ascii值
         int section = getSectionForPosition(position);
-        //如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
+        // 如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
         final GroupManagerItem itemView = (GroupManagerItem) convertView;
         itemView.setData(data, position == getPositionForSection(section));
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isUseCheck) {
-                    if (selected.contains(data)) { // 已经选择过
-                        // 移除掉
-                        selected.remove(data);
-                        itemView.setChecked(false);
-                        if (listener != null) {
-                            listener.onSelected(selected.size(), selected);
-                        }
-                    } else {
-                        if (selected.size() < MAX_SIZE) {
-                            selected.add(data);
-                            itemView.setChecked(true);
-                            if (listener != null) {
-                                listener.onSelected(selected.size(), selected);
+        itemView.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (isUseCheck) {
+                            if (selected.contains(data)) { // 已经选择过
+                                // 移除掉
+                                selected.remove(data);
+                                itemView.setChecked(false);
+                                if (listener != null) {
+                                    listener.onSelected(selected.size(), selected);
+                                }
+                            } else {
+                                if (selected.size() < MAX_SIZE) {
+                                    selected.add(data);
+                                    itemView.setChecked(true);
+                                    if (listener != null) {
+                                        listener.onSelected(selected.size(), selected);
+                                    }
+                                } else {
+                                    if (listener != null) {
+                                        listener.onAlreadyReachedMaxSize(selected, notSelected);
+                                    }
+                                }
                             }
                         } else {
                             if (listener != null) {
-                                listener.onAlreadyReachedMaxSize(selected, notSelected);
+                                selected.clear();
+                                selected.add(data);
+                                listener.onSelected(selected.size(), selected);
                             }
                         }
                     }
-                } else {
-                    if (listener != null) {
-                        selected.clear();
-                        selected.add(data);
-                        listener.onSelected(selected.size(), selected);
-                    }
-                }
-            }
-        });
+                });
 
         // 选择状态
         if (isUseCheck) {
@@ -158,7 +156,6 @@ public class GroupManagerAdapter extends BaseAdapter implements SectionIndexer {
 
         return convertView;
     }
-
 
     @Override
     public int getSectionForPosition(int position) {
@@ -182,7 +179,6 @@ public class GroupManagerAdapter extends BaseAdapter implements SectionIndexer {
         return -1;
     }
 
-
     /**
      * 获取选择的
      *
@@ -192,11 +188,9 @@ public class GroupManagerAdapter extends BaseAdapter implements SectionIndexer {
         return selected;
     }
 
-
     public interface OnGroupManagerListener {
         void onSelected(int number, List<GroupMember> selected);
 
         void onAlreadyReachedMaxSize(List<GroupMember> selected, List<GroupMember> notSelected);
     }
-
 }

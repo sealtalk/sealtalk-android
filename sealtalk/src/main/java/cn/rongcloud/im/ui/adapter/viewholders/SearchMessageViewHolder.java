@@ -3,12 +3,7 @@ package cn.rongcloud.im.ui.adapter.viewholders;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.SealApp;
 import cn.rongcloud.im.ui.interfaces.OnMessageRecordClickListener;
@@ -32,24 +27,30 @@ public class SearchMessageViewHolder extends BaseViewHolder<SearchMessageModel> 
         tvContent = itemView.findViewById(R.id.item_tv_chatting_records_detail);
         tvDate = itemView.findViewById(R.id.item_tv_chatting_records_date);
         listener = l;
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onMessageRecordClick(model);
-                }
-            }
-        });
+        itemView.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (listener != null) {
+                            listener.onMessageRecordClick(model);
+                        }
+                    }
+                });
     }
 
     @Override
     public void update(SearchMessageModel searchMessageModel) {
         model = searchMessageModel;
         tvChatName.setText(searchMessageModel.getName());
-        tvContent.setText(CharacterParser.getColoredChattingRecord(searchMessageModel.getSearch(), searchMessageModel.getBean().getContent(), tvContent.getContext()));
-        String sendTime = RongDateUtils.getConversationFormatDate(searchMessageModel.getBean().getSentTime(), SealApp.getApplication());
+        tvContent.setText(
+                CharacterParser.getColoredChattingRecord(
+                        searchMessageModel.getSearch(),
+                        searchMessageModel.getBean().getContent(),
+                        tvContent.getContext()));
+        String sendTime =
+                RongDateUtils.getConversationFormatDate(
+                        searchMessageModel.getBean().getSentTime(), SealApp.getApplication());
         tvDate.setText(sendTime);
-        ImageLoaderUtils.displayUserPortraitImage(searchMessageModel.getPortiaitUrl(),ivPortrait);
+        ImageLoaderUtils.displayUserPortraitImage(searchMessageModel.getPortiaitUrl(), ivPortrait);
     }
-
 }

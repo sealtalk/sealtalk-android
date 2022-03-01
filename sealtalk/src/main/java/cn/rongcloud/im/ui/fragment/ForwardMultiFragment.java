@@ -1,18 +1,15 @@
 package cn.rongcloud.im.ui.fragment;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.db.model.FriendShipInfo;
@@ -24,23 +21,19 @@ import cn.rongcloud.im.ui.interfaces.OnContactItemClickListener;
 import cn.rongcloud.im.ui.interfaces.OnForwardComfirmListener;
 import cn.rongcloud.im.ui.interfaces.OnGroupItemClickListener;
 import cn.rongcloud.im.ui.interfaces.SearchableInterface;
-
-import static android.app.Activity.RESULT_OK;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * 转发 "多选" 页面
- * 包含两个 Fragment,一层不变
- * 一层 forwardCheckRecendFragment: 最近聊天
- * 二层 forwardCheckSearchFragment: 搜索
+ * 转发 "多选" 页面 包含两个 Fragment,一层不变 一层 forwardCheckRecendFragment: 最近聊天 二层 forwardCheckSearchFragment:
+ * 搜索
  */
 public class ForwardMultiFragment extends BaseFragment implements SearchableInterface {
 
     private static final int REQUEST_SELECT_DETAIL = 1000;
     private ArrayList<Parcelable> messageList;
 
-    /**
-     * Fragment 的类型。
-     */
+    /** Fragment 的类型。 */
     private enum Type {
         RECENT_LIST(0),
         SEARCH(1),
@@ -78,36 +71,38 @@ public class ForwardMultiFragment extends BaseFragment implements SearchableInte
 
     @Override
     protected void onInitView(Bundle savedInstanceState, Intent intent) {
-        messageList = getActivity().getIntent().getParcelableArrayListExtra(IntentExtra.FORWARD_MESSAGE_LIST);
+        messageList =
+                getActivity()
+                        .getIntent()
+                        .getParcelableArrayListExtra(IntentExtra.FORWARD_MESSAGE_LIST);
         showFragment(Type.RECENT_LIST.getValue());
         // 初始化底部布局
         initBottomView();
     }
 
-    /**
-     * 初始化底部布局
-     */
+    /** 初始化底部布局 */
     private void initBottomView() {
         selectedCountTv = findView(R.id.tv_search_count);
         selectedConfirmTv = findView(R.id.tv_search_confirm);
 
-        selectedConfirmTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickConfirm();
-            }
-        });
+        selectedConfirmTv.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onClickConfirm();
+                    }
+                });
 
-        selectedCountTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickContent();
-            }
-        });
+        selectedCountTv.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onClickContent();
+                    }
+                });
 
         updateBottomCount(0, 0);
     }
-
 
     /**
      * 显示framgne
@@ -142,7 +137,6 @@ public class ForwardMultiFragment extends BaseFragment implements SearchableInte
         currentFragmentIndex = index;
     }
 
-
     /**
      * 创建fragment
      *
@@ -173,21 +167,22 @@ public class ForwardMultiFragment extends BaseFragment implements SearchableInte
         Bundle bundle = new Bundle();
         bundle.putBoolean(IntentExtra.IS_SELECT, true);
         forwardGroupListFragment.setArguments(bundle);
-        forwardGroupListFragment.setOnItemClickListener(new CommonListAdapter.OnItemClickListener() {
-            @Override
-            public void onClick(View v, int position, ListItemModel data) {
-                final ListItemModel.ItemView.Type type = data.getItemView().getType();
-                switch (type) {
-                    case GROUP:
-                        final GroupEntity groupEntity = (GroupEntity) data.getData();
-                        handleGroupClicked(groupEntity);
-                        break;
-                    default:
-                        //DO Nothing
-                        break;
-                }
-            }
-        });
+        forwardGroupListFragment.setOnItemClickListener(
+                new CommonListAdapter.OnItemClickListener() {
+                    @Override
+                    public void onClick(View v, int position, ListItemModel data) {
+                        final ListItemModel.ItemView.Type type = data.getItemView().getType();
+                        switch (type) {
+                            case GROUP:
+                                final GroupEntity groupEntity = (GroupEntity) data.getData();
+                                handleGroupClicked(groupEntity);
+                                break;
+                            default:
+                                // DO Nothing
+                                break;
+                        }
+                    }
+                });
         return forwardGroupListFragment;
     }
 
@@ -198,25 +193,28 @@ public class ForwardMultiFragment extends BaseFragment implements SearchableInte
      */
     private Fragment createContactsFragment() {
         ForwardSelectContactFragment selectContactFragment = new ForwardSelectContactFragment();
-        selectContactFragment.setOnItemClickListener(new CommonListAdapter.OnItemClickListener() {
-            @Override
-            public void onClick(View v, int position, ListItemModel data) {
-                final ListItemModel.ItemView.Type type = data.getItemView().getType();
-                switch (type) {
-                    case FUN:
-                        showFragment(Type.GROUPS.getValue());
-                        ((ForwardGroupListFragment) fragments[Type.GROUPS.getValue()]).setSelectedIds(getSelectGourpIds(), getSelectFriendIds());
-                        break;
-                    case FRIEND:
-                        final FriendShipInfo friendShipInfo = (FriendShipInfo) data.getData();
-                        handleFriendClicked(friendShipInfo);
-                        break;
-                    default:
-                        //DO Nothing
-                        break;
-                }
-            }
-        });
+        selectContactFragment.setOnItemClickListener(
+                new CommonListAdapter.OnItemClickListener() {
+                    @Override
+                    public void onClick(View v, int position, ListItemModel data) {
+                        final ListItemModel.ItemView.Type type = data.getItemView().getType();
+                        switch (type) {
+                            case FUN:
+                                showFragment(Type.GROUPS.getValue());
+                                ((ForwardGroupListFragment) fragments[Type.GROUPS.getValue()])
+                                        .setSelectedIds(getSelectGourpIds(), getSelectFriendIds());
+                                break;
+                            case FRIEND:
+                                final FriendShipInfo friendShipInfo =
+                                        (FriendShipInfo) data.getData();
+                                handleFriendClicked(friendShipInfo);
+                                break;
+                            default:
+                                // DO Nothing
+                                break;
+                        }
+                    }
+                });
 
         return selectContactFragment;
     }
@@ -231,19 +229,21 @@ public class ForwardMultiFragment extends BaseFragment implements SearchableInte
         Bundle bundle = new Bundle();
         bundle.putBoolean(IntentExtra.IS_SELECT, true);
         fragment.setArguments(bundle);
-        fragment.setOnGroupItemClickListener(new OnGroupItemClickListener() {
-            @Override
-            public void onGroupClicked(GroupEntity groupEntity) {
-                handleGroupClicked(groupEntity);
-            }
-        });
+        fragment.setOnGroupItemClickListener(
+                new OnGroupItemClickListener() {
+                    @Override
+                    public void onGroupClicked(GroupEntity groupEntity) {
+                        handleGroupClicked(groupEntity);
+                    }
+                });
 
-        fragment.setOnContactItemClickListener(new OnContactItemClickListener() {
-            @Override
-            public void onItemContactClick(FriendShipInfo friendShipInfo) {
-                handleFriendClicked(friendShipInfo);
-            }
-        });
+        fragment.setOnContactItemClickListener(
+                new OnContactItemClickListener() {
+                    @Override
+                    public void onItemContactClick(FriendShipInfo friendShipInfo) {
+                        handleFriendClicked(friendShipInfo);
+                    }
+                });
         return fragment;
     }
 
@@ -253,34 +253,37 @@ public class ForwardMultiFragment extends BaseFragment implements SearchableInte
      * @return
      */
     private Fragment createRecentListFragment() {
-        ForwordRecentMultiSelectListFragment recentListFragment = new ForwordRecentMultiSelectListFragment();
+        ForwordRecentMultiSelectListFragment recentListFragment =
+                new ForwordRecentMultiSelectListFragment();
 
-        recentListFragment.setOnItemClickListener(new CommonListAdapter.OnItemClickListener() {
-            @Override
-            public void onClick(View v, int position, ListItemModel data) {
-                final ListItemModel.ItemView.Type type = data.getItemView().getType();
-                switch (type) {
-                    case FUN:
-                        showFragment(Type.CONTACTS.getValue());
-                        ((ForwardSelectContactFragment) fragments[Type.CONTACTS.getValue()]).setSelectedIds(getSelectGourpIds(), getSelectFriendIds());
-                        break;
-                    case GROUP:
-                        final GroupEntity groupEntity = (GroupEntity) data.getData();
-                        handleGroupClicked(groupEntity);
-                        break;
-                    case FRIEND:
-                        final FriendShipInfo friendShipInfo = (FriendShipInfo) data.getData();
-                        handleFriendClicked(friendShipInfo);
-                        break;
-                    default:
-                        //DO Nothing
-                        break;
-                }
-            }
-        });
+        recentListFragment.setOnItemClickListener(
+                new CommonListAdapter.OnItemClickListener() {
+                    @Override
+                    public void onClick(View v, int position, ListItemModel data) {
+                        final ListItemModel.ItemView.Type type = data.getItemView().getType();
+                        switch (type) {
+                            case FUN:
+                                showFragment(Type.CONTACTS.getValue());
+                                ((ForwardSelectContactFragment) fragments[Type.CONTACTS.getValue()])
+                                        .setSelectedIds(getSelectGourpIds(), getSelectFriendIds());
+                                break;
+                            case GROUP:
+                                final GroupEntity groupEntity = (GroupEntity) data.getData();
+                                handleGroupClicked(groupEntity);
+                                break;
+                            case FRIEND:
+                                final FriendShipInfo friendShipInfo =
+                                        (FriendShipInfo) data.getData();
+                                handleFriendClicked(friendShipInfo);
+                                break;
+                            default:
+                                // DO Nothing
+                                break;
+                        }
+                    }
+                });
         return recentListFragment;
     }
-
 
     /**
      * 修改选择数字文案
@@ -317,18 +320,14 @@ public class ForwardMultiFragment extends BaseFragment implements SearchableInte
         selectedConfirmTv.setTextColor(getResources().getColor(colorResId));
     }
 
-    /**
-     * 底部布局点击按钮事件
-     */
+    /** 底部布局点击按钮事件 */
     private void onClickConfirm() {
         if (listener != null) {
             listener.onForward(selectedGroups, selectedFriends);
         }
     }
 
-    /**
-     * 底部布局点击选择人详情查看的事件
-     */
+    /** 底部布局点击选择人详情查看的事件 */
     private void onClickContent() {
         // 跳转查看选择人的详情部分
         Intent intent = new Intent(getActivity(), ForwardSelectedDetailActivity.class);
@@ -343,10 +342,10 @@ public class ForwardMultiFragment extends BaseFragment implements SearchableInte
         if (currentFragmentIndex != Type.SEARCH.getValue()) {
             showFragment(Type.SEARCH.getValue());
         }
-        ((ForwardSearchFragment) fragments[Type.SEARCH.getValue()]).setSelectedIds(getSelectGourpIds(), getSelectFriendIds());
+        ((ForwardSearchFragment) fragments[Type.SEARCH.getValue()])
+                .setSelectedIds(getSelectGourpIds(), getSelectFriendIds());
         ((ForwardSearchFragment) fragments[Type.SEARCH.getValue()]).search(match);
     }
-
 
     @Override
     public void clear() {
@@ -364,15 +363,17 @@ public class ForwardMultiFragment extends BaseFragment implements SearchableInte
             showFragment(preFragmentIndex);
             // 因为上面已经进行切换了
             if (currentFragmentIndex == Type.CONTACTS.getValue()) {
-                ((ForwardSelectContactFragment) fragments[Type.CONTACTS.getValue()]).setSelectedIds(getSelectGourpIds(), getSelectFriendIds());
+                ((ForwardSelectContactFragment) fragments[Type.CONTACTS.getValue()])
+                        .setSelectedIds(getSelectGourpIds(), getSelectFriendIds());
             } else if (currentFragmentIndex == Type.RECENT_LIST.getValue()) {
-                ((ForwordRecentListFragment) fragments[Type.RECENT_LIST.getValue()]).setSelectedIds(getSelectGourpIds(), getSelectFriendIds());
+                ((ForwordRecentListFragment) fragments[Type.RECENT_LIST.getValue()])
+                        .setSelectedIds(getSelectGourpIds(), getSelectFriendIds());
             } else if (currentFragmentIndex == Type.GROUPS.getValue()) {
-                ((ForwardSelectContactFragment) fragments[Type.CONTACTS.getValue()]).setSelectedIds(getSelectGourpIds(), getSelectFriendIds());
+                ((ForwardSelectContactFragment) fragments[Type.CONTACTS.getValue()])
+                        .setSelectedIds(getSelectGourpIds(), getSelectFriendIds());
             }
         }
     }
-
 
     /**
      * 在选中的id 同比到选择界面
@@ -399,7 +400,6 @@ public class ForwardMultiFragment extends BaseFragment implements SearchableInte
         }
         return ids;
     }
-
 
     /**
      * 点击了好友事件处理
@@ -429,7 +429,6 @@ public class ForwardMultiFragment extends BaseFragment implements SearchableInte
         return false;
     }
 
-
     /**
      * 点击了区组事件处理
      *
@@ -441,7 +440,6 @@ public class ForwardMultiFragment extends BaseFragment implements SearchableInte
         }
         updateBottomCount(selectedGroups.size(), selectedFriends.size());
     }
-
 
     /**
      * 判断是否已经含有此群， 如果有则删除， 并返回true； 没有返回 false
@@ -470,16 +468,17 @@ public class ForwardMultiFragment extends BaseFragment implements SearchableInte
             return true;
         } else if (currentFragmentIndex == Type.CONTACTS.getValue()) {
             showFragment(Type.RECENT_LIST.getValue());
-            ((ForwordRecentMultiSelectListFragment) fragments[Type.RECENT_LIST.getValue()]).setSelectedIds(getSelectGourpIds(), getSelectFriendIds());
+            ((ForwordRecentMultiSelectListFragment) fragments[Type.RECENT_LIST.getValue()])
+                    .setSelectedIds(getSelectGourpIds(), getSelectFriendIds());
             return true;
         } else if (currentFragmentIndex == Type.GROUPS.getValue()) {
             showFragment(Type.CONTACTS.getValue());
-            ((ForwardSelectContactFragment) fragments[Type.CONTACTS.getValue()]).setSelectedIds(getSelectGourpIds(), getSelectFriendIds());
+            ((ForwardSelectContactFragment) fragments[Type.CONTACTS.getValue()])
+                    .setSelectedIds(getSelectGourpIds(), getSelectFriendIds());
             return true;
         }
         return false;
     }
-
 
     /**
      * 点击转发监听
@@ -501,17 +500,20 @@ public class ForwardMultiFragment extends BaseFragment implements SearchableInte
             } else {
                 selectedGroups = data.getParcelableArrayListExtra(IntentExtra.GROUP_LIST);
                 selectedFriends = data.getParcelableArrayListExtra(IntentExtra.FRIEND_LIST);
-                updateBottomCount(selectedGroups == null ? 0 : selectedGroups.size(), selectedFriends == null ? 0 : selectedFriends.size());
+                updateBottomCount(
+                        selectedGroups == null ? 0 : selectedGroups.size(),
+                        selectedFriends == null ? 0 : selectedFriends.size());
                 if (currentFragmentIndex == Type.RECENT_LIST.getValue()) {
-                    ((ForwordRecentMultiSelectListFragment) fragments[Type.RECENT_LIST.getValue()]).setSelectedIds(getSelectGourpIds(), getSelectFriendIds());
+                    ((ForwordRecentMultiSelectListFragment) fragments[Type.RECENT_LIST.getValue()])
+                            .setSelectedIds(getSelectGourpIds(), getSelectFriendIds());
                 } else if (currentFragmentIndex == Type.CONTACTS.getValue()) {
-                    ((ForwardSelectContactFragment) fragments[Type.CONTACTS.getValue()]).setSelectedIds(getSelectGourpIds(), getSelectFriendIds());
+                    ((ForwardSelectContactFragment) fragments[Type.CONTACTS.getValue()])
+                            .setSelectedIds(getSelectGourpIds(), getSelectFriendIds());
                 }
-                if (confirm){
+                if (confirm) {
                     listener.onForwardNoDialog(selectedGroups, selectedFriends);
                 }
             }
-
         }
     }
 }

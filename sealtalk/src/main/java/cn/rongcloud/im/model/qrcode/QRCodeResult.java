@@ -1,8 +1,6 @@
 package cn.rongcloud.im.model.qrcode;
 
-/**
- * 二维码扫描结果
- */
+/** 二维码扫描结果 */
 public class QRCodeResult {
     private QRCodeType type;
     private Object result;
@@ -13,8 +11,8 @@ public class QRCodeResult {
     }
 
     /**
-     * 获取二位码扫描结果类型
-     * 根据结果类型获取相应的结果信息
+     * 获取二位码扫描结果类型 根据结果类型获取相应的结果信息
+     *
      * @return
      */
     public QRCodeType getType() {
@@ -50,5 +48,4 @@ public class QRCodeResult {
     public Object getResult() {
         return result;
     }
-
 }

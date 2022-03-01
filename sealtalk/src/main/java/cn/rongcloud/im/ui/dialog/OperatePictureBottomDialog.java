@@ -7,10 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import cn.rongcloud.im.R;
 
 public class OperatePictureBottomDialog extends BaseBottomDialog implements View.OnClickListener {
@@ -19,7 +17,10 @@ public class OperatePictureBottomDialog extends BaseBottomDialog implements View
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(
+            @NonNull LayoutInflater inflater,
+            @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_select_operation_picture, null);
         Button btnSave = view.findViewById(R.id.btn_save);
         Button btnDelete = view.findViewById(R.id.btn_delete);
@@ -29,7 +30,7 @@ public class OperatePictureBottomDialog extends BaseBottomDialog implements View
         btnCancle.setOnClickListener(this);
 
         Dialog dialog = getDialog();
-        if(dialog != null){
+        if (dialog != null) {
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         }
 
@@ -51,7 +52,6 @@ public class OperatePictureBottomDialog extends BaseBottomDialog implements View
             }
             OperatePictureBottomDialog.this.dismiss();
         }
-
     }
 
     public void setOnDialogButtonClickListener(OnDialogButtonClickListener listener) {

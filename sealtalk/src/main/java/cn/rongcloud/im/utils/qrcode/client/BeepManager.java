@@ -23,16 +23,11 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Vibrator;
 import android.util.Log;
-
-import java.io.IOException;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.QRCodeConstant;
+import java.io.IOException;
 
-
-/**
- * Manages beeps and vibrations.
- */
+/** Manages beeps and vibrations. */
 public final class BeepManager {
 
     private static final String TAG = BeepManager.class.getSimpleName();
@@ -59,7 +54,7 @@ public final class BeepManager {
     /**
      * Call updatePrefs() after setting this.
      *
-     * If the device is in silent mode, it will not beep. 如果手机静音状态不会响
+     * <p>If the device is in silent mode, it will not beep. 如果手机静音状态不会响
      *
      * @param beepEnabled true to enable beep
      */
@@ -81,40 +76,43 @@ public final class BeepManager {
     }
     // 播放声音和震动
     public synchronized void playBeepSoundAndVibrate() {
-        if (QRCodeConstant.QR_VOICE_MODE) { //是否播放声音
+        if (QRCodeConstant.QR_VOICE_MODE) { // 是否播放声音
             playBeepSound();
         }
-        if (QRCodeConstant.QR_VIBRATE_MODE) { //是否震动
+        if (QRCodeConstant.QR_VIBRATE_MODE) { // 是否震动
             Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(VIBRATE_DURATION);
         }
     }
 
-
     public MediaPlayer playBeepSound() {
         MediaPlayer mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                mp.stop();
-                mp.release();
-            }
-        });
-        mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-            @Override
-            public boolean onError(MediaPlayer mp, int what, int extra) {
-                Log.w(TAG, "Failed to beep " + what + ", " + extra);
-                // possibly media player error, so release and recreate
-                mp.stop();
-                mp.release();
-                return true;
-            }
-        });
+        mediaPlayer.setOnCompletionListener(
+                new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mp.stop();
+                        mp.release();
+                    }
+                });
+        mediaPlayer.setOnErrorListener(
+                new MediaPlayer.OnErrorListener() {
+                    @Override
+                    public boolean onError(MediaPlayer mp, int what, int extra) {
+                        Log.w(TAG, "Failed to beep " + what + ", " + extra);
+                        // possibly media player error, so release and recreate
+                        mp.stop();
+                        mp.release();
+                        return true;
+                    }
+                });
         try {
-            AssetFileDescriptor file = context.getResources().openRawResourceFd(R.raw.zxing_beep);//自定义二维码声音
+            AssetFileDescriptor file =
+                    context.getResources().openRawResourceFd(R.raw.zxing_beep); // 自定义二维码声音
             try {
-                mediaPlayer.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
+                mediaPlayer.setDataSource(
+                        file.getFileDescriptor(), file.getStartOffset(), file.getLength());
             } finally {
                 file.close();
             }

@@ -11,13 +11,9 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-
-import java.io.IOException;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.db.model.UserInfo;
@@ -32,36 +28,23 @@ import io.rong.imkit.RongIM;
 import io.rong.imkit.userinfo.RongUserInfoManager;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
+import java.io.IOException;
 
-/**
- * 戳一下消息邀请聊天界面
- */
+/** 戳一下消息邀请聊天界面 */
 public class PokeInviteChatActivity extends BaseActivity implements View.OnClickListener {
     private final String TAG = "PokeInviteChatActivity";
-    /**
-     * 来戳一下消息时震动规则
-     */
-    private final long[] VIBRATOR_PATTERN = new long[]{1000, 1000};
+    /** 来戳一下消息时震动规则 */
+    private final long[] VIBRATOR_PATTERN = new long[] {1000, 1000};
 
-    /**
-     * 默认关闭戳一下邀请界面的时间
-     */
+    /** 默认关闭戳一下邀请界面的时间 */
     private final long TIME_TO_FINISH_POKE_INVITE = 60 * 1000;
-    /**
-     * 邀请人 id
-     */
+    /** 邀请人 id */
     private String fromId;
-    /**
-     * 邀请的会话类型
-     */
+    /** 邀请的会话类型 */
     private Conversation.ConversationType conversationType;
-    /**
-     * 邀请到目标的 targetId, 群组时为群组 id，个人时即为发送人 id
-     */
+    /** 邀请到目标的 targetId, 群组时为群组 id，个人时即为发送人 id */
     private String targetId;
-    /**
-     * 戳一下消息内容
-     */
+    /** 戳一下消息内容 */
     private String pokeMessage;
 
     private TextView fromUserNameTv;
@@ -82,10 +65,12 @@ public class PokeInviteChatActivity extends BaseActivity implements View.OnClick
         fromId = intent.getStringExtra(IntentExtra.START_FROM_ID);
         targetId = intent.getStringExtra(IntentExtra.STR_TARGET_ID);
         pokeMessage = intent.getStringExtra(IntentExtra.STR_POKE_MESSAGE);
-        conversationType = (Conversation.ConversationType) intent.getSerializableExtra(IntentExtra.SERIA_CONVERSATION_TYPE);
+        conversationType =
+                (Conversation.ConversationType)
+                        intent.getSerializableExtra(IntentExtra.SERIA_CONVERSATION_TYPE);
         groupName = intent.getStringExtra(IntentExtra.STR_GROUP_NAME);
 
-        handler  = new Handler();
+        handler = new Handler();
         // 当一定时间后关闭戳一下界面
         handler.postDelayed(timeToDismissRunnable, TIME_TO_FINISH_POKE_INVITE);
 
@@ -125,39 +110,48 @@ public class PokeInviteChatActivity extends BaseActivity implements View.OnClick
 
     private void initViewModel() {
         UserDetailViewModel userDetailViewModel =
-                ViewModelProviders.of(this, new UserDetailViewModel.Factory(getApplication(), fromId)).get(UserDetailViewModel.class);
+                ViewModelProviders.of(
+                                this, new UserDetailViewModel.Factory(getApplication(), fromId))
+                        .get(UserDetailViewModel.class);
 
         // 获取邀请人信息
-        userDetailViewModel.getUserInfo().observe(this, new Observer<Resource<UserInfo>>() {
-            @Override
-            public void onChanged(Resource<UserInfo> userInfoResource) {
-                UserInfo data = userInfoResource.data;
-                if (data != null) {
-                    updateUserInfo(data);
-                }
-            }
-        });
+        userDetailViewModel
+                .getUserInfo()
+                .observe(
+                        this,
+                        new Observer<Resource<UserInfo>>() {
+                            @Override
+                            public void onChanged(Resource<UserInfo> userInfoResource) {
+                                UserInfo data = userInfoResource.data;
+                                if (data != null) {
+                                    updateUserInfo(data);
+                                }
+                            }
+                        });
     }
 
-    /**
-     * 开启提示音和震动
-     */
+    /** 开启提示音和震动 */
     private void startNoticeAndVibrator() {
         if (mediaPlayer == null) {
             mediaPlayer = new MediaPlayer();
-            AssetFileDescriptor noticeMusic = getResources().openRawResourceFd(R.raw.music_poke_msg_incoming);
+            AssetFileDescriptor noticeMusic =
+                    getResources().openRawResourceFd(R.raw.music_poke_msg_incoming);
             try {
-                mediaPlayer.setDataSource(noticeMusic.getFileDescriptor(), noticeMusic.getStartOffset(), noticeMusic.getLength());
+                mediaPlayer.setDataSource(
+                        noticeMusic.getFileDescriptor(),
+                        noticeMusic.getStartOffset(),
+                        noticeMusic.getLength());
                 mediaPlayer.prepareAsync();
-                mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                    @Override
-                    public void onPrepared(MediaPlayer mp) {
-                        if (mp != null) {
-                            mp.setLooping(true);
-                            mp.start();
-                        }
-                    }
-                });
+                mediaPlayer.setOnPreparedListener(
+                        new MediaPlayer.OnPreparedListener() {
+                            @Override
+                            public void onPrepared(MediaPlayer mp) {
+                                if (mp != null) {
+                                    mp.setLooping(true);
+                                    mp.start();
+                                }
+                            }
+                        });
             } catch (IOException e) {
                 SLog.e(TAG, "startNoticeAndVibrator", e);
             }
@@ -170,14 +164,12 @@ public class PokeInviteChatActivity extends BaseActivity implements View.OnClick
         VibratorUtils.startVibrator(this, VIBRATOR_PATTERN, 0);
     }
 
-    /**
-     * 停止提示音乐和震动
-     */
+    /** 停止提示音乐和震动 */
     private void stopNoticeAndVibrator() {
         if (mediaPlayer != null) {
             try {
                 mediaPlayer.stop();
-            }catch (IllegalStateException e){
+            } catch (IllegalStateException e) {
                 SLog.e(TAG, "stopNoticeAndVibrator", e);
             }
         }
@@ -185,15 +177,14 @@ public class PokeInviteChatActivity extends BaseActivity implements View.OnClick
         VibratorUtils.cancelVibrator(this);
     }
 
-    /**
-     * 倒计时退出戳一下显示
-     */
-    private Runnable timeToDismissRunnable = new Runnable() {
-        @Override
-        public void run() {
-            finish();
-        }
-    };
+    /** 倒计时退出戳一下显示 */
+    private Runnable timeToDismissRunnable =
+            new Runnable() {
+                @Override
+                public void run() {
+                    finish();
+                }
+            };
 
     /**
      * 更新邀请人用户信息
@@ -228,13 +219,16 @@ public class PokeInviteChatActivity extends BaseActivity implements View.OnClick
                     title = groupInfo.getName();
                 } else if (conversationType == Conversation.ConversationType.PRIVATE) {
                     if (TextUtils.isEmpty(targetUserName)) {
-                        io.rong.imlib.model.UserInfo userInfo = RongUserInfoManager.getInstance().getUserInfo(targetId);
+                        io.rong.imlib.model.UserInfo userInfo =
+                                RongUserInfoManager.getInstance().getUserInfo(targetId);
                         title = userInfo.getName();
                     } else {
                         title = targetUserName;
                     }
                 }
-                RongIM.getInstance().startConversation(PokeInviteChatActivity.this, conversationType, targetId, title);
+                RongIM.getInstance()
+                        .startConversation(
+                                PokeInviteChatActivity.this, conversationType, targetId, title);
                 finish();
                 break;
         }

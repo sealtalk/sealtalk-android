@@ -3,46 +3,44 @@ package cn.rongcloud.im.db.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
-
 import java.util.Date;
 
 @Entity
 public class FriendDetailInfo implements Parcelable {
     @ColumnInfo(name = "id")
     private String id;
+
     @ColumnInfo(name = "name")
     private String nickname;
+
     @ColumnInfo(name = "region")
     private String region;
+
     @ColumnInfo(name = "phone_number")
     private String phone;
+
     @ColumnInfo(name = "portrait_uri")
     private String portraitUri;
 
     @ColumnInfo(name = "order_spelling")
     private String orderSpelling;
-    @Ignore
-    private String firstCharacter;
+
+    @Ignore private String firstCharacter;
 
     @ColumnInfo(name = "name_spelling")
     private String nameSpelling;
 
-    @Ignore
-    private Date createdAt;
+    @Ignore private Date createdAt;
 
-    @Ignore
-    private Date updatedAt;
+    @Ignore private Date updatedAt;
 
-    @Ignore
-    private long updatedTime;
+    @Ignore private long updatedTime;
 
-    @Ignore
-    private long createdTime;
+    @Ignore private long createdTime;
 
     @NonNull
     public String getId() {
@@ -142,20 +140,40 @@ public class FriendDetailInfo implements Parcelable {
 
     @Override
     public String toString() {
-        return "FriendDetailInfo{" +
-                "id='" + id + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", region='" + region + '\'' +
-                ", phone='" + phone + '\'' +
-                ", portraitUri='" + portraitUri + '\'' +
-                ", orderSpelling='" + orderSpelling + '\'' +
-                ", firstCharacter='" + firstCharacter + '\'' +
-                ", nameSpelling='" + nameSpelling + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", updatedTime=" + updatedTime +
-                ", createdTime=" + createdTime +
-                '}';
+        return "FriendDetailInfo{"
+                + "id='"
+                + id
+                + '\''
+                + ", nickname='"
+                + nickname
+                + '\''
+                + ", region='"
+                + region
+                + '\''
+                + ", phone='"
+                + phone
+                + '\''
+                + ", portraitUri='"
+                + portraitUri
+                + '\''
+                + ", orderSpelling='"
+                + orderSpelling
+                + '\''
+                + ", firstCharacter='"
+                + firstCharacter
+                + '\''
+                + ", nameSpelling='"
+                + nameSpelling
+                + '\''
+                + ", createdAt="
+                + createdAt
+                + ", updatedAt="
+                + updatedAt
+                + ", updatedTime="
+                + updatedTime
+                + ", createdTime="
+                + createdTime
+                + '}';
     }
 
     @Override
@@ -179,8 +197,7 @@ public class FriendDetailInfo implements Parcelable {
         dest.writeLong(this.createdTime);
     }
 
-    public FriendDetailInfo() {
-    }
+    public FriendDetailInfo() {}
 
     protected FriendDetailInfo(Parcel in) {
         this.id = in.readString();
@@ -199,15 +216,16 @@ public class FriendDetailInfo implements Parcelable {
         this.createdTime = in.readLong();
     }
 
-    public static final Parcelable.Creator<FriendDetailInfo> CREATOR = new Parcelable.Creator<FriendDetailInfo>() {
-        @Override
-        public FriendDetailInfo createFromParcel(Parcel source) {
-            return new FriendDetailInfo(source);
-        }
+    public static final Parcelable.Creator<FriendDetailInfo> CREATOR =
+            new Parcelable.Creator<FriendDetailInfo>() {
+                @Override
+                public FriendDetailInfo createFromParcel(Parcel source) {
+                    return new FriendDetailInfo(source);
+                }
 
-        @Override
-        public FriendDetailInfo[] newArray(int size) {
-            return new FriendDetailInfo[size];
-        }
-    };
+                @Override
+                public FriendDetailInfo[] newArray(int size) {
+                    return new FriendDetailInfo[size];
+                }
+            };
 }

@@ -4,14 +4,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.model.UserSimpleInfo;
 import cn.rongcloud.im.ui.view.UserInfoItemView;
 import cn.rongcloud.im.utils.ImageLoaderUtils;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlackListAdapter extends BaseAdapter {
 
@@ -36,12 +34,15 @@ public class BlackListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         UserSimpleInfo userInfo = data.get(position);
         if (convertView == null) {
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_black_list, parent, false);
+            convertView =
+                    LayoutInflater.from(parent.getContext())
+                            .inflate(R.layout.item_black_list, parent, false);
         }
         UserInfoItemView userInfoItemView = (UserInfoItemView) convertView;
         userInfoItemView.setName(userInfo.getName());
-        ImageLoaderUtils.displayUserPortraitImage(userInfo.getPortraitUri(), userInfoItemView.getHeaderImageView());
-        if (position != getCount() -1) {
+        ImageLoaderUtils.displayUserPortraitImage(
+                userInfo.getPortraitUri(), userInfoItemView.getHeaderImageView());
+        if (position != getCount() - 1) {
             userInfoItemView.setDividerVisibility(View.VISIBLE);
         } else {
             userInfoItemView.setDividerVisibility(View.GONE);

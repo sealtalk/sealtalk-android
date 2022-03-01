@@ -4,9 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.HorizontalScrollView;
 
-/**
- * Created by baoleduc on 26/07/16.
- */
+/** Created by baoleduc on 26/07/16. */
 public class BoundedHorizontalScrollView extends HorizontalScrollView {
 
     private final BoundedViewHelper boundedHelper;
@@ -24,7 +22,8 @@ public class BoundedHorizontalScrollView extends HorizontalScrollView {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension(boundedHelper.getBoundedMeasuredWidth(getMeasuredWidth()),
+        setMeasuredDimension(
+                boundedHelper.getBoundedMeasuredWidth(getMeasuredWidth()),
                 boundedHelper.getBoundedMeasuredHeight(getMeasuredHeight()));
     }
 }

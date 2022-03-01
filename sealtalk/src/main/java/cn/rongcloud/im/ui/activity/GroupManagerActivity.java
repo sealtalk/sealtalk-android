@@ -4,13 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
-
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-
-import java.util.List;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.db.model.GroupEntity;
@@ -21,6 +17,7 @@ import cn.rongcloud.im.ui.dialog.CommonDialog;
 import cn.rongcloud.im.ui.view.SettingItemView;
 import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.viewmodel.GroupManagementViewModel;
+import java.util.List;
 
 public class GroupManagerActivity extends TitleBaseActivity implements View.OnClickListener {
 
@@ -67,66 +64,97 @@ public class GroupManagerActivity extends TitleBaseActivity implements View.OnCl
     }
 
     private void initViewModel() {
-        groupManagementViewModel = ViewModelProviders.of(this, new GroupManagementViewModel.Factory(groupId, getApplication())).get(GroupManagementViewModel.class);
+        groupManagementViewModel =
+                ViewModelProviders.of(
+                                this,
+                                new GroupManagementViewModel.Factory(groupId, getApplication()))
+                        .get(GroupManagementViewModel.class);
 
-        groupManagementViewModel.getGroupManagements().observe(this, new Observer<Resource<List<GroupMember>>>() {
-            @Override
-            public void onChanged(Resource<List<GroupMember>> resource) {
-                int managementNumber = resource.data == null ? 0 : resource.data.size();
-                // 减掉1 ， 因为有一条是添加管理员的item
-                setGroupManagerSiv.setValue(managementNumber + "/" + MANAGEMENT_MAX);
-            }
-        });
+        groupManagementViewModel
+                .getGroupManagements()
+                .observe(
+                        this,
+                        new Observer<Resource<List<GroupMember>>>() {
+                            @Override
+                            public void onChanged(Resource<List<GroupMember>> resource) {
+                                int managementNumber =
+                                        resource.data == null ? 0 : resource.data.size();
+                                // 减掉1 ， 因为有一条是添加管理员的item
+                                setGroupManagerSiv.setValue(
+                                        managementNumber + "/" + MANAGEMENT_MAX);
+                            }
+                        });
 
-        groupManagementViewModel.getGroupInfo().observe(this, new Observer<GroupEntity>() {
-            @Override
-            public void onChanged(GroupEntity groupEntity) {
-                if (groupEntity != null) {
-                    if (groupEntity.getIsMute() == 1) {
-                        setCheckChangeWithoutListener(true, muteAllSiv, muteAllSivListener);
-                    }
-                    if (groupEntity.getCertiStatus() == SWITCH_OPEN) {
-                        setCheckChangeWithoutListener(true, addCertifiSiv, certifiSivListener);
-                    }
-                    if (groupEntity.getMemberProtection() == 1) {
-                        setCheckChangeWithoutListener(true, groupMemberProtectSiv, memberProtectSivListener);
-                    }
-                }
-            }
-        });
+        groupManagementViewModel
+                .getGroupInfo()
+                .observe(
+                        this,
+                        new Observer<GroupEntity>() {
+                            @Override
+                            public void onChanged(GroupEntity groupEntity) {
+                                if (groupEntity != null) {
+                                    if (groupEntity.getIsMute() == 1) {
+                                        setCheckChangeWithoutListener(
+                                                true, muteAllSiv, muteAllSivListener);
+                                    }
+                                    if (groupEntity.getCertiStatus() == SWITCH_OPEN) {
+                                        setCheckChangeWithoutListener(
+                                                true, addCertifiSiv, certifiSivListener);
+                                    }
+                                    if (groupEntity.getMemberProtection() == 1) {
+                                        setCheckChangeWithoutListener(
+                                                true,
+                                                groupMemberProtectSiv,
+                                                memberProtectSivListener);
+                                    }
+                                }
+                            }
+                        });
 
-        groupManagementViewModel.getMuteAllResult().observe(this, new Observer<Resource<Void>>() {
-            @Override
-            public void onChanged(Resource<Void> voidResource) {
-                if (voidResource.status == Status.SUCCESS) {
-                    ToastUtils.showToast(R.string.seal_group_manager_set_success);
-                } else if (voidResource.status == Status.ERROR) {
-                    ToastUtils.showToast(R.string.seal_group_manager_set_fail);
-                }
-            }
-        });
+        groupManagementViewModel
+                .getMuteAllResult()
+                .observe(
+                        this,
+                        new Observer<Resource<Void>>() {
+                            @Override
+                            public void onChanged(Resource<Void> voidResource) {
+                                if (voidResource.status == Status.SUCCESS) {
+                                    ToastUtils.showToast(R.string.seal_group_manager_set_success);
+                                } else if (voidResource.status == Status.ERROR) {
+                                    ToastUtils.showToast(R.string.seal_group_manager_set_fail);
+                                }
+                            }
+                        });
 
-        groupManagementViewModel.getCerifiResult().observe(this, new Observer<Resource<Void>>() {
-            @Override
-            public void onChanged(Resource<Void> voidResource) {
-                if (voidResource.status == Status.SUCCESS) {
-                    ToastUtils.showToast(R.string.seal_group_manager_set_success);
-                } else if (voidResource.status == Status.ERROR) {
-                    ToastUtils.showToast(R.string.seal_group_manager_set_fail);
-                }
-            }
-        });
+        groupManagementViewModel
+                .getCerifiResult()
+                .observe(
+                        this,
+                        new Observer<Resource<Void>>() {
+                            @Override
+                            public void onChanged(Resource<Void> voidResource) {
+                                if (voidResource.status == Status.SUCCESS) {
+                                    ToastUtils.showToast(R.string.seal_group_manager_set_success);
+                                } else if (voidResource.status == Status.ERROR) {
+                                    ToastUtils.showToast(R.string.seal_group_manager_set_fail);
+                                }
+                            }
+                        });
 
-        groupManagementViewModel.getMemberProtectionResult().observe(this, new Observer<Resource<Void>>() {
-            @Override
-            public void onChanged(Resource<Void> voidResource) {
-                if (voidResource.status == Status.SUCCESS) {
-                    ToastUtils.showToast(R.string.seal_group_manager_set_success);
-                } else if (voidResource.status == Status.ERROR) {
-                    ToastUtils.showToast(R.string.seal_group_manager_set_fail);
-                }
-            }
-        });
+        groupManagementViewModel
+                .getMemberProtectionResult()
+                .observe(
+                        this,
+                        new Observer<Resource<Void>>() {
+                            @Override
+                            public void onChanged(Resource<Void> voidResource) {
+                                if (voidResource.status == Status.SUCCESS) {
+                                    ToastUtils.showToast(R.string.seal_group_manager_set_success);
+                                } else if (voidResource.status == Status.ERROR) {
+                                    ToastUtils.showToast(R.string.seal_group_manager_set_fail);
+                                }
+                            }
+                        });
     }
 
     @Override
@@ -169,17 +197,18 @@ public class GroupManagerActivity extends TitleBaseActivity implements View.OnCl
     private void showCertifiSivConfirmDialog() {
         CommonDialog.Builder builder = new CommonDialog.Builder();
         builder.setContentMessage(getString(R.string.seal_add_certification_close));
-        builder.setDialogButtonClickListener(new CommonDialog.OnDialogButtonClickListener() {
-            @Override
-            public void onPositiveClick(View v, Bundle bundle) {
-                groupManagementViewModel.setCerification(SWITCH_CLOSE);
-            }
+        builder.setDialogButtonClickListener(
+                new CommonDialog.OnDialogButtonClickListener() {
+                    @Override
+                    public void onPositiveClick(View v, Bundle bundle) {
+                        groupManagementViewModel.setCerification(SWITCH_CLOSE);
+                    }
 
-            @Override
-            public void onNegativeClick(View v, Bundle bundle) {
-                setCheckChangeWithoutListener(true, addCertifiSiv, certifiSivListener);
-            }
-        });
+                    @Override
+                    public void onNegativeClick(View v, Bundle bundle) {
+                        setCheckChangeWithoutListener(true, addCertifiSiv, certifiSivListener);
+                    }
+                });
         CommonDialog dialog = builder.build();
         dialog.show(getSupportFragmentManager(), "certifi_close");
     }
@@ -187,63 +216,69 @@ public class GroupManagerActivity extends TitleBaseActivity implements View.OnCl
     private void showMemberProtectionConfirmDialog() {
         CommonDialog.Builder builder = new CommonDialog.Builder();
         builder.setContentMessage(getString(R.string.seal_add_friend_protect));
-        builder.setDialogButtonClickListener(new CommonDialog.OnDialogButtonClickListener() {
-            @Override
-            public void onPositiveClick(View v, Bundle bundle) {
-                //1为打开，0为关闭
-                groupManagementViewModel.setMemberProtection(0);
-            }
+        builder.setDialogButtonClickListener(
+                new CommonDialog.OnDialogButtonClickListener() {
+                    @Override
+                    public void onPositiveClick(View v, Bundle bundle) {
+                        // 1为打开，0为关闭
+                        groupManagementViewModel.setMemberProtection(0);
+                    }
 
-            @Override
-            public void onNegativeClick(View v, Bundle bundle) {
-                setCheckChangeWithoutListener(true, groupMemberProtectSiv, memberProtectSivListener);
-            }
-        });
+                    @Override
+                    public void onNegativeClick(View v, Bundle bundle) {
+                        setCheckChangeWithoutListener(
+                                true, groupMemberProtectSiv, memberProtectSivListener);
+                    }
+                });
         CommonDialog dialog = builder.build();
         dialog.show(getSupportFragmentManager(), null);
     }
 
-    //转变状态时防止重复发送网络请求
-    private void setCheckChangeWithoutListener(boolean isChecked, SettingItemView view, CompoundButton.OnCheckedChangeListener listener) {
+    // 转变状态时防止重复发送网络请求
+    private void setCheckChangeWithoutListener(
+            boolean isChecked,
+            SettingItemView view,
+            CompoundButton.OnCheckedChangeListener listener) {
         view.setSwitchCheckListener(null);
         view.setCheckedImmediately(isChecked);
         view.setSwitchCheckListener(listener);
     }
 
-    private CompoundButton.OnCheckedChangeListener memberProtectSivListener = new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            //1为打开，0为关闭
-            if (isChecked) {
-                groupManagementViewModel.setMemberProtection(1);
-            } else {
-                showMemberProtectionConfirmDialog();
-            }
-        }
-    };
+    private CompoundButton.OnCheckedChangeListener memberProtectSivListener =
+            new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    // 1为打开，0为关闭
+                    if (isChecked) {
+                        groupManagementViewModel.setMemberProtection(1);
+                    } else {
+                        showMemberProtectionConfirmDialog();
+                    }
+                }
+            };
 
-    private CompoundButton.OnCheckedChangeListener certifiSivListener = new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if (isChecked) {
-                groupManagementViewModel.setCerification(SWITCH_OPEN);
-            } else {
-                showCertifiSivConfirmDialog();
-            }
-        }
-    };
+    private CompoundButton.OnCheckedChangeListener certifiSivListener =
+            new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        groupManagementViewModel.setCerification(SWITCH_OPEN);
+                    } else {
+                        showCertifiSivConfirmDialog();
+                    }
+                }
+            };
 
-    private CompoundButton.OnCheckedChangeListener muteAllSivListener = new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            //1为打开，0为关闭，全员禁言
-            if (isChecked) {
-                groupManagementViewModel.setMuteAll(1);
-            } else {
-                groupManagementViewModel.setMuteAll(0);
-            }
-        }
-    };
-
-
+    private CompoundButton.OnCheckedChangeListener muteAllSivListener =
+            new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    // 1为打开，0为关闭，全员禁言
+                    if (isChecked) {
+                        groupManagementViewModel.setMuteAll(1);
+                    } else {
+                        groupManagementViewModel.setMuteAll(0);
+                    }
+                }
+            };
 }

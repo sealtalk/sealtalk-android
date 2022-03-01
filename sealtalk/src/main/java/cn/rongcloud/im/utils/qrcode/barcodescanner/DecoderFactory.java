@@ -1,7 +1,6 @@
 package cn.rongcloud.im.utils.qrcode.barcodescanner;
 
 import com.google.zxing.DecodeHintType;
-
 import java.util.Map;
 
 /**
@@ -14,10 +13,11 @@ public interface DecoderFactory {
     /**
      * Create a new Decoder.
      *
-     * While this method will only be called from a single thread, the created Decoder will
-     * be used from a different thread. Each decoder will only be used from a single thread.
+     * <p>While this method will only be called from a single thread, the created Decoder will be
+     * used from a different thread. Each decoder will only be used from a single thread.
      *
-     * @param baseHints default hints. Typically specifies DecodeHintType.NEED_RESULT_POINT_CALLBACK.
+     * @param baseHints default hints. Typically specifies
+     *     DecodeHintType.NEED_RESULT_POINT_CALLBACK.
      * @return a new Decoder
      */
     Decoder createDecoder(Map<DecodeHintType, ?> baseHints);

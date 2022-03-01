@@ -6,7 +6,7 @@ import android.os.HandlerThread;
 /**
  * Singleton thread that is started and stopped on demand.
  *
- * Any access to Camera / CameraManager should happen on this thread, through CameraInstance.
+ * <p>Any access to Camera / CameraManager should happen on this thread, through CameraInstance.
  */
 class CameraThread {
     private static final String TAG = CameraThread.class.getSimpleName();
@@ -27,14 +27,12 @@ class CameraThread {
 
     private final Object LOCK = new Object();
 
-
-    private CameraThread() {
-    }
+    private CameraThread() {}
 
     /**
      * Call from main thread or camera thread.
      *
-     * Enqueues a task on the camera thread.
+     * <p>Enqueues a task on the camera thread.
      *
      * @param runnable the task to enqueue
      */
@@ -48,7 +46,7 @@ class CameraThread {
     /**
      * Call from main thread or camera thread.
      *
-     * Enqueues a task on the camera thread.
+     * <p>Enqueues a task on the camera thread.
      *
      * @param runnable the task to enqueue
      * @param delayMillis the delay in milliseconds before executing the runnable
@@ -73,9 +71,7 @@ class CameraThread {
         }
     }
 
-    /**
-     * Call from camera thread.
-     */
+    /** Call from camera thread. */
     private void quit() {
         synchronized (LOCK) {
             this.thread.quit();
@@ -84,9 +80,7 @@ class CameraThread {
         }
     }
 
-    /**
-     * Call from camera thread
-     */
+    /** Call from camera thread */
     protected void decrementInstances() {
         synchronized (LOCK) {
             openCount -= 1;

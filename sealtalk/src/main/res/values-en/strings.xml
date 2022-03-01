@@ -625,4 +625,8 @@
     <string name="seal_talk_registration_title">the Registration Terms</string>
     <string name="seal_mine_about_debug_setting_umeng_info">Device info by umeng</string>
     <string name="seal_mine_about_debug_setting_reference_msg_test">Reference message property test</string>
+
+    <string name="seal_talk_fraud_tips_dialog_title">Tips</string>
+    <string name="seal_talk_fraud_tips_dialog_content">You are using RongCloud IM, RongCloud reminds you to beware of fraud and Be cautious of messages involving money.</string>
+    <string name="seal_talk_fraud_tips_dialog_confirm">Confirm</string>
 </resources>

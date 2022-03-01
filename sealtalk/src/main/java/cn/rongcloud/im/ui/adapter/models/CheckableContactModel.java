@@ -1,6 +1,6 @@
 package cn.rongcloud.im.ui.adapter.models;
 
-public class CheckableContactModel<T> extends ContactModel<T>  {
+public class CheckableContactModel<T> extends ContactModel<T> {
     private CheckType checkType = CheckType.NONE;
     private String id;
     private String firstChar;
@@ -20,6 +20,7 @@ public class CheckableContactModel<T> extends ContactModel<T>  {
     public void setId(String id) {
         this.id = id;
     }
+
     public String getId() {
         return id;
     }

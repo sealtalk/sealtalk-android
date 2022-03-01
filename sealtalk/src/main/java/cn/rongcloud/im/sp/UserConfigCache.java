@@ -2,15 +2,17 @@ package cn.rongcloud.im.sp;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
 import cn.rongcloud.im.model.QuietHours;
 
 public class UserConfigCache {
     private static final String SP_NAME = "User_config_cache";
     private static final String SP_NEW_MESSAGE_REMIND = "new_message_remind";
-    private static final Object SP_NEW_MESSAGE_QUIET_HOURS_STARTTIME = "new_message_notifi_quiet_hours_start_time";
-    private static final String SP_NEW_MESSAGE_QUIET_HOURS_SPANMINUTES = "new_message_notifi_quiet_hours_spanminutes";
-    private static final Object SP_NEW_MESSAGE_QUIET_DONOT_DISTRAB = "new_message_notifi_quiet_donot_distrab";
+    private static final Object SP_NEW_MESSAGE_QUIET_HOURS_STARTTIME =
+            "new_message_notifi_quiet_hours_start_time";
+    private static final String SP_NEW_MESSAGE_QUIET_HOURS_SPANMINUTES =
+            "new_message_notifi_quiet_hours_spanminutes";
+    private static final Object SP_NEW_MESSAGE_QUIET_DONOT_DISTRAB =
+            "new_message_notifi_quiet_donot_distrab";
     private static final String SP_CHAT_BACKGROUND = "chat_bg";
     private static final String SP_SCREEN_STATUS = "screen_capture_status";
     private static final String SP_RECEIVE_POKE_MESSAGE = "receive_poke_message";
@@ -48,10 +50,11 @@ public class UserConfigCache {
      * @param spanMinutes
      */
     public void setNotifiQuietHours(String userId, String startTime, int spanMinutes) {
-        sp.edit().putString(SP_NEW_MESSAGE_QUIET_HOURS_STARTTIME + userId, startTime)
-                .putInt(SP_NEW_MESSAGE_QUIET_HOURS_SPANMINUTES + userId, spanMinutes).commit();
+        sp.edit()
+                .putString(SP_NEW_MESSAGE_QUIET_HOURS_STARTTIME + userId, startTime)
+                .putInt(SP_NEW_MESSAGE_QUIET_HOURS_SPANMINUTES + userId, spanMinutes)
+                .commit();
     }
-
 
     /**
      * 获取免打扰时间
@@ -78,7 +81,6 @@ public class UserConfigCache {
      */
     public void setNotifiDonotDistrabStatus(String userId, boolean status) {
         sp.edit().putBoolean(SP_NEW_MESSAGE_QUIET_DONOT_DISTRAB + userId, status).commit();
-
     }
 
     /**

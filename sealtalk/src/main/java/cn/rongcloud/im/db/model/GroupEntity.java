@@ -2,89 +2,66 @@ package cn.rongcloud.im.db.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
 import java.util.Date;
 
 @Entity(tableName = "group")
 public class GroupEntity implements Parcelable {
-    @PrimaryKey
-    @NonNull
-    private String id;
+    @PrimaryKey @NonNull private String id;
+
     @ColumnInfo(name = "portrait_url")
     private String portraitUri;
+
     @ColumnInfo(name = "name")
     private String name;
+
     @ColumnInfo(name = "name_spelling")
     private String nameSpelling;
+
     @ColumnInfo(name = "name_spelling_initial")
     private String nameSpellingInitial;
+
     @ColumnInfo(name = "order_spelling")
     private String orderSpelling;
-    /**
-     * 群人数
-     */
+    /** 群人数 */
     @ColumnInfo(name = "member_count")
     private int memberCount;
-    /**
-     * 群人数上限
-     */
+    /** 群人数上限 */
     @ColumnInfo(name = "max_member_count")
     private int maxMemberCount;
-    /**
-     * 群主 id
-     */
+    /** 群主 id */
     @ColumnInfo(name = "owner_user_id")
     private String creatorId;
-    /**
-     * 类型: 1,普通群;2,企业群
-     */
+    /** 类型: 1,普通群;2,企业群 */
     @ColumnInfo(name = "type")
     private int type;
-    /**
-     * 群公告
-     */
+    /** 群公告 */
     @ColumnInfo(name = "bulletin")
     private String bulletin;
-    /**
-     * 群公告更新时间
-     */
+    /** 群公告更新时间 */
     @ColumnInfo(name = "bulletin_time")
     private long bulletinTime;
-    /**
-     * 删除日期
-     */
+    /** 删除日期 */
     @ColumnInfo(name = "delete_at")
     private Date deletedAt;
-    /**
-     * 是否在通讯录，0：不在；1：在
-     */
+    /** 是否在通讯录，0：不在；1：在 */
     @ColumnInfo(name = "is_in_contact")
     private int isInContact;
-    /**
-     * 定时删除时间状态
-     */
+    /** 定时删除时间状态 */
     @ColumnInfo(name = "regular_clear_state")
     private int regularClearState;
-    /**
-     * 全员禁言
-     */
+    /** 全员禁言 */
     @ColumnInfo(name = "is_mute_all")
     private int isMute;
 
-    /**
-     * 入群认证
-     */
+    /** 入群认证 */
     @ColumnInfo(name = "certification_status")
     private int certiStatus;
 
-    /**
-     * 成员保护
-     */
+    /** 成员保护 */
     @ColumnInfo(name = "member_protection")
     private int memberProtection;
 
@@ -233,7 +210,6 @@ public class GroupEntity implements Parcelable {
         this.isInContact = isInContact;
     }
 
-
     @Override
     public int describeContents() {
         return 0;
@@ -261,8 +237,7 @@ public class GroupEntity implements Parcelable {
         dest.writeInt(this.memberProtection);
     }
 
-    public GroupEntity() {
-    }
+    public GroupEntity() {}
 
     protected GroupEntity(Parcel in) {
         this.id = in.readString();
@@ -286,39 +261,66 @@ public class GroupEntity implements Parcelable {
         this.memberProtection = in.readInt();
     }
 
-    public static final Creator<GroupEntity> CREATOR = new Creator<GroupEntity>() {
-        @Override
-        public GroupEntity createFromParcel(Parcel source) {
-            return new GroupEntity(source);
-        }
+    public static final Creator<GroupEntity> CREATOR =
+            new Creator<GroupEntity>() {
+                @Override
+                public GroupEntity createFromParcel(Parcel source) {
+                    return new GroupEntity(source);
+                }
 
-        @Override
-        public GroupEntity[] newArray(int size) {
-            return new GroupEntity[size];
-        }
-    };
+                @Override
+                public GroupEntity[] newArray(int size) {
+                    return new GroupEntity[size];
+                }
+            };
 
     @Override
     public String toString() {
-        return "GroupEntity{" +
-                "id='" + id + '\'' +
-                ", portraitUri='" + portraitUri + '\'' +
-                ", name='" + name + '\'' +
-                ", nameSpelling='" + nameSpelling + '\'' +
-                ", nameSpellingInitial='" + nameSpellingInitial + '\'' +
-                ", orderSpelling='" + orderSpelling + '\'' +
-                ", memberCount=" + memberCount +
-                ", maxMemberCount=" + maxMemberCount +
-                ", creatorId='" + creatorId + '\'' +
-                ", type=" + type +
-                ", bulletin='" + bulletin + '\'' +
-                ", bulletinTime=" + bulletinTime +
-                ", deletedAt=" + deletedAt +
-                ", isInContact=" + isInContact +
-                ", regularClearState=" + regularClearState +
-                ", isMute=" + isMute +
-                ", certiStatus=" + certiStatus +
-                ", memberProtection=" + memberProtection +
-                '}';
+        return "GroupEntity{"
+                + "id='"
+                + id
+                + '\''
+                + ", portraitUri='"
+                + portraitUri
+                + '\''
+                + ", name='"
+                + name
+                + '\''
+                + ", nameSpelling='"
+                + nameSpelling
+                + '\''
+                + ", nameSpellingInitial='"
+                + nameSpellingInitial
+                + '\''
+                + ", orderSpelling='"
+                + orderSpelling
+                + '\''
+                + ", memberCount="
+                + memberCount
+                + ", maxMemberCount="
+                + maxMemberCount
+                + ", creatorId='"
+                + creatorId
+                + '\''
+                + ", type="
+                + type
+                + ", bulletin='"
+                + bulletin
+                + '\''
+                + ", bulletinTime="
+                + bulletinTime
+                + ", deletedAt="
+                + deletedAt
+                + ", isInContact="
+                + isInContact
+                + ", regularClearState="
+                + regularClearState
+                + ", isMute="
+                + isMute
+                + ", certiStatus="
+                + certiStatus
+                + ", memberProtection="
+                + memberProtection
+                + '}';
     }
 }

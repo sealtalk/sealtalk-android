@@ -1,8 +1,6 @@
 package cn.rongcloud.im.ui.widget;
 
-/**
- * 动态设置按钮的信息对象
- */
+/** 动态设置按钮的信息对象 */
 public class TabItem {
 
     public int id;

@@ -14,16 +14,12 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-
 import cn.rongcloud.im.R;
 
-/**
- * 通用对话框
- */
+/** 通用对话框 */
 public class CommonDialog extends DialogFragment {
 
     private static class ControllerParams {
@@ -50,24 +46,28 @@ public class CommonDialog extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        //透明化背景
+        // 透明化背景
         Dialog dialog = getDialog();
         if (dialog != null) {
             Window window = dialog.getWindow();
-            //背景色
+            // 背景色
             window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
             int dialogWidth = getDialogWidth();
             if (dialogWidth > 0) {
 
-                dialog.getWindow().setLayout((int) dialogWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialog.getWindow()
+                        .setLayout((int) dialogWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
             }
         }
     }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(
+            @NonNull LayoutInflater inflater,
+            @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
 
         View view = getDialogView();
         if (view == null) {
@@ -84,30 +84,32 @@ public class CommonDialog extends DialogFragment {
         RelativeLayout contentContainer = view.findViewById(R.id.dialog_content_container);
         TextView content = view.findViewById(R.id.dialog_tv_content);
         TextView title = view.findViewById(R.id.dialog_tv_title);
-        negative.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-                if (onNegativeClick()) {
-                    return;
-                }
-                if (params.listener != null) {
-                    params.listener.onNegativeClick(v, getNegativeDatas());
-                }
-            }
-        });
-        positive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-                if (onPositiveClick()) {
-                    return;
-                }
-                if (params.listener != null) {
-                    params.listener.onPositiveClick(v, getPositiveDatas());
-                }
-            }
-        });
+        negative.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dismiss();
+                        if (onNegativeClick()) {
+                            return;
+                        }
+                        if (params.listener != null) {
+                            params.listener.onNegativeClick(v, getNegativeDatas());
+                        }
+                    }
+                });
+        positive.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dismiss();
+                        if (onPositiveClick()) {
+                            return;
+                        }
+                        if (params.listener != null) {
+                            params.listener.onPositiveClick(v, getPositiveDatas());
+                        }
+                    }
+                });
 
         View contentView = onCreateContentView(contentContainer);
         if (contentView != null) {
@@ -144,19 +146,19 @@ public class CommonDialog extends DialogFragment {
         }
 
         return view;
-
     }
-
 
     @Override
     public void onResume() {
         super.onResume();
         Window window = getDialog().getWindow();
         if (window != null) {
-            //去除系统自带的margin
+            // 去除系统自带的margin
             window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            //设置dialog在界面中的属性
-            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+            // 设置dialog在界面中的属性
+            window.setLayout(
+                    WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.WRAP_CONTENT);
         }
     }
 
@@ -169,10 +171,8 @@ public class CommonDialog extends DialogFragment {
         return null;
     }
 
-
     /**
-     * 通过复写此方法， 在子类中，可重新创建设置
-     * 新的内容布局
+     * 通过复写此方法， 在子类中，可重新创建设置 新的内容布局
      *
      * @return
      */
@@ -217,8 +217,7 @@ public class CommonDialog extends DialogFragment {
     }
 
     /**
-     * 获取对话框宽度,重写此方法来设置对话框的宽度
-     * 默认接近占满整个屏幕
+     * 获取对话框宽度,重写此方法来设置对话框的宽度 默认接近占满整个屏幕
      *
      * @return
      */
@@ -237,18 +236,13 @@ public class CommonDialog extends DialogFragment {
         return params.expandParams;
     }
 
-
     public interface OnDialogButtonClickListener {
         void onPositiveClick(View v, Bundle bundle);
 
         void onNegativeClick(View v, Bundle bundle);
     }
 
-
-    /**
-     * 集成 CommonDialog 的子类， 需要继承此类， 并要复写
-     * getCurrentDialog 方法，返回子类的dialog 对象
-     */
+    /** 集成 CommonDialog 的子类， 需要继承此类， 并要复写 getCurrentDialog 方法，返回子类的dialog 对象 */
     public static class Builder {
         private ControllerParams params;
 
@@ -282,7 +276,6 @@ public class CommonDialog extends DialogFragment {
             return this;
         }
 
-
         public Builder setExpandParams(Bundle expandParams) {
             params.expandParams = expandParams;
             return this;
@@ -298,7 +291,6 @@ public class CommonDialog extends DialogFragment {
             dialog.setParams(params);
             return dialog;
         }
-
 
         protected CommonDialog getCurrentDialog() {
             return new CommonDialog();

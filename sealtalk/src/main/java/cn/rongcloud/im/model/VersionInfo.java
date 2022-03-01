@@ -1,23 +1,13 @@
 package cn.rongcloud.im.model;
 
-/**
- * 版本信息类
- */
+/** 版本信息类 */
 public class VersionInfo {
 
-
-    /**
-     * version : 1.0.5
-     * build : 201607181821
-     * url : https://dn-rongcloud.qbox.me/app.plist
-     */
-
+    /** version : 1.0.5 build : 201607181821 url : https://dn-rongcloud.qbox.me/app.plist */
     private IOSVersion iOS;
     /**
-     * version : 1.0.5
-     * url : http://downloads.rongcloud.cn/SealTalk_by_RongCloud_Android_v1_0_5.apk
+     * version : 1.0.5 url : http://downloads.rongcloud.cn/SealTalk_by_RongCloud_Android_v1_0_5.apk
      */
-
     private AndroidVersion Android;
 
     public void setIos(IOSVersion ios) {

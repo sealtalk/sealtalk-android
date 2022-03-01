@@ -7,12 +7,10 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Status;
@@ -27,12 +25,9 @@ import cn.rongcloud.im.utils.qrcode.barcodescanner.BarcodeResult;
 import cn.rongcloud.im.utils.qrcode.barcodescanner.CaptureManager;
 import cn.rongcloud.im.utils.qrcode.barcodescanner.DecoratedBarcodeView;
 
-
-/**
- * 扫一扫界面
- */
+/** 扫一扫界面 */
 public class ScanActivity extends TitleBaseActivity implements View.OnClickListener {
-    private final static String TAG = "ScanActivity";
+    private static final String TAG = "ScanActivity";
     private CaptureManager capture;
     private DecoratedBarcodeView barcodeScannerView;
     private TextView lightControlTv;
@@ -48,38 +43,42 @@ public class ScanActivity extends TitleBaseActivity implements View.OnClickListe
 
         SealTitleBar titleBar = getTitleBar();
         titleBar.setTitle(R.string.seal_main_title_scan);
-        titleBar.setOnBtnRightClickListener(getString(R.string.common_album), new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scanFromAlbum();
-            }
-        });
+        titleBar.setOnBtnRightClickListener(
+                getString(R.string.common_album),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        scanFromAlbum();
+                    }
+                });
 
         initView(savedInstanceState);
 
-        photoUtils = new PhotoUtils(new PhotoUtils.OnPhotoResultListener() {
-            @Override
-            public void onPhotoResult(Uri uri) {
-                String result = QRCodeUtils.analyzeImage(uri.getPath());
-                handleQrCode(result);
-            }
+        photoUtils =
+                new PhotoUtils(
+                        new PhotoUtils.OnPhotoResultListener() {
+                            @Override
+                            public void onPhotoResult(Uri uri) {
+                                String result = QRCodeUtils.analyzeImage(uri.getPath());
+                                handleQrCode(result);
+                            }
 
-            @Override
-            public void onPhotoCancel() {
-            }
-        });
+                            @Override
+                            public void onPhotoCancel() {}
+                        });
     }
 
     private void initView(Bundle savedInstanceState) {
         barcodeScannerView = initializeContent();
         capture = new CaptureManager(this, barcodeScannerView);
         capture.initializeFromIntent(getIntent(), savedInstanceState);
-        capture.setOnCaptureResultListener(new CaptureManager.OnCaptureResultListener() {
-            @Override
-            public void onCaptureResult(BarcodeResult result) {
-                handleQrCode(result.toString());
-            }
-        });
+        capture.setOnCaptureResultListener(
+                new CaptureManager.OnCaptureResultListener() {
+                    @Override
+                    public void onCaptureResult(BarcodeResult result) {
+                        handleQrCode(result.toString());
+                    }
+                });
 
         barcodeScannerView.getViewFinder().networkChange(!NetworkUtils.isNetWorkAvailable(this));
         if (!NetworkUtils.isNetWorkAvailable(this)) {
@@ -87,19 +86,20 @@ public class ScanActivity extends TitleBaseActivity implements View.OnClickListe
         } else {
             capture.decode();
         }
-        barcodeScannerView.setTorchListener(new DecoratedBarcodeView.TorchListener() {
-            @Override
-            public void onTorchOn() {
-                lightControlTv.setText(R.string.zxing_close_light);
-                isCameraLightOn = true;
-            }
+        barcodeScannerView.setTorchListener(
+                new DecoratedBarcodeView.TorchListener() {
+                    @Override
+                    public void onTorchOn() {
+                        lightControlTv.setText(R.string.zxing_close_light);
+                        isCameraLightOn = true;
+                    }
 
-            @Override
-            public void onTorchOff() {
-                lightControlTv.setText(R.string.zxing_open_light);
-                isCameraLightOn = false;
-            }
-        });
+                    @Override
+                    public void onTorchOff() {
+                        lightControlTv.setText(R.string.zxing_open_light);
+                        isCameraLightOn = false;
+                    }
+                });
         lightControlTv = findViewById(R.id.zxing_open_light);
         lightControlTv.setOnClickListener(this);
         selectPicTv = findViewById(R.id.zxing_select_pic);
@@ -117,9 +117,7 @@ public class ScanActivity extends TitleBaseActivity implements View.OnClickListe
         return (DecoratedBarcodeView) findViewById(R.id.zxing_barcode_scanner);
     }
 
-    /**
-     * 切换摄像头照明
-     */
+    /** 切换摄像头照明 */
     private void switchCameraLight() {
         if (isCameraLightOn) {
             barcodeScannerView.setTorchOff();
@@ -140,9 +138,7 @@ public class ScanActivity extends TitleBaseActivity implements View.OnClickListe
         }
     }
 
-    /**
-     * 从相册中选中
-     */
+    /** 从相册中选中 */
     public void scanFromAlbum() {
         photoUtils.selectPicture(this);
     }
@@ -162,23 +158,24 @@ public class ScanActivity extends TitleBaseActivity implements View.OnClickListe
         // 处理二维码结果
         SealQrCodeUISelector uiSelector = new SealQrCodeUISelector(this);
         LiveData<Resource<String>> resourceLiveData = uiSelector.handleUri(qrCodeText);
-        resourceLiveData.observeForever(new Observer<Resource<String>>() {
-            @Override
-            public void onChanged(Resource<String> resource) {
-                if(resource.status != Status.LOADING) {
-                    resourceLiveData.removeObserver(this);
-                }
+        resourceLiveData.observeForever(
+                new Observer<Resource<String>>() {
+                    @Override
+                    public void onChanged(Resource<String> resource) {
+                        if (resource.status != Status.LOADING) {
+                            resourceLiveData.removeObserver(this);
+                        }
 
-                if(resource.status == Status.SUCCESS){
-                    finish();
-                } else if(resource.status == Status.ERROR){
-                    ToastUtils.showToast(resource.data);
-                    barcodeScannerView.getViewFinder().setAllowScanAnimation(false);
-                    lightControlTv.setVisibility(View.INVISIBLE);
-                    tipsTv.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
+                        if (resource.status == Status.SUCCESS) {
+                            finish();
+                        } else if (resource.status == Status.ERROR) {
+                            ToastUtils.showToast(resource.data);
+                            barcodeScannerView.getViewFinder().setAllowScanAnimation(false);
+                            lightControlTv.setVisibility(View.INVISIBLE);
+                            tipsTv.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                });
     }
 
     @Override
@@ -206,7 +203,8 @@ public class ScanActivity extends TitleBaseActivity implements View.OnClickListe
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(
+            int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         capture.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
@@ -219,6 +217,6 @@ public class ScanActivity extends TitleBaseActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        photoUtils.onActivityResult(this, requestCode, resultCode ,data);
+        photoUtils.onActivityResult(this, requestCode, resultCode, data);
     }
 }

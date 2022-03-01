@@ -5,8 +5,7 @@ import android.util.Log;
 
 public class SimpleDebugSLog implements ISLog {
     @Override
-    public void init(Context context) {
-    }
+    public void init(Context context) {}
 
     @Override
     public void i(String tag, String msg) {

@@ -4,15 +4,11 @@ import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
-import java.util.List;
-
 import cn.rongcloud.im.model.ChatRoomResult;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.VersionInfo;
@@ -21,15 +17,17 @@ import cn.rongcloud.im.utils.SingleSourceLiveData;
 import cn.rongcloud.im.utils.SingleSourceMapLiveData;
 import cn.rongcloud.im.utils.log.SLog;
 import io.rong.imkit.utils.language.LangUtils;
-
+import java.util.List;
 
 public class AppViewModel extends AndroidViewModel {
     private final AppTask appTask;
     private String sealTalkVersionName;
-    private SingleSourceMapLiveData<Resource<VersionInfo>, Resource<VersionInfo.AndroidVersion>> hasNew;
+    private SingleSourceMapLiveData<Resource<VersionInfo>, Resource<VersionInfo.AndroidVersion>>
+            hasNew;
     private MutableLiveData<String> sdkVersion = new MutableLiveData<>();
     private MutableLiveData<String> sealTalkVersion = new MutableLiveData<>();
-    private SingleSourceLiveData<Resource<List<ChatRoomResult>>> chatRoomResultList = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<List<ChatRoomResult>>> chatRoomResultList =
+            new SingleSourceLiveData<>();
     private MutableLiveData<LangUtils.RCLocale> languageLocal = new MutableLiveData<>();
     private MutableLiveData<Boolean> debugMode = new MutableLiveData<>();
 
@@ -38,23 +36,30 @@ public class AppViewModel extends AndroidViewModel {
         appTask = new AppTask(application);
         sealTalkVersionName = getSealTalkVersion(application);
 
-        hasNew = new SingleSourceMapLiveData<>(new Function<Resource<VersionInfo>, Resource<VersionInfo.AndroidVersion>>() {
-            @Override
-            public Resource<VersionInfo.AndroidVersion> apply(Resource<VersionInfo> input) {
-                if (input.data != null) {
-                    SLog.d("ss_version", "input == " + input);
-                    boolean hasNew = false;
-                    String newVersion = input.data.getAndroidVersion().getVersion();
-                    if (sealTalkVersionName != null) {
-                        if (hasNewVersion(sealTalkVersionName, newVersion)) {
-                            return new Resource<VersionInfo.AndroidVersion>(input.status, input.data.getAndroidVersion(), input.code);
-                        }
-                    }
-
-                }
-                return new Resource<VersionInfo.AndroidVersion>(input.status, null, input.code);
-            }
-        });
+        hasNew =
+                new SingleSourceMapLiveData<>(
+                        new Function<
+                                Resource<VersionInfo>, Resource<VersionInfo.AndroidVersion>>() {
+                            @Override
+                            public Resource<VersionInfo.AndroidVersion> apply(
+                                    Resource<VersionInfo> input) {
+                                if (input.data != null) {
+                                    SLog.d("ss_version", "input == " + input);
+                                    boolean hasNew = false;
+                                    String newVersion = input.data.getAndroidVersion().getVersion();
+                                    if (sealTalkVersionName != null) {
+                                        if (hasNewVersion(sealTalkVersionName, newVersion)) {
+                                            return new Resource<VersionInfo.AndroidVersion>(
+                                                    input.status,
+                                                    input.data.getAndroidVersion(),
+                                                    input.code);
+                                        }
+                                    }
+                                }
+                                return new Resource<VersionInfo.AndroidVersion>(
+                                        input.status, null, input.code);
+                            }
+                        });
 
         sdkVersion.setValue(getSdkVersion());
         sealTalkVersion.setValue(sealTalkVersionName);
@@ -93,16 +98,12 @@ public class AppViewModel extends AndroidViewModel {
         return sealTalkVersion;
     }
 
-    /**
-     * 检测版本
-     */
+    /** 检测版本 */
     private void checkVersion() {
         hasNew.setSource(appTask.getNewVersion());
     }
 
-    /**
-     * 请求聊天室列表
-     */
+    /** 请求聊天室列表 */
     public void requestChatRoomList() {
         chatRoomResultList.setSource(appTask.getDiscoveryChatRoom());
     }
@@ -116,9 +117,7 @@ public class AppViewModel extends AndroidViewModel {
         return chatRoomResultList;
     }
 
-    /**
-     * 获取SDK版本
-     */
+    /** 获取SDK版本 */
     private String getSdkVersion() {
         return appTask.getSDKVersion();
     }
@@ -140,7 +139,8 @@ public class AppViewModel extends AndroidViewModel {
      */
     private String getSealTalkVersion(Context application) {
         try {
-            PackageInfo packageInfo = application.getPackageManager().getPackageInfo(application.getPackageName(), 0);
+            PackageInfo packageInfo =
+                    application.getPackageManager().getPackageInfo(application.getPackageName(), 0);
             return packageInfo.versionName;
 
         } catch (PackageManager.NameNotFoundException e) {
@@ -164,7 +164,8 @@ public class AppViewModel extends AndroidViewModel {
                 if (i > currentVersionArray.length - 1) {
                     break;
                 }
-                if (Integer.parseInt(newVersionArray[i]) > Integer.parseInt(currentVersionArray[i])) {
+                if (Integer.parseInt(newVersionArray[i])
+                        > Integer.parseInt(currentVersionArray[i])) {
                     return true;
                 }
             }

@@ -5,15 +5,11 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.List;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.adapter.SelectConversationAdapter;
 import cn.rongcloud.im.ui.adapter.models.CheckableContactModel;
@@ -23,8 +19,10 @@ import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.viewmodel.SelectConversationViewModel;
 import io.rong.imlib.model.Conversation;
+import java.util.List;
 
-public class ClearChatMessageActivity extends TitleBaseActivity implements OnCheckConversationClickListener, View.OnClickListener {
+public class ClearChatMessageActivity extends TitleBaseActivity
+        implements OnCheckConversationClickListener, View.OnClickListener {
 
     private RecyclerView rvContent;
     private SelectConversationAdapter adapter;
@@ -56,28 +54,43 @@ public class ClearChatMessageActivity extends TitleBaseActivity implements OnChe
     }
 
     private void initViewModel() {
-        selectConversationViewModel = ViewModelProviders.of(this).get(SelectConversationViewModel.class);
+        selectConversationViewModel =
+                ViewModelProviders.of(this).get(SelectConversationViewModel.class);
         selectConversationViewModel.loadConversation();
-        selectConversationViewModel.getConersationLiveData().observe(this, new Observer<List<CheckableContactModel>>() {
-            @Override
-            public void onChanged(List<CheckableContactModel> checkableContactModels) {
-                SLog.i("ClearChatMessage", "checkableContactModels,change**" +
-                        checkableContactModels.size() + "***" + currentChatMessageCount);
-                adapter.setData(checkableContactModels);
-                //记录消息条目数量，判断是否被删除了
-                if (currentChatMessageCount > checkableContactModels.size()) {
-                    ToastUtils.showToast(R.string.seal_clear_chat_message_delete_success);
-                }
-                currentChatMessageCount = checkableContactModels.size();
-            }
-        });
-        selectConversationViewModel.getSelectedCount().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                SLog.i("ClearChatMessage", integer.toString());
-                updateTvRemoveStatus(integer);
-            }
-        });
+        selectConversationViewModel
+                .getConersationLiveData()
+                .observe(
+                        this,
+                        new Observer<List<CheckableContactModel>>() {
+                            @Override
+                            public void onChanged(
+                                    List<CheckableContactModel> checkableContactModels) {
+                                SLog.i(
+                                        "ClearChatMessage",
+                                        "checkableContactModels,change**"
+                                                + checkableContactModels.size()
+                                                + "***"
+                                                + currentChatMessageCount);
+                                adapter.setData(checkableContactModels);
+                                // 记录消息条目数量，判断是否被删除了
+                                if (currentChatMessageCount > checkableContactModels.size()) {
+                                    ToastUtils.showToast(
+                                            R.string.seal_clear_chat_message_delete_success);
+                                }
+                                currentChatMessageCount = checkableContactModels.size();
+                            }
+                        });
+        selectConversationViewModel
+                .getSelectedCount()
+                .observe(
+                        this,
+                        new Observer<Integer>() {
+                            @Override
+                            public void onChanged(Integer integer) {
+                                SLog.i("ClearChatMessage", integer.toString());
+                                updateTvRemoveStatus(integer);
+                            }
+                        });
     }
 
     private void updateTvRemoveStatus(int integer) {
@@ -88,7 +101,7 @@ public class ClearChatMessageActivity extends TitleBaseActivity implements OnChe
             tvRemove.setClickable(false);
             tvRemove.setTextColor(getResources().getColor(android.R.color.darker_gray));
         }
-        //判断全选状态
+        // 判断全选状态
         if (integer > 0 && integer == currentChatMessageCount) {
             ckSelectAll.setChecked(true);
         } else {
@@ -102,9 +115,7 @@ public class ClearChatMessageActivity extends TitleBaseActivity implements OnChe
         adapter.notifyDataSetChanged();
     }
 
-    /**
-     * 清理消息
-     */
+    /** 清理消息 */
     private void clearMessage() {
         selectConversationViewModel.clearMessage();
     }
@@ -112,19 +123,19 @@ public class ClearChatMessageActivity extends TitleBaseActivity implements OnChe
     private void showDeleteConfirmDialog() {
         CommonDialog.Builder builder = new CommonDialog.Builder();
         builder.setContentMessage(getString(R.string.seal_clear_chat_message_delete_dialog));
-        builder.setDialogButtonClickListener(new CommonDialog.OnDialogButtonClickListener() {
-            @Override
-            public void onPositiveClick(View v, Bundle bundle) {
-                clearMessage();
-            }
+        builder.setDialogButtonClickListener(
+                new CommonDialog.OnDialogButtonClickListener() {
+                    @Override
+                    public void onPositiveClick(View v, Bundle bundle) {
+                        clearMessage();
+                    }
 
-            @Override
-            public void onNegativeClick(View v, Bundle bundle) {
-
-            }
-        });
+                    @Override
+                    public void onNegativeClick(View v, Bundle bundle) {}
+                });
         CommonDialog deleteDialog = builder.build();
-        deleteDialog.show(getSupportFragmentManager().beginTransaction(), "AddCategoriesDialogFragment");
+        deleteDialog.show(
+                getSupportFragmentManager().beginTransaction(), "AddCategoriesDialogFragment");
     }
 
     private void selectAll() {

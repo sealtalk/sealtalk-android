@@ -1,16 +1,13 @@
 package cn.rongcloud.im.im.message;
 
 import android.os.Parcel;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
-
 import io.rong.common.ParcelUtils;
 import io.rong.common.RLog;
 import io.rong.imlib.MessageTag;
 import io.rong.imlib.model.MessageContent;
+import java.io.UnsupportedEncodingException;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 @MessageTag(value = "ST:ConNtf", flag = MessageTag.ISPERSISTED)
 public class SealGroupConNtfMessage extends MessageContent {
@@ -18,8 +15,7 @@ public class SealGroupConNtfMessage extends MessageContent {
     private String operatorUserId;
     private String operation;
 
-    private SealGroupConNtfMessage() {
-    }
+    private SealGroupConNtfMessage() {}
 
     public SealGroupConNtfMessage(byte[] data) {
         String jsonStr = null;
@@ -37,18 +33,18 @@ public class SealGroupConNtfMessage extends MessageContent {
         } catch (JSONException var4) {
             RLog.e("GroupNotificationMessage", "JSONException " + var4.getMessage());
         }
-
     }
 
-    public static final Creator<SealGroupConNtfMessage> CREATOR = new Creator<SealGroupConNtfMessage>() {
-        public SealGroupConNtfMessage createFromParcel(Parcel source) {
-            return new SealGroupConNtfMessage(source);
-        }
+    public static final Creator<SealGroupConNtfMessage> CREATOR =
+            new Creator<SealGroupConNtfMessage>() {
+                public SealGroupConNtfMessage createFromParcel(Parcel source) {
+                    return new SealGroupConNtfMessage(source);
+                }
 
-        public SealGroupConNtfMessage[] newArray(int size) {
-            return new SealGroupConNtfMessage[size];
-        }
-    };
+                public SealGroupConNtfMessage[] newArray(int size) {
+                    return new SealGroupConNtfMessage[size];
+                }
+            };
 
     public static SealGroupConNtfMessage obtain(String operatorUserId, String operation) {
         SealGroupConNtfMessage obj = new SealGroupConNtfMessage();
@@ -108,9 +104,13 @@ public class SealGroupConNtfMessage extends MessageContent {
 
     @Override
     public String toString() {
-        return "SealGroupConNtfMessage{" +
-                "operatorUserId='" + operatorUserId + '\'' +
-                ", operation='" + operation + '\'' +
-                '}';
+        return "SealGroupConNtfMessage{"
+                + "operatorUserId='"
+                + operatorUserId
+                + '\''
+                + ", operation='"
+                + operation
+                + '\''
+                + '}';
     }
 }

@@ -1,7 +1,6 @@
 package cn.rongcloud.im.model;
 
 import android.text.TextUtils;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,7 +11,6 @@ public class QuietHours {
     public String startTime;
     public int spanMinutes;
     public boolean isDonotDistrab;
-
 
     /**
      * 获得开始时间的格式化
@@ -60,7 +58,6 @@ public class QuietHours {
         }
         return 0;
     }
-
 
     /**
      * 获得结束时间
@@ -143,7 +140,7 @@ public class QuietHours {
      * 得到"HH:mm:ss"类型时间
      *
      * @param hourOfDay 小时
-     * @param minite    分钟
+     * @param minite 分钟
      * @return "HH:mm:ss"类型时间
      */
     public static String getFormatTime(final int hourOfDay, final int minite) {

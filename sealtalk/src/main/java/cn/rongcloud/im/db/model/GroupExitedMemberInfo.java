@@ -2,7 +2,6 @@ package cn.rongcloud.im.db.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -22,10 +21,7 @@ public class GroupExitedMemberInfo implements Parcelable {
 
     @ColumnInfo(name = "quitPortraitUri")
     private String quitPortraitUri;
-    /**
-     * 退群原因
-     * 0 被群主 移除群聊、 1 被管理员 移除、 2 主动退出
-     */
+    /** 退群原因 0 被群主 移除群聊、 1 被管理员 移除、 2 主动退出 */
     @ColumnInfo(name = "quitReason")
     private int quitReason;
 
@@ -104,16 +100,31 @@ public class GroupExitedMemberInfo implements Parcelable {
 
     @Override
     public String toString() {
-        return "GroupExitedMemberInfo{" +
-                "id='" + id + '\'' +
-                ", quitUserId='" + quitUserId + '\'' +
-                ", quitNickname='" + quitNickname + '\'' +
-                ", quitPortraitUri='" + quitPortraitUri + '\'' +
-                ", quitReason=" + quitReason +
-                ", quitTime='" + quitTime + '\'' +
-                ", operatorId='" + operatorId + '\'' +
-                ", operatorName='" + operatorName + '\'' +
-                '}';
+        return "GroupExitedMemberInfo{"
+                + "id='"
+                + id
+                + '\''
+                + ", quitUserId='"
+                + quitUserId
+                + '\''
+                + ", quitNickname='"
+                + quitNickname
+                + '\''
+                + ", quitPortraitUri='"
+                + quitPortraitUri
+                + '\''
+                + ", quitReason="
+                + quitReason
+                + ", quitTime='"
+                + quitTime
+                + '\''
+                + ", operatorId='"
+                + operatorId
+                + '\''
+                + ", operatorName='"
+                + operatorName
+                + '\''
+                + '}';
     }
 
     @Override
@@ -133,8 +144,7 @@ public class GroupExitedMemberInfo implements Parcelable {
         dest.writeString(this.operatorName);
     }
 
-    public GroupExitedMemberInfo() {
-    }
+    public GroupExitedMemberInfo() {}
 
     protected GroupExitedMemberInfo(Parcel in) {
         this.id = in.readInt();
@@ -147,15 +157,16 @@ public class GroupExitedMemberInfo implements Parcelable {
         this.operatorName = in.readString();
     }
 
-    public static final Creator<GroupExitedMemberInfo> CREATOR = new Creator<GroupExitedMemberInfo>() {
-        @Override
-        public GroupExitedMemberInfo createFromParcel(Parcel source) {
-            return new GroupExitedMemberInfo(source);
-        }
+    public static final Creator<GroupExitedMemberInfo> CREATOR =
+            new Creator<GroupExitedMemberInfo>() {
+                @Override
+                public GroupExitedMemberInfo createFromParcel(Parcel source) {
+                    return new GroupExitedMemberInfo(source);
+                }
 
-        @Override
-        public GroupExitedMemberInfo[] newArray(int size) {
-            return new GroupExitedMemberInfo[size];
-        }
-    };
+                @Override
+                public GroupExitedMemberInfo[] newArray(int size) {
+                    return new GroupExitedMemberInfo[size];
+                }
+            };
 }

@@ -20,10 +20,6 @@ import android.view.SurfaceView;
 import android.view.TextureView;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.utils.qrcode.barcodescanner.camera.CameraInstance;
 import cn.rongcloud.im.utils.qrcode.barcodescanner.camera.CameraSettings;
@@ -33,44 +29,35 @@ import cn.rongcloud.im.utils.qrcode.barcodescanner.camera.DisplayConfiguration;
 import cn.rongcloud.im.utils.qrcode.barcodescanner.camera.FitCenterStrategy;
 import cn.rongcloud.im.utils.qrcode.barcodescanner.camera.FitXYStrategy;
 import cn.rongcloud.im.utils.qrcode.barcodescanner.camera.PreviewScalingStrategy;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * CameraPreview is a view that handles displaying of a camera preview on a SurfaceView. It is
- * intended to be used as a base for realtime processing of camera images, e.g. barcode decoding
- * or OCR, although none of this happens in CameraPreview itself.
+ * intended to be used as a base for realtime processing of camera images, e.g. barcode decoding or
+ * OCR, although none of this happens in CameraPreview itself.
  *
- * The camera is managed on a separate thread, using CameraInstance.
+ * <p>The camera is managed on a separate thread, using CameraInstance.
  *
- * Two methods MUST be called on CameraPreview to manage its state:
- * 1. resume() - initialize the camera and start the preview. Call from the Activity's onResume().
- * 2. pause() - stop the preview and release any resources. Call from the Activity's onPause().
+ * <p>Two methods MUST be called on CameraPreview to manage its state: 1. resume() - initialize the
+ * camera and start the preview. Call from the Activity's onResume(). 2. pause() - stop the preview
+ * and release any resources. Call from the Activity's onPause().
  *
- * Startup sequence:
+ * <p>Startup sequence:
  *
- * 1. Create SurfaceView.
- * 2. open camera.
- * 2. layout this container, to get size
- * 3. set display config, according to the container size
- * 4. configure()
- * 5. wait for preview size to be ready
- * 6. set surface size according to preview size
- * 7. set surface and start preview
+ * <p>1. Create SurfaceView. 2. open camera. 2. layout this container, to get size 3. set display
+ * config, according to the container size 4. configure() 5. wait for preview size to be ready 6.
+ * set surface size according to preview size 7. set surface and start preview
  */
 public class CameraPreview extends ViewGroup {
     public interface StateListener {
-        /**
-         * Preview and frame sizes are determined.
-         */
+        /** Preview and frame sizes are determined. */
         void previewSized();
 
-        /**
-         * Preview has started.
-         */
+        /** Preview has started. */
         void previewStarted();
 
-        /**
-         * Preview has stopped.
-         */
+        /** Preview has stopped. */
         void previewStopped();
 
         /**
@@ -160,66 +147,68 @@ public class CameraPreview extends ViewGroup {
             }
 
             @Override
-            public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-
-            }
+            public void onSurfaceTextureUpdated(SurfaceTexture surface) {}
         };
     }
 
-    private final SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
+    private final SurfaceHolder.Callback surfaceCallback =
+            new SurfaceHolder.Callback() {
 
-        @Override
-        public void surfaceCreated(SurfaceHolder holder) {
-
-        }
-
-        @Override
-        public void surfaceDestroyed(SurfaceHolder holder) {
-            currentSurfaceSize = null;
-        }
-
-        @Override
-        public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-            if (holder == null) {
-                Log.e(TAG, "*** WARNING *** surfaceChanged() gave us a null surface!");
-                return;
-            }
-            currentSurfaceSize = new Size(width, height);
-            startPreviewIfReady();
-        }
-    };
-
-    private final Handler.Callback stateCallback = new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message message) {
-            if (message.what == R.id.zxing_prewiew_size_ready) {
-                previewSized((Size) message.obj);
-                return true;
-            } else if (message.what == R.id.zxing_camera_error) {
-                Exception error = (Exception) message.obj;
-
-                if (isActive()) {
-                    // This check prevents multiple errors from begin passed through.
-                    pause();
-                    fireState.cameraError(error);
-                }
-            }
-            return false;
-        }
-    };
-
-    private RotationCallback rotationCallback = new RotationCallback() {
-        @Override
-        public void onRotationChanged(int rotation) {
-            // Make sure this is run on the main thread.
-            stateHandler.postDelayed(new Runnable() {
                 @Override
-                public void run() {
-                    rotationChanged();
+                public void surfaceCreated(SurfaceHolder holder) {}
+
+                @Override
+                public void surfaceDestroyed(SurfaceHolder holder) {
+                    currentSurfaceSize = null;
                 }
-            }, ROTATION_LISTENER_DELAY_MS);
-        }
-    };
+
+                @Override
+                public void surfaceChanged(
+                        SurfaceHolder holder, int format, int width, int height) {
+                    if (holder == null) {
+                        Log.e(TAG, "*** WARNING *** surfaceChanged() gave us a null surface!");
+                        return;
+                    }
+                    currentSurfaceSize = new Size(width, height);
+                    startPreviewIfReady();
+                }
+            };
+
+    private final Handler.Callback stateCallback =
+            new Handler.Callback() {
+                @Override
+                public boolean handleMessage(Message message) {
+                    if (message.what == R.id.zxing_prewiew_size_ready) {
+                        previewSized((Size) message.obj);
+                        return true;
+                    } else if (message.what == R.id.zxing_camera_error) {
+                        Exception error = (Exception) message.obj;
+
+                        if (isActive()) {
+                            // This check prevents multiple errors from begin passed through.
+                            pause();
+                            fireState.cameraError(error);
+                        }
+                    }
+                    return false;
+                }
+            };
+
+    private RotationCallback rotationCallback =
+            new RotationCallback() {
+                @Override
+                public void onRotationChanged(int rotation) {
+                    // Make sure this is run on the main thread.
+                    stateHandler.postDelayed(
+                            new Runnable() {
+                                @Override
+                                public void run() {
+                                    rotationChanged();
+                                }
+                            },
+                            ROTATION_LISTENER_DELAY_MS);
+                }
+            };
 
     public CameraPreview(Context context) {
         super(context);
@@ -236,7 +225,8 @@ public class CameraPreview extends ViewGroup {
         initialize(context, attrs, defStyleAttr, 0);
     }
 
-    private void initialize(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initialize(
+            Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         if (getBackground() == null) {
             // Default to SurfaceView colour, so that there are less changes.
             setBackgroundColor(Color.BLACK);
@@ -264,25 +254,39 @@ public class CameraPreview extends ViewGroup {
      * @param attrs the attributes
      */
     protected void initializeAttributes(AttributeSet attrs) {
-        TypedArray styledAttributes = getContext().obtainStyledAttributes(attrs, R.styleable.zxing_camera_preview);
+        TypedArray styledAttributes =
+                getContext().obtainStyledAttributes(attrs, R.styleable.zxing_camera_preview);
 
-        int framingRectWidth = (int) styledAttributes.getDimension(R.styleable.zxing_camera_preview_zxing_framing_rect_width, -1);
-        int framingRectHeight = (int) styledAttributes.getDimension(R.styleable.zxing_camera_preview_zxing_framing_rect_height, -1);
-        framingRectMarginTop = (int)styledAttributes.getDimension(R.styleable.zxing_camera_preview_zxing_framing_rect_margin_top, -1);
+        int framingRectWidth =
+                (int)
+                        styledAttributes.getDimension(
+                                R.styleable.zxing_camera_preview_zxing_framing_rect_width, -1);
+        int framingRectHeight =
+                (int)
+                        styledAttributes.getDimension(
+                                R.styleable.zxing_camera_preview_zxing_framing_rect_height, -1);
+        framingRectMarginTop =
+                (int)
+                        styledAttributes.getDimension(
+                                R.styleable.zxing_camera_preview_zxing_framing_rect_margin_top, -1);
 
         if (framingRectWidth > 0 && framingRectHeight > 0) {
             this.framingRectSize = new Size(framingRectWidth, framingRectHeight);
         }
 
-        this.useTextureView = styledAttributes.getBoolean(R.styleable.zxing_camera_preview_zxing_use_texture_view, true);
+        this.useTextureView =
+                styledAttributes.getBoolean(
+                        R.styleable.zxing_camera_preview_zxing_use_texture_view, true);
 
         // See zxing_attrs.xml for the enum values
-        int scalingStrategyNumber = styledAttributes.getInteger(R.styleable.zxing_camera_preview_zxing_preview_scaling_strategy, -1);
-        if(scalingStrategyNumber == 1) {
+        int scalingStrategyNumber =
+                styledAttributes.getInteger(
+                        R.styleable.zxing_camera_preview_zxing_preview_scaling_strategy, -1);
+        if (scalingStrategyNumber == 1) {
             previewScalingStrategy = new CenterCropStrategy();
-        } else if(scalingStrategyNumber == 2) {
+        } else if (scalingStrategyNumber == 2) {
             previewScalingStrategy = new FitCenterStrategy();
-        } else if(scalingStrategyNumber == 3) {
+        } else if (scalingStrategyNumber == 3) {
             previewScalingStrategy = new FitXYStrategy();
         }
 
@@ -291,7 +295,7 @@ public class CameraPreview extends ViewGroup {
 
     private void rotationChanged() {
         // Confirm that it did actually change
-        if(isActive() && getDisplayRotation() != openedOrientation) {
+        if (isActive() && getDisplayRotation() != openedOrientation) {
             pause();
             resume();
         }
@@ -300,7 +304,7 @@ public class CameraPreview extends ViewGroup {
     @SuppressWarnings("deprecation")
     @SuppressLint("NewAPI")
     private void setupSurfaceView() {
-        if(useTextureView && Build.VERSION.SDK_INT >= 14) {
+        if (useTextureView && Build.VERSION.SDK_INT >= 14) {
             textureView = new TextureView(getContext());
             textureView.setSurfaceTextureListener(surfaceTextureListener());
             addView(textureView);
@@ -315,7 +319,8 @@ public class CameraPreview extends ViewGroup {
     }
 
     /**
-     * Add a forwardDialogClickListener to be notified of changes to the preview state, as well as camera errors.
+     * Add a forwardDialogClickListener to be notified of changes to the preview state, as well as
+     * camera errors.
      *
      * @param listener the forwardDialogClickListener
      */
@@ -323,36 +328,36 @@ public class CameraPreview extends ViewGroup {
         stateListeners.add(listener);
     }
 
-    private final StateListener fireState = new StateListener() {
-        @Override
-        public void previewSized() {
-            for (StateListener listener : stateListeners) {
-                listener.previewSized();
-            }
-        }
+    private final StateListener fireState =
+            new StateListener() {
+                @Override
+                public void previewSized() {
+                    for (StateListener listener : stateListeners) {
+                        listener.previewSized();
+                    }
+                }
 
-        @Override
-        public void previewStarted() {
-            for (StateListener listener : stateListeners) {
-                listener.previewStarted();
-            }
+                @Override
+                public void previewStarted() {
+                    for (StateListener listener : stateListeners) {
+                        listener.previewStarted();
+                    }
+                }
 
-        }
+                @Override
+                public void previewStopped() {
+                    for (StateListener listener : stateListeners) {
+                        listener.previewStopped();
+                    }
+                }
 
-        @Override
-        public void previewStopped() {
-            for (StateListener listener : stateListeners) {
-                listener.previewStopped();
-            }
-        }
-
-        @Override
-        public void cameraError(Exception error) {
-            for (StateListener listener : stateListeners) {
-                listener.cameraError(error);
-            }
-        }
-    };
+                @Override
+                public void cameraError(Exception error) {
+                    for (StateListener listener : stateListeners) {
+                        listener.cameraError(error);
+                    }
+                }
+            };
 
     private void calculateFrames() {
         if (containerSize == null || previewSize == null || displayConfiguration == null) {
@@ -375,10 +380,12 @@ public class CameraPreview extends ViewGroup {
         Rect frameInPreview = new Rect(framingRect);
         frameInPreview.offset(-surfaceRect.left, -surfaceRect.top);
 
-        previewFramingRect = new Rect(frameInPreview.left * previewWidth / surfaceRect.width(),
-                frameInPreview.top * previewHeight / surfaceRect.height(),
-                frameInPreview.right * previewWidth / surfaceRect.width(),
-                frameInPreview.bottom * previewHeight / surfaceRect.height());
+        previewFramingRect =
+                new Rect(
+                        frameInPreview.left * previewWidth / surfaceRect.width(),
+                        frameInPreview.top * previewHeight / surfaceRect.height(),
+                        frameInPreview.right * previewWidth / surfaceRect.width(),
+                        frameInPreview.bottom * previewHeight / surfaceRect.height());
 
         if (previewFramingRect.width() <= 0 || previewFramingRect.height() <= 0) {
             previewFramingRect = null;
@@ -405,11 +412,12 @@ public class CameraPreview extends ViewGroup {
         this.containerSize = containerSize;
         if (cameraInstance != null) {
             if (cameraInstance.getDisplayConfiguration() == null) {
-                displayConfiguration = new DisplayConfiguration(getDisplayRotation(), containerSize);
+                displayConfiguration =
+                        new DisplayConfiguration(getDisplayRotation(), containerSize);
                 displayConfiguration.setPreviewScalingStrategy(getPreviewScalingStrategy());
                 cameraInstance.setDisplayConfiguration(displayConfiguration);
                 cameraInstance.configureCamera();
-                if(torchOn) {
+                if (torchOn) {
                     cameraInstance.setTorch(torchOn);
                 }
             }
@@ -425,23 +433,20 @@ public class CameraPreview extends ViewGroup {
         this.previewScalingStrategy = previewScalingStrategy;
     }
 
-    /**
-     * Override this to specify a different preview scaling strategy.
-     */
+    /** Override this to specify a different preview scaling strategy. */
     public PreviewScalingStrategy getPreviewScalingStrategy() {
-        if(previewScalingStrategy != null) {
+        if (previewScalingStrategy != null) {
             return previewScalingStrategy;
         }
 
         // If we are using SurfaceTexture, it is safe to use centerCrop.
         // For SurfaceView, it's better to use fitCenter, otherwise the preview may overlap to
         // other views.
-        if(textureView != null) {
+        if (textureView != null) {
             return new CenterCropStrategy();
         } else {
             return new FitCenterStrategy();
         }
-
     }
 
     private void previewSized(Size size) {
@@ -456,7 +461,7 @@ public class CameraPreview extends ViewGroup {
     /**
      * Calculate transformation for the TextureView.
      *
-     * An identity matrix would cause the preview to be scaled up/down to fill the TextureView.
+     * <p>An identity matrix would cause the preview to be scaled up/down to fill the TextureView.
      *
      * @param textureSize the size of the textureView
      * @param previewSize the camera preview resolution
@@ -497,11 +502,18 @@ public class CameraPreview extends ViewGroup {
 
     private void startPreviewIfReady() {
         if (currentSurfaceSize != null && previewSize != null && surfaceRect != null) {
-            if (surfaceView != null && currentSurfaceSize.equals(new Size(surfaceRect.width(), surfaceRect.height()))) {
+            if (surfaceView != null
+                    && currentSurfaceSize.equals(
+                            new Size(surfaceRect.width(), surfaceRect.height()))) {
                 startCameraPreview(new CameraSurface(surfaceView.getHolder()));
-            } else if(textureView != null && Build.VERSION.SDK_INT >= 14 && textureView.getSurfaceTexture() != null) {
-                if(previewSize != null) {
-                    Matrix transform = calculateTextureTransform(new Size(textureView.getWidth(), textureView.getHeight()), previewSize);
+            } else if (textureView != null
+                    && Build.VERSION.SDK_INT >= 14
+                    && textureView.getSurfaceTexture() != null) {
+                if (previewSize != null) {
+                    Matrix transform =
+                            calculateTextureTransform(
+                                    new Size(textureView.getWidth(), textureView.getHeight()),
+                                    previewSize);
                     textureView.setTransform(transform);
                 }
 
@@ -517,15 +529,17 @@ public class CameraPreview extends ViewGroup {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         containerSized(new Size(r - l, b - t));
 
-        if(surfaceView != null) {
+        if (surfaceView != null) {
             if (surfaceRect == null) {
-                // Match the container, to reduce the risk of issues. The preview should never be drawn
+                // Match the container, to reduce the risk of issues. The preview should never be
+                // drawn
                 // while the surface has this size.
                 surfaceView.layout(0, 0, getWidth(), getHeight());
             } else {
-                surfaceView.layout(surfaceRect.left, surfaceRect.top, surfaceRect.right, surfaceRect.bottom);
+                surfaceView.layout(
+                        surfaceRect.left, surfaceRect.top, surfaceRect.right, surfaceRect.bottom);
             }
-        } else if(textureView != null && Build.VERSION.SDK_INT >= 14) {
+        } else if (textureView != null && Build.VERSION.SDK_INT >= 14) {
             textureView.layout(0, 0, getWidth(), getHeight());
         }
     }
@@ -533,7 +547,7 @@ public class CameraPreview extends ViewGroup {
     /**
      * The framing rectangle, relative to this view. Use to draw the rectangle.
      *
-     * Will never be null while the preview is active.
+     * <p>Will never be null while the preview is active.
      *
      * @return the framing rect, or null
      * @see #isPreviewActive()
@@ -545,7 +559,7 @@ public class CameraPreview extends ViewGroup {
     /**
      * The framing rect, relative to the camera preview resolution.
      *
-     * Will never be null while the preview is active.
+     * <p>Will never be null while the preview is active.
      *
      * @return the preview rect, or null
      * @see #isPreviewActive()
@@ -554,9 +568,7 @@ public class CameraPreview extends ViewGroup {
         return previewFramingRect;
     }
 
-    /**
-     * @return the CameraSettings currently in use
-     */
+    /** @return the CameraSettings currently in use */
     public CameraSettings getCameraSettings() {
         return cameraSettings;
     }
@@ -565,7 +577,7 @@ public class CameraPreview extends ViewGroup {
      * Set the CameraSettings. Use this to select a different camera, change exposure and torch
      * settings, and some other options.
      *
-     * This has no effect if the camera is already open.
+     * <p>This has no effect if the camera is already open.
      *
      * @param cameraSettings the new settings
      */
@@ -577,7 +589,7 @@ public class CameraPreview extends ViewGroup {
      * Start the camera preview and decoding. Typically this should be called from the Activity's
      * onResume() method.
      *
-     * Call from UI thread only.
+     * <p>Call from UI thread only.
      */
     public void resume() {
         // This must be safe to call multiple times
@@ -591,12 +603,16 @@ public class CameraPreview extends ViewGroup {
             // The activity was paused but not stopped, so the surface still exists. Therefore
             // surfaceCreated() won't be called, so init the camera here.
             startPreviewIfReady();
-        } else if(surfaceView != null) {
+        } else if (surfaceView != null) {
             // Install the callback and wait for surfaceCreated() to init the camera.
             surfaceView.getHolder().addCallback(surfaceCallback);
-        } else if(textureView != null && Build.VERSION.SDK_INT >= 14) {
-            if(textureView.isAvailable()) {
-                surfaceTextureListener().onSurfaceTextureAvailable(textureView.getSurfaceTexture(), textureView.getWidth(), textureView.getHeight());
+        } else if (textureView != null && Build.VERSION.SDK_INT >= 14) {
+            if (textureView.isAvailable()) {
+                surfaceTextureListener()
+                        .onSurfaceTextureAvailable(
+                                textureView.getSurfaceTexture(),
+                                textureView.getWidth(),
+                                textureView.getHeight());
             } else {
                 textureView.setSurfaceTextureListener(surfaceTextureListener());
             }
@@ -611,7 +627,7 @@ public class CameraPreview extends ViewGroup {
      * Pause scanning and the camera preview. Typically this should be called from the Activity's
      * onPause() method.
      *
-     * Call from UI thread only.
+     * <p>Call from UI thread only.
      */
     public void pause() {
         // This must be safe to call multiple times.
@@ -628,7 +644,7 @@ public class CameraPreview extends ViewGroup {
             SurfaceHolder surfaceHolder = surfaceView.getHolder();
             surfaceHolder.removeCallback(surfaceCallback);
         }
-        if(currentSurfaceSize == null && textureView != null && Build.VERSION.SDK_INT >= 14) {
+        if (currentSurfaceSize == null && textureView != null && Build.VERSION.SDK_INT >= 14) {
             textureView.setSurfaceTextureListener(null);
         }
 
@@ -664,7 +680,7 @@ public class CameraPreview extends ViewGroup {
      * @param marginFraction the fraction
      */
     public void setMarginFraction(double marginFraction) {
-        if(marginFraction >= 0.5d) {
+        if (marginFraction >= 0.5d) {
             throw new IllegalArgumentException("The margin fraction must be less than 0.5");
         }
         this.marginFraction = marginFraction;
@@ -677,7 +693,7 @@ public class CameraPreview extends ViewGroup {
     /**
      * Set to true to use TextureView instead of SurfaceView.
      *
-     * Will only have an effect on API >= 14.
+     * <p>Will only have an effect on API >= 14.
      *
      * @param useTextureView true to use TextureView.
      */
@@ -717,7 +733,7 @@ public class CameraPreview extends ViewGroup {
     /**
      * Create a new CameraInstance.
      *
-     * Override to use a custom CameraInstance.
+     * <p>Override to use a custom CameraInstance.
      *
      * @return a new CameraInstance
      */
@@ -739,18 +755,14 @@ public class CameraPreview extends ViewGroup {
         }
     }
 
-    /**
-     * Called when the preview is started. Override this to start decoding work.
-     */
-    protected void previewStarted() {
-
-    }
+    /** Called when the preview is started. Override this to start decoding work. */
+    protected void previewStarted() {}
 
     /**
-     * Get the current CameraInstance. This may be null, and may change when
-     * pausing / resuming the preview.
+     * Get the current CameraInstance. This may be null, and may change when pausing / resuming the
+     * preview.
      *
-     * While the preview is active, getCameraInstance() will never be null.
+     * <p>While the preview is active, getCameraInstance() will never be null.
      *
      * @return the current CameraInstance
      * @see #isPreviewActive()
@@ -760,8 +772,8 @@ public class CameraPreview extends ViewGroup {
     }
 
     /**
-     * The preview typically starts being active a while after calling resume(), and stops
-     * when calling pause().
+     * The preview typically starts being active a while after calling resume(), and stops when
+     * calling pause().
      *
      * @return true if the preview is active
      */
@@ -772,12 +784,12 @@ public class CameraPreview extends ViewGroup {
     /**
      * Calculate framing rectangle, relative to the preview frame.
      *
-     * Note that the SurfaceView may be larger than the container.
+     * <p>Note that the SurfaceView may be larger than the container.
      *
-     * Override this for more control over the framing rect calculations.
+     * <p>Override this for more control over the framing rect calculations.
      *
      * @param container this container, with left = top = 0
-     * @param surface   the SurfaceView, relative to this container
+     * @param surface the SurfaceView, relative to this container
      * @return the framing rect, relative to this container
      */
     protected Rect calculateFramingRect(Rect container, Rect surface) {
@@ -785,11 +797,11 @@ public class CameraPreview extends ViewGroup {
         Rect intersection = new Rect(container);
         boolean intersects = intersection.intersect(surface);
 
-        if(framingRectSize != null) {
+        if (framingRectSize != null) {
             // Specific size is specified. Make sure it's not larger than the container or surface.
             int horizontalMargin = Math.max(0, (intersection.width() - framingRectSize.width) / 2);
             int verticalMargin;
-            if(framingRectMarginTop >= 0){
+            if (framingRectMarginTop >= 0) {
                 verticalMargin = framingRectMarginTop;
                 intersection.left += horizontalMargin;
                 intersection.right -= horizontalMargin;
@@ -802,7 +814,11 @@ public class CameraPreview extends ViewGroup {
             return intersection;
         }
         // margin as 10% (default) of the smaller of width, height
-        int margin = (int)Math.min(intersection.width() * marginFraction, intersection.height() * marginFraction);
+        int margin =
+                (int)
+                        Math.min(
+                                intersection.width() * marginFraction,
+                                intersection.height() * marginFraction);
         intersection.inset(margin, margin);
         if (intersection.height() > intersection.width()) {
             // We don't want a frame that is taller than wide.
@@ -823,11 +839,11 @@ public class CameraPreview extends ViewGroup {
 
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
-        if(!(state instanceof Bundle)) {
+        if (!(state instanceof Bundle)) {
             super.onRestoreInstanceState(state);
             return;
         }
-        Bundle myState = (Bundle)state;
+        Bundle myState = (Bundle) state;
         Parcelable superState = myState.getParcelable("super");
         super.onRestoreInstanceState(superState);
         boolean torch = myState.getBoolean("torch");

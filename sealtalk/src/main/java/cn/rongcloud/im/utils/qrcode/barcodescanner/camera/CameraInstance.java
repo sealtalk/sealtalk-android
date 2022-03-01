@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 import android.view.SurfaceHolder;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.utils.qrcode.barcodescanner.Size;
 import cn.rongcloud.im.utils.qrcode.barcodescanner.Util;
@@ -12,7 +11,7 @@ import cn.rongcloud.im.utils.qrcode.barcodescanner.Util;
 /**
  * Manage a camera instance using a background thread.
  *
- * All methods must be called from the main thread.
+ * <p>All methods must be called from the main thread.
  */
 public class CameraInstance {
     private static final String TAG = CameraInstance.class.getSimpleName();
@@ -29,7 +28,7 @@ public class CameraInstance {
     /**
      * Construct a new CameraInstance.
      *
-     * A new CameraManager is created.
+     * <p>A new CameraManager is created.
      *
      * @param context the Android Context
      */
@@ -99,9 +98,8 @@ public class CameraInstance {
     }
 
     /**
-     *
      * @return the camera rotation relative to display rotation, in degrees. Typically 0 if the
-     *    display is in landscape orientation.
+     *     display is in landscape orientation.
      */
     public int getCameraRotation() {
         return cameraManager.getCameraRotation();
@@ -133,12 +131,13 @@ public class CameraInstance {
         Util.validateMainThread();
 
         if (open) {
-            cameraThread.enqueue(new Runnable() {
-                @Override
-                public void run() {
-                    cameraManager.setTorch(on);
-                }
-            });
+            cameraThread.enqueue(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            cameraManager.setTorch(on);
+                        }
+                    });
         }
     }
 
@@ -159,12 +158,13 @@ public class CameraInstance {
     public void requestPreview(final PreviewCallback callback) {
         validateOpen();
 
-        cameraThread.enqueue(new Runnable() {
-            @Override
-            public void run() {
-                cameraManager.requestPreviewFrame(callback);
-            }
-        });
+        cameraThread.enqueue(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        cameraManager.requestPreviewFrame(callback);
+                    }
+                });
     }
 
     private void validateOpen() {
@@ -173,63 +173,69 @@ public class CameraInstance {
         }
     }
 
-    private Runnable opener = new Runnable() {
-        @Override
-        public void run() {
-            try {
-                Log.d(TAG, "Opening camera");
-                cameraManager.open();
-            } catch (Exception e) {
-                notifyError(e);
-                Log.e(TAG, "Failed to open camera", e);
-            }
-        }
-    };
-
-    private Runnable configure = new Runnable() {
-        @Override
-        public void run() {
-            try {
-                Log.d(TAG, "Configuring camera");
-                cameraManager.configure();
-                if (readyHandler != null) {
-                    readyHandler.obtainMessage(R.id.zxing_prewiew_size_ready, getPreviewSize()).sendToTarget();
+    private Runnable opener =
+            new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Log.d(TAG, "Opening camera");
+                        cameraManager.open();
+                    } catch (Exception e) {
+                        notifyError(e);
+                        Log.e(TAG, "Failed to open camera", e);
+                    }
                 }
-            } catch (Exception e) {
-                notifyError(e);
-                Log.e(TAG, "Failed to configure camera", e);
-            }
-        }
-    };
+            };
 
-    private Runnable previewStarter = new Runnable() {
-        @Override
-        public void run() {
-            try {
-                Log.d(TAG, "Starting preview");
-                cameraManager.setPreviewDisplay(surface);
-                cameraManager.startPreview();
-            } catch (Exception e) {
-                notifyError(e);
-                Log.e(TAG, "Failed to start preview", e);
-            }
-        }
-    };
+    private Runnable configure =
+            new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Log.d(TAG, "Configuring camera");
+                        cameraManager.configure();
+                        if (readyHandler != null) {
+                            readyHandler
+                                    .obtainMessage(R.id.zxing_prewiew_size_ready, getPreviewSize())
+                                    .sendToTarget();
+                        }
+                    } catch (Exception e) {
+                        notifyError(e);
+                        Log.e(TAG, "Failed to configure camera", e);
+                    }
+                }
+            };
 
-    private Runnable closer = new Runnable() {
-        @Override
-        public void run() {
-            try {
-                Log.d(TAG, "Closing camera");
-                cameraManager.stopPreview();
-                cameraManager.close();
-            } catch (Exception e) {
-                Log.e(TAG, "Failed to close camera", e);
-            }
+    private Runnable previewStarter =
+            new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Log.d(TAG, "Starting preview");
+                        cameraManager.setPreviewDisplay(surface);
+                        cameraManager.startPreview();
+                    } catch (Exception e) {
+                        notifyError(e);
+                        Log.e(TAG, "Failed to start preview", e);
+                    }
+                }
+            };
 
-            cameraThread.decrementInstances();
-        }
-    };
+    private Runnable closer =
+            new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Log.d(TAG, "Closing camera");
+                        cameraManager.stopPreview();
+                        cameraManager.close();
+                    } catch (Exception e) {
+                        Log.e(TAG, "Failed to close camera", e);
+                    }
+
+                    cameraThread.decrementInstances();
+                }
+            };
 
     private void notifyError(Exception error) {
         if (readyHandler != null) {
@@ -240,7 +246,7 @@ public class CameraInstance {
     /**
      * Returns the CameraManager used to control the camera.
      *
-     * The CameraManager is not thread-safe, and must only be used from the CameraThread.
+     * <p>The CameraManager is not thread-safe, and must only be used from the CameraThread.
      *
      * @return the CameraManager used
      */
@@ -248,18 +254,12 @@ public class CameraInstance {
         return cameraManager;
     }
 
-    /**
-     *
-     * @return the CameraThread used to manage the camera
-     */
+    /** @return the CameraThread used to manage the camera */
     protected CameraThread getCameraThread() {
         return cameraThread;
     }
 
-    /**
-     *
-     * @return the surface om which the preview is displayed
-     */
+    /** @return the surface om which the preview is displayed */
     protected CameraSurface getSurface() {
         return surface;
     }

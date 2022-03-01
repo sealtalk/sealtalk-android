@@ -2,13 +2,11 @@ package cn.rongcloud.im.viewmodel;
 
 import android.app.Application;
 import android.net.Uri;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-
 import cn.rongcloud.im.db.model.UserInfo;
 import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.model.Resource;
@@ -23,9 +21,12 @@ public class UserInfoViewModel extends AndroidViewModel {
     private IMManager imManager;
     private SingleSourceLiveData<Resource<UserInfo>> userInfo = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<Result>> setNameResult = new SingleSourceLiveData<>();
-    private SingleSourceLiveData<Resource<Result>> uploadPotraitResult = new SingleSourceLiveData<>();
-    private SingleSourceLiveData<Resource<Result>> changePasswordResult = new SingleSourceLiveData<>();
-    private SingleSourceLiveData<Resource<Result>> setStAccountResult = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<Result>> uploadPotraitResult =
+            new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<Result>> changePasswordResult =
+            new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<Result>> setStAccountResult =
+            new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<Result>> setGenderResult = new SingleSourceLiveData<>();
 
     public UserInfoViewModel(@NonNull Application application) {
@@ -40,7 +41,6 @@ public class UserInfoViewModel extends AndroidViewModel {
         userTask = new UserTask(application);
         requestUserInfo(userId);
     }
-
 
     /**
      * 获取 UserInfo
@@ -152,10 +152,7 @@ public class UserInfoViewModel extends AndroidViewModel {
         userInfo.setSource(userTask.getUserInfo(userId));
     }
 
-
-    /**
-     * 退出
-     */
+    /** 退出 */
     public void logout() {
         imManager.logout();
         userTask.logout();
@@ -174,11 +171,12 @@ public class UserInfoViewModel extends AndroidViewModel {
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
             try {
-                return modelClass.getConstructor(String.class, Application.class).newInstance(userId, application);
+                return modelClass
+                        .getConstructor(String.class, Application.class)
+                        .newInstance(userId, application);
             } catch (Exception e) {
                 throw new RuntimeException("Cannot create an instance of " + modelClass, e);
             }
         }
     }
-
 }

@@ -2,14 +2,11 @@ package cn.rongcloud.im.wxapi;
 
 import android.app.Activity;
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
-
+import cn.rongcloud.im.wx.WXManager;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
-
-import cn.rongcloud.im.wx.WXManager;
 
 public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 

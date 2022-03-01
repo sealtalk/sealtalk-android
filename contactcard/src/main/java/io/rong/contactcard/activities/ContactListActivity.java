@@ -1,6 +1,5 @@
 package io.rong.contactcard.activities;
 
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,21 +19,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-
 import io.rong.contactcard.ContactCardContext;
 import io.rong.contactcard.IContactCardInfoProvider;
 import io.rong.contactcard.R;
-
 import io.rong.imkit.activity.RongBaseNoActionbarActivity;
 import io.rong.imkit.userinfo.RongUserInfoManager;
 import io.rong.imkit.utils.CharacterParser;
@@ -42,11 +32,13 @@ import io.rong.imkit.widget.SideBar;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
 
-/**
- * Created by Beyond on 30/12/2016.
- */
-
+/** Created by Beyond on 30/12/2016. */
 public class ContactListActivity extends RongBaseNoActionbarActivity {
     private ListView mListView;
     private List<MemberInfo> mAllMemberList;
@@ -67,130 +59,151 @@ public class ContactListActivity extends RongBaseNoActionbarActivity {
         SideBar mSideBar = (SideBar) findViewById(R.id.rc_sidebar);
         TextView letterPopup = (TextView) findViewById(R.id.rc_popup_bg);
         mSideBar.setTextView(letterPopup);
-        findViewById(R.id.rc_btn_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        findViewById(R.id.rc_btn_cancel)
+                .setOnClickListener(
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                finish();
+                            }
+                        });
 
         mAdapter = new MembersAdapter();
         mListView.setAdapter(mAdapter);
         mAllMemberList = new ArrayList<>();
 
         mTargetId = getIntent().getStringExtra("targetId");
-        mConversationType = (Conversation.ConversationType) getIntent().getSerializableExtra("conversationType");
+        mConversationType =
+                (Conversation.ConversationType)
+                        getIntent().getSerializableExtra("conversationType");
 
-        IContactCardInfoProvider iContactInfoProvider = ContactCardContext.getInstance().getContactCardInfoProvider();
-        if (iContactInfoProvider == null)
-            return;
-        iContactInfoProvider.getContactAllInfoProvider(new IContactCardInfoProvider.IContactCardInfoCallback() {
-            @Override
-            public void getContactCardInfoCallback(final List<? extends UserInfo> members) {
-                if (members != null && members.size() > 0) {
-                    //单聊时，联系人列表不包含targetId对应的信息
-                    if (mConversationType == Conversation.ConversationType.PRIVATE) {
-                        Iterator<? extends UserInfo> mMemberIterator = members.iterator();
-                        while (mMemberIterator.hasNext()) {
-                            UserInfo userInfo = mMemberIterator.next();
-                            if (mTargetId.equals(userInfo.getUserId())) {
-                                mMemberIterator.remove();
-                                break;
-                            }
-                        }
-                    }
-
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            for (int i = 0; i < members.size(); i++) {
-                                UserInfo userInfo = members.get(i);
-                                if (userInfo != null && !userInfo.getUserId().equals(RongIMClient.getInstance().getCurrentUserId())) {
-                                    MemberInfo memberInfo = new MemberInfo(userInfo);
-                                    String sortString = "#";
-                                    //汉字转换成拼音
-                                    String pinyin = CharacterParser.getInstance().getSelling(userInfo.getName());
-
-                                    if (pinyin != null) {
-                                        if (pinyin.length() > 0) {
-                                            sortString = pinyin.substring(0, 1).toUpperCase();
-                                        }
+        IContactCardInfoProvider iContactInfoProvider =
+                ContactCardContext.getInstance().getContactCardInfoProvider();
+        if (iContactInfoProvider == null) return;
+        iContactInfoProvider.getContactAllInfoProvider(
+                new IContactCardInfoProvider.IContactCardInfoCallback() {
+                    @Override
+                    public void getContactCardInfoCallback(final List<? extends UserInfo> members) {
+                        if (members != null && members.size() > 0) {
+                            // 单聊时，联系人列表不包含targetId对应的信息
+                            if (mConversationType == Conversation.ConversationType.PRIVATE) {
+                                Iterator<? extends UserInfo> mMemberIterator = members.iterator();
+                                while (mMemberIterator.hasNext()) {
+                                    UserInfo userInfo = mMemberIterator.next();
+                                    if (mTargetId.equals(userInfo.getUserId())) {
+                                        mMemberIterator.remove();
+                                        break;
                                     }
-                                    // 正则表达式，判断首字母是否是英文字母
-                                    if (sortString.matches("[A-Z]")) {
-                                        memberInfo.setLetter(sortString.toUpperCase());
-                                    } else {
-                                        memberInfo.setLetter("#");
-                                    }
-                                    mAllMemberList.add(memberInfo);
                                 }
                             }
-                            Collections.sort(mAllMemberList, PinyinComparator.getInstance());
-                            mAdapter.setData(mAllMemberList);
-                            mAdapter.notifyDataSetChanged();
-                        }
-                    });
-                }
-            }
-        });
 
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent();
-                intent.putExtra("contact", mAdapter.getItem(position).userInfo);
-                setResult(Activity.RESULT_OK, intent);
-                finish();
-            }
-        });
+                            handler.post(
+                                    new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            for (int i = 0; i < members.size(); i++) {
+                                                UserInfo userInfo = members.get(i);
+                                                if (userInfo != null
+                                                        && !userInfo.getUserId()
+                                                                .equals(
+                                                                        RongIMClient.getInstance()
+                                                                                .getCurrentUserId())) {
+                                                    MemberInfo memberInfo =
+                                                            new MemberInfo(userInfo);
+                                                    String sortString = "#";
+                                                    // 汉字转换成拼音
+                                                    String pinyin =
+                                                            CharacterParser.getInstance()
+                                                                    .getSelling(userInfo.getName());
 
-        //设置右侧触摸监听
-        mSideBar.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
-            @Override
-            public void onTouchingLetterChanged(String s) {
-                //该字母首次出现的位置
-                int position = mAdapter.getPositionForSection(s.charAt(0));
-                if (position != -1) {
-                    mListView.setSelection(position);
-                }
-            }
-        });
-
-        searchBar.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
-                List<MemberInfo> filterDataList = new ArrayList<>();
-
-                if (TextUtils.isEmpty(s.toString())) {
-                    filterDataList = mAllMemberList;
-                } else {
-                    filterDataList.clear();
-                    for (MemberInfo member : mAllMemberList) {
-                        String name = member.userInfo.getName();
-                        if (name != null) {
-                            if (name.contains(s) || CharacterParser.getInstance().getSelling(name).startsWith(s.toString())) {
-                                filterDataList.add(member);
-                            }
+                                                    if (pinyin != null) {
+                                                        if (pinyin.length() > 0) {
+                                                            sortString =
+                                                                    pinyin.substring(0, 1)
+                                                                            .toUpperCase();
+                                                        }
+                                                    }
+                                                    // 正则表达式，判断首字母是否是英文字母
+                                                    if (sortString.matches("[A-Z]")) {
+                                                        memberInfo.setLetter(
+                                                                sortString.toUpperCase());
+                                                    } else {
+                                                        memberInfo.setLetter("#");
+                                                    }
+                                                    mAllMemberList.add(memberInfo);
+                                                }
+                                            }
+                                            Collections.sort(
+                                                    mAllMemberList, PinyinComparator.getInstance());
+                                            mAdapter.setData(mAllMemberList);
+                                            mAdapter.notifyDataSetChanged();
+                                        }
+                                    });
                         }
                     }
-                }
-                // 根据a-z进行排序
-                Collections.sort(filterDataList, PinyinComparator.getInstance());
-                mAdapter.setData(filterDataList);
-                mAdapter.notifyDataSetChanged();
-            }
+                });
 
-            @Override
-            public void afterTextChanged(Editable s) {
+        mListView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(
+                            AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent();
+                        intent.putExtra("contact", mAdapter.getItem(position).userInfo);
+                        setResult(Activity.RESULT_OK, intent);
+                        finish();
+                    }
+                });
 
-            }
-        });
+        // 设置右侧触摸监听
+        mSideBar.setOnTouchingLetterChangedListener(
+                new SideBar.OnTouchingLetterChangedListener() {
+                    @Override
+                    public void onTouchingLetterChanged(String s) {
+                        // 该字母首次出现的位置
+                        int position = mAdapter.getPositionForSection(s.charAt(0));
+                        if (position != -1) {
+                            mListView.setSelection(position);
+                        }
+                    }
+                });
+
+        searchBar.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(
+                            CharSequence s, int start, int count, int after) {}
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        // 当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
+                        List<MemberInfo> filterDataList = new ArrayList<>();
+
+                        if (TextUtils.isEmpty(s.toString())) {
+                            filterDataList = mAllMemberList;
+                        } else {
+                            filterDataList.clear();
+                            for (MemberInfo member : mAllMemberList) {
+                                String name = member.userInfo.getName();
+                                if (name != null) {
+                                    if (name.contains(s)
+                                            || CharacterParser.getInstance()
+                                                    .getSelling(name)
+                                                    .startsWith(s.toString())) {
+                                        filterDataList.add(member);
+                                    }
+                                }
+                            }
+                        }
+                        // 根据a-z进行排序
+                        Collections.sort(filterDataList, PinyinComparator.getInstance());
+                        mAdapter.setData(filterDataList);
+                        mAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {}
+                });
     }
 
     private static class MembersAdapter extends BaseAdapter implements SectionIndexer {
@@ -220,7 +233,9 @@ public class ContactListActivity extends RongBaseNoActionbarActivity {
             ViewHolder viewHolder;
             if (convertView == null) {
                 viewHolder = new ViewHolder();
-                convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.rc_list_item_contact_card, null);
+                convertView =
+                        LayoutInflater.from(parent.getContext())
+                                .inflate(R.layout.rc_list_item_contact_card, null);
                 viewHolder.name = (TextView) convertView.findViewById(R.id.rc_user_name);
                 viewHolder.portrait = (ImageView) convertView.findViewById(R.id.rc_user_portrait);
                 viewHolder.letter = (TextView) convertView.findViewById(R.id.letter);
@@ -230,13 +245,17 @@ public class ContactListActivity extends RongBaseNoActionbarActivity {
             }
             UserInfo userInfo = mList.get(position).userInfo;
             if (userInfo != null) {
-                viewHolder.name.setText(RongUserInfoManager.getInstance().getUserDisplayName(userInfo));
-                Glide.with(convertView).load(userInfo.getPortraitUri()).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(viewHolder.portrait);
+                viewHolder.name.setText(
+                        RongUserInfoManager.getInstance().getUserDisplayName(userInfo));
+                Glide.with(convertView)
+                        .load(userInfo.getPortraitUri())
+                        .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                        .into(viewHolder.portrait);
             }
 
-            //根据position获取分类的首字母的Char ascii值
+            // 根据position获取分类的首字母的Char ascii值
             int section = getSectionForPosition(position);
-            //如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
+            // 如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
             if (position == getPositionForSection(section)) {
                 viewHolder.letter.setVisibility(View.VISIBLE);
                 viewHolder.letter.setText(mList.get(position).getLetter());
@@ -296,7 +315,6 @@ public class ContactListActivity extends RongBaseNoActionbarActivity {
 
     public static class PinyinComparator implements Comparator<MemberInfo> {
 
-
         public static PinyinComparator instance = null;
 
         public static PinyinComparator getInstance() {
@@ -315,7 +333,5 @@ public class ContactListActivity extends RongBaseNoActionbarActivity {
                 return o1.getLetter().compareTo(o2.getLetter());
             }
         }
-
     }
-
 }

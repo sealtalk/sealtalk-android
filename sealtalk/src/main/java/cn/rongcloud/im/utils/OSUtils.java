@@ -2,18 +2,11 @@ package cn.rongcloud.im.utils;
 
 import android.os.Build;
 import android.text.TextUtils;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/**
- * Created by Android Studio.
- * User: lvhongzhen
- * Date: 2019-08-15
- * Time: 01:49
- */
-
+/** Created by Android Studio. User: lvhongzhen Date: 2019-08-15 Time: 01:49 */
 public class OSUtils {
 
     public static final String ROM_MIUI = "MIUI";
@@ -124,5 +117,3 @@ public class OSUtils {
         return line;
     }
 }
-
-

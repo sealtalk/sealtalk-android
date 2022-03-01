@@ -2,9 +2,7 @@ package cn.rongcloud.im.ui.adapter.viewholders;
 
 import android.view.View;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.adapter.models.CharacterTitleInfo;
 import cn.rongcloud.im.ui.adapter.models.ContactModel;

@@ -1,8 +1,6 @@
 package cn.rongcloud.im.model;
 
-/**
- * 获取聊天室结果
- */
+/** 获取聊天室结果 */
 public class ChatRoomResult {
 
     private String type;
@@ -59,6 +57,4 @@ public class ChatRoomResult {
     public int getMaxMemberCount() {
         return maxMemberCount;
     }
-
-
 }

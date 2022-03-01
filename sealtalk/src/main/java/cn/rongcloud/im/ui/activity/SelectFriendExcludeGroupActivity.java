@@ -1,21 +1,16 @@
 package cn.rongcloud.im.ui.activity;
 
+import static cn.rongcloud.im.common.IntentExtra.STR_TARGET_ID;
+
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
-
-import java.util.ArrayList;
-
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.ui.fragment.SelectFriendsExcludeGroupFragment;
 import cn.rongcloud.im.ui.fragment.SelectMultiFriendFragment;
+import java.util.ArrayList;
 
-import static cn.rongcloud.im.common.IntentExtra.STR_TARGET_ID;
-
-/**
- * 除了当前群组 groupId 之外的人
- */
+/** 除了当前群组 groupId 之外的人 */
 public class SelectFriendExcludeGroupActivity extends SelectMultiFriendsActivity {
     private String groupId;
 

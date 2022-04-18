@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.EditText;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import cn.rongcloud.im.BuildConfig;
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.SealApp;
@@ -39,6 +40,7 @@ import cn.rongcloud.im.model.ConversationRecord;
 import cn.rongcloud.im.model.LoginResult;
 import cn.rongcloud.im.model.QuietHours;
 import cn.rongcloud.im.model.Resource;
+import cn.rongcloud.im.model.TranslationTokenResult;
 import cn.rongcloud.im.model.UserCacheInfo;
 import cn.rongcloud.im.net.CallBackWrapper;
 import cn.rongcloud.im.net.HttpClientManager;
@@ -54,6 +56,7 @@ import cn.rongcloud.im.ui.activity.MainActivity;
 import cn.rongcloud.im.ui.activity.MemberMentionedExActivity;
 import cn.rongcloud.im.ui.activity.NewFriendListActivity;
 import cn.rongcloud.im.ui.activity.PokeInviteChatActivity;
+import cn.rongcloud.im.ui.activity.SplashActivity;
 import cn.rongcloud.im.ui.activity.SubConversationListActivity;
 import cn.rongcloud.im.ui.activity.UserDetailActivity;
 import cn.rongcloud.im.utils.log.SLog;
@@ -82,6 +85,7 @@ import io.rong.imkit.userinfo.model.GroupUserInfo;
 import io.rong.imkit.utils.RouteUtils;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.IRongCoreEnum;
+import io.rong.imlib.RongCoreClient;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.chatroom.base.RongChatRoomClient;
 import io.rong.imlib.common.DeviceUtils;
@@ -96,8 +100,11 @@ import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageConfig;
 import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.MessagePushConfig;
+import io.rong.imlib.model.RCTranslationResult;
 import io.rong.imlib.model.UserInfo;
 import io.rong.imlib.publicservice.model.PublicServiceProfile;
+import io.rong.imlib.translation.TranslationClient;
+import io.rong.imlib.translation.TranslationResultListener;
 import io.rong.message.ContactNotificationMessage;
 import io.rong.message.GroupNotificationMessage;
 import io.rong.push.PushEventListener;
@@ -202,6 +209,9 @@ public class IMManager {
         // 初始化聊天室监听
         initChatRoomActionListener();
 
+        // 初始化翻译监听
+        initTranslationListener();
+
         // 缓存连接
         cacheConnectIM();
         RongExtensionManager.getInstance()
@@ -252,6 +262,30 @@ public class IMManager {
                             public void onDestroy(
                                     Conversation.ConversationType type, String targetId) {}
                         });
+    }
+
+    private void initTranslationListener() {
+        if (TranslationClient.getInstance().isTextTranslationSupported()) {
+            TranslationClient.getInstance()
+                    .addTranslationResultListener(
+                            new TranslationResultListener() {
+                                @Override
+                                public void onTranslationResult(
+                                        int code, RCTranslationResult result) {
+                                    handleTranslationFailedEvent(code, result);
+                                }
+                            });
+        }
+    }
+
+    private void handleTranslationFailedEvent(int code, RCTranslationResult result) {
+        if (code == IRongCoreEnum.CoreErrorCode.RC_TRANSLATION_CODE_INVALID_AUTH_TOKEN.code
+                || code == IRongCoreEnum.CoreErrorCode.RC_TRANSLATION_CODE_AUTH_FAILED.code
+                || code
+                        == IRongCoreEnum.CoreErrorCode.RC_TRANSLATION_CODE_SERVER_AUTH_FAILED
+                                .code) {
+            updateJwtToken();
+        }
     }
 
     /** 缓存登录 */
@@ -760,7 +794,7 @@ public class IMManager {
                                 context.startActivities(intents);
                                 return true;
                             } else {
-                                Intent intentMain = new Intent(context, MainActivity.class);
+                                Intent intentMain = new Intent(context, SplashActivity.class);
                                 intentMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 context.startActivity(intentMain);
                             }
@@ -1657,6 +1691,7 @@ public class IMManager {
                             public void onSuccess(String s) {
                                 // 连接 IM 成功后，初始化数据库
                                 DBManager.getInstance(context).openDb(s);
+                                updateJwtToken();
                             }
 
                             public void onError(RongIMClient.ConnectionErrorCode errorCode) {
@@ -1697,6 +1732,39 @@ public class IMManager {
                                 }
                             }
                         });
+    }
+
+    private void updateJwtToken() {
+        RLog.d(TAG, "updateJwtToken: ");
+        if (!RongCoreClient.getInstance().isTextTranslationSupported()) {
+            RLog.d(TAG, "updateJwtToken: not support translation");
+            return;
+        }
+        UserService service =
+                HttpClientManager.getInstance(this.getContext().getApplicationContext())
+                        .getClient()
+                        .createService(UserService.class);
+        service.getTranslationToken(RongIMClient.getInstance().getCurrentUserId())
+                .observeForever(
+                        new Observer<TranslationTokenResult>() {
+                            @Override
+                            public void onChanged(TranslationTokenResult translationTokenResult) {
+                                if (translationTokenResult == null) {
+                                    RLog.d(TAG, "updateJwtToken: translationTokenResult is null");
+                                    return;
+                                }
+                                RLog.d(
+                                        TAG,
+                                        "updateJwtToken: jwtToken = "
+                                                + translationTokenResult.getToken());
+                                TranslationClient.getInstance()
+                                        .updateAuthToken(translationTokenResult.getToken());
+                            }
+                        });
+        RongConfigCenter.featureConfig().rc_translation_src_language =
+                appTask.getTranslationSrcLanguage();
+        RongConfigCenter.featureConfig().rc_translation_target_language =
+                appTask.getTranslationTargetLanguage();
     }
 
     /**

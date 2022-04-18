@@ -20,6 +20,7 @@ import cn.rongcloud.im.ui.activity.AccountSettingActivity;
 import cn.rongcloud.im.ui.activity.ChangeLanguageActivity;
 import cn.rongcloud.im.ui.activity.MyAccountActivity;
 import cn.rongcloud.im.ui.activity.QrCodeDisplayActivity;
+import cn.rongcloud.im.ui.activity.TranslationSettingActivity;
 import cn.rongcloud.im.ui.view.SettingItemView;
 import cn.rongcloud.im.ui.view.UserInfoItemView;
 import cn.rongcloud.im.viewmodel.AppViewModel;
@@ -36,6 +37,8 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 
 public class MainMeFragment extends BaseFragment {
+
+    private static final String TAG = "MainMeFragment";
 
     private SettingItemView sivAbout;
     private UserInfoItemView uivUserInfo;
@@ -57,6 +60,7 @@ public class MainMeFragment extends BaseFragment {
         sivLanguage = findView(R.id.siv_language, true);
         findView(R.id.siv_feedback, true);
         sivAbout = findView(R.id.siv_about, true);
+        findView(R.id.siv_translation, true);
     }
 
     @Override
@@ -189,6 +193,10 @@ public class MainMeFragment extends BaseFragment {
                 }
                 startActivity(intent);
                 break;
+            case R.id.siv_translation:
+                intent = new Intent(getActivity(), TranslationSettingActivity.class);
+                startActivity(intent);
+                break;
             default:
                 break;
         }
@@ -213,6 +221,9 @@ public class MainMeFragment extends BaseFragment {
                                         new Runnable() {
                                             @Override
                                             public void run() {
+                                                if (getActivity() == null) {
+                                                    return;
+                                                }
                                                 Glide.with(getActivity())
                                                         .load(userInfo.getPortraitUri())
                                                         .placeholder(R.drawable.rc_default_portrait)

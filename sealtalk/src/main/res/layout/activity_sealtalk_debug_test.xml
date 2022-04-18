@@ -29,12 +29,11 @@
                 app:item_divider="true" />
 
             <cn.rongcloud.im.ui.view.SettingItemView
-                android:id="@+id/siv_push_config"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/seal_mine_about_height"
-                app:item_content="@string/seal_mine_about_push_config"
-                app:item_divider="true" />
-
+              android:id="@+id/siv_push_config"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/seal_mine_about_height"
+              app:item_content="@string/seal_mine_about_push_config"
+              app:item_divider="true" />
             <cn.rongcloud.im.ui.view.SettingItemView
                 android:id="@+id/siv_discussion"
                 android:layout_width="match_parent"
@@ -120,6 +119,13 @@
                 app:item_content="创建通知通道"
                 app:item_divider="true"
                 />
+            <cn.rongcloud.im.ui.view.SettingItemView
+              android:id="@+id/siv_bind_chat_rtc_room"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/seal_mine_about_height"
+              app:item_content="绑RTCRoom"
+              app:item_divider="true"
+              />
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

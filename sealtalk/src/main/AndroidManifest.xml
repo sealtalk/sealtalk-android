@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cn.rongcloud.im">
 
@@ -55,8 +56,6 @@
     <!-- OPPO 配置结束-->
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <!--为了获取用户手机的IMEI，用来唯一的标识用户;发送位置消息，实时位置共享需要此权限-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <uses-permission android:name="android.permission.VIBRATE" />
 
@@ -102,6 +101,10 @@
                 <data
                     android:host="${applicationId}"
                     android:pathPrefix="/conversation"
+                    android:scheme="rong" />
+                <data
+                    android:host="${applicationId}"
+                    android:pathPrefix="/push_message"
                     android:scheme="rong" />
             </intent-filter>
         </activity>
@@ -166,7 +169,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.PublicServiceInfoActivity"
-            android:exported="false"
+            android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -371,6 +374,13 @@
             android:name=".ui.activity.MultiDeleteFriendsActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".ui.activity.TranslationSettingActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.activity.TranslationLanguageListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.BindChatRTCRoomActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- 请将CHANNAL改为app的发布渠道 < -->
         <meta-data
@@ -397,6 +407,15 @@
         <!--第三方的推送 权限 广播 和服务-->
 
         <!-- 小米 配置开始 < -->
+
+        <activity
+            android:name="com.xiaomi.mipush.sdk.NotificationClickedActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:launchMode="singleInstance"
+            android:exported="true"
+            android:enabled="true">
+        </activity>
+
         <service
             android:name="com.xiaomi.push.service.XMPushService"
             android:enabled="true" />

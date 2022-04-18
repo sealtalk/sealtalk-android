@@ -46,9 +46,21 @@
             android:id="@+id/siv_language"
             android:layout_width="match_parent"
             android:layout_height="@dimen/seal_mine_setting_item_height"
+            app:item_divider="true"
             app:item_content="@string/seal_main_mine_setting_language"
             app:item_image="@drawable/seal_ic_mine_language"
             app:item_value="@string/lang_chs">
+
+        </cn.rongcloud.im.ui.view.SettingItemView>
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_translation"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_mine_setting_item_height"
+            app:item_content="@string/seal_main_mine_setting_translation"
+            app:item_image="@drawable/seal_ic_mine_language"
+            app:item_right_image="@drawable/seal_ic_mine_go"
+            >
 
         </cn.rongcloud.im.ui.view.SettingItemView>
 
@@ -88,7 +100,5 @@
             app:item_tag_image_width="@dimen/seal_mine_setting_item_tag_width">
 
         </cn.rongcloud.im.ui.view.SettingItemView>
-
-
     </LinearLayout>
 </ScrollView>

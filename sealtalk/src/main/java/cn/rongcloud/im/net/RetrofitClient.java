@@ -85,6 +85,7 @@ public class RetrofitClient {
 
             OkHttpClient.Builder okHttpBuilder =
                     new OkHttpClient.Builder()
+                            .addInterceptor(new HttpLogInterceptor())
                             .addInterceptor(new AddHeaderInterceptor(mContext))
                             .addInterceptor(new ReceivedCookiesInterceptor(mContext))
                             .connectTimeout(NetConstant.API_CONNECT_TIME_OUT, TimeUnit.SECONDS)

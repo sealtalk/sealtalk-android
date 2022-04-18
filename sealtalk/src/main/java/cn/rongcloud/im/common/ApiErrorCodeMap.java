@@ -65,6 +65,7 @@ public class ApiErrorCodeMap {
                     put(SealTalkUrl.SET_SCREEN_CAPTURE, SealTalkUrlCode.SET_SCREEN_CAPTURE);
                     put(SealTalkUrl.SEND_SC_MSG, SealTalkUrlCode.SEND_SC_MSG);
                     put(SealTalkUrl.REGISTER_AND_LOGIN, SealTalkUrlCode.REGISTER_AND_LOGIN);
+                    put(SealTalkUrl.TRANSLATION_JWT_TOKEN, SealTalkUrlCode.TRANSLATION_JWT_TOKEN);
                 }
             };
 

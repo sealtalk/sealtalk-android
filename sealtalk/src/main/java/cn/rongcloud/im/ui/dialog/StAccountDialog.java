@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -59,7 +58,6 @@ public class StAccountDialog extends DialogFragment {
         Button negative = view.findViewById(R.id.dialog_btn_negative);
         Button positive = view.findViewById(R.id.dialog_btn_positive);
         View btnSeparate = view.findViewById(R.id.dialog_v_btn_separate);
-        RelativeLayout contentContainer = view.findViewById(R.id.dialog_content_container);
         TextView content = view.findViewById(R.id.dialog_tv_content);
         TextView title = view.findViewById(R.id.dialog_tv_title);
         negative.setOnClickListener(

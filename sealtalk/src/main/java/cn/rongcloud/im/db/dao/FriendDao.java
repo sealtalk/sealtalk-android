@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.RoomWarnings;
 import cn.rongcloud.im.db.model.BlackListEntity;
 import cn.rongcloud.im.db.model.FriendDescription;
 import cn.rongcloud.im.db.model.FriendInfo;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Dao
 public interface FriendDao {
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query(
             "SELECT friend.id as id ,alias,portrait_uri,name,region,phone_number,friend_status,message,updateAt,alias_spelling, name_spelling,order_spelling "
                     + "FROM friend "
@@ -24,21 +26,25 @@ public interface FriendDao {
                     + "order by user.order_spelling")
     LiveData<List<FriendShipInfo>> getAllFriendListDB();
 
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query(
             "SELECT friend.id,alias,portrait_uri,name,region,phone_number,friend_status,message,updateAt,alias_spelling, name_spelling,order_spelling "
                     + "FROM friend INNER JOIN user on friend.id = user.id WHERE friend.id = :id")
     LiveData<FriendShipInfo> getFriendInfo(String id);
 
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query(
             "SELECT friend.id,alias,portrait_uri,name,region,phone_number,friend_status,message,updateAt,alias_spelling, name_spelling,order_spelling "
                     + "FROM friend INNER JOIN user on friend.id = user.id WHERE friend.id = :id")
     FriendShipInfo getFriendInfoSync(String id);
 
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query(
             "SELECT friend.id,alias,portrait_uri,name,region,phone_number,friend_status,message,updateAt,alias_spelling, name_spelling,order_spelling,order_spelling "
                     + "FROM friend INNER JOIN user on friend.id = user.id WHERE friend.id in (:ids)")
     List<FriendShipInfo> getFriendInfoListSync(String[] ids);
 
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query(
             "SELECT friend.id,alias,portrait_uri,name,region,phone_number,friend_status,message,updateAt,alias_spelling, name_spelling,order_spelling,order_spelling "
                     + "FROM friend INNER JOIN user on friend.id = user.id WHERE friend.id in (:ids)")
@@ -50,6 +56,7 @@ public interface FriendDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertFriendShipList(List<FriendInfo> friendInfoList);
 
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query(
             "SELECT friend.id as id ,alias,portrait_uri,name,region,phone_number,friend_status,message,updateAt,alias_spelling, name_spelling,order_spelling "
                     + "FROM friend "
@@ -87,6 +94,7 @@ public interface FriendDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void updateBlackList(List<BlackListEntity> blackListEntityList);
 
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query(
             "SELECT friend.id as id ,alias,portrait_uri,name,region,phone_number,friend_status,message,updateAt,alias_spelling, name_spelling,order_spelling "
                     + "FROM friend "
@@ -97,6 +105,7 @@ public interface FriendDao {
                     + "order by user.order_spelling")
     LiveData<List<FriendShipInfo>> getAllFriendsExcludeGroup(String excludeGroupId);
 
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query(
             "SELECT friend.id as id ,alias,portrait_uri,name,region,phone_number,friend_status,message,updateAt,alias_spelling, name_spelling,order_spelling "
                     + "FROM friend "

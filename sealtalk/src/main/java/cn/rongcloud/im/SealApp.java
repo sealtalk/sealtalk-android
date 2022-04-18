@@ -21,11 +21,9 @@ import cn.rongcloud.im.wx.WXManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
-import com.facebook.stetho.Stetho;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.umeng.commonsdk.UMConfigure;
-import io.rong.callkit.RongCallKit;
 import io.rong.imkit.GlideKitImageEngine;
 import io.rong.imkit.IMCenter;
 import io.rong.imkit.RongIM;
@@ -146,7 +144,6 @@ public class SealApp extends MultiDexApplication {
                             }
                         });
         RongIM.getInstance().setVoiceMessageType(IMCenter.VoiceMessageType.HighQuality);
-        Stetho.initializeWithDefaults(this);
 
         SearchUtils.init(this);
 
@@ -159,9 +156,6 @@ public class SealApp extends MultiDexApplication {
 
         // 监听 App 前后台变化
         observeAppInBackground();
-
-        RongCallKit.setMainPageActivityClass(
-                new String[] {MainActivity.class.getName(), SplashActivity.class.getName()});
 
         // UMeng初始化
         UMConfigure.init(

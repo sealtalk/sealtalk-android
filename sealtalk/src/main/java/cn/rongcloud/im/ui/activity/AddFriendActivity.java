@@ -59,7 +59,7 @@ public class AddFriendActivity extends TitleBaseActivity implements View.OnClick
                 inviteWechatFriend();
                 break;
             case R.id.add_friend_ll_invite_from_contact:
-                inviteFromContact();
+                inviteFromContact(true);
                 break;
         }
     }
@@ -119,12 +119,15 @@ public class AddFriendActivity extends TitleBaseActivity implements View.OnClick
     }
 
     /** 从通讯录邀请好友 */
-    private void inviteFromContact() {
-        boolean hasPermissions =
-                CheckPermissionUtils.requestPermissions(
-                        this,
-                        new String[] {Manifest.permission.READ_CONTACTS},
-                        REQUEST_PERMISSION_INVITE_CONTACT_FRIEND);
+    private void inviteFromContact(boolean needCheckPermission) {
+        boolean hasPermissions = true;
+        if (needCheckPermission) {
+            hasPermissions =
+                    CheckPermissionUtils.requestPermissions(
+                            this,
+                            new String[] {Manifest.permission.READ_CONTACTS},
+                            REQUEST_PERMISSION_INVITE_CONTACT_FRIEND);
+        }
         if (hasPermissions) {
             Intent intent = new Intent(this, InviteFriendFromContactActivity.class);
             startActivity(intent);
@@ -161,7 +164,7 @@ public class AddFriendActivity extends TitleBaseActivity implements View.OnClick
                 if (requestCode == REQUEST_PERMISSION_ADD_CONTACT_FREIND) {
                     addFriendFromContact();
                 } else if (requestCode == REQUEST_PERMISSION_INVITE_CONTACT_FRIEND) {
-                    inviteFromContact();
+                    inviteFromContact(false);
                 }
             } else {
                 toRequestContactPermission();

@@ -144,4 +144,6 @@ public class SealTalkUrl {
     public static final String MULTI_DELETE_FRIEND = "friendship/batch_delete";
 
     public static final String REGISTER_AND_LOGIN = "user/verify_code_register";
+
+    public static final String TRANSLATION_JWT_TOKEN = "user/getJwtToken";
 }

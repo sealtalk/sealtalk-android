@@ -16,6 +16,7 @@ import cn.rongcloud.im.utils.StatusBarUtil;
 import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.viewmodel.SplashViewModel;
+import io.rong.callkit.RongCallKit;
 import io.rong.push.RongPushClient;
 
 public class SplashActivity extends BaseActivity {
@@ -24,6 +25,7 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        RongCallKit.setMainPageActivityClass(new String[] {MainActivity.class.getName()});
         // 处理小米手机按 home 键重新进入会重新打开初始化的页面
         if (!this.isTaskRoot()) {
             Intent mainIntent = getIntent();

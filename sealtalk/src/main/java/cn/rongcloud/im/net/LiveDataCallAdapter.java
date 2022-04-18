@@ -18,6 +18,7 @@ import retrofit2.Response;
 
 public class LiveDataCallAdapter<R> implements CallAdapter<R, LiveData<R>> {
     private final Type responseType;
+    private static final String TAG = "LiveDataCallAdapter";
 
     public LiveDataCallAdapter(Type responseType) {
         this.responseType = responseType;
@@ -79,14 +80,20 @@ public class LiveDataCallAdapter<R> implements CallAdapter<R, LiveData<R>> {
                                                     + throwable.getMessage());
                                     if (throwable instanceof ConnectException) {
                                         R body = null;
-                                        Result result = new Result();
-                                        result.setCode(ErrorCode.NETWORK_ERROR.getCode());
-                                        try {
-                                            body = (R) result;
-                                        } catch (Exception e) {
-                                            // 可能部分接口并不是由 result 包裹，此时无法获取错误码
+                                        if (responseType instanceof Class
+                                                && ((Class) responseType)
+                                                        .isAssignableFrom(Result.class)) {
+                                            Result result = new Result();
+                                            result.setCode(ErrorCode.NETWORK_ERROR.getCode());
+                                            try {
+                                                body = (R) result;
+                                            } catch (Exception e) {
+                                                // 可能部分接口并不是由 result 包裹，此时无法获取错误码
+                                            }
+                                            postValue(body);
+                                        } else {
+                                            postValue(null);
                                         }
-                                        postValue(body);
                                     } else {
                                         postValue(null);
                                     }

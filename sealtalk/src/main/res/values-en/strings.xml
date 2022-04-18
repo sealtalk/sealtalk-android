@@ -195,6 +195,7 @@
 
     <string name="seal_main_mine_set_account">Account Settings</string>
     <string name="seal_main_mine_setting_language">Language</string>
+    <string name="seal_main_mine_setting_translation">Translation Settings</string>
     <string name="seal_main_mine_feedback">Feedback</string>
     <string name="seal_main_mine_about">About RC IM</string>
     <string name="seal_main_mine_customer_xn">Xiaoneng Customer Service</string>

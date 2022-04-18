@@ -16,6 +16,7 @@ import android.widget.EditText;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import cn.rongcloud.im.R;
+import cn.rongcloud.im.ui.test.BindChatRTCRoomActivity;
 import cn.rongcloud.im.ui.test.ChatRoomTestActivity;
 import cn.rongcloud.im.ui.test.CommonConversationListTestActivity;
 import cn.rongcloud.im.ui.test.DeviceInfoActivity;
@@ -47,6 +48,7 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
     private SettingItemView referMsgTest;
     private SettingItemView permissionlistener;
     private SettingItemView createNotificationChannel;
+    private SettingItemView bindChatRTCRoom;
     public static final String SP_IS_SHOW = "is_show";
     public static final String SP_PERMISSION_NAME = "permission_config";
 
@@ -109,6 +111,9 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
 
         createNotificationChannel = findViewById(R.id.siv_create_notification_channel);
         createNotificationChannel.setOnClickListener(this);
+
+        bindChatRTCRoom = findViewById(R.id.siv_bind_chat_rtc_room);
+        bindChatRTCRoom.setOnClickListener(this);
     }
 
     @Override
@@ -157,6 +162,11 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
             case R.id.siv_create_notification_channel:
                 showCreateNotificationDialog();
                 break;
+            case R.id.siv_bind_chat_rtc_room:
+                {
+                    bindChatRTCRoom();
+                    break;
+                }
             default:
                 // Do nothing
                 break;
@@ -317,6 +327,11 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
 
     private void toDiscussion() {
         Intent intent = new Intent(this, DiscussionActivity.class);
+        startActivity(intent);
+    }
+
+    private void bindChatRTCRoom() {
+        Intent intent = new Intent(this, BindChatRTCRoomActivity.class);
         startActivity(intent);
     }
 }

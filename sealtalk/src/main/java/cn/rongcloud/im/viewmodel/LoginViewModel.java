@@ -59,6 +59,7 @@ public class LoginViewModel extends AndroidViewModel {
                     codeCountDown.postValue(0);
                 }
             };
+    ;
 
     public LoginViewModel(@NonNull Application application) {
         super(application);

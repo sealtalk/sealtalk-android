@@ -442,7 +442,7 @@ public class BaseActivity extends AppCompatActivity {
                                 if (runnable != null) {
                                     runnable.run();
                                 }
-                                if (dialog != null) {
+                                if (dialog != null && !isFinishing() && !isDestroyed()) {
                                     dialog.dismiss();
                                     dialog = null;
                                 }

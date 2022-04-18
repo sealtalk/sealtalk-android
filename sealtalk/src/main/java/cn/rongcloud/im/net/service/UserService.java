@@ -9,6 +9,7 @@ import cn.rongcloud.im.model.LoginResult;
 import cn.rongcloud.im.model.RegionResult;
 import cn.rongcloud.im.model.RegisterResult;
 import cn.rongcloud.im.model.Result;
+import cn.rongcloud.im.model.TranslationTokenResult;
 import cn.rongcloud.im.model.UploadTokenResult;
 import cn.rongcloud.im.model.VerifyResult;
 import cn.rongcloud.im.net.SealTalkUrl;
@@ -19,6 +20,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface UserService {
     @POST(SealTalkUrl.LOGIN)
@@ -119,4 +121,7 @@ public interface UserService {
 
     @POST(SealTalkUrl.REGISTER_AND_LOGIN)
     LiveData<Result<LoginResult>> registerAndLogin(@Body RequestBody body);
+
+    @GET(SealTalkUrl.TRANSLATION_JWT_TOKEN)
+    LiveData<TranslationTokenResult> getTranslationToken(@Query("userId") String userId);
 }

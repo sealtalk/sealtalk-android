@@ -19,8 +19,9 @@ import cn.rongcloud.im.net.service.AppService;
 import cn.rongcloud.im.utils.NetworkOnlyResource;
 import io.rong.imkit.utils.language.LangUtils;
 import io.rong.imkit.utils.language.RongConfigurationManager;
+import io.rong.imlib.RongCoreClient;
 import io.rong.imlib.RongIMClient;
-import io.rong.imlib.common.BuildVar;
+import io.rong.imlib.translation.TranslationLanguage;
 import java.util.List;
 import java.util.Locale;
 
@@ -56,13 +57,9 @@ public class AppTask {
         }.asLiveData();
     }
 
-    /**
-     * SDK 版本号
-     *
-     * @return
-     */
+    /** 获取 IMSDK 版本号 */
     public String getSDKVersion() {
-        return BuildVar.SDK_VERSION;
+        return RongCoreClient.getVersion();
     }
 
     /**
@@ -227,5 +224,29 @@ public class AppTask {
     public boolean isDebugMode() {
         // TODO 获取是否是 Debug 模式
         return context.getSharedPreferences("config", MODE_PRIVATE).getBoolean("isDebug", false);
+    }
+
+    public void setTranslationSrcLanguage(String language) {
+        context.getSharedPreferences("config", MODE_PRIVATE)
+                .edit()
+                .putString("translation_src_language", language)
+                .apply();
+    }
+
+    public void setTranslationTargetLanguage(String language) {
+        context.getSharedPreferences("config", MODE_PRIVATE)
+                .edit()
+                .putString("translation_target_language", language)
+                .apply();
+    }
+
+    public String getTranslationSrcLanguage() {
+        return context.getSharedPreferences("config", MODE_PRIVATE)
+                .getString("translation_src_language", TranslationLanguage.LANGUAGE_ZH_CN);
+    }
+
+    public String getTranslationTargetLanguage() {
+        return context.getSharedPreferences("config", MODE_PRIVATE)
+                .getString("translation_target_language", TranslationLanguage.LANGUAGE_EN);
     }
 }

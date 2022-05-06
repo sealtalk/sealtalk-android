@@ -51,6 +51,17 @@ public class NewMessageViewModel extends AndroidViewModel {
         remindStatus.setValue(imManager.getRemindStatus());
         donotDistrabStatus.setValue(imManager.getNotifiQuietHours());
         getPushNotifyDetailResult.setSource(imManager.getPushDetailContentStatus());
+
+        donotDistrabStatus.addSource(
+                setNotifiQuietHoursResult,
+                new Observer<Resource<QuietHours>>() {
+                    @Override
+                    public void onChanged(Resource<QuietHours> resource) {
+                        if (resource.status == Status.SUCCESS) {
+                            donotDistrabStatus.setValue(resource.data);
+                        }
+                    }
+                });
     }
 
     /** 移除通知免打扰结果 */
@@ -102,17 +113,6 @@ public class NewMessageViewModel extends AndroidViewModel {
      * @param spanMinutes 间隔分钟数大于 0 小于 1440。
      */
     public void setNotificationQuietHours(String startTime, int spanMinutes) {
-        donotDistrabStatus.addSource(
-                setNotifiQuietHoursResult,
-                new Observer<Resource<QuietHours>>() {
-                    @Override
-                    public void onChanged(Resource<QuietHours> resource) {
-                        donotDistrabStatus.removeSource(setNotifiQuietHoursResult);
-                        if (resource.status == Status.SUCCESS) {
-                            donotDistrabStatus.setValue(resource.data);
-                        }
-                    }
-                });
         setNotifiQuietHoursResult.setSource(
                 imManager.setNotificationQuietHours(startTime, spanMinutes, true));
     }

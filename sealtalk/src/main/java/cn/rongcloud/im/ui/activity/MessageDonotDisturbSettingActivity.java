@@ -141,7 +141,8 @@ public class MessageDonotDisturbSettingActivity extends TitleBaseActivity
                                 startTimeSiv.setValue(startTime);
 
                                 String endTimeValue = endTimeSiv.getValue();
-                                int spanMinutes = value.spanMinutes;
+                                QuietHours quietHours = getQuietHours();
+                                int spanMinutes = quietHours.spanMinutes;
                                 // 开始时间变化， 重写计算时间间隔
                                 if (!TextUtils.isEmpty(endTimeValue)) {
                                     spanMinutes =
@@ -176,10 +177,12 @@ public class MessageDonotDisturbSettingActivity extends TitleBaseActivity
 
                                 String endTime = QuietHours.getFormatTime(hourOfDay, minute);
                                 endTimeSiv.setValue(endTime);
+                                QuietHours quietHours = getQuietHours();
                                 int spanMinutes =
                                         QuietHours.getSpanMinutes(
-                                                value.getStartTimeFormat(), endTime);
-                                setNotificationQuietHours(value.getStartTimeFormat(), spanMinutes);
+                                                quietHours.getStartTimeFormat(), endTime);
+                                setNotificationQuietHours(
+                                        quietHours.getStartTimeFormat(), spanMinutes);
                             }
                         },
                         hours,

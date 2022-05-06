@@ -631,4 +631,7 @@
     <string name="seal_talk_fraud_tips_dialog_title">提示</string>
     <string name="seal_talk_fraud_tips_dialog_content">您正在使用融云 IM，融云提醒您谨防诈骗，不要轻信涉钱信息。</string>
     <string name="seal_talk_fraud_tips_dialog_confirm">知道了</string>
+
+    <string name="seal_talk_fraud_tip_conversation_top">融云提醒您谨防诈骗，不要轻信涉钱信息，不要进行任何线下转账行为。</string>
+
 </resources>

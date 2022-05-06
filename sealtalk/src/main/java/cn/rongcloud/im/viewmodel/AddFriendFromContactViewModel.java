@@ -93,7 +93,9 @@ public class AddFriendFromContactViewModel extends CommonListBaseViewModel {
      */
     public void search(String keyword) {
         if (TextUtils.isEmpty(keyword)) {
-            allContactBuilder.post();
+            if (allContactBuilder != null) {
+                allContactBuilder.post();
+            }
         } else {
             keywordLiveData.postValue(keyword);
         }

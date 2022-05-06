@@ -116,6 +116,12 @@ public class CustomConversationFragment extends ConversationFragment {
                 });
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ReadReceiptV2Manager.setGroupReadReceiptV2Listener(null);
+    }
+
     private void sendResponse(List<Message> messageList) {
         if (!RongConfigCenter.conversationConfig()
                 .isShowReadReceiptRequest(currentConversationType)) {

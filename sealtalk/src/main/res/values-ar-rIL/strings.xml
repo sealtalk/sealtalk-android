@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="lang_arab">العربية</string>
+
+    <string name="seal_talk_fraud_tip_conversation_top">RongCloud reminds you to beware of fraud, do not trust money-related information, and do not conduct any offline transfers.</string>
+
 </resources>

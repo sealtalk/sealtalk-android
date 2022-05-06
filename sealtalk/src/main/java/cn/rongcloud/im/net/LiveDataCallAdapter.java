@@ -47,15 +47,21 @@ public class LiveDataCallAdapter<R> implements CallAdapter<R, LiveData<R>> {
 
                                     // 当没有信息体时通过 http code 判断业务错误
                                     if (body == null && !response.isSuccessful()) {
-                                        Result result = new Result();
-                                        int errorCode =
-                                                ApiErrorCodeMap.getApiErrorCode(
-                                                        path, response.code());
-                                        result.setCode(errorCode);
-                                        try {
-                                            body = (R) result;
-                                        } catch (Exception e) {
-                                            // 可能部分接口并不是由 result 包裹，此时无法获取错误码
+                                        if (responseType instanceof Class
+                                                && ((Class) responseType)
+                                                        .isAssignableFrom(Result.class)) {
+                                            Result result = new Result();
+                                            int errorCode =
+                                                    ApiErrorCodeMap.getApiErrorCode(
+                                                            path, response.code());
+                                            result.setCode(errorCode);
+                                            try {
+                                                body = (R) result;
+                                            } catch (Exception e) {
+                                                // 可能部分接口并不是由 result 包裹，此时无法获取错误码
+                                            }
+                                        } else {
+                                            body = null;
                                         }
                                     } else if (body instanceof Result) {
                                         Result result = (Result) body;

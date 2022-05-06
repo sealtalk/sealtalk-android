@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -26,7 +27,7 @@
             app:sriv_right_top_corner_radius="@dimen/seal_search_item_portrait_radius" />
 
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ll_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -38,13 +39,22 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:textColor="@color/seal_search_name_text_color"
-                android:textSize="@dimen/seal_search_item_name_text_size" />
+                android:textSize="@dimen/seal_search_item_name_text_size"
+                app:layout_constraintBottom_toTopOf="@+id/ll_description"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="123" />
 
             <LinearLayout
                 android:id="@+id/ll_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true">
+                android:layout_centerVertical="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_name"
+                app:layout_constraintVertical_chainStyle="packed">
 
                 <TextView
                     android:id="@+id/tv_title"
@@ -71,7 +81,7 @@
                 android:layout_height="@dimen/seal_search_item_devi_height"
                 android:layout_alignParentBottom="true"
                 android:background="@color/seal_search_devi_color" />
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 </FrameLayout>

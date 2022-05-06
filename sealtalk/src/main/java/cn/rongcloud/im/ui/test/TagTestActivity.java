@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -175,9 +176,15 @@ public class TagTestActivity extends BaseActivity implements View.OnClickListene
                         .setOnClickListener(
                                 v1 -> {
                                     String id = addDialog.getEtTagId().getText().toString();
-                                    int type =
-                                            Integer.parseInt(
-                                                    addDialog.getEtType().getText().toString());
+                                    int type = 0;
+                                    try {
+                                        type =
+                                                Integer.parseInt(
+                                                        addDialog.getEtType().getText().toString());
+                                    } catch (NumberFormatException e) {
+                                        e.printStackTrace();
+                                        return;
+                                    }
                                     String targetId =
                                             addDialog.getEtTargetId().getText().toString();
                                     ConversationIdentifier conversationIdentifier =
@@ -193,11 +200,21 @@ public class TagTestActivity extends BaseActivity implements View.OnClickListene
                         .getAddView()
                         .setOnClickListener(
                                 v13 -> {
-                                    int type =
-                                            Integer.parseInt(
-                                                    addDialog.getEtType().getText().toString());
+                                    int type = 0;
+                                    try {
+                                        type =
+                                                Integer.parseInt(
+                                                        addDialog.getEtType().getText().toString());
+                                    } catch (NumberFormatException e) {
+                                        e.printStackTrace();
+                                        return;
+                                    }
+
                                     String targetId =
                                             addDialog.getEtTargetId().getText().toString();
+                                    if (TextUtils.isEmpty(targetId)) {
+                                        return;
+                                    }
                                     ConversationIdentifier conversationIdentifier =
                                             new ConversationIdentifier(
                                                     Conversation.ConversationType.setValue(type),
@@ -219,11 +236,23 @@ public class TagTestActivity extends BaseActivity implements View.OnClickListene
                         .setOnClickListener(
                                 v1 -> {
                                     String id = removeDialog.getEtTagId().getText().toString();
-                                    int type =
-                                            Integer.parseInt(
-                                                    removeDialog.getEtType().getText().toString());
+                                    int type = 0;
+                                    try {
+                                        type =
+                                                Integer.parseInt(
+                                                        removeDialog
+                                                                .getEtType()
+                                                                .getText()
+                                                                .toString());
+                                    } catch (NumberFormatException e) {
+                                        e.printStackTrace();
+                                        return;
+                                    }
                                     String targetId =
                                             removeDialog.getEtTargetId().getText().toString();
+                                    if (TextUtils.isEmpty(targetId)) {
+                                        return;
+                                    }
                                     ConversationIdentifier conversationIdentifier =
                                             new ConversationIdentifier(
                                                     Conversation.ConversationType.setValue(type),
@@ -237,11 +266,23 @@ public class TagTestActivity extends BaseActivity implements View.OnClickListene
                         .getAddView()
                         .setOnClickListener(
                                 v13 -> {
-                                    int type =
-                                            Integer.parseInt(
-                                                    removeDialog.getEtType().getText().toString());
+                                    int type = 0;
+                                    try {
+                                        type =
+                                                Integer.parseInt(
+                                                        removeDialog
+                                                                .getEtType()
+                                                                .getText()
+                                                                .toString());
+                                    } catch (NumberFormatException e) {
+                                        e.printStackTrace();
+                                        return;
+                                    }
                                     String targetId =
                                             removeDialog.getEtTargetId().getText().toString();
+                                    if (TextUtils.isEmpty(targetId)) {
+                                        return;
+                                    }
                                     ConversationIdentifier conversationIdentifier =
                                             new ConversationIdentifier(
                                                     Conversation.ConversationType.setValue(type),
@@ -263,11 +304,23 @@ public class TagTestActivity extends BaseActivity implements View.OnClickListene
                         .setOnClickListener(
                                 v1 -> {
                                     String id = removeTags.getEtTagId().getText().toString();
-                                    int type =
-                                            Integer.parseInt(
-                                                    removeTags.getEtType().getText().toString());
+                                    int type = 0;
+                                    try {
+                                        type =
+                                                Integer.parseInt(
+                                                        removeTags
+                                                                .getEtType()
+                                                                .getText()
+                                                                .toString());
+                                    } catch (NumberFormatException e) {
+                                        e.printStackTrace();
+                                        return;
+                                    }
                                     String targetId =
                                             removeTags.getEtTargetId().getText().toString();
+                                    if (TextUtils.isEmpty(targetId) || TextUtils.isEmpty(id)) {
+                                        return;
+                                    }
                                     ids.add(id);
                                     ConversationIdentifier conversationIdentifier =
                                             new ConversationIdentifier(
@@ -297,11 +350,23 @@ public class TagTestActivity extends BaseActivity implements View.OnClickListene
                         .getSureView()
                         .setOnClickListener(
                                 v1 -> {
-                                    int type =
-                                            Integer.parseInt(
-                                                    getConTags.getEtType().getText().toString());
+                                    int type = 0;
+                                    try {
+                                        type =
+                                                Integer.parseInt(
+                                                        getConTags
+                                                                .getEtType()
+                                                                .getText()
+                                                                .toString());
+                                    } catch (NumberFormatException e) {
+                                        e.printStackTrace();
+                                        return;
+                                    }
                                     String targetId =
                                             getConTags.getEtTargetId().getText().toString();
+                                    if (TextUtils.isEmpty(targetId)) {
+                                        return;
+                                    }
                                     ConversationIdentifier conversationIdentifier =
                                             new ConversationIdentifier();
                                     conversationIdentifier.setType(
@@ -322,15 +387,24 @@ public class TagTestActivity extends BaseActivity implements View.OnClickListene
                         .getSureView()
                         .setOnClickListener(
                                 v1 -> {
-                                    int type =
-                                            Integer.parseInt(
-                                                    topInputDialog
-                                                            .getEtType()
-                                                            .getText()
-                                                            .toString());
+                                    int type = 0;
+                                    try {
+                                        type =
+                                                Integer.parseInt(
+                                                        topInputDialog
+                                                                .getEtType()
+                                                                .getText()
+                                                                .toString());
+                                    } catch (NumberFormatException e) {
+                                        e.printStackTrace();
+                                        return;
+                                    }
                                     String targetId =
                                             topInputDialog.getEtTargetId().getText().toString();
                                     String tagId = topInputDialog.getEtTagId().getText().toString();
+                                    if (TextUtils.isEmpty(tagId) || TextUtils.isEmpty(targetId)) {
+                                        return;
+                                    }
                                     ConversationIdentifier conversationIdentifier =
                                             new ConversationIdentifier();
                                     conversationIdentifier.setType(
@@ -354,18 +428,28 @@ public class TagTestActivity extends BaseActivity implements View.OnClickListene
                                 v1 -> {
                                     String tagId =
                                             getConForTagDialog.getEtTagId().getText().toString();
-                                    long ts =
-                                            Long.parseLong(
-                                                    getConForTagDialog
-                                                            .getEtType()
-                                                            .getText()
-                                                            .toString());
-                                    int count =
-                                            Integer.parseInt(
-                                                    getConForTagDialog
-                                                            .getEtTargetId()
-                                                            .getText()
-                                                            .toString());
+                                    long ts = 0;
+                                    int count = 0;
+                                    try {
+                                        ts =
+                                                Long.parseLong(
+                                                        getConForTagDialog
+                                                                .getEtType()
+                                                                .getText()
+                                                                .toString());
+                                        count =
+                                                Integer.parseInt(
+                                                        getConForTagDialog
+                                                                .getEtTargetId()
+                                                                .getText()
+                                                                .toString());
+                                    } catch (NumberFormatException e) {
+                                        e.printStackTrace();
+                                        return;
+                                    }
+                                    if (TextUtils.isEmpty(tagId)) {
+                                        return;
+                                    }
                                     getConversationsFromTagByPage(tagId, ts, count);
                                     getConForTagDialog.cancel();
                                 });
@@ -404,17 +488,35 @@ public class TagTestActivity extends BaseActivity implements View.OnClickListene
                         .setOnClickListener(
                                 v1 -> {
                                     String tagId = setTopDialog.getEtTagId().getText().toString();
-                                    int type =
-                                            Integer.parseInt(
-                                                    setTopDialog.getEtType().getText().toString());
+                                    int type = 0;
+                                    try {
+                                        type =
+                                                Integer.parseInt(
+                                                        setTopDialog
+                                                                .getEtType()
+                                                                .getText()
+                                                                .toString());
+                                    } catch (NumberFormatException e) {
+                                        e.printStackTrace();
+                                    }
                                     String targetId =
                                             setTopDialog.getEtTargetId().getText().toString();
-                                    boolean isTop =
-                                            Boolean.parseBoolean(
-                                                    setTopDialog
-                                                            .getEtTagName()
-                                                            .getText()
-                                                            .toString());
+                                    boolean isTop = false;
+                                    try {
+                                        isTop =
+                                                Boolean.parseBoolean(
+                                                        setTopDialog
+                                                                .getEtTagName()
+                                                                .getText()
+                                                                .toString());
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                        return;
+                                    }
+
+                                    if (TextUtils.isEmpty(tagId) || TextUtils.isEmpty(targetId)) {
+                                        return;
+                                    }
                                     ConversationIdentifier conversationIdentifier =
                                             new ConversationIdentifier();
                                     conversationIdentifier.setType(

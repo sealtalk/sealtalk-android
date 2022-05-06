@@ -10,6 +10,7 @@ import android.os.LocaleList;
 import android.util.DisplayMetrics;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import cn.rongcloud.im.contact.TranslationLanguage;
 import cn.rongcloud.im.model.ChatRoomResult;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Result;
@@ -21,7 +22,6 @@ import io.rong.imkit.utils.language.LangUtils;
 import io.rong.imkit.utils.language.RongConfigurationManager;
 import io.rong.imlib.RongCoreClient;
 import io.rong.imlib.RongIMClient;
-import io.rong.imlib.translation.TranslationLanguage;
 import java.util.List;
 import java.util.Locale;
 

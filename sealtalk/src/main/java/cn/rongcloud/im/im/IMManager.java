@@ -173,6 +173,7 @@ public class IMManager {
 
     /** @param application */
     public void init(Application application) {
+        RongCoreClient.getInstance().setAppVer(BuildConfig.VERSION_NAME);
         this.context = application.getApplicationContext();
         appTask = new AppTask(this.context);
 
@@ -775,7 +776,10 @@ public class IMManager {
                             Context context,
                             PushType pushType,
                             PushNotificationMessage notificationMessage) {
-                        RLog.d(TAG, "onNotificationMessageClicked");
+                        RLog.d(
+                                TAG,
+                                "onNotificationMessageClicked::pushData:"
+                                        + notificationMessage.getPushData());
                         if (!notificationMessage
                                 .getSourceType()
                                 .equals(PushNotificationMessage.PushSourceType.FROM_ADMIN)) {
@@ -1111,6 +1115,27 @@ public class IMManager {
 
                                 @Override
                                 public boolean interceptOnSentMessage(Message message) {
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean interceptOnInsertOutgoingMessage(
+                                        Conversation.ConversationType type,
+                                        String targetId,
+                                        Message.SentStatus sentStatus,
+                                        MessageContent content,
+                                        long time) {
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean interceptOnInsertIncomingMessage(
+                                        Conversation.ConversationType type,
+                                        String targetId,
+                                        String senderId,
+                                        Message.ReceivedStatus receivedStatus,
+                                        MessageContent content,
+                                        long time) {
                                     return false;
                                 }
                             });

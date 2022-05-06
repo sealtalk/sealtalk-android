@@ -6,9 +6,9 @@ import android.util.Pair;
 import android.view.View;
 import androidx.annotation.Nullable;
 import cn.rongcloud.im.R;
+import cn.rongcloud.im.contact.TranslationLanguage;
 import cn.rongcloud.im.task.AppTask;
 import cn.rongcloud.im.ui.view.SettingItemView;
-import io.rong.imlib.translation.TranslationLanguage;
 import java.util.ArrayList;
 import java.util.List;
 

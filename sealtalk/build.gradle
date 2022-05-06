@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 //apply plugin: 'com.google.gms.google-services'
 //apply plugin: 'com.huawei.agconnect'
+
 android {
     compileSdkVersion 30
     defaultConfig {
@@ -8,7 +9,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 30
         versionCode 20210127
-        versionName "5.2.1"
+        versionName "5.2.2"
         ndk {
             abiFilters "armeabi-v7a", 'x86'
         }
@@ -98,12 +99,12 @@ dependencies {
     implementation 'commons-codec:commons-codec:1.6'
 
     //需要替换的版本
-    api 'cn.rongcloud.sdk:im_kit:5.2.1'
-    api 'cn.rongcloud.sdk:im_lib:5.2.1'
-    api 'cn.rongcloud.sdk:rcsticker:5.2.1'
-    api 'cn.rongcloud.sdk:sight:5.2.1'
-    api 'cn.rongcloud.sdk:call_lib:5.2.1'
-    api 'cn.rongcloud.sdk:call_kit:5.2.1'
+    api 'cn.rongcloud.sdk:im_kit:5.2.2'
+    api 'cn.rongcloud.sdk:im_lib:5.2.2'
+    api 'cn.rongcloud.sdk:rcsticker:5.2.2'
+    api 'cn.rongcloud.sdk:sight:5.2.2'
+    api 'cn.rongcloud.sdk:call_lib:5.2.2'
+    api 'cn.rongcloud.sdk:call_kit:5.2.2'
 
     api project(path: ':contactcard')
     api project(path: ':recognizer')

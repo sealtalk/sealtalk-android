@@ -53,12 +53,13 @@
 
     <!-- OPPPO 权限配置-->
     <uses-permission android:name="com.coloros.mcs.permission.SEND_MCS_MESSAGE" />
+    <uses-permission android:name="com.coloros.mcs.permission.RECIEVE_MCS_MESSAGE"/>
+    <uses-permission android:name="com.heytap.mcs.permission.RECIEVE_MCS_MESSAGE"/>
     <!-- OPPO 配置结束-->
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <uses-permission android:name="android.permission.VIBRATE" />
-
 
     <application
         android:name=".SealApp"
@@ -68,7 +69,6 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".ui.activity.SplashActivity"
             android:screenOrientation="portrait"
@@ -93,7 +93,6 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <data
                     android:host="${applicationId}"
                     android:pathPrefix="/conversationlist"
@@ -528,6 +527,22 @@
             android:taskAffinity="net.sourceforge.simcpux"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
+        <activity
+            android:name="io.rong.sight.player.SightPlayerActivity"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="portrait"
+            android:exported="true"
+            android:supportsRtl="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="${applicationId}"
+                    android:pathPrefix="/sight/player"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+
         <!--推送配置项-->
         <meta-data
             android:name="com.vivo.push.api_key"
@@ -633,6 +648,25 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.test.CommonConversationListTestActivity"
             android:screenOrientation="portrait"/>
+        <!-- oppo 推送-->
+        <service
+            android:name="com.heytap.msp.push.service.CompatibleDataMessageCallbackService"
+            android:exported="true"
+            android:permission="com.coloros.mcs.permission.SEND_MCS_MESSAGE" >
+            <intent-filter>
+                <action android:name="com.coloros.mcs.action.RECEIVE_MCS_MESSAGE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.heytap.msp.push.service.DataMessageCallbackService"
+            android:exported="true"
+            android:permission="com.heytap.mcs.permission.SEND_PUSH_MESSAGE" >
+            <intent-filter>
+                <action android:name="com.heytap.mcs.action.RECEIVE_MCS_MESSAGE" />
+                <action android:name="com.heytap.msp.push.RECEIVE_MCS_MESSAGE" />
+            </intent-filter>
+        </service>
+        <!-- oppo 推送 end-->
 
         <!--解决三方厂商推送SDK中含<intent-filter>组件但未声明export属性导致运行问题，升级SDK后要删除调这段临时运行代码-->
         <receiver

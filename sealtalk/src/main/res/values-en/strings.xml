@@ -630,4 +630,7 @@
     <string name="seal_talk_fraud_tips_dialog_title">Tips</string>
     <string name="seal_talk_fraud_tips_dialog_content">You are using RongCloud IM, RongCloud reminds you to beware of fraud and Be cautious of messages involving money.</string>
     <string name="seal_talk_fraud_tips_dialog_confirm">Confirm</string>
+
+    <string name="seal_talk_fraud_tip_conversation_top">RongCloud reminds you to beware of fraud, do not trust money-related information, and do not conduct any offline transfers.</string>
+
 </resources>

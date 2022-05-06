@@ -15,6 +15,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:padding="3dp"
+            android:background="#FDD6D9"
+            android:textColor="@color/app_color_black"
+            android:text="@string/seal_talk_fraud_tip_conversation_top"
+            android:paddingBottom="3dp"/>
         <FrameLayout
             android:id="@+id/rong_content"
             android:layout_width="match_parent"

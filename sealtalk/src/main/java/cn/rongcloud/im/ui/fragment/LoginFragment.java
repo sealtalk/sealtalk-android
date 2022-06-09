@@ -14,13 +14,16 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import cn.rongcloud.im.R;
+import cn.rongcloud.im.common.ErrorCode;
 import cn.rongcloud.im.common.IntentExtra;
+import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.model.CountryInfo;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.model.UserCacheInfo;
 import cn.rongcloud.im.ui.activity.MainActivity;
 import cn.rongcloud.im.ui.activity.SelectCountryActivity;
+import cn.rongcloud.im.ui.dialog.SecurityKickOutDialog;
 import cn.rongcloud.im.ui.widget.ClearWriteEditText;
 import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.viewmodel.LoginViewModel;
@@ -91,6 +94,8 @@ public class LoginFragment extends BaseFragment {
                             @Override
                             public void onChanged(Resource<String> resource) {
                                 if (resource.status == Status.SUCCESS) {
+                                    IMManager.getInstance().resetAfterLogin();
+
                                     dismissLoadingDialog(
                                             new Runnable() {
                                                 @Override
@@ -112,6 +117,9 @@ public class LoginFragment extends BaseFragment {
                                                 @Override
                                                 public void run() {
                                                     showToast(resource.message);
+                                                    if (code == ErrorCode.USER_BLOCKED.getCode()) {
+                                                        showSecurityKickOutDialog();
+                                                    }
                                                 }
                                             });
                                 }
@@ -178,6 +186,12 @@ public class LoginFragment extends BaseFragment {
                                 }
                             }
                         });
+    }
+
+    /** 显示数美踢出对话框 */
+    private void showSecurityKickOutDialog() {
+        SecurityKickOutDialog dialog = new SecurityKickOutDialog();
+        dialog.show(getActivity().getSupportFragmentManager(), null);
     }
 
     @Override

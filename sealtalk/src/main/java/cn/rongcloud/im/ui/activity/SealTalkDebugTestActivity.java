@@ -43,6 +43,9 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
     private SettingItemView messageDelivery;
     private SettingItemView shortage;
     private SettingItemView shortageDialog;
+    private SettingItemView isDelRemoteMsgDialog;
+    private SettingItemView isSoundDialog;
+    private SettingItemView isVibrateDialog;
     private SettingItemView groupReadReceiptV2Siv;
     private SettingItemView deviceInfo;
     private SettingItemView referMsgTest;
@@ -82,6 +85,15 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
 
         shortageDialog = findViewById(R.id.siv_shortage_dialog);
         shortageDialog.setOnClickListener(this);
+
+        isDelRemoteMsgDialog = findViewById(R.id.siv_delete_remote_dialog);
+        isDelRemoteMsgDialog.setOnClickListener(this);
+
+        isSoundDialog = findViewById(R.id.siv_sound_dialog);
+        isSoundDialog.setOnClickListener(this);
+
+        isVibrateDialog = findViewById(R.id.siv_vibrate_dialog);
+        isVibrateDialog.setOnClickListener(this);
 
         tag = findViewById(R.id.siv_tag);
         tag.setOnClickListener(this);
@@ -147,6 +159,15 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
             case R.id.siv_shortage_dialog:
                 toShortageDialog();
                 break;
+            case R.id.siv_delete_remote_dialog:
+                toDelRemoteMessage();
+                break;
+            case R.id.siv_sound_dialog:
+                toSound();
+                break;
+            case R.id.siv_vibrate_dialog:
+                toVibrate();
+                break;
             case R.id.siv_grr_v2_sender_test:
                 toGroupReadReceiptTest(1);
                 break;
@@ -171,6 +192,77 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
                 // Do nothing
                 break;
         }
+    }
+
+    private void toVibrate() {
+        final EditText editText = new EditText(this);
+        editText.setHint("是否震动：0 不震动 1 震动");
+        editText.setFocusable(true);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("设置是否震动")
+                .setView(editText)
+                .setPositiveButton(
+                        "确定",
+                        (dialog, which) -> {
+                            if (editText.getText() == null) {
+                                return;
+                            }
+                            String dialogText = editText.getText().toString();
+                            if ("0".equals(dialogText)) {
+                                RongConfigCenter.featureConfig().setVibrateInForeground(false);
+                            } else if ("1".equals(dialogText)) {
+                                RongConfigCenter.featureConfig().setVibrateInForeground(true);
+                            }
+                        })
+                .show();
+    }
+
+    private void toSound() {
+        final EditText editText = new EditText(this);
+        editText.setHint("是否响铃：0 不响铃 1 响铃");
+        editText.setFocusable(true);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("设置是否响铃")
+                .setView(editText)
+                .setPositiveButton(
+                        "确定",
+                        (dialog, which) -> {
+                            if (editText.getText() == null) {
+                                return;
+                            }
+                            String dialogText = editText.getText().toString();
+                            if ("0".equals(dialogText)) {
+                                RongConfigCenter.featureConfig().setSoundInForeground(false);
+                            } else if ("1".equals(dialogText)) {
+                                RongConfigCenter.featureConfig().setSoundInForeground(false);
+                            }
+                        })
+                .show();
+    }
+
+    private void toDelRemoteMessage() {
+        final EditText editText = new EditText(this);
+        editText.setHint("是否删除：0 不删除 1 删除");
+        editText.setFocusable(true);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("设置是否删除远端消息")
+                .setView(editText)
+                .setPositiveButton(
+                        "确定",
+                        (dialog, which) -> {
+                            if (editText.getText() == null) {
+                                return;
+                            }
+                            String dialogText = editText.getText().toString();
+                            if ("0".equals(dialogText)) {
+                                RongConfigCenter.conversationListConfig()
+                                        .setNeedDeleteRemoteMessage(false);
+                            } else if ("1".equals(dialogText)) {
+                                RongConfigCenter.conversationListConfig()
+                                        .setNeedDeleteRemoteMessage(true);
+                            }
+                        })
+                .show();
     }
 
     private void toShortageDialog() {

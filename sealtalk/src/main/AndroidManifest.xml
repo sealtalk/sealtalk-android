@@ -3,14 +3,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cn.rongcloud.im">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="MediaStore.Images.Media.INTERNAL_CONTENT_URI" />
-    <uses-permission android:name="MediaStore.Images.Media.EXTERNAL_CONTENT_URI" />
-    <!-- 发送位置消息，实时位置共享，如果您需要定位相关的功能，可以打开以下注释 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!-- targetSdkVersion为29时，如果需要后台定位权限，需要添加 ACCESS_BACKGROUND_LOCATION 权限-->
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <!--用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <!--用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!--用于获取运营商信息，用于支持提供运营商信息相关的接口-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!--用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <!--用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <!--用于申请调用A-GPS模块-->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+    <!--如果设置了target >= 28 如果需要启动后台定位则必须声明这个权限-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <!--如果您的应用需要后台定位权限，且有可能运行在Android Q设备上,并且设置了target>28，必须增加这个权限声明-->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
 
     <!-- ⼩米 配置开始 < -->
     <permission
@@ -56,6 +64,16 @@
     <uses-permission android:name="com.coloros.mcs.permission.RECIEVE_MCS_MESSAGE"/>
     <uses-permission android:name="com.heytap.mcs.permission.RECIEVE_MCS_MESSAGE"/>
     <!-- OPPO 配置结束-->
+
+    <!-- 数美 权限配置-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 数美 配置结束-->
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
@@ -111,6 +129,7 @@
         <activity
             android:name=".ui.activity.LoginActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".ui.activity.SelectCountryActivity"
@@ -389,7 +408,7 @@
         <!-- 高德地图-->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="e09af6a2b26c02086e9216bd07c960ae" />
+            android:value="1d902434ae36213f80777cb3590a87c4" />
 
         <!-- push start-->
         <receiver
@@ -618,8 +637,9 @@
             android:name=".ui.test.MsgDeliveryConversationListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.test.MsgDeliveryTestActivity"
-            android:screenOrientation="portrait" />
+          android:name=".ui.test.MsgDeliveryTestActivity"
+          android:screenOrientation="portrait" />
+        <!--群消息送达百分比报告-->
 
         <activity
             android:name=".ui.test.TagTestActivity"

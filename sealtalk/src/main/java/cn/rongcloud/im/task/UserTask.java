@@ -43,6 +43,7 @@ import cn.rongcloud.im.utils.NetworkOnlyResource;
 import cn.rongcloud.im.utils.RongGenerate;
 import cn.rongcloud.im.utils.SearchUtils;
 import cn.rongcloud.im.utils.log.SLog;
+import io.rong.imlib.common.ExecutorFactory;
 import io.rong.imlib.model.Conversation;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -104,6 +105,7 @@ public class UserTask {
                             imManager.connectIM(
                                     loginResult.token,
                                     true,
+                                    false,
                                     new ResultCallback<String>() {
                                         @Override
                                         public void onSuccess(String s) {
@@ -1062,10 +1064,15 @@ public class UserTask {
                             imManager.connectIM(
                                     loginResult.token,
                                     true,
+                                    false,
                                     new ResultCallback<String>() {
                                         @Override
                                         public void onSuccess(String s) {
-                                            result.postValue(Resource.success(s));
+                                            if (ExecutorFactory.getInstance().isMainThread()) {
+                                                result.setValue(Resource.success(s));
+                                            } else {
+                                                result.postValue(Resource.success(s));
+                                            }
                                             // 存储当前登录成功的用户信息
                                             UserCacheInfo info =
                                                     new UserCacheInfo(
@@ -1080,7 +1087,7 @@ public class UserTask {
 
                                         @Override
                                         public void onFail(int errorCode) {
-                                            result.postValue(Resource.error(errorCode, null));
+                                            result.setValue(Resource.error(errorCode, null));
                                         }
                                     });
                         } else {

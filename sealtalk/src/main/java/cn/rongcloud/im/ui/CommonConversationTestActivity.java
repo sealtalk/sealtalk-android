@@ -1,20 +1,18 @@
 package cn.rongcloud.im.ui;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import cn.rongcloud.im.R;
+import cn.rongcloud.im.common.BlockListener;
 import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.ui.test.CustomConversationFragment;
 import io.rong.imkit.config.ConversationClickListener;
 import io.rong.imkit.config.RongConfigCenter;
 import io.rong.imkit.widget.dialog.PromptPopupDialog;
-import io.rong.imlib.IRongCoreListener;
 import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.BlockedMessageInfo;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
@@ -93,39 +91,7 @@ public class CommonConversationTestActivity extends BaseActivity {
                             }
                         });
 
-        RongIMClient.getInstance()
-                .setMessageBlockListener(
-                        new IRongCoreListener.MessageBlockListener() {
-                            @Override
-                            public void onMessageBlock(BlockedMessageInfo info) {
-                                runOnUiThread(
-                                        new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                StringBuilder builder = new StringBuilder();
-                                                builder.append(
-                                                                "会话类型="
-                                                                        + info.getConversationType()
-                                                                                .getName())
-                                                        .append("\n")
-                                                        .append("会话ID=" + info.getTargetId())
-                                                        .append("\n")
-                                                        .append("被拦截的消息ID=" + info.getBlockMsgUId())
-                                                        .append("\n")
-                                                        .append("被拦截原因的类型=" + info.getType().value)
-                                                        .append("\n");
-
-                                                new AlertDialog.Builder(
-                                                                CommonConversationTestActivity.this,
-                                                                AlertDialog
-                                                                        .THEME_DEVICE_DEFAULT_LIGHT)
-                                                        .setMessage(builder.toString())
-                                                        .setCancelable(true)
-                                                        .show();
-                                            }
-                                        });
-                            }
-                        });
+        RongIMClient.getInstance().setMessageBlockListener(new BlockListener(this));
     }
 
     @Override

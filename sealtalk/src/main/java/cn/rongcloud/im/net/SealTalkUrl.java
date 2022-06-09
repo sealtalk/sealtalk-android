@@ -146,4 +146,8 @@ public class SealTalkUrl {
     public static final String REGISTER_AND_LOGIN = "user/verify_code_register";
 
     public static final String TRANSLATION_JWT_TOKEN = "user/getJwtToken";
+
+    public static final String SECURITY_STATUS = "shumei/status";
+
+    public static final String SECURITY_VERIFY = "shumei/verify";
 }

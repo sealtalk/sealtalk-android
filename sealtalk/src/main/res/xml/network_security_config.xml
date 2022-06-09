@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<network-security-config>
+<network-security-config xmlns:tools="http://schemas.android.com/tools">
     <base-config cleartextTrafficPermitted="true" />
+    <domain-config
+        cleartextTrafficPermitted="true"
+        tools:ignore="NetworkSecurityConfig">
+        <domain includeSubdomains="true">fengkongcloud.com</domain>
+    </domain-config>
 </network-security-config>

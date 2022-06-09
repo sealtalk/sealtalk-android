@@ -26,6 +26,7 @@ import cn.rongcloud.im.db.model.FriendShipInfo;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.model.VersionInfo;
+import cn.rongcloud.im.security.SMSDKUtils;
 import cn.rongcloud.im.ui.BaseActivity;
 import cn.rongcloud.im.ui.dialog.FraudTipsDialog;
 import cn.rongcloud.im.ui.dialog.MorePopWindow;
@@ -40,6 +41,8 @@ import cn.rongcloud.im.ui.widget.TabItem;
 import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.viewmodel.AppViewModel;
 import cn.rongcloud.im.viewmodel.MainViewModel;
+import cn.rongcloud.im.viewmodel.SecurityViewModel;
+import com.amap.api.location.AMapLocationClient;
 import io.rong.imkit.conversationlist.ConversationListFragment;
 import io.rong.imkit.picture.tools.ScreenUtils;
 import io.rong.imkit.utils.RouteUtils;
@@ -60,6 +63,7 @@ public class MainActivity extends BaseActivity
     private ImageView ivMore;
     private AppViewModel appViewModel;
     public MainViewModel mainViewModel;
+    private SecurityViewModel securityViewModel;
     private TextView tvTitle;
     private RelativeLayout btnSearch;
     private ImageButton btnMore;
@@ -116,6 +120,12 @@ public class MainActivity extends BaseActivity
         initViewModel();
         clearBadgeStatu();
         showFraudTipsDialog();
+        initAMapPrivacy();
+    }
+
+    private void initAMapPrivacy() {
+        AMapLocationClient.updatePrivacyShow(this, true, true);
+        AMapLocationClient.updatePrivacyAgree(this, true);
     }
 
     private void showFraudTipsDialog() {
@@ -353,6 +363,8 @@ public class MainActivity extends BaseActivity
     private void initViewModel() {
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         appViewModel = ViewModelProviders.of(this).get(AppViewModel.class);
+        securityViewModel = ViewModelProviders.of(this).get(SecurityViewModel.class);
+
         appViewModel
                 .getHasNewVersion()
                 .observe(
@@ -431,6 +443,36 @@ public class MainActivity extends BaseActivity
                                         Conversation.ConversationType.PRIVATE,
                                         friendShipInfo.getUser().getId(),
                                         bundle);
+                            }
+                        });
+        securityViewModel
+                .getSecurityVerify()
+                .observe(
+                        this,
+                        resource -> {
+                            if (resource.status == Status.SUCCESS && resource.data != null) {
+                                if (resource.data.isKickOut()) {
+                                    logoutBySecurity();
+                                }
+                            }
+                        });
+        securityViewModel
+                .getSecurityStatus()
+                .observe(
+                        this,
+                        resource -> {
+                            if (resource.status == Status.SUCCESS && resource.data != null) {
+                                boolean openEnable = resource.data.openEnable;
+                                if (openEnable) {
+                                    SMSDKUtils.init(
+                                            MainActivity.this.getApplicationContext(),
+                                            new SMSDKUtils.Callback() {
+                                                @Override
+                                                public void onSuccess(String id) {
+                                                    securityViewModel.doSecurityVerify(id);
+                                                }
+                                            });
+                                }
                             }
                         });
     }

@@ -29,11 +29,11 @@
                 app:item_divider="true" />
 
             <cn.rongcloud.im.ui.view.SettingItemView
-              android:id="@+id/siv_push_config"
-              android:layout_width="match_parent"
-              android:layout_height="@dimen/seal_mine_about_height"
-              app:item_content="@string/seal_mine_about_push_config"
-              app:item_divider="true" />
+                android:id="@+id/siv_push_config"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/seal_mine_about_height"
+                app:item_content="@string/seal_mine_about_push_config"
+                app:item_divider="true" />
             <cn.rongcloud.im.ui.view.SettingItemView
                 android:id="@+id/siv_discussion"
                 android:layout_width="match_parent"
@@ -84,6 +84,28 @@
                 app:item_divider="true" />
 
             <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/siv_delete_remote_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/seal_mine_about_height"
+                app:item_content="是否删除远端消息"
+                app:item_divider="true" />
+
+            <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/siv_sound_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/seal_mine_about_height"
+                app:item_content="是否响铃"
+                app:item_divider="true" />
+
+
+            <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/siv_vibrate_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/seal_mine_about_height"
+                app:item_content="是否震动"
+                app:item_divider="true" />
+
+            <cn.rongcloud.im.ui.view.SettingItemView
                 android:id="@+id/siv_grr_v2_sender_test"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/seal_mine_about_height"
@@ -120,12 +142,12 @@
                 app:item_divider="true"
                 />
             <cn.rongcloud.im.ui.view.SettingItemView
-              android:id="@+id/siv_bind_chat_rtc_room"
-              android:layout_width="match_parent"
-              android:layout_height="@dimen/seal_mine_about_height"
-              app:item_content="绑RTCRoom"
-              app:item_divider="true"
-              />
+                android:id="@+id/siv_bind_chat_rtc_room"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/seal_mine_about_height"
+                app:item_content="绑RTCRoom"
+                app:item_divider="true"
+                />
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

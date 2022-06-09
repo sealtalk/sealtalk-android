@@ -48,6 +48,7 @@ import cn.rongcloud.im.net.service.UserService;
 import cn.rongcloud.im.sp.UserCache;
 import cn.rongcloud.im.sp.UserConfigCache;
 import cn.rongcloud.im.task.AppTask;
+import cn.rongcloud.im.task.UserTask;
 import cn.rongcloud.im.ui.activity.ConversationActivity;
 import cn.rongcloud.im.ui.activity.ForwardActivity;
 import cn.rongcloud.im.ui.activity.GroupNoticeListActivity;
@@ -130,6 +131,7 @@ public class IMManager {
     private MutableLiveData<Boolean> autologinResult = new MutableLiveData<>();
     private MutableLiveData<Message> messageRouter = new MutableLiveData<>();
     private MutableLiveData<Boolean> kickedOffline = new MutableLiveData<>();
+    private MutableLiveData<Boolean> userIsBlocked = new MutableLiveData<>();
     /** 接收戳一下消息 */
     private volatile Boolean isReceivePokeMessage = null;
 
@@ -189,6 +191,8 @@ public class IMManager {
         initRongIM(application);
 
         initDebug();
+
+        initInterceptor();
 
         initIMConfig();
 
@@ -265,6 +269,131 @@ public class IMManager {
                         });
     }
 
+    private void initInterceptor() {
+        IMCenter.getInstance()
+                .setMessageInterceptor(
+                        new MessageInterceptor() {
+                            @Override
+                            public boolean interceptReceivedMessage(
+                                    Message message,
+                                    int left,
+                                    boolean hasPackage,
+                                    boolean offline) {
+                                if (message != null
+                                        && Conversation.ConversationType.ULTRA_GROUP.equals(
+                                                message.getConversationType())) {
+                                    return true;
+                                }
+                                return false;
+                            }
+
+                            @Override
+                            public boolean interceptOnSendMessage(Message message) {
+                                // 推送配置测试相关
+                                SharedPreferences sharedPreferences =
+                                        context.getSharedPreferences("push_config", MODE_PRIVATE);
+                                String id = sharedPreferences.getString("id", "");
+                                String title = sharedPreferences.getString("title", "");
+                                String content = sharedPreferences.getString("content", "");
+                                String data = sharedPreferences.getString("data", "");
+                                String hw = sharedPreferences.getString("hw", "");
+                                String hwImportance =
+                                        sharedPreferences.getString("importance", "NORMAL");
+                                String mi = sharedPreferences.getString("mi", "");
+                                String oppo = sharedPreferences.getString("oppo", "");
+                                String threadId = sharedPreferences.getString("threadId", "");
+                                String apnsId = sharedPreferences.getString("apnsId", "");
+                                String category = sharedPreferences.getString("category", "");
+                                String richMediaUri =
+                                        sharedPreferences.getString("richMediaUri", "");
+                                String fcm = sharedPreferences.getString("fcm", "");
+                                String imageUrl = sharedPreferences.getString("imageUrl", "");
+                                boolean vivo = sharedPreferences.getBoolean("vivo", false);
+                                boolean disableTitle =
+                                        sharedPreferences.getBoolean("disableTitle", false);
+                                String templateId = sharedPreferences.getString("templateId", "");
+                                boolean forceDetail =
+                                        sharedPreferences.getBoolean("forceDetail", false);
+                                String imageUrlHW = sharedPreferences.getString("imageUrlHW", "");
+                                String imageUrlMi = sharedPreferences.getString("imageUrlMi", "");
+                                String fcmChannelId =
+                                        sharedPreferences.getString("fcmChannelId", "");
+                                MessagePushConfig messagePushConfig =
+                                        new MessagePushConfig.Builder()
+                                                .setPushTitle(title)
+                                                .setPushContent(content)
+                                                .setPushData(data)
+                                                .setForceShowDetailContent(forceDetail)
+                                                .setDisablePushTitle(disableTitle)
+                                                .setTemplateId(templateId)
+                                                .setAndroidConfig(
+                                                        new AndroidConfig.Builder()
+                                                                .setNotificationId(id)
+                                                                .setChannelIdHW(hw)
+                                                                .setChannelIdMi(mi)
+                                                                .setChannelIdOPPO(oppo)
+                                                                .setTypeVivo(
+                                                                        vivo
+                                                                                ? AndroidConfig
+                                                                                        .SYSTEM
+                                                                                : AndroidConfig
+                                                                                        .OPERATE)
+                                                                .setFcmCollapseKey(fcm)
+                                                                .setFcmImageUrl(imageUrl)
+                                                                .setImportanceHW(
+                                                                        getImportance(hwImportance))
+                                                                .setChannelIdFCM(fcmChannelId)
+                                                                .setImageUrlMi(imageUrlMi)
+                                                                .setImageUrlHW(imageUrlHW)
+                                                                .build())
+                                                .setIOSConfig(
+                                                        new IOSConfig(
+                                                                threadId,
+                                                                apnsId,
+                                                                category,
+                                                                richMediaUri))
+                                                .build();
+                                message.setMessagePushConfig(messagePushConfig);
+                                SharedPreferences sharedPreferencesPush =
+                                        context.getSharedPreferences("MessageConfig", MODE_PRIVATE);
+                                boolean disableNotification =
+                                        sharedPreferencesPush.getBoolean(
+                                                "disableNotification", false);
+                                message.setMessageConfig(
+                                        new MessageConfig.Builder()
+                                                .setDisableNotification(disableNotification)
+                                                .build());
+                                return false;
+                            }
+
+                            @Override
+                            public boolean interceptOnSentMessage(Message message) {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean interceptOnInsertOutgoingMessage(
+                                    Conversation.ConversationType type,
+                                    String targetId,
+                                    Message.SentStatus sentStatus,
+                                    MessageContent content,
+                                    long time) {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean interceptOnInsertIncomingMessage(
+                                    Conversation.ConversationType type,
+                                    String targetId,
+                                    String senderId,
+                                    Message.ReceivedStatus receivedStatus,
+                                    MessageContent content,
+                                    long time) {
+                                return false;
+                            }
+                        });
+    }
+
     private void initTranslationListener() {
         if (TranslationClient.getInstance().isTextTranslationSupported()) {
             TranslationClient.getInstance()
@@ -312,6 +441,7 @@ public class IMManager {
         connectIM(
                 loginToken,
                 true,
+                true,
                 new ResultCallback<String>() {
                     @Override
                     public void onSuccess(String s) {
@@ -320,8 +450,13 @@ public class IMManager {
 
                     @Override
                     public void onFail(int errorCode) {
+                        RLog.e(TAG, "cacheConnectIM errorCode:" + errorCode);
                         // 缓存登录时可以认为缓存了之前连接成功过的结果，所以当再次连接失败时可以通过 SDK 自动重连连接成功
-                        autologinResult.postValue(true);
+                        if (ErrorCode.USER_BLOCKED.getCode() == errorCode) {
+                            autologinResult.postValue(false);
+                        } else {
+                            autologinResult.postValue(true);
+                        }
                     }
                 });
     }
@@ -993,6 +1128,9 @@ public class IMManager {
                                     kickedOffline.postValue(true);
                                 } else if (connectionStatus == ConnectionStatus.TOKEN_INCORRECT) {
                                     // TODO token 错误时，重新登录
+                                } else if (connectionStatus.equals(
+                                        ConnectionStatus.CONN_USER_BLOCKED)) {
+                                    userIsBlocked.postValue(true);
                                 }
                             }
                         });
@@ -1015,129 +1153,6 @@ public class IMManager {
                                 phraseList.add("45263573475");
                                 phraseList.add("随后，康宁再用离子交换技术强化玻璃，本质上就是扩大离子尺寸，让结构更牢固");
                                 return phraseList;
-                            });
-            IMCenter.getInstance()
-                    .setMessageInterceptor(
-                            new MessageInterceptor() {
-                                @Override
-                                public boolean interceptReceivedMessage(
-                                        Message message,
-                                        int left,
-                                        boolean hasPackage,
-                                        boolean offline) {
-                                    return false;
-                                }
-
-                                @Override
-                                public boolean interceptOnSendMessage(Message message) {
-                                    // 推送配置测试相关
-                                    SharedPreferences sharedPreferences =
-                                            context.getSharedPreferences(
-                                                    "push_config", MODE_PRIVATE);
-                                    String id = sharedPreferences.getString("id", "");
-                                    String title = sharedPreferences.getString("title", "");
-                                    String content = sharedPreferences.getString("content", "");
-                                    String data = sharedPreferences.getString("data", "");
-                                    String hw = sharedPreferences.getString("hw", "");
-                                    String hwImportance =
-                                            sharedPreferences.getString("importance", "NORMAL");
-                                    String mi = sharedPreferences.getString("mi", "");
-                                    String oppo = sharedPreferences.getString("oppo", "");
-                                    String threadId = sharedPreferences.getString("threadId", "");
-                                    String apnsId = sharedPreferences.getString("apnsId", "");
-                                    String category = sharedPreferences.getString("category", "");
-                                    String richMediaUri =
-                                            sharedPreferences.getString("richMediaUri", "");
-                                    String fcm = sharedPreferences.getString("fcm", "");
-                                    String imageUrl = sharedPreferences.getString("imageUrl", "");
-                                    boolean vivo = sharedPreferences.getBoolean("vivo", false);
-                                    boolean disableTitle =
-                                            sharedPreferences.getBoolean("disableTitle", false);
-                                    String templateId =
-                                            sharedPreferences.getString("templateId", "");
-                                    boolean forceDetail =
-                                            sharedPreferences.getBoolean("forceDetail", false);
-                                    String imageUrlHW =
-                                            sharedPreferences.getString("imageUrlHW", "");
-                                    String imageUrlMi =
-                                            sharedPreferences.getString("imageUrlMi", "");
-                                    String fcmChannelId =
-                                            sharedPreferences.getString("fcmChannelId", "");
-                                    MessagePushConfig messagePushConfig =
-                                            new MessagePushConfig.Builder()
-                                                    .setPushTitle(title)
-                                                    .setPushContent(content)
-                                                    .setPushData(data)
-                                                    .setForceShowDetailContent(forceDetail)
-                                                    .setDisablePushTitle(disableTitle)
-                                                    .setTemplateId(templateId)
-                                                    .setAndroidConfig(
-                                                            new AndroidConfig.Builder()
-                                                                    .setNotificationId(id)
-                                                                    .setChannelIdHW(hw)
-                                                                    .setChannelIdMi(mi)
-                                                                    .setChannelIdOPPO(oppo)
-                                                                    .setTypeVivo(
-                                                                            vivo
-                                                                                    ? AndroidConfig
-                                                                                            .SYSTEM
-                                                                                    : AndroidConfig
-                                                                                            .OPERATE)
-                                                                    .setFcmCollapseKey(fcm)
-                                                                    .setFcmImageUrl(imageUrl)
-                                                                    .setImportanceHW(
-                                                                            getImportance(
-                                                                                    hwImportance))
-                                                                    .setChannelIdFCM(fcmChannelId)
-                                                                    .setImageUrlMi(imageUrlMi)
-                                                                    .setImageUrlHW(imageUrlHW)
-                                                                    .build())
-                                                    .setIOSConfig(
-                                                            new IOSConfig(
-                                                                    threadId,
-                                                                    apnsId,
-                                                                    category,
-                                                                    richMediaUri))
-                                                    .build();
-                                    message.setMessagePushConfig(messagePushConfig);
-                                    SharedPreferences sharedPreferencesPush =
-                                            context.getSharedPreferences(
-                                                    "MessageConfig", MODE_PRIVATE);
-                                    boolean disableNotification =
-                                            sharedPreferencesPush.getBoolean(
-                                                    "disableNotification", false);
-                                    message.setMessageConfig(
-                                            new MessageConfig.Builder()
-                                                    .setDisableNotification(disableNotification)
-                                                    .build());
-                                    return false;
-                                }
-
-                                @Override
-                                public boolean interceptOnSentMessage(Message message) {
-                                    return false;
-                                }
-
-                                @Override
-                                public boolean interceptOnInsertOutgoingMessage(
-                                        Conversation.ConversationType type,
-                                        String targetId,
-                                        Message.SentStatus sentStatus,
-                                        MessageContent content,
-                                        long time) {
-                                    return false;
-                                }
-
-                                @Override
-                                public boolean interceptOnInsertIncomingMessage(
-                                        Conversation.ConversationType type,
-                                        String targetId,
-                                        String senderId,
-                                        Message.ReceivedStatus receivedStatus,
-                                        MessageContent content,
-                                        long time) {
-                                    return false;
-                                }
                             });
         }
     }
@@ -1681,18 +1696,40 @@ public class IMManager {
         IMCenter.getInstance().logout();
     }
 
+    /** 退出并清除缓存,等同于手动logout */
+    public void logoutAndClear() {
+        IMCenter.getInstance().logout();
+        UserTask userTask = new UserTask(context);
+        userTask.logout();
+    }
+
+    /**
+     * 是否登录状态
+     *
+     * @return
+     */
+    public boolean userIsLoginState() {
+        UserCache userCache = new UserCache(context);
+        return userCache.getUserCache() != null;
+    }
+
     /**
      * 连接 IM 服务
      *
      * @param token
      * @param autoConnect 是否在连接失败时无限时间自动重连
+     * @param cacheConnect 是否为缓存登录而做的IM连接 （true：只连接IM；false：主动操作，会在业务登录成功后再连接im）
      * @param callback
      */
-    public void connectIM(String token, boolean autoConnect, ResultCallback<String> callback) {
+    public void connectIM(
+            String token,
+            boolean autoConnect,
+            boolean cacheConnect,
+            ResultCallback<String> callback) {
         if (autoConnect) {
-            connectIM(token, 0, callback);
+            connectIM(token, cacheConnect, 0, callback);
         } else {
-            connectIM(token, NetConstant.API_IM_CONNECT_TIME_OUT, callback);
+            connectIM(token, cacheConnect, NetConstant.API_IM_CONNECT_TIME_OUT, callback);
         }
     }
 
@@ -1700,10 +1737,12 @@ public class IMManager {
      * 连接 IM 服务
      *
      * @param token
+     * @param cacheConnect 是否为缓存登录而做的IM连接 （true：只连接IM；false：主动操作，会在业务登录成功后再连接im）
      * @param timeOut 自动重连超时时间。
      * @param callback
      */
-    public void connectIM(String token, int timeOut, ResultCallback<String> callback) {
+    public void connectIM(
+            String token, boolean cacheConnect, int timeOut, ResultCallback<String> callback) {
         /*
          *  考虑到会有后台调用此方法，所以不采用 LiveData 做返回值
          */
@@ -1717,10 +1756,17 @@ public class IMManager {
                                 // 连接 IM 成功后，初始化数据库
                                 DBManager.getInstance(context).openDb(s);
                                 updateJwtToken();
+                                // 如果是非缓存连接，既主动登录触发的连接，onSuccess才抛给上层
+                                if (!cacheConnect) {
+                                    if (callback != null) {
+                                        callback.onSuccess(s);
+                                    }
+                                }
                             }
 
                             public void onError(RongIMClient.ConnectionErrorCode errorCode) {
                                 SLog.e(LogTag.IM, "connect error - code:" + errorCode.getValue());
+                                RLog.e(TAG, "connectIM errorCode:" + errorCode);
                                 if (errorCode
                                         == RongIMClient.ConnectionErrorCode
                                                 .RC_CONN_TOKEN_INCORRECT) {
@@ -1728,7 +1774,11 @@ public class IMManager {
                                             new ResultCallback<LoginResult>() {
                                                 @Override
                                                 public void onSuccess(LoginResult loginResult) {
-                                                    connectIM(loginResult.token, timeOut, callback);
+                                                    connectIM(
+                                                            loginResult.token,
+                                                            cacheConnect,
+                                                            timeOut,
+                                                            callback);
                                                 }
 
                                                 @Override
@@ -1737,6 +1787,9 @@ public class IMManager {
                                                 }
                                             });
                                     ;
+                                } else if (errorCode
+                                        == RongIMClient.ConnectionErrorCode.RC_CONN_USER_BLOCKED) {
+                                    callback.onFail(ErrorCode.USER_BLOCKED.getCode());
                                 } else {
                                     if (callback != null) {
                                         callback.onFail(ErrorCode.IM_ERROR.getCode());
@@ -1752,8 +1805,11 @@ public class IMManager {
                                 String currentUserId =
                                         RongIMClient.getInstance().getCurrentUserId();
                                 DBManager.getInstance(context).openDb(currentUserId);
-                                if (callback != null) {
-                                    callback.onSuccess(currentUserId);
+                                // 如果是缓存连接，在onDatabaseOpened抛给上层
+                                if (cacheConnect) {
+                                    if (callback != null) {
+                                        callback.onSuccess(currentUserId);
+                                    }
                                 }
                             }
                         });
@@ -1824,12 +1880,35 @@ public class IMManager {
         return kickedOffline;
     }
 
+    /**
+     * 封禁状态, true 为当前为被封禁状态， false 为不需要处理
+     *
+     * @return
+     */
+    public LiveData<Boolean> getUserIsBlocked() {
+        return userIsBlocked;
+    }
+
     /** 重置被提出状态为 false */
     public void resetKickedOfflineState() {
+        resetState(kickedOffline);
+    }
+
+    /** 重置封禁状态 */
+    public void resetUserBlockedState() {
+        resetState(userIsBlocked);
+    }
+
+    /** 登录后重置状态 */
+    public void resetAfterLogin() {
+        resetUserBlockedState();
+    }
+
+    public void resetState(MutableLiveData<Boolean> state) {
         if (Looper.getMainLooper().getThread().equals(Thread.currentThread())) {
-            kickedOffline.setValue(false);
+            state.setValue(false);
         } else {
-            kickedOffline.postValue(false);
+            state.postValue(false);
         }
     }
 

@@ -23,10 +23,12 @@ import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.ui.BaseActivity;
 import cn.rongcloud.im.ui.dialog.CommonDialog;
+import cn.rongcloud.im.ui.dialog.SecurityKickOutDialog;
 import cn.rongcloud.im.ui.fragment.LoginFindPasswordFragment;
 import cn.rongcloud.im.ui.fragment.LoginFragment;
 import cn.rongcloud.im.ui.fragment.LoginRegisterFragment;
 import cn.rongcloud.im.utils.StatusBarUtil;
+import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.viewmodel.AppViewModel;
 import io.rong.imkit.utils.language.LangUtils;
 
@@ -103,11 +105,24 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         startBgAnimation();
 
-        // 判断是否被其他用户踢出到此界面
         Intent intent = getIntent();
+        // 是否被数美踢出
+        boolean isKickedBySecurity =
+                intent.getBooleanExtra(IntentExtra.BOOLEAN_KICKED_BY_SECURITY, false);
+        if (isKickedBySecurity) {
+            SLog.d(TAG, "isKickedBySecurity");
+            showSecurityKickOutDialog();
+        }
+        // 判断是否被其他用户踢出到此界面
         boolean isKicked = intent.getBooleanExtra(IntentExtra.BOOLEAN_KICKED_BY_OTHER_USER, false);
         if (isKicked) {
+            SLog.d(TAG, "isKicked");
             showKickedByOtherDialog();
+        }
+        boolean isUserBlocked = intent.getBooleanExtra(IntentExtra.BOOLEAN_USER_BLOCKED, false);
+        if (isUserBlocked) {
+            SLog.d(TAG, "isUserBlocked");
+            showSecurityKickOutDialog();
         }
     }
 
@@ -372,6 +387,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         builder.setIsOnlyConfirm(true);
         builder.isCancelable(false);
         CommonDialog dialog = builder.build();
+        dialog.show(getSupportFragmentManager(), null);
+    }
+
+    /** 显示封禁对话框 */
+    private void showUserBlockedDialog() {
+        CommonDialog.Builder builder = new CommonDialog.Builder();
+        builder.setContentMessage(getString(R.string.seal_login_user_blocked));
+        builder.setIsOnlyConfirm(true);
+        builder.isCancelable(false);
+        CommonDialog dialog = builder.build();
+        dialog.show(getSupportFragmentManager(), null);
+    }
+
+    /** 显示数美踢出对话框 */
+    private void showSecurityKickOutDialog() {
+        SecurityKickOutDialog dialog = new SecurityKickOutDialog();
         dialog.show(getSupportFragmentManager(), null);
     }
 

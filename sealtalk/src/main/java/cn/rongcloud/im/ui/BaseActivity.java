@@ -91,14 +91,30 @@ public class BaseActivity extends AppCompatActivity {
                                      */
                                     if (isLogout) {
                                         SLog.d(BaseActivity.class.getCanonicalName(), "Log out.");
-                                        sendLogoutNotify();
                                         IMManager.getInstance().resetKickedOfflineState();
-                                        Intent intent =
-                                                new Intent(BaseActivity.this, LoginActivity.class);
-                                        intent.putExtra(
-                                                IntentExtra.BOOLEAN_KICKED_BY_OTHER_USER, true);
-                                        startActivity(intent);
-                                        finish();
+                                        logout(true, false);
+                                    }
+                                }
+                            });
+            IMManager.getInstance()
+                    .getUserIsBlocked()
+                    .observe(
+                            this,
+                            new Observer<Boolean>() {
+                                @Override
+                                public void onChanged(Boolean isLogout) {
+                                    /*
+                                     * 只有当前显示的 Activity 会走此段逻辑
+                                     */
+                                    if (isLogout) {
+                                        SLog.d(
+                                                BaseActivity.class.getCanonicalName(),
+                                                "user blocked.");
+                                        IMManager.getInstance().resetUserBlockedState();
+                                        if (IMManager.getInstance().userIsLoginState()) {
+                                            IMManager.getInstance().logoutAndClear();
+                                            logout(false, false);
+                                        }
                                     }
                                 }
                             });
@@ -106,6 +122,18 @@ public class BaseActivity extends AppCompatActivity {
 
         // 清除已存在的 Fragment 防止因没有复用导致叠加显示
         clearAllFragmentExistBeforeCreate();
+    }
+
+    private void logout(boolean isKick, boolean isLogout) {
+        Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
+        if (isKick) {
+            intent.putExtra(IntentExtra.BOOLEAN_KICKED_BY_OTHER_USER, true);
+        } else {
+            intent.putExtra(IntentExtra.BOOLEAN_USER_BLOCKED, true);
+        }
+        sendLogoutNotify();
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -393,6 +421,16 @@ public class BaseActivity extends AppCompatActivity {
                     finish();
                 }
             };
+
+    /** 安全原因触发退出登录 */
+    public void logoutBySecurity() {
+        sendLogoutNotify();
+        IMManager.getInstance().resetKickedOfflineState();
+        Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
+        intent.putExtra(IntentExtra.BOOLEAN_KICKED_BY_SECURITY, true);
+        startActivity(intent);
+        finish();
+    }
 
     // 记录dialog 显示创建时间
     private long dialogCreateTime;

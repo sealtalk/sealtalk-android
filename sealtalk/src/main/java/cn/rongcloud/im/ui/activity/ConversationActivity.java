@@ -28,6 +28,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import cn.rongcloud.im.R;
+import cn.rongcloud.im.common.BlockListener;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.common.ThreadManager;
 import cn.rongcloud.im.event.DeleteFriendEvent;
@@ -57,6 +58,8 @@ import io.rong.imkit.manager.UnReadMessageManager;
 import io.rong.imkit.utils.PermissionCheckUtil;
 import io.rong.imkit.utils.RouteUtils;
 import io.rong.imkit.widget.TitleBar;
+import io.rong.imlib.IRongCoreListener;
+import io.rong.imlib.RongCoreClient;
 import io.rong.imlib.model.Conversation;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -92,7 +95,7 @@ public class ConversationActivity extends RongBaseActivity
     private String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
 
     private ScreenCaptureUtil screenCaptureUtil;
-
+    private IRongCoreListener.MessageBlockListener blockListener = new BlockListener(this);
     /** 在会话类型为群组时：是否为群主 */
     private boolean isGroupOwner;
     /** 在会话类型为群组时：是否为群管理员 */
@@ -183,6 +186,8 @@ public class ConversationActivity extends RongBaseActivity
                         }
                     });
         }
+
+        RongCoreClient.getInstance().setMessageBlockListener(blockListener);
     }
 
     @Override

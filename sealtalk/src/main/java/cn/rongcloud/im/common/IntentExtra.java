@@ -59,6 +59,10 @@ public class IntentExtra {
 
     public static final String OPERATE_PICTURE_ACTION = "operate_picture_action";
 
+    public static final String BOOLEAN_USER_BLOCKED = "user_blocked";
+
+    public static final String BOOLEAN_KICKED_BY_SECURITY = "kick_by_security";
+
     /** 创建群组时是否返回结果，默认是 false ，代表创建群组后直接跳转到群聊界面 */
     public static final String BOOLEAN_CREATE_GROUP_RETURN_RESULT = "create_group_return_result";
 

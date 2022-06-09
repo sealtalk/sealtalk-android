@@ -12,6 +12,7 @@ import io.rong.common.rlog.RLog;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.config.ConversationListBehaviorListener;
 import io.rong.imkit.conversationlist.model.BaseUiConversation;
+import io.rong.imkit.utils.RouteUtils;
 import io.rong.imlib.model.Conversation;
 
 public class MsgExpansionConversationListActivity extends FragmentActivity {
@@ -60,6 +61,11 @@ public class MsgExpansionConversationListActivity extends FragmentActivity {
                     @Override
                     public boolean onConversationLongClick(
                             Context context, View view, BaseUiConversation conversation) {
+                        RouteUtils.routeToConversationActivity(
+                                context,
+                                conversation.mCore.getConversationType(),
+                                conversation.mCore.getTargetId(),
+                                true);
                         return false;
                     }
 

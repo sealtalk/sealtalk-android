@@ -255,10 +255,10 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
                             }
                             String dialogText = editText.getText().toString();
                             if ("0".equals(dialogText)) {
-                                RongConfigCenter.conversationListConfig()
+                                RongConfigCenter.conversationConfig()
                                         .setNeedDeleteRemoteMessage(false);
                             } else if ("1".equals(dialogText)) {
-                                RongConfigCenter.conversationListConfig()
+                                RongConfigCenter.conversationConfig()
                                         .setNeedDeleteRemoteMessage(true);
                             }
                         })

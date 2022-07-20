@@ -43,7 +43,8 @@ public class BlockListener implements IRongCoreListener.MessageBlockListener {
                                 + " ("
                                 + map.get(info.getType().value)
                                 + ")")
-                .append("\n");
+                .append("\n")
+                .append("被拦截的扩展字段=" + info.getExtra());
 
         new AlertDialog.Builder(activity, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
                 .setMessage(builder.toString())

@@ -9,7 +9,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 30
         versionCode 20210127
-        versionName "5.2.3"
+        versionName "5.2.3.3"
         ndk {
             abiFilters "armeabi-v7a", 'x86'
         }
@@ -99,12 +99,12 @@ dependencies {
     implementation 'commons-codec:commons-codec:1.6'
 
     //需要替换的版本
-    api 'cn.rongcloud.sdk:im_kit:5.2.3'
-    api 'cn.rongcloud.sdk:im_lib:5.2.3'
-    api 'cn.rongcloud.sdk:rcsticker:5.2.3'
-    api 'cn.rongcloud.sdk:sight:5.2.3'
-    api 'cn.rongcloud.sdk:call_lib:5.2.3'
-    api 'cn.rongcloud.sdk:call_kit:5.2.3'
+    api 'cn.rongcloud.sdk:im_kit:5.2.3.3'
+    api 'cn.rongcloud.sdk:im_lib:5.2.3.3'
+    api 'cn.rongcloud.sdk:rcsticker:5.2.3.3'
+    api 'cn.rongcloud.sdk:sight:5.2.3.3'
+    api 'cn.rongcloud.sdk:call_lib:5.2.3.3'
+    api 'cn.rongcloud.sdk:call_kit:5.2.3.3'
 
     api project(path: ':contactcard')
     api project(path: ':recognizer')

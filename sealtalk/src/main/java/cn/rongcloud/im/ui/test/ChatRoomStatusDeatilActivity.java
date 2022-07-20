@@ -512,14 +512,13 @@ public class ChatRoomStatusDeatilActivity extends TitleBaseActivity
                                         chatRoomStatusInputDialog.getEtValue().getText().toString();
                                 boolean isAutoDel =
                                         chatRoomStatusInputDialog.getCbAutoDel().isChecked();
-                                if (TextUtils.isEmpty(keyList)
-                                        || TextUtils.isEmpty(valueList)
-                                        || keyList.length() != valueList.length()) {
-                                    return;
-                                }
-
                                 String[] keyArray = keyList.split(",");
                                 String[] valueArray = valueList.split(",");
+                                if (TextUtils.isEmpty(keyList)
+                                        || TextUtils.isEmpty(valueList)
+                                        || keyArray.length != keyArray.length) {
+                                    return;
+                                }
 
                                 Map<String, String> kvMap = new HashMap<>();
                                 for (int i = 0; i < keyArray.length; i++) {

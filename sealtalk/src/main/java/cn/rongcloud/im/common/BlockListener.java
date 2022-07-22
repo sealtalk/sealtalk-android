@@ -37,6 +37,8 @@ public class BlockListener implements IRongCoreListener.MessageBlockListener {
                 .append("\n")
                 .append("被拦截的消息ID=" + info.getBlockMsgUId())
                 .append("\n")
+                .append("被拦截的ChannelID=" + info.getChannelId())
+                .append("\n")
                 .append(
                         "被拦截原因的类型="
                                 + info.getType().value

@@ -20,6 +20,20 @@
     <!--如果您的应用需要后台定位权限，且有可能运行在Android Q设备上,并且设置了target>28，必须增加这个权限声明-->
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
 
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <!-- ⼩米 配置开始 < -->
     <permission
         android:name="${applicationId}.permission.MIPUSH_RECEIVE"
@@ -640,6 +654,12 @@
           android:name=".ui.test.MsgDeliveryTestActivity"
           android:screenOrientation="portrait" />
         <!--群消息送达百分比报告-->
+        <activity
+          android:name=".ui.test.GroupMsgDeliveryConversationListActivity"
+          android:screenOrientation="portrait" />
+        <activity
+          android:name=".ui.test.GroupMsgDeliveryTestActivity"
+          android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.test.TagTestActivity"

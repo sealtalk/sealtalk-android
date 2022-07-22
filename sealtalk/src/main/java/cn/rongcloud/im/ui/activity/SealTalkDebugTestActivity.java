@@ -184,10 +184,8 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
                 showCreateNotificationDialog();
                 break;
             case R.id.siv_bind_chat_rtc_room:
-                {
-                    bindChatRTCRoom();
-                    break;
-                }
+                bindChatRTCRoom();
+                break;
             default:
                 // Do nothing
                 break;

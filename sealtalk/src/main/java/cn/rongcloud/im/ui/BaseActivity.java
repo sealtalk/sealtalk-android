@@ -96,6 +96,30 @@ public class BaseActivity extends AppCompatActivity {
                                     }
                                 }
                             });
+
+            IMManager.getInstance()
+                    .getUserIsAbandon()
+                    .observe(
+                            this,
+                            new Observer<Boolean>() {
+                                @Override
+                                public void onChanged(Boolean isLogout) {
+                                    /*
+                                     * 只有当前显示的 Activity 会走此段逻辑
+                                     */
+                                    if (isLogout) {
+                                        SLog.d(
+                                                BaseActivity.class.getCanonicalName(),
+                                                "user Log out.");
+                                        IMManager.getInstance().resetUserLogoutState();
+                                        if (IMManager.getInstance().userIsLoginState()) {
+                                            IMManager.getInstance().logoutAndClear();
+                                            logout(false, true);
+                                        }
+                                    }
+                                }
+                            });
+
             IMManager.getInstance()
                     .getUserIsBlocked()
                     .observe(
@@ -128,6 +152,8 @@ public class BaseActivity extends AppCompatActivity {
         Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
         if (isKick) {
             intent.putExtra(IntentExtra.BOOLEAN_KICKED_BY_OTHER_USER, true);
+        } else if (isLogout) {
+            intent.putExtra(IntentExtra.BOOLEAN_USER_ABANDON, true);
         } else {
             intent.putExtra(IntentExtra.BOOLEAN_USER_BLOCKED, true);
         }

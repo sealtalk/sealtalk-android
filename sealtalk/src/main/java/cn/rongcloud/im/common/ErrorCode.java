@@ -35,6 +35,7 @@ public enum ErrorCode {
     RTC_ERROR(-5, 0),
     IM_TOKEN_ERROR(-6, 0),
     QRCODE_ERROR(-7, 0),
+    USER_ABANDON(-8, R.string.seal_login_user_logout),
     USER_BLOCKED(-9, R.string.seal_login_user_blocked),
     UNKNOWN_ERROR(999999, 0),
     NONE_ERROR(-1, 0),

@@ -59,6 +59,8 @@ public class IntentExtra {
 
     public static final String OPERATE_PICTURE_ACTION = "operate_picture_action";
 
+    public static final String BOOLEAN_USER_ABANDON = "user_abandon";
+
     public static final String BOOLEAN_USER_BLOCKED = "user_blocked";
 
     public static final String BOOLEAN_KICKED_BY_SECURITY = "kick_by_security";

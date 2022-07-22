@@ -32,6 +32,7 @@
     <string name="login_verification_code_error">Verification code is incorrect</string>
     <string name="seal_login_kick_by_other">Your account is logged-in on another device and  you are forced to logout!</string>
     <string name="seal_login_connect_time_out">Login time out, please try again</string>
+    <string name="seal_login_user_logout">User is Logout</string>
 
     <string name="common_chat_room">Chatroom</string>
     <string name="discovery_chat_room_one">Chatroom1</string>

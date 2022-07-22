@@ -119,6 +119,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             SLog.d(TAG, "isKicked");
             showKickedByOtherDialog();
         }
+        boolean isUserLogout = intent.getBooleanExtra(IntentExtra.BOOLEAN_USER_ABANDON, false);
+        if (isUserLogout) {
+            SLog.d(TAG, "isUserLogout");
+            showUserLogoutDialog();
+        }
         boolean isUserBlocked = intent.getBooleanExtra(IntentExtra.BOOLEAN_USER_BLOCKED, false);
         if (isUserBlocked) {
             SLog.d(TAG, "isUserBlocked");
@@ -384,6 +389,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private void showKickedByOtherDialog() {
         CommonDialog.Builder builder = new CommonDialog.Builder();
         builder.setContentMessage(getString(R.string.seal_login_kick_by_other));
+        builder.setIsOnlyConfirm(true);
+        builder.isCancelable(false);
+        CommonDialog dialog = builder.build();
+        dialog.show(getSupportFragmentManager(), null);
+    }
+
+    /** 显示销户对话框 */
+    private void showUserLogoutDialog() {
+        CommonDialog.Builder builder = new CommonDialog.Builder();
+        builder.setContentMessage(getString(R.string.seal_login_user_logout));
         builder.setIsOnlyConfirm(true);
         builder.isCancelable(false);
         CommonDialog dialog = builder.build();

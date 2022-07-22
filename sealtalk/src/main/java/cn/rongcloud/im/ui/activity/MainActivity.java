@@ -43,6 +43,8 @@ import cn.rongcloud.im.viewmodel.AppViewModel;
 import cn.rongcloud.im.viewmodel.MainViewModel;
 import cn.rongcloud.im.viewmodel.SecurityViewModel;
 import com.amap.api.location.AMapLocationClient;
+import com.amap.api.maps.MapsInitializer;
+import com.amap.api.services.core.ServiceSettings;
 import io.rong.imkit.conversationlist.ConversationListFragment;
 import io.rong.imkit.picture.tools.ScreenUtils;
 import io.rong.imkit.utils.RouteUtils;
@@ -126,6 +128,10 @@ public class MainActivity extends BaseActivity
     private void initAMapPrivacy() {
         AMapLocationClient.updatePrivacyShow(this, true, true);
         AMapLocationClient.updatePrivacyAgree(this, true);
+        MapsInitializer.updatePrivacyShow(this, true, true);
+        MapsInitializer.updatePrivacyAgree(this, true);
+        ServiceSettings.updatePrivacyShow(this, true, true);
+        ServiceSettings.updatePrivacyAgree(this, true);
     }
 
     private void showFraudTipsDialog() {
@@ -463,7 +469,7 @@ public class MainActivity extends BaseActivity
                         resource -> {
                             if (resource.status == Status.SUCCESS && resource.data != null) {
                                 boolean openEnable = resource.data.openEnable;
-                                if (openEnable) {
+                                if (!BuildConfig.DEBUG && openEnable) {
                                     SMSDKUtils.init(
                                             MainActivity.this.getApplicationContext(),
                                             new SMSDKUtils.Callback() {

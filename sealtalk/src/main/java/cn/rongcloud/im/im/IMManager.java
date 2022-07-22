@@ -131,6 +131,7 @@ public class IMManager {
     private MutableLiveData<Boolean> autologinResult = new MutableLiveData<>();
     private MutableLiveData<Message> messageRouter = new MutableLiveData<>();
     private MutableLiveData<Boolean> kickedOffline = new MutableLiveData<>();
+    private MutableLiveData<Boolean> userIsAbandon = new MutableLiveData<>();
     private MutableLiveData<Boolean> userIsBlocked = new MutableLiveData<>();
     /** 接收戳一下消息 */
     private volatile Boolean isReceivePokeMessage = null;
@@ -187,14 +188,14 @@ public class IMManager {
 
         initPhrase();
 
+        initIMConfig();
+
         // 调用 RongIM 初始化
         initRongIM(application);
 
         initDebug();
 
         initInterceptor();
-
-        initIMConfig();
 
         // 初始化用户和群组信息内容提供者
         initInfoProvider(context);
@@ -452,7 +453,8 @@ public class IMManager {
                     public void onFail(int errorCode) {
                         RLog.e(TAG, "cacheConnectIM errorCode:" + errorCode);
                         // 缓存登录时可以认为缓存了之前连接成功过的结果，所以当再次连接失败时可以通过 SDK 自动重连连接成功
-                        if (ErrorCode.USER_BLOCKED.getCode() == errorCode) {
+                        if (ErrorCode.USER_ABANDON.getCode() == errorCode
+                                || ErrorCode.USER_BLOCKED.getCode() == errorCode) {
                             autologinResult.postValue(false);
                         } else {
                             autologinResult.postValue(true);
@@ -911,10 +913,7 @@ public class IMManager {
                             Context context,
                             PushType pushType,
                             PushNotificationMessage notificationMessage) {
-                        RLog.d(
-                                TAG,
-                                "onNotificationMessageClicked::pushData:"
-                                        + notificationMessage.getPushData());
+                        RLog.d(TAG, "onNotificationMessageClicked");
                         if (!notificationMessage
                                 .getSourceType()
                                 .equals(PushNotificationMessage.PushSourceType.FROM_ADMIN)) {
@@ -963,7 +962,7 @@ public class IMManager {
         // 配置会话界面
         initConversation();
 
-        RongConfigCenter.featureConfig().enableDestruct(true);
+        RongConfigCenter.featureConfig().enableDestruct(BuildConfig.DEBUG);
     }
 
     private void initPhrase() {
@@ -1128,6 +1127,8 @@ public class IMManager {
                                     kickedOffline.postValue(true);
                                 } else if (connectionStatus == ConnectionStatus.TOKEN_INCORRECT) {
                                     // TODO token 错误时，重新登录
+                                } else if (connectionStatus.equals(ConnectionStatus.USER_LOGOUT)) {
+                                    userIsAbandon.postValue(true);
                                 } else if (connectionStatus.equals(
                                         ConnectionStatus.CONN_USER_BLOCKED)) {
                                     userIsBlocked.postValue(true);
@@ -1788,6 +1789,9 @@ public class IMManager {
                                             });
                                     ;
                                 } else if (errorCode
+                                        == RongIMClient.ConnectionErrorCode.RC_CONN_USER_ABANDON) {
+                                    callback.onFail(ErrorCode.USER_ABANDON.getCode());
+                                } else if (errorCode
                                         == RongIMClient.ConnectionErrorCode.RC_CONN_USER_BLOCKED) {
                                     callback.onFail(ErrorCode.USER_BLOCKED.getCode());
                                 } else {
@@ -1881,6 +1885,15 @@ public class IMManager {
     }
 
     /**
+     * 被踢销户, true 为当前为被销户状态， false 为不需要处理
+     *
+     * @return
+     */
+    public LiveData<Boolean> getUserIsAbandon() {
+        return userIsAbandon;
+    }
+
+    /**
      * 封禁状态, true 为当前为被封禁状态， false 为不需要处理
      *
      * @return
@@ -1894,6 +1907,11 @@ public class IMManager {
         resetState(kickedOffline);
     }
 
+    /** 重置销户状态 */
+    public void resetUserLogoutState() {
+        resetState(userIsAbandon);
+    }
+
     /** 重置封禁状态 */
     public void resetUserBlockedState() {
         resetState(userIsBlocked);
@@ -1901,6 +1919,7 @@ public class IMManager {
 
     /** 登录后重置状态 */
     public void resetAfterLogin() {
+        resetUserLogoutState();
         resetUserBlockedState();
     }
 

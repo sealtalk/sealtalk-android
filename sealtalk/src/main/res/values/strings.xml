@@ -32,6 +32,7 @@
     <string name="login_verification_code_error">验证码错误</string>
     <string name="seal_login_kick_by_other">您的账号在别的设备上登录，您被迫下线!</string>
     <string name="seal_login_connect_time_out">连接超时，请重新登录</string>
+    <string name="seal_login_user_logout">该账号已销户！</string>
     <string name="seal_login_user_blocked">此账号被封禁！</string>
     <string name="common_chat_room">聊天室</string>
     <string name="discovery_chat_room_one">聊天室 I</string>

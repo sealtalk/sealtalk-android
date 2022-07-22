@@ -14,6 +14,7 @@ import android.util.Log;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import cn.rongcloud.im.R;
+import io.rong.imkit.utils.KitStorageUtils;
 import java.io.File;
 import java.util.List;
 
@@ -153,7 +154,21 @@ public class PhotoUtils {
      * @return
      */
     private Uri buildUri(Activity activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (KitStorageUtils.isBuildAndTargetForQ(activity)) {
+            File file =
+                    new File(
+                            activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+                                    + File.separator
+                                    + CROP_FILE_NAME);
+            Uri uri =
+                    FileProvider.getUriForFile(
+                            activity,
+                            activity.getPackageName()
+                                    + activity.getResources()
+                                            .getString(R.string.rc_authorities_fileprovider),
+                            file);
+            return uri;
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Uri uri =
                     FileProvider.getUriForFile(
                             activity,
@@ -200,7 +215,10 @@ public class PhotoUtils {
         Intent cropIntent = new Intent("com.android.camera.action.CROP");
         cropIntent.setDataAndType(uri, "image/*");
         cropIntent.putExtra("crop", "true");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (KitStorageUtils.isBuildAndTargetForQ(activity)) {
+            cropIntent.addFlags(
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             cropIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
         cropIntent.putExtra("aspectX", 1);
@@ -280,7 +298,6 @@ public class PhotoUtils {
                     onPhotoResultListener.onPhotoCancel();
                 }
                 break;
-
                 // 选择图片
             case INTENT_SELECT:
                 if (data != null && data.getData() != null) {

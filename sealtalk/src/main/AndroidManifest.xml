@@ -148,6 +148,9 @@
         <activity
             android:name=".ui.activity.SelectCountryActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.SelectDataCenterActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.activity.MainActivity"
@@ -422,7 +425,7 @@
         <!-- 高德地图-->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="1d902434ae36213f80777cb3590a87c4" />
+            android:value="${MAP_KEY}" />
 
         <!-- push start-->
         <receiver

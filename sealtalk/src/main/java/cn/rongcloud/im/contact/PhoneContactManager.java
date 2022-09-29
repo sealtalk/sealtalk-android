@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 import android.telephony.PhoneNumberUtils;
+import android.util.Log;
 import cn.rongcloud.im.model.SimplePhoneContactInfo;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,33 +30,38 @@ public class PhoneContactManager {
 
     public List<SimplePhoneContactInfo> getAllContactInfo() {
         List<SimplePhoneContactInfo> resultList = new ArrayList<>();
-        String[] projection = {
-            ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER
-        };
-        Cursor cursor =
-                context.getContentResolver()
-                        .query(
-                                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                                projection,
-                                null,
-                                null,
-                                null);
-        if (cursor != null) {
-            while (cursor.moveToNext()) {
-                // 取得联系人名字和电话号
-                int nameFieldColumnIndex =
-                        cursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME);
-                int numberFieldColumnIndex =
-                        cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-                String name = cursor.getString(nameFieldColumnIndex);
-                String number = cursor.getString(numberFieldColumnIndex);
-                number = PhoneNumberUtils.stripSeparators(number);
-                SimplePhoneContactInfo contactInfo = new SimplePhoneContactInfo();
-                contactInfo.setName(name);
-                contactInfo.setPhone(number);
-                resultList.add(contactInfo);
+        try {
+            String[] projection = {
+                ContactsContract.PhoneLookup.DISPLAY_NAME,
+                ContactsContract.CommonDataKinds.Phone.NUMBER
+            };
+            Cursor cursor =
+                    context.getContentResolver()
+                            .query(
+                                    ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                                    projection,
+                                    null,
+                                    null,
+                                    null);
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    // 取得联系人名字和电话号
+                    int nameFieldColumnIndex =
+                            cursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME);
+                    int numberFieldColumnIndex =
+                            cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+                    String name = cursor.getString(nameFieldColumnIndex);
+                    String number = cursor.getString(numberFieldColumnIndex);
+                    number = PhoneNumberUtils.stripSeparators(number);
+                    SimplePhoneContactInfo contactInfo = new SimplePhoneContactInfo();
+                    contactInfo.setName(name);
+                    contactInfo.setPhone(number);
+                    resultList.add(contactInfo);
+                }
+                cursor.close();
             }
-            cursor.close();
+        } catch (Exception e) {
+            Log.w("PhoneContactManager", "getAllContactInfo", e);
         }
 
         return resultList;

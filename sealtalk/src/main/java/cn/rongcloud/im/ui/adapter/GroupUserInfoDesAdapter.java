@@ -105,7 +105,9 @@ public class GroupUserInfoDesAdapter extends RecyclerView.Adapter {
                         @Override
                         public void afterTextChanged(Editable s) {
                             // 替换元素
-                            data.set(desHolder.getAdapterPosition(), s.toString());
+                            if (data.size() > 0) {
+                                data.set(desHolder.getAdapterPosition(), s.toString());
+                            }
                         }
                     });
             desHolder.tvDelete.setOnClickListener(

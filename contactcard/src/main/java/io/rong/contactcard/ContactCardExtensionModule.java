@@ -59,8 +59,8 @@ public class ContactCardExtensionModule implements IExtensionModule {
     @Override
     public List<IPluginModule> getPluginModules(Conversation.ConversationType conversationType) {
         List<IPluginModule> pluginModules = new ArrayList<>();
-        if (conversationType.equals(Conversation.ConversationType.PRIVATE)
-                || conversationType.equals(Conversation.ConversationType.GROUP)) {
+        if (Conversation.ConversationType.PRIVATE.equals(conversationType)
+                || Conversation.ConversationType.GROUP.equals(conversationType)) {
             pluginModules.add(new ContactCardPlugin());
         }
         return pluginModules;

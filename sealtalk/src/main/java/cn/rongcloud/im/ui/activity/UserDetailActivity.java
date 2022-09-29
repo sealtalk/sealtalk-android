@@ -41,6 +41,7 @@ import io.rong.callkit.RongVoIPIntent;
 import io.rong.calllib.RongCallClient;
 import io.rong.calllib.RongCallCommon;
 import io.rong.calllib.RongCallSession;
+import io.rong.common.RLog;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -667,6 +668,10 @@ public class UserDetailActivity extends TitleBaseActivity implements View.OnClic
     /** 发起视频聊天 */
     public void startVideo() {
         if (latestUserInfo == null) return;
+        if (RongCallClient.getInstance() == null) {
+            RLog.e(TAG, "ipc process not init");
+            return;
+        }
         RongCallSession profile = RongCallClient.getInstance().getCallSession();
         if (profile != null && profile.getStartTime() > 0) {
             ToastUtils.showToast(

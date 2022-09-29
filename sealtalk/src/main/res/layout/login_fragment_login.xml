@@ -6,11 +6,52 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/ll_data_center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/seal_login_fragment_login_country_select_margin_left"
+        android:layout_marginEnd="@dimen/seal_login_fragment_login_country_select_margin_right"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/TextStyle.Alignment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/seal_login_register_padding"
+            android:paddingEnd="@dimen/seal_login_register_padding"
+            android:text="@string/data_center"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium.Inverse"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_data_center_name"
+            style="@style/TextStyle.Alignment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:maxLines="1"
+            android:paddingStart="@dimen/seal_login_register_padding"
+            android:paddingEnd="@dimen/seal_login_register_padding"
+            android:text="@string/data_center_beijing"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium.Inverse"
+            android:textColor="@color/white" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/seal_ic_rp_arrow" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/ll_country_select"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/seal_login_fragment_login_country_select_margin_left"
         android:layout_marginEnd="@dimen/seal_login_fragment_login_country_select_margin_right"
+        android:layout_marginTop="@dimen/seal_login_fragment_login_phonenumber_margin_top"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 

@@ -3,7 +3,7 @@ package cn.rongcloud.im.net;
 import cn.rongcloud.im.BuildConfig;
 
 public class SealTalkUrl {
-    public static final String DOMAIN = BuildConfig.SEALTALK_SERVER;
+    public static String DOMAIN = BuildConfig.SEALTALK_SERVER;
 
     public static final String LOGIN = "user/login";
 

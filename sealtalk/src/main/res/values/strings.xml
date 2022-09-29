@@ -641,4 +641,9 @@
     <string name="seal_talk_security_kick_out_phone">400-919-9066</string>
     <string name="seal_talk_security_kick_out_des">工作时间：每天 9:30 ~ 18:30</string>
 
+
+    <string name="data_center">数据中心</string>
+    <string name="data_center_beijing">北京</string>
+    <string name="data_center_singapore">新加坡</string>
+    <string name="data_center_north_america">北美</string>
 </resources>

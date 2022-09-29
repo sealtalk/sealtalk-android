@@ -21,19 +21,25 @@ import cn.rongcloud.im.model.CountryInfo;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.model.UserCacheInfo;
+import cn.rongcloud.im.task.AppTask;
 import cn.rongcloud.im.ui.activity.MainActivity;
 import cn.rongcloud.im.ui.activity.SelectCountryActivity;
+import cn.rongcloud.im.ui.activity.SelectDataCenterActivity;
 import cn.rongcloud.im.ui.dialog.SecurityKickOutDialog;
 import cn.rongcloud.im.ui.widget.ClearWriteEditText;
+import cn.rongcloud.im.utils.DataCenter;
+import cn.rongcloud.im.utils.DataCenterImpl;
 import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.viewmodel.LoginViewModel;
 
 public class LoginFragment extends BaseFragment {
     private static final int REQUEST_CODE_SELECT_COUNTRY = 1000;
+    private static final int REQUEST_CODE_SELECT_DATA_CENTER = 1001;
     private ClearWriteEditText phoneNumberEdit;
     private ClearWriteEditText verifyCodeEdit;
     private TextView countryNameTv;
     private TextView countryCodeTv;
+    private TextView dataCenter;
 
     private LoginViewModel loginViewModel;
     private Button sendCodeBtn;
@@ -50,10 +56,18 @@ public class LoginFragment extends BaseFragment {
         verifyCodeEdit = findView(R.id.cet_login_verify_code);
         countryNameTv = findView(R.id.tv_country_name);
         countryCodeTv = findView(R.id.tv_country_code);
+        dataCenter = (TextView) findView(R.id.tv_data_center_name);
         findView(R.id.btn_login, true);
         findView(R.id.ll_country_select, true);
         sendCodeBtn = findView(R.id.cet_login_send_verify_code, true);
+        findView(R.id.ll_data_center, true);
         sendCodeBtn.setEnabled(false);
+        AppTask appTask = new AppTask(this.getContext());
+        if (appTask.isSealChat()) {
+            findView(R.id.ll_data_center).setVisibility(View.VISIBLE);
+        } else {
+            findView(R.id.ll_data_center).setVisibility(View.GONE);
+        }
 
         phoneNumberEdit.addTextChangedListener(
                 new TextWatcher() {
@@ -186,6 +200,16 @@ public class LoginFragment extends BaseFragment {
                                 }
                             }
                         });
+        loginViewModel
+                .getDataCenterLiveData()
+                .observe(
+                        this,
+                        new Observer<DataCenter>() {
+                            @Override
+                            public void onChanged(DataCenter center) {
+                                dataCenter.setText(center.getNameId());
+                            }
+                        });
     }
 
     /** 显示数美踢出对话框 */
@@ -241,6 +265,11 @@ public class LoginFragment extends BaseFragment {
                         new Intent(getActivity(), SelectCountryActivity.class),
                         REQUEST_CODE_SELECT_COUNTRY);
                 break;
+            case R.id.ll_data_center:
+                startActivityForResult(
+                        new Intent(getActivity(), SelectDataCenterActivity.class),
+                        REQUEST_CODE_SELECT_DATA_CENTER);
+                break;
             default:
                 break;
         }
@@ -281,11 +310,21 @@ public class LoginFragment extends BaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == getActivity().RESULT_OK && requestCode == REQUEST_CODE_SELECT_COUNTRY) {
-            CountryInfo info =
-                    data.getParcelableExtra(SelectCountryActivity.RESULT_PARAMS_COUNTRY_INFO);
-            countryNameTv.setText(info.getCountryName());
-            countryCodeTv.setText(info.getZipCode());
+        if (resultCode == getActivity().RESULT_OK) {
+            if (requestCode == REQUEST_CODE_SELECT_COUNTRY) {
+                CountryInfo info =
+                        data.getParcelableExtra(SelectCountryActivity.RESULT_PARAMS_COUNTRY_INFO);
+                countryNameTv.setText(info.getCountryName());
+                countryCodeTv.setText(info.getZipCode());
+            } else if (requestCode == REQUEST_CODE_SELECT_DATA_CENTER) {
+                String dataCenterCode = data.getStringExtra("code");
+                if (!TextUtils.isEmpty(dataCenterCode)) {
+                    DataCenter dataCenter = DataCenterImpl.valueByCode(dataCenterCode);
+                    if (dataCenter != null) {
+                        loginViewModel.changeDataCenter(dataCenter);
+                    }
+                }
+            }
         }
     }
 

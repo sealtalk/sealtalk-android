@@ -2,6 +2,7 @@ package cn.rongcloud.im.task;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -10,14 +11,21 @@ import android.os.LocaleList;
 import android.util.DisplayMetrics;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import cn.rongcloud.im.BuildConfig;
+import cn.rongcloud.im.R;
 import cn.rongcloud.im.contact.TranslationLanguage;
+import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.model.ChatRoomResult;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Result;
 import cn.rongcloud.im.model.VersionInfo;
 import cn.rongcloud.im.net.HttpClientManager;
+import cn.rongcloud.im.net.SealTalkUrl;
 import cn.rongcloud.im.net.service.AppService;
+import cn.rongcloud.im.utils.DataCenter;
+import cn.rongcloud.im.utils.DataCenterImpl;
 import cn.rongcloud.im.utils.NetworkOnlyResource;
+import io.rong.imkit.IMCenter;
 import io.rong.imkit.utils.language.LangUtils;
 import io.rong.imkit.utils.language.RongConfigurationManager;
 import io.rong.imlib.RongCoreClient;
@@ -248,5 +256,67 @@ public class AppTask {
     public String getTranslationTargetLanguage() {
         return context.getSharedPreferences("config", MODE_PRIVATE)
                 .getString("translation_target_language", TranslationLanguage.LANGUAGE_EN);
+    }
+
+    public void changeDataCenter(DataCenter center) {
+        saveDataCenter(center);
+        RongCoreClient.getInstance().switchAppKey(center.getAppKey());
+        RongCoreClient.setServerInfo(center.getNaviUrl(), null);
+        IMCenter.init((Application) context.getApplicationContext(), center.getAppKey(), true);
+        // 初始化扩展模块
+        IMManager.getInstance().initExtensionModules(context);
+        IMManager.getInstance().initMessageAndTemplate();
+        SealTalkUrl.DOMAIN = center.getAppServer();
+    }
+
+    private void saveDataCenter(DataCenter dataCenter) {
+        context.getSharedPreferences("config", MODE_PRIVATE)
+                .edit()
+                .putString("data_center", dataCenter.getCode())
+                .apply();
+    }
+
+    private DataCenter getDataCenterByCode() {
+        String code =
+                context.getSharedPreferences("config", MODE_PRIVATE)
+                        .getString("data_center", DataCenterImpl.SINGAPORE.getCode());
+        return DataCenterImpl.valueByCode(code);
+    }
+
+    public DataCenter getCurrentDataCenter() {
+        if (isSealChat()) {
+            return getDataCenterByCode();
+        } else {
+            return new DataCenter() {
+                @Override
+                public String getNaviUrl() {
+                    return BuildConfig.SEALTALK_NAVI_SERVER;
+                }
+
+                @Override
+                public int getNameId() {
+                    return R.string.data_center_beijing;
+                }
+
+                @Override
+                public String getCode() {
+                    return null;
+                }
+
+                @Override
+                public String getAppKey() {
+                    return BuildConfig.SEALTALK_APP_KEY;
+                }
+
+                @Override
+                public String getAppServer() {
+                    return BuildConfig.SEALTALK_SERVER;
+                }
+            };
+        }
+    }
+
+    public boolean isSealChat() {
+        return context.getApplicationInfo().processName.equals("cn.rongcloud.im.sg");
     }
 }

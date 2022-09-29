@@ -50,8 +50,7 @@
             android:gravity="start"
             android:maxLines="1"
             android:textColor="#353535"
-            android:textSize="16sp"
-            tools:text="Frank" />
+            android:textSize="16sp" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -113,8 +112,7 @@
                 android:textColor="#939393"
                 android:textSize="13sp"
                 android:topLeftRadius="4dp"
-                android:topRightRadius="4dp"
-                tools:text="[个人名片]Tom" />
+                android:topRightRadius="4dp" />
 
             <EditText
                 android:id="@+id/message"

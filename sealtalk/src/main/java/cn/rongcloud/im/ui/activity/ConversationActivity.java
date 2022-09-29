@@ -460,12 +460,18 @@ public class ConversationActivity extends RongBaseActivity
                                                         typingInfo.typingList.size() - 1);
                                         if (typing.type == TypingInfo.Typing.Type.text) {
                                             mTitleBar.setTyping(
-                                                    R.string
-                                                            .seal_conversation_remote_side_is_typing);
+                                                    io.rong
+                                                            .imkit
+                                                            .R
+                                                            .string
+                                                            .rc_conversation_remote_side_is_typing);
                                         } else if (typing.type == TypingInfo.Typing.Type.voice) {
                                             mTitleBar.setTyping(
-                                                    R.string
-                                                            .seal_conversation_remote_side_speaking);
+                                                    io.rong
+                                                            .imkit
+                                                            .R
+                                                            .string
+                                                            .rc_conversation_remote_side_speaking);
                                         }
                                     }
                                 }

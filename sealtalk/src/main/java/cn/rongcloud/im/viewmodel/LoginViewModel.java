@@ -14,11 +14,14 @@ import cn.rongcloud.im.model.RegisterResult;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.model.UserCacheInfo;
+import cn.rongcloud.im.task.AppTask;
 import cn.rongcloud.im.task.UserTask;
+import cn.rongcloud.im.utils.DataCenter;
 import cn.rongcloud.im.utils.SingleSourceLiveData;
 import cn.rongcloud.im.utils.SingleSourceMapLiveData;
 
 public class LoginViewModel extends AndroidViewModel {
+    private final AppTask mAppTask;
     private SingleSourceLiveData<Resource<String>> loginResult = new SingleSourceLiveData<>();
     // TODO 示例代码，当需要转换结果类型时参考
     private SingleSourceMapLiveData<Resource<String>, String> loginResultNoResource;
@@ -44,6 +47,8 @@ public class LoginViewModel extends AndroidViewModel {
 
     private MutableLiveData<UserCacheInfo> lastLoginUserCache = new MutableLiveData<>();
 
+    private MutableLiveData<DataCenter> dataCenterLiveData = new MediatorLiveData<>();
+
     private UserTask userTask;
     private CountDownTimer countDownTimer =
             new CountDownTimer(60 * 1000, 1000) {
@@ -65,6 +70,7 @@ public class LoginViewModel extends AndroidViewModel {
         super(application);
 
         userTask = new UserTask(application);
+        mAppTask = new AppTask(application);
         loadingState.addSource(loginResult, resource -> loadingState.setValue(resource));
         loginResultNoResource = new SingleSourceMapLiveData<>(input -> input.data);
 
@@ -118,6 +124,7 @@ public class LoginViewModel extends AndroidViewModel {
         if (userCache != null) {
             lastLoginUserCache.setValue(userCache);
         }
+        changeDataCenter(mAppTask.getCurrentDataCenter());
     }
 
     public void login(String region, String phone, String pwd) {
@@ -140,6 +147,10 @@ public class LoginViewModel extends AndroidViewModel {
 
     public LiveData<Resource> getLoadingState() {
         return loadingState;
+    }
+
+    public LiveData<DataCenter> getDataCenterLiveData() {
+        return dataCenterLiveData;
     }
 
     //    /**
@@ -317,5 +328,10 @@ public class LoginViewModel extends AndroidViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
+    }
+
+    public void changeDataCenter(DataCenter center) {
+        mAppTask.changeDataCenter(center);
+        dataCenterLiveData.postValue(center);
     }
 }

@@ -16,10 +16,14 @@ import cn.rongcloud.im.task.AppTask;
 import cn.rongcloud.im.utils.SingleSourceLiveData;
 import cn.rongcloud.im.utils.SingleSourceMapLiveData;
 import cn.rongcloud.im.utils.log.SLog;
+import io.rong.common.RLog;
 import io.rong.imkit.utils.language.LangUtils;
 import java.util.List;
 
 public class AppViewModel extends AndroidViewModel {
+
+    private static final String TAG = "AppViewModel";
+
     private final AppTask appTask;
     private String sealTalkVersionName;
     private SingleSourceMapLiveData<Resource<VersionInfo>, Resource<VersionInfo.AndroidVersion>>
@@ -157,18 +161,22 @@ public class AppViewModel extends AndroidViewModel {
      * @return
      */
     private boolean hasNewVersion(String currentVersion, String newVersion) {
-        String[] currentVersionArray = currentVersion.split("\\.");
-        String[] newVersionArray = newVersion.split("\\.");
-        if (currentVersionArray.length > 0 && newVersionArray.length > 0) {
-            for (int i = 0; i < newVersionArray.length; i++) {
-                if (i > currentVersionArray.length - 1) {
-                    break;
-                }
-                if (Integer.parseInt(newVersionArray[i])
-                        > Integer.parseInt(currentVersionArray[i])) {
-                    return true;
+        try {
+            String[] currentVersionArray = currentVersion.split("\\.");
+            String[] newVersionArray = newVersion.split("\\.");
+            if (currentVersionArray.length > 0 && newVersionArray.length > 0) {
+                for (int i = 0; i < newVersionArray.length; i++) {
+                    if (i > currentVersionArray.length - 1) {
+                        break;
+                    }
+                    if (Integer.parseInt(newVersionArray[i])
+                            > Integer.parseInt(currentVersionArray[i])) {
+                        return true;
+                    }
                 }
             }
+        } catch (NumberFormatException e) {
+            RLog.e(TAG, "hasNewVersion:" + e.getMessage());
         }
         return false;
     }

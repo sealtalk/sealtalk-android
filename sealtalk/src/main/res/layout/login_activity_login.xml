@@ -38,9 +38,9 @@
             android:layout_marginTop="9dp"
             android:includeFontPadding="false"
             android:text="@string/seal_login_text_title"
-            android:visibility="gone"
             android:textColor="@color/color_black_text"
-            android:textSize="19sp" />
+            android:textSize="19sp"
+            android:visibility="gone" />
     </LinearLayout>
 
 
@@ -88,8 +88,8 @@
         <TextView
             android:id="@+id/tv_registration_terms"
             android:layout_width="wrap_content"
-            android:gravity="center_horizontal"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:textColor="#484848"
             android:textSize="@dimen/seal_login_rongcloud_text_size" />
 

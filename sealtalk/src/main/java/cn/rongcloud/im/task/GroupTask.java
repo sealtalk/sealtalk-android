@@ -580,7 +580,7 @@ public class GroupTask {
      * @return
      */
     public GroupEntity getGroupInfoSync(final String groupId) {
-        if (dbManager == null) {
+        if (dbManager == null || dbManager.getGroupDao() == null) {
             return null;
         }
         return dbManager.getGroupDao().getGroupInfoSync(groupId);

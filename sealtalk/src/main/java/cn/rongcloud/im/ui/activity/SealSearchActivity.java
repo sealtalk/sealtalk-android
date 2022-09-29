@@ -155,7 +155,7 @@ public class SealSearchActivity extends SealSearchBaseActivity
                         message.getConversationType(),
                         message.getTargetId(),
                         searchMessageModel.getName(),
-                        message.getSentTime());
+                        message.getSentTime() + 2);
     }
 
     private void pushFragment(SearchBaseFragment fragment) {

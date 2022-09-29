@@ -44,6 +44,7 @@ import cn.rongcloud.im.model.TranslationTokenResult;
 import cn.rongcloud.im.model.UserCacheInfo;
 import cn.rongcloud.im.net.CallBackWrapper;
 import cn.rongcloud.im.net.HttpClientManager;
+import cn.rongcloud.im.net.SealTalkUrl;
 import cn.rongcloud.im.net.service.UserService;
 import cn.rongcloud.im.sp.UserCache;
 import cn.rongcloud.im.sp.UserConfigCache;
@@ -60,6 +61,7 @@ import cn.rongcloud.im.ui.activity.PokeInviteChatActivity;
 import cn.rongcloud.im.ui.activity.SplashActivity;
 import cn.rongcloud.im.ui.activity.SubConversationListActivity;
 import cn.rongcloud.im.ui.activity.UserDetailActivity;
+import cn.rongcloud.im.utils.DataCenter;
 import cn.rongcloud.im.utils.log.SLog;
 import com.google.gson.Gson;
 import io.rong.common.RLog;
@@ -990,7 +992,7 @@ public class IMManager {
     }
 
     /** 注册消息及消息模版 */
-    private void initMessageAndTemplate() {
+    public void initMessageAndTemplate() {
         SLog.d("ss_register_message", "initMessageAndTemplate");
         ArrayList<Class<? extends MessageContent>> myMessages = new ArrayList<>();
         myMessages.add(SealGroupNotificationMessage.class);
@@ -1018,7 +1020,7 @@ public class IMManager {
      *
      * @param context
      */
-    private void initExtensionModules(Context context) {
+    public void initExtensionModules(Context context) {
         RongExtensionManager.getInstance().setExtensionConfig(new SealExtensionConfig());
         // 语音输入
         RongExtensionManager.getInstance().registerExtensionModule(new RecognizeExtensionModule());
@@ -1043,8 +1045,13 @@ public class IMManager {
          * 如果是连接到私有云需要在此配置服务器地址
          * 如果是公有云则不需要调用此方法
          */
-        RongIMClient.getInstance()
-                .setServerInfo(BuildConfig.SEALTALK_NAVI_SERVER, BuildConfig.SEALTALK_FILE_SERVER);
+        //        RongIMClient.getInstance()
+        //                .setServerInfo(BuildConfig.SEALTALK_NAVI_SERVER,
+        // BuildConfig.SEALTALK_FILE_SERVER);
+
+        DataCenter currentDataCenter = appTask.getCurrentDataCenter();
+        RongIMClient.setServerInfo(
+                currentDataCenter.getNaviUrl(), BuildConfig.SEALTALK_FILE_SERVER);
 
         /*
          * 初始化 SDK，在整个应用程序全局，只需要调用一次。建议在 Application 继承类中调用。
@@ -1056,7 +1063,8 @@ public class IMManager {
         // RongIM.init(this);
 
         // 可在初始 SDK 时直接带入融云 IM 申请的APP KEY
-        IMCenter.init(application, BuildConfig.SEALTALK_APP_KEY, true);
+        IMCenter.init(application, currentDataCenter.getAppKey(), true);
+        SealTalkUrl.DOMAIN = currentDataCenter.getAppServer();
     }
 
     /** 初始化信息提供者，包括用户信息，群组信息，群主成员信息 */
@@ -1771,23 +1779,9 @@ public class IMManager {
                                 if (errorCode
                                         == RongIMClient.ConnectionErrorCode
                                                 .RC_CONN_TOKEN_INCORRECT) {
-                                    getToken(
-                                            new ResultCallback<LoginResult>() {
-                                                @Override
-                                                public void onSuccess(LoginResult loginResult) {
-                                                    connectIM(
-                                                            loginResult.token,
-                                                            cacheConnect,
-                                                            timeOut,
-                                                            callback);
-                                                }
-
-                                                @Override
-                                                public void onFail(int errorCode) {
-                                                    callback.onFail(errorCode);
-                                                }
-                                            });
-                                    ;
+                                    if (callback != null) {
+                                        callback.onFail(ErrorCode.IM_ERROR.getCode());
+                                    }
                                 } else if (errorCode
                                         == RongIMClient.ConnectionErrorCode.RC_CONN_USER_ABANDON) {
                                     callback.onFail(ErrorCode.USER_ABANDON.getCode());

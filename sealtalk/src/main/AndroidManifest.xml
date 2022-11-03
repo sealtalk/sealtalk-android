@@ -765,6 +765,10 @@
                 <action android:name="com.huawei.android.push.intent.RECEIVE" />
             </intent-filter>
         </receiver>
+        <!-- sealtalk 渠道区分 -->
+        <meta-data
+            android:name="CHANNEL"
+            android:value="none" />
 
         <!-- end -->
     </application>

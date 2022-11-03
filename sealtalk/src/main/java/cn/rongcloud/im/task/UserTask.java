@@ -1,6 +1,8 @@
 package cn.rongcloud.im.task;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.text.TextUtils;
 import androidx.annotation.NonNull;
@@ -8,6 +10,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import cn.rongcloud.im.BuildConfig;
+import cn.rongcloud.im.SealApp;
 import cn.rongcloud.im.common.ErrorCode;
 import cn.rongcloud.im.common.ResultCallback;
 import cn.rongcloud.im.db.DBManager;
@@ -43,6 +47,7 @@ import cn.rongcloud.im.utils.NetworkOnlyResource;
 import cn.rongcloud.im.utils.RongGenerate;
 import cn.rongcloud.im.utils.SearchUtils;
 import cn.rongcloud.im.utils.log.SLog;
+import io.rong.common.rlog.RLog;
 import io.rong.imlib.common.ExecutorFactory;
 import io.rong.imlib.model.Conversation;
 import java.util.ArrayList;
@@ -1050,6 +1055,9 @@ public class UserTask {
                         paramsMap.put("region", region);
                         paramsMap.put("phone", phone);
                         paramsMap.put("code", code);
+                        paramsMap.put("channel", getChannel(SealApp.getApplication()));
+                        paramsMap.put("os", "android");
+                        paramsMap.put("version", BuildConfig.VERSION_NAME);
                         RequestBody body = RetrofitUtil.createJsonRequest(paramsMap);
                         return userService.registerAndLogin(body);
                     }
@@ -1115,5 +1123,21 @@ public class UserTask {
                     }
                 });
         return result;
+    }
+
+    public String getChannel(Context context) {
+        try {
+            PackageManager pm = context.getPackageManager();
+            ApplicationInfo appInfo =
+                    pm.getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+            // key为<meta-data>标签中的name
+            String channel = appInfo.metaData.getString("CHANNEL");
+            if (!TextUtils.isEmpty(channel)) {
+                return channel;
+            }
+        } catch (Exception e) {
+            RLog.e("UserTask", "getChannel", e);
+        }
+        return "none";
     }
 }

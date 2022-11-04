@@ -6,14 +6,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.util.LayoutDirection;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import androidx.core.text.TextUtilsCompat;
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.ui.activity.ImagePreviewActivity;
+import java.util.Locale;
 
 public class RencentPicturePopWindow extends PopupWindow implements View.OnClickListener {
 
@@ -29,6 +32,9 @@ public class RencentPicturePopWindow extends PopupWindow implements View.OnClick
         LayoutInflater inflater =
                 (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         contentView = inflater.inflate(R.layout.recent_picture_popup, null);
+        if (contentView.getBackground() != null) {
+            contentView.getBackground().setAutoMirrored(true);
+        }
         contentView.setOnClickListener(this);
         ivPicture = contentView.findViewById(R.id.iv_picture);
         this.setContentView(contentView);
@@ -49,7 +55,11 @@ public class RencentPicturePopWindow extends PopupWindow implements View.OnClick
     }
     /** 显示popupWindow */
     public void showPopupWindow(int h) {
-        showAtLocation(contentView, Gravity.BOTTOM | Gravity.RIGHT, dp2px(8), h + dp2px(4));
+        boolean isRTL =
+                TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault())
+                        == LayoutDirection.RTL;
+        int gravity = Gravity.BOTTOM | (isRTL ? Gravity.START : Gravity.END);
+        showAtLocation(contentView, gravity, dp2px(8), h + dp2px(4));
     }
 
     private int dp2px(int dp) {

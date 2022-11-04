@@ -1,7 +1,9 @@
 package cn.rongcloud.im.ui.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,7 +15,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.Observer;
@@ -123,6 +129,9 @@ public class MainActivity extends BaseActivity
         clearBadgeStatu();
         showFraudTipsDialog();
         initAMapPrivacy();
+        if (Build.VERSION.SDK_INT >= 33) {
+            askNotificationPermission();
+        }
     }
 
     private void initAMapPrivacy() {
@@ -547,4 +556,25 @@ public class MainActivity extends BaseActivity
                         - btnMore.getWidth();
         return (int) (popSelfXOffset);
     }
+
+    @RequiresApi(api = 33)
+    private void askNotificationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                == PackageManager.GET_PERMISSIONS) {
+
+        } else {
+            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+        }
+    }
+
+    private final ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(
+                    new ActivityResultContracts.RequestPermission(),
+                    isGranted -> {
+                        if (isGranted) {
+                            // FCM SDK (and your app) can post notifications.
+                        } else {
+
+                        }
+                    });
 }

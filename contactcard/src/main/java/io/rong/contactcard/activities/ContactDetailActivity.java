@@ -59,6 +59,7 @@ public class ContactDetailActivity extends RongBaseNoActionbarActivity
     private Group group;
     private List<UserInfo> mGroupMember;
     private boolean mGroupMemberShown = false;
+    private static final int ENCRYPTED_LENGTH = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,8 +108,8 @@ public class ContactDetailActivity extends RongBaseNoActionbarActivity
                 break;
             case ENCRYPTED:
                 String userId = null;
-                String str[] = mTargetId.split(";;;");
-                if (str.length >= 2) {
+                String[] str = mTargetId.split(";;;");
+                if (str.length >= ENCRYPTED_LENGTH) {
                     userId = str[1];
                 }
                 mine = RongUserInfoManager.getInstance().getUserInfo(userId);
@@ -154,16 +155,18 @@ public class ContactDetailActivity extends RongBaseNoActionbarActivity
                                 if (!mGroupMemberShown) {
                                     hideInputKeyBoard();
                                     mViewAnimator.setDisplayedChild(1);
-                                    if (mGroupMember != null && mGroupMember.size() > 4)
+                                    if (mGroupMember != null && mGroupMember.size() > 4) {
+
                                         mGridView.setLayoutParams(
                                                 new LinearLayout.LayoutParams(
                                                         LinearLayout.LayoutParams.MATCH_PARENT,
                                                         RongUtils.dip2px(160)));
-                                    else
+                                    } else {
                                         mGridView.setLayoutParams(
                                                 new LinearLayout.LayoutParams(
                                                         LinearLayout.LayoutParams.MATCH_PARENT,
                                                         RongUtils.dip2px(90)));
+                                    }
 
                                     ObjectAnimator animator =
                                             ObjectAnimator.ofFloat(mArrow, "rotation", 0f, 180f);
@@ -188,9 +191,10 @@ public class ContactDetailActivity extends RongBaseNoActionbarActivity
                 break;
         }
 
-        if (mContactFriend != null)
+        if (mContactFriend != null) {
             mContactName.setText(
                     getString(R.string.rc_plugins_contact) + ": " + mContactFriend.getName());
+        }
 
         mMessage.addTextChangedListener(
                 new TextWatcher() {
@@ -249,15 +253,21 @@ public class ContactDetailActivity extends RongBaseNoActionbarActivity
                                         null,
                                         new IRongCallback.ISendMessageCallback() {
                                             @Override
-                                            public void onAttached(Message message) {}
+                                            public void onAttached(Message message) {
+                                                // do nothing
+                                            }
 
                                             @Override
-                                            public void onSuccess(Message message) {}
+                                            public void onSuccess(Message message) {
+                                                // do nothing
+                                            }
 
                                             @Override
                                             public void onError(
                                                     Message message,
-                                                    RongIMClient.ErrorCode errorCode) {}
+                                                    RongIMClient.ErrorCode errorCode) {
+                                                // do nothing
+                                            }
                                         });
 
                         String message = mMessage.getText().toString().trim();
@@ -271,15 +281,21 @@ public class ContactDetailActivity extends RongBaseNoActionbarActivity
                                             null,
                                             new IRongCallback.ISendMessageCallback() {
                                                 @Override
-                                                public void onAttached(Message message) {}
+                                                public void onAttached(Message message) {
+                                                    // do nothing
+                                                }
 
                                                 @Override
-                                                public void onSuccess(Message message) {}
+                                                public void onSuccess(Message message) {
+                                                    // do nothing
+                                                }
 
                                                 @Override
                                                 public void onError(
                                                         Message message,
-                                                        RongIMClient.ErrorCode errorCode) {}
+                                                        RongIMClient.ErrorCode errorCode) {
+                                                    // do nothing
+                                                }
                                             });
                         } else {
                             hideInputKeyBoard();
@@ -334,7 +350,9 @@ public class ContactDetailActivity extends RongBaseNoActionbarActivity
     }
 
     @Override
-    public void onGroupUserInfoUpdate(GroupUserInfo groupUserInfo) {}
+    public void onGroupUserInfoUpdate(GroupUserInfo groupUserInfo) {
+        // do nothing
+    }
 
     private static class GridAdapter extends BaseAdapter {
 
@@ -399,7 +417,4 @@ public class ContactDetailActivity extends RongBaseNoActionbarActivity
                 (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(mMessage.getWindowToken(), 0);
     }
-
-    @Override
-    public void onBackPressed() {}
 }

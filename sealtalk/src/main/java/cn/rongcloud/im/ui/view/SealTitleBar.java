@@ -1,6 +1,7 @@
 package cn.rongcloud.im.ui.view;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
@@ -44,6 +45,9 @@ public class SealTitleBar extends RelativeLayout {
     private void initView() {
         View view = View.inflate(getContext(), R.layout.layout_title, this);
         btnLeft = view.findViewById(R.id.btn_left);
+        for (Drawable drawable : btnLeft.getCompoundDrawablesRelative()) {
+            if (drawable != null) drawable.setAutoMirrored(true);
+        }
         btnRight = view.findViewById(R.id.btn_right);
         tvTitle = view.findViewById(R.id.tv_title);
         tvTyping = view.findViewById(R.id.tv_typing);

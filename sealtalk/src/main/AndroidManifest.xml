@@ -33,13 +33,9 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <!-- ⼩米 配置开始 < -->
-    <permission
-        android:name="${applicationId}.permission.MIPUSH_RECEIVE"
-        android:protectionLevel="signature" />
-    <uses-permission android:name="${applicationId}.permission.MIPUSH_RECEIVE" />
-    <!-- ⼩米 配置结束 < -->
     <!-- GCM 配置开始 < -->
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"
@@ -417,6 +413,10 @@
         <activity android:name=".ui.test.BindChatRTCRoomActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".ui.activity.ProxySettingActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
+
         <!-- 请将CHANNAL改为app的发布渠道 < -->
         <meta-data
             android:name="InstallChannel"
@@ -442,33 +442,8 @@
         <!--第三方的推送 权限 广播 和服务-->
 
         <!-- 小米 配置开始 < -->
-
-        <activity
-            android:name="com.xiaomi.mipush.sdk.NotificationClickedActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:launchMode="singleInstance"
-            android:exported="true"
-            android:enabled="true">
-        </activity>
-
-        <service
-            android:name="com.xiaomi.push.service.XMPushService"
-            android:enabled="true" />
-        <service
-            android:name="com.xiaomi.mipush.sdk.PushMessageHandler"
-            android:enabled="true"
-            android:exported="true" />
-        <service
-            android:name="com.xiaomi.mipush.sdk.MessageHandleService"
-            android:enabled="true" />
         <!--注：此service必须在2.2.5版本以后（包括2.2.5版本）加入-->
 
-        <service
-            android:name="com.xiaomi.push.service.XMJobService"
-            android:enabled="true"
-            android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-        <!--注：此service必须在3.0.1版本以后（包括3.0.1版本）加入-->
 
         <receiver
             android:name="com.xiaomi.push.service.receivers.NetworkStatusReceiver"
@@ -478,13 +453,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
-        <receiver
-            android:name="com.xiaomi.push.service.receivers.PingReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.xiaomi.push.PING_TIMER" />
-            </intent-filter>
-        </receiver>
+
         <receiver
             android:name="io.rong.push.platform.mi.MiMessageReceiver"
             android:exported="true">
@@ -710,16 +679,6 @@
             </intent-filter>
         </service>
         <!-- oppo 推送 end-->
-
-        <!--解决三方厂商推送SDK中含<intent-filter>组件但未声明export属性导致运行问题，升级SDK后要删除调这段临时运行代码-->
-        <receiver
-            android:name="com.meizu.cloud.pushsdk.MzPushSystemReceiver"
-            android:exported="true"
-            android:permission="com.meizu.flyme.permission.PUSH" >
-            <intent-filter>
-                <action android:name="com.meizu.flyme.push.intent.PUSH_SYSTEM" />
-            </intent-filter>
-        </receiver>
 
         <service
             android:name="com.heytap.msp.push.service.CompatibleDataMessageCallbackService"

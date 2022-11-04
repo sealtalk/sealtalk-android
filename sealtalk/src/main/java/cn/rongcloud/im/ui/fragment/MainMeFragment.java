@@ -19,6 +19,7 @@ import cn.rongcloud.im.ui.activity.AboutSealTalkActivity;
 import cn.rongcloud.im.ui.activity.AccountSettingActivity;
 import cn.rongcloud.im.ui.activity.ChangeLanguageActivity;
 import cn.rongcloud.im.ui.activity.MyAccountActivity;
+import cn.rongcloud.im.ui.activity.ProxySettingActivity;
 import cn.rongcloud.im.ui.activity.QrCodeDisplayActivity;
 import cn.rongcloud.im.ui.activity.TranslationSettingActivity;
 import cn.rongcloud.im.ui.view.SettingItemView;
@@ -61,6 +62,7 @@ public class MainMeFragment extends BaseFragment {
         findView(R.id.siv_feedback, true);
         sivAbout = findView(R.id.siv_about, true);
         findView(R.id.siv_translation, true);
+        findView(R.id.siv_proxy_setting, true);
     }
 
     @Override
@@ -195,6 +197,10 @@ public class MainMeFragment extends BaseFragment {
                 break;
             case R.id.siv_translation:
                 intent = new Intent(getActivity(), TranslationSettingActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.siv_proxy_setting:
+                intent = new Intent(getActivity(), ProxySettingActivity.class);
                 startActivity(intent);
                 break;
             default:

@@ -7,6 +7,7 @@
 
     <TextView
         android:id="@+id/catalog"
+        style="@style/TextStyle.Alignment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="12dip"

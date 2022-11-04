@@ -3,5 +3,8 @@
     <string name="lang_arab">العربية</string>
 
     <string name="seal_talk_fraud_tip_conversation_top">RongCloud reminds you to beware of fraud, do not trust money-related information, and do not conduct any offline transfers.</string>
+    <string name="seal_conversation_remote_side_is_typing">الطرف الآخر يكتب&#046;&#046;&#046;</string>
+    <string name="seal_conversation_remote_side_speaking">الطرف الآخر يتحدث&#046;&#046;&#046;</string>
 
+    <string name="seal_member_mention_all_member">حميلحميل</string>
 </resources>

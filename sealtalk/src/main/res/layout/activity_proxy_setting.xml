@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.activity.ProxySettingActivity">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:layout_marginEnd="@dimen/seal_login_bg_margin_right"
+        android:src="@drawable/seal_ic_login_bg" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_test_uri"
+        style="@style/seal_proxy_setting_input_style"
+        app:layout_constraintBottom_toTopOf="@+id/til_proxy_ip"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tb_title">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_test_uri"
+            style="@style/seal_proxy_setting_edit_style"
+            android:hint="测试地址"
+            android:inputType="textUri" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_proxy_ip"
+        style="@style/seal_proxy_setting_input_style"
+        app:layout_constraintBottom_toTopOf="@+id/til_proxy_port"
+        app:layout_constraintEnd_toEndOf="@+id/til_test_uri"
+        app:layout_constraintStart_toStartOf="@+id/til_test_uri"
+        app:layout_constraintTop_toBottomOf="@+id/til_test_uri">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_proxy_ip"
+            style="@style/seal_proxy_setting_edit_style"
+            android:hint="代理 IP"
+            android:inputType="textUri" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_proxy_port"
+        style="@style/seal_proxy_setting_input_style"
+        app:layout_constraintBottom_toTopOf="@+id/til_proxy_user_name"
+        app:layout_constraintEnd_toEndOf="@+id/til_test_uri"
+        app:layout_constraintStart_toStartOf="@+id/til_test_uri"
+        app:layout_constraintTop_toBottomOf="@+id/til_proxy_ip">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_proxy_port"
+            style="@style/seal_proxy_setting_edit_style"
+            android:hint="代理端口"
+            android:inputType="number"
+            android:maxLength="5" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_proxy_user_name"
+        style="@style/seal_proxy_setting_input_style"
+        app:layout_constraintBottom_toTopOf="@+id/til_proxy_password"
+        app:layout_constraintEnd_toEndOf="@+id/til_test_uri"
+        app:layout_constraintStart_toStartOf="@+id/til_test_uri"
+        app:layout_constraintTop_toBottomOf="@+id/til_proxy_port">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_proxy_user_name"
+            style="@style/seal_proxy_setting_edit_style"
+            android:hint="用户名"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_proxy_password"
+        style="@style/seal_proxy_setting_input_style"
+        app:layout_constraintBottom_toTopOf="@+id/btn_test"
+        app:layout_constraintEnd_toEndOf="@+id/til_test_uri"
+        app:layout_constraintStart_toStartOf="@+id/til_test_uri"
+        app:layout_constraintTop_toBottomOf="@+id/til_proxy_user_name">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_proxy_password"
+            style="@style/seal_proxy_setting_edit_style"
+            android:hint="密码"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_test_proxy"
+        android:text="测试代理"
+        app:layout_constraintEnd_toEndOf="@+id/til_test_uri"
+        app:layout_constraintStart_toStartOf="@+id/til_test_uri"
+        app:layout_constraintTop_toBottomOf="@+id/til_proxy_password"
+        style="@style/seal_proxy_setting_text" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_save_proxy"
+        android:text="保存代理"
+        app:layout_constraintEnd_toEndOf="@+id/til_test_uri"
+        app:layout_constraintStart_toStartOf="@+id/til_test_uri"
+        app:layout_constraintTop_toBottomOf="@+id/btn_test_proxy"
+        style="@style/seal_proxy_setting_text" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_clear_proxy"
+        android:text="清除代理"
+        app:layout_constraintEnd_toEndOf="@+id/til_test_uri"
+        app:layout_constraintStart_toStartOf="@+id/til_test_uri"
+        app:layout_constraintTop_toBottomOf="@+id/btn_save_proxy"
+        style="@style/seal_proxy_setting_text" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -32,8 +32,8 @@ import cn.rongcloud.im.model.Result;
 import cn.rongcloud.im.model.SearchFriendInfo;
 import cn.rongcloud.im.model.SimplePhoneContactInfo;
 import cn.rongcloud.im.model.Status;
-import cn.rongcloud.im.net.HttpClientManager;
 import cn.rongcloud.im.net.RetrofitUtil;
+import cn.rongcloud.im.net.proxy.RetrofitProxyServiceCreator;
 import cn.rongcloud.im.net.service.FriendService;
 import cn.rongcloud.im.utils.CharacterParser;
 import cn.rongcloud.im.utils.NetworkBoundResource;
@@ -57,9 +57,7 @@ public class FriendTask {
     public FriendTask(Context context) {
         this.context = context.getApplicationContext();
         friendService =
-                HttpClientManager.getInstance(this.context)
-                        .getClient()
-                        .createService(FriendService.class);
+                RetrofitProxyServiceCreator.getRetrofitService(context, FriendService.class);
         dbManager = DBManager.getInstance(this.context);
         fileManager = new FileManager(context);
     }

@@ -189,6 +189,7 @@ public class SettingItemView extends LinearLayout {
                         break;
                     case R.styleable.SettingItemView_item_right_image:
                         Drawable rightImage = ta.getDrawable(attr);
+                        rightImage.setAutoMirrored(true);
                         ivRightImage.setImageDrawable(rightImage);
                         ivRightImage.setVisibility(VISIBLE);
                         break;

@@ -19,8 +19,7 @@ import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Result;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.model.UploadTokenResult;
-import cn.rongcloud.im.net.HttpClientManager;
-import cn.rongcloud.im.net.RetrofitClient;
+import cn.rongcloud.im.net.proxy.RetrofitProxyServiceCreator;
 import cn.rongcloud.im.net.service.AppService;
 import cn.rongcloud.im.net.service.UserService;
 import cn.rongcloud.im.utils.FileUtils;
@@ -49,9 +48,8 @@ public class FileManager {
 
     public FileManager(Context context) {
         this.context = context.getApplicationContext();
-        RetrofitClient client = HttpClientManager.getInstance(context).getClient();
-        userService = client.createService(UserService.class);
-        appService = client.createService(AppService.class);
+        userService = RetrofitProxyServiceCreator.getRetrofitService(context, UserService.class);
+        appService = RetrofitProxyServiceCreator.getRetrofitService(context, AppService.class);
     }
 
     /**

@@ -48,8 +48,13 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        Context context = RongConfigurationManager.getInstance().getConfigurationContext(newBase);
-        super.attachBaseContext(context);
+        try {
+            Context context =
+                    RongConfigurationManager.getInstance().getConfigurationContext(newBase);
+            super.attachBaseContext(context);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -429,7 +434,9 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     private void unRegisterLogoutBroadcast() {
-        unregisterReceiver(logoutRecevier);
+        if (logoutRecevier != null) {
+            unregisterReceiver(logoutRecevier);
+        }
     }
 
     /** 通知通其他注册了登出广播的 Activity 关闭 */

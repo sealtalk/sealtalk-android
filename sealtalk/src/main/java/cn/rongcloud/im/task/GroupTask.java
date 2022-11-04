@@ -32,8 +32,8 @@ import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Result;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.model.UserSimpleInfo;
-import cn.rongcloud.im.net.HttpClientManager;
 import cn.rongcloud.im.net.RetrofitUtil;
+import cn.rongcloud.im.net.proxy.RetrofitProxyServiceCreator;
 import cn.rongcloud.im.net.service.GroupService;
 import cn.rongcloud.im.ui.adapter.models.SearchGroupMember;
 import cn.rongcloud.im.utils.NetworkBoundResource;
@@ -55,10 +55,7 @@ public class GroupTask {
 
     public GroupTask(Context context) {
         this.context = context.getApplicationContext();
-        groupService =
-                HttpClientManager.getInstance(context)
-                        .getClient()
-                        .createService(GroupService.class);
+        groupService = RetrofitProxyServiceCreator.getRetrofitService(context, GroupService.class);
         dbManager = DBManager.getInstance(context);
         fileManager = new FileManager(context);
     }

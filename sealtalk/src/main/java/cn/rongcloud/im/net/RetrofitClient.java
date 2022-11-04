@@ -6,7 +6,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 import cn.rongcloud.im.common.NetConstant;
+import io.rong.imlib.model.RCIMProxy;
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.security.cert.CertificateException;
 import java.util.HashSet;
 import java.util.concurrent.TimeUnit;
@@ -16,18 +19,23 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+import okhttp3.Authenticator;
+import okhttp3.Credentials;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.Route;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
+    private static final String TAG = "RetrofitClient";
+
     private Context mContext;
     private Retrofit mRetrofit;
 
-    public RetrofitClient(Context context, String baseUrl) {
+    public RetrofitClient(Context context, String baseUrl, RCIMProxy proxy) {
         mContext = context;
 
         //        OkHttpClient.Builder okHttpBuilder = new OkHttpClient.Builder()
@@ -46,7 +54,7 @@ public class RetrofitClient {
         }
         mRetrofit =
                 new Retrofit.Builder()
-                        .client(getUnsafeOkHttpClient())
+                        .client(getUnsafeOkHttpClient(proxy))
                         .baseUrl(baseUrl) // 设置网络请求的Url地址
                         .addConverterFactory(GsonConverterFactory.create()) // 设置数据解析器
                         .addCallAdapterFactory(
@@ -54,7 +62,7 @@ public class RetrofitClient {
                         .build();
     }
 
-    private OkHttpClient getUnsafeOkHttpClient() {
+    private OkHttpClient getUnsafeOkHttpClient(RCIMProxy proxy) {
         try {
             // Create a trust manager that does not validate certificate chains
             final TrustManager[] trustAllCerts =
@@ -92,6 +100,34 @@ public class RetrofitClient {
                             .connectTimeout(NetConstant.API_CONNECT_TIME_OUT, TimeUnit.SECONDS)
                             .readTimeout(NetConstant.API_READ_TIME_OUT, TimeUnit.SECONDS)
                             .writeTimeout(NetConstant.API_WRITE_TIME_OUT, TimeUnit.SECONDS);
+
+            if (proxy != null && proxy.isValid()) {
+                okHttpBuilder.proxy(
+                        new Proxy(
+                                Proxy.Type.SOCKS,
+                                new InetSocketAddress(proxy.getHost(), proxy.getPort())));
+                if (!TextUtils.isEmpty(proxy.getUserName())
+                        && !TextUtils.isEmpty(proxy.getPassword())) {
+                    okHttpBuilder.proxyAuthenticator(
+                            new Authenticator() {
+                                @Override
+                                public Request authenticate(Route route, Response response)
+                                        throws IOException {
+                                    if (response.code() == 407) {
+                                        // 代理鉴权
+                                        String credential =
+                                                Credentials.basic(
+                                                        proxy.getUserName(), proxy.getPassword());
+                                        return response.request()
+                                                .newBuilder()
+                                                .header("Proxy-Authorization", credential)
+                                                .build();
+                                    }
+                                    return null;
+                                }
+                            });
+                }
+            }
             okHttpBuilder.sslSocketFactory(sslSocketFactory);
             okHttpBuilder.hostnameVerifier(
                     new HostnameVerifier() {

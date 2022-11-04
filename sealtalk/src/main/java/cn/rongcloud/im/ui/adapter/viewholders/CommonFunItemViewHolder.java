@@ -19,6 +19,7 @@ public class CommonFunItemViewHolder extends BaseItemViewHolder<ListItemModel<Fu
         super(itemView);
         itemUiv = itemView.findViewById(R.id.uiv_item);
         arrowIv = itemView.findViewById(R.id.iv_arrow);
+        arrowIv.getDrawable().setAutoMirrored(true);
         unreadTv = itemView.findViewById(R.id.tv_unread);
 
         itemView.setOnClickListener(

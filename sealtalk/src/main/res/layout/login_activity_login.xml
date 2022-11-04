@@ -144,4 +144,15 @@
         android:textColor="@color/white"
         android:textSize="@dimen/seal_login_text_change_lang_text_size" />
 
+    <TextView
+        android:id="@+id/tv_proxy_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="20dp"
+        android:text="代理"
+        android:visibility="gone"
+        android:textColor="@color/white"
+        android:textSize="@dimen/seal_login_text_change_lang_text_size" />
+
 </RelativeLayout>

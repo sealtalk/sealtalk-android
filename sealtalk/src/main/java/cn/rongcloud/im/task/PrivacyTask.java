@@ -8,8 +8,8 @@ import cn.rongcloud.im.model.PrivacyResult;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Result;
 import cn.rongcloud.im.model.ScreenCaptureResult;
-import cn.rongcloud.im.net.HttpClientManager;
 import cn.rongcloud.im.net.RetrofitUtil;
+import cn.rongcloud.im.net.proxy.RetrofitProxyServiceCreator;
 import cn.rongcloud.im.net.service.PrivacyService;
 import cn.rongcloud.im.sp.UserConfigCache;
 import cn.rongcloud.im.utils.NetworkOnlyResource;
@@ -27,9 +27,7 @@ public class PrivacyTask {
         userConfigCache = new UserConfigCache(context);
         dbManager = DBManager.getInstance(context);
         privacyService =
-                HttpClientManager.getInstance(context)
-                        .getClient()
-                        .createService(PrivacyService.class);
+                RetrofitProxyServiceCreator.getRetrofitService(context, PrivacyService.class);
     }
 
     /**

@@ -8,7 +8,7 @@ import cn.rongcloud.im.model.Result;
 import cn.rongcloud.im.model.SecurityStatusResult;
 import cn.rongcloud.im.model.SecurityVerifyResult;
 import cn.rongcloud.im.model.UserCacheInfo;
-import cn.rongcloud.im.net.HttpClientManager;
+import cn.rongcloud.im.net.proxy.RetrofitProxyServiceCreator;
 import cn.rongcloud.im.net.service.SecurityService;
 import cn.rongcloud.im.sp.UserCache;
 import cn.rongcloud.im.utils.NetworkOnlyResource;
@@ -22,9 +22,7 @@ public class SecurityTask {
 
     public SecurityTask(Context context) {
         securityService =
-                HttpClientManager.getInstance(context)
-                        .getClient()
-                        .createService(SecurityService.class);
+                RetrofitProxyServiceCreator.getRetrofitService(context, SecurityService.class);
         userCache = new UserCache(context);
     }
 

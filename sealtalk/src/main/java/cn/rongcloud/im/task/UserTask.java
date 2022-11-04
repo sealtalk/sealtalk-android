@@ -36,8 +36,8 @@ import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.model.UserCacheInfo;
 import cn.rongcloud.im.model.UserSimpleInfo;
 import cn.rongcloud.im.model.VerifyResult;
-import cn.rongcloud.im.net.HttpClientManager;
 import cn.rongcloud.im.net.RetrofitUtil;
+import cn.rongcloud.im.net.proxy.RetrofitProxyServiceCreator;
 import cn.rongcloud.im.net.service.UserService;
 import cn.rongcloud.im.sp.CountryCache;
 import cn.rongcloud.im.sp.UserCache;
@@ -68,8 +68,7 @@ public class UserTask {
 
     public UserTask(Context context) {
         this.context = context.getApplicationContext();
-        userService =
-                HttpClientManager.getInstance(context).getClient().createService(UserService.class);
+        userService = RetrofitProxyServiceCreator.getRetrofitService(context, UserService.class);
         dbManager = DBManager.getInstance(context.getApplicationContext());
         fileManager = new FileManager(context.getApplicationContext());
         userCache = new UserCache(context.getApplicationContext());

@@ -99,6 +99,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         registerRight.setOnClickListener(this);
         findPassword.setOnClickListener(this);
         toLogin.setOnClickListener(this);
+        findViewById(R.id.tv_proxy_setting).setOnClickListener(this);
 
         // 默认是登录界面
         controlBottomView(currentFragmentIndex);
@@ -372,6 +373,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     changeLanguage(LangUtils.RCLocale.LOCALE_CHINA);
                 }
                 restartActivity();
+                break;
+            case R.id.tv_proxy_setting:
+                Intent intent = new Intent(this, ProxySettingActivity.class);
+                startActivity(intent);
                 break;
             default:
                 // Do nothing

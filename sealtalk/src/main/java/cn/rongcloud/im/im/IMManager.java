@@ -38,13 +38,15 @@ import cn.rongcloud.im.im.provider.SealGroupNotificationMessageItemProvider;
 import cn.rongcloud.im.model.ChatRoomAction;
 import cn.rongcloud.im.model.ConversationRecord;
 import cn.rongcloud.im.model.LoginResult;
+import cn.rongcloud.im.model.ProxyModel;
 import cn.rongcloud.im.model.QuietHours;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.TranslationTokenResult;
 import cn.rongcloud.im.model.UserCacheInfo;
+import cn.rongcloud.im.net.AppProxyManager;
 import cn.rongcloud.im.net.CallBackWrapper;
-import cn.rongcloud.im.net.HttpClientManager;
 import cn.rongcloud.im.net.SealTalkUrl;
+import cn.rongcloud.im.net.proxy.RetrofitProxyServiceCreator;
 import cn.rongcloud.im.net.service.UserService;
 import cn.rongcloud.im.sp.UserCache;
 import cn.rongcloud.im.sp.UserConfigCache;
@@ -103,6 +105,7 @@ import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageConfig;
 import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.MessagePushConfig;
+import io.rong.imlib.model.RCIMProxy;
 import io.rong.imlib.model.RCTranslationResult;
 import io.rong.imlib.model.UserInfo;
 import io.rong.imlib.publicservice.model.PublicServiceProfile;
@@ -422,7 +425,7 @@ public class IMManager {
     }
 
     /** 缓存登录 */
-    private void cacheConnectIM() {
+    public void cacheConnectIM() {
         if (RongIMClient.getInstance().getCurrentConnectionStatus()
                 == RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED) {
             autologinResult.setValue(true);
@@ -945,6 +948,28 @@ public class IMManager {
                     @Override
                     public void onThirdPartyPushState(
                             PushType pushType, String action, long resultCode) {}
+
+                    @Override
+                    public void onTokenReceived(PushType pushType, String token) {
+                        RLog.d(
+                                TAG,
+                                "onTokenReceived: pushType = " + pushType + ",token = " + token);
+                    }
+
+                    @Override
+                    public void onTokenReportResult(
+                            PushType reportType, int code, PushType finalType, String finalToken) {
+                        RLog.d(
+                                TAG,
+                                "onTokenReportResult: reportType = "
+                                        + reportType
+                                        + ",code = "
+                                        + code
+                                        + ",finalType = "
+                                        + finalType
+                                        + ",finalToken = "
+                                        + finalToken);
+                    }
                 });
     }
 
@@ -1049,6 +1074,16 @@ public class IMManager {
         //                .setServerInfo(BuildConfig.SEALTALK_NAVI_SERVER,
         // BuildConfig.SEALTALK_FILE_SERVER);
 
+        ProxyModel proxy = appTask.getProxy();
+        if (proxy != null) {
+            AppProxyManager.getInstance()
+                    .setProxy(
+                            new RCIMProxy(
+                                    proxy.getProxyHost(),
+                                    proxy.getPort(),
+                                    proxy.getUserName(),
+                                    proxy.getPassword()));
+        }
         DataCenter currentDataCenter = appTask.getCurrentDataCenter();
         RongIMClient.setServerInfo(
                 currentDataCenter.getNaviUrl(), BuildConfig.SEALTALK_FILE_SERVER);
@@ -1820,9 +1855,7 @@ public class IMManager {
             return;
         }
         UserService service =
-                HttpClientManager.getInstance(this.getContext().getApplicationContext())
-                        .getClient()
-                        .createService(UserService.class);
+                RetrofitProxyServiceCreator.getRetrofitService(context, UserService.class);
         service.getTranslationToken(RongIMClient.getInstance().getCurrentUserId())
                 .observeForever(
                         new Observer<TranslationTokenResult>() {
@@ -1853,7 +1886,7 @@ public class IMManager {
      */
     private void getToken(ResultCallback<LoginResult> callback) {
         UserService userService =
-                HttpClientManager.getInstance(context).getClient().createService(UserService.class);
+                RetrofitProxyServiceCreator.getRetrofitService(context, UserService.class);
         /*
          *  考虑到会有后台调用此方法，所以不采用 LiveData 做返回值
          */

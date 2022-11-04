@@ -1,7 +1,6 @@
 package io.rong.contactcard.message;
 
 import android.os.Parcel;
-import android.util.Log;
 import io.rong.common.ParcelUtils;
 import io.rong.common.RLog;
 import io.rong.imlib.MessageTag;
@@ -17,6 +16,15 @@ import org.json.JSONObject;
 @MessageTag(value = "RC:CardMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
 public class ContactMessage extends MessageContent {
     private static final String TAG = "ContactMessage";
+    private static final String SEND_USER_ID = "sendUserId";
+    private static final String USER_ID = "userId";
+    private static final String NAME = "name";
+    private static final String PORTRAIT_URI = "portraitUri";
+    private static final String SEND_USER_NAME = "sendUserName";
+    private static final String EXTRA = "extra";
+    private static final String USER = "user";
+    private static final String IS_BURN_AFTER_READ = "isBurnAfterRead";
+    private static final String BURN_DURATION = "burnDuration";
 
     private String id;
     private String name;
@@ -24,6 +32,7 @@ public class ContactMessage extends MessageContent {
     private String sendUserId;
     private String sendUserName;
     private String extra;
+    private static final Pattern pattern = Pattern.compile("\\[/u([0-9A-Fa-f]+)\\]");
 
     public ContactMessage() {}
 
@@ -82,13 +91,13 @@ public class ContactMessage extends MessageContent {
             jsonObject.put("isBurnAfterRead", isDestruct());
             jsonObject.put("burnDuration", getDestructTime());
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+            RLog.e(TAG, "encode " + e.getMessage());
         }
 
         try {
             return jsonObject.toString().getBytes("UTF-8");
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            RLog.e(TAG, "encode " + e.getMessage());
         }
         return null;
     }
@@ -98,25 +107,38 @@ public class ContactMessage extends MessageContent {
         try {
             jsonStr = new String(data, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            RLog.e(TAG, e.getMessage());
         }
 
         try {
             JSONObject jsonObj = new JSONObject(jsonStr);
 
-            if (jsonObj.has("userId")) setId(jsonObj.optString("userId"));
-            if (jsonObj.has("name")) setName(jsonObj.optString("name"));
-            if (jsonObj.has("portraitUri")) setImgUrl(jsonObj.optString("portraitUri"));
-            if (jsonObj.has("sendUserId")) setSendUserId(jsonObj.optString("sendUserId"));
-            if (jsonObj.has("sendUserName")) setSendUserName(jsonObj.optString("sendUserName"));
-            if (jsonObj.has("extra")) setExtra(jsonObj.optString("extra"));
-            if (jsonObj.has("user"))
-                setUserInfo(parseJsonToUserInfo(jsonObj.getJSONObject("user")));
-            if (jsonObj.has("isBurnAfterRead")) {
-                setDestruct(jsonObj.getBoolean("isBurnAfterRead"));
+            if (jsonObj.has(USER_ID)) {
+                setId(jsonObj.optString(USER_ID));
             }
-            if (jsonObj.has("burnDuration")) {
-                setDestructTime(jsonObj.getLong("burnDuration"));
+            if (jsonObj.has(NAME)) {
+                setName(jsonObj.optString(NAME));
+            }
+            if (jsonObj.has(PORTRAIT_URI)) {
+                setImgUrl(jsonObj.optString(PORTRAIT_URI));
+            }
+            if (jsonObj.has(SEND_USER_ID)) {
+                setSendUserId(jsonObj.optString(SEND_USER_ID));
+            }
+            if (jsonObj.has(SEND_USER_NAME)) {
+                setSendUserName(jsonObj.optString(SEND_USER_NAME));
+            }
+            if (jsonObj.has(EXTRA)) {
+                setExtra(jsonObj.optString(EXTRA));
+            }
+            if (jsonObj.has(USER)) {
+                setUserInfo(parseJsonToUserInfo(jsonObj.getJSONObject(USER)));
+            }
+            if (jsonObj.has(IS_BURN_AFTER_READ)) {
+                setDestruct(jsonObj.getBoolean(IS_BURN_AFTER_READ));
+            }
+            if (jsonObj.has(BURN_DURATION)) {
+                setDestructTime(jsonObj.getLong(BURN_DURATION));
             }
         } catch (JSONException e) {
             RLog.e(TAG, "JSONException " + e.getMessage());
@@ -154,8 +176,6 @@ public class ContactMessage extends MessageContent {
     }
 
     private String getEmotion(String content) {
-
-        Pattern pattern = Pattern.compile("\\[/u([0-9A-Fa-f]+)\\]");
         Matcher matcher = pattern.matcher(content);
 
         StringBuffer sb = new StringBuffer();

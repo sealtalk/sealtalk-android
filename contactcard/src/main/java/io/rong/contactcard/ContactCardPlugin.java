@@ -23,7 +23,9 @@ public class ContactCardPlugin implements IPluginModule {
     private String targetId;
     public static final String IS_FROM_CARD = "isFromCard";
 
-    public ContactCardPlugin() {}
+    public ContactCardPlugin() {
+        // do nothing
+    }
 
     @Override
     public Drawable obtainDrawable(Context context) {

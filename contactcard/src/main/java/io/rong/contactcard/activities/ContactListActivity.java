@@ -98,46 +98,38 @@ public class ContactListActivity extends RongBaseNoActionbarActivity {
                             }
 
                             handler.post(
-                                    new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            for (int i = 0; i < members.size(); i++) {
-                                                UserInfo userInfo = members.get(i);
-                                                if (userInfo != null
-                                                        && !userInfo.getUserId()
-                                                                .equals(
-                                                                        RongIMClient.getInstance()
-                                                                                .getCurrentUserId())) {
-                                                    MemberInfo memberInfo =
-                                                            new MemberInfo(userInfo);
-                                                    String sortString = "#";
-                                                    // 汉字转换成拼音
-                                                    String pinyin =
-                                                            CharacterParser.getInstance()
-                                                                    .getSelling(userInfo.getName());
+                                    () -> {
+                                        for (int i = 0; i < members.size(); i++) {
+                                            UserInfo userInfo = members.get(i);
+                                            if (userInfo != null
+                                                    && !userInfo.getUserId()
+                                                            .equals(
+                                                                    RongIMClient.getInstance()
+                                                                            .getCurrentUserId())) {
+                                                MemberInfo memberInfo = new MemberInfo(userInfo);
+                                                String sortString = "#";
+                                                // 汉字转换成拼音
+                                                String pinyin =
+                                                        CharacterParser.getInstance()
+                                                                .getSelling(userInfo.getName());
 
-                                                    if (pinyin != null) {
-                                                        if (pinyin.length() > 0) {
-                                                            sortString =
-                                                                    pinyin.substring(0, 1)
-                                                                            .toUpperCase();
-                                                        }
-                                                    }
-                                                    // 正则表达式，判断首字母是否是英文字母
-                                                    if (sortString.matches("[A-Z]")) {
-                                                        memberInfo.setLetter(
-                                                                sortString.toUpperCase());
-                                                    } else {
-                                                        memberInfo.setLetter("#");
-                                                    }
-                                                    mAllMemberList.add(memberInfo);
+                                                if (pinyin != null && pinyin.length() > 0) {
+                                                    sortString =
+                                                            pinyin.substring(0, 1).toUpperCase();
                                                 }
+                                                // 正则表达式，判断首字母是否是英文字母
+                                                if (sortString.matches("[A-Z]")) {
+                                                    memberInfo.setLetter(sortString.toUpperCase());
+                                                } else {
+                                                    memberInfo.setLetter("#");
+                                                }
+                                                mAllMemberList.add(memberInfo);
                                             }
-                                            Collections.sort(
-                                                    mAllMemberList, PinyinComparator.getInstance());
-                                            mAdapter.setData(mAllMemberList);
-                                            mAdapter.notifyDataSetChanged();
                                         }
+                                        Collections.sort(
+                                                mAllMemberList, PinyinComparator.getInstance());
+                                        mAdapter.setData(mAllMemberList);
+                                        mAdapter.notifyDataSetChanged();
                                     });
                         }
                     }
@@ -171,8 +163,9 @@ public class ContactListActivity extends RongBaseNoActionbarActivity {
         searchBar.addTextChangedListener(
                 new TextWatcher() {
                     @Override
-                    public void beforeTextChanged(
-                            CharSequence s, int start, int count, int after) {}
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        // do nothing
+                    }
 
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -185,13 +178,12 @@ public class ContactListActivity extends RongBaseNoActionbarActivity {
                             filterDataList.clear();
                             for (MemberInfo member : mAllMemberList) {
                                 String name = member.userInfo.getName();
-                                if (name != null) {
-                                    if (name.contains(s)
-                                            || CharacterParser.getInstance()
-                                                    .getSelling(name)
-                                                    .startsWith(s.toString())) {
-                                        filterDataList.add(member);
-                                    }
+                                if (name != null
+                                        && (name.contains(s)
+                                                || CharacterParser.getInstance()
+                                                        .getSelling(name)
+                                                        .startsWith(s.toString()))) {
+                                    filterDataList.add(member);
                                 }
                             }
                         }
@@ -202,7 +194,9 @@ public class ContactListActivity extends RongBaseNoActionbarActivity {
                     }
 
                     @Override
-                    public void afterTextChanged(Editable s) {}
+                    public void afterTextChanged(Editable s) {
+                        // do nothing
+                    }
                 });
     }
 

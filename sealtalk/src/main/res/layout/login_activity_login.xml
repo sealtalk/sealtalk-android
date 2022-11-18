@@ -85,14 +85,29 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_registration_terms"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:textColor="#484848"
-            android:textSize="@dimen/seal_login_rongcloud_text_size" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
+            <CheckBox
+                android:id="@+id/cb_registration_terms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:background="@null"
+                android:button="@drawable/seal_checkbox_selector"/>
+
+            <TextView
+                android:id="@+id/tv_registration_terms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textColor="#484848"
+                android:textSize="@dimen/seal_login_rongcloud_text_size" />
+
+        </LinearLayout>
         <TextView
             android:id="@+id/tv_seal_talk_version"
             android:layout_width="wrap_content"

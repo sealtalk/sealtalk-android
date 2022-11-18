@@ -79,17 +79,17 @@ public class ContactMessage extends MessageContent {
         JSONObject jsonObject = new JSONObject();
 
         try {
-            jsonObject.put("userId", getId()); // 这里的id（联系人）不同于下边发送名片信息者的 sendUserId
-            jsonObject.put("name", getEmotion(getName()));
-            jsonObject.put("portraitUri", getImgUrl());
-            jsonObject.put("sendUserId", getSendUserId());
-            jsonObject.put("sendUserName", getEmotion(getSendUserName()));
-            jsonObject.put("extra", getExtra());
+            jsonObject.put(USER_ID, getId()); // 这里的id（联系人）不同于下边发送名片信息者的 sendUserId
+            jsonObject.put(NAME, getEmotion(getName()));
+            jsonObject.put(PORTRAIT_URI, getImgUrl());
+            jsonObject.put(SEND_USER_ID, getSendUserId());
+            jsonObject.put(SEND_USER_NAME, getEmotion(getSendUserName()));
+            jsonObject.put(EXTRA, getExtra());
             if (getJSONUserInfo() != null) {
-                jsonObject.putOpt("user", getJSONUserInfo());
+                jsonObject.putOpt(USER, getJSONUserInfo());
             }
-            jsonObject.put("isBurnAfterRead", isDestruct());
-            jsonObject.put("burnDuration", getDestructTime());
+            jsonObject.put(IS_BURN_AFTER_READ, isDestruct());
+            jsonObject.put(BURN_DURATION, getDestructTime());
         } catch (Exception e) {
             RLog.e(TAG, "encode " + e.getMessage());
         }

@@ -43,6 +43,8 @@ import java.util.List;
 public class ContactDetailActivity extends RongBaseNoActionbarActivity
         implements RongUserInfoManager.UserDataObserver {
 
+    private static final int DIP_VALUE_160 = 160;
+    private static final int DIP_VALUE_90 = 90;
     private ImageView mTargetPortrait;
     private TextView mTargetName;
     private TextView mContactName;
@@ -160,12 +162,12 @@ public class ContactDetailActivity extends RongBaseNoActionbarActivity
                                         mGridView.setLayoutParams(
                                                 new LinearLayout.LayoutParams(
                                                         LinearLayout.LayoutParams.MATCH_PARENT,
-                                                        RongUtils.dip2px(160)));
+                                                        RongUtils.dip2px(DIP_VALUE_160)));
                                     } else {
                                         mGridView.setLayoutParams(
                                                 new LinearLayout.LayoutParams(
                                                         LinearLayout.LayoutParams.MATCH_PARENT,
-                                                        RongUtils.dip2px(90)));
+                                                        RongUtils.dip2px(DIP_VALUE_90)));
                                     }
 
                                     ObjectAnimator animator =
@@ -199,11 +201,14 @@ public class ContactDetailActivity extends RongBaseNoActionbarActivity
         mMessage.addTextChangedListener(
                 new TextWatcher() {
                     @Override
-                    public void beforeTextChanged(
-                            CharSequence s, int start, int count, int after) {}
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        // default implementation ignored
+                    }
 
                     @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        // default implementation ignored
+                    }
 
                     @Override
                     public void afterTextChanged(Editable s) {

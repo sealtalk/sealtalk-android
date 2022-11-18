@@ -42,7 +42,9 @@ public class RecognizePlugin implements IPluginModule, IPluginRequestPermissionR
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {}
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // default implementation ignored
+    }
 
     private void startRecognize(Fragment fragment, final RongExtension extension) {
         if (AudioPlayManager.getInstance().isPlaying()) {

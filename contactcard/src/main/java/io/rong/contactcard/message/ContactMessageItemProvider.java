@@ -35,7 +35,6 @@ import java.util.List;
 
 // Todo
 public class ContactMessageItemProvider extends BaseMessageItemProvider<ContactMessage> {
-    private static final String TAG = "ContactMessageItemProvider";
     private IContactCardClickListener iContactCardClickListener;
 
     public ContactMessageItemProvider(IContactCardClickListener iContactCardClickListener) {

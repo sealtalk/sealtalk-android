@@ -12,6 +12,7 @@ import android.text.style.ClickableSpan;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -23,6 +24,7 @@ import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.ui.BaseActivity;
 import cn.rongcloud.im.ui.dialog.CommonDialog;
+import cn.rongcloud.im.ui.dialog.PrivacyDialog;
 import cn.rongcloud.im.ui.dialog.SecurityKickOutDialog;
 import cn.rongcloud.im.ui.fragment.LoginFindPasswordFragment;
 import cn.rongcloud.im.ui.fragment.LoginFragment;
@@ -51,6 +53,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private int currentFragmentIndex = FRAGMENT_LOGIN; // 当前选择 Fragment 下标
     private TextView registrationTerms;
     private TextView mSealTalkVersion;
+    private CheckBox mRegistrationTermsCheckBox;
+    private boolean isPrivacyChecked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +97,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         toLogin = findViewById(R.id.tv_login);
         mSealTalkVersion = findViewById(R.id.tv_seal_talk_version);
         initRegistrationTerms();
+        mRegistrationTermsCheckBox = findViewById(R.id.cb_registration_terms);
+        mRegistrationTermsCheckBox.setChecked(false);
+        mRegistrationTermsCheckBox.setOnCheckedChangeListener(
+                (compoundButton, b) -> isPrivacyChecked = b);
 
         changLang.setOnClickListener(this);
         registerLeft.setOnClickListener(this);
@@ -266,7 +274,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     supportFragmentManager.findFragmentByTag(
                             LoginFragment.class.getCanonicalName());
             if (fragment == null) {
-                fragment = new LoginFragment();
+                LoginFragment loginFragment = new LoginFragment();
+                loginFragment.setLoginListener(
+                        new LoginFragment.OnLoginListener() {
+                            @Override
+                            public boolean beforeLogin() {
+                                if (!isPrivacyChecked) {
+                                    showPrivacyDialog();
+                                }
+                                return isPrivacyChecked;
+                            }
+                        });
+                fragment = loginFragment;
             }
         } else if (i == FRAGMENT_REGISTER) {
             fragment =
@@ -418,6 +437,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         builder.isCancelable(false);
         CommonDialog dialog = builder.build();
         dialog.show(getSupportFragmentManager(), null);
+    }
+
+    /** 显示同意隐私协议对话框 */
+    private void showPrivacyDialog() {
+        PrivacyDialog.Builder builder = new PrivacyDialog.Builder();
+        builder.setDialogButtonClickListener(
+                new CommonDialog.OnDialogButtonClickListener() {
+                    @Override
+                    public void onPositiveClick(View v, Bundle bundle) {
+                        mRegistrationTermsCheckBox.setChecked(true);
+                    }
+
+                    @Override
+                    public void onNegativeClick(View v, Bundle bundle) {}
+                });
+        builder.build().show(getSupportFragmentManager(), null);
     }
 
     /** 显示数美踢出对话框 */

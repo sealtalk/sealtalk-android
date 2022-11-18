@@ -5,5 +5,11 @@ import io.rong.contactcard.message.ContactMessage;
 
 /** 单击名片消息，展示联系人详情信息的接口 Created by Beyond on 05/01/2017. */
 public interface IContactCardClickListener {
+    /**
+     * 单击名片消息
+     *
+     * @param view View
+     * @param content {@link ContactMessage}
+     */
     void onContactCardClick(View view, ContactMessage content);
 }

@@ -158,8 +158,7 @@ public class SealApp extends MultiDexApplication {
         observeAppInBackground();
 
         // UMeng初始化
-        UMConfigure.init(
-                this, BuildConfig.SEALTALK_UMENG_APPKEY, null, UMConfigure.DEVICE_TYPE_PHONE, null);
+        UMConfigure.preInit(this, BuildConfig.SEALTALK_UMENG_APPKEY, null);
     }
 
     /** 检查是否正确的配置 SealTalk 中的一些必要环境。 */

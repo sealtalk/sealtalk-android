@@ -17,7 +17,6 @@ import java.util.List;
 
 /** Created by Beyond on 2017/4/14. */
 public class ContactCardExtensionModule implements IExtensionModule {
-    private final String TAG = this.getClass().getSimpleName();
 
     private IContactCardClickListener iContactCardClickListener;
 
@@ -48,13 +47,19 @@ public class ContactCardExtensionModule implements IExtensionModule {
     }
 
     @Override
-    public void onAttachedToExtension(Fragment fragment, RongExtension extension) {}
+    public void onAttachedToExtension(Fragment fragment, RongExtension extension) {
+        // do nothing
+    }
 
     @Override
-    public void onDetachedFromExtension() {}
+    public void onDetachedFromExtension() {
+        // do nothing
+    }
 
     @Override
-    public void onReceivedMessage(Message message) {}
+    public void onReceivedMessage(Message message) {
+        // do nothing
+    }
 
     @Override
     public List<IPluginModule> getPluginModules(Conversation.ConversationType conversationType) {
@@ -72,5 +77,7 @@ public class ContactCardExtensionModule implements IExtensionModule {
     }
 
     @Override
-    public void onDisconnect() {}
+    public void onDisconnect() {
+        // do nothing
+    }
 }

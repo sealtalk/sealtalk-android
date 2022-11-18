@@ -374,6 +374,9 @@ public class IMManager {
 
                             @Override
                             public boolean interceptOnSentMessage(Message message) {
+                                if (message != null) {
+                                    message.setMessageConfig(null);
+                                }
                                 return false;
                             }
 

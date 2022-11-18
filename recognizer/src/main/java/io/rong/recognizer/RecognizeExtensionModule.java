@@ -13,16 +13,24 @@ import java.util.List;
 
 public class RecognizeExtensionModule implements IExtensionModule {
     @Override
-    public void onInit(Context context, String appKey) {}
+    public void onInit(Context context, String appKey) {
+        // default implementation ignored
+    }
 
     @Override
-    public void onAttachedToExtension(Fragment fragment, RongExtension extension) {}
+    public void onAttachedToExtension(Fragment fragment, RongExtension extension) {
+        // default implementation ignored
+    }
 
     @Override
-    public void onDetachedFromExtension() {}
+    public void onDetachedFromExtension() {
+        // default implementation ignored
+    }
 
     @Override
-    public void onReceivedMessage(Message message) {}
+    public void onReceivedMessage(Message message) {
+        // default implementation ignored
+    }
 
     @Override
     public List<IPluginModule> getPluginModules(Conversation.ConversationType conversationType) {
@@ -38,5 +46,7 @@ public class RecognizeExtensionModule implements IExtensionModule {
     }
 
     @Override
-    public void onDisconnect() {}
+    public void onDisconnect() {
+        // default implementation ignored
+    }
 }

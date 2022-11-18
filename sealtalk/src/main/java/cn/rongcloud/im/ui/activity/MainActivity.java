@@ -51,6 +51,7 @@ import cn.rongcloud.im.viewmodel.SecurityViewModel;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.maps.MapsInitializer;
 import com.amap.api.services.core.ServiceSettings;
+import com.umeng.commonsdk.UMConfigure;
 import io.rong.imkit.conversationlist.ConversationListFragment;
 import io.rong.imkit.picture.tools.ScreenUtils;
 import io.rong.imkit.utils.RouteUtils;
@@ -129,9 +130,15 @@ public class MainActivity extends BaseActivity
         clearBadgeStatu();
         showFraudTipsDialog();
         initAMapPrivacy();
+        initOtherPrivacy();
         if (Build.VERSION.SDK_INT >= 33) {
             askNotificationPermission();
         }
+    }
+
+    private void initOtherPrivacy() {
+        UMConfigure.init(
+                this, BuildConfig.SEALTALK_UMENG_APPKEY, null, UMConfigure.DEVICE_TYPE_PHONE, null);
     }
 
     private void initAMapPrivacy() {

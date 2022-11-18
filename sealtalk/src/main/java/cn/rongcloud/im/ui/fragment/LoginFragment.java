@@ -44,6 +44,7 @@ public class LoginFragment extends BaseFragment {
     private LoginViewModel loginViewModel;
     private Button sendCodeBtn;
     private boolean isRequestVerifyCode = false; // 是否请求成功验证码
+    private OnLoginListener loginListener;
 
     @Override
     protected int getLayoutResId() {
@@ -234,6 +235,9 @@ public class LoginFragment extends BaseFragment {
                 sendCode(countryCode, phoneNumber);
                 break;
             case R.id.btn_login:
+                if (loginListener != null && !loginListener.beforeLogin()) {
+                    return;
+                }
                 String phoneStr = phoneNumberEdit.getText().toString().trim();
                 String codeStr = verifyCodeEdit.getText().toString().trim();
                 String countryCodeStr = countryCodeTv.getText().toString().trim();
@@ -346,5 +350,13 @@ public class LoginFragment extends BaseFragment {
         super.onDestroy();
         verifyCodeEdit = null;
         loginViewModel.stopCodeCountDown();
+    }
+
+    public void setLoginListener(OnLoginListener loginListener) {
+        this.loginListener = loginListener;
+    }
+
+    public interface OnLoginListener {
+        boolean beforeLogin();
     }
 }

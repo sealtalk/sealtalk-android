@@ -88,13 +88,19 @@ public class SpeechToTextUtility {
         RecognizerListener recognizerListener =
                 new RecognizerListener() {
                     @Override
-                    public void onVolumeChanged(int i, byte[] bytes) {}
+                    public void onVolumeChanged(int i, byte[] bytes) {
+                        // default implementation ignored
+                    }
 
                     @Override
-                    public void onBeginOfSpeech() {}
+                    public void onBeginOfSpeech() {
+                        // default implementation ignored
+                    }
 
                     @Override
-                    public void onEndOfSpeech() {}
+                    public void onEndOfSpeech() {
+                        // default implementation ignored
+                    }
 
                     @Override
                     public void onResult(RecognizerResult results, boolean isLast) {

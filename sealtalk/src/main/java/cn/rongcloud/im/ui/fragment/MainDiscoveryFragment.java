@@ -16,6 +16,7 @@ import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.viewmodel.AppViewModel;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.utils.RouteUtils;
+import io.rong.imlib.IRongCoreEnum;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import java.util.ArrayList;
@@ -75,7 +76,15 @@ public class MainDiscoveryFragment extends BaseFragment {
                             @Override
                             public void onChanged(ChatRoomAction chatRoomAction) {
                                 if (chatRoomAction.status == ChatRoomAction.Status.ERROR) {
-                                    ToastUtils.showToast(R.string.discovery_chat_room_join_failure);
+                                    if (chatRoomAction.errorCode
+                                            == IRongCoreEnum.CoreErrorCode.KICKED_FROM_CHATROOM) {
+                                        ToastUtils.showToast(
+                                                R.string
+                                                        .discovery_chat_room_join_failure_by_kicked);
+                                    } else {
+                                        ToastUtils.showToast(
+                                                R.string.discovery_chat_room_join_failure);
+                                    }
                                 } else {
                                     SLog.d(
                                             LogTag.IM,

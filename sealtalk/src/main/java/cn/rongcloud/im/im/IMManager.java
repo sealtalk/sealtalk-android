@@ -1622,7 +1622,7 @@ public class IMManager {
 
                     @Override
                     public void onError(String chatRoomId, IRongCoreEnum.CoreErrorCode code) {
-                        chatRoomActionLiveData.postValue(ChatRoomAction.error(chatRoomId));
+                        chatRoomActionLiveData.postValue(ChatRoomAction.error(chatRoomId, code));
                     }
                 });
     }

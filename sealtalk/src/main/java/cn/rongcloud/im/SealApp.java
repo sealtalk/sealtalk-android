@@ -23,13 +23,13 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.commonsdk.UMConfigure;
 import io.rong.imkit.GlideKitImageEngine;
 import io.rong.imkit.IMCenter;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.config.RongConfigCenter;
 import io.rong.imkit.utils.language.LangUtils;
-import io.rong.imlib.ipc.RongExceptionHandler;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 
@@ -61,6 +61,7 @@ public class SealApp extends MultiDexApplication {
         // 初始化 bugly BUG 统计
         // CrashReport.initCrashReport(getApplicationContext());
         // BlockCanary.install(this, new AppBlockCanaryContext()).start();
+        CrashReport.initCrashReport(getApplicationContext(), "c0ac38ea5b", true);
         ErrorCode.init(this);
         ImageLoaderConfiguration imageLoaderConfiguration =
                 ImageLoaderConfiguration.createDefault(this);
@@ -147,7 +148,7 @@ public class SealApp extends MultiDexApplication {
 
         SearchUtils.init(this);
 
-        Thread.setDefaultUncaughtExceptionHandler(new RongExceptionHandler(this));
+        //        Thread.setDefaultUncaughtExceptionHandler(new RongExceptionHandler(this));
 
         // 微信分享初始化
         WXManager.getInstance().init(this);

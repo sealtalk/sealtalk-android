@@ -32,6 +32,7 @@ import io.rong.imkit.config.RongConfigCenter;
 import io.rong.imkit.utils.language.LangUtils;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
+import java.util.HashMap;
 
 public class SealApp extends MultiDexApplication {
     private static SealApp appInstance;
@@ -57,6 +58,15 @@ public class SealApp extends MultiDexApplication {
         super.onCreate();
 
         appInstance = this;
+        HashMap<String, Integer> map = new HashMap<>();
+        int id = io.rong.imkit.R.drawable.rc_file_icon_pdf;
+        map.put("doc", R.drawable.doc_icon);
+        map.put("mp3", R.drawable.mp3_icon);
+        map.put("pdf", R.drawable.pdf_icon);
+        map.put("rmvb", R.drawable.rmvb_icon);
+        map.put("default", R.drawable.default_icon);
+        map.put("error", 123);
+        RongConfigCenter.conversationConfig().registerFileSuffixTypes(map);
 
         // 初始化 bugly BUG 统计
         // CrashReport.initCrashReport(getApplicationContext());

@@ -1207,7 +1207,7 @@ public class IMManager {
     /** 初始化消息监听 */
     private void initOnReceiveMessage(Context context) {
         IMCenter.getInstance()
-                .addOnReceiveMessageListener(
+                .addAsyncOnReceiveMessageListener(
                         new RongIMClient.OnReceiveMessageWrapperListener() {
                             @Override
                             public boolean onReceived(

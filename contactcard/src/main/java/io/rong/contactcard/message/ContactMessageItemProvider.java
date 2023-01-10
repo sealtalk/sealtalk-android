@@ -14,6 +14,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import io.rong.common.RLog;
 import io.rong.contactcard.ContactCardContext;
 import io.rong.contactcard.IContactCardClickListener;
 import io.rong.contactcard.IContactCardInfoProvider;
@@ -61,6 +62,10 @@ public class ContactMessageItemProvider extends BaseMessageItemProvider<ContactM
             IViewProviderListener<UiMessage> listener) {
 
         final ImageView imageView = holder.getView(R.id.rc_img);
+        if (!checkViewsValid(imageView)) {
+            RLog.e(TAG, "checkViewsValid error," + uiMessage.getObjectName());
+            return;
+        }
         final RequestOptions options =
                 RequestOptions.bitmapTransform(
                                 new RoundedCorners(

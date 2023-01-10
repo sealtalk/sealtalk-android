@@ -35,5 +35,4 @@
     <!--是否开启引用消息功能，默认关闭，开启之后，聊天页面长按消息支持引用（目前仅支持文本消息、文件消息、图文消息、图片消息、引用消息的引用）-->
     <bool name="rc_enable_reference_message">true</bool>
 
-
 </resources>

@@ -30,7 +30,7 @@ import cn.rongcloud.im.viewmodel.CommonListBaseViewModel;
 import cn.rongcloud.im.viewmodel.MainContactsListViewModel;
 import io.rong.imkit.utils.RouteUtils;
 import io.rong.imkit.widget.dialog.OptionsPopupDialog;
-import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.ConversationIdentifier;
 import java.util.List;
 
 public class MainContactsListFragment extends CommonListBaseFragment {
@@ -188,8 +188,7 @@ public class MainContactsListFragment extends CommonListBaseFragment {
                             : friendShipInfo.getDisplayName();
             RouteUtils.routeToConversationActivity(
                     this.getContext(),
-                    Conversation.ConversationType.PRIVATE,
-                    friendShipInfo.getUser().getId());
+                    ConversationIdentifier.obtainPrivate(friendShipInfo.getUser().getId()));
         } else {
             Intent intent = new Intent(getContext(), UserDetailActivity.class);
             intent.putExtra(STR_TARGET_ID, friendShipInfo.getUser().getId());

@@ -36,6 +36,7 @@ public class MainViewModel extends AndroidViewModel {
                 new Conversation.ConversationType[] {
                     Conversation.ConversationType.PRIVATE,
                     Conversation.ConversationType.GROUP,
+                    Conversation.ConversationType.ULTRA_GROUP,
                     Conversation.ConversationType.SYSTEM,
                     Conversation.ConversationType.PUBLIC_SERVICE,
                     Conversation.ConversationType.APP_PUBLIC_SERVICE

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_horizontal"
+    android:descendantFocusability="blocksDescendants">
+
+    <RelativeLayout
+        android:id="@+id/rc_conversation_portrait_rl"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="6dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ultraImageView"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:padding="6dp" />
+
+        <RelativeLayout
+            android:id="@+id/rc_conversation_unread"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true">
+
+            <ImageView
+                android:id="@+id/rc_ultra_conversation_unread_bg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                app:srcCompat="@drawable/rc_unread_count_bg_normal" />
+
+            <TextView
+                android:id="@+id/rc_ultra_conversation_unread_count"
+                style="@style/TextStyle.Alignment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="15"
+                android:visibility="gone"
+                android:textColor="@color/rc_white_color"
+                android:textSize="@dimen/rc_font_auxiliary_size" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

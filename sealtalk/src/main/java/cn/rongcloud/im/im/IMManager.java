@@ -7,10 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -29,6 +31,10 @@ import cn.rongcloud.im.im.message.PokeMessage;
 import cn.rongcloud.im.im.message.SealContactNotificationMessage;
 import cn.rongcloud.im.im.message.SealGroupConNtfMessage;
 import cn.rongcloud.im.im.message.SealGroupNotificationMessage;
+import cn.rongcloud.im.im.message.SealUltraGroupNotificationMessage;
+import cn.rongcloud.im.im.plugin.ImageTextModule;
+import cn.rongcloud.im.im.plugin.InsertMessageModule;
+import cn.rongcloud.im.im.plugin.MentionAllModule;
 import cn.rongcloud.im.im.plugin.PokeExtensionModule;
 import cn.rongcloud.im.im.provider.ContactNotificationMessageProvider;
 import cn.rongcloud.im.im.provider.GroupApplyMessageItemProvider;
@@ -88,8 +94,11 @@ import io.rong.imkit.notification.RongNotificationManager;
 import io.rong.imkit.userinfo.RongUserInfoManager;
 import io.rong.imkit.userinfo.model.GroupUserInfo;
 import io.rong.imkit.utils.RouteUtils;
+import io.rong.imlib.ChannelClient;
 import io.rong.imlib.IRongCallback;
+import io.rong.imlib.IRongCoreCallback;
 import io.rong.imlib.IRongCoreEnum;
+import io.rong.imlib.IRongCoreListener;
 import io.rong.imlib.RongCoreClient;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.chatroom.base.RongChatRoomClient;
@@ -98,6 +107,7 @@ import io.rong.imlib.cs.CustomServiceConfig;
 import io.rong.imlib.cs.CustomServiceManager;
 import io.rong.imlib.model.AndroidConfig;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.ConversationIdentifier;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.IOSConfig;
 import io.rong.imlib.model.MentionedInfo;
@@ -107,6 +117,7 @@ import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.MessagePushConfig;
 import io.rong.imlib.model.RCIMProxy;
 import io.rong.imlib.model.RCTranslationResult;
+import io.rong.imlib.model.UltraGroupTypingStatusInfo;
 import io.rong.imlib.model.UserInfo;
 import io.rong.imlib.publicservice.model.PublicServiceProfile;
 import io.rong.imlib.translation.TranslationClient;
@@ -121,7 +132,9 @@ import io.rong.push.pushconfig.PushConfig;
 import io.rong.recognizer.RecognizeExtensionModule;
 import io.rong.sight.SightExtensionModule;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class IMManager {
     private static volatile IMManager instance;
@@ -143,6 +156,11 @@ public class IMManager {
 
     private IMInfoProvider imInfoProvider;
     private ConversationRecord lastConversationRecord;
+
+    private List<IRongCoreListener.UltraGroupMessageChangeListener>
+            mUltraGroupMessageChangeListener = new ArrayList<>();
+    private CopyOnWriteArrayList<IRongCoreListener.UserGroupStatusListener>
+            mUserGroupStatusListeners = new CopyOnWriteArrayList<>();
 
     private IMManager() {
         RongMentionManager.getInstance()
@@ -220,6 +238,9 @@ public class IMManager {
         // 初始化聊天室监听
         initChatRoomActionListener();
 
+        // 初始化超级群相关监听
+        initUltraGroup();
+
         // 初始化翻译监听
         initTranslationListener();
 
@@ -260,6 +281,7 @@ public class IMManager {
                                             .getMentionedInfo()
                                             .setType(MentionedInfo.MentionedType.ALL);
                                 }
+                                sendUltraGroupTypingStatus(message);
                             }
 
                             @Override
@@ -285,11 +307,6 @@ public class IMManager {
                                     int left,
                                     boolean hasPackage,
                                     boolean offline) {
-                                if (message != null
-                                        && Conversation.ConversationType.ULTRA_GROUP.equals(
-                                                message.getConversationType())) {
-                                    return true;
-                                }
                                 return false;
                             }
 
@@ -425,6 +442,324 @@ public class IMManager {
                                 .code) {
             updateJwtToken();
         }
+    }
+
+    private void initUltraGroupMessageChangeListener() {
+        ChannelClient.getInstance()
+                .setUltraGroupMessageChangeListener(
+                        new IRongCoreListener.UltraGroupMessageChangeListener() {
+                            @Override
+                            public void onUltraGroupMessageExpansionUpdated(
+                                    List<Message> messages) {
+                                if (messages == null) {
+                                    return;
+                                }
+                                StringBuilder stringBuilder = new StringBuilder();
+                                stringBuilder.append("扩展更新: ");
+                                for (Message message : messages) {
+                                    stringBuilder.append(message.getUId()).append(",");
+                                }
+
+                                new Handler(Looper.getMainLooper())
+                                        .post(
+                                                new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        // 此时已经回到主线程
+                                                        Toast.makeText(
+                                                                        context,
+                                                                        stringBuilder.toString(),
+                                                                        Toast.LENGTH_LONG)
+                                                                .show();
+                                                    }
+                                                });
+                                RLog.e(TAG, "onUltraGroupMessageExpansionUpdated:" + stringBuilder);
+                                for (IRongCoreListener.UltraGroupMessageChangeListener l :
+                                        mUltraGroupMessageChangeListener) {
+                                    l.onUltraGroupMessageExpansionUpdated(messages);
+                                }
+                            }
+
+                            @Override
+                            public void onUltraGroupMessageModified(List<Message> messages) {
+                                if (messages == null) {
+                                    return;
+                                }
+                                StringBuilder stringBuilder = new StringBuilder();
+                                stringBuilder.append("消息修改：");
+                                for (Message message : messages) {
+                                    stringBuilder.append(message.getUId()).append(",");
+                                }
+
+                                new Handler(Looper.getMainLooper())
+                                        .post(
+                                                new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        // 此时已经回到主线程
+                                                        Toast.makeText(
+                                                                        context,
+                                                                        stringBuilder.toString(),
+                                                                        Toast.LENGTH_LONG)
+                                                                .show();
+                                                    }
+                                                });
+                                RLog.e(TAG, "onUltraGroupMessageModified:" + stringBuilder);
+                                for (IRongCoreListener.UltraGroupMessageChangeListener l :
+                                        mUltraGroupMessageChangeListener) {
+                                    l.onUltraGroupMessageModified(messages);
+                                }
+                            }
+
+                            @Override
+                            public void onUltraGroupMessageRecalled(List<Message> messages) {
+                                if (messages == null) {
+                                    return;
+                                }
+
+                                StringBuilder stringBuilder = new StringBuilder();
+                                stringBuilder.append("消息撤回：");
+                                for (Message message : messages) {
+                                    stringBuilder.append(message.getUId()).append(",");
+                                }
+
+                                new Handler(Looper.getMainLooper())
+                                        .post(
+                                                new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        // 此时已经回到主线程
+                                                        Toast.makeText(
+                                                                        context,
+                                                                        stringBuilder.toString(),
+                                                                        Toast.LENGTH_LONG)
+                                                                .show();
+                                                    }
+                                                });
+                                RLog.e(TAG, "onUltraGroupMessageRecalled:" + stringBuilder);
+                                for (IRongCoreListener.UltraGroupMessageChangeListener l :
+                                        mUltraGroupMessageChangeListener) {
+                                    l.onUltraGroupMessageRecalled(messages);
+                                }
+                            }
+                        });
+    }
+
+    private void initUserGroupEventListener() {
+        ChannelClient.getInstance()
+                .setUserGroupStatusListener(
+                        new IRongCoreListener.UserGroupStatusListener() {
+                            @Override
+                            public void userGroupDisbandFrom(
+                                    ConversationIdentifier identifier, String[] userGroupIds) {
+                                String users = Arrays.toString(userGroupIds);
+                                RLog.d(TAG, "userGroupDisbandFrom: " + identifier + "," + users);
+                                for (IRongCoreListener.UserGroupStatusListener listener :
+                                        mUserGroupStatusListeners) {
+                                    try {
+                                        listener.userGroupDisbandFrom(identifier, userGroupIds);
+                                    } catch (Exception e) {
+                                        RLog.e(TAG, "userGroupDisbandFrom e: " + e);
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void userAddedTo(
+                                    ConversationIdentifier identifier, String[] userGroupIds) {
+                                String users = Arrays.toString(userGroupIds);
+                                RLog.d(TAG, "userAddedTo: " + identifier + "," + users);
+                                for (IRongCoreListener.UserGroupStatusListener listener :
+                                        mUserGroupStatusListeners) {
+                                    try {
+                                        listener.userAddedTo(identifier, userGroupIds);
+                                    } catch (Exception e) {
+                                        RLog.e(TAG, "userAddedTo e: " + e);
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void userRemovedFrom(
+                                    ConversationIdentifier identifier, String[] userGroupIds) {
+                                String users = Arrays.toString(userGroupIds);
+                                RLog.d(TAG, "userRemovedFrom: " + identifier + "," + users);
+                                for (IRongCoreListener.UserGroupStatusListener listener :
+                                        mUserGroupStatusListeners) {
+                                    try {
+                                        listener.userRemovedFrom(identifier, userGroupIds);
+                                    } catch (Exception e) {
+                                        RLog.e(TAG, "userRemovedFrom e: " + e);
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void userGroupBindTo(
+                                    ConversationIdentifier identifier,
+                                    IRongCoreEnum.UltraGroupChannelType channelType,
+                                    String[] userGroupIds) {
+                                String users = Arrays.toString(userGroupIds);
+                                RLog.d(
+                                        TAG,
+                                        "userGroupBindTo: "
+                                                + identifier
+                                                + ","
+                                                + channelType
+                                                + ","
+                                                + users);
+                                for (IRongCoreListener.UserGroupStatusListener listener :
+                                        mUserGroupStatusListeners) {
+                                    try {
+                                        listener.userGroupBindTo(
+                                                identifier, channelType, userGroupIds);
+                                    } catch (Exception e) {
+                                        RLog.e(TAG, "userGroupBindTo e: " + e);
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void userGroupUnbindFrom(
+                                    ConversationIdentifier identifier,
+                                    IRongCoreEnum.UltraGroupChannelType channelType,
+                                    String[] userGroupIds) {
+                                String users = Arrays.toString(userGroupIds);
+                                RLog.d(
+                                        TAG,
+                                        "userGroupUnbindFrom: "
+                                                + identifier
+                                                + ","
+                                                + channelType
+                                                + ","
+                                                + users);
+                                for (IRongCoreListener.UserGroupStatusListener listener :
+                                        mUserGroupStatusListeners) {
+                                    try {
+                                        listener.userGroupUnbindFrom(
+                                                identifier, channelType, userGroupIds);
+                                    } catch (Exception e) {
+                                        RLog.e(TAG, "userGroupUnbindFrom e: " + e);
+                                    }
+                                }
+                            }
+                        });
+    }
+
+    private void initUltraGroupConversationListener() {
+        ChannelClient.getInstance()
+                .setUltraGroupConversationListener(
+                        new IRongCoreListener.UltraGroupConversationListener() {
+                            @Override
+                            public void ultraGroupConversationListDidSync() {
+                                RLog.e(TAG, "ultraGroupConversationListDidSync");
+                            }
+                        });
+    }
+
+    public void addUltraGroupMessageChangeListener(
+            IRongCoreListener.UltraGroupMessageChangeListener listener) {
+        this.mUltraGroupMessageChangeListener.add(listener);
+    }
+
+    public void removeUltraGroupMessageChangeListener(
+            IRongCoreListener.UltraGroupMessageChangeListener listener) {
+        this.mUltraGroupMessageChangeListener.remove(listener);
+    }
+
+    public void addUserGroupStatusListener(IRongCoreListener.UserGroupStatusListener listener) {
+        this.mUserGroupStatusListeners.add(listener);
+    }
+
+    public void removeUserGroupStatusListener(IRongCoreListener.UserGroupStatusListener listener) {
+        this.mUserGroupStatusListeners.remove(listener);
+    }
+
+    private void initUltraGroupTyingStatusListener() {
+        ChannelClient.getInstance()
+                .setUltraGroupTypingStatusListener(
+                        infoList -> {
+                            if (infoList == null || infoList.isEmpty()) {
+                                return;
+                            }
+                            RLog.e(TAG, "onUltraGroupTypingStatusChanged: " + infoList.size());
+                            for (UltraGroupTypingStatusInfo info : infoList) {
+                                StringBuilder infoString = new StringBuilder();
+                                infoString
+                                        .append(info.getTargetId())
+                                        .append(",")
+                                        .append(info.getChannelId())
+                                        .append(",")
+                                        .append(info.getUserId());
+
+                                RLog.e(TAG, "onUltraGroupTypingStatusChanged: " + infoString);
+                            }
+                        });
+    }
+
+    private void initUltraGroup() {
+        // 初始化超级群已读状态监听
+        initUltraGroupReadStatusListener();
+
+        // 初始化超级群输入状态监听
+        initUltraGroupTyingStatusListener();
+
+        // 设置超级群消息变化监听
+        initUltraGroupMessageChangeListener();
+
+        // 初始化超级群会话监听
+        initUltraGroupConversationListener();
+
+        // 初始化用户组监听
+        initUserGroupEventListener();
+    }
+
+    private void initUltraGroupReadStatusListener() {
+        ChannelClient.getInstance()
+                .setUltraGroupReadTimeListener(
+                        (targetId, channelId, time) -> {
+                            RLog.e(
+                                    TAG,
+                                    "onUltraGroupReadTimeReceived: "
+                                            + targetId
+                                            + ","
+                                            + channelId
+                                            + ","
+                                            + time);
+                            ChannelClient.getInstance()
+                                    .syncUltraGroupReadStatus(
+                                            targetId,
+                                            channelId,
+                                            time,
+                                            new IRongCoreCallback.OperationCallback() {
+                                                @Override
+                                                public void onSuccess() {
+                                                    RLog.e(
+                                                            TAG,
+                                                            "syncUltraGroupReadStatus success "
+                                                                    + targetId
+                                                                    + ","
+                                                                    + channelId
+                                                                    + ","
+                                                                    + time);
+                                                }
+
+                                                @Override
+                                                public void onError(
+                                                        IRongCoreEnum.CoreErrorCode coreErrorCode) {
+                                                    RLog.e(
+                                                            TAG,
+                                                            "syncUltraGroupReadStatus "
+                                                                    + targetId
+                                                                    + ","
+                                                                    + channelId
+                                                                    + ","
+                                                                    + time
+                                                                    + ",e:"
+                                                                    + coreErrorCode);
+                                                }
+                                            });
+                        });
     }
 
     /** 缓存登录 */
@@ -634,6 +969,7 @@ public class IMManager {
         Conversation.ConversationType[] supportedTypes = {
             Conversation.ConversationType.PRIVATE,
             Conversation.ConversationType.GROUP,
+            Conversation.ConversationType.ULTRA_GROUP,
             Conversation.ConversationType.SYSTEM,
             Conversation.ConversationType.APP_PUBLIC_SERVICE,
             Conversation.ConversationType.PUBLIC_SERVICE,
@@ -832,8 +1168,8 @@ public class IMManager {
                             public void onSuccess(Conversation conversation) {
                                 IMCenter.getInstance()
                                         .cleanHistoryMessages(
-                                                conversationType,
-                                                targetId,
+                                                ConversationIdentifier.obtain(
+                                                        conversationType, targetId, ""),
                                                 0,
                                                 false,
                                                 new RongIMClient.OperationCallback() {
@@ -1024,6 +1360,7 @@ public class IMManager {
         SLog.d("ss_register_message", "initMessageAndTemplate");
         ArrayList<Class<? extends MessageContent>> myMessages = new ArrayList<>();
         myMessages.add(SealGroupNotificationMessage.class);
+        myMessages.add(SealUltraGroupNotificationMessage.class);
         myMessages.add(SealContactNotificationMessage.class);
         myMessages.add(SealGroupConNtfMessage.class);
         myMessages.add(GroupApplyMessage.class);
@@ -1061,6 +1398,14 @@ public class IMManager {
         RongExtensionManager.getInstance().registerExtensionModule(new SightExtensionModule());
         // 戳一下
         RongExtensionManager.getInstance().registerExtensionModule(new PokeExtensionModule());
+        if (appTask.isDebugMode()) {
+            // 图文消息
+            RongExtensionManager.getInstance().registerExtensionModule(new ImageTextModule());
+            // @所有人
+            RongExtensionManager.getInstance().registerExtensionModule(new MentionAllModule());
+            // 插入一条消息
+            RongExtensionManager.getInstance().registerExtensionModule(new InsertMessageModule());
+        }
     }
 
     /**
@@ -1439,8 +1784,7 @@ public class IMManager {
                                     if (groupClearMessage.getClearTime() > 0) {
                                         IMCenter.getInstance()
                                                 .cleanHistoryMessages(
-                                                        message.getConversationType(),
-                                                        message.getTargetId(),
+                                                        ConversationIdentifier.obtain(message),
                                                         groupClearMessage.getClearTime(),
                                                         true,
                                                         null);
@@ -1668,9 +2012,7 @@ public class IMManager {
                                     for (Conversation c : conversations) {
                                         IMCenter.getInstance()
                                                 .clearMessagesUnreadStatus(
-                                                        c.getConversationType(),
-                                                        c.getTargetId(),
-                                                        null);
+                                                        ConversationIdentifier.obtain(c), null);
                                         if (c.getConversationType()
                                                         == Conversation.ConversationType.PRIVATE
                                                 || c.getConversationType()
@@ -2152,5 +2494,49 @@ public class IMManager {
 
     public AppTask getAppTask() {
         return appTask;
+    }
+
+    private void sendUltraGroupTypingStatus(Message message) {
+        if (appTask.isDebugMode()) {
+            // 超级群测试代码
+            if (Conversation.ConversationType.ULTRA_GROUP.equals(message.getConversationType())) {
+                ChannelClient.getInstance()
+                        .sendUltraGroupTypingStatus(
+                                message.getTargetId(),
+                                message.getChannelId(),
+                                IRongCoreEnum.UltraGroupTypingStatus.ULTRA_GROUP_TYPING_STATUS_TEXT,
+                                new IRongCoreCallback.OperationCallback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        new Handler(Looper.getMainLooper())
+                                                .post(
+                                                        () -> {
+                                                            // 此时已经回到主线程
+                                                            Toast.makeText(
+                                                                            getContext(),
+                                                                            "发送超级群 Typing 状态成功",
+                                                                            Toast.LENGTH_LONG)
+                                                                    .show();
+                                                        });
+                                    }
+
+                                    @Override
+                                    public void onError(IRongCoreEnum.CoreErrorCode coreErrorCode) {
+                                        new Handler(Looper.getMainLooper())
+                                                .post(
+                                                        () -> {
+                                                            // 此时已经回到主线程
+                                                            Toast.makeText(
+                                                                            getContext(),
+                                                                            "发送超级群 Typing 状态错误"
+                                                                                    + coreErrorCode
+                                                                                            .getValue(),
+                                                                            Toast.LENGTH_LONG)
+                                                                    .show();
+                                                        });
+                                    }
+                                });
+            }
+        }
     }
 }

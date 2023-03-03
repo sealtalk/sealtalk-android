@@ -109,4 +109,8 @@ public class SealTalkUrlCode {
     public static final int REGISTER_AND_LOGIN = 52 * API_CODE_PREFIX;
 
     public static final int TRANSLATION_JWT_TOKEN = 53 * API_CODE_PREFIX;
+
+    public static final int ULTRA_GROUP_CREATE = 53 * API_CODE_PREFIX;
+
+    public static final int ULTRA_CHANNEL_CREATE = 54 * API_CODE_PREFIX;
 }

@@ -10,6 +10,7 @@ import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.fragment.PublicServiceFragment;
 import cn.rongcloud.im.ui.interfaces.PublicServiceClickListener;
 import io.rong.imkit.utils.RouteUtils;
+import io.rong.imlib.model.ConversationIdentifier;
 import io.rong.imlib.publicservice.model.PublicServiceProfile;
 
 public class PublicServiceActivity extends TitleBaseActivity
@@ -37,8 +38,10 @@ public class PublicServiceActivity extends TitleBaseActivity
     public void onPublicServiceClicked(PublicServiceProfile publicServiceProfile) {
         RouteUtils.routeToConversationActivity(
                 this,
-                publicServiceProfile.getConversationType(),
-                publicServiceProfile.getTargetId());
+                ConversationIdentifier.obtain(
+                        publicServiceProfile.getConversationType(),
+                        publicServiceProfile.getTargetId(),
+                        ""));
     }
 
     @Override

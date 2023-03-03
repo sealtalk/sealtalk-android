@@ -11,6 +11,7 @@ import cn.rongcloud.im.model.GroupNoticeResult;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.task.GroupTask;
 import cn.rongcloud.im.utils.SingleSourceLiveData;
+import io.rong.imlib.model.ConversationIdentifier;
 
 public class GroupNoticeViewModel extends AndroidViewModel {
     private SingleSourceLiveData<Resource<GroupEntity>> groupInfo = new SingleSourceLiveData<>();
@@ -92,11 +93,11 @@ public class GroupNoticeViewModel extends AndroidViewModel {
     }
 
     public static class Factory implements ViewModelProvider.Factory {
-        private String targetId;
+        private ConversationIdentifier conversationIdentifier;
         private Application application;
 
-        public Factory(Application application, String targetId) {
-            this.targetId = targetId;
+        public Factory(Application application, ConversationIdentifier conversationIdentifier) {
+            this.conversationIdentifier = conversationIdentifier;
             this.application = application;
         }
 
@@ -106,7 +107,7 @@ public class GroupNoticeViewModel extends AndroidViewModel {
             try {
                 return modelClass
                         .getConstructor(Application.class, String.class)
-                        .newInstance(application, targetId);
+                        .newInstance(application, conversationIdentifier.getTargetId());
             } catch (Exception e) {
                 throw new RuntimeException("Cannot create an instance of " + modelClass, e);
             }

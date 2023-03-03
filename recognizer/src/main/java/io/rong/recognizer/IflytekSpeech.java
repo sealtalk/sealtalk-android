@@ -1,6 +1,7 @@
 package io.rong.recognizer;
 
 import android.content.Context;
+import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.iflytek.cloud.RecognizerResult;
@@ -12,6 +13,8 @@ import org.json.JSONTokener;
 
 /** 集成科大讯飞 SDK 的工具类 */
 public class IflytekSpeech {
+
+    private static final String TAG = IflytekSpeech.class.getSimpleName();
 
     /**
      * 初始化科大讯飞 SDK
@@ -51,7 +54,7 @@ public class IflytekSpeech {
                 //        				}
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
         }
         return ret.toString();
     }

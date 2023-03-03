@@ -24,7 +24,7 @@ import cn.rongcloud.im.viewmodel.CreateGroupViewModel;
 import io.rong.imkit.conversation.extension.component.emoticon.AndroidEmoji;
 import io.rong.imkit.utils.RouteUtils;
 import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.ConversationIdentifier;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -210,7 +210,7 @@ public class CreateGroupActivity extends TitleBaseActivity implements View.OnCli
 
     /** 跳转到群组聊天 */
     private void toGroupChat(String groupId) {
-        RouteUtils.routeToConversationActivity(this, Conversation.ConversationType.GROUP, groupId);
+        RouteUtils.routeToConversationActivity(this, ConversationIdentifier.obtainGroup(groupId));
         finish();
     }
 

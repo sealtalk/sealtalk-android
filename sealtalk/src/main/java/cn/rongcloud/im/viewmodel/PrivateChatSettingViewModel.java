@@ -18,7 +18,7 @@ import cn.rongcloud.im.task.FriendTask;
 import cn.rongcloud.im.task.PrivacyTask;
 import cn.rongcloud.im.task.UserTask;
 import cn.rongcloud.im.utils.SingleSourceLiveData;
-import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.ConversationIdentifier;
 
 /** 私聊详情视图模型 */
 public class PrivateChatSettingViewModel extends AndroidViewModel {
@@ -27,8 +27,7 @@ public class PrivateChatSettingViewModel extends AndroidViewModel {
     private MediatorLiveData<Resource<FriendShipInfo>> friendShipInfoLiveData =
             new MediatorLiveData<>();
 
-    private String targetId;
-    private Conversation.ConversationType conversationType;
+    private ConversationIdentifier conversationIdentifier;
     private SingleSourceLiveData<Resource<ScreenCaptureResult>> screenCaptureResult =
             new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<Void>> setScreenCaptureResult =
@@ -42,23 +41,22 @@ public class PrivateChatSettingViewModel extends AndroidViewModel {
     }
 
     public PrivateChatSettingViewModel(
-            @NonNull Application application,
-            String targetId,
-            Conversation.ConversationType conversationType) {
+            @NonNull Application application, ConversationIdentifier conversationIdentifier) {
         super(application);
 
         userTask = new UserTask(application);
         friendTask = new FriendTask(application);
         privacyTask = new PrivacyTask(application);
-        this.targetId = targetId;
-        this.conversationType = conversationType;
+        this.conversationIdentifier = conversationIdentifier;
         getScreenCaptureStatus();
     }
 
     /** 获取是否开启截屏通知 */
     private void getScreenCaptureStatus() {
         screenCaptureResult.setSource(
-                privacyTask.getScreenCapture(conversationType.getValue(), targetId));
+                privacyTask.getScreenCapture(
+                        conversationIdentifier.getTypeValue(),
+                        conversationIdentifier.getTargetId()));
     }
 
     public LiveData<Resource<ScreenCaptureResult>> getScreenCaptureStatusResult() {
@@ -72,7 +70,10 @@ public class PrivateChatSettingViewModel extends AndroidViewModel {
      */
     public void setScreenCaptureStatus(int status) {
         setScreenCaptureResult.setSource(
-                privacyTask.setScreenCapture(conversationType.getValue(), targetId, status));
+                privacyTask.setScreenCapture(
+                        conversationIdentifier.getTypeValue(),
+                        conversationIdentifier.getTargetId(),
+                        status));
     }
 
     public LiveData<Resource<Void>> getSetScreenCaptureResult() {
@@ -81,11 +82,10 @@ public class PrivateChatSettingViewModel extends AndroidViewModel {
 
     /** 请求好友信息. */
     public void requestFriendInfo() {
-
         // 支持加入信息是自己的话，支持查看自己， 则需要查询自己的信息
-        if (IMManager.getInstance().getCurrentId().equals(targetId)) {
+        if (IMManager.getInstance().getCurrentId().equals(conversationIdentifier.getTargetId())) {
             friendShipInfoLiveData.addSource(
-                    userTask.getUserInfo(targetId),
+                    userTask.getUserInfo(conversationIdentifier.getTargetId()),
                     new Observer<Resource<UserInfo>>() {
                         @Override
                         public void onChanged(Resource<UserInfo> resource) {
@@ -110,7 +110,7 @@ public class PrivateChatSettingViewModel extends AndroidViewModel {
                     });
         } else {
             friendShipInfoLiveData.addSource(
-                    friendTask.getFriendInfo(targetId),
+                    friendTask.getFriendInfo(conversationIdentifier.getTargetId()),
                     new Observer<Resource<FriendShipInfo>>() {
                         @Override
                         public void onChanged(Resource<FriendShipInfo> friendShipInfoResource) {
@@ -130,17 +130,12 @@ public class PrivateChatSettingViewModel extends AndroidViewModel {
     }
 
     public static class Factory implements ViewModelProvider.Factory {
-        private String targetId;
-        private Conversation.ConversationType conversationType;
         private Application application;
+        private ConversationIdentifier conversationIdentifier;
 
-        public Factory(
-                Application application,
-                String targetId,
-                Conversation.ConversationType conversationType) {
-            this.conversationType = conversationType;
-            this.targetId = targetId;
+        public Factory(Application application, ConversationIdentifier conversationIdentifier) {
             this.application = application;
+            this.conversationIdentifier = conversationIdentifier;
         }
 
         @NonNull
@@ -148,11 +143,8 @@ public class PrivateChatSettingViewModel extends AndroidViewModel {
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
             try {
                 return modelClass
-                        .getConstructor(
-                                Application.class,
-                                String.class,
-                                Conversation.ConversationType.class)
-                        .newInstance(application, targetId, conversationType);
+                        .getConstructor(Application.class, ConversationIdentifier.class)
+                        .newInstance(application, conversationIdentifier);
             } catch (Exception e) {
                 throw new RuntimeException("Cannot create an instance of " + modelClass, e);
             }

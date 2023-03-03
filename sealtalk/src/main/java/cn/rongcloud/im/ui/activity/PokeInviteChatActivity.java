@@ -27,6 +27,7 @@ import cn.rongcloud.im.viewmodel.UserDetailViewModel;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.userinfo.RongUserInfoManager;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.ConversationIdentifier;
 import io.rong.imlib.model.Group;
 import java.io.IOException;
 
@@ -228,7 +229,9 @@ public class PokeInviteChatActivity extends BaseActivity implements View.OnClick
                 }
                 RongIM.getInstance()
                         .startConversation(
-                                PokeInviteChatActivity.this, conversationType, targetId, title);
+                                PokeInviteChatActivity.this,
+                                ConversationIdentifier.obtain(conversationType, targetId, ""),
+                                title);
                 finish();
                 break;
         }

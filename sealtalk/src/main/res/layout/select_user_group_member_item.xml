@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    android:background="@color/white">
+
+    <cn.rongcloud.im.ui.widget.SelectableRoundedImageView
+        android:id="@+id/iv_portrait"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="8dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/rc_default_portrait"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:sriv_left_bottom_corner_radius="@dimen/seal_contact_item_portrait_radius"
+        app:sriv_left_top_corner_radius="@dimen/seal_contact_item_portrait_radius"
+        app:sriv_oval="true"
+        app:sriv_right_bottom_corner_radius="@dimen/seal_contact_item_portrait_radius"
+        app:sriv_right_top_corner_radius="@dimen/seal_contact_item_portrait_radius" />
+
+    <TextView
+        android:id="@+id/tv_user_name"
+        style="@style/TextStyle.Alignment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lines="1"
+        android:maxLength="32"
+        android:textColor="@color/color_black_text"
+        android:textSize="16sp"
+        tools:text="小明"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_portrait"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/cb_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:src="@drawable/seal_cb_select_contact_pic_btn_unselected"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/seal_ic_checkbox_full" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_contact_devi_height"
+        android:layout_marginStart="@dimen/seal_contact_devi_margin_left"
+        android:layout_marginEnd="@dimen/seal_contact_devi_margin_right"
+        android:background="@color/seal_contact_devi_color"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

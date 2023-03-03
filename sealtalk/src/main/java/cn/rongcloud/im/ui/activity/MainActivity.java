@@ -3,6 +3,7 @@ package cn.rongcloud.im.ui.activity;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -39,6 +40,7 @@ import cn.rongcloud.im.ui.dialog.MorePopWindow;
 import cn.rongcloud.im.ui.fragment.MainContactsListFragment;
 import cn.rongcloud.im.ui.fragment.MainDiscoveryFragment;
 import cn.rongcloud.im.ui.fragment.MainMeFragment;
+import cn.rongcloud.im.ui.fragment.UltraConversationListFragment;
 import cn.rongcloud.im.ui.view.MainBottomTabGroupView;
 import cn.rongcloud.im.ui.view.MainBottomTabItem;
 import cn.rongcloud.im.ui.widget.DragPointView;
@@ -48,6 +50,7 @@ import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.viewmodel.AppViewModel;
 import cn.rongcloud.im.viewmodel.MainViewModel;
 import cn.rongcloud.im.viewmodel.SecurityViewModel;
+import cn.rongcloud.im.viewmodel.UltraGroupViewModel;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.maps.MapsInitializer;
 import com.amap.api.services.core.ServiceSettings;
@@ -55,9 +58,11 @@ import com.umeng.commonsdk.UMConfigure;
 import io.rong.imkit.conversationlist.ConversationListFragment;
 import io.rong.imkit.picture.tools.ScreenUtils;
 import io.rong.imkit.utils.RouteUtils;
-import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.ConversationIdentifier;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends BaseActivity
         implements MorePopWindow.OnPopWindowItemClickListener {
@@ -65,6 +70,11 @@ public class MainActivity extends BaseActivity
     private static final int REQUEST_START_CHAT = 0;
     private static final int REQUEST_START_GROUP = 1;
     private static final String TAG = "MainActivity";
+    public static final String CHAT = "chat";
+    public static final String ULTRA = "ultra";
+    public static final String CONTACTS = "contacts";
+    public static final String FIND = "find";
+    public static final String ME = "me";
 
     private ViewPager vpFragmentContainer;
     private MainBottomTabGroupView tabGroupView;
@@ -73,49 +83,13 @@ public class MainActivity extends BaseActivity
     private AppViewModel appViewModel;
     public MainViewModel mainViewModel;
     private SecurityViewModel securityViewModel;
+    private UltraGroupViewModel mConversationListViewModel;
     private TextView tvTitle;
     private RelativeLayout btnSearch;
     private ImageButton btnMore;
-
-    /** tab 项枚举 */
-    public enum Tab {
-        /** 聊天 */
-        CHAT(0),
-        /** 联系人 */
-        CONTACTS(1),
-        /** 发现 */
-        FIND(2),
-        /** 我的 */
-        ME(3);
-
-        private int value;
-
-        Tab(int value) {
-            this.value = value;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-        public static Tab getType(int value) {
-            for (Tab type : Tab.values()) {
-                if (value == type.getValue()) {
-                    return type;
-                }
-            }
-            return null;
-        }
-    }
-
-    /** tabs 的图片资源 */
-    private int[] tabImageRes =
-            new int[] {
-                R.drawable.seal_tab_chat_selector,
-                R.drawable.seal_tab_contact_list_selector,
-                R.drawable.seal_tab_find_selector,
-                R.drawable.seal_tab_me_selector
-            };
+    private boolean isDebugUltraGroup = false; // 是否处于debug模式
+    private LinkedHashMap<String, Integer> tabsMap = new LinkedHashMap<>();
+    private String[] tabNameList; // tab 显示名称数组
 
     /** 各个 Fragment 界面 */
     private List<Fragment> fragments = new ArrayList<>();
@@ -124,13 +98,20 @@ public class MainActivity extends BaseActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity_main);
-        //        setWindowStatusBarColor(this,R.color.white);
+        ApplicationInfo info = this.getApplicationInfo();
+        isDebugUltraGroup =
+                getApplication()
+                        .getSharedPreferences("config", MODE_PRIVATE)
+                        .getBoolean("isDebug", false);
+        initTabData();
         initView();
         initViewModel();
         clearBadgeStatu();
         showFraudTipsDialog();
         initAMapPrivacy();
-        initOtherPrivacy();
+        if (isDebugUltraGroup) {
+            initOtherPrivacy();
+        }
         if (Build.VERSION.SDK_INT >= 33) {
             askNotificationPermission();
         }
@@ -201,7 +182,7 @@ public class MainActivity extends BaseActivity
         btnSearch = findViewById(R.id.btn_search);
         btnMore = findViewById(R.id.btn_more);
 
-        int tabIndex = getIntent().getIntExtra(PARAMS_TAB_INDEX, Tab.CHAT.getValue());
+        int tabIndex = getIntent().getIntExtra(PARAMS_TAB_INDEX, tabsMap.get(CHAT));
 
         // title
         btnSearch.setOnClickListener(
@@ -218,11 +199,11 @@ public class MainActivity extends BaseActivity
                     @Override
                     public void onClick(View v) {
                         int currentItem = vpFragmentContainer.getCurrentItem();
-                        if (currentItem == Tab.CHAT.getValue()) {
+                        if (currentItem == tabsMap.get(CHAT)) {
                             MorePopWindow morePopWindow =
                                     new MorePopWindow(MainActivity.this, MainActivity.this);
                             morePopWindow.showPopupWindow(btnMore, 0.8f, -getXOffset(), 0);
-                        } else if (currentItem == Tab.CONTACTS.getValue()) {
+                        } else if (currentItem == tabsMap.get(CONTACTS)) {
                             onAddFriendClick();
                         }
                     }
@@ -245,11 +226,20 @@ public class MainActivity extends BaseActivity
     private void initTabs() {
         // 初始化 tab
         List<TabItem> items = new ArrayList<>();
-        String[] stringArray = getResources().getStringArray(R.array.tab_names);
+        if (isDebugUltraGroup) {
+            tabNameList = getResources().getStringArray(R.array.tab_names_ultra);
+        } else {
+            tabNameList = getResources().getStringArray(R.array.tab_names_nomal);
+        }
         List<TabItem.AnimationDrawableBean> animationDrawableList = new ArrayList<>();
         animationDrawableList.add(
                 new TabItem.AnimationDrawableBean(
                         R.drawable.tab_chat_0, R.drawable.tab_chat_animation_list));
+        if (isDebugUltraGroup) {
+            animationDrawableList.add(
+                    new TabItem.AnimationDrawableBean(
+                            R.drawable.rc_ultra_0, R.drawable.tab_ultra_animation_list));
+        }
         animationDrawableList.add(
                 new TabItem.AnimationDrawableBean(
                         R.drawable.tab_contacts_0, R.drawable.tab_contacts_animation_list));
@@ -259,12 +249,11 @@ public class MainActivity extends BaseActivity
         animationDrawableList.add(
                 new TabItem.AnimationDrawableBean(
                         R.drawable.tab_me_0, R.drawable.tab_me_animation_list));
-        for (Tab tab : Tab.values()) {
+        for (Map.Entry<String, Integer> entry : tabsMap.entrySet()) {
             TabItem tabItem = new TabItem();
-            tabItem.id = tab.getValue();
-            tabItem.text = stringArray[tab.getValue()];
-            tabItem.animationDrawable = animationDrawableList.get(tab.getValue());
-            //            tabItem.drawable = tabImageRes[tab.getValue()];
+            tabItem.id = entry.getValue();
+            tabItem.text = tabNameList[entry.getValue()];
+            tabItem.animationDrawable = animationDrawableList.get(entry.getValue());
             items.add(tabItem);
         }
 
@@ -278,29 +267,46 @@ public class MainActivity extends BaseActivity
                         if (currentItem != item.id) {
                             // 切换布局
                             vpFragmentContainer.setCurrentItem(item.id);
-                            if (item.id == Tab.ME.getValue()) {
+                            if (item.id == tabsMap.get(ME)) {
                                 // 如果是我的页面， 则隐藏红点
-                                ((MainBottomTabItem) tabGroupView.getView(Tab.ME.getValue()))
+                                ((MainBottomTabItem) tabGroupView.getView(tabsMap.get(ME)))
                                         .setRedVisibility(View.GONE);
-                                tvTitle.setText(
-                                        getResources().getStringArray(R.array.tab_names)[3]);
+                                if (isDebugUltraGroup) {
+                                    tvTitle.setText(tabNameList[4]);
+                                } else {
+                                    tvTitle.setText(tabNameList[3]);
+                                }
                                 btnMore.setVisibility(View.GONE);
                                 btnSearch.setVisibility(View.GONE);
                             }
-                        } else if (item.id == Tab.CHAT.getValue()) {
+                        } else if (item.id == tabsMap.get(CHAT)) {
                             btnMore.setVisibility(View.VISIBLE);
                             btnSearch.setVisibility(View.VISIBLE);
                             btnMore.setImageDrawable(
                                     getResources().getDrawable(R.drawable.seal_ic_main_more));
-                            tvTitle.setText(getResources().getStringArray(R.array.tab_names)[0]);
-                        } else if (item.id == Tab.CONTACTS.getValue()) {
+                            tvTitle.setText(tabNameList[0]);
+                        } else if (isDebugUltraGroup && item.id == tabsMap.get(ULTRA)) {
+                            btnMore.setVisibility(View.VISIBLE);
+                            btnSearch.setVisibility(View.GONE);
+                            mConversationListViewModel.getUltraGroupMemberList();
+                            btnMore.setVisibility(View.GONE);
+                            tvTitle.setText(tabNameList[1]);
+                        } else if (item.id == tabsMap.get(CONTACTS)) {
                             btnMore.setVisibility(View.VISIBLE);
                             btnSearch.setVisibility(View.VISIBLE);
                             btnMore.setImageDrawable(
                                     getResources().getDrawable(R.drawable.seal_ic_main_add_friend));
-                            tvTitle.setText(getResources().getStringArray(R.array.tab_names)[1]);
-                        } else if (item.id == Tab.FIND.getValue()) {
-                            tvTitle.setText(getResources().getStringArray(R.array.tab_names)[2]);
+                            if (isDebugUltraGroup) {
+                                tvTitle.setText(tabNameList[2]);
+                            } else {
+                                tvTitle.setText(tabNameList[1]);
+                            }
+                        } else if (item.id == tabsMap.get(FIND)) {
+                            if (isDebugUltraGroup) {
+                                tvTitle.setText(tabNameList[3]);
+                            } else {
+                                tvTitle.setText(tabNameList[2]);
+                            }
                             btnMore.setVisibility(View.GONE);
                             btnSearch.setVisibility(View.GONE);
                         }
@@ -312,7 +318,7 @@ public class MainActivity extends BaseActivity
                     @Override
                     public void onDoubleClick(TabItem item, View view) {
                         // 双击定位到某一个未读消息位置
-                        if (item.id == Tab.CHAT.getValue()) {
+                        if (item.id == tabsMap.get(CHAT)) {
                             // todo
                             //                    MainConversationListFragment fragment =
                             // (MainConversationListFragment) fragments.get(Tab.CHAT.getValue());
@@ -322,28 +328,53 @@ public class MainActivity extends BaseActivity
                 });
 
         // 未读数拖拽
-        ((MainBottomTabItem) tabGroupView.getView(Tab.CHAT.getValue()))
+        ((MainBottomTabItem) tabGroupView.getView(tabsMap.get(CHAT)))
                 .setTabUnReadNumDragListener(
                         new DragPointView.OnDragListencer() {
 
                             @Override
                             public void onDragOut() {
-                                ((MainBottomTabItem) tabGroupView.getView(Tab.CHAT.getValue()))
+                                ((MainBottomTabItem) tabGroupView.getView(tabsMap.get(CHAT)))
                                         .setNumVisibility(View.GONE);
                                 showToast(getString(R.string.seal_main_toast_unread_clear_success));
                                 clearUnreadStatus();
                             }
                         });
-        ((MainBottomTabItem) tabGroupView.getView(Tab.CHAT.getValue()))
+        ((MainBottomTabItem) tabGroupView.getView(tabsMap.get(CHAT)))
                 .setNumVisibility(View.VISIBLE);
+    }
+
+    private void initTabData() {
+        if (isDebugUltraGroup) {
+            tabsMap.put(CHAT, 0);
+            tabsMap.put(ULTRA, 1);
+            tabsMap.put(CONTACTS, 2);
+            tabsMap.put(FIND, 3);
+            tabsMap.put(ME, 4);
+        } else {
+            tabsMap.put(CHAT, 0);
+            tabsMap.put(CONTACTS, 1);
+            tabsMap.put(FIND, 2);
+            tabsMap.put(ME, 3);
+        }
     }
 
     /** 初始化 initFragmentViewPager */
     private void initFragmentViewPager() {
         fragments.add(new ConversationListFragment());
+        if (isDebugUltraGroup) {
+            fragments.add(new UltraConversationListFragment());
+        }
         fragments.add(new MainContactsListFragment());
         fragments.add(new MainDiscoveryFragment());
         fragments.add(new MainMeFragment());
+
+        //        FragmentTransaction fragmentTransaction =
+        // getSupportFragmentManager().beginTransaction();
+        //        for (Fragment item : fragments) {
+        //            fragmentTransaction.add(R.id.vp_main_container, item).hide(item);
+        //        }
+        //        fragmentTransaction.show(fragments.get(0)).commit();
 
         // ViewPager 的 Adpater
         FragmentPagerAdapter fragmentPagerAdapter =
@@ -374,6 +405,17 @@ public class MainActivity extends BaseActivity
                     public void onPageSelected(int position) {
                         // 当页面切换完成之后， 同时也要把 tab 设置到正确的位置
                         tabGroupView.setSelected(position);
+                        if (isDebugUltraGroup) {
+                            if (position == 0) {
+                                RouteUtils.registerActivity(
+                                        RouteUtils.RongActivityType.ConversationActivity,
+                                        ConversationActivity.class);
+                            } else if (position == 1) {
+                                RouteUtils.registerActivity(
+                                        RouteUtils.RongActivityType.ConversationActivity,
+                                        UltraConversationActivity.class);
+                            }
+                        }
                     }
 
                     @Override
@@ -386,7 +428,9 @@ public class MainActivity extends BaseActivity
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         appViewModel = ViewModelProviders.of(this).get(AppViewModel.class);
         securityViewModel = ViewModelProviders.of(this).get(SecurityViewModel.class);
-
+        if (isDebugUltraGroup) {
+            mConversationListViewModel = ViewModelProviders.of(this).get(UltraGroupViewModel.class);
+        }
         appViewModel
                 .getHasNewVersion()
                 .observe(
@@ -395,9 +439,8 @@ public class MainActivity extends BaseActivity
                             @Override
                             public void onChanged(Resource<VersionInfo.AndroidVersion> resource) {
                                 if (resource.status == Status.SUCCESS && resource.data != null) {
-                                    if (tabGroupView.getSelectedItemId() != Tab.ME.getValue()) {
-                                        ((MainBottomTabItem)
-                                                        tabGroupView.getView(Tab.ME.getValue()))
+                                    if (tabGroupView.getSelectedItemId() != tabsMap.get(ME)) {
+                                        ((MainBottomTabItem) tabGroupView.getView(tabsMap.get(ME)))
                                                 .setRedVisibility(View.VISIBLE);
                                     }
                                 }
@@ -413,8 +456,7 @@ public class MainActivity extends BaseActivity
                             @Override
                             public void onChanged(Integer count) {
                                 MainBottomTabItem chatTab =
-                                        (MainBottomTabItem)
-                                                tabGroupView.getView(Tab.CHAT.getValue());
+                                        (MainBottomTabItem) tabGroupView.getView(tabsMap.get(CHAT));
                                 if (count == 0) {
                                     chatTab.setNumVisibility(View.GONE);
                                 } else if (count > 0 && count < 100) {
@@ -438,7 +480,7 @@ public class MainActivity extends BaseActivity
                             @Override
                             public void onChanged(Integer count) {
                                 MainBottomTabItem chatTab =
-                                        tabGroupView.getView(Tab.CONTACTS.getValue());
+                                        tabGroupView.getView(tabsMap.get(CONTACTS));
                                 if (count > 0) {
                                     chatTab.setRedVisibility(View.VISIBLE);
                                 } else {
@@ -462,8 +504,8 @@ public class MainActivity extends BaseActivity
                                                 : friendShipInfo.getDisplayName());
                                 RouteUtils.routeToConversationActivity(
                                         MainActivity.this,
-                                        Conversation.ConversationType.PRIVATE,
-                                        friendShipInfo.getUser().getId(),
+                                        ConversationIdentifier.obtainPrivate(
+                                                friendShipInfo.getUser().getId()),
                                         bundle);
                             }
                         });

@@ -48,7 +48,11 @@ public enum ErrorCode {
     LOGIN_VERIFY_CODE_FAILED(
             SealTalkUrlCode.REGISTER_AND_LOGIN + 1000, R.string.login_verification_code_error),
     LOGIN_VERIFY_CODE_EXPIRED(
-            SealTalkUrlCode.REGISTER_AND_LOGIN + 2000, R.string.login_error_captcha_overdue);
+            SealTalkUrlCode.REGISTER_AND_LOGIN + 2000, R.string.login_error_captcha_overdue),
+    ULTRA_GROUP_CREATE_OVER_LIMIT(
+            SealTalkUrlCode.ULTRA_GROUP_CREATE + 1000, R.string.ultra_group_create_over_limit),
+    ULTRA_GROUP_CHANNEL_OVER_LIMIT(
+            SealTalkUrlCode.ULTRA_CHANNEL_CREATE + 1000, R.string.ultra_group_channel_over_limit);
 
     private int code;
     private int messageResId;

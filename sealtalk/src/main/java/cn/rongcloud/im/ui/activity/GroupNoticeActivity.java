@@ -15,7 +15,6 @@ import androidx.lifecycle.ViewModelProviders;
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.Constant;
 import cn.rongcloud.im.common.ErrorCode;
-import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.model.GroupNoticeResult;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Status;
@@ -25,6 +24,7 @@ import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.viewmodel.GroupNoticeViewModel;
 import io.rong.imkit.conversation.extension.component.emoticon.AndroidEmoji;
+import io.rong.imlib.model.ConversationIdentifier;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -38,8 +38,7 @@ public class GroupNoticeActivity extends TitleBaseActivity {
     private EditText noticeInputEt;
 
     private GroupNoticeViewModel groupNoticeViewModel;
-
-    private String groupId;
+    private ConversationIdentifier conversationIdentifier;
     private String lastNotice;
 
     @Override
@@ -56,9 +55,8 @@ public class GroupNoticeActivity extends TitleBaseActivity {
             finish();
             return;
         }
-
-        groupId = intent.getStringExtra(IntentExtra.STR_TARGET_ID);
-        if (groupId == null) {
+        conversationIdentifier = initConversationIdentifier();
+        if (conversationIdentifier.isValid()) {
             SLog.e(TAG, "targetId or conversationType is null, finish" + TAG);
             finish();
             return;
@@ -138,7 +136,8 @@ public class GroupNoticeActivity extends TitleBaseActivity {
         groupNoticeViewModel =
                 ViewModelProviders.of(
                                 this,
-                                new GroupNoticeViewModel.Factory(this.getApplication(), groupId))
+                                new GroupNoticeViewModel.Factory(
+                                        this.getApplication(), conversationIdentifier))
                         .get(GroupNoticeViewModel.class);
 
         // 获取群公告

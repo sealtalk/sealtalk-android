@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/rc_tv_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:text="给用户组添加/移除成员"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rc_rv_checked"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/rc_tv_tips" />
+
+    <RelativeLayout
+        android:id="@+id/btn_search"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/rc_white_color"
+        app:layout_constraintTop_toBottomOf="@+id/rc_rv_checked"
+        android:paddingStart="@dimen/rc_margin_size_12"
+        android:paddingEnd="@dimen/rc_margin_size_12">
+
+        <EditText
+            android:id="@id/rc_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:paddingStart="8dp"
+            android:background="@drawable/rc_ac_contact_members_search_bg"
+            android:drawableStart="@drawable/rc_search"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:hint="@string/rc_search"
+            android:imeOptions="actionSearch"
+            android:maxLines="1"
+            android:textColor="#999999"
+            android:textSize="14sp"
+            android:visibility="visible" />
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rc_rv_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/rc_tv_finish"
+        app:layout_constraintTop_toBottomOf="@+id/btn_search" />
+
+    <TextView
+        android:id="@+id/rc_tv_finish"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/common_btn_blue_selector"
+        android:gravity="center"
+        android:text="完成"
+        android:textColor="@color/text_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

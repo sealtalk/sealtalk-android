@@ -113,7 +113,7 @@ public class ChangeLanguageActivity extends TitleBaseActivity {
 
     private void backToSettingActivity() {
         Intent mainActivity = new Intent(ChangeLanguageActivity.this, MainActivity.class);
-        mainActivity.putExtra(MainActivity.PARAMS_TAB_INDEX, MainActivity.Tab.ME.getValue());
+        mainActivity.putExtra(MainActivity.PARAMS_TAB_INDEX, MainActivity.ME);
         Intent settLanguageActivity =
                 new Intent(ChangeLanguageActivity.this, ChangeLanguageActivity.class);
         TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(ChangeLanguageActivity.this);

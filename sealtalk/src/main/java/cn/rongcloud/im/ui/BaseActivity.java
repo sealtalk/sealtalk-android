@@ -36,6 +36,8 @@ import cn.rongcloud.im.utils.StatusBarUtil;
 import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.utils.log.SLog;
 import io.rong.imkit.utils.language.RongConfigurationManager;
+import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.ConversationIdentifier;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -543,5 +545,22 @@ public class BaseActivity extends AppCompatActivity {
         }
         lastClickTime = time;
         return false;
+    }
+
+    /** 从Intent取出ConversationIdentifier，没有的话取ConversationType、targetId、channelId构建 */
+    public ConversationIdentifier initConversationIdentifier() {
+        Intent intent = getIntent();
+        if (intent.hasExtra(IntentExtra.SERIA_CONVERSATION_IDENTIFIER)) {
+            ConversationIdentifier identifier =
+                    intent.getParcelableExtra(IntentExtra.SERIA_CONVERSATION_IDENTIFIER);
+            if (identifier != null) {
+                return identifier;
+            }
+        }
+        String targetId = intent.getStringExtra(IntentExtra.STR_TARGET_ID);
+        Conversation.ConversationType conversationType =
+                (Conversation.ConversationType)
+                        intent.getSerializableExtra(IntentExtra.SERIA_CONVERSATION_TYPE);
+        return ConversationIdentifier.obtain(conversationType, targetId, "");
     }
 }

@@ -17,7 +17,6 @@ import cn.rongcloud.im.task.GroupTask;
 import cn.rongcloud.im.ui.activity.JoinGroupActivity;
 import cn.rongcloud.im.ui.activity.UserDetailActivity;
 import io.rong.imkit.RongIM;
-import io.rong.imlib.model.Conversation;
 import java.util.List;
 
 /** QR 二维码界面跳转工具 */
@@ -146,9 +145,7 @@ public class SealQrCodeUISelector {
      */
     private void toGroupChat(
             String groupId, String groupName, MutableLiveData<Resource<String>> result) {
-        RongIM.getInstance()
-                .startConversation(
-                        context, Conversation.ConversationType.GROUP, groupId, groupName);
+        RongIM.getInstance().startGroupChat(context, groupId, groupName);
         result.postValue(Resource.success(null));
     }
 

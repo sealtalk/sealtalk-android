@@ -18,7 +18,7 @@ import io.rong.imkit.RongIM;
 import io.rong.imkit.utils.RouteUtils;
 import io.rong.imlib.IRongCoreEnum;
 import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.ConversationIdentifier;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -153,8 +153,7 @@ public class MainDiscoveryFragment extends BaseFragment {
                                 RongIM.getInstance()
                                         .startConversation(
                                                 getActivity(),
-                                                Conversation.ConversationType.CHATROOM,
-                                                roomId,
+                                                ConversationIdentifier.obtainChatroom(roomId),
                                                 roomTitle);
                             }
 

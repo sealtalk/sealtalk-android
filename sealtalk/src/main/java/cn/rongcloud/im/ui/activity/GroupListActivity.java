@@ -15,7 +15,6 @@ import cn.rongcloud.im.ui.adapter.models.SearchModel;
 import cn.rongcloud.im.ui.fragment.SearchGroupByNameFragment;
 import cn.rongcloud.im.ui.interfaces.OnGroupItemClickListener;
 import io.rong.imkit.RongIM;
-import io.rong.imlib.model.Conversation;
 import java.util.List;
 
 public class GroupListActivity extends TitleAndSearchBaseActivity
@@ -61,12 +60,7 @@ public class GroupListActivity extends TitleAndSearchBaseActivity
 
     @Override
     public void onGroupClicked(GroupEntity groupEntity) {
-        RongIM.getInstance()
-                .startConversation(
-                        this,
-                        Conversation.ConversationType.GROUP,
-                        groupEntity.getId(),
-                        groupEntity.getName());
+        RongIM.getInstance().startGroupChat(this, groupEntity.getId(), groupEntity.getName());
     }
 
     //    @Override

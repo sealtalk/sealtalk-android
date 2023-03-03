@@ -24,6 +24,7 @@ import cn.rongcloud.im.ui.interfaces.OnShowMoreClickListener;
 import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.viewmodel.SearchMessageModel;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.model.ConversationIdentifier;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.SearchConversationResult;
 
@@ -82,8 +83,7 @@ public class SealSearchActivity extends SealSearchBaseActivity
             RongIM.getInstance()
                     .startConversation(
                             this,
-                            result.getConversation().getConversationType(),
-                            result.getConversation().getTargetId(),
+                            ConversationIdentifier.obtain(result.getConversation()),
                             searchConversationModel.getName(),
                             result.getConversation().getSentTime());
         } else {
@@ -91,8 +91,8 @@ public class SealSearchActivity extends SealSearchBaseActivity
             searchMessageFragment = new SearchMessageFragment();
             searchMessageFragment.init(
                     this,
-                    searchConversationModel.getBean().getConversation().getTargetId(),
-                    searchConversationModel.getBean().getConversation().getConversationType(),
+                    ConversationIdentifier.obtain(
+                            searchConversationModel.getBean().getConversation()),
                     searchConversationModel.getName(),
                     searchConversationModel.getPortraitUrl());
             pushFragment(searchMessageFragment);
@@ -152,8 +152,7 @@ public class SealSearchActivity extends SealSearchBaseActivity
         RongIM.getInstance()
                 .startConversation(
                         this,
-                        message.getConversationType(),
-                        message.getTargetId(),
+                        ConversationIdentifier.obtain(message),
                         searchMessageModel.getName(),
                         message.getSentTime() + 2);
     }

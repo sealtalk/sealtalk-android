@@ -39,6 +39,8 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
     private SettingItemView pushLanguageSiv;
     private SettingItemView chatRoomSiv;
     private SettingItemView messageExpansion;
+    private SettingItemView ultraGroup;
+    private SettingItemView ultraGroupUnreadMentionDigests;
     private SettingItemView tag;
     private SettingItemView messageDelivery;
     private SettingItemView shortage;
@@ -50,10 +52,13 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
     private SettingItemView deviceInfo;
     private SettingItemView referMsgTest;
     private SettingItemView permissionlistener;
+    private SettingItemView ultraDebug; // 超级群的debug模式
     private SettingItemView createNotificationChannel;
     private SettingItemView bindChatRTCRoom;
     public static final String SP_IS_SHOW = "is_show";
     public static final String SP_PERMISSION_NAME = "permission_config";
+    public static final String ULTRA_DEBUG_CONFIG = "ultra_debug_config";
+    public static final String ULTRA_IS_DEBUG_KEY = "ultra_isdebug";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,6 +84,13 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
 
         messageExpansion = findViewById(R.id.siv_message_expansion);
         messageExpansion.setOnClickListener(this);
+
+        ultraGroup = findViewById(R.id.siv_ultra_group);
+        ultraGroup.setOnClickListener(this);
+
+        ultraGroupUnreadMentionDigests =
+                findViewById(R.id.siv_ultra_group_unread_mention_msg_digests);
+        ultraGroupUnreadMentionDigests.setOnClickListener(this);
 
         shortage = findViewById(R.id.siv_shortage);
         shortage.setOnClickListener(this);
@@ -120,7 +132,20 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
                         permissionConfigSP.edit().putBoolean(SP_IS_SHOW, isChecked).commit();
                     }
                 });
-
+        ultraDebug = findViewById(R.id.siv_ultra_debug);
+        ultraDebug.setChecked(
+                getSharedPreferences(SealTalkDebugTestActivity.ULTRA_DEBUG_CONFIG, MODE_PRIVATE)
+                        .getBoolean(ULTRA_IS_DEBUG_KEY, false));
+        ultraDebug.setSwitchCheckListener(
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        getSharedPreferences(ULTRA_DEBUG_CONFIG, MODE_PRIVATE)
+                                .edit()
+                                .putBoolean(ULTRA_IS_DEBUG_KEY, isChecked)
+                                .commit();
+                    }
+                });
         createNotificationChannel = findViewById(R.id.siv_create_notification_channel);
         createNotificationChannel.setOnClickListener(this);
 
@@ -145,6 +170,12 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
                 break;
             case R.id.siv_message_expansion:
                 toMessageExpansion();
+                break;
+            case R.id.siv_ultra_group:
+                toUltraGroup();
+                break;
+            case R.id.siv_ultra_group_unread_mention_msg_digests:
+                toUltraGroupUnreadMentionDigest();
                 break;
             case R.id.siv_tag:
                 toTagTest();
@@ -336,6 +367,15 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
                             }
                         })
                 .show();
+    }
+
+    private void toUltraGroup() {
+        Intent intent = new Intent(this, UltraGroupConversationListActivity.class);
+        startActivity(intent);
+    }
+
+    private void toUltraGroupUnreadMentionDigest() {
+        startActivity(new Intent(this, UltraGroupUnreadMentionDigestsActivity.class));
     }
 
     private void toReferMsgTest() {

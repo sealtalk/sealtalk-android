@@ -27,6 +27,8 @@ import io.rong.imlib.RongIMClient;
 import io.rong.imlib.cs.CustomServiceConfig;
 import io.rong.imlib.cs.CustomServiceManager;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.ConversationIdentifier;
+import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
 import io.rong.imlib.publicservice.model.PublicServiceProfile;
 import io.rong.imlib.typingmessage.TypingStatus;
@@ -123,12 +125,13 @@ public class ConversationViewModel extends AndroidViewModel {
     /**
      * 获取 title 根据不同的 type
      *
-     * @param targetId
-     * @param conversationType
      * @param title
      */
     public void getTitleByConversation(
-            String targetId, Conversation.ConversationType conversationType, String title) {
+            ConversationIdentifier conversationIdentifier, String title) {
+        Conversation.ConversationType conversationType = conversationIdentifier.getType();
+        String targetId = conversationIdentifier.getTargetId();
+        String channelId = conversationIdentifier.getChannelId();
         if (conversationType == null) {
             return;
         }
@@ -200,8 +203,8 @@ public class ConversationViewModel extends AndroidViewModel {
                 titleStr.postValue(title);
             }
 
-        } else if (conversationType.equals(Conversation.ConversationType.GROUP)) {
-
+        } else if (conversationType.equals(Conversation.ConversationType.GROUP)
+                || Conversation.ConversationType.ULTRA_GROUP.equals(conversationType)) {
             LiveData<Resource<GroupEntity>> groupInfo = groupTask.getGroupInfo(targetId);
             titleStr.addSource(
                     groupInfo,
@@ -225,7 +228,7 @@ public class ConversationViewModel extends AndroidViewModel {
                                     if (groupEntityResource.status == Status.ERROR) {
                                         io.rong.imlib.model.Group group =
                                                 RongUserInfoManager.getInstance()
-                                                        .getGroupInfo(targetId);
+                                                        .getGroupInfo(targetId + channelId);
                                         if (group != null) {
                                             name = group.getName();
                                         }
@@ -233,55 +236,36 @@ public class ConversationViewModel extends AndroidViewModel {
                                 }
                             }
 
-                            if (!TextUtils.isEmpty(name)) {
-                                titleStr.postValue(name);
-                            } else if (!TextUtils.isEmpty(title)) {
-                                titleStr.postValue(title);
+                            if (Conversation.ConversationType.ULTRA_GROUP.equals(
+                                    conversationType)) {
+                                Group group =
+                                        RongUserInfoManager.getInstance()
+                                                .getGroupInfo(targetId + channelId);
+                                name = group == null ? "" : group.getName();
+                                if (!TextUtils.isEmpty(title)) {
+                                    titleStr.postValue(title);
+                                } else if (!TextUtils.isEmpty(name)) {
+                                    titleStr.postValue(name);
+                                } else {
+                                    titleStr.postValue(targetId);
+                                }
                             } else {
-                                titleStr.postValue(targetId);
+                                if (!TextUtils.isEmpty(name)) {
+                                    titleStr.postValue(name);
+                                } else if (!TextUtils.isEmpty(title)) {
+                                    titleStr.postValue(title);
+                                } else {
+                                    titleStr.postValue(targetId);
+                                }
                             }
                         }
                     });
 
         } else if (conversationType.equals(Conversation.ConversationType.APP_PUBLIC_SERVICE)) {
-            if (targetId == null) {
-                titleStr.postValue(title);
-            } else {
-                imManager.getPublicServiceProfile(
-                        Conversation.PublicServiceType.APP_PUBLIC_SERVICE,
-                        targetId,
-                        new RongIMClient.ResultCallback<PublicServiceProfile>() {
-                            @Override
-                            public void onSuccess(PublicServiceProfile publicServiceProfile) {
-                                titleStr.postValue(publicServiceProfile.getName());
-                            }
-
-                            @Override
-                            public void onError(RongIMClient.ErrorCode errorCode) {
-                                titleStr.postValue("");
-                            }
-                        });
-            }
-
+            getPublicServiceProfile(
+                    targetId, Conversation.PublicServiceType.APP_PUBLIC_SERVICE, title);
         } else if (conversationType.equals(Conversation.ConversationType.PUBLIC_SERVICE)) {
-            if (targetId == null) {
-                titleStr.postValue(title);
-            } else {
-                imManager.getPublicServiceProfile(
-                        Conversation.PublicServiceType.PUBLIC_SERVICE,
-                        targetId,
-                        new RongIMClient.ResultCallback<PublicServiceProfile>() {
-                            @Override
-                            public void onSuccess(PublicServiceProfile publicServiceProfile) {
-                                titleStr.postValue(publicServiceProfile.getName());
-                            }
-
-                            @Override
-                            public void onError(RongIMClient.ErrorCode errorCode) {
-                                titleStr.postValue("");
-                            }
-                        });
-            }
+            getPublicServiceProfile(targetId, Conversation.PublicServiceType.PUBLIC_SERVICE, title);
         } else if (conversationType.equals(Conversation.ConversationType.CHATROOM)) {
             titleStr.postValue(title);
         } else if (conversationType.equals(Conversation.ConversationType.SYSTEM)) {
@@ -290,6 +274,28 @@ public class ConversationViewModel extends AndroidViewModel {
             titleStr.postValue("");
         } else {
             titleStr.postValue("");
+        }
+    }
+
+    private void getPublicServiceProfile(
+            String targetId, Conversation.PublicServiceType type, String title) {
+        if (targetId == null) {
+            titleStr.postValue(title);
+        } else {
+            imManager.getPublicServiceProfile(
+                    type,
+                    targetId,
+                    new RongIMClient.ResultCallback<PublicServiceProfile>() {
+                        @Override
+                        public void onSuccess(PublicServiceProfile publicServiceProfile) {
+                            titleStr.postValue(publicServiceProfile.getName());
+                        }
+
+                        @Override
+                        public void onError(RongIMClient.ErrorCode errorCode) {
+                            titleStr.postValue("");
+                        }
+                    });
         }
     }
 

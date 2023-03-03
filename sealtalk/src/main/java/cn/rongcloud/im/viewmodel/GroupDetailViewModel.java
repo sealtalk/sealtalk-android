@@ -22,6 +22,7 @@ import cn.rongcloud.im.task.PrivacyTask;
 import cn.rongcloud.im.utils.SingleSourceLiveData;
 import cn.rongcloud.im.utils.SingleSourceMapLiveData;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.ConversationIdentifier;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -436,17 +437,12 @@ public class GroupDetailViewModel extends AndroidViewModel {
     }
 
     public static class Factory implements ViewModelProvider.Factory {
-        private String targetId;
-        private Conversation.ConversationType conversationType;
+        private ConversationIdentifier conversationIdentifier;
         private Application application;
 
-        public Factory(
-                Application application,
-                String targetId,
-                Conversation.ConversationType conversationType) {
-            this.conversationType = conversationType;
-            this.targetId = targetId;
+        public Factory(Application application, ConversationIdentifier conversationIdentifier) {
             this.application = application;
+            this.conversationIdentifier = conversationIdentifier;
         }
 
         @NonNull
@@ -458,7 +454,10 @@ public class GroupDetailViewModel extends AndroidViewModel {
                                 Application.class,
                                 String.class,
                                 Conversation.ConversationType.class)
-                        .newInstance(application, targetId, conversationType);
+                        .newInstance(
+                                application,
+                                conversationIdentifier.getTargetId(),
+                                conversationIdentifier.getType());
             } catch (Exception e) {
                 throw new RuntimeException("Cannot create an instance of " + modelClass, e);
             }

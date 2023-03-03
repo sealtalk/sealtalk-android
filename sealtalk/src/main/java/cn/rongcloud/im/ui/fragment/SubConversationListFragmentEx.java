@@ -98,8 +98,7 @@ public class SubConversationListFragmentEx extends SubConversationListFragment {
                                 } else {
                                     RouteUtils.routeToConversationActivity(
                                             view.getContext(),
-                                            baseUiConversation.mCore.getConversationType(),
-                                            baseUiConversation.mCore.getTargetId());
+                                            baseUiConversation.getConversationIdentifier());
                                 }
                             } else {
                                 RLog.e(TAG, "invalid conversation.");

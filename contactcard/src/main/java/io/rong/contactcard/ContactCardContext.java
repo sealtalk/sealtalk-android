@@ -5,7 +5,9 @@ public class ContactCardContext {
     private IContactCardSelectListProvider iContactCardSelectListProvider;
     private IContactCardInfoProvider iContactCardInfoProvider;
 
-    private ContactCardContext() {}
+    private ContactCardContext() {
+        // default implementation ignored
+    }
 
     private static class SingletonHolder {
         static ContactCardContext sInstance = new ContactCardContext();

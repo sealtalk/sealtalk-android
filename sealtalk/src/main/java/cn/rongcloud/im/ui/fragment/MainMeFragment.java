@@ -34,7 +34,7 @@ import io.rong.imkit.utils.RouteUtils;
 import io.rong.imkit.utils.language.LangUtils;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.cs.model.CSCustomServiceInfo;
-import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.ConversationIdentifier;
 import io.rong.imlib.model.Group;
 
 public class MainMeFragment extends BaseFragment {
@@ -179,10 +179,7 @@ public class MainMeFragment extends BaseFragment {
                         RouteUtils.TITLE, getString(R.string.seal_main_mine_online_custom_service));
                 bundle.putParcelable(RouteUtils.CUSTOM_SERVICE_INFO, builder.build());
                 RouteUtils.routeToConversationActivity(
-                        getContext(),
-                        Conversation.ConversationType.CUSTOMER_SERVICE,
-                        "service",
-                        bundle);
+                        getContext(), ConversationIdentifier.obtainCustomer("service"), bundle);
                 break;
             case R.id.siv_about:
                 Intent intent = new Intent(getActivity(), AboutSealTalkActivity.class);

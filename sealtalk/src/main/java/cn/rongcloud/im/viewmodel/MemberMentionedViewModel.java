@@ -15,7 +15,9 @@ import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.model.GroupMember;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Status;
+import cn.rongcloud.im.model.UltraGroupMemberListResult;
 import cn.rongcloud.im.task.GroupTask;
+import cn.rongcloud.im.task.UltraGroupTask;
 import cn.rongcloud.im.utils.CharacterParser;
 import cn.rongcloud.im.utils.SingleSourceLiveData;
 import cn.rongcloud.im.utils.SingleSourceMapLiveData;
@@ -31,10 +33,13 @@ public class MemberMentionedViewModel extends AndroidViewModel {
 
     private IMManager imManager;
     private GroupTask groupTask;
+    private UltraGroupTask ultraGroupTask;
     private SingleSourceMapLiveData<Resource<List<GroupMember>>, List<GroupMember>>
             memberListResult;
     private SingleSourceLiveData<Resource<List<GroupMember>>> memberList =
             new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<List<UltraGroupMemberListResult>>>
+            ultraGroupMemberInfoListResult = new SingleSourceLiveData<>();
     private MutableLiveData<List<GroupMember>> filterMemberResult = new MutableLiveData<>();
 
     public MemberMentionedViewModel(@NonNull Application application) {
@@ -49,6 +54,7 @@ public class MemberMentionedViewModel extends AndroidViewModel {
 
         imManager = IMManager.getInstance();
         groupTask = new GroupTask(application.getApplicationContext());
+        ultraGroupTask = new UltraGroupTask(application.getApplicationContext());
 
         memberListResult =
                 new SingleSourceMapLiveData<>(
@@ -159,6 +165,8 @@ public class MemberMentionedViewModel extends AndroidViewModel {
             String targerId, Conversation.ConversationType conversationType) {
         if (conversationType.equals(Conversation.ConversationType.GROUP)) {
             getGroupMembers(targerId);
+        } else if (conversationType.equals(Conversation.ConversationType.ULTRA_GROUP)) {
+            getUltraGroupMembers(targerId);
         }
     }
 
@@ -169,6 +177,16 @@ public class MemberMentionedViewModel extends AndroidViewModel {
      */
     private void getGroupMembers(String targetId) {
         memberList.setSource(groupTask.getGroupMemberInfoList(targetId));
+    }
+
+    /**
+     * 获取超级群成员
+     *
+     * @param targetId
+     */
+    private void getUltraGroupMembers(String targetId) {
+        ultraGroupMemberInfoListResult.setSource(
+                ultraGroupTask.getUltraGroupMemberInfoList(targetId, 1, 100));
     }
 
     /**

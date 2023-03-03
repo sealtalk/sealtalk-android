@@ -23,7 +23,6 @@ import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.viewmodel.CopyGroupViewModel;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.userinfo.RongUserInfoManager;
-import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 import java.util.List;
 import java.util.Random;
@@ -95,9 +94,8 @@ public class GroupCopyActivity extends TitleBaseActivity implements View.OnClick
                                     isCopyNameGoing = false;
                                     if (copyGroupResultResource.data != null) {
                                         RongIM.getInstance()
-                                                .startConversation(
+                                                .startGroupChat(
                                                         GroupCopyActivity.this,
-                                                        Conversation.ConversationType.GROUP,
                                                         copyGroupResultResource.data.id,
                                                         copyGroupName);
                                         if (copyGroupResultResource.data.userStatus != null

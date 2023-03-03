@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="30dp">
+
+            <cn.rongcloud.im.ui.widget.WrapHeightGridView
+                android:id="@+id/profile_gv_group_member"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:gravity="start"
+                android:listSelector="@android:color/transparent"
+                android:numColumns="5"
+                android:paddingStart="1dp"
+                android:paddingEnd="1dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#fff">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.25dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginEnd="14dp"
+                    android:background="#dfdfdd" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#fff">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.25dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginEnd="14dp"
+                    android:background="#dfdfdd" />
+            </LinearLayout>
+
+            <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/profile_ultra_siv_group_name_container"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/seal_group_detail_item_height"
+                app:item_content="群组名称"
+                app:item_divider="true"
+                app:item_right_image="@drawable/seal_ic_mine_go"
+                app:item_value_text_size="15sp"/>
+
+            <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/profile_ultra_siv_channel_name_container"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/seal_group_detail_item_height"
+                android:visibility="gone"
+                app:item_content="频道名称"
+                app:item_divider="true"
+                app:item_right_image="@drawable/seal_ic_mine_go"
+                app:item_value_text_size="15sp"/>
+
+            <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/profile_ultra_siv_user_group_container"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/seal_group_detail_item_height"
+                app:item_content="用户组"
+                app:item_divider="true"
+                app:item_right_image="@drawable/seal_ic_mine_go"
+                app:item_value_text_size="15sp"/>
+
+            <io.rong.imkit.widget.SettingItemView
+                android:id="@+id/siv_channel_members"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:item_content="频道白名单"
+                app:item_divider="true"
+                app:item_right_image="@drawable/seal_ic_mine_go" />
+
+            <io.rong.imkit.widget.SettingItemView
+                android:id="@+id/siv_channel_add_members"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:item_content="添加白名单"
+                app:item_divider="true"
+                app:item_right_image="@drawable/seal_ic_mine_go" />
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/cb_private_channel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="私有频道" />
+
+            <cn.rongcloud.im.ui.widget.WrapHeightGridView
+                android:id="@+id/profile_gv_channel_member"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:gravity="start"
+                android:listSelector="@android:color/transparent"
+                android:numColumns="5"
+                android:paddingStart="1dp"
+                android:paddingEnd="1dp" />
+
+            <Button
+                android:id="@+id/profile_btn_group_quit"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="14dp"
+                android:background="@drawable/seal_btn_red_selector"
+                android:text="@string/profile_quit_group"
+                android:textColor="#FFF"
+                android:textSize="16sp" />
+
+
+            <Button
+                android:id="@+id/btn_group_channel_delete"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="14dp"
+                android:background="@drawable/seal_btn_red_selector"
+                android:text="删除频道"
+                android:textColor="#FFF"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

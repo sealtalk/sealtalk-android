@@ -14,6 +14,7 @@ import cn.rongcloud.im.ui.fragment.PublicServiceSearchFragment;
 import cn.rongcloud.im.ui.interfaces.PublicServiceClickListener;
 import io.rong.imkit.feature.publicservice.PublicServiceProfileFragment;
 import io.rong.imkit.utils.RouteUtils;
+import io.rong.imlib.model.ConversationIdentifier;
 import io.rong.imlib.publicservice.model.PublicServiceProfile;
 
 public class PublicServiceSearchActivity extends TitleBaseActivity
@@ -45,8 +46,10 @@ public class PublicServiceSearchActivity extends TitleBaseActivity
         if (publicServiceProfile.isFollow()) {
             RouteUtils.routeToConversationActivity(
                     this,
-                    publicServiceProfile.getConversationType(),
-                    publicServiceProfile.getTargetId());
+                    ConversationIdentifier.obtain(
+                            publicServiceProfile.getConversationType(),
+                            publicServiceProfile.getTargetId(),
+                            ""));
         } else {
             Uri uri =
                     Uri.parse("rong://" + getApplicationInfo().packageName)

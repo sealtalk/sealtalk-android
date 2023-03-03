@@ -41,6 +41,7 @@ public class ContactMessageItemProvider extends BaseMessageItemProvider<ContactM
     public ContactMessageItemProvider(IContactCardClickListener iContactCardClickListener) {
         this.iContactCardClickListener = iContactCardClickListener;
         mConfig.showContentBubble = false;
+        mConfig.showReadState = true;
     }
 
     @Override

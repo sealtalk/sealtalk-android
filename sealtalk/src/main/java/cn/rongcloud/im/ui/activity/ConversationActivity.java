@@ -40,6 +40,7 @@ import cn.rongcloud.im.model.ScreenCaptureResult;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.model.TypingInfo;
 import cn.rongcloud.im.sp.UserConfigCache;
+import cn.rongcloud.im.task.AppTask;
 import cn.rongcloud.im.ui.dialog.RencentPicturePopWindow;
 import cn.rongcloud.im.ui.view.AnnouceView;
 import cn.rongcloud.im.utils.CheckPermissionUtils;
@@ -61,6 +62,7 @@ import io.rong.imkit.widget.TitleBar;
 import io.rong.imlib.IRongCoreListener;
 import io.rong.imlib.RongCoreClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.ConversationIdentifier;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -75,6 +77,7 @@ public class ConversationActivity extends RongBaseActivity
     private ConversationFragment fragment;
     private String mTargetId;
     private Conversation.ConversationType mConversationType;
+    private ConversationIdentifier conversationIdentifier;
     private AnnouceView annouceView;
     private ConversationViewModel conversationViewModel;
     private RongExtensionViewModel extensionViewModel;
@@ -128,6 +131,7 @@ public class ConversationActivity extends RongBaseActivity
             return;
         }
 
+        conversationIdentifier = initConversationIdentifier();
         mTargetId = getIntent().getStringExtra(RouteUtils.TARGET_ID);
         mConversationType =
                 Conversation.ConversationType.valueOf(
@@ -233,7 +237,7 @@ public class ConversationActivity extends RongBaseActivity
     @Override
     protected void onResume() {
         super.onResume();
-        getTitleStr(mTargetId, mConversationType, title);
+        getTitleStr(title);
         refreshScreenCaptureStatus();
         // 设置聊天背景
         if (isFirstResume) {
@@ -554,7 +558,7 @@ public class ConversationActivity extends RongBaseActivity
                     ViewModelProviders.of(
                                     this,
                                     new PrivateChatSettingViewModel.Factory(
-                                            getApplication(), mTargetId, mConversationType))
+                                            getApplication(), conversationIdentifier))
                             .get(PrivateChatSettingViewModel.class);
             privateChatSettingViewModel
                     .getScreenCaptureStatusResult()
@@ -585,14 +589,11 @@ public class ConversationActivity extends RongBaseActivity
     /**
      * 获取 title
      *
-     * @param mTargetId
-     * @param conversationType
      * @param title
      */
-    private void getTitleStr(
-            String mTargetId, Conversation.ConversationType conversationType, String title) {
+    private void getTitleStr(String title) {
         if (conversationViewModel != null) {
-            conversationViewModel.getTitleByConversation(mTargetId, conversationType, title);
+            conversationViewModel.getTitleByConversation(conversationIdentifier, title);
         }
     }
 
@@ -833,22 +834,27 @@ public class ConversationActivity extends RongBaseActivity
             startActivity(intent);
         } else if (conversationType == Conversation.ConversationType.PRIVATE) {
             Intent intent = new Intent(this, PrivateChatSettingActivity.class);
-            intent.putExtra(IntentExtra.STR_TARGET_ID, mTargetId);
-            intent.putExtra(
-                    IntentExtra.SERIA_CONVERSATION_TYPE, Conversation.ConversationType.PRIVATE);
+            intent.putExtra(IntentExtra.SERIA_CONVERSATION_IDENTIFIER, conversationIdentifier);
             startActivity(intent);
         } else if (conversationType == Conversation.ConversationType.GROUP) {
             Intent intent = new Intent(this, GroupDetailActivity.class);
-            intent.putExtra(IntentExtra.STR_TARGET_ID, mTargetId);
-            intent.putExtra(
-                    IntentExtra.SERIA_CONVERSATION_TYPE, Conversation.ConversationType.GROUP);
+            intent.putExtra(IntentExtra.SERIA_CONVERSATION_IDENTIFIER, conversationIdentifier);
             startActivity(intent);
         } else if (conversationType == Conversation.ConversationType.SYSTEM) {
             Intent intent = new Intent(this, SystemSettingActivity.class);
-            intent.putExtra(IntentExtra.STR_TARGET_ID, mTargetId);
-            intent.putExtra(
-                    IntentExtra.SERIA_CONVERSATION_TYPE, Conversation.ConversationType.SYSTEM);
+            intent.putExtra(IntentExtra.SERIA_CONVERSATION_IDENTIFIER, conversationIdentifier);
             startActivity(intent);
+        } else if (conversationType == Conversation.ConversationType.ULTRA_GROUP) {
+            AppTask appTask = IMManager.getInstance().getAppTask();
+            if (appTask.isDebugMode()) {
+                Intent intent = new Intent(this, UltraGroupSettingActivity.class);
+                intent.putExtra(IntentExtra.SERIA_CONVERSATION_IDENTIFIER, conversationIdentifier);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(this, UltraSettingActivity.class);
+                intent.putExtra(IntentExtra.SERIA_CONVERSATION_IDENTIFIER, conversationIdentifier);
+                startActivity(intent);
+            }
         } else if (conversationType == Conversation.ConversationType.DISCUSSION) {
 
         }

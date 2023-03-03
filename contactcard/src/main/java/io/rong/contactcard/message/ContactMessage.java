@@ -34,7 +34,9 @@ public class ContactMessage extends MessageContent {
     private String extra;
     private static final Pattern pattern = Pattern.compile("\\[/u([0-9A-Fa-f]+)\\]");
 
-    public ContactMessage() {}
+    public ContactMessage() {
+        // default implementation ignored
+    }
 
     public ContactMessage(
             String id,

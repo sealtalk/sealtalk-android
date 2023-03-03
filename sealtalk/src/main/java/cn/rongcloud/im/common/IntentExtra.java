@@ -1,11 +1,32 @@
 package cn.rongcloud.im.common;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import cn.rongcloud.im.utils.IntentDataTransferBinder;
+
 public class IntentExtra {
     public static final String STR_TARGET_ID = "target_id";
 
     public static final String START_FROM_ID = "from_id";
 
     public static final String SERIA_CONVERSATION_TYPE = "conversation_type";
+
+    public static final String SERIA_CONVERSATION_IDENTIFIER = "conversation_identifier";
+
+    public static final String SERIA_USER_GROUP_CHECKED_LIST = "user_group_checked_list";
+
+    public static final String SERIA_USER_GROUP_INFO = "user_group_info";
+
+    public static final String SERIA_USER_GROUP_TITLE = "user_group_title";
+
+    public static final String SERIA_USER_GROUP_CAN_EDIT = "user_group_can_edit";
+
+    public static final String SERIA_USER_GROUP_SOURCE_CODE = "user_group_source_code";
+
+    public static final String SERIA_INTENT_BINDER = "intent_binder";
+
+    public static final String SERIA_INTENT_BUNDLE = "intent_bundle";
 
     public static final String LIST_STR_ID_LIST = "id_list";
 
@@ -77,4 +98,28 @@ public class IntentExtra {
 
     public static final String STR_POKE_MESSAGE = "poke_message";
     public static final String CONFIRM_SEND = "confirm_send";
+
+    public static void setResultWithBinder(Activity activity, Object data) {
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        IntentDataTransferBinder transferBinder = new IntentDataTransferBinder(data);
+        bundle.putBinder(IntentExtra.SERIA_INTENT_BINDER, transferBinder);
+        intent.putExtra(IntentExtra.SERIA_INTENT_BUNDLE, bundle);
+        activity.setResult(Activity.RESULT_OK, intent);
+        activity.finish();
+    }
+
+    public static IntentDataTransferBinder extractIntentBinder(Intent data) {
+        if (data == null) {
+            return null;
+        }
+        Bundle bundle = data.getBundleExtra(IntentExtra.SERIA_INTENT_BUNDLE);
+        if (bundle == null) {
+            return null;
+        }
+        if (!bundle.containsKey(IntentExtra.SERIA_INTENT_BINDER)) {
+            return null;
+        }
+        return (IntentDataTransferBinder) bundle.getBinder(IntentExtra.SERIA_INTENT_BINDER);
+    }
 }

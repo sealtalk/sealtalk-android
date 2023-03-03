@@ -51,6 +51,7 @@ import io.rong.imkit.conversation.extension.component.emoticon.AndroidEmoji;
 import io.rong.imkit.model.OperationResult;
 import io.rong.imkit.userinfo.RongUserInfoManager;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.ConversationIdentifier;
 import io.rong.imlib.model.Group;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,8 +73,7 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
     private Button quitGroupBtn;
     private LoadingDialog loadingDialog;
 
-    private String groupId;
-    private Conversation.ConversationType conversationType;
+    private ConversationIdentifier conversationIdentifier;
     private GroupDetailViewModel groupDetailViewModel;
     private ConversationSettingViewModel conversationSettingViewModel;
     private GridGroupMemberAdapter memberAdapter;
@@ -116,11 +116,8 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
             return;
         }
 
-        conversationType =
-                (Conversation.ConversationType)
-                        intent.getSerializableExtra(IntentExtra.SERIA_CONVERSATION_TYPE);
-        groupId = intent.getStringExtra(IntentExtra.STR_TARGET_ID);
-        if (groupId == null || conversationType == null) {
+        conversationIdentifier = initConversationIdentifier();
+        if (conversationIdentifier.isValid()) {
             SLog.e(TAG, "targetId or conversationType is null, finish" + TAG);
             return;
         }
@@ -259,7 +256,7 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
                 ViewModelProviders.of(
                                 this,
                                 new GroupDetailViewModel.Factory(
-                                        this.getApplication(), groupId, conversationType))
+                                        this.getApplication(), conversationIdentifier))
                         .get(GroupDetailViewModel.class);
 
         // 获取自己的信息
@@ -341,7 +338,7 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
                 ViewModelProviders.of(
                                 this,
                                 new ConversationSettingViewModel.Factory(
-                                        this.getApplication(), conversationType, groupId))
+                                        this.getApplication(), conversationIdentifier))
                         .get(ConversationSettingViewModel.class);
 
         conversationSettingViewModel
@@ -746,7 +743,7 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
                 break;
             case R.id.profile_siv_group_user_info:
                 Intent intentUserInfo = new Intent(this, GroupUserInfoActivity.class);
-                intentUserInfo.putExtra(IntentExtra.GROUP_ID, groupId);
+                intentUserInfo.putExtra(IntentExtra.GROUP_ID, conversationIdentifier.getTargetId());
                 intentUserInfo.putExtra(
                         IntentExtra.STR_TARGET_ID, IMManager.getInstance().getCurrentId());
                 startActivity(intentUserInfo);
@@ -759,7 +756,7 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
                 break;
             case R.id.profile_siv_group_manager:
                 Intent intent = new Intent(this, GroupManagerActivity.class);
-                intent.putExtra(IntentExtra.GROUP_ID, groupId);
+                intent.putExtra(IntentExtra.GROUP_ID, conversationIdentifier.getTargetId());
                 startActivity(intent);
                 break;
             case R.id.profile_siv_group_clean_timming:
@@ -779,7 +776,9 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
         Intent intent = new Intent(this, UserDetailActivity.class);
         intent.putExtra(IntentExtra.STR_TARGET_ID, groupMember.getUserId());
         intent.putExtra(IntentExtra.GROUP_ID, groupMember.getGroupId());
-        Group groupInfo = RongUserInfoManager.getInstance().getGroupInfo(groupId);
+        Group groupInfo =
+                RongUserInfoManager.getInstance()
+                        .getGroupInfo(conversationIdentifier.getTargetId());
         if (groupInfo != null) {
             intent.putExtra(IntentExtra.STR_GROUP_NAME, groupInfo.getName());
         }
@@ -794,11 +793,11 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
     private void toMemberManage(boolean isAdd) {
         if (isAdd) {
             Intent intent = new Intent(this, SelectFriendExcludeGroupActivity.class);
-            intent.putExtra(IntentExtra.STR_TARGET_ID, groupId);
+            intent.putExtra(IntentExtra.STR_TARGET_ID, conversationIdentifier.getTargetId());
             startActivityForResult(intent, REQUEST_ADD_GROUP_MEMBER);
         } else {
             Intent intent = new Intent(this, SelectGroupMemberActivity.class);
-            intent.putExtra(IntentExtra.STR_TARGET_ID, groupId);
+            intent.putExtra(IntentExtra.STR_TARGET_ID, conversationIdentifier.getTargetId());
             ArrayList<String> excludeList = new ArrayList<>(); // 不可选择的成员 id 列表
             String currentId = IMManager.getInstance().getCurrentId();
             excludeList.add(currentId);
@@ -817,15 +816,14 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
     /** 显示全部群组成员 */
     public void showAllGroupMember() {
         Intent intent = new Intent(this, GroupMemberListActivity.class);
-        intent.putExtra(IntentExtra.STR_TARGET_ID, groupId);
+        intent.putExtra(IntentExtra.STR_TARGET_ID, conversationIdentifier.getTargetId());
         startActivity(intent);
     }
 
     /** 显示搜索历史消息 */
     public void showSearchHistoryMessage() {
         Intent intent = new Intent(this, SearchHistoryMessageActivity.class);
-        intent.putExtra(IntentExtra.STR_TARGET_ID, groupId);
-        intent.putExtra(IntentExtra.SERIA_CONVERSATION_TYPE, Conversation.ConversationType.GROUP);
+        intent.putExtra(IntentExtra.SERIA_CONVERSATION_IDENTIFIER, conversationIdentifier);
         intent.putExtra(IntentExtra.STR_CHAT_NAME, groupName);
         intent.putExtra(IntentExtra.STR_CHAT_PORTRAIT, grouportraitUrl);
         startActivity(intent);
@@ -834,7 +832,7 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
     /** 显示群二维码 */
     private void showGroupQrCode() {
         Intent intent = new Intent(this, QrCodeDisplayActivity.class);
-        intent.putExtra(IntentExtra.STR_TARGET_ID, groupId);
+        intent.putExtra(IntentExtra.STR_TARGET_ID, conversationIdentifier.getTargetId());
         intent.putExtra(IntentExtra.START_FROM_ID, IMManager.getInstance().getCurrentId());
         intent.putExtra(IntentExtra.SERIA_QRCODE_DISPLAY_TYPE, QrCodeDisplayType.GROUP);
         startActivity(intent);
@@ -897,9 +895,7 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
         // 判断是否是群组或管理员
         if (isGroupOwner() || isGroupManager()) {
             Intent intent = new Intent(this, GroupNoticeActivity.class);
-            intent.putExtra(IntentExtra.STR_TARGET_ID, groupId);
-            intent.putExtra(
-                    IntentExtra.SERIA_CONVERSATION_TYPE, Conversation.ConversationType.GROUP);
+            intent.putExtra(IntentExtra.SERIA_CONVERSATION_IDENTIFIER, conversationIdentifier);
             startActivity(intent);
         } else {
             GroupNoticeDialog commonDialog = new GroupNoticeDialog();

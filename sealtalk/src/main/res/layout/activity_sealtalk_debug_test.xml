@@ -56,6 +56,20 @@
                 app:item_divider="true" />
 
             <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/siv_ultra_group"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/seal_mine_about_height"
+                app:item_content="超级群"
+                app:item_divider="true" />
+
+            <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/siv_ultra_group_unread_mention_msg_digests"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/seal_mine_about_height"
+                app:item_content="超级群未读消息摘要"
+                app:item_divider="true" />
+
+            <cn.rongcloud.im.ui.view.SettingItemView
                 android:id="@+id/siv_tag"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/seal_mine_about_height"
@@ -133,7 +147,13 @@
                 app:item_content="权限申请监听"
                 app:item_divider="true"
                 app:item_switch="true" />
-
+            <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/siv_ultra_debug"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/seal_mine_about_height"
+                app:item_content="超级群Debug开关"
+                app:item_divider="true"
+                app:item_switch="true" />
             <cn.rongcloud.im.ui.view.SettingItemView
                 android:id="@+id/siv_create_notification_channel"
                 android:layout_width="match_parent"

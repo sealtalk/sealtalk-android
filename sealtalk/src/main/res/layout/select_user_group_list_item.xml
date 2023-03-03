@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/seal_bg_list_item">
+
+    <TextView
+        android:id="@+id/tv_user_group_name"
+        style="@style/TextStyle.Alignment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lines="1"
+        android:maxLength="32"
+        android:textColor="@color/color_black_text"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_member_image"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/seal_ic_pop_group"
+        app:layout_constraintStart_toStartOf="@+id/tv_user_group_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_user_group_name" />
+
+    <TextView
+        android:id="@+id/tv_user_group_member"
+        style="@style/TextStyle.Alignment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/color_black_text"
+        android:textSize="13sp"
+        app:layout_constraintStart_toEndOf="@+id/iv_member_image"
+        app:layout_constraintTop_toBottomOf="@+id/tv_user_group_name" />
+
+    <ImageView
+        android:id="@+id/iv_right_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/seal_ic_mine_go"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/cb_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:src="@drawable/seal_cb_select_contact_pic_btn_unselected"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_contact_devi_height"
+        android:layout_marginStart="@dimen/seal_contact_devi_margin_left"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="@dimen/seal_contact_devi_margin_right"
+        android:background="@color/seal_contact_devi_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_member_image" />
+</androidx.constraintlayout.widget.ConstraintLayout>

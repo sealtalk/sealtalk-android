@@ -31,8 +31,13 @@ import cn.rongcloud.im.utils.SearchUtils;
 import cn.rongcloud.im.utils.SingleSourceLiveData;
 import cn.rongcloud.im.utils.SingleSourceMapLiveData;
 import cn.rongcloud.im.utils.log.SLog;
+import io.rong.imkit.userinfo.RongUserInfoManager;
+import io.rong.imlib.ChannelClient;
+import io.rong.imlib.IRongCoreCallback;
+import io.rong.imlib.IRongCoreEnum;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.ConversationIdentifier;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.SearchConversationResult;
 import java.util.ArrayList;
@@ -49,6 +54,7 @@ public class SealSearchViewModel extends AndroidViewModel {
     private SingleSourceLiveData<Resource<List<GroupEntity>>> groupContactList =
             new SingleSourceLiveData<>();
     private MutableLiveData<List<SearchModel>> conversationSearch;
+    private MutableLiveData<List<SearchModel>> ultraGroupConversationSearch;
     private MutableLiveData<List<SearchModel>> messageSearch;
     private MediatorLiveData searchAll;
     private FriendTask friendTask;
@@ -104,6 +110,7 @@ public class SealSearchViewModel extends AndroidViewModel {
                             }
                         });
         conversationSearch = new MutableLiveData<>();
+        ultraGroupConversationSearch = new MutableLiveData<>();
         messageSearch = new MutableLiveData<>();
         initSearchAllLiveData();
     }
@@ -165,56 +172,141 @@ public class SealSearchViewModel extends AndroidViewModel {
                         });
     }
 
+    /**
+     * 搜索超级群会话
+     *
+     * @param match
+     */
+    public void searchUltraGroupConversation(String match) {
+        Conversation.ConversationType[] c = {Conversation.ConversationType.ULTRA_GROUP};
+        SLog.i(TAG, "searchUltraGroupConversation match: " + match);
+        conversationMatch = match;
+        ChannelClient.getInstance()
+                .searchConversationForAllChannel(
+                        match,
+                        c,
+                        new String[] {"RC:TxtMsg", "RC:ImgTextMsg", "RC:FileMsg"},
+                        new IRongCoreCallback.ResultCallback<List<SearchConversationResult>>() {
+
+                            @Override
+                            public void onSuccess(
+                                    List<SearchConversationResult> searchConversationResults) {
+                                ThreadManager.getInstance()
+                                        .runOnWorkThread(
+                                                new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        convertUltraGroupConversationAndSetValue(
+                                                                searchConversationResults);
+                                                    }
+                                                });
+                            }
+
+                            @Override
+                            public void onError(IRongCoreEnum.CoreErrorCode e) {}
+                        });
+    }
+
     public void searchMessage(
-            String targetId,
-            Conversation.ConversationType conversationType,
-            String name,
-            String portrait,
-            String match) {
-        searchIMClientMessage(targetId, conversationType, name, portrait, match);
+            ConversationIdentifier identifier, String name, String portrait, String match) {
+        if (identifier.getType() == Conversation.ConversationType.ULTRA_GROUP
+                && TextUtils.isEmpty(identifier.getChannelId())) {
+            searchMessageForAllChannel(identifier, name, portrait, match);
+        } else {
+            searchIMClientMessage(identifier, name, portrait, match);
+        }
     }
 
     private void searchIMClientMessage(
-            String targetId,
-            Conversation.ConversationType conversationType,
-            String name,
-            String portrait,
-            String match) {
-        SLog.i(TAG, "searchIMClientMessage() match = " + match);
-        RongIMClient.getInstance()
+            ConversationIdentifier identifier, String name, String portrait, String match) {
+        SLog.i(TAG, "searchIMClientUltraGroupMessage() match = " + match);
+        ChannelClient.getInstance()
                 .searchMessages(
-                        conversationType,
-                        targetId,
+                        identifier.getType(),
+                        identifier.getTargetId(),
+                        identifier.getChannelId(),
                         match,
                         50,
                         0,
-                        new RongIMClient.ResultCallback<List<Message>>() {
+                        new IRongCoreCallback.ResultCallback<List<Message>>() {
 
                             @Override
                             public void onSuccess(List<Message> messages) {
                                 SLog.i(
                                         TAG,
-                                        "searchIMClientMessage()  onSuccess size = "
+                                        "searchIMClientUltraGroupMessage()  onSuccess size = "
                                                 + messages.size());
-                                List<SearchModel> result = new ArrayList<>();
-                                SearchMessageModel searchMessageModel = null;
-                                for (Message message : messages) {
-                                    searchMessageModel =
-                                            new SearchMessageModel(
-                                                    message,
-                                                    R.layout
-                                                            .search_fragment_recycler_chatting_records_list,
-                                                    name,
-                                                    portrait,
-                                                    match);
-                                    result.add(searchMessageModel);
-                                }
-                                messageSearch.postValue(result);
+                                processSearchMessage(messages, match, name, portrait);
                             }
 
                             @Override
-                            public void onError(RongIMClient.ErrorCode errorCode) {}
+                            public void onError(IRongCoreEnum.CoreErrorCode e) {}
                         });
+    }
+
+    private void searchMessageForAllChannel(
+            ConversationIdentifier identifier, String name, String portrait, String match) {
+        SLog.i(TAG, "searchMessageForAllChannel() match = " + match);
+        ChannelClient.getInstance()
+                .searchMessageForAllChannel(
+                        identifier.getTargetId(),
+                        identifier.getType(),
+                        match,
+                        50,
+                        0,
+                        new IRongCoreCallback.ResultCallback<List<Message>>() {
+
+                            @Override
+                            public void onSuccess(List<Message> messages) {
+                                SLog.i(
+                                        TAG,
+                                        "searchMessageForAllChannel()  onSuccess size = "
+                                                + messages.size());
+                                processSearchMessage(messages, match, name, portrait);
+                            }
+
+                            @Override
+                            public void onError(IRongCoreEnum.CoreErrorCode e) {}
+                        });
+    }
+
+    private void processSearchMessage(
+            List<Message> messages, String match, String name, String portrait) {
+        List<SearchModel> result = new ArrayList<>();
+        for (Message message : messages) {
+            SearchMessageModel searchMessageModel;
+            if (TextUtils.isEmpty(name) && TextUtils.isEmpty(portrait)) {
+                io.rong.imlib.model.UserInfo userInfo =
+                        RongUserInfoManager.getInstance().getUserInfo(message.getSenderUserId());
+                if (userInfo != null) {
+                    searchMessageModel =
+                            new SearchMessageModel(
+                                    message,
+                                    R.layout.search_fragment_recycler_chatting_records_list,
+                                    userInfo.getName(),
+                                    userInfo.getPortraitUri().toString(),
+                                    match);
+                } else {
+                    searchMessageModel =
+                            new SearchMessageModel(
+                                    message,
+                                    R.layout.search_fragment_recycler_chatting_records_list,
+                                    "发送ID：" + message.getSenderUserId(),
+                                    "",
+                                    match);
+                }
+            } else {
+                searchMessageModel =
+                        new SearchMessageModel(
+                                message,
+                                R.layout.search_fragment_recycler_chatting_records_list,
+                                name,
+                                portrait,
+                                match);
+            }
+            result.add(searchMessageModel);
+        }
+        messageSearch.postValue(result);
     }
 
     public void searchAll(String math) {
@@ -475,6 +567,34 @@ public class SealSearchViewModel extends AndroidViewModel {
         conversationSearch.postValue(output);
     }
 
+    private void convertUltraGroupConversationAndSetValue(
+            List<SearchConversationResult> searchConversationResults) {
+        List<SearchModel> output = new ArrayList<>();
+        SearchConversationModel searchConversationModel = null;
+        for (SearchConversationResult result : searchConversationResults) {
+            String name = ""; // 如下是在分情况查找name
+            String portraitUrl = "";
+            if (result.getConversation().getConversationType()
+                    == Conversation.ConversationType.ULTRA_GROUP) {
+                name =
+                        "超级群"
+                                + result.getConversation().getTargetId()
+                                + "["
+                                + result.getConversation().getChannelId()
+                                + "]";
+            }
+            searchConversationModel =
+                    new SearchConversationModel(
+                            result,
+                            R.layout.serach_fragment_recycler_conversation_item,
+                            conversationMatch,
+                            name,
+                            portraitUrl);
+            output.add(searchConversationModel);
+        }
+        ultraGroupConversationSearch.postValue(output);
+    }
+
     private List<SearchModel> convertGroupSearch(List<SearchGroupMember> input) {
         List<SearchModel> output = new ArrayList<>();
         output.add(
@@ -582,5 +702,9 @@ public class SealSearchViewModel extends AndroidViewModel {
 
     public LiveData<Resource<List<GroupEntity>>> getGroupContactList() {
         return groupContactList;
+    }
+
+    public LiveData<List<SearchModel>> getUltraGroupConversationSearch() {
+        return ultraGroupConversationSearch;
     }
 }

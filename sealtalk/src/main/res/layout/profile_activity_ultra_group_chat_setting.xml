@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_user_notification"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            android:layout_marginTop="@dimen/seal_private_detail_item_margin_top"
+            app:item_content="@string/profile_message_notice"
+            app:item_divider="true"
+            app:item_switch="true"></cn.rongcloud.im.ui.view.SettingItemView>
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_conversation_top"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="@string/profile_set_top"
+            app:item_divider="true"
+            app:item_switch="true"></cn.rongcloud.im.ui.view.SettingItemView>
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_clean_chat_message"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="@string/profile_clean_message"
+            app:item_right_image="@drawable/seal_ic_mine_go"></cn.rongcloud.im.ui.view.SettingItemView>
+
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_clean_all_channel"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="清除本地所有 channel 当前时间之前的消息" />
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_clean_channel"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="清除当前 channel 当前时间之前的消息" />
+
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_clean_remote_channel"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="清除服务端指定 channel 当前时间之前的消息" />
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_get_channel_list"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="获取会话列表" />
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_set_notify_level"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="设置指定时区内全局免打扰" />
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_remove_notify_level"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="移除指定时区内全局免打扰" />
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_query_notify_level"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="查询指定时区内全局免打扰" />
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_conversation_channel_level"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="指定频道免打扰设置" />
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_remove_conversation_channel_level"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="指定频道免打扰移除（设置接口 level 传 0）" />
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_query_conversation_channel_level"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="指定频道免打扰查询" />
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_set_conversation_level"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="指定会话免打扰设置" />
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_remove_conversation_level"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="指定会话免打扰移除（设置接口 level 传 0）" />
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_query_conversation_level"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="查询指定会话免打扰" />
+
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_set_conversation_type_level"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="指定会话类型免打扰设置" />
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_remove_conversation_type_level"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="指定会话类型免打扰设置（设置接口 level 传 0）" />
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_query_conversation_type_level"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="查询指定会话类型免打扰" />
+
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_set_ultra_group_type_level"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="设置指定超级群默认通知配置" />
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_query_ultra_group_type_level"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="查询指定超级群默认通知配置" />
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_set_ultra_group_channel_level"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="设置指定超级群指定频道默认通知配置" />
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_query_ultra_group_channel_level"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="查询指定超级群指定频道默认通知配置" />
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_query_ultra_group_unread_count"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="获取指定超级群下所有频道的未读消息总数" />
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_query_ultra_group_all_unread_count"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="获取超级群会话类型的所有未读消息数" />
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_query_ultra_group_all_mention_unread_count"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="获取超级群会话类型的@消息未读数接口" />
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_query_ultra_group_unread_count_new"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="按会话免打扰类型，获取未读消息数" />
+
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_query_ultra_group_unread_count_by_level"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="获取会话未读消息数" />
+
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_query_ultra_group_mention_count_by_level"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="获取会话未读 @ 消息数" />
+
+
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_query_target_ultra_group_unread_count_by_level"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="获取指定超级群会话的未读消息数（包括所有频道)" />
+
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_query_target_ultra_group_mention_count_by_level"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="获取指定超级群会话的未读@消息数（包括所有频道)" />
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_query_target_ultra_group_cur_channel_message"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="搜索超级群当前频道的消息记录" />
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_query_target_ultra_group_all_channel_message"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="搜索超级群所有频道的消息记录" />
+
+    </LinearLayout>
+</ScrollView>

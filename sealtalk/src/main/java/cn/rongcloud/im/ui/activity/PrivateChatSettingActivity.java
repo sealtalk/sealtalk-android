@@ -39,7 +39,7 @@ import io.rong.imlib.RongIMClient.ErrorCode;
 import io.rong.imlib.RongIMClient.ResultCallback;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Conversation.ConversationNotificationStatus;
-import io.rong.imlib.model.Conversation.ConversationType;
+import io.rong.imlib.model.ConversationIdentifier;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,10 +55,9 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
     private SettingItemView isTopSb;
     private SettingItemView isScreenShotSiv;
 
-    private String targetId;
+    private ConversationIdentifier conversationIdentifier;
     private String name;
     private String portraitUrl;
-    private Conversation.ConversationType conversationType;
     private SelectableRoundedImageView portraitIv;
     private TextView nameTv;
     private boolean isScreenShotSivClicked = false;
@@ -79,11 +78,7 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
             finish();
             return;
         }
-
-        targetId = intent.getStringExtra(IntentExtra.STR_TARGET_ID);
-        conversationType =
-                (Conversation.ConversationType)
-                        intent.getSerializableExtra(IntentExtra.SERIA_CONVERSATION_TYPE);
+        conversationIdentifier = initConversationIdentifier();
         initView();
         initViewModel();
         initData();
@@ -98,7 +93,8 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
                         Intent intent =
                                 new Intent(
                                         PrivateChatSettingActivity.this, UserDetailActivity.class);
-                        intent.putExtra(IntentExtra.STR_TARGET_ID, targetId);
+                        intent.putExtra(
+                                IntentExtra.STR_TARGET_ID, conversationIdentifier.getTargetId());
                         startActivity(intent);
                     }
                 });
@@ -169,7 +165,7 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
                 ViewModelProviders.of(
                                 this,
                                 new PrivateChatSettingViewModel.Factory(
-                                        getApplication(), targetId, conversationType))
+                                        getApplication(), conversationIdentifier))
                         .get(PrivateChatSettingViewModel.class);
         privateChatSettingViewModel
                 .getFriendInfo()
@@ -202,7 +198,7 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
                 ViewModelProviders.of(
                                 this,
                                 new ConversationSettingViewModel.Factory(
-                                        getApplication(), conversationType, targetId))
+                                        getApplication(), conversationIdentifier))
                         .get(ConversationSettingViewModel.class);
 
         conversationSettingViewModel
@@ -316,8 +312,7 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
     /** 跳转到聊天记录搜索界面 */
     private void goSearchChatMessage() {
         Intent intent = new Intent(this, SearchHistoryMessageActivity.class);
-        intent.putExtra(IntentExtra.STR_TARGET_ID, targetId);
-        intent.putExtra(IntentExtra.SERIA_CONVERSATION_TYPE, conversationType);
+        intent.putExtra(IntentExtra.SERIA_CONVERSATION_IDENTIFIER, conversationIdentifier);
         intent.putExtra(IntentExtra.STR_CHAT_NAME, name);
         intent.putExtra(IntentExtra.STR_CHAT_PORTRAIT, portraitUrl);
         startActivity(intent);
@@ -327,7 +322,7 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
     private void addOtherMemberToGroup() {
         Intent intent = new Intent(this, SelectCreateGroupActivity.class);
         ArrayList<String> friendIdList = new ArrayList<>();
-        friendIdList.add(targetId);
+        friendIdList.add(conversationIdentifier.getTargetId());
         intent.putStringArrayListExtra(IntentExtra.LIST_CAN_NOT_CHECK_ID_LIST, friendIdList);
         startActivityForResult(intent, REQUEST_START_GROUP);
     }
@@ -340,7 +335,7 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
             ArrayList<String> memberList =
                     data.getStringArrayListExtra(IntentExtra.LIST_STR_ID_LIST);
             // 添加该好友的id
-            memberList.add(targetId);
+            memberList.add(conversationIdentifier.getTargetId());
             SLog.i(TAG, "memberList.size = " + memberList.size());
             Intent intent = new Intent(this, CreateGroupActivity.class);
             intent.putExtra(IntentExtra.LIST_STR_ID_LIST, memberList);
@@ -406,8 +401,7 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
     private void updateUserNotification() {
         RongNotificationManager.getInstance()
                 .getConversationNotificationStatus(
-                        ConversationType.PRIVATE,
-                        targetId,
+                        conversationIdentifier,
                         new ResultCallback<ConversationNotificationStatus>() {
                             @Override
                             public void onSuccess(

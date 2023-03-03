@@ -53,6 +53,14 @@ public class SealExtensionConfig extends DefaultExtensionConfig {
                 pluginList.remove(destructPlugin);
             }
         }
+        if (Conversation.ConversationType.ULTRA_GROUP.equals(conversationType)) {
+            if (audioPlugin != null) {
+                pluginList.remove(audioPlugin);
+            }
+            if (videoPlugin != null) {
+                pluginList.remove(videoPlugin);
+            }
+        }
         return pluginList;
     }
 }

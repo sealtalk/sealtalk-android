@@ -6,7 +6,6 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 import cn.rongcloud.im.R;
-import cn.rongcloud.im.common.IntentExtra;
 import cn.rongcloud.im.ui.view.SealTitleBar;
 import cn.rongcloud.im.ui.view.SettingItemView;
 import cn.rongcloud.im.utils.ToastUtils;
@@ -16,6 +15,7 @@ import io.rong.imkit.notification.RongNotificationManager;
 import io.rong.imkit.widget.dialog.PromptPopupDialog;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.ConversationIdentifier;
 
 public class SystemSettingActivity extends TitleBaseActivity implements View.OnClickListener {
     private ConversationSettingViewModel conversationSettingViewModel;
@@ -23,8 +23,7 @@ public class SystemSettingActivity extends TitleBaseActivity implements View.OnC
     private SettingItemView isNotifySb;
     private SettingItemView isTopSb;
 
-    private String targetId;
-    private Conversation.ConversationType conversationType;
+    private ConversationIdentifier conversationIdentifier;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,10 +39,7 @@ public class SystemSettingActivity extends TitleBaseActivity implements View.OnC
             return;
         }
 
-        targetId = intent.getStringExtra(IntentExtra.STR_TARGET_ID);
-        conversationType =
-                (Conversation.ConversationType)
-                        intent.getSerializableExtra(IntentExtra.SERIA_CONVERSATION_TYPE);
+        conversationIdentifier = initConversationIdentifier();
         initView();
         initViewModel();
     }
@@ -71,7 +67,7 @@ public class SystemSettingActivity extends TitleBaseActivity implements View.OnC
                 ViewModelProviders.of(
                                 this,
                                 new ConversationSettingViewModel.Factory(
-                                        getApplication(), conversationType, targetId))
+                                        getApplication(), conversationIdentifier))
                         .get(ConversationSettingViewModel.class);
 
         conversationSettingViewModel
@@ -137,8 +133,7 @@ public class SystemSettingActivity extends TitleBaseActivity implements View.OnC
     private void updateUserNotification() {
         RongNotificationManager.getInstance()
                 .getConversationNotificationStatus(
-                        Conversation.ConversationType.PRIVATE,
-                        targetId,
+                        conversationIdentifier,
                         new RongIMClient.ResultCallback<
                                 Conversation.ConversationNotificationStatus>() {
                             @Override

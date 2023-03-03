@@ -11,24 +11,21 @@ import androidx.lifecycle.Observer;
 import cn.rongcloud.im.ui.adapter.models.SearchModel;
 import cn.rongcloud.im.ui.interfaces.OnMessageRecordClickListener;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.ConversationIdentifier;
 import java.util.List;
 
 public class SearchMessageFragment extends SearchBaseFragment {
-    private String targetId;
-    private Conversation.ConversationType conversationType;
+    private ConversationIdentifier identifier;
     private String name;
     private String portraitUrl;
 
     public void init(
             OnMessageRecordClickListener onMessageRecordClickListener,
-            String targetId,
-            Conversation.ConversationType conversationType,
+            ConversationIdentifier identifier,
             String name,
             String portraitUrl) {
         init(null, null, null, null, onMessageRecordClickListener);
-
-        this.targetId = targetId;
-        this.conversationType = conversationType;
+        this.identifier = identifier != null ? identifier : new ConversationIdentifier();
         this.name = name;
         this.portraitUrl = portraitUrl;
     }
@@ -43,7 +40,7 @@ public class SearchMessageFragment extends SearchBaseFragment {
         viewModel
                 .getMessageSearch()
                 .observe(
-                        this,
+                        getViewLifecycleOwner(),
                         new Observer<List<SearchModel>>() {
                             @Override
                             public void onChanged(List<SearchModel> searchModels) {
@@ -59,8 +56,10 @@ public class SearchMessageFragment extends SearchBaseFragment {
     @Override
     public void search(String search) {
         super.search(search);
-        if (viewModel != null && !TextUtils.isEmpty(targetId) && conversationType != null) {
-            viewModel.searchMessage(targetId, conversationType, name, portraitUrl, search);
+        if (viewModel != null
+                && !TextUtils.isEmpty(identifier.getTargetId())
+                && identifier.getType() != Conversation.ConversationType.NONE) {
+            viewModel.searchMessage(identifier, name, portraitUrl, search);
         }
     }
 }

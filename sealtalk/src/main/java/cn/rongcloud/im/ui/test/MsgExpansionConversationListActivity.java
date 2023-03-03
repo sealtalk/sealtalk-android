@@ -62,10 +62,7 @@ public class MsgExpansionConversationListActivity extends FragmentActivity {
                     public boolean onConversationLongClick(
                             Context context, View view, BaseUiConversation conversation) {
                         RouteUtils.routeToConversationActivity(
-                                context,
-                                conversation.mCore.getConversationType(),
-                                conversation.mCore.getTargetId(),
-                                true);
+                                context, conversation.getConversationIdentifier(), true, null);
                         return false;
                     }
 

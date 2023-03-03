@@ -21,7 +21,7 @@ import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.viewmodel.JoinGroupViewModel;
 import io.rong.imkit.utils.RouteUtils;
-import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.ConversationIdentifier;
 import java.util.Date;
 
 /** 加入群组界面 */
@@ -122,7 +122,7 @@ public class JoinGroupActivity extends TitleBaseActivity implements View.OnClick
         Bundle bundle = new Bundle();
         bundle.putString("title", groupName);
         RouteUtils.routeToConversationActivity(
-                this, Conversation.ConversationType.GROUP, groupId, bundle);
+                this, ConversationIdentifier.obtainGroup(groupId), bundle);
         finish();
     }
 

@@ -185,6 +185,9 @@
             android:name=".ui.activity.SealSearchActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.activity.SealSearchUltraGroupActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.activity.SearchFriendActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -595,6 +598,43 @@
             </intent-filter>
         </service>
 
+        <!--超级群-->
+
+        <activity
+            android:name=".ui.activity.UltraGroupConversationListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.UltraGroupUnreadMentionDigestsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.UltraGroupConversationListPickerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.UltraConversationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.UltraGroupChannelMemberSetting"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.UltraGroupChannelAddMemberActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.UltraGroupSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.UltraSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.SelectUltraCreateGroupActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ui.activity.CreateUltraGroupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.CreateChannelActivity"
+            android:screenOrientation="portrait" />
+
 
         <activity
             android:name=".ui.test.PushConfigActivity"
@@ -660,6 +700,16 @@
         <activity android:name=".ui.CommonConversationTestActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.test.CommonConversationListTestActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.UserGroupListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.UserGroupEditMemberActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.UserGroupEditActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.UserGroupChannelListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.UserGroupBindChannelActivity"
             android:screenOrientation="portrait"/>
         <!-- oppo 推送-->
         <service

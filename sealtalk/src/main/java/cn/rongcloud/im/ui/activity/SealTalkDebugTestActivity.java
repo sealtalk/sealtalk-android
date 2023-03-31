@@ -15,6 +15,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.ViewModelProviders;
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.test.BindChatRTCRoomActivity;
 import cn.rongcloud.im.ui.test.ChatRoomTestActivity;
@@ -28,7 +29,9 @@ import cn.rongcloud.im.ui.test.PushConfigActivity;
 import cn.rongcloud.im.ui.test.ShortageConversationListActivity;
 import cn.rongcloud.im.ui.test.TagTestActivity;
 import cn.rongcloud.im.ui.view.SettingItemView;
+import cn.rongcloud.im.utils.DialogWithYesOrNoUtils;
 import cn.rongcloud.im.utils.ToastUtils;
+import cn.rongcloud.im.viewmodel.UserInfoViewModel;
 import io.rong.imkit.config.RongConfigCenter;
 import io.rong.imlib.IRongCoreEnum;
 import io.rong.imlib.RongIMClient;
@@ -60,11 +63,14 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
     public static final String ULTRA_DEBUG_CONFIG = "ultra_debug_config";
     public static final String ULTRA_IS_DEBUG_KEY = "ultra_isdebug";
 
+    private UserInfoViewModel userInfoViewModel;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sealtalk_debug_test);
         initView();
+        initViewModel();
     }
 
     /** 初始化布局 */
@@ -140,10 +146,36 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
                 new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        getSharedPreferences(ULTRA_DEBUG_CONFIG, MODE_PRIVATE)
-                                .edit()
-                                .putBoolean(ULTRA_IS_DEBUG_KEY, isChecked)
-                                .commit();
+                        DialogWithYesOrNoUtils.getInstance()
+                                .showDialog(
+                                        SealTalkDebugTestActivity.this,
+                                        getString(R.string.setting_close_ultra_group_debug_promt),
+                                        new DialogWithYesOrNoUtils.DialogCallBack() {
+                                            @Override
+                                            public void executeEvent() {
+                                                getSharedPreferences(
+                                                                ULTRA_DEBUG_CONFIG, MODE_PRIVATE)
+                                                        .edit()
+                                                        .putBoolean(ULTRA_IS_DEBUG_KEY, isChecked)
+                                                        .commit();
+                                                userInfoViewModel.logout();
+                                                // 通知退出
+                                                sendLogoutNotify();
+                                                Intent intent =
+                                                        new Intent(
+                                                                SealTalkDebugTestActivity.this,
+                                                                LoginActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+
+                                            @Override
+                                            public void executeEditEvent(String editText) {}
+
+                                            @Override
+                                            public void updatePassword(
+                                                    String oldPassword, String newPassword) {}
+                                        });
                     }
                 });
         createNotificationChannel = findViewById(R.id.siv_create_notification_channel);
@@ -151,6 +183,10 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
 
         bindChatRTCRoom = findViewById(R.id.siv_bind_chat_rtc_room);
         bindChatRTCRoom.setOnClickListener(this);
+    }
+
+    private void initViewModel() {
+        userInfoViewModel = ViewModelProviders.of(this).get(UserInfoViewModel.class);
     }
 
     @Override

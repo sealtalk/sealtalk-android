@@ -15,15 +15,20 @@ public class HttpClientManager {
     private Context context;
     private RetrofitClient client;
 
+    private String baseUrl;
+
     private HttpClientManager(Context context, RCIMProxy proxy) {
         this.context = context;
         client = new RetrofitClient(context, SealTalkUrl.DOMAIN, proxy);
         mProxy = proxy;
+        baseUrl = SealTalkUrl.DOMAIN;
     }
 
     public static HttpClientManager getInstance(Context context) {
         RCIMProxy currentProxy = AppProxyManager.getInstance().getProxy();
-        if (instance != null && !proxyCompare(currentProxy, instance.mProxy)) {
+        if (instance != null && !proxyCompare(currentProxy, instance.mProxy)
+                || !TextUtils.equals(
+                        instance == null ? null : instance.baseUrl, SealTalkUrl.DOMAIN)) {
             instance = null;
         }
         if (instance == null) {

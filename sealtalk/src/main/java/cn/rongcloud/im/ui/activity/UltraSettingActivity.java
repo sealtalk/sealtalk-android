@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.IntentExtra;
+import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.model.GroupMember;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.model.UltraChannelInfo;
@@ -91,6 +92,11 @@ public class UltraSettingActivity extends TitleBaseActivity
         View siv_channel_members = findViewById(R.id.siv_channel_members);
         siv_channel_members.setOnClickListener(this);
         findViewById(R.id.siv_channel_add_members).setOnClickListener(this);
+        if (IMManager.getInstance().getAppTask().isDebugMode()
+                && IMManager.getInstance().getAppTask().isUltraGroupDebugMode()) {
+            findViewById(R.id.siv_channel_debug_setting).setOnClickListener(this);
+            findViewById(R.id.siv_channel_debug_setting).setVisibility(View.VISIBLE);
+        }
         userGroupSiv.setOnClickListener(this);
         // groupNameSiv.setOnClickListener(this);
 
@@ -245,6 +251,10 @@ public class UltraSettingActivity extends TitleBaseActivity
             } else {
                 UserGroupChannelListActivity.start(this, conversationIdentifier, title);
             }
+        } else if (v.getId() == R.id.siv_channel_debug_setting) {
+            Intent intent = new Intent(this, UltraGroupSettingActivity.class);
+            intent.putExtra(IntentExtra.SERIA_CONVERSATION_IDENTIFIER, conversationIdentifier);
+            startActivity(intent);
         }
     }
 

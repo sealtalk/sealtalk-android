@@ -136,7 +136,8 @@ public class UltraConversationListFragment extends Fragment
         mList = view.findViewById(R.id.ultraList);
         ImageView imageView = view.findViewById(R.id.imageView);
         imageView.setOnClickListener(this);
-        if (IMManager.getInstance().getAppTask().isDebugMode()) {
+        if (IMManager.getInstance().getAppTask().isDebugMode()
+                && IMManager.getInstance().getAppTask().isUltraGroupDebugMode()) {
             ImageView imageViewSetting = view.findViewById(R.id.imageViewSetting);
             imageViewSetting.setVisibility(View.VISIBLE);
             imageViewSetting.setOnClickListener(

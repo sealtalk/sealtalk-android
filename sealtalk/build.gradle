@@ -9,7 +9,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 30
         versionCode 20210127
-        versionName "5.4.0"
+        versionName "5.4.1"
         ndk {
             abiFilters "armeabi-v7a", 'x86'
         }
@@ -30,6 +30,7 @@ android {
         manifestPlaceholders = [SEALTALK_HW_PUSH_APPID: SEALTALK_HW_PUSH_APPID.replaceAll('"', '')]
         buildConfigField "String", "SEALTALK_UMENG_APPKEY", "${SEALTALK_UMENG_APPKEY}"
         buildConfigField "String", "SEALTALK_UMENG_CHANNEL", "${SEALTALK_UMENG_CHANNEL}"
+        buildConfigField "String", "SEALTALK_DATA_CENTER", "\"\""
     }
 
     buildTypes {
@@ -99,13 +100,13 @@ dependencies {
     implementation 'commons-codec:commons-codec:1.6'
 
     //需要替换的版本
-    api 'cn.rongcloud.sdk:im_kit:5.4.0'
-    api 'cn.rongcloud.sdk:im_lib:5.4.0'
-    api 'cn.rongcloud.sdk:rcsticker:5.4.0'
-    api 'cn.rongcloud.sdk:sight:5.4.0'
-    api 'cn.rongcloud.sdk:call_lib:5.4.0'
-    api 'cn.rongcloud.sdk:call_kit:5.4.0'
-    api 'cn.rongcloud.sdk:locationKit:5.4.0'
+    api 'cn.rongcloud.sdk:im_kit:5.4.1'
+    api 'cn.rongcloud.sdk:im_lib:5.4.1'
+    api 'cn.rongcloud.sdk:rcsticker:5.4.1'
+    api 'cn.rongcloud.sdk:sight:5.4.1'
+    api 'cn.rongcloud.sdk:call_lib:5.4.1'
+    api 'cn.rongcloud.sdk:call_kit:5.4.1'
+    api 'cn.rongcloud.sdk:locationKit:5.4.1'
 
     api project(path: ':contactcard')
     api project(path: ':recognizer')

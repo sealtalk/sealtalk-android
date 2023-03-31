@@ -98,6 +98,15 @@
                 app:item_divider="true"
                 app:item_right_image="@drawable/seal_ic_mine_go" />
 
+            <io.rong.imkit.widget.SettingItemView
+                android:id="@+id/siv_channel_debug_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:item_content="超级群频道设置页面"
+                app:item_divider="true"
+                android:visibility="gone"
+                app:item_right_image="@drawable/seal_ic_mine_go" />
+
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/cb_private_channel"
                 android:layout_width="wrap_content"

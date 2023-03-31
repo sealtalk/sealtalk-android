@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 import androidx.annotation.DrawableRes;
@@ -14,25 +15,40 @@ import androidx.multidex.MultiDexApplication;
 import cn.rongcloud.im.common.ErrorCode;
 import cn.rongcloud.im.contact.PhoneContactManager;
 import cn.rongcloud.im.im.IMManager;
+import cn.rongcloud.im.model.DataCenterJsonModel;
 import cn.rongcloud.im.ui.activity.MainActivity;
 import cn.rongcloud.im.ui.activity.SplashActivity;
+import cn.rongcloud.im.utils.DataCenter;
 import cn.rongcloud.im.utils.SearchUtils;
 import cn.rongcloud.im.wx.WXManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.commonsdk.UMConfigure;
+import io.rong.common.utils.SSLUtils;
 import io.rong.imkit.GlideKitImageEngine;
 import io.rong.imkit.IMCenter;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.config.RongConfigCenter;
 import io.rong.imkit.utils.language.LangUtils;
+import io.rong.imlib.RongCoreClientImpl;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.HashMap;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 public class SealApp extends MultiDexApplication {
     private static SealApp appInstance;
@@ -53,6 +69,43 @@ public class SealApp extends MultiDexApplication {
         super.attachBaseContext(context);
     }
 
+    private void setSSL() {
+        try {
+            TrustManager tm[] = {
+                new X509TrustManager() {
+                    @Override
+                    public void checkClientTrusted(X509Certificate[] chain, String authType)
+                            throws CertificateException {
+                        Log.d("checkClientTrusted", "authType:" + authType);
+                    }
+
+                    @Override
+                    public void checkServerTrusted(X509Certificate[] chain, String authType)
+                            throws CertificateException {
+                        Log.d("checkServerTrusted", "authType:" + authType);
+                    }
+
+                    @Override
+                    public X509Certificate[] getAcceptedIssuers() {
+                        return new X509Certificate[0];
+                    }
+                }
+            };
+            SSLContext mySSLContext = SSLContext.getInstance("TLS");
+            mySSLContext.init(null, tm, null);
+            SSLUtils.setSSLContext(mySSLContext);
+            SSLUtils.setHostnameVerifier(
+                    new HostnameVerifier() {
+                        @Override
+                        public boolean verify(String hostname, SSLSession session) {
+                            return true;
+                        }
+                    });
+        } catch (KeyManagementException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -68,6 +121,9 @@ public class SealApp extends MultiDexApplication {
         map.put("error", 123);
         RongConfigCenter.conversationConfig().registerFileSuffixTypes(map);
 
+        if (RongCoreClientImpl.isPrivateSDK()) {
+            setSSL();
+        }
         // 初始化 bugly BUG 统计
         // CrashReport.initCrashReport(getApplicationContext());
         // BlockCanary.install(this, new AppBlockCanaryContext()).start();
@@ -88,6 +144,7 @@ public class SealApp extends MultiDexApplication {
         // 检查是否争取配置了 SealTalk 参数
         checkSealConfig();
 
+        initDataCenter();
         /*
          * 以下部分仅在主进程中进行执行
          */
@@ -170,6 +227,57 @@ public class SealApp extends MultiDexApplication {
 
         // UMeng初始化
         UMConfigure.preInit(this, BuildConfig.SEALTALK_UMENG_APPKEY, null);
+    }
+
+    private void initDataCenter() {
+        DataCenter.addDataCenter(getDefaultDataCenter());
+        if (!TextUtils.isEmpty(BuildConfig.SEALTALK_DATA_CENTER)) {
+            try {
+                Gson gson = new Gson();
+                DataCenterJsonModel dataCenterJsonModel =
+                        gson.fromJson(BuildConfig.SEALTALK_DATA_CENTER, DataCenterJsonModel.class);
+                for (DataCenterJsonModel.DataCenterListDTO dataCenterListDTO :
+                        dataCenterJsonModel.getDataCenterList()) {
+                    DataCenter.addDataCenter(dataCenterListDTO);
+                }
+            } catch (JsonSyntaxException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private DataCenter getDefaultDataCenter() {
+        return new DataCenter() {
+            @Override
+            public String getNaviUrl() {
+                return BuildConfig.SEALTALK_NAVI_SERVER;
+            }
+
+            @Override
+            public int getNameId() {
+                return R.string.data_center_beijing;
+            }
+
+            @Override
+            public String getCode() {
+                return "beijing";
+            }
+
+            @Override
+            public String getAppKey() {
+                return BuildConfig.SEALTALK_APP_KEY;
+            }
+
+            @Override
+            public String getAppServer() {
+                return BuildConfig.SEALTALK_SERVER;
+            }
+
+            @Override
+            public boolean isDefault() {
+                return true;
+            }
+        };
     }
 
     /** 检查是否正确的配置 SealTalk 中的一些必要环境。 */

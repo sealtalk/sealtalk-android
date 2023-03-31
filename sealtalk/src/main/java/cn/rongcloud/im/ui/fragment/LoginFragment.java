@@ -2,13 +2,18 @@ package cn.rongcloud.im.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
@@ -16,19 +21,19 @@ import androidx.lifecycle.ViewModelProviders;
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.common.ErrorCode;
 import cn.rongcloud.im.common.IntentExtra;
+import cn.rongcloud.im.common.ThreadManager;
 import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.model.CountryInfo;
+import cn.rongcloud.im.model.ImageCodeResult;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.model.UserCacheInfo;
-import cn.rongcloud.im.task.AppTask;
 import cn.rongcloud.im.ui.activity.MainActivity;
 import cn.rongcloud.im.ui.activity.SelectCountryActivity;
 import cn.rongcloud.im.ui.activity.SelectDataCenterActivity;
 import cn.rongcloud.im.ui.dialog.SecurityKickOutDialog;
 import cn.rongcloud.im.ui.widget.ClearWriteEditText;
 import cn.rongcloud.im.utils.DataCenter;
-import cn.rongcloud.im.utils.DataCenterImpl;
 import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.viewmodel.LoginViewModel;
 
@@ -45,6 +50,10 @@ public class LoginFragment extends BaseFragment {
     private Button sendCodeBtn;
     private boolean isRequestVerifyCode = false; // 是否请求成功验证码
     private OnLoginListener loginListener;
+    private ImageView imageCode;
+    private TextView mRefreshImageCode;
+    private ImageCodeResult mImageCodeResult;
+    private EditText imageEditText;
 
     @Override
     protected int getLayoutResId() {
@@ -57,14 +66,18 @@ public class LoginFragment extends BaseFragment {
         verifyCodeEdit = findView(R.id.cet_login_verify_code);
         countryNameTv = findView(R.id.tv_country_name);
         countryCodeTv = findView(R.id.tv_country_code);
+        imageCode = findView(R.id.iv_verify_code);
+        mRefreshImageCode = (TextView) findView(R.id.tv_refresh_image_code);
+        imageEditText = findView(R.id.cet_image_verify_code);
         dataCenter = (TextView) findView(R.id.tv_data_center_name);
         findView(R.id.btn_login, true);
         findView(R.id.ll_country_select, true);
         sendCodeBtn = findView(R.id.cet_login_send_verify_code, true);
         findView(R.id.ll_data_center, true);
         sendCodeBtn.setEnabled(false);
-        AppTask appTask = new AppTask(this.getContext());
-        if (appTask.isSealChat()) {
+        imageCode.setOnClickListener(this);
+        mRefreshImageCode.setOnClickListener(this);
+        if (DataCenter.getDataCenterList().size() > 1) {
             findView(R.id.ll_data_center).setVisibility(View.VISIBLE);
         } else {
             findView(R.id.ll_data_center).setVisibility(View.GONE);
@@ -208,7 +221,72 @@ public class LoginFragment extends BaseFragment {
                         new Observer<DataCenter>() {
                             @Override
                             public void onChanged(DataCenter center) {
-                                dataCenter.setText(center.getNameId());
+                                if (center.getNameId() != 0) {
+                                    dataCenter.setText(center.getNameId());
+                                }
+                            }
+                        });
+        loginViewModel
+                .getImageCodeResult()
+                .observe(
+                        this,
+                        new Observer<Resource<ImageCodeResult>>() {
+                            @Override
+                            public void onChanged(Resource<ImageCodeResult> resource) {
+                                mImageCodeResult = resource.data;
+                                if (resource.status == Status.SUCCESS) {
+                                    if (resource.data != null
+                                            && !TextUtils.isEmpty(resource.data.getPicCode())) {
+                                        convertToBitmap(resource.data);
+                                        return;
+                                    }
+                                } else if (resource.status == Status.ERROR) {
+                                    showToast(resource.message);
+                                } else if (resource.status == Status.LOADING) {
+                                    imageCode.setVisibility(View.GONE);
+                                    mRefreshImageCode.setVisibility(View.GONE);
+                                    return;
+                                }
+                                imageCode.setVisibility(View.GONE);
+                                mRefreshImageCode.setVisibility(View.VISIBLE);
+                            }
+                        });
+    }
+
+    private void convertToBitmap(ImageCodeResult imageCodeResult) {
+        ThreadManager.getInstance()
+                .runOnWorkThread(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    byte[] data =
+                                            Base64.decode(
+                                                    imageCodeResult.getPicCode(), Base64.NO_WRAP);
+                                    Bitmap bitmap =
+                                            BitmapFactory.decodeByteArray(data, 0, data.length);
+                                    setBitmapToImageCode(bitmap);
+                                } catch (Exception e) {
+                                    setBitmapToImageCode(null);
+                                }
+                            }
+                        });
+    }
+
+    private void setBitmapToImageCode(Bitmap bitmap) {
+        ThreadManager.getInstance()
+                .runOnUIThread(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                if (bitmap != null) {
+                                    imageCode.setVisibility(View.VISIBLE);
+                                    mRefreshImageCode.setVisibility(View.GONE);
+                                    imageCode.setImageBitmap(bitmap);
+                                } else {
+                                    imageCode.setVisibility(View.GONE);
+                                    mRefreshImageCode.setVisibility(View.VISIBLE);
+                                }
                             }
                         });
     }
@@ -229,10 +307,20 @@ public class LoginFragment extends BaseFragment {
                     showToast(R.string.seal_login_toast_phone_number_is_null);
                     return;
                 }
+                if (TextUtils.isEmpty(imageEditText.getText().toString().trim())) {
+                    showToast(R.string.image_verification_code_is_null);
+                    return;
+                }
                 // 请求发送验证码时， 禁止手机号改动和获取验证码的按钮改动
                 // 请求完成后在恢复原来状态
                 sendCodeBtn.setEnabled(false);
-                sendCode(countryCode, phoneNumber);
+                String imageCode = null;
+                String imageCodeId = null;
+                if (mImageCodeResult != null) {
+                    imageCode = imageEditText.getText().toString().trim();
+                    imageCodeId = mImageCodeResult.getPicCodeId();
+                }
+                sendCode(countryCode, phoneNumber, imageCode, imageCodeId);
                 break;
             case R.id.btn_login:
                 if (loginListener != null && !loginListener.beforeLogin()) {
@@ -274,6 +362,10 @@ public class LoginFragment extends BaseFragment {
                         new Intent(getActivity(), SelectDataCenterActivity.class),
                         REQUEST_CODE_SELECT_DATA_CENTER);
                 break;
+            case R.id.iv_verify_code:
+            case R.id.tv_refresh_image_code:
+                loginViewModel.getImageCode();
+                break;
             default:
                 break;
         }
@@ -285,8 +377,8 @@ public class LoginFragment extends BaseFragment {
      * @param phoneCode 国家地区的手机区号
      * @param phoneNumber 手机号
      */
-    private void sendCode(String phoneCode, String phoneNumber) {
-        loginViewModel.sendCode(phoneCode, phoneNumber);
+    private void sendCode(String phoneCode, String phoneNumber, String picCode, String picCodeId) {
+        loginViewModel.sendCode(phoneCode, phoneNumber, picCode, picCodeId);
     }
 
     /**
@@ -323,9 +415,10 @@ public class LoginFragment extends BaseFragment {
             } else if (requestCode == REQUEST_CODE_SELECT_DATA_CENTER) {
                 String dataCenterCode = data.getStringExtra("code");
                 if (!TextUtils.isEmpty(dataCenterCode)) {
-                    DataCenter dataCenter = DataCenterImpl.valueByCode(dataCenterCode);
+                    DataCenter dataCenter = DataCenter.getDataCenter(dataCenterCode);
                     if (dataCenter != null) {
                         loginViewModel.changeDataCenter(dataCenter);
+                        loginViewModel.saveDataCenter(dataCenter);
                     }
                 }
             }

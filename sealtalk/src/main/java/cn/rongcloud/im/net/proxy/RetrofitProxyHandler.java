@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import cn.rongcloud.im.net.AppProxyManager;
 import cn.rongcloud.im.net.HttpClientManager;
+import cn.rongcloud.im.net.SealTalkUrl;
 import io.rong.imlib.model.RCIMProxy;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -15,6 +16,8 @@ public class RetrofitProxyHandler<T> implements InvocationHandler {
     private final Class<T> retrofitServiceClass;
     private T retrofitService;
     private RCIMProxy mProxy;
+
+    private String baseUrl;
 
     public RetrofitProxyHandler(Context context, Class<T> retrofitServiceClass) {
         this.retrofitServiceClass = retrofitServiceClass;
@@ -32,19 +35,16 @@ public class RetrofitProxyHandler<T> implements InvocationHandler {
 
     private T getRetrofitServiceInstance() {
         RCIMProxy proxy = AppProxyManager.getInstance().getProxy();
-        if (retrofitService == null) {
-            retrofitService =
-                    HttpClientManager.getInstance(mContext)
-                            .getClient()
-                            .createService(retrofitServiceClass);
-        }
-        if (!proxyCompare(proxy, mProxy)) {
+        if (retrofitService == null
+                || !proxyCompare(proxy, mProxy)
+                || !TextUtils.equals(baseUrl, SealTalkUrl.DOMAIN)) {
             retrofitService =
                     HttpClientManager.getInstance(mContext)
                             .getClient()
                             .createService(retrofitServiceClass);
         }
         mProxy = proxy;
+        baseUrl = SealTalkUrl.DOMAIN;
         return retrofitService;
     }
 

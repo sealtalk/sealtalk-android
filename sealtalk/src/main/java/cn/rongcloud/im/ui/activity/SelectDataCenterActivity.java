@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.utils.DataCenter;
-import cn.rongcloud.im.utils.DataCenterImpl;
 
 /** @author gusd @Date 2022/03/29 */
 public class SelectDataCenterActivity extends TitleBaseActivity {
@@ -38,7 +37,7 @@ public class SelectDataCenterActivity extends TitleBaseActivity {
                     @Override
                     public void onBindViewHolder(
                             @NonNull DataCenterViewHolder holder, int position) {
-                        DataCenter value = DataCenterImpl.values()[position];
+                        DataCenter value = DataCenter.getDataCenterList().get(position);
                         holder.dataCenter.setText(value.getNameId());
                         holder.itemView.setOnClickListener(
                                 new View.OnClickListener() {
@@ -54,7 +53,7 @@ public class SelectDataCenterActivity extends TitleBaseActivity {
 
                     @Override
                     public int getItemCount() {
-                        return DataCenterImpl.values().length;
+                        return DataCenter.getDataCenterList().size();
                     }
                 });
     }

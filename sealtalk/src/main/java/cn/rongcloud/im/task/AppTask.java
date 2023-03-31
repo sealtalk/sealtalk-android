@@ -13,8 +13,6 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import cn.rongcloud.im.BuildConfig;
-import cn.rongcloud.im.R;
 import cn.rongcloud.im.contact.TranslationLanguage;
 import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.model.ChatRoomResult;
@@ -27,7 +25,6 @@ import cn.rongcloud.im.net.HttpClientManager;
 import cn.rongcloud.im.net.SealTalkUrl;
 import cn.rongcloud.im.net.service.AppService;
 import cn.rongcloud.im.utils.DataCenter;
-import cn.rongcloud.im.utils.DataCenterImpl;
 import cn.rongcloud.im.utils.NetworkOnlyResource;
 import com.google.gson.Gson;
 import io.rong.imkit.IMCenter;
@@ -44,6 +41,9 @@ public class AppTask {
 
     private AppService appsService;
     private Context context;
+
+    private static final String ULTRA_DEBUG_CONFIG = "ultra_debug_config";
+    private static final String ULTRA_IS_DEBUG_KEY = "ultra_isdebug";
 
     public AppTask(Context context) {
         appsService =
@@ -186,7 +186,7 @@ public class AppTask {
                 RongConfigurationManager.getInstance()
                         .switchLocale(LangUtils.RCLocale.LOCALE_ARAB, context);
             }
-            //            setPushLanguage(RongIMClient.PushLanguage.LOCALE_ARAB);
+            setPushLanguage(RongIMClient.PushLanguage.AR_SA);
         }
 
         return true;
@@ -241,6 +241,16 @@ public class AppTask {
         return context.getSharedPreferences("config", MODE_PRIVATE).getBoolean("isDebug", false);
     }
 
+    /**
+     * 是否打开了超级群 Debug 模式
+     *
+     * @return
+     */
+    public boolean isUltraGroupDebugMode() {
+        return context.getSharedPreferences(ULTRA_DEBUG_CONFIG, MODE_PRIVATE)
+                .getBoolean(ULTRA_IS_DEBUG_KEY, false);
+    }
+
     public void setTranslationSrcLanguage(String language) {
         context.getSharedPreferences("config", MODE_PRIVATE)
                 .edit()
@@ -266,8 +276,6 @@ public class AppTask {
     }
 
     public void changeDataCenter(DataCenter center) {
-        saveDataCenter(center);
-        RongCoreClient.getInstance().switchAppKey(center.getAppKey());
         RongCoreClient.setServerInfo(center.getNaviUrl(), null);
         IMCenter.init((Application) context.getApplicationContext(), center.getAppKey(), true);
         // 初始化扩展模块
@@ -276,7 +284,7 @@ public class AppTask {
         SealTalkUrl.DOMAIN = center.getAppServer();
     }
 
-    private void saveDataCenter(DataCenter dataCenter) {
+    public void saveDataCenter(DataCenter dataCenter) {
         context.getSharedPreferences("config", MODE_PRIVATE)
                 .edit()
                 .putString("data_center", dataCenter.getCode())
@@ -284,10 +292,22 @@ public class AppTask {
     }
 
     private DataCenter getDataCenterByCode() {
+        String defaultCode = isChineseLanguage() ? "beijing" : "singapore";
         String code =
                 context.getSharedPreferences("config", MODE_PRIVATE)
-                        .getString("data_center", DataCenterImpl.SINGAPORE.getCode());
-        return DataCenterImpl.valueByCode(code);
+                        .getString("data_center", defaultCode);
+        return DataCenter.getDataCenter(code);
+    }
+
+    private boolean isChineseLanguage() {
+        Locale locale = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            locale = context.getResources().getConfiguration().getLocales().get(0);
+        } else {
+            locale = context.getResources().getConfiguration().locale;
+        }
+        String lang = locale.getLanguage() + "-" + locale.getCountry();
+        return lang.contains("zh") && lang.contains("CN");
     }
 
     public void reInit() {
@@ -335,39 +355,6 @@ public class AppTask {
     }
 
     public DataCenter getCurrentDataCenter() {
-        if (isSealChat()) {
-            return getDataCenterByCode();
-        } else {
-            return new DataCenter() {
-                @Override
-                public String getNaviUrl() {
-                    return BuildConfig.SEALTALK_NAVI_SERVER;
-                }
-
-                @Override
-                public int getNameId() {
-                    return R.string.data_center_beijing;
-                }
-
-                @Override
-                public String getCode() {
-                    return null;
-                }
-
-                @Override
-                public String getAppKey() {
-                    return BuildConfig.SEALTALK_APP_KEY;
-                }
-
-                @Override
-                public String getAppServer() {
-                    return BuildConfig.SEALTALK_SERVER;
-                }
-            };
-        }
-    }
-
-    public boolean isSealChat() {
-        return context.getApplicationInfo().processName.equals("cn.rongcloud.im.sg");
+        return getDataCenterByCode();
     }
 }

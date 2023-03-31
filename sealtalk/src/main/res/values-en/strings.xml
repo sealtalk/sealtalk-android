@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RC IM</string>
+    <string name="app_name">融云 IM</string>
     <string name="title_activity_main">MainActivity</string>
     <!-- login-->
     <string name="seal_login_text_new_user">Sign Up</string>
@@ -244,9 +244,9 @@
     <string name="seal_update_staccout_exit">This RC IM number already exists, please reset</string>
     <string name="seal_update_staccount_tips">1.The RC IM number is the unique certificate for the account and can only be set once.\n2.After setting the RC IM account, you can add your friend by searching for the RC IM number.</string>
     <string name="seal_update_staccount_edit_digist">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-</string>
-    <string name="seal_update_staccount_title">Set up the Seal RC IM Talk number</string>
+    <string name="seal_update_staccount_title">Set up the SealRC IM Talk number</string>
     <string name="seal_update_staccount_save">Save</string>
-    <string name="seal_staccount_dialog_title">Confirm this RC IM number</string>
+    <string name="seal_staccount_dialog_title">Confirm this Sealtalk number</string>
     <string name="seal_staccount_dialog_title_format_error">Set up RC IM number failed</string>
     <string name="seal_staccount_dialog_content">Are you sure set the RC IM number to @ ? it will not be modified after confirmation</string>
     <string name="seal_staccount_set_success">Set up RC IM number success</string>
@@ -297,7 +297,7 @@
     <string name="seal_privacy_blacklist_is_empty">Blacklist is empty</string>
     <string name="seal_privacy_blacklist">BlackList</string>
     <string name="seal_privacy_search_phone">Search By Mobile</string>
-    <string name="seal_privacy_search_st_account">Search By RC IM No.</string>
+    <string name="seal_privacy_search_st_account">Search By Sealtalk No.</string>
     <string name="seal_privacy_friend_verify">Adding Verification</string>
     <string name="seal_privacy_group_verify">Add To Group Chat</string>
 
@@ -349,14 +349,14 @@
 
     <string name="new_friend_request_permission_title">mobile phonebook matching</string>
     <string name="new_friend_read_contact_dialog_title">RC IM Want to access your address book</string>
-    <string name="new_friend_read_contact_dialog_content">Allow RC IM to get your address book, to match friends with the server, RC IM will not save your address book.</string>
+    <string name="new_friend_read_contact_dialog_content">Allow Sealtalk to get your address book, to match friends with the server, RC IM will not save your address book.</string>
     <string name="new_friend_no_permission_read_contact">Unable to get address book information</string>
     <string name="new_friend_to_setting_accept_contact_permission">Please go to "Settings" to allow this app to get contacts</string>
     <string name="common_enter_setting">Enter settings</string>
     <string name="new_friend_no_permission_can_not_to_setting">Unable to jump to the Settings, please manually set.</string>
 
     <string name="wx_share_invite_friend_title">Global Internet Communication Cloud</string>
-    <string name="wx_share_invite_friend_content">Add me as a friend and Let\'s chat on RC IM !</string>
+    <string name="wx_share_invite_friend_content">Add me as a friend and Let\'s chat on Sealtalk !</string>
     <string name="sms_share_invite_friend_content_format">Hi~ I am using RC IM now, a chat app tailored for the best, come and try it! download it from: %s</string>
 
     <string name="zxing_msg_camera_framework_bug">Sorry, the Android camera encountered a problem. You may need to restart the device.</string>
@@ -615,6 +615,7 @@
     <!--debug mode-->
     <string name="setting_open_debug_prompt">Is the App Debug mode enabled (requires re-login to the app)?</string>
     <string name="setting_close_debug_promt">Is the App Debug mode disabled (requires re-login to the app)?</string>
+    <string name="setting_close_ultra_group_debug_promt">Is switch Ultra Group Debug mode (requires re-login to the app)?</string>
     <string name="seal_mine_about_push_config">Set Push Config</string>
     <string name="seal_mine_about_debug_setting">Setting</string>
     <string name="seal_mine_about_debug_setting_push_language">Set push language</string>
@@ -626,7 +627,7 @@
     <string name="seal_friend_message">Friends news</string>
 
     <string name="seal_login_text_title">Welcome to RC IM</string>
-    <string name="seal_talk_login_verify_code">Please enter the verification code</string>
+    <string name="seal_talk_login_verify_code">Verification code</string>
     <string name="seal_talk_login_send_verify_code">Send verification code</string>
     <string name="seal_talk_version_text">RC IM V%s</string>
     <string name="seal_talk_login_bottom_registration_text_front">The Login user shall register and open RC developer account</string>
@@ -647,4 +648,9 @@
     <string name="data_center_beijing">Beijing</string>
     <string name="data_center_singapore">Singapore</string>
     <string name="data_center_north_america">North America</string>
+
+    <string name="refresh">refresh</string>
+    <string name="image_verification_code_is_null">Image verification code is null</string>
+    <string name="seal_talk_image_verify_code">Image verification code</string>
+    <string name="image_verification_code_is_expired">The image verification code is expired,please try again</string>
 </resources>

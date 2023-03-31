@@ -73,6 +73,8 @@ public class SearchFriendActivity extends TitleBaseActivity
                                             searchFriendInfoResource.data);
                                     pushFragment(searchFriendResultFragment);
                                     viewModel.isFriend(friendInfo.getId());
+                                } else if (searchFriendInfoResource.status == Status.LOADING) {
+                                    // LOADING 状态不做任何处理
                                 } else if (searchFriendInfoResource.status == Status.ERROR
                                         || searchFriendInfoResource.data == null) {
                                     Toast.makeText(

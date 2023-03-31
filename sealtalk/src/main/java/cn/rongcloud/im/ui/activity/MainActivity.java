@@ -3,7 +3,6 @@ package cn.rongcloud.im.ui.activity;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -87,7 +86,6 @@ public class MainActivity extends BaseActivity
     private TextView tvTitle;
     private RelativeLayout btnSearch;
     private ImageButton btnMore;
-    private boolean isDebugUltraGroup = false; // 是否处于debug模式
     private LinkedHashMap<String, Integer> tabsMap = new LinkedHashMap<>();
     private String[] tabNameList; // tab 显示名称数组
 
@@ -98,18 +96,13 @@ public class MainActivity extends BaseActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity_main);
-        ApplicationInfo info = this.getApplicationInfo();
-        isDebugUltraGroup =
-                getApplication()
-                        .getSharedPreferences("config", MODE_PRIVATE)
-                        .getBoolean("isDebug", false);
+        initViewModel();
         initTabData();
         initView();
-        initViewModel();
         clearBadgeStatu();
         showFraudTipsDialog();
         initAMapPrivacy();
-        if (isDebugUltraGroup) {
+        if (appViewModel.isUltraGroupDebugMode()) {
             initOtherPrivacy();
         }
         if (Build.VERSION.SDK_INT >= 33) {
@@ -226,7 +219,7 @@ public class MainActivity extends BaseActivity
     private void initTabs() {
         // 初始化 tab
         List<TabItem> items = new ArrayList<>();
-        if (isDebugUltraGroup) {
+        if (appViewModel.isUltraGroupDebugMode()) {
             tabNameList = getResources().getStringArray(R.array.tab_names_ultra);
         } else {
             tabNameList = getResources().getStringArray(R.array.tab_names_nomal);
@@ -235,7 +228,7 @@ public class MainActivity extends BaseActivity
         animationDrawableList.add(
                 new TabItem.AnimationDrawableBean(
                         R.drawable.tab_chat_0, R.drawable.tab_chat_animation_list));
-        if (isDebugUltraGroup) {
+        if (appViewModel.isUltraGroupDebugMode()) {
             animationDrawableList.add(
                     new TabItem.AnimationDrawableBean(
                             R.drawable.rc_ultra_0, R.drawable.tab_ultra_animation_list));
@@ -271,7 +264,7 @@ public class MainActivity extends BaseActivity
                                 // 如果是我的页面， 则隐藏红点
                                 ((MainBottomTabItem) tabGroupView.getView(tabsMap.get(ME)))
                                         .setRedVisibility(View.GONE);
-                                if (isDebugUltraGroup) {
+                                if (appViewModel.isUltraGroupDebugMode()) {
                                     tvTitle.setText(tabNameList[4]);
                                 } else {
                                     tvTitle.setText(tabNameList[3]);
@@ -285,7 +278,8 @@ public class MainActivity extends BaseActivity
                             btnMore.setImageDrawable(
                                     getResources().getDrawable(R.drawable.seal_ic_main_more));
                             tvTitle.setText(tabNameList[0]);
-                        } else if (isDebugUltraGroup && item.id == tabsMap.get(ULTRA)) {
+                        } else if (appViewModel.isUltraGroupDebugMode()
+                                && item.id == tabsMap.get(ULTRA)) {
                             btnMore.setVisibility(View.VISIBLE);
                             btnSearch.setVisibility(View.GONE);
                             mConversationListViewModel.getUltraGroupMemberList();
@@ -296,13 +290,13 @@ public class MainActivity extends BaseActivity
                             btnSearch.setVisibility(View.VISIBLE);
                             btnMore.setImageDrawable(
                                     getResources().getDrawable(R.drawable.seal_ic_main_add_friend));
-                            if (isDebugUltraGroup) {
+                            if (appViewModel.isUltraGroupDebugMode()) {
                                 tvTitle.setText(tabNameList[2]);
                             } else {
                                 tvTitle.setText(tabNameList[1]);
                             }
                         } else if (item.id == tabsMap.get(FIND)) {
-                            if (isDebugUltraGroup) {
+                            if (appViewModel.isUltraGroupDebugMode()) {
                                 tvTitle.setText(tabNameList[3]);
                             } else {
                                 tvTitle.setText(tabNameList[2]);
@@ -345,7 +339,7 @@ public class MainActivity extends BaseActivity
     }
 
     private void initTabData() {
-        if (isDebugUltraGroup) {
+        if (appViewModel.isUltraGroupDebugMode()) {
             tabsMap.put(CHAT, 0);
             tabsMap.put(ULTRA, 1);
             tabsMap.put(CONTACTS, 2);
@@ -362,7 +356,7 @@ public class MainActivity extends BaseActivity
     /** 初始化 initFragmentViewPager */
     private void initFragmentViewPager() {
         fragments.add(new ConversationListFragment());
-        if (isDebugUltraGroup) {
+        if (appViewModel.isUltraGroupDebugMode()) {
             fragments.add(new UltraConversationListFragment());
         }
         fragments.add(new MainContactsListFragment());
@@ -405,7 +399,7 @@ public class MainActivity extends BaseActivity
                     public void onPageSelected(int position) {
                         // 当页面切换完成之后， 同时也要把 tab 设置到正确的位置
                         tabGroupView.setSelected(position);
-                        if (isDebugUltraGroup) {
+                        if (appViewModel.isUltraGroupDebugMode()) {
                             if (position == 0) {
                                 RouteUtils.registerActivity(
                                         RouteUtils.RongActivityType.ConversationActivity,
@@ -428,7 +422,7 @@ public class MainActivity extends BaseActivity
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         appViewModel = ViewModelProviders.of(this).get(AppViewModel.class);
         securityViewModel = ViewModelProviders.of(this).get(SecurityViewModel.class);
-        if (isDebugUltraGroup) {
+        if (appViewModel.isUltraGroupDebugMode()) {
             mConversationListViewModel = ViewModelProviders.of(this).get(UltraGroupViewModel.class);
         }
         appViewModel

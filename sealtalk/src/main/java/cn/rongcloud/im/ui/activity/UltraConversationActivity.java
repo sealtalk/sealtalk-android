@@ -1,7 +1,5 @@
 package cn.rongcloud.im.ui.activity;
 
-import static cn.rongcloud.im.ui.activity.SealTalkDebugTestActivity.ULTRA_IS_DEBUG_KEY;
-
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -41,7 +39,6 @@ import cn.rongcloud.im.model.ScreenCaptureResult;
 import cn.rongcloud.im.model.Status;
 import cn.rongcloud.im.model.TypingInfo;
 import cn.rongcloud.im.sp.UserConfigCache;
-import cn.rongcloud.im.task.AppTask;
 import cn.rongcloud.im.ui.dialog.RencentPicturePopWindow;
 import cn.rongcloud.im.ui.test.CustomConversationFragment;
 import cn.rongcloud.im.ui.view.AnnouceView;
@@ -793,21 +790,9 @@ public class UltraConversationActivity extends RongBaseActivity
 
     /** 根据 mTargetid 和 ConversationType 进入到设置页面 */
     private void toDetailActivity() {
-        AppTask appTask = IMManager.getInstance().getAppTask();
-        boolean isUltraDebug =
-                getSharedPreferences(SealTalkDebugTestActivity.ULTRA_DEBUG_CONFIG, MODE_PRIVATE)
-                        .getBoolean(ULTRA_IS_DEBUG_KEY, false);
-        if (appTask.isDebugMode()) {
-            if (isUltraDebug) {
-                Intent intent = new Intent(this, UltraGroupSettingActivity.class);
-                intent.putExtra(IntentExtra.SERIA_CONVERSATION_IDENTIFIER, conversationIdentifier);
-                startActivity(intent);
-            } else {
-                Intent intent = new Intent(this, UltraSettingActivity.class);
-                intent.putExtra(IntentExtra.SERIA_CONVERSATION_IDENTIFIER, conversationIdentifier);
-                startActivity(intent);
-            }
-        }
+        Intent intent = new Intent(this, UltraSettingActivity.class);
+        intent.putExtra(IntentExtra.SERIA_CONVERSATION_IDENTIFIER, conversationIdentifier);
+        startActivity(intent);
     }
 
     /** 软键盘打开和关闭的监听 */

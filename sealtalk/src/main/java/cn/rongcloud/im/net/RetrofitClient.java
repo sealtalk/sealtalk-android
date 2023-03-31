@@ -93,7 +93,6 @@ public class RetrofitClient {
 
             OkHttpClient.Builder okHttpBuilder =
                     new OkHttpClient.Builder()
-                            .addInterceptor(new ChangeHostInterceptor())
                             .addInterceptor(new HttpLogInterceptor())
                             .addInterceptor(new AddHeaderInterceptor(mContext))
                             .addInterceptor(new ReceivedCookiesInterceptor(mContext))

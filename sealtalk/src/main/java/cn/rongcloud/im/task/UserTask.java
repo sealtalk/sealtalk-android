@@ -27,6 +27,7 @@ import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.model.BlackListUser;
 import cn.rongcloud.im.model.ContactGroupResult;
 import cn.rongcloud.im.model.GetPokeResult;
+import cn.rongcloud.im.model.ImageCodeResult;
 import cn.rongcloud.im.model.LoginResult;
 import cn.rongcloud.im.model.RegionResult;
 import cn.rongcloud.im.model.RegisterResult;
@@ -251,7 +252,8 @@ public class UserTask {
      * @param phoneNumber
      * @return
      */
-    public LiveData<Resource<String>> sendCode(String region, String phoneNumber) {
+    public LiveData<Resource<String>> sendCode(
+            String region, String phoneNumber, String picCode, String picCodeId) {
         return new NetworkOnlyResource<String, Result<String>>() {
 
             @NonNull
@@ -260,10 +262,37 @@ public class UserTask {
                 HashMap<String, Object> paramsMap = new HashMap<>();
                 paramsMap.put("region", region);
                 paramsMap.put("phone", phoneNumber);
+                paramsMap.put("picCode", picCode);
+                paramsMap.put("picCodeId", picCodeId);
                 RequestBody body = RetrofitUtil.createJsonRequest(paramsMap);
                 return userService.sendCode(body);
             }
         }.asLiveData();
+    }
+
+    public LiveData<Resource<ImageCodeResult>> getImageCode() {
+        MediatorLiveData<Resource<ImageCodeResult>> result = new MediatorLiveData<>();
+        result.setValue(Resource.loading(null));
+        LiveData<Resource<ImageCodeResult>> resourceLiveData =
+                new NetworkOnlyResource<ImageCodeResult, Result<ImageCodeResult>>() {
+                    @NonNull
+                    @Override
+                    protected LiveData<Result<ImageCodeResult>> createCall() {
+                        return userService.getImageCode();
+                    }
+                }.asLiveData();
+        result.addSource(
+                resourceLiveData,
+                resource -> {
+                    if (resource.status == Status.SUCCESS) {
+                        result.setValue(Resource.success(resource.data));
+                    } else if (resource.status == Status.ERROR) {
+                        result.setValue(Resource.error(resource.code, null));
+                    } else {
+                        // do nothing
+                    }
+                });
+        return result;
     }
 
     /**

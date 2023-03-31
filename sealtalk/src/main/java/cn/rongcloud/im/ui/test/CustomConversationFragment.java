@@ -19,6 +19,7 @@ import io.rong.common.RLog;
 import io.rong.imkit.IMCenter;
 import io.rong.imkit.MessageItemLongClickAction;
 import io.rong.imkit.MessageItemLongClickActionManager;
+import io.rong.imkit.RongIM;
 import io.rong.imkit.config.RongConfigCenter;
 import io.rong.imkit.conversation.ConversationFragment;
 import io.rong.imkit.conversation.messgelist.viewmodel.MessageViewModel;
@@ -220,13 +221,17 @@ public class CustomConversationFragment extends ConversationFragment
             MessageItemLongClickActionManager.getInstance()
                     .addMessageItemLongClickAction(modifyAction);
         }
-
         if (updateExpansionAction == null) {
             updateExpansionAction =
                     new MessageItemLongClickAction.Builder()
                             .titleResId(R.string.rc_dialog_item_message_update)
                             .actionListener(
                                     (context, message) -> {
+                                        if (!message.getSenderUserId()
+                                                .equals(RongIM.getInstance().getCurrentUserId())) {
+                                            ToastUtils.showToast("非自己发送消息不能操作");
+                                            return false;
+                                        }
                                         if (message.getConversationType()
                                                         .equals(
                                                                 Conversation.ConversationType
@@ -328,6 +333,11 @@ public class CustomConversationFragment extends ConversationFragment
                             .titleResId(R.string.rc_dialog_item_ultra_message_delete)
                             .actionListener(
                                     (context, message) -> {
+                                        if (!message.getSenderUserId()
+                                                .equals(RongIM.getInstance().getCurrentUserId())) {
+                                            ToastUtils.showToast("非自己发送消息不能操作");
+                                            return false;
+                                        }
                                         ArrayList<String> list = new ArrayList<>();
                                         list.add("100");
                                         ChannelClient.getInstance()

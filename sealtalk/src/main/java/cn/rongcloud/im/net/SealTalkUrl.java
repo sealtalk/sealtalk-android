@@ -200,4 +200,8 @@ public class SealTalkUrl {
     public static final String USER_GROUP_CHANNEL_QUERY = "/ultragroup/channel/usergroup/query";
     // 分页查询用户组下的用户信息
     public static final String USER_GROUP_MEMBER_QUERY = "/ultragroup/usergroup/member/query";
+    // 获取图片验证码
+    public static final String GET_IMAGE_CODE = "/user/pic_code";
+    // 注销账号
+    public static final String DELETE_ACCOUNT = "/user/del";
 }

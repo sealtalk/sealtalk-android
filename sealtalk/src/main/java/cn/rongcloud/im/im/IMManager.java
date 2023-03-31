@@ -2293,6 +2293,11 @@ public class IMManager {
     public void resetAfterLogin() {
         resetUserLogoutState();
         resetUserBlockedState();
+        saveLoginDataCenter();
+    }
+
+    private void saveLoginDataCenter() {
+        appTask.saveDataCenter(appTask.getCurrentDataCenter());
     }
 
     public void resetState(MutableLiveData<Boolean> state) {

@@ -195,4 +195,8 @@ public class AppViewModel extends AndroidViewModel {
     public LiveData<Boolean> getDebugMode() {
         return debugMode;
     }
+
+    public boolean isUltraGroupDebugMode() {
+        return appTask.isDebugMode() && appTask.isUltraGroupDebugMode();
+    }
 }

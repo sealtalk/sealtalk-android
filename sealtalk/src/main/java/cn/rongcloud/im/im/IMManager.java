@@ -36,6 +36,7 @@ import cn.rongcloud.im.im.plugin.ImageTextModule;
 import cn.rongcloud.im.im.plugin.InsertMessageModule;
 import cn.rongcloud.im.im.plugin.MentionAllModule;
 import cn.rongcloud.im.im.plugin.PokeExtensionModule;
+import cn.rongcloud.im.im.plugin.SendKVMessageModule;
 import cn.rongcloud.im.im.provider.ContactNotificationMessageProvider;
 import cn.rongcloud.im.im.provider.GroupApplyMessageItemProvider;
 import cn.rongcloud.im.im.provider.PokeMessageItemProvider;
@@ -1405,6 +1406,8 @@ public class IMManager {
             RongExtensionManager.getInstance().registerExtensionModule(new MentionAllModule());
             // 插入一条消息
             RongExtensionManager.getInstance().registerExtensionModule(new InsertMessageModule());
+            // 发送一条KV消息
+            RongExtensionManager.getInstance().registerExtensionModule(new SendKVMessageModule());
         }
     }
 

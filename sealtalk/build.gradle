@@ -9,7 +9,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 30
         versionCode 20210127
-        versionName "5.4.1"
+        versionName "5.4.2"
         ndk {
             abiFilters "armeabi-v7a", 'x86'
         }
@@ -27,7 +27,8 @@ android {
         buildConfigField "String", "SEALTALK_MIZU_PUSH_APPKEY", "${SEALTALK_MIZU_PUSH_APPKEY}"
         buildConfigField "String", "SEALTALK_OPPO_PUSH_APPKEY", "${SEALTALK_OPPO_PUSH_APPKEY}"
         buildConfigField "String", "SEALTALK_OPPO_PUSH_SECRET", "${SEALTALK_OPPO_PUSH_SECRET}"
-        manifestPlaceholders = [SEALTALK_HW_PUSH_APPID: SEALTALK_HW_PUSH_APPID.replaceAll('"', '')]
+        manifestPlaceholders = [SEALTALK_HW_PUSH_APPID: SEALTALK_HW_PUSH_APPID.replaceAll('"', ''),
+                                MAP_KEY: MAP_KEY.replaceAll('"', '')]
         buildConfigField "String", "SEALTALK_UMENG_APPKEY", "${SEALTALK_UMENG_APPKEY}"
         buildConfigField "String", "SEALTALK_UMENG_CHANNEL", "${SEALTALK_UMENG_CHANNEL}"
         buildConfigField "String", "SEALTALK_DATA_CENTER", "\"\""
@@ -100,13 +101,13 @@ dependencies {
     implementation 'commons-codec:commons-codec:1.6'
 
     //需要替换的版本
-    api 'cn.rongcloud.sdk:im_kit:5.4.1'
-    api 'cn.rongcloud.sdk:im_lib:5.4.1'
-    api 'cn.rongcloud.sdk:rcsticker:5.4.1'
-    api 'cn.rongcloud.sdk:sight:5.4.1'
-    api 'cn.rongcloud.sdk:call_lib:5.4.1'
-    api 'cn.rongcloud.sdk:call_kit:5.4.1'
-    api 'cn.rongcloud.sdk:locationKit:5.4.1'
+    api 'cn.rongcloud.sdk:im_kit:5.4.2'
+    api 'cn.rongcloud.sdk:im_lib:5.4.2'
+    api 'cn.rongcloud.sdk:rcsticker:5.4.2'
+    api 'cn.rongcloud.sdk:sight:5.4.2'
+    api 'cn.rongcloud.sdk:call_lib:5.4.2'
+    api 'cn.rongcloud.sdk:call_kit:5.4.2'
+    api 'cn.rongcloud.sdk:locationKit:5.4.2'
 
     api project(path: ':contactcard')
     api project(path: ':recognizer')

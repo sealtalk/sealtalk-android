@@ -1,8 +1,6 @@
 package cn.rongcloud.im.task;
 
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.text.TextUtils;
 import androidx.annotation.NonNull;
@@ -45,10 +43,10 @@ import cn.rongcloud.im.sp.UserCache;
 import cn.rongcloud.im.utils.CharacterParser;
 import cn.rongcloud.im.utils.NetworkBoundResource;
 import cn.rongcloud.im.utils.NetworkOnlyResource;
+import cn.rongcloud.im.utils.RongChannelUtils;
 import cn.rongcloud.im.utils.RongGenerate;
 import cn.rongcloud.im.utils.SearchUtils;
 import cn.rongcloud.im.utils.log.SLog;
-import io.rong.common.rlog.RLog;
 import io.rong.imlib.common.ExecutorFactory;
 import io.rong.imlib.model.Conversation;
 import java.util.ArrayList;
@@ -1020,6 +1018,12 @@ public class UserTask {
         dbManager.closeDb();
     }
 
+    /** 账号注销 */
+    public void accountDelete() {
+        userCache.clearAllCache();
+        dbManager.closeDb();
+    }
+
     /**
      * 设置是否接收戳一下消息
      *
@@ -1153,18 +1157,21 @@ public class UserTask {
         return result;
     }
 
-    public String getChannel(Context context) {
-        try {
-            PackageManager pm = context.getPackageManager();
-            ApplicationInfo appInfo =
-                    pm.getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
-            // key为<meta-data>标签中的name
-            String channel = appInfo.metaData.getString("CHANNEL");
-            if (!TextUtils.isEmpty(channel)) {
-                return channel;
+    /** 用户注销 */
+    public LiveData<Resource<Void>> deleteAccount() {
+        return new NetworkOnlyResource<Void, Result>() {
+            @NonNull
+            @Override
+            protected LiveData<Result> createCall() {
+                return userService.deleteAccount();
             }
-        } catch (Exception e) {
-            RLog.e("UserTask", "getChannel", e);
+        }.asLiveData();
+    }
+
+    public String getChannel(Context context) {
+        String channelName = RongChannelUtils.getChannelName(context);
+        if (!TextUtils.isEmpty(channelName)) {
+            return channelName;
         }
         return "none";
     }

@@ -129,6 +129,6 @@ public interface UserService {
     @GET(SealTalkUrl.GET_IMAGE_CODE)
     LiveData<Result<ImageCodeResult>> getImageCode();
 
-    @GET(SealTalkUrl.DELETE_ACCOUNT)
+    @POST(SealTalkUrl.DELETE_ACCOUNT)
     LiveData<Result> deleteAccount();
 }

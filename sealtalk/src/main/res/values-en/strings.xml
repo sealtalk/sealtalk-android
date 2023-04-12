@@ -217,6 +217,7 @@
     <string name="seal_mine_set_account_chat_bg">Chat background</string>
     <string name="seal_mine_set_account_clear_message_cache">Clean up chat history</string>
     <string name="seal_mine_set_account_logout">Logout</string>
+    <string name="seal_mine_set_account_delete">Delete Account</string>
     <string name="seal_mine_set_account_push_language">Setting Push To Chinese</string>
     <string name="seal_mine_set_account_push_content">Display Push Content</string>
     <string name="seal_mine_set_account_push_message">Receive Push Message</string>
@@ -368,6 +369,8 @@
     <string name="zxing_scan_from_picture">Select image</string>
 
     <string name="seal_mine_set_account_dialog_logout_message">Do you want to log out?</string>
+    <string name="seal_mine_set_account_dialog_delete_message">Are you sure delete the account?</string>
+    <string name="seal_mine_set_account_dialog_delete_failed_message">delete fail</string>
     <string name="seal_download_app_browser_download">Open By Browser</string>
     <string name="seal_download_app_local_download">Local Download</string>
     <string name="seal_forward_message">Forward</string>

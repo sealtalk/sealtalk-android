@@ -152,7 +152,6 @@
     <string name="seal_mine_set_account_chat_bg">聊天背景</string>
     <string name="seal_mine_set_account_clear_message_cache">清理聊天记录</string>
     <string name="seal_mine_set_account_logout">退出登录</string>
-    <string name="seal_mine_set_account_delete">删除账户</string>
     <string name="seal_mine_set_account_push_language">设置 Push 中文</string>
     <string name="seal_mine_set_account_push_content">显示 Push 内容</string>
     <string name="seal_mine_set_account_push_message">接收 Push 消息</string>
@@ -375,8 +374,6 @@
     <string name="zxing_msg_camera_permission_grant_needed">您需要在设置中打开相机权限</string>
 
     <string name="seal_mine_set_account_dialog_logout_message">是否退出登录?</string>
-    <string name="seal_mine_set_account_dialog_delete_message">你确定要删除账户吗?</string>
-    <string name="seal_mine_set_account_dialog_delete_failed_message">删除失败</string>
 
     <string name="seal_download_app_browser_download">浏览器打开</string>
     <string name="seal_download_app_local_download">本地下载</string>
@@ -678,9 +675,4 @@
     <string name="seal_main_title_create_channel">创建频道</string>
     <string name="profile_channel_name_word_limit_format" formatted="true">填写频道名称(%d-%d字符)</string>
     <string name="profile_group_name_invalid_word">不能输入特殊字符</string>
-
-    <string name="refresh">刷新</string>
-    <string name="image_verification_code_is_null">图片验证码为空</string>
-    <string name="seal_talk_image_verify_code">请输入图片中的验证码</string>
-    <string name="image_verification_code_is_expired">图片验证码已过期，请重新输入</string>
 </resources>

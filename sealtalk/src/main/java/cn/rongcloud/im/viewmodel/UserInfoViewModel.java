@@ -29,8 +29,6 @@ public class UserInfoViewModel extends AndroidViewModel {
             new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<Result>> setGenderResult = new SingleSourceLiveData<>();
 
-    private SingleSourceLiveData<Resource<Void>> deleteAccountResult = new SingleSourceLiveData<>();
-
     public UserInfoViewModel(@NonNull Application application) {
         super(application);
         imManager = IMManager.getInstance();
@@ -98,11 +96,6 @@ public class UserInfoViewModel extends AndroidViewModel {
         return changePasswordResult;
     }
 
-    /** 销户 */
-    public LiveData<Resource<Void>> getDeleteAccountResult() {
-        return deleteAccountResult;
-    }
-
     /**
      * 设置用户名
      *
@@ -163,17 +156,6 @@ public class UserInfoViewModel extends AndroidViewModel {
     public void logout() {
         imManager.logout();
         userTask.logout();
-    }
-
-    /** 账号注销 */
-    public void accountDelete() {
-        imManager.logout();
-        userTask.accountDelete();
-    }
-
-    /** 销户 */
-    public void deleteAccount() {
-        deleteAccountResult.setSource(userTask.deleteAccount());
     }
 
     public static class Factory extends ViewModelProvider.NewInstanceFactory {

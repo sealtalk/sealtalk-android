@@ -7,9 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.text.Editable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
-import io.rong.common.rlog.RLog;
 import io.rong.imkit.conversation.extension.InputMode;
 import io.rong.imkit.conversation.extension.RongExtension;
 import io.rong.imkit.conversation.extension.RongExtensionViewModel;
@@ -19,7 +17,6 @@ import io.rong.imkit.manager.AudioPlayManager;
 import io.rong.imkit.utils.PermissionCheckUtil;
 
 public class RecognizePlugin implements IPluginModule, IPluginRequestPermissionResultCallback {
-    private static final String TAG = "RecognizePlugin";
 
     @Override
     public Drawable obtainDrawable(Context context) {
@@ -33,10 +30,6 @@ public class RecognizePlugin implements IPluginModule, IPluginRequestPermissionR
 
     @Override
     public void onClick(Fragment currentFragment, final RongExtension extension, int index) {
-        if (extension == null) {
-            RLog.e(TAG, "onClick extension null");
-            return;
-        }
         String[] permissions = {Manifest.permission.RECORD_AUDIO};
         if (PermissionCheckUtil.checkPermissions(currentFragment.getActivity(), permissions)) {
             startRecognize(currentFragment, extension);
@@ -54,11 +47,6 @@ public class RecognizePlugin implements IPluginModule, IPluginRequestPermissionR
     }
 
     private void startRecognize(Fragment fragment, final RongExtension extension) {
-        final FragmentActivity activity = fragment.getActivity();
-        if (activity == null || activity.isDestroyed() || activity.isFinishing()) {
-            RLog.e(TAG, "startRecognize activity null");
-            return;
-        }
         if (AudioPlayManager.getInstance().isPlaying()) {
             AudioPlayManager.getInstance().stopPlay();
         }

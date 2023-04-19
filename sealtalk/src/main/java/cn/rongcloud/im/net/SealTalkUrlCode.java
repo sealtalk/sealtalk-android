@@ -113,6 +113,4 @@ public class SealTalkUrlCode {
     public static final int ULTRA_GROUP_CREATE = 53 * API_CODE_PREFIX;
 
     public static final int ULTRA_CHANNEL_CREATE = 54 * API_CODE_PREFIX;
-
-    public static final int GET_IMAGE_CODE = 55 * API_CODE_PREFIX;
 }

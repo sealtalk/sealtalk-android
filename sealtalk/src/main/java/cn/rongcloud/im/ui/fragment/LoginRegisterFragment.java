@@ -233,7 +233,7 @@ public class LoginRegisterFragment extends BaseFragment {
                 // 请求完成后在恢复原来状态
                 sendCodeBtn.setEnabled(false);
                 // phoneEdit.setEnabled(false);
-                sendCode(phoneCode, phoneNumber, null, null);
+                sendCode(phoneCode, phoneNumber);
 
                 break;
             case R.id.btn_register:
@@ -298,8 +298,8 @@ public class LoginRegisterFragment extends BaseFragment {
      * @param phoneCode 国家地区的手机区号
      * @param phoneNumber 手机号
      */
-    private void sendCode(String phoneCode, String phoneNumber, String picCode, String picCodeId) {
-        loginViewModel.sendCode(phoneCode, phoneNumber, picCode, picCodeId);
+    private void sendCode(String phoneCode, String phoneNumber) {
+        loginViewModel.sendCode(phoneCode, phoneNumber);
     }
 
     private void register(

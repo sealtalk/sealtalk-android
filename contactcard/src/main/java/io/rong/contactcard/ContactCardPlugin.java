@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import io.rong.common.rlog.RLog;
 import io.rong.contactcard.activities.ContactDetailActivity;
 import io.rong.contactcard.activities.ContactListActivity;
 import io.rong.imkit.conversation.extension.RongExtension;
@@ -18,7 +17,6 @@ import io.rong.imlib.model.UserInfo;
 /** Created by Beyond on 2016/11/14. */
 public class ContactCardPlugin implements IPluginModule {
 
-    private static final String TAG = "ContactCardPlugin";
     private static final int REQUEST_CONTACT = 55;
     private Context context;
     private Conversation.ConversationType conversationType;
@@ -31,7 +29,6 @@ public class ContactCardPlugin implements IPluginModule {
 
     @Override
     public Drawable obtainDrawable(Context context) {
-        this.context = context;
         return ContextCompat.getDrawable(context, R.drawable.rc_contact_plugin_icon);
     }
 
@@ -42,14 +39,7 @@ public class ContactCardPlugin implements IPluginModule {
 
     @Override
     public void onClick(Fragment currentFragment, RongExtension extension, int index) {
-        if (extension == null) {
-            RLog.e(TAG, "extension or Fragment null");
-            return;
-        }
-        if (currentFragment.getActivity() != null) {
-            context = currentFragment.getActivity().getApplicationContext();
-        }
-
+        context = currentFragment.getActivity().getApplicationContext();
         conversationType = extension.getConversationType();
         targetId = extension.getTargetId();
 
@@ -61,13 +51,7 @@ public class ContactCardPlugin implements IPluginModule {
             iContactCardSelectListProvider.onContactPluginClick(
                     REQUEST_CONTACT, currentFragment, extension, this);
             extension.collapseExtension();
-            return;
-        }
-        if (context == null) {
-            RLog.e(TAG, "context null");
-            return;
-        }
-        if (iContactInfoProvider != null) {
+        } else if (iContactInfoProvider != null) {
             Intent intent = new Intent(context, ContactListActivity.class);
             extension.startActivityForPluginResult(intent, REQUEST_CONTACT, this);
             intent.putExtra(IS_FROM_CARD, true);
@@ -84,10 +68,6 @@ public class ContactCardPlugin implements IPluginModule {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CONTACT && resultCode == Activity.RESULT_OK) {
-            if (conversationType == null || context == null) {
-                RLog.e(TAG, "conversationType or context null");
-                return;
-            }
             Intent intent = new Intent(context, ContactDetailActivity.class);
             intent.putExtra("contact", (UserInfo) data.getParcelableExtra("contact"));
             intent.putExtra("conversationType", conversationType);

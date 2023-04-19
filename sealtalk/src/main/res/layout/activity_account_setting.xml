@@ -110,16 +110,4 @@
         style="?android:attr/borderlessButtonStyle"
         />
 
-    <Button
-        android:id="@+id/btn_account_delete"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/seal_mine_account_setting_item_height"
-        android:layout_marginTop="@dimen/seal_mine_account_setting_item_margin_top"
-        android:textColor="@color/seal_setting_item_content"
-        android:textSize="@dimen/seal_setting_item_text_size"
-        android:text="@string/seal_mine_set_account_delete"
-        android:background="@drawable/seal_mine_setting_item_selector"
-        style="?android:attr/borderlessButtonStyle"
-        />
-
 </LinearLayout>

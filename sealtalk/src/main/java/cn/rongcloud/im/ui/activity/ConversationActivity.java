@@ -51,7 +51,6 @@ import cn.rongcloud.im.utils.log.SLog;
 import cn.rongcloud.im.viewmodel.ConversationViewModel;
 import cn.rongcloud.im.viewmodel.GroupManagementViewModel;
 import cn.rongcloud.im.viewmodel.PrivateChatSettingViewModel;
-import io.rong.imkit.RongIM;
 import io.rong.imkit.activity.RongBaseActivity;
 import io.rong.imkit.conversation.ConversationFragment;
 import io.rong.imkit.conversation.extension.RongExtensionViewModel;
@@ -62,7 +61,6 @@ import io.rong.imkit.utils.RouteUtils;
 import io.rong.imkit.widget.TitleBar;
 import io.rong.imlib.IRongCoreListener;
 import io.rong.imlib.RongCoreClient;
-import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.ConversationIdentifier;
 import java.lang.ref.WeakReference;
@@ -108,8 +106,6 @@ public class ConversationActivity extends RongBaseActivity
 
     private DelayDismissHandler mHandler;
     private final int RECENTLY_POPU_DISMISS = 0x2870;
-    // 根据收到消息的TargetId是否为当前TargetId，如果一致则不刷新消息数量，反之刷新
-    private boolean isUpdateCount = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -196,8 +192,6 @@ public class ConversationActivity extends RongBaseActivity
         }
 
         RongCoreClient.getInstance().setMessageBlockListener(blockListener);
-
-        RongIM.addOnReceiveMessageListener(messageWrapperListener);
     }
 
     @Override
@@ -287,7 +281,7 @@ public class ConversationActivity extends RongBaseActivity
         IMManager.getInstance().clearConversationRecord(mTargetId);
         mHandler.removeCallbacksAndMessages(null);
         UnReadMessageManager.getInstance().removeObserver(this);
-        RongIM.removeOnReceiveMessageListener(messageWrapperListener);
+
         if (rencentPicturePopWindow != null) {
             rencentPicturePopWindow.dismiss();
             rencentPicturePopWindow = null;
@@ -742,7 +736,6 @@ public class ConversationActivity extends RongBaseActivity
 
     @Override
     public void onCountChanged(int count) {
-        if (!isUpdateCount) return;
         if (count > 0) {
             if (count < 100) {
                 mTitleBar.setLeftText("(" + count + ")");
@@ -990,17 +983,4 @@ public class ConversationActivity extends RongBaseActivity
             finish();
         }
     }
-
-    private RongIMClient.OnReceiveMessageWrapperListener messageWrapperListener =
-            new RongIMClient.OnReceiveMessageWrapperListener() {
-                @Override
-                public boolean onReceived(
-                        io.rong.imlib.model.Message message,
-                        int left,
-                        boolean hasPackage,
-                        boolean offline) {
-                    isUpdateCount = !TextUtils.equals(mTargetId, message.getTargetId());
-                    return false;
-                }
-            };
 }

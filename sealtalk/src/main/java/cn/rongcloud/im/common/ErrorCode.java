@@ -24,8 +24,6 @@ public enum ErrorCode {
             SealTalkUrlCode.SEND_CODE + 5000, R.string.login_error_send_message_frequency),
     API_VERIFY_CODE_EXPIRED(
             SealTalkUrlCode.VERIFY_CODE + 2000, R.string.login_error_captcha_overdue),
-    API_IMAGE_CODE_EXPIRED(
-            SealTalkUrlCode.SEND_CODE + 1000, R.string.image_verification_code_is_expired),
     CHECK_VERIFY_CODE_FAILED(
             SealTalkUrlCode.VERIFY_CODE + 1000, R.string.login_verification_code_error),
     REGISTER_PHONE_ALREADY_EXISTED(

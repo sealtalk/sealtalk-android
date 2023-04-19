@@ -1,6 +1,8 @@
 package cn.rongcloud.im.task;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.text.TextUtils;
 import androidx.annotation.NonNull;
@@ -25,7 +27,6 @@ import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.model.BlackListUser;
 import cn.rongcloud.im.model.ContactGroupResult;
 import cn.rongcloud.im.model.GetPokeResult;
-import cn.rongcloud.im.model.ImageCodeResult;
 import cn.rongcloud.im.model.LoginResult;
 import cn.rongcloud.im.model.RegionResult;
 import cn.rongcloud.im.model.RegisterResult;
@@ -43,10 +44,10 @@ import cn.rongcloud.im.sp.UserCache;
 import cn.rongcloud.im.utils.CharacterParser;
 import cn.rongcloud.im.utils.NetworkBoundResource;
 import cn.rongcloud.im.utils.NetworkOnlyResource;
-import cn.rongcloud.im.utils.RongChannelUtils;
 import cn.rongcloud.im.utils.RongGenerate;
 import cn.rongcloud.im.utils.SearchUtils;
 import cn.rongcloud.im.utils.log.SLog;
+import io.rong.common.rlog.RLog;
 import io.rong.imlib.common.ExecutorFactory;
 import io.rong.imlib.model.Conversation;
 import java.util.ArrayList;
@@ -250,8 +251,7 @@ public class UserTask {
      * @param phoneNumber
      * @return
      */
-    public LiveData<Resource<String>> sendCode(
-            String region, String phoneNumber, String picCode, String picCodeId) {
+    public LiveData<Resource<String>> sendCode(String region, String phoneNumber) {
         return new NetworkOnlyResource<String, Result<String>>() {
 
             @NonNull
@@ -260,37 +260,10 @@ public class UserTask {
                 HashMap<String, Object> paramsMap = new HashMap<>();
                 paramsMap.put("region", region);
                 paramsMap.put("phone", phoneNumber);
-                paramsMap.put("picCode", picCode);
-                paramsMap.put("picCodeId", picCodeId);
                 RequestBody body = RetrofitUtil.createJsonRequest(paramsMap);
                 return userService.sendCode(body);
             }
         }.asLiveData();
-    }
-
-    public LiveData<Resource<ImageCodeResult>> getImageCode() {
-        MediatorLiveData<Resource<ImageCodeResult>> result = new MediatorLiveData<>();
-        result.setValue(Resource.loading(null));
-        LiveData<Resource<ImageCodeResult>> resourceLiveData =
-                new NetworkOnlyResource<ImageCodeResult, Result<ImageCodeResult>>() {
-                    @NonNull
-                    @Override
-                    protected LiveData<Result<ImageCodeResult>> createCall() {
-                        return userService.getImageCode();
-                    }
-                }.asLiveData();
-        result.addSource(
-                resourceLiveData,
-                resource -> {
-                    if (resource.status == Status.SUCCESS) {
-                        result.setValue(Resource.success(resource.data));
-                    } else if (resource.status == Status.ERROR) {
-                        result.setValue(Resource.error(resource.code, null));
-                    } else {
-                        // do nothing
-                    }
-                });
-        return result;
     }
 
     /**
@@ -1018,12 +991,6 @@ public class UserTask {
         dbManager.closeDb();
     }
 
-    /** 账号注销 */
-    public void accountDelete() {
-        userCache.clearAllCache();
-        dbManager.closeDb();
-    }
-
     /**
      * 设置是否接收戳一下消息
      *
@@ -1157,21 +1124,18 @@ public class UserTask {
         return result;
     }
 
-    /** 用户注销 */
-    public LiveData<Resource<Void>> deleteAccount() {
-        return new NetworkOnlyResource<Void, Result>() {
-            @NonNull
-            @Override
-            protected LiveData<Result> createCall() {
-                return userService.deleteAccount();
-            }
-        }.asLiveData();
-    }
-
     public String getChannel(Context context) {
-        String channelName = RongChannelUtils.getChannelName(context);
-        if (!TextUtils.isEmpty(channelName)) {
-            return channelName;
+        try {
+            PackageManager pm = context.getPackageManager();
+            ApplicationInfo appInfo =
+                    pm.getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+            // key为<meta-data>标签中的name
+            String channel = appInfo.metaData.getString("CHANNEL");
+            if (!TextUtils.isEmpty(channel)) {
+                return channel;
+            }
+        } catch (Exception e) {
+            RLog.e("UserTask", "getChannel", e);
         }
         return "none";
     }

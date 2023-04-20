@@ -5,6 +5,7 @@ import cn.rongcloud.im.db.model.FriendBlackInfo;
 import cn.rongcloud.im.db.model.UserInfo;
 import cn.rongcloud.im.model.ContactGroupResult;
 import cn.rongcloud.im.model.GetPokeResult;
+import cn.rongcloud.im.model.ImageCodeResult;
 import cn.rongcloud.im.model.LoginResult;
 import cn.rongcloud.im.model.RegionResult;
 import cn.rongcloud.im.model.RegisterResult;
@@ -124,4 +125,10 @@ public interface UserService {
 
     @GET(SealTalkUrl.TRANSLATION_JWT_TOKEN)
     LiveData<TranslationTokenResult> getTranslationToken(@Query("userId") String userId);
+
+    @GET(SealTalkUrl.GET_IMAGE_CODE)
+    LiveData<Result<ImageCodeResult>> getImageCode();
+
+    @POST(SealTalkUrl.DELETE_ACCOUNT)
+    LiveData<Result> deleteAccount();
 }

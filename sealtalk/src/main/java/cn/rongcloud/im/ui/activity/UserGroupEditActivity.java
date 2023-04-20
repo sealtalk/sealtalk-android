@@ -215,7 +215,7 @@ public class UserGroupEditActivity extends TitleBaseActivity implements View.OnC
                                 dismissLoadingDialog();
                                 if (resource.status == Status.SUCCESS) {
                                     setCheckedList(resource.data);
-                                } else {
+                                } else if (!TextUtils.isEmpty(userGroupInfo.userGroupId)) {
                                     ToastUtils.showToast("用户组成员列表获取异常");
                                 }
                             }

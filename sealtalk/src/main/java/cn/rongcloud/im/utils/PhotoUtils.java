@@ -336,21 +336,25 @@ public class PhotoUtils {
             Log.e(tag, "onPhotoResultListener is not null");
             return;
         }
-
+        if (resultCode != fragment.getActivity().RESULT_OK) return;
         switch (requestCode) {
                 // 拍照
             case INTENT_TAKE:
-                if (new File(buildLocalFileUri().getPath()).exists()) {
-                    // 不需要裁剪
-                    if (mType == NO_CROP) {
-                        onPhotoResultListener.onPhotoResult(buildLocalFileUri());
-                        return;
-                    }
-                    if (corp(fragment, buildUri(fragment.getActivity()))) {
-                        return;
-                    }
-                    onPhotoResultListener.onPhotoCancel();
+                // if (new File(buildLocalFileUri().getPath()).exists()) {
+                // 不需要裁剪
+                if (mType == NO_CROP) {
+                    // takePicture
+                    // 方法中传入的是buildUri(fragment.getActivity())，所以这里不能传buildLocalFileUri()。
+                    // 必须确保这里使用传入的Uri
+                    // onPhotoResultListener.onPhotoResult(buildLocalFileUri());
+                    onPhotoResultListener.onPhotoResult(buildUri(fragment.getActivity()));
+                    return;
                 }
+                if (corp(fragment, buildUri(fragment.getActivity()))) {
+                    return;
+                }
+                onPhotoResultListener.onPhotoCancel();
+                //                }
                 break;
 
                 // 选择图片

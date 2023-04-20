@@ -55,6 +55,9 @@ public class HttpLogInterceptor implements Interceptor {
                     }
                     Log.d(TAG, "响应:" + resp);
                     Log.e(TAG, "********响应日志结束********");
+                    if (resp == null) {
+                        resp = "";
+                    }
                     body = ResponseBody.create(mediaType, resp);
                     return response.newBuilder().body(body).build();
                 } else {

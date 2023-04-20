@@ -217,6 +217,7 @@
     <string name="seal_mine_set_account_chat_bg">Chat background</string>
     <string name="seal_mine_set_account_clear_message_cache">Clean up chat history</string>
     <string name="seal_mine_set_account_logout">Logout</string>
+    <string name="seal_mine_set_account_delete">Delete Account</string>
     <string name="seal_mine_set_account_push_language">Setting Push To Chinese</string>
     <string name="seal_mine_set_account_push_content">Display Push Content</string>
     <string name="seal_mine_set_account_push_message">Receive Push Message</string>
@@ -368,6 +369,8 @@
     <string name="zxing_scan_from_picture">Select image</string>
 
     <string name="seal_mine_set_account_dialog_logout_message">Do you want to log out?</string>
+    <string name="seal_mine_set_account_dialog_delete_message">Are you sure delete the account?</string>
+    <string name="seal_mine_set_account_dialog_delete_failed_message">delete fail</string>
     <string name="seal_download_app_browser_download">Open By Browser</string>
     <string name="seal_download_app_local_download">Local Download</string>
     <string name="seal_forward_message">Forward</string>
@@ -627,7 +630,7 @@
     <string name="seal_friend_message">Friends news</string>
 
     <string name="seal_login_text_title">Welcome to RC IM</string>
-    <string name="seal_talk_login_verify_code">Please enter the verification code</string>
+    <string name="seal_talk_login_verify_code">Verification code</string>
     <string name="seal_talk_login_send_verify_code">Send verification code</string>
     <string name="seal_talk_version_text">RC IM V%s</string>
     <string name="seal_talk_login_bottom_registration_text_front">The Login user shall register and open RC developer account</string>
@@ -648,4 +651,9 @@
     <string name="data_center_beijing">Beijing</string>
     <string name="data_center_singapore">Singapore</string>
     <string name="data_center_north_america">North America</string>
+
+    <string name="refresh">refresh</string>
+    <string name="image_verification_code_is_null">Image verification code is null</string>
+    <string name="seal_talk_image_verify_code">Image verification code</string>
+    <string name="image_verification_code_is_expired">The image verification code is expired,please try again</string>
 </resources>

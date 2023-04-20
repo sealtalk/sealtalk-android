@@ -35,6 +35,7 @@ import cn.rongcloud.im.ui.dialog.LoadingDialog;
 import cn.rongcloud.im.utils.StatusBarUtil;
 import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.utils.log.SLog;
+import io.rong.imkit.RongIM;
 import io.rong.imkit.utils.language.RongConfigurationManager;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.ConversationIdentifier;
@@ -453,6 +454,7 @@ public class BaseActivity extends AppCompatActivity {
 
                 @Override
                 public void onReceive(Context context, Intent intent) {
+                    RongIM.getInstance().logout();
                     finish();
                 }
             };

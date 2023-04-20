@@ -1,8 +1,6 @@
 package cn.rongcloud.im.task;
 
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.text.TextUtils;
 import androidx.annotation.NonNull;
@@ -27,6 +25,7 @@ import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.model.BlackListUser;
 import cn.rongcloud.im.model.ContactGroupResult;
 import cn.rongcloud.im.model.GetPokeResult;
+import cn.rongcloud.im.model.ImageCodeResult;
 import cn.rongcloud.im.model.LoginResult;
 import cn.rongcloud.im.model.RegionResult;
 import cn.rongcloud.im.model.RegisterResult;
@@ -44,10 +43,10 @@ import cn.rongcloud.im.sp.UserCache;
 import cn.rongcloud.im.utils.CharacterParser;
 import cn.rongcloud.im.utils.NetworkBoundResource;
 import cn.rongcloud.im.utils.NetworkOnlyResource;
+import cn.rongcloud.im.utils.RongChannelUtils;
 import cn.rongcloud.im.utils.RongGenerate;
 import cn.rongcloud.im.utils.SearchUtils;
 import cn.rongcloud.im.utils.log.SLog;
-import io.rong.common.rlog.RLog;
 import io.rong.imlib.common.ExecutorFactory;
 import io.rong.imlib.model.Conversation;
 import java.util.ArrayList;
@@ -65,6 +64,9 @@ public class UserTask {
     // 存储当前最新一次登录的用户信息
     private UserCache userCache;
     private CountryCache countryCache;
+
+    private static final String LOGIN_DEBUG_CONFIG = "login_debug_config";
+    private static final String LOGIN_IS_HIDE_PIC_CODE = "login_is_hide_pic_code";
 
     public UserTask(Context context) {
         this.context = context.getApplicationContext();
@@ -251,7 +253,8 @@ public class UserTask {
      * @param phoneNumber
      * @return
      */
-    public LiveData<Resource<String>> sendCode(String region, String phoneNumber) {
+    public LiveData<Resource<String>> sendCode(
+            String region, String phoneNumber, String picCode, String picCodeId) {
         return new NetworkOnlyResource<String, Result<String>>() {
 
             @NonNull
@@ -260,10 +263,39 @@ public class UserTask {
                 HashMap<String, Object> paramsMap = new HashMap<>();
                 paramsMap.put("region", region);
                 paramsMap.put("phone", phoneNumber);
+                if (!isHidePicCode()) {
+                    paramsMap.put("picCode", picCode);
+                }
+                paramsMap.put("picCodeId", picCodeId);
                 RequestBody body = RetrofitUtil.createJsonRequest(paramsMap);
                 return userService.sendCode(body);
             }
         }.asLiveData();
+    }
+
+    public LiveData<Resource<ImageCodeResult>> getImageCode() {
+        MediatorLiveData<Resource<ImageCodeResult>> result = new MediatorLiveData<>();
+        result.setValue(Resource.loading(null));
+        LiveData<Resource<ImageCodeResult>> resourceLiveData =
+                new NetworkOnlyResource<ImageCodeResult, Result<ImageCodeResult>>() {
+                    @NonNull
+                    @Override
+                    protected LiveData<Result<ImageCodeResult>> createCall() {
+                        return userService.getImageCode();
+                    }
+                }.asLiveData();
+        result.addSource(
+                resourceLiveData,
+                resource -> {
+                    if (resource.status == Status.SUCCESS) {
+                        result.setValue(Resource.success(resource.data));
+                    } else if (resource.status == Status.ERROR) {
+                        result.setValue(Resource.error(resource.code, null));
+                    } else {
+                        // do nothing
+                    }
+                });
+        return result;
     }
 
     /**
@@ -991,6 +1023,12 @@ public class UserTask {
         dbManager.closeDb();
     }
 
+    /** 账号注销 */
+    public void accountDelete() {
+        userCache.clearAllCache();
+        dbManager.closeDb();
+    }
+
     /**
      * 设置是否接收戳一下消息
      *
@@ -1124,19 +1162,28 @@ public class UserTask {
         return result;
     }
 
-    public String getChannel(Context context) {
-        try {
-            PackageManager pm = context.getPackageManager();
-            ApplicationInfo appInfo =
-                    pm.getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
-            // key为<meta-data>标签中的name
-            String channel = appInfo.metaData.getString("CHANNEL");
-            if (!TextUtils.isEmpty(channel)) {
-                return channel;
+    /** 用户注销 */
+    public LiveData<Resource<Void>> deleteAccount() {
+        return new NetworkOnlyResource<Void, Result>() {
+            @NonNull
+            @Override
+            protected LiveData<Result> createCall() {
+                return userService.deleteAccount();
             }
-        } catch (Exception e) {
-            RLog.e("UserTask", "getChannel", e);
+        }.asLiveData();
+    }
+
+    public String getChannel(Context context) {
+        String channelName = RongChannelUtils.getChannelName(context);
+        if (!TextUtils.isEmpty(channelName)) {
+            return channelName;
         }
         return "none";
+    }
+
+    /** 是否打开了不展示登录图片验证码 */
+    public boolean isHidePicCode() {
+        return context.getSharedPreferences(LOGIN_DEBUG_CONFIG, Context.MODE_PRIVATE)
+                .getBoolean(LOGIN_IS_HIDE_PIC_CODE, false);
     }
 }

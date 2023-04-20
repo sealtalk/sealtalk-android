@@ -1,6 +1,7 @@
 package cn.rongcloud.im.viewmodel;
 
 import android.app.Application;
+import android.os.Looper;
 import android.text.TextUtils;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -115,7 +116,11 @@ public class ConversationViewModel extends AndroidViewModel {
                             }
                             info.typingList = typingsList;
                         }
-                        typingStatusInfo.postValue(info);
+                        if (Thread.currentThread().equals(Looper.getMainLooper().getThread())) {
+                            typingStatusInfo.setValue(info);
+                        } else {
+                            typingStatusInfo.postValue(info);
+                        }
                     }
                 });
 

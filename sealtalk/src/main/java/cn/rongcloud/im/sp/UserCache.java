@@ -95,4 +95,9 @@ public class UserCache {
         String userJson = gson.toJson(userCache);
         sp.edit().putString(SP_CACHE_USER, userJson).commit();
     }
+
+    /** 账号注销所要清理的缓存 */
+    public void clearAllCache() {
+        sp.edit().putString(SP_CACHE_USER, "").commit();
+    }
 }

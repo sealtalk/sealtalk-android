@@ -10,6 +10,7 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import cn.rongcloud.im.common.ErrorCode;
+import cn.rongcloud.im.model.ImageCodeResult;
 import cn.rongcloud.im.model.RegisterResult;
 import cn.rongcloud.im.model.Resource;
 import cn.rongcloud.im.model.Status;
@@ -48,6 +49,9 @@ public class LoginViewModel extends AndroidViewModel {
     private MutableLiveData<UserCacheInfo> lastLoginUserCache = new MutableLiveData<>();
 
     private MutableLiveData<DataCenter> dataCenterLiveData = new MediatorLiveData<>();
+
+    private SingleSourceMapLiveData<Resource<ImageCodeResult>, Resource<ImageCodeResult>>
+            imageCodeResult;
 
     private UserTask userTask;
     private CountDownTimer countDownTimer =
@@ -120,11 +124,14 @@ public class LoginViewModel extends AndroidViewModel {
                             }
                         });
 
+        imageCodeResult = new SingleSourceMapLiveData<>(input -> input);
+
         UserCacheInfo userCache = userTask.getUserCache();
         if (userCache != null) {
             lastLoginUserCache.setValue(userCache);
         }
         changeDataCenter(mAppTask.getCurrentDataCenter());
+        getImageCode();
     }
 
     public void login(String region, String phone, String pwd) {
@@ -168,6 +175,10 @@ public class LoginViewModel extends AndroidViewModel {
      */
     public LiveData<Resource<String>> getSendCodeState() {
         return sendCodeState;
+    }
+
+    public LiveData<Resource<ImageCodeResult>> getImageCodeResult() {
+        return imageCodeResult;
     }
 
     /**
@@ -223,8 +234,12 @@ public class LoginViewModel extends AndroidViewModel {
      * @param phoneCode 国家区域手机区号
      * @param phoneNumber 手机号
      */
-    public void sendCode(String phoneCode, String phoneNumber) {
-        sendCodeState.setSource(userTask.sendCode(phoneCode, phoneNumber));
+    public void sendCode(String phoneCode, String phoneNumber, String picCode, String picCodeId) {
+        sendCodeState.setSource(userTask.sendCode(phoneCode, phoneNumber, picCode, picCodeId));
+    }
+
+    public void getImageCode() {
+        imageCodeResult.setSource(userTask.getImageCode());
     }
 
     /**
@@ -276,7 +291,8 @@ public class LoginViewModel extends AndroidViewModel {
      * @param phoneCode
      * @param phoneNumber
      */
-    public void checkPhoneAndSendCode(String phoneCode, String phoneNumber) {
+    public void checkPhoneAndSendCode(
+            String phoneCode, String phoneNumber, String picCode, String picCodeId) {
         checkPhoneAvailable(phoneCode, phoneNumber);
         checkPhoneAndSendCodeResult.removeSource(checkPhoneResult);
         checkPhoneAndSendCodeResult.addSource(
@@ -286,7 +302,7 @@ public class LoginViewModel extends AndroidViewModel {
                     public void onChanged(Resource<Boolean> resource) {
                         if (resource.status == Status.SUCCESS) {
                             checkPhoneAndSendCodeResult.removeSource(checkPhoneResult);
-                            sendCode(phoneCode, phoneNumber);
+                            sendCode(phoneCode, phoneNumber, picCode, picCodeId);
                             checkPhoneAndSendCodeResult.removeSource(sendCodeState);
                             checkPhoneAndSendCodeResult.addSource(
                                     sendCodeState,
@@ -337,5 +353,10 @@ public class LoginViewModel extends AndroidViewModel {
 
     public void saveDataCenter(DataCenter dataCenter) {
         mAppTask.saveDataCenter(dataCenter);
+    }
+
+    /** 是否打开了不展示登录图片验证码 */
+    public boolean isHidePicCode() {
+        return userTask.isHidePicCode();
     }
 }

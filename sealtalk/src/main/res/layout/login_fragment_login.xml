@@ -125,6 +125,63 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/image_verify_code_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/seal_login_fragment_login_phonenumber_margin_left"
+        android:layout_marginTop="@dimen/seal_login_fragment_login_phonenumber_margin_top"
+        android:layout_marginEnd="@dimen/seal_login_fragment_login_phonenumber_margin_right"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <cn.rongcloud.im.ui.widget.ClearWriteEditText
+            android:id="@+id/cet_image_verify_code"
+            style="@style/EditTextStyle.Alignment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rc_ed_public_service_search_selector"
+            android:layout_weight="7"
+            android:drawablePadding="@dimen/seal_login_register_drawable_padding"
+            android:hint="@string/seal_talk_image_verify_code"
+            android:paddingStart="@dimen/seal_login_find_password_padding"
+            android:singleLine="true"
+            android:lines="1"
+            android:paddingEnd="@dimen/seal_login_find_password_padding"
+            android:maxLength="6"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textColorHint="@color/white" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_verify_code"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/seal_login_register_btn_margin_left"
+            android:layout_weight="4"
+            android:clickable="false"
+            android:scaleType="fitXY"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/tv_refresh_image_code"
+            android:text="@string/refresh"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:layout_marginStart="@dimen/seal_login_register_btn_margin_left"
+            android:layout_weight="4"
+            android:clickable="false"
+            android:background="@drawable/seal_login_btn_selector"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="@dimen/seal_login_register_btn_code_text_size"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

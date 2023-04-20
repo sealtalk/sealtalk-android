@@ -198,7 +198,7 @@ public class LoginFindPasswordFragment extends BaseFragment {
 
                 sendCodeBtn.setEnabled(false);
                 phoneEdit.setEnabled(false);
-                checkPhoneAndSendCode(phoneCodeStr, phoneStr);
+                checkPhoneAndSendCode(phoneCodeStr, phoneStr, null, null);
                 break;
             case R.id.btn_confirm:
                 String fpPhoneStr = phoneEdit.getText().toString().trim();
@@ -260,8 +260,9 @@ public class LoginFindPasswordFragment extends BaseFragment {
      * @param phoneCode
      * @param phoneNumber
      */
-    private void checkPhoneAndSendCode(String phoneCode, String phoneNumber) {
-        loginViewModel.checkPhoneAndSendCode(phoneCode, phoneNumber);
+    private void checkPhoneAndSendCode(
+            String phoneCode, String phoneNumber, String picCode, String picCodeId) {
+        loginViewModel.checkPhoneAndSendCode(phoneCode, phoneNumber, picCode, picCodeId);
     }
 
     /**

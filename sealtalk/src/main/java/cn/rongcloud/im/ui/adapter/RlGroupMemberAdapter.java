@@ -1,7 +1,5 @@
 package cn.rongcloud.im.ui.adapter;
 
-import static cn.rongcloud.im.ui.adapter.RlGroupMemberAdapter.*;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +15,7 @@ import cn.rongcloud.im.utils.ImageLoaderUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RlGroupMemberAdapter extends Adapter<RlGroupMemberViewHolder> {
+public class RlGroupMemberAdapter extends Adapter<RlGroupMemberAdapter.RlGroupMemberViewHolder> {
 
     private List<GroupMember> memberList = new ArrayList<>();
     private OnItemClickedListener onItemClickedListener;

@@ -6,7 +6,7 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 31
-        versionName "5.4.1"
+        versionName "5.4.2"
     }
 
     buildTypes {
@@ -15,7 +15,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
     lintOptions {
         abortOnError false
         baseline file("lint-baseline.xml")
@@ -24,5 +27,5 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    api 'cn.rongcloud.sdk:im_kit:5.4.1'
+    api 'cn.rongcloud.sdk:im_kit:5.4.2'
 }

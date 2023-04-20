@@ -56,12 +56,15 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
     private SettingItemView referMsgTest;
     private SettingItemView permissionlistener;
     private SettingItemView ultraDebug; // 超级群的debug模式
+    private SettingItemView isHideLoginPagePicCode; // 是否忽略登录图片验证码
     private SettingItemView createNotificationChannel;
     private SettingItemView bindChatRTCRoom;
     public static final String SP_IS_SHOW = "is_show";
     public static final String SP_PERMISSION_NAME = "permission_config";
     public static final String ULTRA_DEBUG_CONFIG = "ultra_debug_config";
     public static final String ULTRA_IS_DEBUG_KEY = "ultra_isdebug";
+    public static final String LOGIN_DEBUG_CONFIG = "login_debug_config";
+    public static final String LOGIN_IS_HIDE_PIC_CODE = "login_is_hide_pic_code";
 
     private UserInfoViewModel userInfoViewModel;
 
@@ -176,6 +179,20 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
                                             public void updatePassword(
                                                     String oldPassword, String newPassword) {}
                                         });
+                    }
+                });
+        isHideLoginPagePicCode = findViewById(R.id.siv_login_ignore_pic_code);
+        isHideLoginPagePicCode.setChecked(
+                getSharedPreferences(SealTalkDebugTestActivity.LOGIN_DEBUG_CONFIG, MODE_PRIVATE)
+                        .getBoolean(LOGIN_IS_HIDE_PIC_CODE, false));
+        isHideLoginPagePicCode.setSwitchCheckListener(
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        getSharedPreferences(LOGIN_DEBUG_CONFIG, MODE_PRIVATE)
+                                .edit()
+                                .putBoolean(LOGIN_IS_HIDE_PIC_CODE, isChecked)
+                                .commit();
                     }
                 });
         createNotificationChannel = findViewById(R.id.siv_create_notification_channel);

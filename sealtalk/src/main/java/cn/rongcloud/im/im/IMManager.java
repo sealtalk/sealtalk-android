@@ -36,6 +36,7 @@ import cn.rongcloud.im.im.plugin.ImageTextModule;
 import cn.rongcloud.im.im.plugin.InsertMessageModule;
 import cn.rongcloud.im.im.plugin.MentionAllModule;
 import cn.rongcloud.im.im.plugin.PokeExtensionModule;
+import cn.rongcloud.im.im.plugin.SendKVMessageModule;
 import cn.rongcloud.im.im.provider.ContactNotificationMessageProvider;
 import cn.rongcloud.im.im.provider.GroupApplyMessageItemProvider;
 import cn.rongcloud.im.im.provider.PokeMessageItemProvider;
@@ -331,7 +332,10 @@ public class IMManager {
                                         sharedPreferences.getString("richMediaUri", "");
                                 String fcm = sharedPreferences.getString("fcm", "");
                                 String imageUrl = sharedPreferences.getString("imageUrl", "");
-                                boolean vivo = sharedPreferences.getBoolean("vivo", false);
+                                String hwCategory = sharedPreferences.getString("hwCategory", null);
+                                String vivoCategory =
+                                        sharedPreferences.getString("vivoCategory", null);
+                                boolean vivo = sharedPreferences.getBoolean("vivo", true);
                                 boolean disableTitle =
                                         sharedPreferences.getBoolean("disableTitle", false);
                                 String templateId = sharedPreferences.getString("templateId", "");
@@ -368,6 +372,8 @@ public class IMManager {
                                                                 .setChannelIdFCM(fcmChannelId)
                                                                 .setImageUrlMi(imageUrlMi)
                                                                 .setImageUrlHW(imageUrlHW)
+                                                                .setCategoryHW(hwCategory)
+                                                                .setCategoryVivo(vivoCategory)
                                                                 .build())
                                                 .setIOSConfig(
                                                         new IOSConfig(
@@ -1405,6 +1411,8 @@ public class IMManager {
             RongExtensionManager.getInstance().registerExtensionModule(new MentionAllModule());
             // 插入一条消息
             RongExtensionManager.getInstance().registerExtensionModule(new InsertMessageModule());
+            // 发送一条KV消息
+            RongExtensionManager.getInstance().registerExtensionModule(new SendKVMessageModule());
         }
     }
 

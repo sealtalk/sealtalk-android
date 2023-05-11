@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -201,20 +202,26 @@ public class FileManager {
     private LiveData<Resource<String>> uploadFileByQiNiu(Uri fileUri, String uploadToken) {
         MutableLiveData<Resource<String>> result = new MutableLiveData<>();
         result.setValue(Resource.loading(null));
-
-        File uploadFile = new File(fileUri.getPath());
-        if (!uploadFile.exists()) {
-            uploadFile = new File(getRealPathFromUri(fileUri));
+        String realFilePath = saveFileToCacheDir(fileUri);
+        if (TextUtils.isEmpty(realFilePath)) {
+            result.setValue(Resource.error(ErrorCode.API_ERR_OTHER.getCode(), null));
+            return result;
         }
+
         UploadManager uploadManager = new UploadManager();
+        final File imageCacheFile = new File(realFilePath);
         uploadManager.put(
-                uploadFile,
+                imageCacheFile,
                 null,
                 uploadToken,
                 new UpCompletionHandler() {
                     @Override
                     public void complete(
                             String s, ResponseInfo responseInfo, JSONObject jsonObject) {
+                        boolean delete = imageCacheFile.delete();
+                        if (!delete) {
+                            Log.e(LogTag.API, "qiniu upload success,but cannot delete cache file");
+                        }
                         if (responseInfo.isOK()) {
                             try {
                                 String key = (String) jsonObject.get("key");
@@ -235,6 +242,25 @@ public class FileManager {
                 null);
 
         return result;
+    }
+
+    private String saveFileToCacheDir(Uri fileUri) {
+        String path = fileUri.getPath();
+        if (TextUtils.isEmpty(path)) {
+            return null;
+        }
+        int index = path.lastIndexOf(".");
+        if (index == -1) {
+            return null;
+        }
+        String fileName = System.currentTimeMillis() + path.substring(index);
+        Context context = SealApp.getApplication();
+        String cachePath =
+                context.getExternalCacheDir() + File.separator + "image" + File.separator;
+        boolean result =
+                io.rong.common.FileUtils.copyFileToInternal(
+                        SealApp.getApplication(), fileUri, cachePath, fileName);
+        return result ? cachePath + fileName : null;
     }
 
     /**

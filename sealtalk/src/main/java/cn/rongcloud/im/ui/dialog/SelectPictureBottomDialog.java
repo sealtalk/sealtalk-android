@@ -3,6 +3,7 @@ package cn.rongcloud.im.ui.dialog;
 import static cn.rongcloud.im.ui.activity.QrCodeDisplayActivity.REQUEST_CODE_ASK_PERMISSIONS;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -15,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.utils.PhotoUtils;
+import io.rong.imkit.utils.PermissionCheckUtil;
+import io.rong.imkit.utils.RongUtils;
 
 public class SelectPictureBottomDialog extends BaseBottomDialog {
 
@@ -74,20 +77,8 @@ public class SelectPictureBottomDialog extends BaseBottomDialog {
                             @Override
                             public void onClick(View v) {
                                 // 从6.0系统(API 23)开始，访问外置存储需要动态申请权限
-                                if (Build.VERSION.SDK_INT >= 23) {
-                                    int checkPermission =
-                                            getActivity()
-                                                    .checkSelfPermission(
-                                                            Manifest.permission
-                                                                    .WRITE_EXTERNAL_STORAGE);
-                                    if (checkPermission != PackageManager.PERMISSION_GRANTED) {
-                                        requestPermissions(
-                                                new String[] {
-                                                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                                                },
-                                                REQUEST_CODE_ASK_PERMISSIONS);
-                                        return;
-                                    }
+                                if (!checkPremission()) {
+                                    return;
                                 }
                                 photoUtils.selectPicture(SelectPictureBottomDialog.this);
                             }
@@ -120,6 +111,35 @@ public class SelectPictureBottomDialog extends BaseBottomDialog {
                         },
                         mType);
         return view;
+    }
+
+    private boolean checkPremission() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            Context context = getContext();
+            if (context == null) {
+                return false;
+            }
+            String[] permissions;
+            if (RongUtils.checkSDKVersionAndTargetIsTIRAMISU(context)) {
+                permissions =
+                        new String[] {
+                            Manifest.permission.READ_MEDIA_IMAGES,
+                            Manifest.permission.READ_MEDIA_VIDEO
+                        };
+            } else {
+                permissions =
+                        new String[] {
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        };
+            }
+            boolean checkPermission = PermissionCheckUtil.checkPermissions(context, permissions);
+            if (!checkPermission) {
+                requestPermissions(permissions, REQUEST_CODE_ASK_PERMISSIONS);
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

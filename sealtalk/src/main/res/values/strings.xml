@@ -140,6 +140,15 @@
     <string name="seal_main_mine_set_account">账号设置</string>
     <string name="seal_main_mine_setting_language">多语言</string>
     <string name="seal_main_mine_setting_translation">翻译设置</string>
+    <string name="seal_main_mine_proxy_setting">代理设置</string>
+    <string name="seal_main_mine_proxy_setting_test_host">测试地址</string>
+    <string name="seal_main_mine_proxy_setting_proxy_ip">代理 IP</string>
+    <string name="seal_main_mine_proxy_setting_proxy_port">代理端口</string>
+    <string name="seal_main_mine_proxy_setting_username">用户名</string>
+    <string name="seal_main_mine_proxy_setting_password">密码</string>
+    <string name="seal_main_mine_proxy_setting_test_proxy">测试代理</string>
+    <string name="seal_main_mine_proxy_setting_save_proxy">保存代理</string>
+    <string name="seal_main_mine_proxy_setting_clear_proxy">清除代理</string>
     <string name="seal_main_mine_feedback">意见反馈</string>
     <string name="seal_main_mine_about">关于融云 IM</string>
     <string name="seal_main_mine_customer_xn">小能客服</string>
@@ -683,4 +692,8 @@
     <string name="image_verification_code_is_null">图片验证码为空</string>
     <string name="seal_talk_image_verify_code">请输入图片中的验证码</string>
     <string name="image_verification_code_is_expired">图片验证码已过期，请重新输入</string>
+
+    <string name="ultra_group_conversation_mentioned_me">[%1$d人@我]</string>
+    <string name="ultra_group_conversation_mentioned_all">[%1$d人@所有人]</string>
+    <string name="ultra_group_conversation_mentioned_me_and_all">[有%1$d人@我，%2$d人@所有人]</string>
 </resources>

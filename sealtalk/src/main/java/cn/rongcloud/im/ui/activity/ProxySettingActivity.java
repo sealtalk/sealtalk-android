@@ -227,6 +227,7 @@ public class ProxySettingActivity extends BaseActivity {
 
     private void initTitleBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.tb_title);
+        toolbar.setTitle(R.string.seal_main_mine_proxy_setting);
         setSupportActionBar(toolbar);
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {

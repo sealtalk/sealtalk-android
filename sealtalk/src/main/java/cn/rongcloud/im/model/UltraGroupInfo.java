@@ -7,6 +7,9 @@ public class UltraGroupInfo implements Serializable {
     @SerializedName("groupId")
     public String groupId;
 
+    @SerializedName("channelId")
+    public String channelId;
+
     @SerializedName("groupName")
     public String groupName;
 

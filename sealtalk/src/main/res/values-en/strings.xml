@@ -205,6 +205,15 @@
     <string name="seal_main_mine_set_account">Account Settings</string>
     <string name="seal_main_mine_setting_language">Language</string>
     <string name="seal_main_mine_setting_translation">Translation Settings</string>
+    <string name="seal_main_mine_proxy_setting">Proxy Setting</string>
+    <string name="seal_main_mine_proxy_setting_test_host">Test Host</string>
+    <string name="seal_main_mine_proxy_setting_proxy_ip">Proxy IP</string>
+    <string name="seal_main_mine_proxy_setting_proxy_port">Proxy Port</string>
+    <string name="seal_main_mine_proxy_setting_username">UserName</string>
+    <string name="seal_main_mine_proxy_setting_password">Password</string>
+    <string name="seal_main_mine_proxy_setting_test_proxy">Test proxy</string>
+    <string name="seal_main_mine_proxy_setting_save_proxy">Save proxy</string>
+    <string name="seal_main_mine_proxy_setting_clear_proxy">Clear proxy</string>
     <string name="seal_main_mine_feedback">Feedback</string>
     <string name="seal_main_mine_about">About RC IM</string>
     <string name="seal_main_mine_customer_xn">Xiaoneng Customer Service</string>
@@ -656,4 +665,8 @@
     <string name="image_verification_code_is_null">Image verification code is null</string>
     <string name="seal_talk_image_verify_code">Image verification code</string>
     <string name="image_verification_code_is_expired">The image verification code is expired,please try again</string>
+
+    <string name="ultra_group_conversation_mentioned_me">[%1$d@You]</string>
+    <string name="ultra_group_conversation_mentioned_all">[%1$d人@All]</string>
+    <string name="ultra_group_conversation_mentioned_me_and_all">[%1$d@You，%2$d@All]</string>
 </resources>

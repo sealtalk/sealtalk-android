@@ -248,7 +248,7 @@ public class UltraGroupViewModel extends AndroidViewModel
                     Conversation.ConversationType type = event.getMessage().getConversationType();
                     String targetId = event.getMessage().getTargetId();
                     String channelId = event.getMessage().getChannelId();
-                    getConversation(type, targetId);
+                    getConversation(type, targetId, channelId);
                 }
 
                 @Override
@@ -830,6 +830,10 @@ public class UltraGroupViewModel extends AndroidViewModel
 
     public void setChannelId(String channelId) {
         this.channelId = channelId;
+    }
+
+    public String getChannelId() {
+        return channelId;
     }
 
     public void setDefaultGroupId(String defaultGroupId) {

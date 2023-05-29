@@ -69,7 +69,7 @@
             android:id="@+id/siv_proxy_setting"
             android:layout_width="match_parent"
             android:layout_height="@dimen/seal_mine_setting_item_height"
-            app:item_content="代理设置"
+            app:item_content="@string/seal_main_mine_proxy_setting"
             app:item_image="@drawable/seal_ic_mine_language"
             app:item_right_image="@drawable/seal_ic_mine_go"
             >

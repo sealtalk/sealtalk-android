@@ -126,6 +126,7 @@ public class UltraConversationListFragment extends Fragment
         recyclerView = view.findViewById(R.id.rc_conversation_list);
         // mRefreshLayout = view.findViewById(io.rong.imkit.R.id.rc_refresh);
 
+        mAdapter.setContext(getContext());
         mAdapter.setItemClickListener(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);

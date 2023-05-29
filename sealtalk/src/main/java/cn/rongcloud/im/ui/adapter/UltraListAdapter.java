@@ -18,6 +18,7 @@ import com.bumptech.glide.request.RequestOptions;
 import io.rong.imlib.ChannelClient;
 import io.rong.imlib.IRongCoreCallback;
 import io.rong.imlib.IRongCoreEnum;
+import io.rong.imlib.model.Conversation;
 import java.util.List;
 
 public class UltraListAdapter extends BaseAdapter {
@@ -83,6 +84,7 @@ public class UltraListAdapter extends BaseAdapter {
         showUltraGroupUnread(
                 convertView.getContext(),
                 ultraUserInfo.groupId,
+                ultraUserInfo.channelId,
                 holder.unreadImageView,
                 holder.unread);
         return convertView;
@@ -103,27 +105,40 @@ public class UltraListAdapter extends BaseAdapter {
         TextView unread;
     }
 
+    private String getMentionedMessage(Context context, int mentionedCount) {
+        if (mentionedCount > 99) {
+            return context.getString(R.string.seal_main_chat_tab_more_read_message);
+        } else if (mentionedCount > 0) {
+            return String.valueOf(mentionedCount);
+        } else {
+            return "";
+        }
+    }
+
     private void showUltraGroupUnread(
-            Context context, String groupId, ImageView unreadImageView, TextView unread) {
+            Context context,
+            String groupId,
+            String channelId,
+            ImageView unreadImageView,
+            TextView unread) {
         ChannelClient.getInstance()
-                .getUltraGroupUnreadMentionedCount(
+                .getConversation(
+                        Conversation.ConversationType.ULTRA_GROUP,
                         groupId,
-                        new IRongCoreCallback.ResultCallback<Integer>() {
+                        channelId,
+                        new IRongCoreCallback.ResultCallback<Conversation>() {
                             @Override
-                            public void onSuccess(Integer count) {
-                                if (count == 0) {
+                            public void onSuccess(Conversation conversation) {
+                                String mentionedMessage =
+                                        getMentionedMessage(
+                                                context, conversation.getUnreadMentionedCount());
+                                if (TextUtils.isEmpty(mentionedMessage)) {
                                     unreadImageView.setVisibility(View.GONE);
                                     unread.setVisibility(View.GONE);
-                                } else if (count > 0 && count < 100) {
-                                    unreadImageView.setVisibility(View.VISIBLE);
-                                    unread.setVisibility(View.VISIBLE);
-                                    unread.setText(String.valueOf(count));
                                 } else {
                                     unreadImageView.setVisibility(View.VISIBLE);
                                     unread.setVisibility(View.VISIBLE);
-                                    unread.setText(
-                                            context.getString(
-                                                    R.string.seal_main_chat_tab_more_read_message));
+                                    unread.setText(mentionedMessage);
                                 }
                             }
 

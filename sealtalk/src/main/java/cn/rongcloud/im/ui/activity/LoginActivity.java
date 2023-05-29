@@ -405,7 +405,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     /** 设置切换语言后， 重启activity */
     private void restartActivity() {
-        startActivity(new Intent(LoginActivity.this, LoginActivity.class));
+        startActivity(new Intent(this, LoginActivity.class));
         finish();
     }
 

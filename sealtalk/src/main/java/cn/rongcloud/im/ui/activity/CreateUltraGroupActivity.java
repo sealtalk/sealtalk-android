@@ -104,7 +104,8 @@ public class CreateUltraGroupActivity extends TitleBaseActivity implements View.
                                     ToastUtils.showToast("没有数据");
                                     return;
                                 }
-                                processCreateResult(resource.data);
+                                processCreateResult(
+                                        resource.data, createGroupViewModel.getChannelId());
                             } else if (resource.status == Status.ERROR) {
                                 // 当有结果时代表群组创建成功，但上传图片失败
                                 // 处理创建群组结果
@@ -209,11 +210,12 @@ public class CreateUltraGroupActivity extends TitleBaseActivity implements View.
     }
 
     /** 处理创建结果 */
-    private void processCreateResult(String groupId) {
+    private void processCreateResult(String groupId, String channelId) {
         // 返回结果时候设置结果并结束
         UltraGroupInfo ultraGroupInfo = new UltraGroupInfo();
         ultraGroupInfo.creatorId = RongIMClient.getInstance().getCurrentUserId();
         ultraGroupInfo.groupId = groupId;
+        ultraGroupInfo.channelId = channelId;
         ultraGroupInfo.groupName = createGroupName;
         if (groupPortraitUri != null) {
             ultraGroupInfo.portraitUri = groupPortraitUri.toString();

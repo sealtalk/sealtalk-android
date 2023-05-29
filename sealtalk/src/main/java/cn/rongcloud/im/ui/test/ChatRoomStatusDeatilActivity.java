@@ -26,6 +26,9 @@ import io.rong.imlib.RongIMClient;
 import io.rong.imlib.chatroom.base.RongChatRoomClient;
 import io.rong.imlib.chatroom.message.ChatRoomKVNotiMessage;
 import io.rong.imlib.model.ChatRoomMemberAction;
+import io.rong.imlib.model.ChatRoomMemberBanEvent;
+import io.rong.imlib.model.ChatRoomMemberBlockEvent;
+import io.rong.imlib.model.ChatRoomSyncEvent;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
 import java.lang.ref.WeakReference;
@@ -309,6 +312,90 @@ public class ChatRoomStatusDeatilActivity extends TitleBaseActivity
                                 .setMessage(builder.toString())
                                 .setCancelable(true)
                                 .show();
+                    }
+                });
+        RongChatRoomClient.addChatRoomNotifyEventListener(
+                new RongChatRoomClient.ChatRoomNotifyEventListener() {
+                    @Override
+                    public void onChatRoomNotifyMultiLoginSync(ChatRoomSyncEvent event) {
+                        StringBuilder builder = new StringBuilder();
+                        builder.append("聊天室多端同步事件: ChatRoomSyncEvent\n");
+                        builder.append("聊天室ID:" + event.getChatroomId() + "\n");
+                        if (ChatRoomSyncEvent.ChatRoomSyncStatus.Quit.equals(event.getStatus())) {
+                            builder.append("同步类型:" + "0 (退出)" + "\n");
+                        } else {
+                            builder.append("同步类型:" + "1 (加入)" + "\n");
+                        }
+                        if (ChatRoomSyncEvent.ChatRoomSyncStatusReason.LeaveOnMyOwn.equals(
+                                event.getReason())) {
+                            builder.append("同步原因:" + "1 (自己退出)" + "\n");
+                        } else {
+                            builder.append("同步原因:" + "2 (多端加入互踢导致离开)" + "\n");
+                        }
+                        builder.append("操作时间戳(毫秒):" + event.getTime() + "\n");
+                        builder.append("extra:" + event.getExtra() + "\n");
+                        addToList(builder.toString());
+                    }
+
+                    @Override
+                    public void onChatRoomNotifyBlock(ChatRoomMemberBlockEvent event) {
+                        StringBuilder builder = new StringBuilder();
+                        builder.append("聊天室成员封禁事件: ChatRoomMemberBlockEvent\n");
+                        builder.append("聊天室ID:" + event.getChatroomId() + "\n");
+                        if (ChatRoomMemberBlockEvent.ChatRoomOperateType.Deblock.equals(
+                                event.getOperateType())) {
+                            builder.append("操作类型:" + "0 (解除封禁)" + "\n");
+                        } else {
+                            builder.append("操作类型:" + "1 (封禁)" + "\n");
+                        }
+                        builder.append("封禁时长(毫秒):" + event.getDurationTime() + "\n");
+                        builder.append("操作时间戳(毫秒):" + event.getOperateTime() + "\n");
+                        builder.append("处理的用户清单:" + event.getUserIdList() + "\n");
+                        builder.append("extra:" + event.getExtra() + "\n");
+                        addToList(builder.toString());
+                    }
+
+                    @Override
+                    public void onChatRoomNotifyBan(ChatRoomMemberBanEvent event) {
+                        StringBuilder builder = new StringBuilder();
+                        builder.append("聊天室成员禁言事件: ChatRoomMemberBanEvent\n");
+                        builder.append("聊天室ID:" + event.getChatroomId() + "\n");
+                        if (ChatRoomMemberBanEvent.ChatRoomMemberBanType.UnmuteUsers.equals(
+                                event.getBanType())) {
+                            builder.append("操作类型:" + "0 (解除指定聊天室中用户禁言)" + "\n");
+                        } else if (ChatRoomMemberBanEvent.ChatRoomMemberBanType.MuteUsers.equals(
+                                event.getBanType())) {
+                            builder.append("操作类型:" + "1 (禁言指定聊天室中用户)" + "\n");
+                        } else if (ChatRoomMemberBanEvent.ChatRoomMemberBanType.UnmuteAll.equals(
+                                event.getBanType())) {
+                            builder.append("操作类型:" + "2 (解除聊天室全体禁言)" + "\n");
+                        } else if (ChatRoomMemberBanEvent.ChatRoomMemberBanType.MuteAll.equals(
+                                event.getBanType())) {
+                            builder.append("操作类型:" + "3 (聊天室全体禁言)" + "\n");
+                        } else if (ChatRoomMemberBanEvent.ChatRoomMemberBanType.RemoveWhitelist
+                                .equals(event.getBanType())) {
+                            builder.append("操作类型:" + "4 (移出禁言用户白名单)" + "\n");
+                        } else if (ChatRoomMemberBanEvent.ChatRoomMemberBanType.AddWhitelist.equals(
+                                event.getBanType())) {
+                            builder.append("操作类型:" + "5 (添加禁言用户白名单)" + "\n");
+                        } else if (ChatRoomMemberBanEvent.ChatRoomMemberBanType.UnmuteGlobal.equals(
+                                event.getBanType())) {
+                            builder.append("操作类型:" + "6 (解除用户聊天室全局禁言)" + "\n");
+                        } else if (ChatRoomMemberBanEvent.ChatRoomMemberBanType.MuteGlobal.equals(
+                                event.getBanType())) {
+                            builder.append("操作类型:" + "7 (用户聊天室全局禁言)" + "\n");
+                        } else {
+                            builder.append(
+                                    "Error : 操作类型:"
+                                            + event.getBanType().getValue()
+                                            + " (未知类型)"
+                                            + "\n");
+                        }
+                        builder.append("禁言时长(毫秒):" + event.getDurationTime() + "\n");
+                        builder.append("操作时间戳(毫秒):" + event.getOperateTime() + "\n");
+                        builder.append("处理的用户清单:" + event.getUserIdList() + "\n");
+                        builder.append("extra:" + event.getExtra() + "\n");
+                        addToList(builder.toString());
                     }
                 });
     }

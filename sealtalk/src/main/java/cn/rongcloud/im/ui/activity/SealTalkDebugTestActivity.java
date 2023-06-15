@@ -1,5 +1,7 @@
 package cn.rongcloud.im.ui.activity;
 
+import static java.lang.System.exit;
+
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.DialogInterface;
@@ -44,6 +46,7 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
     private SettingItemView messageExpansion;
     private SettingItemView ultraGroup;
     private SettingItemView ultraGroupUnreadMentionDigests;
+    private SettingItemView ultraGroupConversationByTargetIds;
     private SettingItemView tag;
     private SettingItemView messageDelivery;
     private SettingItemView shortage;
@@ -100,6 +103,10 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
         ultraGroupUnreadMentionDigests =
                 findViewById(R.id.siv_ultra_group_unread_mention_msg_digests);
         ultraGroupUnreadMentionDigests.setOnClickListener(this);
+
+        ultraGroupConversationByTargetIds =
+                findViewById(R.id.siv_ultra_group_conversation_by_target_id);
+        ultraGroupConversationByTargetIds.setOnClickListener(this);
 
         shortage = findViewById(R.id.siv_shortage);
         shortage.setOnClickListener(this);
@@ -161,15 +168,7 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
                                                         .edit()
                                                         .putBoolean(ULTRA_IS_DEBUG_KEY, isChecked)
                                                         .commit();
-                                                userInfoViewModel.logout();
-                                                // 通知退出
-                                                sendLogoutNotify();
-                                                Intent intent =
-                                                        new Intent(
-                                                                SealTalkDebugTestActivity.this,
-                                                                LoginActivity.class);
-                                                startActivity(intent);
-                                                finish();
+                                                exit(0);
                                             }
 
                                             @Override
@@ -229,6 +228,9 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
                 break;
             case R.id.siv_ultra_group_unread_mention_msg_digests:
                 toUltraGroupUnreadMentionDigest();
+                break;
+            case R.id.siv_ultra_group_conversation_by_target_id:
+                toUltraGroupConversationListByTargetIds();
                 break;
             case R.id.siv_tag:
                 toTagTest();
@@ -429,6 +431,10 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
 
     private void toUltraGroupUnreadMentionDigest() {
         startActivity(new Intent(this, UltraGroupUnreadMentionDigestsActivity.class));
+    }
+
+    private void toUltraGroupConversationListByTargetIds() {
+        ConversationListByTargetIdsActivity.start(this, "超级群TargetId会话列表");
     }
 
     private void toReferMsgTest() {

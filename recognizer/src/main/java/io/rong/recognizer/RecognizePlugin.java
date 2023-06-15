@@ -4,7 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.text.Editable;
+import android.widget.EditText;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -87,15 +87,20 @@ public class RecognizePlugin implements IPluginModule, IPluginRequestPermissionR
                 new IRecognizedResult() {
                     @Override
                     public void onResult(String data) {
-                        Editable editable = extension.getInputEditText().getText();
-                        String str = editable.toString() + data;
-                        extension.getInputEditText().setText(str);
-                        extension.getInputEditText().setSelection(str.length());
+                        EditText inputEditText = extension.getInputEditText();
+                        if (inputEditText != null && inputEditText.getText() != null) {
+                            String str = inputEditText.getText().toString() + data;
+                            inputEditText.setText(str);
+                            inputEditText.setSelection(str.length());
+                        }
                     }
 
                     @Override
                     public void onClearClick() {
-                        extension.getInputEditText().setText("");
+                        EditText inputEditText = extension.getInputEditText();
+                        if (inputEditText != null) {
+                            inputEditText.setText("");
+                        }
                     }
                 });
         extension.addPluginPager(recognizerView);

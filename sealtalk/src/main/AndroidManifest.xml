@@ -713,6 +713,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.activity.UserGroupBindChannelActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.ConversationListByTargetIdsActivity"
+            android:screenOrientation="portrait"/>
         <!-- oppo 推送-->
         <service
             android:name="com.heytap.msp.push.service.CompatibleDataMessageCallbackService"

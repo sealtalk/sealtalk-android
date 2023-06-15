@@ -1,5 +1,7 @@
 package cn.rongcloud.im.ui.activity;
 
+import static java.lang.System.exit;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -187,15 +189,7 @@ public class AboutSealTalkActivity extends TitleBaseActivity implements View.OnC
                                                 getSharedPreferences("config", MODE_PRIVATE).edit();
                                         editor.putBoolean("isDebug", true);
                                         editor.commit();
-                                        logout();
-                                        // 通知退出
-                                        sendLogoutNotify();
-                                        Intent intent =
-                                                new Intent(
-                                                        AboutSealTalkActivity.this,
-                                                        LoginActivity.class);
-                                        startActivity(intent);
-                                        finish();
+                                        exit(0);
                                     }
 
                                     @Override
@@ -221,13 +215,7 @@ public class AboutSealTalkActivity extends TitleBaseActivity implements View.OnC
                                         getSharedPreferences("config", MODE_PRIVATE).edit();
                                 editor.putBoolean("isDebug", false);
                                 editor.commit();
-                                logout();
-                                // 通知退出
-                                sendLogoutNotify();
-                                Intent intent =
-                                        new Intent(AboutSealTalkActivity.this, LoginActivity.class);
-                                startActivity(intent);
-                                finish();
+                                exit(0);
                             }
 
                             @Override

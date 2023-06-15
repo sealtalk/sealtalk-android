@@ -625,9 +625,9 @@
 
 
     <!--debug mode-->
-    <string name="setting_open_debug_prompt">Is the App Debug mode enabled (requires re-login to the app)?</string>
-    <string name="setting_close_debug_promt">Is the App Debug mode disabled (requires re-login to the app)?</string>
-    <string name="setting_close_ultra_group_debug_promt">Is switch Ultra Group Debug mode (requires re-login to the app)?</string>
+    <string name="setting_open_debug_prompt">Is the App Debug mode enabled (requires re-open to the app)?</string>
+    <string name="setting_close_debug_promt">Is the App Debug mode disabled (requires re-open to the app)?</string>
+    <string name="setting_close_ultra_group_debug_promt">Is switch Ultra Group Debug mode (requires re-open to the app)?</string>
     <string name="seal_mine_about_push_config">Set Push Config</string>
     <string name="seal_mine_about_debug_setting">Setting</string>
     <string name="seal_mine_about_debug_setting_push_language">Set push language</string>

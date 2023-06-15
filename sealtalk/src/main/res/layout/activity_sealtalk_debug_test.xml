@@ -70,6 +70,13 @@
                 app:item_divider="true" />
 
             <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/siv_ultra_group_conversation_by_target_id"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/seal_mine_about_height"
+                app:item_content="根据超级群TargetID列表获取所有频道会话信息"
+                app:item_divider="true" />
+
+            <cn.rongcloud.im.ui.view.SettingItemView
                 android:id="@+id/siv_tag"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/seal_mine_about_height"

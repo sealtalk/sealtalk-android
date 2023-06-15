@@ -629,9 +629,9 @@
     <string name="seal_friend_message">好友消息</string>
 
     <!--debug mode-->
-    <string name="setting_open_debug_prompt">是否开启 App Debug 模式(需要重新登录应用)?</string>
-    <string name="setting_close_debug_promt">是否关闭 App Debug 模式(需要重新登录应用)?</string>
-    <string name="setting_close_ultra_group_debug_promt">是否切换 超级群 Debug 模式(需要重新登录应用)?</string>
+    <string name="setting_open_debug_prompt">是否开启 App Debug 模式(需要重新打开应用)?</string>
+    <string name="setting_close_debug_promt">是否关闭 App Debug 模式(需要重新打开应用)?</string>
+    <string name="setting_close_ultra_group_debug_promt">是否切换 超级群 Debug 模式(需要重新打开应用)?</string>
     <string name="seal_mine_about_push_config">设置推送配置</string>
     <string name="seal_mine_about_debug_setting_push_language">设置推送语言</string>
     <string name="seal_mine_about_group_read_receipt_test">群已读回执V2测试</string>

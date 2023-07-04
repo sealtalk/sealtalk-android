@@ -37,6 +37,7 @@ public class SealNotificationReceiver extends PushMessageReceiver {
                 Intent intentMain = new Intent(context, MainActivity.class);
                 intentMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intentMain);
+                return true;
             }
         }
         return false;

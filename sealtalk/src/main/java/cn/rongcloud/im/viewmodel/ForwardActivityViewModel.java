@@ -15,6 +15,7 @@ import cn.rongcloud.im.model.Resource;
 import io.rong.contactcard.message.ContactMessage;
 import io.rong.imkit.feature.forward.ForwardManager;
 import io.rong.imkit.userinfo.RongUserInfoManager;
+import io.rong.imlib.ErrorCodes;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.location.message.LocationMessage;
@@ -175,8 +176,9 @@ public class ForwardActivityViewModel extends AndroidViewModel {
 
                 @Override
                 public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-                    if (errorCode == RongIMClient.ErrorCode.RC_NET_UNAVAILABLE
-                            || errorCode == RongIMClient.ErrorCode.RC_NET_CHANNEL_INVALID) {
+                    int errorCodeValue = errorCode.getValue();
+                    if (errorCodeValue == ErrorCodes.CONNECTION_UNAVAILABLE.getCode()
+                            || errorCodeValue == ErrorCodes.CONNECTION_RELEASED.getCode()) {
                         forwardSuccessLiveData.postValue(
                                 Resource.error(ErrorCode.NETWORK_ERROR.getCode(), null));
                     } else {

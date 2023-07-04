@@ -35,47 +35,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
-
-    <!-- ⼩米 配置开始 < -->
-    <!-- GCM 配置开始 < -->
-    <permission
-        android:name="${applicationId}.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
-    <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE" />
-    <!-- GCM 配置结束 < -->
-    <!-- 华为 配置开始 < -->
-    <!--HMS-SDK引导升级HMS功能，访问OTA服务器需要网络权限-->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!--HMS-SDK引导升级HMS功能，保存下载的升级包需要SD卡写权限-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!--检测网络状态-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!--检测wifi状态-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!--为了获取用户手机的IMEI，用来唯一的标识用户;发送位置及实时位置时需要此权限-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
-    <!--如果是安卓8.0，应用编译配置的targetSdkVersion>=26，请务必添加以下权限 -->
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-    <!-- 华为 配置结束 < -->
-
-    <!-- MeiZu 配置开始 < -->
-    <!-- 兼容 flyme5.0 以下版本，魅族内部集成 pushSDK 必填，不然无法收到 消息-->
-    <uses-permission android:name="com.meizu.flyme.push.permission.RECEIVE" />
-    <permission
-        android:name="${applicationId}.push.permission.MESSAGE"
-        android:protectionLevel="signature" />
-    <uses-permission android:name="${applicationId}.push.permission.MESSAGE" />
-    <!-- 兼容 flyme3.0 配置权限-->
-    <uses-permission android:name="com.meizu.c2dm.permission.RECEIVE" />
-    <!-- MeiZu 配置结束 < -->
-
-    <!-- OPPPO 权限配置-->
-    <uses-permission android:name="com.coloros.mcs.permission.SEND_MCS_MESSAGE" />
-    <uses-permission android:name="com.coloros.mcs.permission.RECIEVE_MCS_MESSAGE"/>
-    <uses-permission android:name="com.heytap.mcs.permission.RECIEVE_MCS_MESSAGE"/>
-    <!-- OPPO 配置结束-->
-
     <!-- 数美 权限配置-->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -444,87 +403,6 @@
             </intent-filter>
         </receiver>
 
-
-        <!--第三方的推送 权限 广播 和服务-->
-
-        <!-- 小米 配置开始 < -->
-        <!--注：此service必须在2.2.5版本以后（包括2.2.5版本）加入-->
-
-
-        <receiver
-            android:name="com.xiaomi.push.service.receivers.NetworkStatusReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </receiver>
-
-        <receiver
-            android:name="io.rong.push.platform.mi.MiMessageReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.xiaomi.mipush.ERROR" />
-            </intent-filter>
-        </receiver>
-        <!-- 小米 配置结束 < -->
-
-        <!-- [START firebase_service] -->
-        <service
-            android:name="io.rong.push.platform.google.RongFirebaseMessagingService"
-            android:exported="false"
-            android:stopWithTask="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-
-        <meta-data
-            android:name="firebase_messaging_auto_init_enabled"
-            android:value="false" />
-        <meta-data
-            android:name="firebase_analytics_collection_enabled"
-            android:value="false" />
-        <!-- [END firebase_service] -->
-
-        <!-- MeiZu 配置开始 < -->
-        <receiver android:name="io.rong.push.platform.meizu.MeiZuReceiver"
-            android:exported="true">
-            <intent-filter>
-                <!-- 接收 push 消息 -->
-                <action android:name="com.meizu.flyme.push.intent.MESSAGE" />
-                <!-- 接收 register 消息 -->
-                <action android:name="com.meizu.flyme.push.intent.REGISTER.FEEDBACK" />
-                <!-- 接收 unregister 消息-->
-                <action android:name="com.meizu.flyme.push.intent.UNREGISTER.FEEDBACK" />
-
-                <!-- 兼容低版本 Flyme3 推送服务配置 -->
-                <action android:name="com.meizu.c2dm.intent.REGISTRATION" />
-                <action android:name="com.meizu.c2dm.intent.RECEIVE" />
-
-                <category android:name="${applicationId}" />
-            </intent-filter>
-        </receiver>
-        <!-- MeiZu 配置结束 < -->
-
-
-        <!-- vivo 推送配置 开始 -->
-        <service
-            android:name="com.vivo.push.sdk.service.CommandClientService"
-            android:permission="com.push.permission.UPSTAGESERVICE"
-            android:exported="true" />
-
-        <activity
-            android:name="com.vivo.push.sdk.LinkProxyClientActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".ui.activity.GroupReadReceiptDetailActivity"
             android:screenOrientation="portrait" />
@@ -554,26 +432,7 @@
             </intent-filter>
         </activity>
 
-        <!--推送配置项-->
-        <meta-data
-            android:name="com.vivo.push.api_key"
-            android:value="9379dbec440afd82e6d8fd903204c9a7" />
-        <meta-data
-            android:name="com.vivo.push.app_id"
-            android:value="103912318" />
 
-        <!-- push 应用定义消息 receiver 声明 -->
-        <receiver android:name="io.rong.push.platform.vivo.VivoPushMessageReceiver"
-            android:exported="false">
-            <intent-filter>
-                <!-- 接收 push 消息 -->
-                <action android:name="com.vivo.pushclient.action.RECEIVE" />
-            </intent-filter>
-        </receiver>
-        <!-- vivo 推送配置 结束 -->
-
-        <!--第三方推送的权限 广播 服务 配置结束-->
-        <!-- push end -->
 
         <!-- bugly 配置 APP ID -->
         <!--
@@ -591,14 +450,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/rc_file_path" />
         </provider>
-
-        <service
-            android:name="io.rong.push.platform.hms.HMSPushService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.huawei.push.action.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
 
         <!--超级群-->
 
@@ -715,70 +566,6 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.activity.ConversationListByTargetIdsActivity"
             android:screenOrientation="portrait"/>
-        <!-- oppo 推送-->
-        <service
-            android:name="com.heytap.msp.push.service.CompatibleDataMessageCallbackService"
-            android:exported="true"
-            android:permission="com.coloros.mcs.permission.SEND_MCS_MESSAGE" >
-            <intent-filter>
-                <action android:name="com.coloros.mcs.action.RECEIVE_MCS_MESSAGE" />
-            </intent-filter>
-        </service>
-        <service
-            android:name="com.heytap.msp.push.service.DataMessageCallbackService"
-            android:exported="true"
-            android:permission="com.heytap.mcs.permission.SEND_PUSH_MESSAGE" >
-            <intent-filter>
-                <action android:name="com.heytap.mcs.action.RECEIVE_MCS_MESSAGE" />
-                <action android:name="com.heytap.msp.push.RECEIVE_MCS_MESSAGE" />
-            </intent-filter>
-        </service>
-        <!-- oppo 推送 end-->
-
-        <service
-            android:name="com.heytap.msp.push.service.CompatibleDataMessageCallbackService"
-            android:exported="true"
-            android:permission="com.coloros.mcs.permission.SEND_MCS_MESSAGE" >
-            <intent-filter>
-                <action android:name="com.coloros.mcs.action.RECEIVE_MCS_MESSAGE" />
-            </intent-filter>
-        </service>
-        <service
-            android:name="com.heytap.msp.push.service.DataMessageCallbackService"
-            android:exported="true"
-            android:permission="com.heytap.mcs.permission.SEND_PUSH_MESSAGE" >
-            <intent-filter>
-                <action android:name="com.heytap.mcs.action.RECEIVE_MCS_MESSAGE" />
-                <action android:name="com.heytap.msp.push.RECEIVE_MCS_MESSAGE" />
-            </intent-filter>
-        </service>
-
-        <receiver
-            android:name="com.huawei.hms.support.api.push.PushMsgReceiver"
-            android:directBootAware="true"
-            android:exported="true"
-            android:permission="${applicationId}.permission.PROCESS_PUSH_MSG" >
-            <intent-filter>
-
-                <!-- Mandatory, be used to receive notification bar message click event. -->
-                <action android:name="com.huawei.intent.action.PUSH_DELAY_NOTIFY" />
-                <!-- Optional, compatible with old huawei phones. -->
-                <action android:name="com.huawei.intent.action.PUSH" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="com.huawei.hms.support.api.push.PushReceiver"
-            android:directBootAware="true"
-            android:exported="true"
-            android:permission="${applicationId}.permission.PROCESS_PUSH_MSG" >
-            <intent-filter>
-
-                <!-- Mandatory, be used to receive tokens. -->
-                <action android:name="com.huawei.android.push.intent.REGISTRATION" />
-                <!-- Mandatory, be used to receive messages. -->
-                <action android:name="com.huawei.android.push.intent.RECEIVE" />
-            </intent-filter>
-        </receiver>
         <!-- end -->
     </application>
 

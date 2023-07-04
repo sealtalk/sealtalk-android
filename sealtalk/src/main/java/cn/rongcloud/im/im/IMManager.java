@@ -96,6 +96,7 @@ import io.rong.imkit.userinfo.RongUserInfoManager;
 import io.rong.imkit.userinfo.model.GroupUserInfo;
 import io.rong.imkit.utils.RouteUtils;
 import io.rong.imlib.ChannelClient;
+import io.rong.imlib.ErrorCodes;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.IRongCoreCallback;
 import io.rong.imlib.IRongCoreEnum;
@@ -128,8 +129,8 @@ import io.rong.message.GroupNotificationMessage;
 import io.rong.push.PushEventListener;
 import io.rong.push.PushType;
 import io.rong.push.RongPushClient;
+import io.rong.push.RongPushPlugin;
 import io.rong.push.notification.PushNotificationMessage;
-import io.rong.push.pushconfig.PushConfig;
 import io.rong.recognizer.RecognizeExtensionModule;
 import io.rong.sight.SightExtensionModule;
 import java.util.ArrayList;
@@ -1219,24 +1220,7 @@ public class IMManager {
          * 根据需求配置各个平台的推送
          * 配置推送需要在初始化 融云 SDK 之前
          */
-        PushConfig config =
-                new PushConfig.Builder()
-                        .enableFCM(true) // 在 google-services.json 文件中进行配置
-                        .enableHWPush(
-                                true) // 在 AndroidManifest.xml 中搜索 com.huawei.hms.client.appid 进行设置
-                        .enableMiPush(
-                                BuildConfig.SEALTALK_MI_PUSH_APPID,
-                                BuildConfig.SEALTALK_MI_PUSH_APPKEY)
-                        .enableMeiZuPush(
-                                BuildConfig.SEALTALK_MIZU_PUSH_APPID,
-                                BuildConfig.SEALTALK_MIZU_PUSH_APPKEY)
-                        .enableVivoPush(true) // 在 AndroidManifest.xml 中搜索 com.vivo.push.api_key 和
-                        // com.vivo.push.app_id 进行设置
-                        .enableOppoPush(
-                                BuildConfig.SEALTALK_OPPO_PUSH_APPKEY,
-                                BuildConfig.SEALTALK_OPPO_PUSH_SECRET)
-                        .build();
-        RongPushClient.setPushConfig(config);
+        RongPushPlugin.init(getContext());
         RongPushClient.setPushEventListener(
                 new PushEventListener() {
                     @Override
@@ -1285,6 +1269,7 @@ public class IMManager {
                                 Intent intentMain = new Intent(context, SplashActivity.class);
                                 intentMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 context.startActivity(intentMain);
+                                return true;
                             }
                         }
                         return false;
@@ -1339,6 +1324,7 @@ public class IMManager {
 
     private void initPhrase() {
         if (appTask.isDebugMode()) {
+
             List<String> phraseList = new ArrayList<>();
             phraseList.add(
                     "1为了研究编译器的实现原理，我们需要使用 clang 命令。clang 命令可以将 Objetive-C 的源码改写成 C / C++ 语言的，借此可以研究 block 中各个特性的源码实现方式。该命令是为了研究编译器的实现原理，我们需要使用 clang ");
@@ -2164,17 +2150,15 @@ public class IMManager {
                             public void onError(RongIMClient.ConnectionErrorCode errorCode) {
                                 SLog.e(LogTag.IM, "connect error - code:" + errorCode.getValue());
                                 RLog.e(TAG, "connectIM errorCode:" + errorCode);
-                                if (errorCode
-                                        == RongIMClient.ConnectionErrorCode
-                                                .RC_CONN_TOKEN_INCORRECT) {
+                                if (errorCode.getValue() == ErrorCodes.TOKEN_INCORRECT.getCode()) {
                                     if (callback != null) {
                                         callback.onFail(ErrorCode.IM_ERROR.getCode());
                                     }
-                                } else if (errorCode
-                                        == RongIMClient.ConnectionErrorCode.RC_CONN_USER_ABANDON) {
+                                } else if (errorCode.getValue()
+                                        == ErrorCodes.USER_CANCELLATION.getCode()) {
                                     callback.onFail(ErrorCode.USER_ABANDON.getCode());
-                                } else if (errorCode
-                                        == RongIMClient.ConnectionErrorCode.RC_CONN_USER_BLOCKED) {
+                                } else if (errorCode.getValue()
+                                        == ErrorCodes.USER_BLOCKED.getCode()) {
                                     callback.onFail(ErrorCode.USER_BLOCKED.getCode());
                                 } else {
                                     if (callback != null) {
@@ -2452,11 +2436,12 @@ public class IMManager {
                             @Override
                             public void onError(RongIMClient.ErrorCode errorCode) {
                                 int errCode = ErrorCode.IM_ERROR.getCode();
-                                if (errorCode == RongIMClient.ErrorCode.RC_NET_CHANNEL_INVALID
-                                        || errorCode == RongIMClient.ErrorCode.RC_NET_UNAVAILABLE
-                                        || errorCode
-                                                == RongIMClient.ErrorCode
-                                                        .RC_NETWORK_IS_DOWN_OR_UNREACHABLE) {
+                                int errorCodeValue = errorCode.getValue();
+                                if (errorCodeValue == ErrorCodes.CONNECTION_RELEASED.getCode()
+                                        || errorCodeValue
+                                                == ErrorCodes.CONNECTION_UNAVAILABLE.getCode()
+                                        || errorCodeValue
+                                                == ErrorCodes.NETWORK_UNAVAILABLE.getCode()) {
                                     errCode = ErrorCode.NETWORK_ERROR.getCode();
                                 }
                                 result.postValue(Resource.error(errCode, !isDetail));
@@ -2484,11 +2469,12 @@ public class IMManager {
                             @Override
                             public void onError(RongIMClient.ErrorCode errorCode) {
                                 int errCode = ErrorCode.IM_ERROR.getCode();
-                                if (errorCode == RongIMClient.ErrorCode.RC_NET_CHANNEL_INVALID
-                                        || errorCode == RongIMClient.ErrorCode.RC_NET_UNAVAILABLE
-                                        || errorCode
-                                                == RongIMClient.ErrorCode
-                                                        .RC_NETWORK_IS_DOWN_OR_UNREACHABLE) {
+                                int errorCodeValue = errorCode.getValue();
+                                if (errorCodeValue == ErrorCodes.CONNECTION_RELEASED.getCode()
+                                        || errorCodeValue
+                                                == ErrorCodes.CONNECTION_UNAVAILABLE.getCode()
+                                        || errorCodeValue
+                                                == ErrorCodes.NETWORK_UNAVAILABLE.getCode()) {
                                     errCode = ErrorCode.NETWORK_ERROR.getCode();
                                 }
                                 result.postValue(Resource.error(errCode, false));

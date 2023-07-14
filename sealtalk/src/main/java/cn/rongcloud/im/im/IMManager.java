@@ -96,7 +96,6 @@ import io.rong.imkit.userinfo.RongUserInfoManager;
 import io.rong.imkit.userinfo.model.GroupUserInfo;
 import io.rong.imkit.utils.RouteUtils;
 import io.rong.imlib.ChannelClient;
-import io.rong.imlib.ErrorCodes;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.IRongCoreCallback;
 import io.rong.imlib.IRongCoreEnum;
@@ -112,6 +111,7 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.ConversationIdentifier;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.IOSConfig;
+import io.rong.imlib.model.InitOption;
 import io.rong.imlib.model.MentionedInfo;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageConfig;
@@ -1426,9 +1426,6 @@ public class IMManager {
                                     proxy.getUserName(),
                                     proxy.getPassword()));
         }
-        DataCenter currentDataCenter = appTask.getCurrentDataCenter();
-        RongIMClient.setServerInfo(
-                currentDataCenter.getNaviUrl(), BuildConfig.SEALTALK_FILE_SERVER);
 
         /*
          * 初始化 SDK，在整个应用程序全局，只需要调用一次。建议在 Application 继承类中调用。
@@ -1440,7 +1437,14 @@ public class IMManager {
         // RongIM.init(this);
 
         // 可在初始 SDK 时直接带入融云 IM 申请的APP KEY
-        IMCenter.init(application, currentDataCenter.getAppKey(), true);
+        DataCenter currentDataCenter = appTask.getCurrentDataCenter();
+        InitOption initOption =
+                new InitOption.Builder()
+                        .setNaviServer(currentDataCenter.getNaviUrl())
+                        .setFileServer(BuildConfig.SEALTALK_FILE_SERVER)
+                        .enablePush(true)
+                        .build();
+        IMCenter.init(application, currentDataCenter.getAppKey(), initOption);
         SealTalkUrl.DOMAIN = currentDataCenter.getAppServer();
     }
 
@@ -2150,15 +2154,17 @@ public class IMManager {
                             public void onError(RongIMClient.ConnectionErrorCode errorCode) {
                                 SLog.e(LogTag.IM, "connect error - code:" + errorCode.getValue());
                                 RLog.e(TAG, "connectIM errorCode:" + errorCode);
-                                if (errorCode.getValue() == ErrorCodes.TOKEN_INCORRECT.getCode()) {
+                                if (errorCode
+                                        == RongIMClient.ConnectionErrorCode
+                                                .RC_CONN_TOKEN_INCORRECT) {
                                     if (callback != null) {
                                         callback.onFail(ErrorCode.IM_ERROR.getCode());
                                     }
-                                } else if (errorCode.getValue()
-                                        == ErrorCodes.USER_CANCELLATION.getCode()) {
+                                } else if (errorCode
+                                        == RongIMClient.ConnectionErrorCode.RC_CONN_USER_ABANDON) {
                                     callback.onFail(ErrorCode.USER_ABANDON.getCode());
-                                } else if (errorCode.getValue()
-                                        == ErrorCodes.USER_BLOCKED.getCode()) {
+                                } else if (errorCode
+                                        == RongIMClient.ConnectionErrorCode.RC_CONN_USER_BLOCKED) {
                                     callback.onFail(ErrorCode.USER_BLOCKED.getCode());
                                 } else {
                                     if (callback != null) {
@@ -2436,12 +2442,11 @@ public class IMManager {
                             @Override
                             public void onError(RongIMClient.ErrorCode errorCode) {
                                 int errCode = ErrorCode.IM_ERROR.getCode();
-                                int errorCodeValue = errorCode.getValue();
-                                if (errorCodeValue == ErrorCodes.CONNECTION_RELEASED.getCode()
-                                        || errorCodeValue
-                                                == ErrorCodes.CONNECTION_UNAVAILABLE.getCode()
-                                        || errorCodeValue
-                                                == ErrorCodes.NETWORK_UNAVAILABLE.getCode()) {
+                                if (errorCode == RongIMClient.ErrorCode.RC_NET_CHANNEL_INVALID
+                                        || errorCode == RongIMClient.ErrorCode.RC_NET_UNAVAILABLE
+                                        || errorCode
+                                                == RongIMClient.ErrorCode
+                                                        .RC_NETWORK_IS_DOWN_OR_UNREACHABLE) {
                                     errCode = ErrorCode.NETWORK_ERROR.getCode();
                                 }
                                 result.postValue(Resource.error(errCode, !isDetail));
@@ -2469,12 +2474,11 @@ public class IMManager {
                             @Override
                             public void onError(RongIMClient.ErrorCode errorCode) {
                                 int errCode = ErrorCode.IM_ERROR.getCode();
-                                int errorCodeValue = errorCode.getValue();
-                                if (errorCodeValue == ErrorCodes.CONNECTION_RELEASED.getCode()
-                                        || errorCodeValue
-                                                == ErrorCodes.CONNECTION_UNAVAILABLE.getCode()
-                                        || errorCodeValue
-                                                == ErrorCodes.NETWORK_UNAVAILABLE.getCode()) {
+                                if (errorCode == RongIMClient.ErrorCode.RC_NET_CHANNEL_INVALID
+                                        || errorCode == RongIMClient.ErrorCode.RC_NET_UNAVAILABLE
+                                        || errorCode
+                                                == RongIMClient.ErrorCode
+                                                        .RC_NETWORK_IS_DOWN_OR_UNREACHABLE) {
                                     errCode = ErrorCode.NETWORK_ERROR.getCode();
                                 }
                                 result.postValue(Resource.error(errCode, false));

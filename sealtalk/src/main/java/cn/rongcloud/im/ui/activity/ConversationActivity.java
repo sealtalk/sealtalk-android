@@ -53,9 +53,11 @@ import cn.rongcloud.im.viewmodel.GroupManagementViewModel;
 import cn.rongcloud.im.viewmodel.PrivateChatSettingViewModel;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.activity.RongBaseActivity;
+import io.rong.imkit.config.RongConfigCenter;
 import io.rong.imkit.conversation.ConversationFragment;
 import io.rong.imkit.conversation.extension.RongExtensionViewModel;
 import io.rong.imkit.conversation.messgelist.viewmodel.MessageViewModel;
+import io.rong.imkit.feature.quickreply.IQuickReplyProvider;
 import io.rong.imkit.manager.UnReadMessageManager;
 import io.rong.imkit.utils.PermissionCheckUtil;
 import io.rong.imkit.utils.RouteUtils;
@@ -105,6 +107,8 @@ public class ConversationActivity extends RongBaseActivity
     private boolean isGroupOwner;
     /** 在会话类型为群组时：是否为群管理员 */
     private boolean isGroupManager;
+
+    private int addPhrases = 0;
 
     private DelayDismissHandler mHandler;
     private final int RECENTLY_POPU_DISMISS = 0x2870;
@@ -811,6 +815,8 @@ public class ConversationActivity extends RongBaseActivity
                     @Override
                     public void onRightIconClick(View v) {
                         toDetailActivity(conversationType, mTargetId);
+                        addPhrases++;
+                        updatePhrases(addPhrases);
                     }
                 });
         mTitleBar.setOnBackClickListener(
@@ -822,6 +828,32 @@ public class ConversationActivity extends RongBaseActivity
                         }
                     }
                 });
+    }
+
+    /**
+     * 在会话页面增加测试"更新常用语"的代码，仅供sealTalk测试 点击会话页面右上角"···"按钮会更新常用语
+     * 点击会话"常用语"按钮看是否有更新，逻辑仅影响debug模式下的sealTalk，不会影响sdk
+     *
+     * @param addPhrases
+     */
+    private void updatePhrases(int addPhrases) {
+        AppTask appTask = IMManager.getInstance().getAppTask();
+        if (appTask.isDebugMode()) {
+            RongConfigCenter.featureConfig()
+                    .enableQuickReply(
+                            new IQuickReplyProvider() {
+                                @Override
+                                public List<String> getPhraseList(
+                                        Conversation.ConversationType type) {
+                                    List<String> phraseList = new ArrayList<>();
+                                    phraseList.add("您好！");
+                                    phraseList.add("您太客气了！");
+                                    phraseList.add("您吃饭了吗？");
+                                    phraseList.add("动态添加常用语" + addPhrases);
+                                    return phraseList;
+                                }
+                            });
+        }
     }
 
     /** 根据 mTargetid 和 ConversationType 进入到设置页面 */

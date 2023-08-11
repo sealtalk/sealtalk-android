@@ -55,6 +55,7 @@ import io.rong.imlib.model.ConversationIdentifier;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class UltraConversationListFragment extends Fragment
@@ -244,6 +245,7 @@ public class UltraConversationListFragment extends Fragment
                         getViewLifecycleOwner(),
                         uiConversations -> {
                             ArrayList<BaseUiConversation> data = new ArrayList<>();
+                            HashSet<String> channelIds = new HashSet<>();
                             for (BaseUiConversation uiConversation : uiConversations) {
                                 if (!Conversation.ConversationType.ULTRA_GROUP.equals(
                                                 uiConversation.mCore.getConversationType())
@@ -251,8 +253,16 @@ public class UltraConversationListFragment extends Fragment
                                     continue;
                                 }
                                 data.add(uiConversation);
+                                channelIds.add(uiConversation.mCore.getChannelId());
                             }
                             mAdapter.setDataCollection(data);
+                            // 存储当前的 ChannelId
+                            if (!channelIds.isEmpty()) {
+                                sharedPreferences
+                                        .edit()
+                                        .putStringSet("channel_ids", channelIds)
+                                        .apply();
+                            }
                         });
         // 连接状态监听
         //

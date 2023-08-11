@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_user_id_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/seal_search_group_draw_padding"
+        android:ellipsize="middle"
+        android:text="选择用户ID:"
+        android:textSize="16sp"
+        android:singleLine="true"
+        android:textColor="@color/seal_search_empty_text_color"
+        android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_user_id_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/seal_search_devi_color"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tv_channel_id_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/seal_search_group_draw_padding"
+        android:ellipsize="middle"
+        android:text="选择ChannelID:"
+        android:singleLine="true"
+        android:textColor="@color/seal_search_empty_text_color"
+        android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_channel_id_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/seal_search_devi_color"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:visibility="gone"/>
+
+</LinearLayout>

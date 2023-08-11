@@ -1,5 +1,6 @@
 package cn.rongcloud.im.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -83,6 +84,12 @@ public class UltraGroupSettingActivity extends TitleBaseActivity implements View
                 .setOnClickListener(this);
         findViewById(R.id.siv_query_target_ultra_group_cur_channel_message)
                 .setOnClickListener(this);
+        findViewById(R.id.siv_query_target_ultra_group_multi_channel_message)
+                .setOnClickListener(this);
+        findViewById(R.id.siv_query_target_ultra_group_by_user_multi_channel_message)
+                .setOnClickListener(this);
+        findViewById(R.id.siv_query_target_ultra_group_by_user_all_channel_message)
+                .setOnClickListener(this);
         findViewById(R.id.siv_query_target_ultra_group_all_channel_message)
                 .setOnClickListener(this);
 
@@ -147,6 +154,7 @@ public class UltraGroupSettingActivity extends TitleBaseActivity implements View
                         });
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
 
@@ -835,15 +843,39 @@ public class UltraGroupSettingActivity extends TitleBaseActivity implements View
             case R.id.siv_query_target_ultra_group_all_channel_message:
                 SealSearchUltraGroupActivity.start(
                         this,
-                        SealSearchUltraGroupActivity.TYPE_TARGET,
+                        SealSearchUltraGroupActivity.TYPE_SEARCH_MESSAGE_FOR_ALL_CHANNEL,
                         ConversationIdentifier.obtain(
                                 conversationIdentifier.getType(),
                                 conversationIdentifier.getTargetId(),
-                                ""));
+                                ""),
+                        null,
+                        null);
                 break;
             case R.id.siv_query_target_ultra_group_cur_channel_message:
                 SealSearchUltraGroupActivity.start(
-                        this, SealSearchUltraGroupActivity.TYPE_TARGET, conversationIdentifier);
+                        this,
+                        SealSearchUltraGroupActivity.TYPE_SEARCH_MESSAGES,
+                        conversationIdentifier,
+                        null,
+                        null);
+                break;
+            case R.id.siv_query_target_ultra_group_multi_channel_message:
+                SearchMessageSelectActivity.start(
+                        this,
+                        SealSearchUltraGroupActivity.TYPE_SEARCH_MESSAGES_FOR_CHANNELS,
+                        conversationIdentifier);
+                break;
+            case R.id.siv_query_target_ultra_group_by_user_multi_channel_message:
+                SearchMessageSelectActivity.start(
+                        this,
+                        SealSearchUltraGroupActivity.TYPE_SEARCH_MESSAGES_BY_USER_FOR_CHANNELS,
+                        conversationIdentifier);
+                break;
+            case R.id.siv_query_target_ultra_group_by_user_all_channel_message:
+                SearchMessageSelectActivity.start(
+                        this,
+                        SealSearchUltraGroupActivity.TYPE_SEARCH_MESSAGES_BY_USER_FOR_ALL_CHANNELS,
+                        conversationIdentifier);
                 break;
             default:
                 break;

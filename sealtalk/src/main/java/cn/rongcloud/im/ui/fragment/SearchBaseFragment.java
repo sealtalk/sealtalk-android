@@ -32,7 +32,7 @@ public class SearchBaseFragment extends Fragment implements SearchableInterface 
     private RecyclerView recyclerView;
     private SearchAdapter searchAdapter;
     protected SealSearchViewModel viewModel;
-    protected String initSearch;
+    protected String initSearch = "";
     private TextView tvEmpty;
 
     public void init(

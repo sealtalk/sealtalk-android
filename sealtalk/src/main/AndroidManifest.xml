@@ -155,6 +155,9 @@
             android:name=".ui.activity.SearchHistoryMessageActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.activity.SearchMessageSelectActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.activity.GroupListActivity"
             android:screenOrientation="portrait" />
         <activity

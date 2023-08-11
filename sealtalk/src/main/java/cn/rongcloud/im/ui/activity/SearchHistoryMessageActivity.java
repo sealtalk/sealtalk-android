@@ -27,7 +27,14 @@ public class SearchHistoryMessageActivity extends SealSearchBaseActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         messageFragment = new SearchMessageFragment();
-        messageFragment.init(this, conversationIdentifier, name, portrait);
+        messageFragment.init(
+                SealSearchUltraGroupActivity.TYPE_SEARCH_MESSAGES,
+                this,
+                conversationIdentifier,
+                name,
+                portrait,
+                null,
+                null);
         transaction.replace(R.id.fl_content_fragment, messageFragment);
         transaction.commit();
     }

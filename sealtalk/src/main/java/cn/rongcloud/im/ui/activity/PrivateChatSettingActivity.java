@@ -121,7 +121,7 @@ public class PrivateChatSettingActivity extends TitleBaseActivity implements Vie
         isTopSb = findViewById(R.id.siv_conversation_top);
         isTopSb.setSwitchCheckListener(
                 (buttonView, isChecked) ->
-                        conversationSettingViewModel.setConversationTop(isChecked, false));
+                        conversationSettingViewModel.setConversationTop(isChecked, true));
 
         isScreenShotSiv = findViewById(R.id.profile_siv_group_screen_shot_notification);
         isScreenShotSiv.setSwitchTouchListener(

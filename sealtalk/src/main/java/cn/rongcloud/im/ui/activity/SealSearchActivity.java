@@ -90,11 +90,14 @@ public class SealSearchActivity extends SealSearchBaseActivity
 
             searchMessageFragment = new SearchMessageFragment();
             searchMessageFragment.init(
+                    SealSearchUltraGroupActivity.TYPE_SEARCH_MESSAGES,
                     this,
                     ConversationIdentifier.obtain(
                             searchConversationModel.getBean().getConversation()),
                     searchConversationModel.getName(),
-                    searchConversationModel.getPortraitUrl());
+                    searchConversationModel.getPortraitUrl(),
+                    null,
+                    null);
             pushFragment(searchMessageFragment);
         }
     }

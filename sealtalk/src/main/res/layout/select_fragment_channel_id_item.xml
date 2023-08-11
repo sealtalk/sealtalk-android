@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/ll_contact_item"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_contact_item_height"
+        android:background="@drawable/seal_bg_list_item"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/seal_contact_item_padding">
+
+        <ImageView
+            android:id="@+id/cb_select"
+            android:layout_width="@dimen/rc_margin_size_20"
+            android:layout_height="@dimen/rc_margin_size_20"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/seal_contact_item_portrait_margin_left"
+            android:src="@drawable/seal_cb_select_contact_pic_btn_unselected" />
+
+        <TextView
+            android:id="@+id/tv_channel_id"
+            style="@style/TextStyle.Alignment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/seal_contact_item_name_margin_left"
+            android:layout_toEndOf="@+id/cb_select"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:lines="1"
+            android:maxLength="32"
+            android:textColor="#111F2C"
+            android:textSize="17dp" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seal_contact_devi_height"
+        android:layout_marginStart="48dp"
+        android:background="#fff5f6f9" />
+
+</LinearLayout>

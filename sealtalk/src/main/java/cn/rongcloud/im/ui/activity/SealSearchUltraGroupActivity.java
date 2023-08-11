@@ -1,8 +1,11 @@
 package cn.rongcloud.im.ui.activity;
 
+import static cn.rongcloud.im.ui.view.SealTitleBar.Type.NORMAL;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -24,16 +27,33 @@ public class SealSearchUltraGroupActivity extends SealSearchBaseActivity
 
     public static final String TYPE = "type";
     public static final String TYPE_CONVERSATION_IDENTIFIER = "identifier";
+    public static final String TYPE_USER_ID = "userId";
+    public static final String TYPE_CHANNEL_IDS = "channelIds";
     public static final int TYPE_ALL_TARGET = 1;
-    public static final int TYPE_TARGET = 2;
+    public static final int TYPE_SEARCH_MESSAGE_FOR_ALL_CHANNEL = 2;
+    public static final int TYPE_SEARCH_MESSAGES = 3;
+    public static final int TYPE_SEARCH_MESSAGES_FOR_CHANNELS = 4;
+    public static final int TYPE_SEARCH_MESSAGES_BY_USER_FOR_CHANNELS = 5;
+    public static final int TYPE_SEARCH_MESSAGES_BY_USER_FOR_ALL_CHANNELS = 6;
 
     private SearchBaseFragment currentFragment; // 当前Fragment
 
-    public static void start(Activity activity, int type, ConversationIdentifier identifier) {
+    public static void start(
+            Activity activity,
+            int type,
+            ConversationIdentifier identifier,
+            String userId,
+            String[] channelIds) {
         Intent intent = new Intent(activity, SealSearchUltraGroupActivity.class);
         intent.putExtra(SealSearchUltraGroupActivity.TYPE, type);
         if (identifier != null) {
             intent.putExtra(SealSearchUltraGroupActivity.TYPE_CONVERSATION_IDENTIFIER, identifier);
+        }
+        if (!TextUtils.isEmpty(userId)) {
+            intent.putExtra(SealSearchUltraGroupActivity.TYPE_USER_ID, userId);
+        }
+        if (channelIds != null) {
+            intent.putExtra(SealSearchUltraGroupActivity.TYPE_CHANNEL_IDS, channelIds);
         }
         activity.startActivity(intent);
     }
@@ -49,10 +69,18 @@ public class SealSearchUltraGroupActivity extends SealSearchBaseActivity
         } else {
             ConversationIdentifier identifier =
                     getIntent().getParcelableExtra(TYPE_CONVERSATION_IDENTIFIER);
+            String userId = getIntent().getStringExtra(SealSearchUltraGroupActivity.TYPE_USER_ID);
+            String[] channelIds =
+                    getIntent().getStringArrayExtra(SealSearchUltraGroupActivity.TYPE_CHANNEL_IDS);
             SearchMessageFragment searchMessageFragment = new SearchMessageFragment();
-            searchMessageFragment.init(this, identifier, "", "");
+            searchMessageFragment.init(type, this, identifier, "", "", userId, channelIds);
             currentFragment = searchMessageFragment;
+            if (type == TYPE_SEARCH_MESSAGES_BY_USER_FOR_CHANNELS
+                    || type == TYPE_SEARCH_MESSAGES_BY_USER_FOR_ALL_CHANNELS) {
+                getTitleBar().setType(NORMAL);
+            }
         }
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fl_content_fragment, currentFragment);
         transaction.commit();

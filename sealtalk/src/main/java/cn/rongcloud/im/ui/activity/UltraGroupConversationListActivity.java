@@ -23,6 +23,8 @@ public class UltraGroupConversationListActivity extends FragmentActivity {
                                 SealSearchUltraGroupActivity.start(
                                         UltraGroupConversationListActivity.this,
                                         SealSearchUltraGroupActivity.TYPE_ALL_TARGET,
+                                        null,
+                                        null,
                                         null);
                             }
                         });

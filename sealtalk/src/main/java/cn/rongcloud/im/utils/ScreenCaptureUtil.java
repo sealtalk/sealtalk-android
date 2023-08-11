@@ -4,10 +4,12 @@ import android.content.Context;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.provider.CallLog;
 import android.provider.MediaStore;
 import android.util.Log;
 import androidx.loader.content.CursorLoader;
@@ -26,7 +28,15 @@ public class ScreenCaptureUtil {
 
     /** 读取媒体数据库时需要读取的列 */
     private static final String[] MEDIA_PROJECTIONS = {
-        MediaStore.Images.ImageColumns.DATA, MediaStore.Images.ImageColumns.DATE_TAKEN,
+        MediaStore.Images.ImageColumns.DATA,
+        MediaStore.Images.ImageColumns.DATE_TAKEN,
+        MediaStore.Images.ImageColumns.DATE_ADDED
+    };
+    /** 读取媒体数据库时需要读取的列 */
+    private static final String[] MEDIA_PROJECTIONS_NEW_API = {
+        MediaStore.Images.ImageColumns.RELATIVE_PATH,
+        MediaStore.Images.ImageColumns.DATE_TAKEN,
+        MediaStore.Images.ImageColumns.DATE_ADDED
     };
 
     private static final String[] projection = {
@@ -72,13 +82,28 @@ public class ScreenCaptureUtil {
     }
 
     public void register() {
-        // 添加监听
-        mContext.getContentResolver()
-                .registerContentObserver(
-                        MediaStore.Images.Media.INTERNAL_CONTENT_URI, false, mInternalObserver);
-        mContext.getContentResolver()
-                .registerContentObserver(
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, false, mExternalObserver);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+            // 添加监听 android Q 以上，registerContentObserver 中 notifyForDescendants 参数需要设置为 true
+            // Android Q(10) ContentObserver 不回调 onChange，在Android
+            // Q版本上调用注册媒体数据库监听的方法registerContentObserver时传入 notifyForDescendants参数值需要改为 true，Android
+            // Q之前的版本仍然传入 false。
+            // 如果值为false，则只要指定的URI或路径层次结构中URI的祖先之一发生变化，就会通知观察者。
+            // 如果为true，则每当路径层次结构中URI的后代发生更改时，也会通知观察者。
+            mContext.getContentResolver()
+                    .registerContentObserver(
+                            MediaStore.Images.Media.INTERNAL_CONTENT_URI, true, mInternalObserver);
+            mContext.getContentResolver()
+                    .registerContentObserver(
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, true, mExternalObserver);
+        } else {
+            // 添加监听
+            mContext.getContentResolver()
+                    .registerContentObserver(
+                            MediaStore.Images.Media.INTERNAL_CONTENT_URI, false, mInternalObserver);
+            mContext.getContentResolver()
+                    .registerContentObserver(
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, false, mExternalObserver);
+        }
     }
 
     /** 在生命周期的结束时使用 */
@@ -143,16 +168,33 @@ public class ScreenCaptureUtil {
      */
     private void handleMediaContentChange(Uri contentUri) {
         Cursor cursor = null;
+        Uri limitedCallLogUri =
+                contentUri
+                        .buildUpon()
+                        .appendQueryParameter(CallLog.Calls.LIMIT_PARAM_KEY, "1")
+                        .build();
         try {
             // 数据改变时查询数据库中最后加入的一条数据
-            cursor =
-                    mContext.getContentResolver()
-                            .query(
-                                    contentUri,
-                                    MEDIA_PROJECTIONS,
-                                    null,
-                                    null,
-                                    MediaStore.Images.ImageColumns.DATE_ADDED + " desc limit 1");
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+                cursor =
+                        mContext.getContentResolver()
+                                .query(
+                                        limitedCallLogUri,
+                                        MEDIA_PROJECTIONS_NEW_API,
+                                        null,
+                                        null,
+                                        MediaStore.Images.ImageColumns.DATE_ADDED + " desc");
+            } else {
+                cursor =
+                        mContext.getContentResolver()
+                                .query(
+                                        contentUri,
+                                        MEDIA_PROJECTIONS,
+                                        null,
+                                        null,
+                                        MediaStore.Images.ImageColumns.DATE_ADDED
+                                                + " desc limit 1");
+            }
 
             if (cursor == null) {
                 return;
@@ -160,9 +202,13 @@ public class ScreenCaptureUtil {
             if (!cursor.moveToFirst()) {
                 return;
             }
-
+            int dataIndex;
             // 获取各列的索引
-            int dataIndex = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+                dataIndex = cursor.getColumnIndex(MediaStore.Images.ImageColumns.RELATIVE_PATH);
+            } else {
+                dataIndex = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            }
             int dateTakenIndex = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATE_TAKEN);
 
             // 获取行数据

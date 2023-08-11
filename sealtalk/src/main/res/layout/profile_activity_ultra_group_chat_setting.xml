@@ -225,5 +225,23 @@
             android:layout_height="@dimen/seal_private_detail_item_height"
             app:item_content="搜索超级群所有频道的消息记录" />
 
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_query_target_ultra_group_multi_channel_message"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="搜索超级群下多个频道的消息记录" />
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_query_target_ultra_group_by_user_multi_channel_message"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="根据用户ID搜索超级群多个频道的消息记录" />
+
+        <cn.rongcloud.im.ui.view.SettingItemView
+            android:id="@+id/siv_query_target_ultra_group_by_user_all_channel_message"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seal_private_detail_item_height"
+            app:item_content="根据用户ID 搜索超级群所有频道的消息记录" />
+
     </LinearLayout>
 </ScrollView>

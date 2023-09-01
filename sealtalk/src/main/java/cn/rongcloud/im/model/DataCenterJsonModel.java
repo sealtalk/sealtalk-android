@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import cn.rongcloud.im.SealApp;
 import cn.rongcloud.im.utils.DataCenter;
 import com.google.gson.annotations.SerializedName;
+import io.rong.imlib.model.InitOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +64,17 @@ public class DataCenterJsonModel {
 
         public void setCode(String code) {
             this.code = code;
+        }
+
+        public InitOption.AreaCode getAreaCode() {
+            if ("north_america".equals(code)) {
+                return InitOption.AreaCode.NA;
+            }
+            if ("singapore".equals(code)) {
+                return InitOption.AreaCode.SG;
+            }
+            // beijing
+            return InitOption.AreaCode.BJ;
         }
 
         @Override

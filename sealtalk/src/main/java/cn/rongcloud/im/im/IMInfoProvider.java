@@ -39,7 +39,10 @@ public class IMInfoProvider {
     private final MediatorLiveData<Resource> triggerLiveData =
             new MediatorLiveData<>(); // 同步信息时用于触发事件使用的变量
     private volatile Observer<Resource> emptyObserver; // 空监听用于触发事件
+    // 是否正在请求群组信息
     private volatile boolean groupMemberIsRequest;
+    // 是否正在请求需要Callback的群组信息
+    private volatile boolean groupMemberCallbackIsRequest;
     private GroupTask groupTask;
     private UserTask userTask;
     private FriendTask friendTask;
@@ -220,9 +223,9 @@ public class IMInfoProvider {
                 .runOnUIThread(
                         () -> {
                             // 考虑到在群内频繁调用此方法,当有请求时进行请求
-                            if (groupMemberIsRequest) return;
+                            if (groupMemberCallbackIsRequest) return;
 
-                            groupMemberIsRequest = true;
+                            groupMemberCallbackIsRequest = true;
                             LiveData<Resource<List<GroupMember>>> groupMemberSource =
                                     groupTask.getGroupMemberInfoList(groupId);
                             triggerLiveData.addSource(
@@ -233,7 +236,7 @@ public class IMInfoProvider {
                                             // 确认成功或失败后，移除数据源
                                             // 在请求成功后，会在插入数据时同步更新缓存
                                             triggerLiveData.removeSource(groupMemberSource);
-                                            groupMemberIsRequest = false;
+                                            groupMemberCallbackIsRequest = false;
                                         }
 
                                         if (resource.status == Status.SUCCESS

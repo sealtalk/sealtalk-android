@@ -4,6 +4,7 @@ import static java.lang.System.exit;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +16,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProviders;
@@ -34,9 +36,14 @@ import cn.rongcloud.im.ui.view.SettingItemView;
 import cn.rongcloud.im.utils.DialogWithYesOrNoUtils;
 import cn.rongcloud.im.utils.ToastUtils;
 import cn.rongcloud.im.viewmodel.UserInfoViewModel;
+import io.rong.imkit.RongIM;
+import io.rong.imkit.config.ConversationClickListener;
 import io.rong.imkit.config.RongConfigCenter;
 import io.rong.imlib.IRongCoreEnum;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Message;
+import io.rong.imlib.model.UserInfo;
 
 public class SealTalkDebugTestActivity extends TitleBaseActivity implements View.OnClickListener {
     private SettingItemView pushConfigModeSiv;
@@ -60,6 +67,7 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
     private SettingItemView permissionlistener;
     private SettingItemView ultraDebug; // 超级群的debug模式
     private SettingItemView isHideLoginPagePicCode; // 是否忽略登录图片验证码
+    private SettingItemView quickIntercept; // 是否忽略登录图片验证码
     private SettingItemView createNotificationChannel;
     private SettingItemView bindChatRTCRoom;
     public static final String SP_IS_SHOW = "is_show";
@@ -181,6 +189,119 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
                     }
                 });
         isHideLoginPagePicCode = findViewById(R.id.siv_login_ignore_pic_code);
+        quickIntercept = findViewById(R.id.quick_intercept);
+        quickIntercept.setSwitchCheckListener(
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked) {
+                            RongIM.setConversationClickListener(
+                                    new ConversationClickListener() {
+                                        @Override
+                                        public boolean onUserPortraitClick(
+                                                Context context,
+                                                Conversation.ConversationType conversationType,
+                                                UserInfo user,
+                                                String targetId) {
+                                            return false;
+                                        }
+
+                                        @Override
+                                        public boolean onUserPortraitLongClick(
+                                                Context context,
+                                                Conversation.ConversationType conversationType,
+                                                UserInfo user,
+                                                String targetId) {
+                                            return false;
+                                        }
+
+                                        @Override
+                                        public boolean onMessageClick(
+                                                Context context, View view, Message message) {
+                                            return false;
+                                        }
+
+                                        @Override
+                                        public boolean onMessageLongClick(
+                                                Context context, View view, Message message) {
+                                            return false;
+                                        }
+
+                                        @Override
+                                        public boolean onMessageLinkClick(
+                                                Context context, String link, Message message) {
+                                            return false;
+                                        }
+
+                                        @Override
+                                        public boolean onReadReceiptStateClick(
+                                                Context context, Message message) {
+                                            return false;
+                                        }
+
+                                        @Override
+                                        public boolean onQuickReplyClick(Context context) {
+                                            Toast.makeText(
+                                                            context,
+                                                            "拦截了常用语点击事件",
+                                                            Toast.LENGTH_SHORT)
+                                                    .show();
+                                            return true;
+                                        }
+                                    });
+                        } else {
+                            RongIM.setConversationClickListener(
+                                    new ConversationClickListener() {
+                                        @Override
+                                        public boolean onUserPortraitClick(
+                                                Context context,
+                                                Conversation.ConversationType conversationType,
+                                                UserInfo user,
+                                                String targetId) {
+                                            return false;
+                                        }
+
+                                        @Override
+                                        public boolean onUserPortraitLongClick(
+                                                Context context,
+                                                Conversation.ConversationType conversationType,
+                                                UserInfo user,
+                                                String targetId) {
+                                            return false;
+                                        }
+
+                                        @Override
+                                        public boolean onMessageClick(
+                                                Context context, View view, Message message) {
+                                            return false;
+                                        }
+
+                                        @Override
+                                        public boolean onMessageLongClick(
+                                                Context context, View view, Message message) {
+                                            return false;
+                                        }
+
+                                        @Override
+                                        public boolean onMessageLinkClick(
+                                                Context context, String link, Message message) {
+                                            return false;
+                                        }
+
+                                        @Override
+                                        public boolean onReadReceiptStateClick(
+                                                Context context, Message message) {
+                                            return false;
+                                        }
+
+                                        @Override
+                                        public boolean onQuickReplyClick(Context context) {
+                                            return false;
+                                        }
+                                    });
+                        }
+                    }
+                });
         isHideLoginPagePicCode.setChecked(
                 getSharedPreferences(SealTalkDebugTestActivity.LOGIN_DEBUG_CONFIG, MODE_PRIVATE)
                         .getBoolean(LOGIN_IS_HIDE_PIC_CODE, false));
@@ -270,6 +391,9 @@ public class SealTalkDebugTestActivity extends TitleBaseActivity implements View
                 showCreateNotificationDialog();
                 break;
             case R.id.siv_bind_chat_rtc_room:
+                bindChatRTCRoom();
+                break;
+            case R.id.quick_intercept:
                 bindChatRTCRoom();
                 break;
             default:

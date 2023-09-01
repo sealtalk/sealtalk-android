@@ -184,6 +184,14 @@
                 app:item_divider="true"
                 app:item_switch="true"
                 />
+            <cn.rongcloud.im.ui.view.SettingItemView
+                android:id="@+id/quick_intercept"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/seal_mine_about_height"
+                app:item_content="是否拦截常用语按钮点击事件"
+                app:item_divider="true"
+                app:item_switch="true"
+                />
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

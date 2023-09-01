@@ -1443,6 +1443,7 @@ public class IMManager {
                         .setNaviServer(currentDataCenter.getNaviUrl())
                         .setFileServer(BuildConfig.SEALTALK_FILE_SERVER)
                         .enablePush(true)
+                        .setAreaCode(currentDataCenter.getAreaCode())
                         .build();
         IMCenter.init(application, currentDataCenter.getAppKey(), initOption);
         SealTalkUrl.DOMAIN = currentDataCenter.getAppServer();

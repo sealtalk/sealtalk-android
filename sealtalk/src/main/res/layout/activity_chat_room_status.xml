@@ -3,14 +3,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/tv_chat_room_info"
+        android:visibility="visible"
+        android:hint="加入聊天室成功的结果"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentTop="true"
+        android:maxLines="20"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="20dp"
         android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btn_chat_room_exist"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:text="加入聊天室接口测试" />
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:visibility="invisible"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -2,6 +2,7 @@ package cn.rongcloud.im.ui.activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -15,8 +16,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
@@ -57,6 +60,7 @@ import com.umeng.commonsdk.UMConfigure;
 import io.rong.imkit.conversationlist.ConversationListFragment;
 import io.rong.imkit.picture.tools.ScreenUtils;
 import io.rong.imkit.utils.RouteUtils;
+import io.rong.imkit.utils.ToastUtils;
 import io.rong.imlib.model.ConversationIdentifier;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -108,6 +112,20 @@ public class MainActivity extends BaseActivity
         if (Build.VERSION.SDK_INT >= 33) {
             askNotificationPermission();
         }
+        toastInterceptor();
+    }
+
+    private void toastInterceptor() {
+        ToastUtils.setInterceptor(
+                new ToastUtils.ToastInterceptor() {
+                    @Override
+                    public boolean willToast(
+                            @NonNull Context context, @NonNull CharSequence text, int duration) {
+                        String s = "被 sealtalk 拦截的 toast：" + text;
+                        Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
+                        return false;
+                    }
+                });
     }
 
     private void initOtherPrivacy() {

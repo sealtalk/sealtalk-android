@@ -2,6 +2,7 @@ package cn.rongcloud.im.utils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
+import io.rong.imlib.model.InitOption;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -37,7 +38,14 @@ public interface DataCenter {
     @StringRes
     public int getNameId();
 
+    // "north_america" > InitOption.AreaCode.NA
+    // "singapore" > InitOption.AreaCode.SG
+    // "beijing" > InitOption.AreaCode.BJ
     public String getCode();
+
+    public default InitOption.AreaCode getAreaCode() {
+        return InitOption.AreaCode.BJ;
+    }
 
     public String getAppKey();
 

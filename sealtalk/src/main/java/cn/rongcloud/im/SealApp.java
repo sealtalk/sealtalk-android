@@ -38,6 +38,7 @@ import io.rong.imkit.config.RongConfigCenter;
 import io.rong.imkit.utils.language.LangUtils;
 import io.rong.imlib.RongCoreClientImpl;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.InitOption;
 import io.rong.imlib.model.Message;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -261,6 +262,10 @@ public class SealApp extends MultiDexApplication {
             @Override
             public String getCode() {
                 return "beijing";
+            }
+
+            public InitOption.AreaCode getAreaCode() {
+                return InitOption.AreaCode.BJ;
             }
 
             @Override

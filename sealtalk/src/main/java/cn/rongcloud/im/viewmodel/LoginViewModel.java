@@ -347,7 +347,7 @@ public class LoginViewModel extends AndroidViewModel {
     }
 
     public void changeDataCenter(DataCenter center) {
-        mAppTask.changeDataCenter(center);
+        mAppTask.changeDataCenter(getApplication(), center);
         dataCenterLiveData.postValue(center);
     }
 

@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import cn.rongcloud.im.BuildConfig;
 import cn.rongcloud.im.contact.TranslationLanguage;
 import cn.rongcloud.im.im.IMManager;
 import cn.rongcloud.im.model.ChatRoomResult;
@@ -33,6 +34,7 @@ import io.rong.imkit.utils.language.LangUtils;
 import io.rong.imkit.utils.language.RongConfigurationManager;
 import io.rong.imlib.RongCoreClient;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.InitOption;
 import io.rong.imlib.model.RCIMProxy;
 import java.util.List;
 import java.util.Locale;
@@ -275,9 +277,15 @@ public class AppTask {
                 .getString("translation_target_language", TranslationLanguage.LANGUAGE_EN);
     }
 
-    public void changeDataCenter(DataCenter center) {
-        RongCoreClient.setServerInfo(center.getNaviUrl(), null);
-        IMCenter.init((Application) context.getApplicationContext(), center.getAppKey(), true);
+    public void changeDataCenter(Application application, DataCenter center) {
+        InitOption initOption =
+                new InitOption.Builder()
+                        .setNaviServer(center.getNaviUrl())
+                        .setFileServer(BuildConfig.SEALTALK_FILE_SERVER)
+                        .enablePush(true)
+                        .setAreaCode(center.getAreaCode())
+                        .build();
+        IMCenter.init(application, center.getAppKey(), initOption);
         // 初始化扩展模块
         IMManager.getInstance().initExtensionModules(context);
         IMManager.getInstance().initMessageAndTemplate();

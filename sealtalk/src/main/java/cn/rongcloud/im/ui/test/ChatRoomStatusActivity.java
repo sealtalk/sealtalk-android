@@ -1,5 +1,6 @@
 package cn.rongcloud.im.ui.test;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import cn.rongcloud.im.R;
@@ -21,6 +24,7 @@ import io.rong.imlib.IRongCoreEnum;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.chatroom.base.RongChatRoomClient;
 import io.rong.imlib.chatroom.message.ChatRoomKVNotiMessage;
+import io.rong.imlib.model.JoinChatRoomResponse;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
 import java.text.SimpleDateFormat;
@@ -36,6 +40,7 @@ public class ChatRoomStatusActivity extends TitleBaseActivity implements View.On
     public static boolean isFirstKVStatusDidChange;
     private Handler handler;
     private ChatRoomViewModel chatRoomViewModel;
+    private TextView chatRoomInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,7 +149,50 @@ public class ChatRoomStatusActivity extends TitleBaseActivity implements View.On
                                 }
                             }
                         });
+
+        RongChatRoomClient.addChatRoomAdvanceActionListener(chatRoomAdvancedActionListener);
     }
+
+    private final RongChatRoomClient.ChatRoomAdvancedActionListener chatRoomAdvancedActionListener =
+            new RongChatRoomClient.ChatRoomAdvancedActionListener() {
+                @Override
+                public void onJoining(String chatRoomId) {}
+
+                @Override
+                public void onJoined(String chatRoomId) {}
+
+                @Override
+                public void onJoined(String chatRoomId, JoinChatRoomResponse joinChatRoomResponse) {
+                    if (chatRoomInfo != null && joinChatRoomResponse != null) {
+                        String preText = chatRoomInfo.getText().toString();
+                        String text =
+                                preText
+                                        + "\n\n加入房间成功回调:\n"
+                                        + convertJoinChatRoomResponse(joinChatRoomResponse);
+                        chatRoomInfo.setText(text);
+                        chatRoomInfo.setVisibility(View.VISIBLE);
+                    }
+                    Toast.makeText(
+                                    ChatRoomStatusActivity.this,
+                                    "加入房间成功回调:\n"
+                                            + convertJoinChatRoomResponse(joinChatRoomResponse),
+                                    Toast.LENGTH_SHORT)
+                            .show();
+                }
+
+                @Override
+                public void onReset(String chatRoomId) {}
+
+                @Override
+                public void onQuited(String chatRoomId) {}
+
+                @Override
+                public void onDestroyed(
+                        String chatRoomId, IRongCoreEnum.ChatRoomDestroyType type) {}
+
+                @Override
+                public void onError(String chatRoomId, IRongCoreEnum.CoreErrorCode code) {}
+            };
 
     //        private void initReceiveMessageListener() {
     //        RongIM.setOnReceiveMessageListener(new RongIMClient.OnReceiveMessageListener() {
@@ -159,15 +207,32 @@ public class ChatRoomStatusActivity extends TitleBaseActivity implements View.On
     private void initView() {
         Button btnChatRoom1 = findViewById(R.id.btn_chat_room1);
         Button btnChatRoom2 = findViewById(R.id.btn_chat_room2);
+        chatRoomInfo = findViewById(R.id.tv_chat_room_info);
         findViewById(R.id.btn_get_kvs_no_join_room1).setOnClickListener(this);
         findViewById(R.id.btn_get_kvs_no_join_room2).setOnClickListener(this);
+        findViewById(R.id.btn_chat_room_exist).setOnClickListener(this);
         btnChatRoom1.setOnClickListener(this);
         btnChatRoom2.setOnClickListener(this);
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        RongChatRoomClient.removeChatRoomAdvanceActionListener(chatRoomAdvancedActionListener);
+    }
+
+    @Override
+    protected void onDestroy() {
+        RongChatRoomClient.removeChatRoomAdvanceActionListener(chatRoomAdvancedActionListener);
+        super.onDestroy();
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.btn_chat_room_exist:
+                joinExistRoom();
+                break;
             case R.id.btn_chat_room1:
                 toDeatail(CHAT_ROOM_1);
                 break;
@@ -181,6 +246,65 @@ public class ChatRoomStatusActivity extends TitleBaseActivity implements View.On
                 getAllChatRoomEntries(CHAT_ROOM_2);
                 break;
         }
+    }
+
+    private void joinExistRoom() {
+        RongChatRoomClient.getInstance()
+                .joinExistChatRoom(
+                        CHAT_ROOM_1,
+                        10,
+                        new IRongCoreCallback.ResultCallback<JoinChatRoomResponse>() {
+                            @SuppressLint("SetTextI18n")
+                            @Override
+                            public void onSuccess(JoinChatRoomResponse joinChatRoomResponse) {
+                                if (chatRoomInfo != null && joinChatRoomResponse != null) {
+                                    String text =
+                                            "加入聊天室成功:("
+                                                    + CHAT_ROOM_1
+                                                    + ")\n"
+                                                    + convertJoinChatRoomResponse(
+                                                            joinChatRoomResponse);
+                                    chatRoomInfo.setText(text);
+                                    chatRoomInfo.setVisibility(View.VISIBLE);
+                                }
+                            }
+
+                            @Override
+                            public void onError(IRongCoreEnum.CoreErrorCode e) {
+                                if (chatRoomInfo != null) {
+                                    String text = "加入聊天室失败:\n" + e.toString();
+                                    chatRoomInfo.setText(text);
+                                    chatRoomInfo.setVisibility(View.VISIBLE);
+                                }
+                                Toast.makeText(
+                                                ChatRoomStatusActivity.this,
+                                                "加入聊天室失败:" + e.toString(),
+                                                Toast.LENGTH_SHORT)
+                                        .show();
+                            }
+                        });
+    }
+
+    private String convertJoinChatRoomResponse(JoinChatRoomResponse joinChatRoomResponse) {
+        String sb =
+                "createTime: "
+                        + joinChatRoomResponse.getCreateTime()
+                        + "\n"
+                        + "memberCount: "
+                        + joinChatRoomResponse.getMemberCount()
+                        + "\n"
+                        + "isCurrentChatRoomBanned: "
+                        + joinChatRoomResponse.isAllChatRoomBanned()
+                        + "\n"
+                        + "isCurrentUserBanned: "
+                        + joinChatRoomResponse.isCurrentUserBanned()
+                        + "\n"
+                        + "isAllChatRoomBanned: "
+                        + joinChatRoomResponse.isCurrentChatRoomBanned()
+                        + "\n"
+                        + "isCurrentChatRoomInWhitelist: "
+                        + joinChatRoomResponse.isCurrentChatRoomInWhitelist();
+        return sb;
     }
 
     private void getAllChatRoomEntries(String roomId) {

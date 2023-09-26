@@ -3,8 +3,8 @@ package io.rong.recognizer.speechtotext;
 import android.media.MediaCodec;
 import android.media.MediaExtractor;
 import android.os.AsyncTask;
-import android.util.Log;
 import androidx.annotation.NonNull;
+import io.rong.common.RLog;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
@@ -99,7 +99,7 @@ public class DecodeAmrTask extends AsyncTask<String, Void, byte[]> {
                 // END_INCLUDE(pop_sample)
             }
         } catch (IOException e) {
-            Log.e(TAG, e.getMessage());
+            RLog.e(TAG, e.getMessage());
             release();
         }
 

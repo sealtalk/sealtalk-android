@@ -1,12 +1,12 @@
 package io.rong.recognizer;
 
 import android.content.Context;
-import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.iflytek.cloud.RecognizerResult;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
+import io.rong.common.RLog;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -54,7 +54,7 @@ public class IflytekSpeech {
                 //        				}
             }
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+            RLog.e(TAG, e.getMessage());
         }
         return ret.toString();
     }
